@@ -1,0 +1,338 @@
+==== Enlightenment ====
+
+[[download|Download Enlightenment Here]]
+
+{{:icon-enlightenment.png?nolink |}}
+
+Enlightenment (0.17+) (a.k.a E17) is the next generation of
+graphical desktop shell from the Enlightenment project. When you first
+run it and get past the initial setup wizard, you should end up with a
+desktop not unlike the above. It is a very traditional UNIX/X11 style
+desktop, because that is what E primarily is and attempts to be, **BUT**
+with a bunch of bells, whistles and modernities that were never there,
+as well as a different core design philosophy. There seems to be some
+obsession with Window Manager vs. Desktop Environment debates. It
+doesn't much matter what you call it. It manages windows. It does
+compositing. It manages files. It launches applications. It handles UI
+and system settings.
+
+This information assumes you will download and compile Enlightenment
+and its necessities beyond what your current OS does or can provide.
+If Enlightenment is provided already as packages, you may want to
+check them out first, see if they are actually up to date, as opposed
+to compiling it all yourself. If not, then this information will help
+you get it set up yourself and take your first few steps. There are a
+few things you will need to use Enlightenment. Firstly you will need
+to [[download]] Enlightenment and EFL library components. You will need to
+provide the appropriate system dependencies too. The details will be
+further on.
+
+=== Misconceptions and assumptions ===
+
+Before we go any further, it is time to clean up some common
+misconceptions. First, Enlightenment is not new. It is OLD. It
+predates larger desktop environments like GNOME or XFCE. It is just
+barely younger than KDE. It never started life as an attempt to "be a
+full desktop environment". It started life as simply a window manager.
+This was back towards the latter part of 1996, and its first 0.1
+release came in the first part of 1997. It was a window manager with
+some extras to scratch the itch that "everything was gray bevels and
+UIs had to be plain to be functional or useful, and that computers/X11
+were not capable of more". It handily proved that to be wrong. It
+could manage function AND form more flexibly than anything else, and
+to this date is still in an enviable position of flexibility in both
+behavior features and in terms of visuals. In fact, its Achilles heel
+simply may be that it has too many options and too much flexibility.
+Some of the extras filled in the gaps, like setting wallpaper, that
+was always done by 3rd party tools and not the window manager at the
+time. If you are after a constrained and simple UI, then Enlightenment
+(E) is not for you. It can be configured to be plain and simple if you
+try, or to be buzzing with activity and complexity, but this is up to
+you. Its default is somewhere in between these to give you a taste of
+what it can do on both ends of the spectrum.
+
+The default look is not what you are stuck with. Enlightenment was the
+first Window Manager (WM) to introduce themes in X11 (pre-packaged
+sets of data that you just grab and select, providing you with a vast
+new look and feel). Today in Enlightenment, these themes come as
+"Edje" files (.edj), and are pre-packaged data files containing all
+images, layout, animation etc. that you may need. They never get
+"unpacked". They are used "live as-is", and only the data needed from
+the file is sourced and decoded, so even if the theme is massive, only
+the pieces needed at any one time are decoded into memory, which is
+normally a fraction of the actual file size. They are also live data
+and need to be there while E17 runs as it is forever digging bits of
+data out of these files as it needs it. It is an accepted fact that
+the default look will not be for everyone. It tries to strike a
+balance of being unique (not mimicking some other desktop look), yet
+still being stylish. It is meant to echo some of the past from where
+Enlightenment comes from, and yet roll in modern effects and feels. It
+sacrifices some "usability" for look, yet tries to keep a balance and
+still be functional. It will not be for everyone, but it is hoped that
+it keeps you mostly happy until you find other themes that exactly
+meet your visual needs. You will find this as an on-going philosophy
+in Enlightenment. One size does NOT fit all. That's what options are
+for. Thats why we have themes. Do not have the misconception that what
+you see is what you are stuck with. You are expected to experiment and
+discover what is good for you. Maybe the default is fine. Maybe it is
+not. That's why we pioneered themes and spent immense amounts of time
+making them nicely packaged, efficient and powerful enough to
+fine-tune almost any aspect of the UI.
+
+That leads onto the next thing you may find quickly. Enlightenment has
+so many options, because we believe that **CHOICE** is important. If you
+don't believe that your preferences matter, then maybe another project
+is better for you, but we firmly believe that they do. We also believe
+that there are others who have different preferences to you and that
+they matter too. We may not have accounted for every single option out
+there. We may not have presented it to you in a way that makes it
+childs play to find and use, but we have tried. Over time options will
+be cleaned up and accessibility to them improved. A lot of them are
+there simply because they needed to be and not a lot of time was spent
+fine-tuning how to present them in a fool-proof manner. This will
+improve over time and with input, suggestions, patches etc. we hope to
+still offer all the options you need or want, but in a much more
+accessible form.
+
+Not everything is perfect, polished and "finished". This is not the
+end of a path. It is the start of a whole new one. If you find
+something you think could be better, please don't just complain and
+vanish. [[contact|Contact us]] and open up a dialogue. Maybe we agree.
+Maybe we disagree. Maybe we are already working on it. Maybe you can
+help out and provide patches too.
+
+----
+
+=== Philosophy ===
+
+We have certain things that are important to us and how we work. They
+will often show immediately to users, and it is good to explain this
+here. They will lurk behind our decisions and responses, so instead of
+having to explain them each time, setting the tone here is a good idea.
+
+== CHOICE IS GOOD ==
+
+A user should be given as much control as is feasible. There is often
+a trade-off in maintainability by the programmers of some code,
+current and future development, as well as available time to do the
+work. It is always best to make any feature "just work" without
+options for everyone if possible, but the effort may be immense, or
+the "what does "just work" really mean may not be as clear to some as
+to others, and so options are provided to allow the fine-tuning to be
+done by users. Sometimes options are dangerous, but necessary for some
+people. Sometimes they are so dangerous that they are buried under
+layers of complex systems to try and keep them from being mis-used.
+Sometimes they are just, by nature, complex, and that's life. In the
+end, choice is good. That means that options and configuration are
+important. We'd love to streamline how they are presented, and make it
+easier for the "Average Joe", but never shall we do this at the
+expense of the power user.
+
+== VANILLA VS. STRAWBERRY VS. CHOCOLATE ==
+
+Like with choice of options, the actual aesthetics are something that
+is highly subjective and personal. What is beautiful for one person
+can be ugly for another. Otherwise we'd all still be driving black
+Ford model-T's and all be happy about it. Some desktops and OSs
+provide vanilla looks. Some are strawberry. Some can never be changed.
+We have chosen chocolate by default. Mostly because it means we stand
+out by default. You can change this if you want. You can even create
+your own flavors of look in gory detail if you spend the time on the
+artwork and layout. Take advantage of the choice.
+
+== EFFICIENCY MATTERS ==
+
+We want Enlightenment to be as efficient as possible. We don't want to
+sacrifice looks or functionality either, so we have spent a lot of
+effort making a lot of libraries that help this happen. Our theme
+files are binary blobs. They may appear opaque at first, but they are
+dissectable, given tools we provide like edje_decc. The same for our
+configuration files (eet). We value runtime speed and efficiency over
+giving the user encouragement to go hack their configuration files
+with a text editor. We spent a lot of time providing a GUI for almost
+every option that exists in Enlightenment. It manages this for you.
+It's to ensure maximum efficiency at runtime. If you need to, on the
+odd occasion, dig into the bowels of these files we have tools that
+can export and import text files that you can edit, so for the real
+tinkerer, hacker and developer you can do what you need to, BUT the
+regular user is discouraged from messing at this level, as this is
+where you can get yourself into more trouble if you get it wrong. We
+have also chosen a much more process-lean model with fewer processes
+and more rolled into a single one. This gives better opportunities for
+efficiency, but makes things a little more fragile. To solve the
+fragility we have made error recovery very good with enlightenment
+catching its own errors and offering the ability to debug or just
+restart from where u left off and move on without losing any work. E17
+leaves a crash log file (~/.e-crashdump.txt) if you have gdb installed
+and you have debug symbols on.
+
+== NOT EVERYONE DRIVES A F1 ==
+
+Not just being efficient, but realizing that not everyone has the
+latest and greatest hardware to run Enlightenment is what we are
+about. It's also not just one architecture. They may be stuck on
+something quite old (some 486), or want Enlightenment to work on
+something quite bizarre. We have gone to a lot of effort to make
+Enlightenment scale from anything like a 200Mhz ARM phone with 32M RAM
+all the way up to the latest multi-core, 64bit multi-Ghz and 16GB+
+desktop beasts with 2 or more screens. We keep in mind the puny end of
+the spectrum all the way up to the beastly end. When we make decisions
+they try and ensure every part of this spectrum gets a fair go, and
+preferably leaves as few people behind as possible. This also means
+sometimes raising the bar in order not to hold back future things, but
+also means sometimes holding back until a better way is found. You'll
+find evidence of this in the fact that out-of-the-box we have made
+compositing fast and usable even without a GPU, and yet we can fully
+push your GPU if you have one and it has solid drivers. We care.
+
+== EYE CANDY MATTERS ==
+
+If you want a minimal interface, you can configure Enlightenment to be
+quite minimal, but it takes effort. Enlightenment leans towards
+providing eye candy where it can, and often comes by default that way.
+This is how we roll. We always have. Haters gonna hate. That's how we
+roll. Bring on the lollipops!
+
+== WE MAKE LIBRARIES MUCH MORE THAN WM'S ==
+
+One thing over the years that has happened, is that the project has
+morphed into a library project much more than a Window Manager or
+Desktop project. Of our released code something like 80% of it is
+stand-alone libraries. This is why there was no apparent progress in
+the Window Manager for many years. The progress was sunk all into
+building libraries and a toolkit, in order to make the WM and much
+more besides. A lot of effort was spent on abstractions to ensure we
+have many years of smooth sailing into the future. When we do things
+we often go and build libraries first, and then try and make them
+applicable to much more than just the simple problem being solved in
+Enlightenment, which adds overhead, but provides valuable resources
+for developers other than us who wish to re-use that effort in their
+own creations.
+
+== PORTING MATTERS ==
+
+We, as a group, primarily work on Linux systems. We have developers
+who use and focus on others like MacOS-X, Windows, the BSD's even PS3.
+We care about porting, and that often adds overhead and complexity,
+but we don't have build and development farms set up for each OS out
+there, so often you'll find Linux gets the support first and foremost,
+and then it's improved for other targets. Sometimes we shortcut that
+and do it "the Linux way" only as we have problems to solve and can
+worry about other target systems later. We are always open to ways of
+making that better and more portable. We welcome patches and input and
+anyone willing to do the hard yards of supporting their OS.
+
+== WE HAVE A SENSE OF HUMOR ==
+
+We are not always that serious a bunch. We have a sense of Humor. We
+exercise it regularly. You may call it "unprofessional". We call it
+"having a life". :)
+
+== THE WORLD IS NOT ENGLISH ==
+
+Whilst most of our website is in English, as is the default language
+for Enlightenment (until you change it), and it's the common language
+of communication amongst developers and even a lot of users. Even so,
+we realize and are fully aware that people speak other languages.
+Many, in fact most of our developers are not native English speakers.
+We have tried to support "the rest of the world" as much as we can and
+hope to continue in future. It is an ongoing process to provide
+translations and such support. Help out. We do care. We are busy. Very
+busy. But we care. It should be hopefully evident in the large list of
+languages Enlightenment is already translated to, partially or
+completely, and the fact we support selection of keyboard layouts and
+input methods as well. We are all UTF-8 through and through and
+support right-to-left text too as well as complex composition as is
+found in some languages (if you provide the right dependencies). Many
+of our developers do not live in their own native languages and
+countries, so we are fully aware of the challenges people face with
+another language environment.
+
+== OPEN IS BEST ==
+
+Enlightenment and its libraries are all open source (BSD 2 clause,
+LGPL or GPL for some executable binaries only). It is a mix because
+the person who founded each library chose the license, or a license is
+inherited from some original source. We respect that choice and
+license. We believe open is best because it simply is the best way to
+propagate knowledge, gain feedback and input and build a community
+beyond your small borders. It gets your software onto more devices and
+operating systems. It allows developers to poke and prod and find out
+what is really happening. It's the most detailed documentation ever
+made. It simply is better. But your "brand" of open and someone else's
+may differ. That's not for us to promote or debate. There are no other
+political aspirations for this project beyond that. Open is best. This
+also goes for our communication. Warts and all we discuss in the open.
+
+=== Why oh why use E? ===
+
+So if you've managed to read this far, you're rather patient and
+willing to invest more than 7 seconds on Enlightenment, but you're
+probably wondering "Why on earth should I use this Enlightenment
+thing? I don't want people to know I use E! They might think I do
+drugs or something?". Well wonder no more! You shall now be assaulted
+by our marketing blurb!
+
+E is smaller, lighter, faster, nicer and more flexible that your
+current WM, and it's old school with a new-school twist. It's trendy
+and fashionable. You will simply be totally un-cool if you don't use
+it. Its farts smell of roses and world peace has been known to be
+solved by E. OK. Just kidding (though really... they do smell of
+roses!).
+
+In all seriousness Enlightenment is fairly lean. Considering how much
+you get in return. It isn't a minimalist WM or desktop, but it is a
+massively long cry from the full desktop beasts that are its peers,
+even the ones that claim to be minimalist/lean. Enlightenment uses
+EFL. EFL was designed to provide the core of Enlightenment, and then
+some. But it was targeted at scaling down to things like mobile phones
+and embedded devices. This has meant that there was a large focus on
+being lean, and getting a lot of "return on investment" from the very
+core that sits under E17. This of course has paid off for
+Enlightenment itself rather nicely.
+
+It only loads what it needs to, when it needs to. It caches what it no
+longer needs to avoid always re-fetching it, but these caches
+eventually get flushed or expire, so long-term it won't just grow
+without bound in memory footprint. Rendering can be done with the CPU
+and/or GPU. It's up to you. (though at the moment we don't give you
+any UI controls over the rendering engine for UI content, but the
+compositor allows the choice - the core toolkit is capable of it).
+
+An E17 install on the exact same system as Unity on Ubuntu, simply
+replacing unity can save you 200M of RAM. Not to mention be snappier
+and more responsive. You will never know until you try, so why not at
+least give it a go? You run fewer processes since E17 now handles
+being the panel, filemanager, window manager and compositor (and more)
+all at once. It amortizes the cost of all these common components into
+a single process. You start quickly and you are now just a really cool
+person.
+
+Enlightenment and EFL provide over-the-top power when it comes to
+re-skinning or theme changes. You can change not just colors and
+background images, but entire animations, multiple layers of imagery
+scaled, aligned and laid out to please. It's like Photoshop or The
+GIMP, but on steroids riding a train of rabid camels. If anything it
+may be an Achilles heel given how much power is exposed, but hey,
+that's what we have. If you are an artist, designer or skinner, you
+could hardly do much worse than E17. Wallpapers don't just have to be
+images. They can be complete interactive animations. You can provide
+multiple resolutions of your imagery all in-line in the same file and
+have the "best one chosen automatically" based on size. It's all like
+layers that are sized, scaled, aligned and arranged relative to
+each-other and every UI element is a collection of these. You can have
+it animate base on input events, or time. And not just the wallpaper.
+Anything in E17 can do this. Fade layers in and out, change their
+sizes, image content and more. Make your art come to life.
+
+And for the tweaker heads amongst you, there is an option for every
+occasion. We don't go quietly into the night and remove options when
+no one is looking. None of those new big version releases with fanfare
+and "Hey look! Now with half the options you used to have!". We sneak
+in when you least expect it and plant a whole forest of new option
+seeds, watching them spring to life. We nail new options to walls on a
+regular basis. We bake options-cakes and hand them out at parties.
+Options are good. Options are awesome. We have lots of them. Spend
+some quality time getting to know your new garden of options in E17.
+It may just finally give you the control you have been pining for.
+

@@ -1,0 +1,137 @@
+==== Get The Source ====
+
+As any general anonymous user for the EFL core libraries:
+
+<code bash>
+git clone http://git.enlightenment.org/core/efl.git
+git clone http://git.enlightenment.org/core/emotion_generic_players.git
+git clone http://git.enlightenment.org/core/evas_generic_loaders.git
+git clone http://git.enlightenment.org/core/elementary.git
+</code>
+
+And for some sample well developed / maintained applications
+
+<code bash>
+git clone http://git.enlightenment.org/core/enlightenment.git
+git clone http://git.enlightenment.org/apps/terminology.git
+git clone http://git.enlightenment.org/apps/rage.git
+</code>
+
+For libraries (build these before applications), build them in order:
+
+  * efl
+  * emotion_generic_players
+  * evas_generic_loaders
+  * elementary
+
+Building each library or application is the same. Before you start you
+will want basic build tools installed such as:
+
+  * gcc or clang
+  * make
+  * autoconf 2.59 or better
+  * automake 1.10 or better
+  * autopoint
+  * libtool
+  * gettext
+  * check
+
+You will want to ensure the default prefix ''/usr/local'' is avilable
+to build tools. If you know what you are doing, you can change the
+prefix, but this heere shall assume you do not, and the above prefix
+is used. These environment variables are used during build, so you may
+want to make them more permanent.
+
+<code bash>
+export PATH=/usr/local/bin:"$PATH"
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:"$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH=/usr/local/lib:"$LD_LIBRARY_PATH"
+</code>
+
+Note the ''LD_LIBRARY_PATH'' environment variable is set. You can
+ensure the system always supports ''/usr/local/lib'' by editing
+''/etc/ld.so.conf'' or adding a file to ''/etc/ld/so/conf.d'' and
+simply have a line in either file that says:
+
+<code bash>
+/usr/local/lib
+</code>
+
+And rememeber to run ''sudo ldconfig'' tool every time you install a
+library to ensure caches are updated.
+
+For every library or application simply run the following:
+
+<code bash>
+./autogen.sh
+make
+sudo make install
+</code>
+
+If configure fails, you are likely missing a dependency - provide it.
+It should tell you what that dependency is. **NOTE** that you can
+provide configure arguments to autoogen.sh such as ''--prefix=/opt/e''
+or similar. It would be highly suugested you provide the following
+dependencies before you begin compilation:
+
+  * libpam
+  * freetype 2.3 or better
+  * libpng
+  * libjpeg
+  * zlib
+  * libdbus
+  * luajit
+  * libx11
+  * libxcursor
+  * libxrender
+  * libxrandr
+  * libxfixes
+  * libxdamage
+  * libxcomposite
+  * libxss
+  * libxp
+  * libxext
+  * libxinerama
+  * libxkbfile
+  * libxtst
+  * libxcb
+  * libxcb-shape
+  * libxcb-keysyms1
+  * libpulse
+  * libsndfile
+  * libudev //(for eeze udev support)//
+  * libblkid & libmount **OR** libutil-linux
+  * libgstreamer 1.0 or better
+  * vlc //(for emotion_generic_players)//
+  * libtiff
+  * giflib
+  * curl
+  * openssl
+  * opengl //(mesa or vendor supplied desktop OpenGL or OpenGL-ES2)//
+  * libspectre //(for evas_generic_loaders)//
+  * poppler //(for evas_generic_loaders)//
+  * librsvg //(for evas_generic_loaders)//
+  * libraw //(for evas_generic_laoders)//
+  * libxine //(for emotion xine back-end support - optional)//
+
+For debugging you really want tools like these installed:
+
+  * gdb
+  * valgrind
+  * perf
+
+----
+
+=== Developer git access ===
+
+If you get git commit access simply use
+
+<code bash>
+git clone git+ssh://git@
+</code>
+
+instead of
+
+<code bash>
+git clone http://
+</code>

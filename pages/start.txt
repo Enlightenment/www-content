@@ -1,58 +1,41 @@
+{{page>latest-event}}{{page>latest-release}}
 
-====== Level 1 Headline ======
+==== Window Manager ====
 
-Paragraph here
+{{  :shot-enlightenment.png?nolink&480}}
 
-===== Level 2 Headline =====
+[[:about-enlightenment|Enlightenment]] started as a project to build a Window Manager for X11. That was way back in 1996. It has grown much since. It still produces this Window Manager, but it has evolved to also cover Mobile, Wearable and TV UI needs for projects such as [[http://www.tizen.org|Tizen]] as well as traditional the "desktop" UI. We still push out releases, so see our [[:download|download]] page for more details on the latest releases, or see our [[:contribute|contribute]] page for source code repositories in their latest development state.
 
-Paragraph here
+It also is in the transition from [[http://www.x.org|X11]] to [[http://wayland.freedesktop.org|Wayland]]. We are fully committed to moving to Wayland eventually as this is definitely the future of the graphical display layer on Linux.
 
-==== Level 3 Headline ====
-
-Paragraph here
-
-=== Level 4 Headline ===
-
-Paragraph here
-
-== Level 5 Headline ==
-
-A horizontal rule goes below.
+We still primarily support Linux for Enlightenment, but there is some effort (based on help and support from users and some developers) to support the BSDs.
 
 ----
 
-This is the first paragraph of the page. We should test a long one to see how wrapping and other formatting works with it. **Bold Text** works. //Italic Text// also works. __Underlined Text__ is fine as well. ''Monospaced Text'' is there too. <del>Strike-through Text</del> is also not a problem. 
+==== Libraries ====
 
-  - Ordered List Item
-  - Item 2
-  - Last item
+{{  :diagram-block-efl.png?nolink&}}
 
-  * Unordered List Item
-  * Item 2
-  * Third item
-  * Last item 
+In the process of developing a Window Manager, A set of libraries were developed in order to achieve that goal. These libraries are known collectively as [[:about-efl|EFL]]. They cover a range of functionality from main-loop, to graphics, scene graphs, networking, widgets, data storage, IPC and much more.
 
-An external link like: [[http://example.com|External Link]] would go here.
+We now are starting to pull in bindings support directly into EFL. We are working on having bindings auto-generated for C++, Lua and Javascript (v8/node.js). We also would like to pull in our Python bindings in future so we can support as many languages as possible and keep them up to date.
 
-And here is an inlined image, centered and scaled to 100px wide.
+For our libraries, our primary development envrionment is Linux, but we make an effort to support the BSDs as fully as possible, as well as OSX and Windows.
 
-{{ :goat.gif?nolink&100 |}}
+----
 
-Sample code snippets and hilights
+==== Applications ====
 
-<code c>
-  typedef struct blah Blah;
-  int c;
-  void function(char *blah) {
-    double x;
-    x = 10;
-  }
-</code>
+{{:shot-terminology.png?nolink&240  }}
 
-<code lua>
-  function hello(x)
-    local y
-  end
-</code>
+We eat our own dog food. We use our libraries not just to make [[:about-enlightenment|Enlightenment]] but to also make other applications for regular every-day use. We make these applications available for free.
 
-This should become a link to the [[start]] page. How about the [[blah]] page too.
+{{  :shot-rage.png?nolink&240}}
+
+We have some of the usual suspects like a [[:about-terminology|terminal emulator]], a [[:about-rage|video player]], and even the start of an IDE.
+
+Even [[http://www.tizen.org|native Tizen applications]] use EFL for their development because we have focused on remaining lean and still featureful. Unlike many traditional toolkits, we have based ourselves around a scene graph from the ground up, making EFL very different in nature, yet allowing us to seamlessly switch from software rendering to OpenGL or any other mechanism that can be put in a render engine for the canvas scene graph engine we call Evas as well as layer widgets and objects with alpha channels from the ground up and no special tricks.
+
+{{:shot-edi.png?nolink&240  }}
+
+This is by no means a complete list of applications, and we are not done making more. We may not have started the traditional way, but are building our library over time, and Tizen has another library brewing over there as well.
