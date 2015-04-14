@@ -1,16 +1,42 @@
+~~Title: evas_object_del()~~
 <code c>
 void evas_object_del(Evas_Object *obj)
 </code>
 
-Sample page for evas_object_del
+This marks the given Evas object ''obj'' for deletion (when Evas will free
+its memory). Objects are not freed immediately. They are deferred until
+after 1 or more render cycles because objects present a graph in the
+Evas canvas (one object may clip another for example) and thus must be kept
+around for update calculation. Over time such objects will be garbage
+collected by the rendering of the canvas. This will also hide the
+object, if it has been shown.
 
-Fill this in and argue about formatting...
+Note that if the object has more references (created by
+''evas_object_ref()'' and ''evas_object_unref()'' for example), then
+deletion will wait until all these references have been given up with
+''evas_object_unref()''.
 
+If the object has no outstanding references, at this point the
+''EVAS_CALLBACK_DEL'' callback will be called on this object, informing
+all listeners of the callback of this deletion. At a later point when
+the object is actually really cleaned up, the ''EVAS_CALLBACK_FREE''
+event callback will get called.
+
+If the object had the focus at the time of deletion, the
+''EVAS_CALLBACK_FOCUS_OUT'' event callbacks will also be called at this
+time.
+
+Note that all objects contained in an Evas canvas are deleted when the
+canvas is deleted, so there is no neeed to go delete them separately.
+
+----
 == See Also ==
-
 <code c>
-evas_object_show()
 evas_object_hide()
 evas_object_ref()
 evas_object_unref()
+EVAS_CALLBACK_DEL
+EVAS_CALLBACK_FREE
+EVAS_CALLBACK_FOCUS_OUT
+Evas_Object
 </code>
