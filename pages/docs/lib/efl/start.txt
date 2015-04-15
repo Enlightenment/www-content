@@ -1,0 +1,77 @@
+~~Title: EFL~~
+==== EFL ====
+
+EFL is a range of libraries that cover APIs to solve every day
+problems we, and others have encountered. You can see it having
+various API layers, with some intended for very low-level controls and
+access that no one but specialists (eg writing a window manager
+itself) will need, through to higher level "just writing a notepad"
+application. The lower you go, the less portable things can be. Here
+we will cover the EFL features and APIs used to make things portably
+and cleanly. We will cover these topics here:
+
+  * Data structures (lists, hash tables, growable buffers/strings etc.)
+  * Main loop event, I/O and timing core
+  * Event queue and callhandling
+  * Canvas scene graph and rendering
+  * UI object element layout, animation and theme abstraction
+  * Widgets/controls (buttons, sliders, scrollers etc.)
+  * Input method framework
+  * Data archive storage & retrieval
+  * Data strcuture (de)serialization
+  * Video & audio codec playback, control and display
+  * IPC and network connectivty (TCP, UDP, unix domain & abstract sockets, HTTP)
+  * File utilities
+  * Freedesktop.org standards (desktop files, menus, mime types, icons)
+  * Async I/O
+  * D-Bus IPC integration
+  * Location API
+  * Basic Audio playback, recording and mixing
+
+You will use a range of libraries to make use of the above, and so
+learning the naming of these is important to know where to look. They
+will be in Ecore, Evas, Edje, Elementary (Elm), Ecore_IMF, Eet,
+Emotion, Ecore_Con, Ecore_IPC, Eio, Eldbus, Elocation, Ecore_Audio,
+Ecore_File and Efreet.
+
+----
+
+=== Application Mainloop ===
+
+It is assumed every application has a Mainloop, and that EFL is in
+charge of that. If you are writing a library, then that assumption
+would be made ulimately of the application using that library as well.
+For the purposes of this introduction to EFL, we will talk about an
+application, how it starts, runs and shuts down.
+
+Every application is expected to have a lifecycle as follows. If you
+have a design that is significantly different then you will be
+struggling against EFL and what it is pushing you to use. This does
+not mean we do not support threads, we just push you into a specific
+design pattern.
+
+{{ :docs:lib:efl:mainloop.png?nolink |Application Mainloop}}
+
+An application would spend almost it's entire life inside the Mainloop
+sleeping, processing events and then updating it's UI, until it
+decides to exit. All of this would take place inside the mainloop
+processing function ''elm_run()'' which will only return once the
+mainloop voluntarily exits thanks to an ''elm_exit()'' function being
+called, whihc marks the loop to exit, next time it has a chance.
+Before and after this, will be initialization and shutdown of the
+application. Your most basic application that just does nothing but
+wait forever would be:
+
+<code c example.c>
+#include <Elementary.h>
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   elm_run();
+   return 0;
+}
+ELM_MAIN()
+</code>
+Compile it with:
+  cc example.c -o example `pkg-config --cflags --libs elementary`
