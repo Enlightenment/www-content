@@ -34,12 +34,17 @@ will be in Ecore, Evas, Edje, Elementary (Elm), Ecore_IMF, Eet,
 Emotion, Ecore_Con, Ecore_IPC, Eio, Eldbus, Elocation, Ecore_Audio,
 Ecore_File and Efreet.
 
+We will make an assumption that you have a reasonable grasp of the C
+programming language here. Perhaps you might want to read
+[[http://www.cprogramming.com/tutorial/c-tutorial.html|this C introduction totorial]]
+if you are new to C, or need a refresher.
+
 ----
 
 === Application Mainloop ===
 
-It is assumed every application has a Mainloop, and that EFL is in
-charge of that. If you are writing a library, then that assumption
+It is assumed every application has a __Mainloop__, and that EFL is
+in charge of that. If you are writing a library, then that assumption
 would be made ulimately of the application using that library as well.
 For the purposes of this introduction to EFL, we will talk about an
 application, how it starts, runs and shuts down.
@@ -52,15 +57,15 @@ design pattern.
 
 {{ :docs:lib:efl:mainloop.png?nolink |Application Mainloop}}
 
-An application would spend almost it's entire life inside the Mainloop
-sleeping, processing events and then updating it's UI, until it
-decides to exit. All of this would take place inside the mainloop
-processing function ''elm_run()'' which will only return once the
-mainloop voluntarily exits thanks to an ''elm_exit()'' function being
-called, whihc marks the loop to exit, next time it has a chance.
-Before and after this, will be initialization and shutdown of the
+An application would spend almost it's entire life inside the
+__Mainloop__ sleeping, processing events and then updating it's UI,
+until it decides to exit. All of this would take place inside the
+__Mainloop__ processing function ''elm_run()'' which will only return
+once the __Mainloop__ voluntarily exits if an ''elm_exit()'' function is
+called while it runs, which marks the loop to exit, next time it has a
+chance. Before and after this, will be initialization and shutdown of the
 application. Your most basic application that just does nothing but
-wait forever would be:
+wait forever for events would be:
 
 <code c example.c>
 #include <Elementary.h>
@@ -73,5 +78,188 @@ elm_main(int argc, char **argv)
 }
 ELM_MAIN()
 </code>
-Compile it with:
+Compile it (and other examples on this page) with:
   cc example.c -o example `pkg-config --cflags --libs elementary`
+
+Expanding on this, let us make our first application with an actual
+visible window and a button inside to click to exit:
+
+<code c example.c>
+#include <Elementary.h>
+
+static void
+on_click(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *btn;
+
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+
+   win = elm_win_util_standard_add("Main", "Hello, World!");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   btn = elm_button_add(win);
+   elm_object_text_set(btn, "Goodbye Cruel World");
+   elm_win_resize_object_add(win, btn);
+   evas_object_smart_callback_add(btn, "clicked", on_click, win);
+   evas_object_show(btn);
+
+   evas_object_show(win);
+
+   elm_run();
+
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+When the application runs, the ''ELM_MAIN()'' macro sets up a normal
+''main()'' function, inits EFL for you and then calls elm_main() with
+the usual application argc & argv parameters you get in C. When
+''elm_main()'' returns, it willpass the return value to the return
+value of main() for the application exit code. Before it does this,
+EFL will be cleanly shut down for you. You are encouraged to use this
+setup above to ensure this happens.
+
+<code c>
+elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+</code>
+
+The first thing we do is enable a policy where if our last window is
+deleted, the __Mainloop__ started by ''elm_run()'' is automatically
+quit when this last window is closed. This is really handy for
+applications with multiple windows that want to just go away when they
+are no longer presenting any UI.
+
+<code c>
+win = elm_win_util_standard_add("Main", "Hello, World!");
+</code>
+
+We now create a standard window with a standard background using a
+utility function. It has the **name** set to "Main". This is normally
+not a user-visible property of a window. It is used to identify that
+window separately from other windows the app may create. A dialog, a
+file selector window, a settings dialog etc. so name appropriately
+here. The window will display a title of "Hello, World!" in the
+titlebar (if such a thing exists on your platform). This title may be
+used in other places on a platform such as a window switcher, a
+taskbar or some otherinterface control element. The window will have a
+background already placed as the resize object of a window.
+
+<code c>
+elm_win_autodel_set(win, EINA_TRUE);
+</code>
+
+Next we enable **autodel** on the window. This means that if someone
+hits the close button, or otherwise uses some normal environment
+mechanism (keybinding, menu) to close the window, the window object is
+automatically deleted on the application side. If you do not do this,
+these mechanisms will not work and the window will stay around. It is
+expected that you would add a callback to handle the "delete,request"
+event on the window and then either delete it or do something like
+prompt the user if they are sure they wish to close the window
+(unsaved content?) etc.
+
+<code c>
+btn = elm_button_add(win);
+</code>
+
+Next we create a button (relative to the window). You must create all
+objects relative to some object inside a window or the window itself.
+All graphical objects belong to a window of some sort. This will not
+have set up the parent/child containering and control relationships
+yet. That comes later.
+
+<code c>
+elm_object_text_set(btn, "Goodbye Cruel World");
+elm_win_resize_object_add(win, btn);
+</code>
+
+We now set the label of the button to "Goodbye Cruel World", then add
+the button as a window resize object. If we did not set the label
+text, the button would be empty (and quite small by default). Windows
+have a special list of resize objects (can be more than one) stacked
+one on top of the other which resize when the window resizes. In turn
+they also affect the window sizing with their minimum and maximum
+sizes as well as sizing hints for weight and alignment (which we will
+come to later).
+
+<code c>
+static void
+on_click(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+</code>
+<code c>
+evas_object_smart_callback_add(btn, "clicked", on_click, win);
+</code>
+
+We now add a callback for the "clicked" smart event on the button.
+This will call the ''on_click'' function when a user clicks on the
+button. The __Mainloop__ drives event handling and thus calling of
+this callback. All event callbacks can pass in an arbitrary pointer to
+anything the like. This will be passed as the first data pointer to
+the callback above. In this case we will passin our window pointer as
+we want to delete the window when someone presses the button. Due to
+our policy settings, this will end up deleting the last window we have
+and automatically exiting the mainloop, and then of course the
+application. The example works this way to show how it might be
+extended to open multiple windows and only have the window you click
+the button in be deleted, until all windows are gone and application
+cleanly exits.
+
+<code c>
+evas_object_show(btn);
+</code>
+
+Next we show the button. All graphical objects are hidden by default.
+This avoids unwanted events like mouse in, move and out events due to
+objects being created underneath the current pointer position. It
+makes things more efficient as you can show the object after you have
+finished defining its state.
+
+<code c>
+evas_object_show(win);
+</code>
+
+Now we show the window. It is best to show it last just before you
+jump into the __Mainloop__ to process everything. This means all
+window setup is invisible until it is finished.
+
+<code c>
+elm_run();
+</code>
+
+Finally we begin the __Mainloop__. This function will not exit until
+the __Mainloop__ is done and exits (with an ''elm_exit()'' being
+called from inside some callback there). So at this point your
+application is handing full control over it's execution to EFL and the
+__Mainloop__ to deal with events and rendering of updates.
+
+----
+
+**NOTE**: If you don't want to use ''ELM_MAIN()'', you can use
+''elm_init()'' and ''elm_shutdown()'' manually yourself. You **MUST**
+call ''elm_init()'' before you call any EFL functions. It could fail
+too. Also never call any EFL functions after ''elm_shutdown()''.
+
+<code c example.c>
+#include <Elementary.h>
+
+int
+main(int argc, char **argv)
+{
+   if (!elm_init()) return -1;
+
+   elm_run();
+
+   elm_shutdown();
+   return 0;
+}
+</code>
