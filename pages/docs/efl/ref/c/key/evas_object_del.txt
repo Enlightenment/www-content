@@ -1,4 +1,5 @@
 ~~Title: evas_object_del()~~
+~~CODE-c~~
 <code c>
 void evas_object_del(Evas_Object *obj)
 </code>
@@ -12,18 +13,18 @@ collected by the rendering of the canvas. This will also hide the
 object, if it has been shown.
 
 Note that if the object has more references (created by
-''evas_object_ref()'' and ''evas_object_unref()'' for example), then
+evas_object_ref() and evas_object_unref() for example), then
 deletion will wait until all these references have been given up with
-''evas_object_unref()''.
+evas_object_unref().
 
 If the object has no outstanding references, at this point the
-''EVAS_CALLBACK_DEL'' callback will be called on this object, informing
+EVAS_CALLBACK_DEL callback will be called on this object, informing
 all listeners of the callback of this deletion. At a later point when
-the object is actually really cleaned up, the ''EVAS_CALLBACK_FREE''
+the object is actually really cleaned up, the EVAS_CALLBACK_FREE
 event callback will get called.
 
 If the object had the focus at the time of deletion, the
-''EVAS_CALLBACK_FOCUS_OUT'' event callbacks will also be called at this
+EVAS_CALLBACK_FOCUS_OUT event callbacks will also be called at this
 time.
 
 Note that all objects contained in an Evas canvas are deleted when the

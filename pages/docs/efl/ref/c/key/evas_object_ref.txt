@@ -1,10 +1,11 @@
 ~~Title: evas_object_ref()~~
+~~CODE-c~~
 <code c>
 void evas_object_ref(Evas_Object *obj)
 </code>
 
 This increments the reference count of the object ''obj'', which, if greater
-than 0, will defer deletion by ''evas_object_del()'' until all references
+than 0, will defer deletion by evas_object_del() until all references
 are released back (counter back to 0). References cannot go below 0 and
 unreferencing past that will result in the reference count being limited to
 0. References are limited to //(2^32) -1// for an object. Referencing it
@@ -15,8 +16,8 @@ instance, Evas is not ready to check for pending references on a
 canvas deletion, or things like that. This is useful in scenarios
 where, inside a code block, callbacks exist which would possibly
 delete an object we are operating on afterwards. Then, one would
-''evas_object_ref()'' it at the beginning of the block and
-''evas_object_unref()'' it at the end. It would then be deleted at
+evas_object_ref() it at the beginning of the block and
+evas_object_unref() it at the end. It would then be deleted at
 this point, if it should be.
 
 == Example ==

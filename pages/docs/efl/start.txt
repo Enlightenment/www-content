@@ -1,4 +1,5 @@
 ~~Title: EFL~~
+~~CODE-c~~
 
 ==== EFL ====
 
@@ -61,12 +62,14 @@ design pattern.
 An application would spend almost it's entire life inside the
 __Mainloop__ sleeping, processing events and then updating it's UI,
 until it decides to exit. All of this would take place inside the
-__Mainloop__ processing function ''elm_run()'' which will only return
-once the __Mainloop__ voluntarily exits if an ''elm_exit()'' function is
+__Mainloop__ processing function elm_run() which will only return
+once the __Mainloop__ voluntarily exits if an elm_exit() function is
 called while it runs, which marks the loop to exit, next time it has a
 chance. Before and after this, will be initialization and shutdown of the
 application. Your most basic application that just does nothing but
 wait forever for events would be:
+
+elm_exit
 
 <code c example.c>
 #include <Elementary.h>
@@ -119,10 +122,10 @@ elm_main(int argc, char **argv)
 ELM_MAIN()
 </code>
 
-When the application runs, the ''ELM_MAIN()'' macro sets up a normal
-''main()'' function, inits EFL for you and then calls elm_main() with
+When the application runs, the ELM_MAIN() macro sets up a normal
+main() function, inits EFL for you and then calls elm_main() with
 the usual application argc & argv parameters you get in C. When
-''elm_main()'' returns, it will pass the return value to the return
+elm_main() returns, it will pass the return value to the return
 value of main() for the application exit code. Before it does this,
 EFL will be cleanly shut down for you. You are encouraged to use this
 setup above to ensure this happens.
@@ -132,7 +135,7 @@ elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
 </code>
 
 The first thing we do is enable a policy where if our last window is
-deleted, the __Mainloop__ started by ''elm_run()'' is automatically
+deleted, the __Mainloop__ started by elm_run() is automatically
 quit when this last window is closed. This is really handy for
 applications with multiple windows that want to just go away when they
 are no longer presenting any UI.
@@ -238,17 +241,17 @@ elm_run();
 </code>
 
 Finally we begin the __Mainloop__. This function will not exit until
-the __Mainloop__ is done and exits (with an ''elm_exit()'' being
+the __Mainloop__ is done and exits (with an elm_exit() being
 called from inside some callback there). So at this point your
 application is handing full control over it's execution to EFL and the
 __Mainloop__ to deal with events and rendering of updates.
 
 ----
 
-**NOTE**: If you don't want to use ''ELM_MAIN()'', you can use
-''elm_init()'' and ''elm_shutdown()'' manually yourself. You **MUST**
-call ''elm_init()'' before you call any EFL functions. It could fail
-too. Also never call any EFL functions after ''elm_shutdown()''.
+**NOTE**: If you don't want to use ELM_MAIN(), you can use
+elm_init() and elm_shutdown() manually yourself. You **MUST**
+call elm_init() before you call any EFL functions. It could fail
+too. Also never call any EFL functions after elm_shutdown().
 
 <code c example.c>
 #include <Elementary.h>
