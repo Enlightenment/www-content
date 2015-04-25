@@ -1,0 +1,40 @@
++-******~~Title: EFL Mainloop~~
+~~CODE-c~~
+
+{{page>index}}
+
+=== Mainloop in detail ===
+
+{{ :docs:efl:mainloop.svg?nolink |Application Mainloop}}
+
+The mainloop will sit and iterate forever until something flags it to stop. This is your "event pump" for your application and it has many stages in it for different purposes to allow fine-grained control over your loop. Of course threads can be used and interact with this mainloop almost like it was another process, by sending messages to it and waking it up. But first let us deal with it in a simple single-threaded form. The mainloop has the following stages:
+
+== Stages in each mainloop iteration ==
+
+^Stage ^Description ^Callbacks called^
+|[[#Idle]]  |Totally asleep waiting on timeouts or I/O UNLESS idlers are registered | [[ecore_idlers]] are called in a tight loop, one after the other during this time |
+|**[[#Wakeup]]** | This is a special timepoint and it is stored and can be retrieved with ecore_loop_time_get() | |
+|**[[#Idle Exit]]** |Coming out of the idle state due to a timeout or I/O event |[[ecore_idle_exiters]] all called here, if registered|
+|**[[#FD Event handling]]** |File Descriptors (fd's) are processed here (read from or written to) and events queued |[[ecore_fd_handlers]] callbacks called here (read, write, buffer) |
+|**[[#Event filtering]]** |Filter out events we don't want now that we have gathered all pending I/O | [[ecore_event_filters]] callbacks called here |
+|**[[#Event handling]]** |Regular event handling (in order) and events may still be generated and added to the queue as a result of event handling via ecore_event_add() or ecore_job_add() for example |[[ecore_event_handlers]] callbacks called here as well as [[ecore_timers]] callbacks, [[ecore_animators]] callbacks for animation, [[ecore_jobs]] callbacks, and almost all the UI callbacks (such as mouse click events, enter/leave, key events, other widget changes etc.) |
+|**[[#Entering idle]]** |The mainloop is about to go idle again now that everything has been processed | [[ecore_idle_enterers]] are called here (the first of which may be the [[evas_rendering]] related callbacks which will calculate widget and object changes, actually trigger rendering etc., depending on the order of idlers added via ecore_idle_enterer_add() to the end of the idle enterer queue or ecore_idle_enterer_before_add() which adds to the start of the idle enterer queue |
+|REPEAT |Go back to the top of this table and repeat | |
+
+== Idle ==
+
+Most applications spend the vast majority of their lives being idle. They are waiting on something. On input from the user. On data from a network to arrive. It is rare that applications are continually processing. Often they want to process in quick batches to get an update to the user as soon as possible then go back to sleep. Sometimes they do have specific processing needs, and those might impact the mainloop if executed directly in-line. EFL Has support for various ways of [[threads|interacting and managing threads]], and highly encourages clear separation of tasks, rather than mixing control of an application state between many threads. EFL pushes you to a design where you isolate work on something heavy inside of a thread, and once that work is ready to be seen, the mainloop is informed and does the appropriate state/UI etc. changes to make that happen. These threads may continue to process while the mainloop is idle, or whilst it is busy.
+
+Developers can [[ecore_idlers|register callbacks]] to be called whilst sleeping in idle, instead of actually sleeping. This would be pretty poor behavior to use often and is highly discouraged. It is a very rare day that you need this. If you find yourself using idlers, chances are you are "doing it wrong". Re-think what you are doing. If you must register an idler, ensure you delete it as soon as it is no longer needed, and that an idler starts and finishes as rapidly as possible so it does not affect the time it takes to wake up from idle too badly. Of course setting up such idlers will result in users seeing "high CPU usage" and complaining, so stick clear of them whenever possible.
+
+== Wakeup ==
+
+== Idle Exit ==
+
+== FD Event Handling ==
+
+== Event Filtering ==
+
+== Event Handling ==
+
+== Entering Idle ==
