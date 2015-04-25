@@ -13,7 +13,7 @@ The mainloop will sit and iterate forever until something flags it to stop. This
 
 ^Stage ^Description ^Callbacks called^
 |[[#Idle]]  |Totally asleep waiting on timeouts or I/O UNLESS idlers are registered | [[ecore_idlers]] are called in a tight loop, one after the other during this time |
-|**[[#Wakeup]]** | This is a special timepoint and it is stored and can be retrieved with ecore_loop_time_get() | |
+|**[[#Wake Up]]** | This is a special timepoint and it is stored and can be retrieved with ecore_loop_time_get() | |
 |**[[#Idle Exit]]** |Coming out of the idle state due to a timeout or I/O event |[[ecore_idle_exiters]] all called here, if registered|
 |**[[#FD Event handling]]** |File Descriptors (fd's) are processed here (read from or written to) and events queued |[[ecore_fd_handlers]] callbacks called here (read, write, buffer) |
 |**[[#Event filtering]]** |Filter out events we don't want now that we have gathered all pending I/O | [[ecore_event_filters]] callbacks called here |
@@ -23,18 +23,58 @@ The mainloop will sit and iterate forever until something flags it to stop. This
 
 == Idle ==
 
-Most applications spend the vast majority of their lives being idle. They are waiting on something. On input from the user. On data from a network to arrive. It is rare that applications are continually processing. Often they want to process in quick batches to get an update to the user as soon as possible then go back to sleep. Sometimes they do have specific processing needs, and those might impact the mainloop if executed directly in-line. EFL Has support for various ways of [[threads|interacting and managing threads]], and highly encourages clear separation of tasks, rather than mixing control of an application state between many threads. EFL pushes you to a design where you isolate work on something heavy inside of a thread, and once that work is ready to be seen, the mainloop is informed and does the appropriate state/UI etc. changes to make that happen. These threads may continue to process while the mainloop is idle, or whilst it is busy.
+Most applications spend the vast majority of their lives being idle. They are waiting on something. On input from the user. On data from a network to arrive. It is rare that applications are continually processing. Often they want to process in quick batches to get an update to the user as soon as possible then go back to sleep.
 
-Developers can [[ecore_idlers|register callbacks]] to be called whilst sleeping in idle, instead of actually sleeping. This would be pretty poor behavior to use often and is highly discouraged. It is a very rare day that you need this. If you find yourself using idlers, chances are you are "doing it wrong". Re-think what you are doing. If you must register an idler, ensure you delete it as soon as it is no longer needed, and that an idler starts and finishes as rapidly as possible so it does not affect the time it takes to wake up from idle too badly. Of course setting up such idlers will result in users seeing "high CPU usage" and complaining, so stick clear of them whenever possible.
+Sometimes they do have specific processing needs, and those might impact the mainloop if executed directly in-line. EFL Has support for various ways of [[threads|interacting and managing threads]], and highly encourages clear separation of tasks, rather than mixing control of an application state between many threads.
 
-== Wakeup ==
+EFL pushes you to a design where you isolate work on something heavy inside of a thread, and once that work is ready to be seen, the mainloop is informed and does the appropriate state/UI etc. changes to make that happen. These threads may continue to process while the mainloop is idle, or whilst it is busy.
+
+Developers can [[ecore_idlers|register callbacks]] with ecore_ilder_add() to be called whilst sleeping in idle, instead of actually sleeping. This would be pretty poor behavior to use often and is highly discouraged. It is a very rare day that you need this. If you find yourself using idlers, chances are you are "doing it wrong" and re-think what you are doing.
+
+If you must register an idler, ensure you delete it as soon as it is no longer needed, and that an idler callback itself starts and finishes as rapidly as possible so it does not affect the time it takes to wake up from idle too badly.
+
+Of course setting up such idlers will result in users seeing "high CPU usage" and complaining, so stay clear of them whenever possible.
+
+== Wake Up ==
+
+When a process wakes up from idle is a special time in its life. The mainloop records this time-point and it can be queried with ecore_loop_time_get(). This will return the "logical" wake-up time as a time-point (since some point in the past) in seconds. As this function returns a double, there is plenty of precision for sub-second accuracy. The zero time is system dependent, but it likely will be something like the time when the system last booted.
+
+In some cases the loop time is manipulated during the event loop. For example if screen refresh is tied into the [[ecore_animators]], then they will attempt to get the exact time-stamp from the video driver event itself, if possible. If this is possible, some of the I/O handling may adjust the time-point to be when the hardware event happened (probably a very short time before the actual wake up).
+
+For the vast majority of callbacks in your app then (animators, etc.) then getting the loop time will make things nicely accurate for synchronizing animation.
+
+You are highly encouraged to only ever use [[ecore_animators]] for animation (not [[ecore_timers]] unless you have very specific frame rates to keep), and to use ecore_loop_time_get() in both situations to get the most accurate time-point measurement possible for your animation needs.
 
 == Idle Exit ==
 
+At this point the mainloop is seriously waking up but has yet to actually figure out what is going on. Imagine this as being what it is like after being woken up yourself first thing in the morning by your alarm clock. You are bleary-eyed and not quite sure of what is happening and what has happened since you went to sleep last night. The application won't have adjusted the loop time yet, if needed by VSYNC, and have no idea what I/O woke it up yet, or know of any pending events.
+
+At this stage you can have some [[ecore_idle_exiters]] callbacks called, if you registered them with ecore_idle_exiter_add(). It is very rare that you need such functions, but this stage exists for loop management purposes, and EFL itself uses things like this to do timing of how long mainloop stages take for debugging purposes, performance measurement etc.
+
 == FD Event Handling ==
+
+This is where the core of I/O handling happens. This is where fds are looked at to see if they woke us up and have data available to read, or their buffers are available for writing. EFL has [[ecore_fd_handlers]] precisely for this purpose, where ecore_fd_handler_add() creates an object whose point it is to manage a system file descriptor and watch it.
+
+The appropriate callbacks will be called on the handler based on the expected mode (are we interested in listening for reads, or do we have buffered data awaiting a write and want to be told when the fd is available for writing?).
+
+The callbacks here will actually read and write data to and from the fds. The assumption here is that since the fd is active, all of this data is local and in RAM already, so these reads and writes should never block, but simply gather (or output) data without waiting on anything, and transform data into events for the ecore event queue as fast as possible by adding events with ecore_event_add(). Almost all of this I/O work has been done for you in EFL itself, and most of EFL's core is built on top of these handlers and events. These handlers exist for developers to glue in foreign fds that they may have to deal with from time to time. It is a relatively advanced topic as most of the day-to-day needs are already wrapped and covered by EFL.
 
 == Event Filtering ==
 
+It is a very rare occasion where events already posted to the event queue. These filters are called, if registered, on every event in the queue before event handler callbacks are processed, and these callbacks can modify an event or remove it from the queue. They could even add events. This is an advanced topic, but see [[ecore_event_filters]] for more information if you really need this.
+
 == Event Handling ==
 
+This is the core of most of what is going on in your application or library. It is here that you will find your UI event callback being processed, animation and timer callbacks and more. It is here that state changes are made, decisions as to what to do next are made and so on. The idea is that all these little decisions should be light and simple and not take too much time. If they do, performance will be affected. If you have heavy decision making to do, such as some AI or scripting system, it may be a good idea to farm that decision off to a [[threads|thread, have it decide what to do]], and then come back with a result.
+
+Ecore events are called in strict order that they find themselves added to the queue. This ordering is important and guaranteed. you can take advantage of this with things like [[ecore_jobs]] which actually add another event to the queue to be called later (when you add with ecore_job_add(), the job is posted to the very end of the event queue at the time). This is a great way to say "well, I don't know yet what I want to do, so let's handle everything else first, then deal with this later". A common trick is to defer by adding jobs, and if you already added a job and find yourself needing to add another, delete the old job, and add a new one. Deleted jobs will not be called. You can put off heavier work like this for a long time during event processing, so take advantage of it if needed and you will have better performing applications as a result.
+
 == Entering Idle ==
+
+This is another very important stage for EFL. This is where EFL evaluates everything that has changed during the event handling and before, and will do things such as render updates to canvases, call pending/flagged calculation callbacks on objects and so on.
+
+EFL likes to defer work as long as possible to avoid doing it multiple times. thus doing a simple state change and deferring the hard "caculation" work until later does save doing it more often than needed a lot of the time. This is a general across EFL - to defer work until later whenever possible.
+
+As a result of calculating and implementing such calculations, it can happen that you may add jobs, which will be processed now after going idle. If you post events or jobs here, then the mainloop will go idle and immediately wake up (not calling any idlers as it spends no time sleeping due to pending events). Also actual UI events may be called here due to changing of object states, so be aware that this can happen early during entering idle, before rendering begins.
+
+Rendering may render inline in the mainloop or may farm off rendering to threads to do in parallel, depending on the engine being used. This may change over time, but in the long-run we aim to move more and more of our rendering off into many slave threads to free up the mainloop as much as possible.
