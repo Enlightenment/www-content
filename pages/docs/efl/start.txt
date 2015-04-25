@@ -1,6 +1,8 @@
 ~~Title: EFL~~
 ~~CODE-c~~
 
+{{page>index}}
+
 ==== EFL ====
 
 EFL is a range of libraries that cover APIs to solve every day
@@ -45,13 +47,13 @@ if you are new to C, or need a refresher.
 
 === Application Mainloop ===
 
-It is assumed every application has a __Mainloop__, and that EFL is
+It is assumed every application has a [[mainloop]], and that EFL is
 in charge of that. If you are writing a library, then that assumption
 would be made ultimately of the application using that library as well.
 For the purposes of this introduction to EFL, we will talk about an
 application, how it starts, runs and shuts down.
 
-Every application is expected to have a lifecycle as follows. If you
+Every application is expected to have a life-cycle as follows. If you
 have a design that is significantly different then you will be
 struggling against EFL and what it is pushing you to use. This does
 not mean we do not support threads, we just push you into a specific
@@ -60,10 +62,10 @@ design pattern.
 {{ :docs:efl:mainloop.svg?nolink |Application Mainloop}}
 
 An application would spend almost it's entire life inside the
-__Mainloop__ sleeping, processing events and then updating it's UI,
+[[mainloop]] sleeping, processing events and then updating it's UI,
 until it decides to exit. All of this would take place inside the
-__Mainloop__ processing function elm_run() which will only return
-once the __Mainloop__ voluntarily exits if an elm_exit() function is
+[[mainloop]] processing function elm_run() which will only return
+once the [[mainloop]] voluntarily exits if an elm_exit() function is
 called while it runs, which marks the loop to exit, next time it has a
 chance. Before and after this, will be initialization and shutdown of the
 application. Your most basic application that just does nothing but
@@ -133,7 +135,7 @@ elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
 </code>
 
 The first thing we do is enable a policy where if our last window is
-deleted, the __Mainloop__ started by elm_run() is automatically
+deleted, the [[mainloop]] started by elm_run() is automatically
 quit when this last window is closed. This is really handy for
 applications with multiple windows that want to just go away when they
 are no longer presenting any UI.
@@ -204,13 +206,13 @@ evas_object_smart_callback_add(btn, "clicked", on_click, win);
 
 We now add a callback for the "clicked" smart event on the button.
 This will call the ''on_click'' function when a user clicks on the
-button. The __Mainloop__ drives event handling and thus calling of
+button. The [[mainloop]] drives event handling and thus calling of
 this callback. All event callbacks can pass in an arbitrary pointer to
 anything the like. This will be passed as the first data pointer to
-the callback above. In this case we will passin our window pointer as
+the callback above. In this case we will passing our window pointer as
 we want to delete the window when someone presses the button. Due to
 our policy settings, this will end up deleting the last window we have
-and automatically exiting the __Mainloop__, and then of course the
+and automatically exiting the [[mainloop]], and then of course the
 application. The example works this way to show how it might be
 extended to open multiple windows and only have the window you click
 the button in be deleted, until all windows are gone and application
@@ -231,18 +233,18 @@ evas_object_show(win);
 </code>
 
 Now we show the window. It is best to show it last just before you
-jump into the __Mainloop__ to process everything. This means all
+jump into the [[mainloop]] to process everything. This means all
 window setup is invisible until it is finished.
 
 <code c>
 elm_run();
 </code>
 
-Finally we begin the __Mainloop__. This function will not exit until
-the __Mainloop__ is done and exits (with an elm_exit() being
+Finally we begin the [[mainloop]]. This function will not exit until
+the [[mainloop]] is done and exits (with an elm_exit() being
 called from inside some callback there). So at this point your
 application is handing full control over it's execution to EFL and the
-__Mainloop__ to deal with events and rendering of updates.
+[[mainloop]] to deal with events and rendering of updates. From inside the mainloop function run by EFL, all your callbacks (functions you register to be called when events, state changes etc. etc. happen) will be called.
 
 ----
 
