@@ -73,7 +73,7 @@ Ecore events are called in strict order that they find themselves added to the q
 
 This is another very important stage for EFL. This is where EFL evaluates everything that has changed during the event handling and before, and will do things such as render updates to canvases, call pending/flagged calculation callbacks on objects and so on.
 
-EFL likes to defer work as long as possible to avoid doing it multiple times. thus doing a simple state change and deferring the hard "caculation" work until later does save doing it more often than needed a lot of the time. This is a general across EFL - to defer work until later whenever possible.
+EFL likes to defer work as long as possible to avoid doing it multiple times. thus doing a simple state change and deferring the hard "calculation" work until later does save doing it more often than needed a lot of the time. This is a general across EFL - to defer work until later whenever possible.
 
 As a result of calculating and implementing such calculations, it can happen that you may add jobs, which will be processed now after going idle. If you post events or jobs here, then the mainloop will go idle and immediately wake up (not calling any idlers as it spends no time sleeping due to pending events). Also actual UI events may be called here due to changing of object states, so be aware that this can happen early during entering idle, before rendering begins.
 
