@@ -3,35 +3,129 @@
 
 ==== Preface ====
 
-//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
+//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL on todays common architectures. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
 
-//It won't cover esoteric details of "strange architectures" which may, in theory exist, but in real life are long dead, never existed, or are so rare that you won't need to know. It pretty much thinks of C as a high level assembly language that is portable across a range of modern architectures.//
+//It won't cover esoteric details of "strange architectures". It pretty much covers C as a high level assembly language that is portable across a range of modern architectures.//
 
-//Keep this in mind when reading, and know that some facets of C have been adapted to take this view of things. It simply makes everything easier and more practical to learn, along with actually being relevant day-to-day in usage of C.//
+==== Your first program ====
+
+Let's start with the traditional "Hello world" C application. This is about as simple as it gets for an application that does something you can see.
+
+<code c hello.c>
+#include <stdio.h>
+
+int
+main(int argc, char **argv)
+{
+   printf("Hello world!\n");
+   return 0;
+}
+</code>
+
+You would compile this on a command-line as follows:
+
+  cc hello.c -o hello
+
+Run the application with:
+
+  ./hello
+
+You should then see this output:
+
+  Hello world!
+
+So what has happened here? Let's first look at the code itself. The first line:
+
+<code c>
+#include <stdio.h>
+</code>
+
+This tells the compiler to literally include the **stdio.h** file into your application. The compiler will find this file in the standard locations to look for include files and literally "paste" it there where the include line is. This file provides some "standard I/O" features, such as ''printf()''.
+
+The next thing is something every application will have - a ''main()'' function. This function must exist only once in the application because this is the function that is run //AS// the application. When this function exits, the application does.
+
+<code c>
+int
+main(int argc, char **argv)
+{
+}
+</code>
+
+The ''main()'' function always returns an ''integer'' value, and is given 2 parameters on start. Those are an integer ''argc'' and then an array of strings. In C an array is generally just a pointer to the first element. A String is generally a pointer to a series of bytes (chars) which ends in a byte value of 0 to indicate the end of the string. We'll come back to this later, but as we don't use these, just ignore this for now.
+
+The next thing that happens is for the code to call a function ''printf()'' with a string "Hello world!\n". Why the "\n" at the end? This is an "escape". A way of indicating a special character. In this case this is the //newline// character. Strings in C can contain some special characters like this, and "\" is used to begin the escaped string.
+
+<code c>
+printf("Hello world!\n");
+</code>
+
+Now finally we return from the main function with the value 0. The ''main()'' function of an application is special. It always returns an integer that indicates the "success" of the application. This is used by the shell executing the process to determine success. A return of ''0'' indicates the process ran successfully.
+
+<code c>
+return 0;
+</code>
+
+You will notice a few things. First lines starting with ''#'' are commands, but don't have a '';''. This is normal because these lines are processed by the pre-processor. All code in C goes through the C pre-processor and this basically generates more code. Other lines that are not starting a function, ending it or defining control end every statement in C with a '';'' character. If you don't do this, the statement continues until a '';'' is found, even if it goes across multiple lines.
+
+If we look at how the application is compiled, We execute the C compiler, give it 1 or more source files to compile and the with ''-o'' tell it what output file to produce (the executable)
+
+  cc hello.c -o hello
+
+Often ''cc'' will be replaced with things like ''gcc'' or maybe ''clang'' or whatever compiler you prefer.
+
+Now let's take a detour back to the machine that is running your very first C application.
 
 ==== The machine ====
 
-Reality is that you are dealing with a machine. It's real. It has its personality and ways of working thanks to the people who designed the CPU and its components. Most machines are fairly similar these days, of course with their variations on personality, size etc.
+Reality is that you are dealing with a machine. A real modern piece of hardware. Not abstract. It's real. Most machines are fairly similar these days, of course with their variations on personality, size etc.
 
-All machines have at least a single processor to execute a series of instructions. If you write an application (a common case) this is the model you will see right in front of you. An applications begins by executing a list of instructions at the CPU level.
+All machines have at least a single processor to execute a series of instructions. If you write an application (a common case) this is the model you will see right in front of you. An application begins by executing a list of instructions at the CPU level.
 
-The C compiler takes the C code files you write and converts them into "machine code" (which is really just a series of numbers that end up stored in memory, and these numbers have meanings like "0" is "do nothing", "1" is "add the next 2 numbers together and store the result". "2" is "compare result with next number, store comparison in result", "3" is "if result is 'equal to' then start executing instructions at the memory location in the next number" etc.). Somewhere these numbers are placed in memory by the operating system when the executable is loaded, and the CPU is instructed to begin executing them. What these numbers are and what they mean is dependent on your CPU type.
+The C compiler takes the C code source files you write and converts them into "machine code" (which is really just a series of numbers that end up stored in memory, and these numbers have meanings like "0" is "do nothing", "1" is "add the next 2 numbers together and store the result" etc.). Somewhere these numbers are placed in memory by the operating system when the executable is loaded, and the CPU is instructed to begin executing them. What these numbers mean is dependent on your CPU type.
 
-CPUs will do arithmetic, logic operations, change what it is they execute, and read from or write to memory to deal with data. In the end, everything to a CPU is effectively a number, and some operation you do to it.
+An example:
 
-To computers, numbers are a string of "bits". A bit can be on or off. Just like you may be used to numbers, with each digit having 10 values (0 through to 9), A computer sees numbers more simply. It is 0, or it is 1. Just like you can have a bigger number by adding a digit (1 digit can encode 10 values, 2 digits can encode 100 values, 3 can encode 1000 values etc.), So too with the binary (0 or 1) numbering system computers use. Every binary digit you add doubles the number of values you can deal with.
+^Memory location ^Value in hexadecimal ^Instruction meaning ^
+|0               |e1510000             |cmp r1, r0          |
+|4               |e280001a             |add r0, r0, #26     |
 
-Numbers to a computer normally come in sizes that indicate how many bits they use. The sizes that really matter are bytes (8 bits), shorts (16 bits), integers (32 bits), long integers (32 or 64 bits), long long integers (64 bits), floats (32 bits) doubles (64 bits) and pointers (32 or 64 bits).  The terms here are those similar to what C uses for clarity and ease of explanation. The sizes here are the **COMMON SIZES** found across real life architectures today. //(This does gloss over some corner cases such as on x86 systems, doubles can be 80 bits whilst they are inside a register, etc.)//
 
-Bytes (chars) can encode numbers from 0 through to 255. Shorts can do 0 through to 65535, integers can do 0 through to about 4 billion, long integers if 64 bit or long long integers can encode values up to about 18 qunitillion (a very big number). Pointers are also just integers. Either 32 or 64 bits. Floats and doubles can encode numbers with "a decimal place". Like  3.14159. Thus both floats and doubles consist of a mantissa and exponent. The mantissa determines the digits of the number and the exponent determines where the decimal place should go.
+CPUs will do arithmetic, logic operations, change what it is they execute, and read from or write to memory to deal with data. In the end, everything to a CPU is effectively a number, somewhere to store it to or load it from and some operation you do to it.
 
-When we want signed numbers, we center our ranges AROUND 0. So bytes (chars) can go from -128 to 127, shorts from -32768 to 32767, integers from around -2 billion to 2 billion, and the long long integers and 64 bit versions of integers can go from about -9 quintillion to about 9 quinitillion. By default all of the types are signed (except pointers) UNLESS you put an "unsigned" in front of them. You can also place "signed" in front to explicitly say you want the type to be signed. //A catch - on ARM systems chars often are by default unsigned//. Also be aware that it is common on 64 bit systems to have long integers be 64 bit, and on 32 bit they switch to being 32 bits. Windows is the exception here and long integers will remain 32 bit (we are skipping windows 16 bit coding here - Win32). Pointers follow the instruction set mode. For 32 bit architectures pointers are 64 bit, and 64 bit on 64 bit architectures. Standard ARM systems are 32 bit, except for very new 64 bit ARM systems. On x86, 64 bit has been around for a while, and so you will commonly see both. This is the same for PowerPC and MIPS as well.
+To computers, numbers are a string of "bits". A bit can be on or off. Just like you may be used to numbers, with each digit having 10 values (0 through to 9), A computer sees numbers more simply. It is 0, or it is 1. Just like you can have a bigger number by adding a digit (1 digit can encode 10 values, 2 digits can encode 100 values, 3 can encode 1000 values etc.), So too with the binary (0 or 1) numbering system computers use. Every binary digit you add doubles the number of values you can deal with. For convenience we often use Hexadecimal as a way of writing numbers because it aligns nicely with the bits used in binary. Hexadecimal uses 16 values per digit, with 0 through to 9, then a through to f being digits.
 
-Memory to a machine is just a big "spreadsheed" of numbers. Imagine it as a spreadsheet with only 1 column and a lot of rows. Every cell can store 8 bits (a byte). If you "merge" rows (2, 4, 8) you can store more values as above. But when you merge rows, the next row number doesn't change. You also could still address the "parts" of the merged cell as bytes or smaller units. In the end pointers are nothing more than a number saying "go to memory row 2943298 and get me the integer (4 bytes) located there" (if it was a pointer to an integer). The pointer itself just stores the PLACE in memory where you find the data. The data itself is what you get when you de-reference a pointer.
+^Binary           ^Hexadecimal ^Decimal ^
+|101              |d           |14      |
+|00101101         |2d          |46      |
+|1111001101010001 |f351        |62289   |
 
-This level of indirection can nest. You can have a pointer to pointers. so de-reference a pointer to pointers to get the place in memory where the actual data is then de-reference that again. Since pointers are numbers, you can do math on them like any other. you can advance through memory just by adding 1, 2, 4 or 8 to your pointer to point to the "next thing along". 
+Numbers to a computer normally come in sizes that indicate how many bits they use. The sizes that really matter are:
 
-In general machines like to store these numbers memory at a place that is aligned to their size. That means that bytes (chars) can be stored anywhere as the smallest unit when addressing memory is a byte (in general). Shorts want to be aligned to 16 bits - that means 2 bytes (chars). So you should (ideally) never find a short at an ODD byte in memory. Integers want to be stored on 4 byte boundaries, Long integers may align to either 4 or 8 bytes depending, and long long integers on 8 byte boundaries. Floats would align to 4 bytes, doubles to 8 bytes, and pointers to either 4 or 8 bytes depending on size. Some architectures such as x86, don't care if you align things, and will "fix things up for you" transparently. But others (most) care and will refuse to access data if it is nor aligned correctly. So keep this in mind a a general rule - your data must be aligned. The C compiler will do most of this for you, until you start doing "fun" things with pointers.
+^Common term       ^C type    ^Number of bits ^Max unsigned                  ^
+|Byte              |char      |8              |255                           |
+|Word              |short     |16             |65535                         |
+|Integer           |int       |32             |~4 billion                    |
+|Long Integer      |long      |32 / 64        |~4 billion / ~18 qunitillion  |
+|Long Long Integer |long long |64             |~18 qunitillion               |
+|Float             |float     |32             |3.402823466 e+38              |
+|Double Float      |double    |64             |1.7976931348623158 e+308      |
+|Pointer           |* **X**   |32 / 64        |~4 billion / ~18 qunitillion  |
+
+The sizes here are the **COMMON SIZES** found across real life architectures today. //(This does gloss over some corner cases such as on x86 systems, doubles can be 80 bits whilst they are inside a register, etc.)//
+
+Pointers are also just integers. Either 32 or 64 bits. They refer to a location in memory as a multiple of bytes. Floats and doubles can encode numbers with "a decimal place". Like  3.14159. Thus both floats and doubles consist of a mantissa and exponent. The mantissa determines the digits of the number and the exponent determines where the decimal place should go.
+
+When we want signed numbers, we center our ranges AROUND 0. So bytes (chars) can go from -128 to 127, shorts from -32768 to 32767, and so on. By default all of the types are signed (except pointers) UNLESS you put an "unsigned" in front of them. You can also place "signed" in front to explicitly say you want the type to be signed. //A catch - on ARM systems chars often are unsigned by default//. Also be aware that it is common on 64 bit systems to have long integers be 64 bit, and on 32 bit they switch to being 32 bits. Windows is the exception here and long integers will remain 32 bit (we are skipping windows 16 bit coding here).
+
+Pointers follow the instruction set mode. For 32 bit architectures pointers are 32 bits in size, and are bits in size on 64 bit architectures. Standard ARM systems are 32 bit, except for very new 64 bit ARM systems. On x86, 64 bit has been around for a while, and so you will commonly see both. This is the same for PowerPC and MIPS as well.
+
+Memory to a machine is just a big "spreadsheet" of numbers. Imagine it as a spreadsheet with only 1 column and a lot of rows. Every cell can store 8 bits (a byte). If you "merge" rows (2, 4, 8) you can store more values as above. But when you merge rows, the next row number doesn't change. You also could still address the "parts" of the merged cell as bytes or smaller units. In the end pointers are nothing more than a number saying "go to memory row 2943298 and get me the integer (4 bytes) located there" (if it was a pointer to an integer). The pointer itself just stores the PLACE in memory where you find the data. The data itself is what you get when you de-reference a pointer.
+
+This level of indirection can nest. You can have a pointer to pointers, so de-reference a pointer to pointers to get the place in memory where the actual data is then de-reference that again to get the data itself. Follow the chain of pointers if you want values. Since pointers are numbers, you can do math on them like any other. You can advance through memory just by adding 1, 2, 4 or 8 to your pointer to point to the "next thing along" for example, which is how arrays work. 
+
+In general machines like to store these numbers in memory at a place that is aligned to their size. That means that bytes (chars) can be stored anywhere as the smallest unit when addressing memory is a byte (in general). Shorts want to be aligned to 16 bits - that means 2 bytes (chars), so you should (ideally) never find a short at an ODD byte in memory. Integers want to be stored on 4 byte boundaries, Long integers may align to either 4 or 8 bytes depending, and long long integers on 8 byte boundaries. Floats would align to 4 bytes, doubles to 8 bytes, and pointers to either 4 or 8 bytes depending on size. Some architectures such as x86, don't care if you align things, and will "fix things up for you" transparently. But others (most actually) care and will refuse to access data if it is nor aligned correctly.
+
+So keep this in mind as a general rule - your data must be aligned. The C compiler will do most of this for you, until you start doing "fun" things with pointers.
 
 Note that in addition to memory, CPUs will have "temporary local registers" that are directly inside the CPU. They do not have addresses. The compiler will use them as temporary scratch space to store data from memory so the CPU can work on it. Different CPU types have different numbers and naming of such registers. ARM CPUs tend to have more registers than x86 for example.
 
@@ -53,19 +147,7 @@ You can even tell the compiler to make sure it has an initial value. If you don'
 int bob = 42;
 </code>
 
-Once you have declared a variable, you can now use it. In C the types available to you are as follows. Note that 1 byte *IS* 8 bits in size. In real life.
-
-^Type      ^Size (bytes) ^Stores                                           ^
-|char      |1            |Integers -128 => 127                             |
-|short     |2            |Integers -32768 => 32767                         |
-|int       |4            |Integers -2 billion => 2 billion (about)         |
-|long      |4 or 8       |Integers -2 billion => 2 billion OR -9 quintillion => 9 quintillion (about) |
-|long long |8            |Integers -9 quintillion => 9 quintillion (about) |
-|float     |4            |Floating point (large range)                     |
-|double    |8            |Floating point (huge range)                      |
-|* **X**   |4 or 8       |Pointer to type **X**                            |
-
-You can group values together in repeating sequences using arrays or in mixed groups called "structs".
+Once you have declared a variable, you can now use it. You can group values together in repeating sequences using arrays or in mixed groups called "structs".
 
 <code c>
 int bobs[100];
