@@ -59,19 +59,19 @@ The next thing that happens is for the code to call a function ''printf()'' with
 printf("Hello world!\n");
 </code>
 
-Now finally we return from the main function with the value 0. The ''main()'' function of an application is special. It always returns an integer that indicates the "success" of the application. This is used by the shell executing the process to determine success. A return of ''0'' indicates the process ran successfully.
+Now finally we return from the main function with the value 0. The ''main()'' function of an application is special. It always returns an integer that indicates the "success" of the application. This is used by the shell executing the process to determine success. A return of ''0'' indicates the process ran successfully. Any other return value is an indicator of failure.
 
 <code c>
 return 0;
 </code>
 
-You will notice a few things. First lines starting with ''#'' are commands, but don't have a '';''. This is normal because these lines are processed by the pre-processor. All code in C goes through the C pre-processor and this basically generates more code. Other lines that are not starting a function, ending it or defining control end every statement in C with a '';'' character. If you don't do this, the statement continues until a '';'' is found, even if it goes across multiple lines.
+You will notice a few things. First lines starting with ''#'' are commands, but don't have a '';''. This is normal because these lines are processed by the pre-processor. All code in C goes through the C pre-processor and this basically generates more code for the compiler to actually deal with. Other lines that are not starting a function, ending it or defining control end every statement in C with a '';'' character. If you don't do this, the statement continues until a '';'' is found, even if it goes across multiple lines.
 
 If we look at how the application is compiled, We execute the C compiler, give it 1 or more source files to compile and the with ''-o'' tell it what output file to produce (the executable)
 
   cc hello.c -o hello
 
-Often ''cc'' will be replaced with things like ''gcc'' or maybe ''clang'' or whatever compiler you prefer.
+Often ''cc'' will be replaced with things like ''gcc'' or maybe ''clang'' or whatever compiler you prefer. A compiler will run the source through the pre-processor and then convert your source code into a binary form that your CPU and Os can actually understand and run.
 
 Now let's take a detour back to the machine that is running your very first C application.
 
@@ -147,7 +147,7 @@ You can even tell the compiler to make sure it has an initial value. If you don'
 int bob = 42;
 </code>
 
-Once you have declared a variable, you can now use it. You can group values together in repeating sequences using arrays or in mixed groups called "structs".
+Once you have declared a variable, you can now use it. You can group values together in repeating sequences using //arrays// or in mixed groups called //structs// that contain a sequence of variables structured as indicated. Order is important and is maintained in memory. You can at times take advantage of this ordering for doing things like "inheritance". Arrays also have strict ordering in memory, so you can later on use pointers and simple arithmetic to walk up and down an array to access data, which is very handy on many occasions.
 
 <code c>
 int bobs[100];
@@ -158,13 +158,64 @@ double things[200];
 struct mydata
   {
      int count;
-     double items[100]
+     double items[100];
   };
 
 struct mydata bob;
 </code>
 
+Structs (structured data) are very important and allow C to become rather complex and powerful when it comes to data storage, and don't forget you can embed structs inside structs, have arrays of structs, structs with arrays and use pointers to indirect from one struct to another, arrays of pointers to structs and so on.
+
 ==== Functions ====
+
+A function is a basic unit of execution. Conceptually a function hides an implementation of how to do something and exposes this as a higher level command. "Go make me a sandwich, using butter, cheese and ham" could be seen as calling the "make me a sandwich" function, with the input parameters (or arguments) being butter, cheese and ham, and the function returns a sandwich (for example). In C we might express this as follows:
+
+<code c>
+struct sandwich
+  {
+    struct bread_slice top;
+    struct bread_slice bottom;
+    enum filling *fillings;
+    int num_fillings;
+  };
+
+enum filling
+  {
+    FILLING_HAM,
+    FILLING_CHEESE,
+    FILLING_BUTTER
+  };
+
+struct sandwich *
+make_sandwich(enum filling *fillings, int num_fillings)
+  {
+    struct sandwich *sandwich;
+    int i;
+    
+    sandwich = malloc(sizeof(struct sandwich));
+    if (!sandwich) return NULL;
+    sandwich->fillings = malloc(sizeof(enum filling) * num_fillings);
+    if (!sandwich->fillings)
+      {
+        free(sandwich);
+        return NULL;
+      }
+    for (i = 0; i < num_fillings; i++)
+      sandwich->fillings[i] = fillings[i];
+    sandwich->num_fillings = num_fillings;
+    return sandwich;
+  }
+</code>
+
+I may call the function as follows:
+
+<code c>
+struct sandwich *sandwich;
+struct filling my_fillings[3] = {FILLING_HAM, CHEESE, BUTTER};
+
+sandwich = make_sandwich(my_fillings, 3);
+</code>
+
 ==== Types ====
 ==== Arithmetic ====
 ==== Logic ====
