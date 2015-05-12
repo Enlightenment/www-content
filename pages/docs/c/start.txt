@@ -194,6 +194,8 @@ make_sandwich(enum filling *fillings, int num_fillings)
     
     sandwich = malloc(sizeof(struct sandwich));
     if (!sandwich) return NULL;
+    get_bread_top(&(sandwich->top));
+    get_bread_bottom(&(sandwich->bottom));
     sandwich->fillings = malloc(sizeof(enum filling) * num_fillings);
     if (!sandwich->fillings)
       {
@@ -211,10 +213,18 @@ I may call the function as follows:
 
 <code c>
 struct sandwich *sandwich;
-struct filling my_fillings[3] = {FILLING_HAM, CHEESE, BUTTER};
+struct filling my_fillings[3] = {FILLING_HAM, FILLING_CHEESE, FILLING_BUTTER};
 
 sandwich = make_sandwich(my_fillings, 3);
 </code>
+
+You will notice we used little markers such at * to indicate the variable is a //POINTER// to that type of variable. This also is used for return types of functions. This level of indirection (to return something that points to the the real thing) is very common, because it is very efficient (returning only 4 or 8 bytes of data) and keeping the original data exactly where it is without needing any copies. It means we can modify the same object from many locations by passing around a pointer //TO// that object.
+
+We also use the //&// operator to get the pointer //TO// that element in memory. This is a great way of passing in "please do something to THIS THING HERE that i have". In the above case, we call an imaginary function that we haven't specified above to "get a bread slice" and place it into the top and bottom elements of the sandwich.
+
+So back to functions, They exist mostly to hide complexity. Many simple things you will see are actually rather complex, and are many detailed steps to get it right. Functions encapsulate this and hide it at a higher level. They are basically ways of summarizing "this bit of code here" with a defined set of input parameters (0 or more) and a return value (or no return) when the function is done. When a function is called, execution waits for it to finish before resuming in the current scope.
+
+In C (and on a machine) everything lives in memory somewhere, and so functions can even have pointers. This is a very useful mechanism to say "call this thing here, when this other things happens". What "this thing here" is can be modified at runtime to point to any function you like. These are often referred to as Callbacks. See below for more details on these.
 
 ==== Types ====
 ==== Arithmetic ====
