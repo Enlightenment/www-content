@@ -14,10 +14,11 @@ Let's start with the traditional "Hello world" C application. This is about as s
 <code c hello.c>
 #include <stdio.h>
 
+// This is my very first program
 int
 main(int argc, char **argv)
 {
-   printf("Hello world!\n");
+   printf("Hello world!\n"); /* Print some stuff */
    return 0;
 }
 </code>
@@ -66,6 +67,8 @@ return 0;
 </code>
 
 You will notice a few things. First lines starting with ''#'' are commands, but don't have a '';''. This is normal because these lines are processed by the pre-processor. All code in C goes through the C pre-processor and this basically generates more code for the compiler to actually deal with. Other lines that are not starting a function, ending it or defining control end every statement in C with a '';'' character. If you don't do this, the statement continues until a '';'' is found, even if it goes across multiple lines.
+
+Note that we can do comments for human-eyes-only that the compiler ignores by having the first 2 letters if any line be ''%%//%%'' excluding whitespace (spaces, tabs etc.). Everything until the end of the line on such lines will be ignored by the compiler. For comments stretching over multiple lines or only for a small section of a line, you can start such a comment with ''%%/*%%'' and that comment will continue for as long as needed (across multiple lines) until a matching ''%%*/%%'' is found.
 
 If we look at how the application is compiled, We execute the C compiler, give it 1 or more source files to compile and the with ''-o'' tell it what output file to produce (the executable)
 
@@ -218,7 +221,7 @@ struct filling my_fillings[3] = {FILLING_HAM, FILLING_CHEESE, FILLING_BUTTER};
 sandwich = make_sandwich(my_fillings, 3);
 </code>
 
-You will notice we used little markers such at * to indicate the variable is a //POINTER// to that type of variable. This also is used for return types of functions. This level of indirection (to return something that points to the the real thing) is very common, because it is very efficient (returning only 4 or 8 bytes of data) and keeping the original data exactly where it is without needing any copies. It means we can modify the same object from many locations by passing around a pointer //TO// that object.
+You will notice we used little markers such at * to indicate the variable is a //POINTER// to that type of variable. The sandwich structure is located over at "byte 1837616 in memory" for example (and the next N bytes will be the data for the sandwich). This also is used for return types of functions. This level of indirection (to return something that points to the the real thing) is very common, because it is very efficient (returning only 4 or 8 bytes of data) and keeping the original data exactly where it is without needing any copies. It means we can modify the same object from many locations by passing around a pointer //TO// that object.
 
 We also use the //&// operator to get the pointer //TO// that element in memory. This is a great way of passing in "please do something to THIS THING HERE that i have". In the above case, we call an imaginary function that we haven't specified above to "get a bread slice" and place it into the top and bottom elements of the sandwich.
 
@@ -227,14 +230,124 @@ So back to functions, They exist mostly to hide complexity. Many simple things y
 In C (and on a machine) everything lives in memory somewhere, and so functions can even have pointers. This is a very useful mechanism to say "call this thing here, when this other things happens". What "this thing here" is can be modified at runtime to point to any function you like. These are often referred to as Callbacks. See below for more details on these.
 
 ==== Types ====
+
+C provides a host of basic types. The common ones are:
+
+^Type               ^Description ^
+|char               |A single byte almost always signed except on ARM where it likely is unsigned by default (use signed char explicitly to get signed on ARM) |
+|unsigned char      |A single byte that has no sign |
+|short              |2 bytes together as a short word, signed |
+|unsigned short     |2 bytes together as a short word, unsigned |
+|int                |4 bytes together as a word, signed |
+|unsigned int       |4 bytes together as a word, unsigned |
+|long               |4 or 8 bytes (32 or 64 bit) together as a word, signed |
+|unsigned long      |4 or 8 bytes (32 or 64 bit) together as a word, unsigned |
+|long long          |8 bytes together as a word, signed |
+|unsigned long long |8 bytes together as a word, unsigned |
+|float              |4 bytes together as a floating point value, signed |
+|double             |8 bytes together as a floating point value, signed |
+|struct x           |A custom defined set of N bytes, broken up into sub-types as per the struct definition of "x" |
+|enum y             |A type that can have one of N values (an enumerated type), where those word-like values also have numerical values (size is almost always 4 bytes like an int) |
+|void               |An undefined type, used often to mean no type (no return or no parameters) or if used with pointers, a pointer to "anything" |
+|* z                |A pointer to type "z". Have ''%%** z%%'' to mean "a pointer to a pointer to something of type z", or ''%%*** z%%''  etc. |
+
+You can create new types yourself with a typedef. For example:
+
+<code c>
+typedef double Coordinate;
+</code>
+
+This would create a new type of ''Coordinate'' which really is a double. You can typedef to typedefs too.
+
+<code c>
+typedef double Coordinate;
+typedef Coordinate Graphics_Coordinate;
+</code>
+
+You can  use this with structs and enums as well to make new types that represent this custom defined type you have created, like:
+
+<code c>
+struct sandwich
+  {
+    struct bread_slice top;
+    struct bread_slice bottom;
+    enum filling *fillings;
+    int num_fillings;
+  };
+
+enum filling
+  {
+    FILLING_HAM,
+    FILLING_CHEESE,
+    FILLING_BUTTER
+  };
+
+typedef struct sandwich Sandwich;
+typedef enum filling Filling;
+</code>
+
+You can now replace all ''struct sandwich'' instances with ''Sandwich''. Take note that since C only parses a file once from beginning to end, you need to typedef something before you use it, otherwise the compiler will not know about that type yet when it sees it in code. Keep this in mind - ordering does matter.
+
 ==== Arithmetic ====
+
+C supports all the usual mathematics you might want as well as boolean logic (binary logic operations). you can add (''+''), subtract (''-''), multiply (''*''), divide (''/''), modulo (''%''), and then to bit-wise bit logic with XOR (''^''), AND (''&''), OR (''|''), NOT (''!''). It is highly advised to group operations in braces like () to be clear on the order of operation you wanted. So ''%%x = a * b - c / d%%'' is unclear as to what you intended. It is wise to explicitly group like ''%%x = a * ((b - c) / d)%%''. The same goes for the bit-wise operations as well.
+
+Note that this arithmetic starts falling apart if you try to add two structs (it doesn't work), as these are not normal integers or floating point values. You can add two pointers of the same type, but do not use ''void *'' for pointer arithmetic as it is unclear what the unit is. Normally a pointer has a unit size of its type size. Also bit-wise arithmetic isn't very useful on floating point values etc.
+
+You also have shortcuts like ''%%i = i + 1%%'' can be ''%%i++%%''. Or ''%%i = i - 1%%'' can be ''%%i--%%'' or to be specific ''%%i = i + 10%%'' can be ''%%i += 10%%'' and same with ''%%i -= 10%%'' being ''%%i = i - 10%%''.
+
 ==== Logic ====
+
+In addition to bit-wise logic, there is boolean logic. In C if a variable is 0, it is false, and otherwise it is true. you can thus use simple ints, chars etc. as booleans. You would indicate boolean logic vs bit logic with ''&&'' for logical AND, and ''||'' for logical OR. For example:
+
+<code c>
+// if (a is less than 10 AND b is < 100) OR z is true then...
+if (((a < 10) && (b < 100)) || (z)) printf("Success\n");
+</code>
+
+Like with arithmetic, it is highly advisable to group your logic into clear order of evaluation with braces. Relying on order of operation can lead to bugs when you happen to not quite remember an order properly, and then someone trying to fix your code later being confused as to exactly what you meant to do. So be clear and use braces liberally. They cost you nothing in performance at runtime, just add clarity in code when it is written.
+
 ==== Loops ====
+
+Like most languages you will have seen, C can loop with ''for'' loops as well as ''while'' loops and ''do while'' loops. You can even use flow control such as goto to create loops, though this is generally not recommended except in very rare circumstances. The most common use of goto for such flow control would be error handling in a single section at the end of a function or code segment to avoid duplicate error case handling in multiple places. You can control the flow within a loop using ''continue'' and ''break''. The ''continue'' statement will skip the rest of the current outer most for or while loop and go to the end of it to re-evaluate looping conditions. the ''break'' statement breaks out of the current while or for loop and returns to the parent scope.
+
+<code c>
+int i;
+
+for (i = 0; i < 100; i++)
+  {
+    printf("Loop number %i\n", i);
+    if (rand() < 100) break;
+  }
+
+while (i > 0)
+  {
+    printf("While loop changing i to %i\n", i);
+    if (rand() < 100) break;
+  }
+
+do
+  {
+    i--;
+    if (rand() < 100) continue;
+    printf("do .. while only prints some of the iterations as this may be skipped. i = %i\n". i);
+  }
+while (i > 0);
+</code>
+
+The ''for'' loop always has 3 statements separated by a '';'' char. The first is the starting statement. This is executed when the loop first starts. In this case we set i to be 0.  The second statement is run at the start of every loop to determine if it should continue or not. If this statement is true, then the loop continues. The last statement is something to do at the end of every loop iteration before returning to the start of the loop. Here it is to increment the value of i by one.
+
+The ''while'' loop simple checks the statement in the braces following the while is true at the start of each loop, and if it is, executes the statements in the following scope, until the end, then repeats this statement in the first braces, until it is false.
+
+The ''do while'' loop is just like ''while'' But the test statement is executed at the end of each loop, not at the start, so you are guaranteed that the inner scope code of the loop will execute at least once before a test.
+
 ----
+
 ==== Memory ====
 ==== Libraries ====
 ==== API calls ====
 ==== System calls ====
+
 ----
 ==== Alignment ====
 ==== Endianess ====
@@ -244,7 +357,7 @@ In C (and on a machine) everything lives in memory somewhere, and so functions c
 
 === Also See ===
 
-Now you have read our less-than-perfect primer on C for those wanting to get into developing on EFL or using it from the C APIs we have, you may also want to look at the following list of pages and pick up some more information or fill in the gaps we do not cover here.
+Now you have read our less-than-perfect primer on C for those wanting to get into developing on EFL or using it from the C APIs we have, you may also want to look at the following list of pages and pick up some more information or fill in the gaps we do not cover here //(feel free to link to more articles that are good for teaching C from new developers through to advanced)//.
 
   * [[http://www.cprogramming.com/tutorial/c-tutorial.html|C tutorial]]
 
