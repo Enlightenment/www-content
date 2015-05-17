@@ -343,6 +343,91 @@ The ''do while'' loop is just like ''while'' But the test statement is executed 
 
 ==== Pre-processor and Macros ====
 
+You already had your first encounter with the C pre-processor with the ''#include'' line in the first "Hello world" example above. The pre-processor is "executed" during compilation before the code is actually parsed by the C compiler proper. The job of the pre-processor in general is to "generate" more code. This mechanism is used to save a lot of repetitive typing, copy & pasting, conditional compilation (compile section of code A instead of code B based on compile-time information), as well as wholesale importing of other pieces of code that can define types, structs, function prototypes and more. This will not cover all possible features of the pre-processor, but the most common and useful. Here are some of the basic use cases.
+
+== System include headers ==
+<code c>
+#include <Eina.h>
+</code>
+
+These headers define functions, types and even other pre-processor macros for use in your code. These headers are generally provided by system libraries (such as libc or EFL etc.) and you generally would place such include lines at the top of your C source files to indicate you are "including" the content of that file. Remember that this file is also passed through the pre-processor and thus can recurse, including more files than can include more files and so on. All the content of these files is effectively "pasted" into your code at the point of the include. These lines all start with a ''#'' character on the first character of the line.
+
+== Local headers ==
+<code c>
+#include "myheader.h"
+</code>
+
+Once your projects get a bit larger, you will divide your application or library up into many .c and .h files. The headers (.h files) will define things from other parts of your source code base. you likely will use a Makefile or some similar mechanism to compile your project file by file and then link it together. You will compile the .c files, and include .h files along the way. The ''"'' quotes as opposed to the ''<>'' is that this here searches in the same directory as the source file that includes it, but the latter will search in a search path of directories (normally ''/usr/include'' and this can be extended with extra command line options to the compiler such as ''-I/usr/local/include'' to add this directory to the search path for includes).
+
+== Defined values ==
+<code c>
+#define NUM_ITEMS 100
+
+int x = NUM_ITEMS;
+</code>
+
+It is useful to avoid "magic numbers" in your code to define them in a central place (at the top of your .c files or in a shared common .h file) and give them a name. If you need to change them later, you change them in one place only. This also helps document the purpose of this magic value as it gives it a descriptive name, improving maintainability. Note that you can also "undefine" a value with an ''#undef NUM_ITEMS'' for example. This will remove the definition from that point on in your source file, unless re-defined again. This can be useful if you want a special define for just a section of code, but then want to release that definition to allow it to be re-used later on.
+
+<code c>
+#define MY_TITLE "Hello world"
+
+printf("This is: %n", MY_TITLE);
+</code>
+
+You can define anything. It literally is a "string replacement" system, so it will replace the defined toke with what you define it as. This works with numbers, strings, functions and whole sections of text. You can even define a definition with other definitions inside of it:
+
+<code c>
+#define NUM_ITEMS 100
+#define MY_STRING "Hello", NUM_ITEMS
+
+printf("This string: %s has %i items\n", MY_STRING);
+</code>
+
+== More complex macros ==
+<code c>
+#define SIMPLE_FUNC(x, y) complex_func(100, 200, x, "hello", 4.8, y)
+
+int x = rand();
+SIMPLE_FUNC("Boo", 10 * x);
+</code>
+
+You can define macros that take parameters. They will produce the code that you specify exactly as given, replacing instances of the tokens given as parameters as they are passed into the macro. This is extremely useful in being able to simplify and make code more concise. The tokens passed in don't have to even have to be simple single values. They can be entire expressions going on and on, even entire snippets of code. Such macros are very powerful, and a common convention in C is to make defined macros or values "all upper-case" to indicate that it is actually a macro, as opposed to a function.
+
+== Conditional compilation ==
+<code c>
+int
+myfunc(void)
+  {
+#ifdef _WIN32
+    // windows specific code here
+#else
+    // generic code here
+#endif
+  }
+</code>
+
+Another very common use of the pre-processor is to compile only some pieces of code in specific circumstances. A common use-case is for portability (but you can also use this along with #includes, macros etc. to use the pre-processor as a code-generation tool to save a lot of re-typing of almost the same bits of code). On one platform you may have to have some pieces of code work in a specific way that differs from other platforms. This commonly happens with Windows vs Linux vs BSD etc. so you may end up with segments of code such as above, with platform-specific segments of code (individual lines, or maybe even whole large sections of files of 100's or 1000's of lines of code, or perhaps in header files with sometimes specific include files being included only on certain platforms).
+
+You can use this also to compile your code with features enabled or not. You can define pre-processor values on the command line with ''-D'' with most compilers, such as ''-DMY_FEATURE=1'' for example which is the same as putting in the code ''#define MY_FEATURE 1''. You can then have your code be something like:
+
+<code c>
+int
+myfunc(void)
+  {
+#ifdef MY_FEATURE
+    int i = 0;
+    
+    while (i < 0) i = rand();
+    return i;
+#else
+    // feature not implemented, so return -1
+    return -1;
+#endif
+  }
+</code>
+
+So only compile the active code in when enabled in the compilation process.
+
 ----
 
 ==== Memory ====
