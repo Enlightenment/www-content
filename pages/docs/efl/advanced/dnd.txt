@@ -3,7 +3,105 @@
 
 {{page>index}}
 
-Content goes here
+==== Drag and drop mechanism ====
+
+Drag and drop is a very common feature that allows you to 'grab' an object on the screen and drag it to a different location. EFL provides its own [[https://docs.enlightenment.org/auto/elementary/group__CopyPaste.html|generic API]] for you to implement drag and drop operations in your applications. 
+The X11 window system is used to share the drag and drop data. Thanks to that, the drag and drop API can be used not only to share data within a single application but also across different ones. Here we will go through an example of how to do the latter so that one application provides the data and another one receives it.
+
+{{ :docs:efl:advanced:dnd-1.png?200 |}}
+
+There are two applications visible on the screen: first is a window with a blue background and a gengrid containing 8 different images. Those images will be dragged to the other application, which is behind it - a window with a white background and a smaller, 4-element gengrid at the bottom. The easiest way to share information about the dragged image is to pass its path so that's how it's done here.
+
+
+{{ :docs:efl:advanced:dnd-2.png?200 |}}
+
+To begin dragging an object, [[https://docs.enlightenment.org/auto/elementary/group__CopyPaste.html#gafbba28b98c9cedca35b0c6da403321aa|elm_drag_start()]] function is invoked. Here it is done on image's longpress. 
+
+<code bash>
+elm_drag_start(image, ELM_SEL_FORMAT_TEXT, path, ELM_XDND_ACTION_COPY,
+_create_drag_image, image, NULL, NULL, NULL, NULL, NULL, NULL);
+</code>
+
+Apart from the source object, we also need to define the content format supported by the data (''Elm_Sel_Format'' - in case of image's path it's ''ELM_SEL_FORMAT_TEXT'') and the kind of action associated with the data for the drag and drop - here set to ''ELM_XDND_ACTION_COPY''. The third argument defines the drag data in a form of a string where, in this example, the image's path is passed. 
+Create icon callback needs to be set if an object is to be visible during the drag and drop. If it is not set, we are still able to move or copy an object by dropping it at valid location but we won't see its movement on screen. The original image object is passed to this callback so that its path and position can be retrieved and used to create and position new image. the position of the image is not limited by the application's window's boundaries. 
+
+{{ :docs:efl:advanced:dnd-3.png?200 |}}
+
+In the create icon callback a new image is created based on the image file of object that we passed to it. 
+
+<code bash>
+elm_image_file_get(org_image, &file, &group);
+
+image = elm_image_add(win);
+elm_image_file_set(image, file, group);
+elm_image_aspect_fixed_set(image, EINA_FALSE);
+elm_image_preload_disabled_set(image, EINA_FALSE);
+evas_object_color_set(image, 100, 100, 100, 100);
+</code>
+
+By default the new image's position is (0,0) relative to application's window. To change that, we set the xoff and yoff coordinates offsets based on mouse pointer position and image's width and height.
+
+<code bash>
+evas_object_geometry_get(org_image, &x, &y, &w, &h);
+evas_pointer_canvas_xy_get(evas_object_evas_get(org_image), &x0, &y0);
+
+evas_object_resize(image, w, h);
+evas_object_move(image, x-w/2, y-h/2);
+
+*xoff = x0-w/2;
+*yoff = y0-h/2;
+</code>
+
+You can also set 3 other callbacks that are invoked when: the object's position changes, the target accepts (or not) the drop data or when drag and drop is finished - we didn't need them in this example so they're omitted.
+
+
+----
+
+The gengrid in the second application needs to register itself as a target for drops for drag-and-drop. To do so, [[https://docs.enlightenment.org/auto/elementary/group__CopyPaste.html#ga250bae4f6f8e9195cefae317b180bd43|elm_drop_item_container_add()]] function is used. 
+
+<code bash>
+elm_drop_item_container_add(viewdata_s.gengrid, ELM_SEL_FORMAT_TEXT, _item_get_cb,
+NULL, NULL, NULL, NULL,
+_item_pos_cb, NULL, _item_drop_cb, NULL);
+</code>
+    
+The function helps to manage dropping an object into gengrid's items easily, by passing the item the mouse was over when the drop happened as an argument to drag-and-drop callbacks. We set ''_item_get_cb()'' as the callback to get ''Elm_Object_Item'' at (x,y) - it simply returns the item at mouse position (x,y).
+
+<code bash>
+Elm_Object_Item *_item_get_cb(Evas_Object *obj, Evas_Coord x, Evas_Coord y, int *xposret, int *yposret)
+{
+	return elm_gengrid_at_xy_item_get(viewdata_s.gengrid, x, y, NULL, NULL);
+}
+</code>
+
+The content format supported by the data is set to ''ELM_SEL_FORMAT_TEXT'', as is on the other end of drag and drop in this example. A callback for dragged object's position update - ''_item_pos_cb()'' - is set to monitor dragged image's position and highlight a gengrid item when the image is over it and ''_item_drop_cb()'' to actually copy the image to the destination.
+
+{{ :docs:efl:advanced:dnd-4.png?200 |}}
+
+When object is dropped, ''_item_drop_cb()'' is invoked. An ''Elm_Selection_Data'' structure is passed to ''_item_drop_cb()'' callback. It contains the drag-and-drop data as well as the drop coordinates. The dragged image's path was set as the drag-and-drop data so the only thing that needs to be done in ''_item_drop_cb()'' is to create an image based on given path and put in inside the gengrid item.
+
+<code bash>
+Eina_Bool _item_drop_cb(void *data, Evas_Object *obj, Elm_Object_Item *it, Elm_Selection_Data *ev, int xposret, int yposret)
+{
+	if(ev->format == ELM_SEL_FORMAT_TEXT)
+	{
+		return view_item_update_image(it, ev->data);
+	}
+
+    return EINA_FALSE;
+}
+</code>
+
+The ''view_item_update_image()'' function takes ''Elm_Object_Item*'' and ''char*'' as arguments and creates a new image object based on given path string and sets it in given gengrid item.
+
+{{wiki:5.png}}
+
+Another callbacks you can set for the drop target are:
+
+  * enter callback - function that is called when the object enters target's area. It can be used for example for highlighting the target to indicate that it accepts dragged objects,
+  * leave callback - function that is called when the objects leaves target's area.
+
+To receive the dragged data in an object that isn't a container, you have to use [[https://docs.enlightenment.org/auto/elementary/group__CopyPaste.html#ga8bb9ab62fff2db50b2983431b151d382|elm_drop_target_add()]] instead of ''elm_drop_item_container_add()''. The only difference between them is that you don't set the callback for getting the ''Elm_Object_Item'' at given coordinates.
 
 ----
 
