@@ -18,12 +18,16 @@ git clone http://git.enlightenment.org/apps/terminology.git
 git clone http://git.enlightenment.org/apps/rage.git
 </code>
 
+==== Build Order ====
+
 For libraries (build these before applications), build them in order:
 
   * efl
   * emotion_generic_players
   * evas_generic_loaders
   * elementary
+
+==== Basic Requirements ====
 
 Building each library or application is the same. Before you start you
 will want basic build tools installed such as:
@@ -37,6 +41,8 @@ will want basic build tools installed such as:
   * gettext
   * check
 
+==== Build Environment ====
+
 You will want to ensure the default prefix ''/usr/local'' is available
 to build tools. If you know what you are doing, you can change the
 prefix, but this here shall assume you do not, and the above prefix
@@ -48,6 +54,8 @@ export PATH=/usr/local/bin:"$PATH"
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:"$PKG_CONFIG_PATH"
 export LD_LIBRARY_PATH=/usr/local/lib:"$LD_LIBRARY_PATH"
 </code>
+
+==== Runtime Library Linking ====
 
 Note the ''LD_LIBRARY_PATH'' environment variable is set. You can
 ensure the system always supports ''/usr/local/lib'' by editing
@@ -61,6 +69,8 @@ simply have a line in either file that says:
 And remember to run ''sudo ldconfig'' tool every time you install a
 library to ensure caches are updated.
 
+==== Compilation ====
+
 For every library or application simply run the following:
 
 <code bash>
@@ -69,11 +79,9 @@ make
 sudo make install
 </code>
 
-If configure fails, you are likely missing a dependency - provide it.
-It should tell you what that dependency is. **NOTE** that you can
-provide configure arguments to autogen.sh such as ''--prefix=/opt/e''
-or similar. It would be highly suggested you provide the following
-dependencies before you begin compilation:
+If configure (which autogen.sh will run for you) fails, you are likely missing a dependency - provide it. It should tell you what that dependency is. **NOTE** that you can provide configure arguments to autogen.sh such as ''--prefix=/opt/e'' or similar. It would be highly suggested you provide the following dependencies before you begin compilation:
+
+==== Extended Requriements ====
 
   * libpam
   * freetype 2.3 or better
@@ -115,6 +123,8 @@ dependencies before you begin compilation:
   * libraw //(for evas_generic_laoders)//
   * libxine //(for emotion xine back-end support - optional)//
 
+==== Debugging ====
+
 For debugging you really want tools like these installed:
 
   * gdb
@@ -136,3 +146,5 @@ instead of
 <code bash>
 git clone http://
 </code>
+
+~~DISCUSSIONS~~
