@@ -1,4 +1,5 @@
 ~~Title: Wiki Syntax~~
+~~CODE-c~~
 
 A title like the title of this page:
 
@@ -117,21 +118,91 @@ An external link like: [[http://example.com|External Link]] would go here. An in
 
 ----
 
+A left-aligned image with text flowing around it
 
+{{ :efl-core.png?nolink|Left}}
 
+<code>
+{{ :efl-core.png?nolink|Left}}
+</code>
 
+----
 
+A right-aligned image with text flowing around it
 
+{{:efl-core.png?nolink |Right}}
 
+<code>
+{{:efl-core.png?nolink |Right}}
+</code>
 
+----
 
+A centered image on its own on a line:
 
+{{ :efl-core.png?nolink }}
 
-And here is an inlined image, centered.
+<code>
+{{ :efl-core.png?nolink }}
+</code>
 
-{{ :efl-core.png?nolink |}}
+----
 
-Sample code snippets and hilights
+A centered image on its own on a line with a mouse-over label
+
+{{ :efl-core.png?nolink |Label here}}
+
+<code>
+{{ :efl-core.png?nolink |Label here}}
+</code>
+
+----
+
+An inlined image put into the content along with any text around
+{{:efl-core.png?nolink&24|Inlined image with content}}
+it so it looks like it's part of the text and has just been slotted in as well as scaled down to 24 pixels in size.
+
+<code>
+{{:efl-core.png?nolink&24|Inlined image with content}}
+</code>
+
+----
+
+An image that links to the same image if clicked on for a "full resolution" display.
+
+{{ :efl-core.png |A Linked Image}}
+
+<code>
+{{ :efl-core.png |A Linked Image}}
+</code>
+
+----
+
+Images inlined and scaled to 16, 32 and 64 pixels in size respectively.
+
+{{:efl-core.png?nolink&16|16 Pixels in size}}
+{{:efl-core.png?nolink&32|32 Pixels in size}}
+{{:efl-core.png?nolink&64|64 Pixels in size}}
+
+<code>
+{{:efl-core.png?nolink&16|16 Pixels in size}}
+{{:efl-core.png?nolink&32|32 Pixels in size}}
+{{:efl-core.png?nolink&64|64 Pixels in size}}
+</code>
+
+----
+
+An link to somewhere else with an image
+
+[[http://www.enlightenment.org|{{ :efl-core.png |A Website image link}}]]
+
+<code>
+[[http://www.enlightenment.org|{{ :efl-core.png |A Website image link}}]]
+</code>
+
+----
+
+Sample C source code
 
 <code c>
   typedef struct blah Blah;
@@ -147,24 +218,91 @@ Sample code snippets and hilights
   }
 </code>
 
+<file>
+<code c>
+  typedef struct blah Blah;
+  int c;
+  void function(char *blah) {
+    double x;
+    This_Type *y;
+    Type_Here *z;
+    int e = ENUM_HERE;
+    x = 10;
+    char *p = malloc(10);
+    evas_object_del(p);
+  }
+</code>
+</file>
+
+----
+
+Sample lua source code
+
 <code lua>
   function hello(x)
     local y
   end
 </code>
 
-This should become a link to the [[start]] page. How about the [[blah]]
-page too. Test autolink with evas_object_del() as a keyword.
-
-Below between the hr's should be an externally included wiki page
+<file>
+<code lua>
+  function hello(x)
+    local y
+  end
+</code>
+</file>
 
 ----
 
-{{page>blah}}
+Sample shall/bash script
+
+<code bash>
+$ cat blah.txt | grep pants > output.txt
+</code>
+
+<file>
+<code bash>
+$ cat blah.txt | grep pants > output.txt
+</code>
+</file>
 
 ----
 
-So how about Tables? well let's try one:
+A raw file content "quote"
+
+<file>
+This is a aw segment of file
+verbatim placed in the page as a monospace
+sample section.
+</file>
+
+<code>
+<file>
+This is a aw segment of file
+verbatim placed in the page as a monospace
+sample section.
+</file>
+</code>
+
+----
+
+EFL functions will auto link such as evas_object_del() and even other types like Evas_Object and EINA_TRUE will all become links, as long as you have a ''~~CODE-c~~'' at the top of the page indicating which language the page discusses. There is no need to manually link such things. They also auto-link from C code quotes like above.
+
+<code>
+EFL functions will auto link such as evas_object_del() and even other types like Evas_Object and EINA_TRUE will all become links, as long as you have a ~~CODE-c~~ at the top of the page indicating which language the page discusses. There is no need to manually link such things. They also auto-link from C code quotes like above.
+</code>
+
+-----
+
+You can include another page named ''PAGENAME'' with:
+
+<code>
+{{page>PAGENAME}}
+</code>
+
+----
+
+You can do tables like:
 
 ^ Header 1 ^ Header Column 2 ^ Column 3 header ^
 | Cell 1   | Cell 2          | Cell 3          |
@@ -172,14 +310,71 @@ So how about Tables? well let's try one:
 | Cell 1   | Cell 2          | Cell 3          |
 | Cell 1   | Cell 2          | Cell 3          |
 
-And quotes:
+<code>
+^ Header 1 ^ Header Column 2 ^ Column 3 header ^
+| Cell 1   | Cell 2          | Cell 3          |
+| Cell 1   | Cell 2          | Cell 3          |
+| Cell 1   | Cell 2          | Cell 3          |
+| Cell 1   | Cell 2          | Cell 3          |
+</code>
+
+----
+
+You can quote people like e-mails with multiple levels of nesting:
 
 Some text
 > Quote this level
+> More on this level
 >> Another level
 >>> Yet another level
 
+<code>
+Some text
+> Quote this level
+> More on this level
+>> Another level
+>>> Yet another level
+</code>
+
 ----
+
+You can do folded segments or entire blocks of text like:
+
+Here is some folded text/content below. But
+++First | test if we can fold/unfold inline++.
+Then try a block below:
+
+++++ Folded block here |
+
+The content would be here along with a table inside.
+
+^ Table ^ Blah ^ Blah   ^
+| Row   | Row  | Row    |
+| Your  | Boat | Gently |
+| Down  | The  | Stream |
+
+++++
+
+<code>
+Here is some folded text/content below. But
+++First | test if we can fold/unfold inline++.
+Then try a block below:
+
+++++ Folded block here |
+
+The content would be here along with a table inside.
+
+^ Table ^ Blah ^ Blah   ^
+| Row   | Row  | Row    |
+| Your  | Boat | Gently |
+| Down  | The  | Stream |
+
+++++
+</code>
+
+----
+
+You can do complex tables with itemtable like:
 <itemtable header=test;c=column_a;c=column_b,column_c;c=column_d;fdelim=:>
 
 _line_a
@@ -196,6 +391,28 @@ column_c:text_b2
 
 </itemtable>
 
+<code>
+<itemtable header=test;c=column_a;c=column_b,column_c;c=column_d;fdelim=:>
+
+_line_a
+column_a:text_a1
+column_b:<tablecell>text_a2 \\ This is an example
+how to fill a cell over several lines</tablecell>
+
+_line_b
+column_a:<tablecell>text_b1 \\ \\ As you can see, local DokuWiki CRLF sequences
+can be added to force a linebreak in the cell. Other formatting
+elements could be used as well.
+</tablecell>
+column_c:text_b2
+
+</itemtable>
+</code>
+
+----
+
+Also you can do tables this way
+
 {|
 |+//Extended Table Example//
 ! style="width: 12em;"|
@@ -204,7 +421,7 @@ A1 Header
 B1 Header
 |- style="background-color: #223344;"
 |
-{{ icon-enlightenment.png?50&nolink}}
+{{ :icon-enlightenment.png?50&nolink}}
 Lorem ipsum dolor sit amet, 
 consetetur sadipscing elitr, 
 sed diam nonumy eirmod tempor invidunt
@@ -220,6 +437,37 @@ B2 Data
 Needs an extra empty line 
 after the end of  whole table!
 |}
+
+<code>
+{|
+|+//Extended Table Example//
+! style="width: 12em;"|
+A1 Header
+! style="width: 10em;"|
+B1 Header
+|- style="background-color: #223344;"
+|
+{{ :icon-enlightenment.png?50&nolink}}
+Lorem ipsum dolor sit amet, 
+consetetur sadipscing elitr, 
+sed diam nonumy eirmod tempor invidunt
+ut labore et dolore magna aliquyam erat, 
+sed diam voluptua.
+|
+B2 Data
+  * //italic//
+  * ''monospace''
+  * [[:start|page link]]
+
+**ATTENTION:**\\
+Needs an extra empty line 
+after the end of  whole table!
+|}
+</code>
+
+----
+
+You can do more complex ordered and un-ordered lists like:
 
   - Ordered list item 1
   - Ordered list item 2
@@ -241,6 +489,32 @@ after the end of  whole table!
   - Back to first level
   - Still at first level
 
+<code>
+  - Ordered list item 1
+  - Ordered list item 2
+  -- Ordered list item 3...
+  .. ... in multiple paragraphs
+  - Ordered list item 4
+
+  * Unordered list item
+  ** Unordered list item...
+  .. ... in multiple paragraphs
+
+  - Ordered list, first level
+    - Second level
+      - Third level
+        - Fourth level
+    -- Back to second level
+      - //Second?! What happened to third?//
+    .. //Quiet, you.//
+  - Back to first level
+  - Still at first level
+</code>
+
+----
+
+You can do definition lists as follows:
+
   ? Definition list
   : Definition lists vary only slightly from other types of lists in that list items consist of two parts: a term and a description. The term is given by the DT element and is restricted to inline content. The description is given with a DD element that contains block-level content. [Source: W3C]
   ? Definition list w/ multiple paragraphs
@@ -256,20 +530,29 @@ after the end of  whole table!
   ?? But DT tags can't contain paragraphs. That would __not__ be legal XHTML.
   .. If you try, the result will be rendered oddly.
 
-And now to test a bunch of folded text/content below. But ++First |
-test if we can fold/unfold inline++. Then try a block below:
+<code>
+  ? Definition list
+  : Definition lists vary only slightly from other types of lists in that list items consist of two parts: a term and a description. The term is given by the DT element and is restricted to inline content. The description is given with a DD element that contains block-level content. [Source: W3C]
+  ? Definition list w/ multiple paragraphs
+  :: The style sheet provided with this plugin will render these paragraphs...
+  .. ... to the left of the term being defined.
+    ? Definition list w/ multiple "paragraphs"
+    : Another way to separate blocks of text in a definition...
+    : ... is to simply have multiple definitions for a term (or group of terms).
 
-++++ Folded block here |
-
-The content would be here
-
-^ Table ^ Blah ^ Blah   ^
-| Row   | Row  | Row    |
-| Your  | Boat | Gently |
-| Down  | The  | Stream |
-
-++++
+  : This definition list has DD tags without any preceding DT tags.
+  : Hey, it's legal XHTML.
+  ? Just like DT tags without following DD tags.
+  ?? But DT tags can't contain paragraphs. That would __not__ be legal XHTML.
+  .. If you try, the result will be rendered oddly.
+</code>
 
 ----
 
+You can add a discussion section to the bottom of any page if you add
+
+<code>
 ~~DISCUSSIONS~~
+</code>
+
+At the bottom of a page.
