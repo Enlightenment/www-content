@@ -298,12 +298,14 @@ You also have shortcuts like ''%%i = i + 1%%'' can be ''%%i++%%''. Or ''%%i = i 
 
 ==== Logic ====
 
-In addition to bit-wise logic, there is boolean logic. In C if a variable is 0, it is false, and otherwise it is true. you can thus use simple ints, chars etc. as booleans. You would indicate boolean logic vs bit logic with ''&&'' for logical AND, and ''||'' for logical OR. For example:
+In addition to bit-wise logic, there is boolean logic. In C if a variable is 0, it is false, and otherwise it is true. You can thus use simple ints, chars etc. as booleans. You would indicate boolean logic vs bit logic with ''&&'' for logical AND, and ''||'' for logical OR. For example:
 
 <code c>
 // if (a is less than 10 AND b is < 100) OR z is true then...
 if (((a < 10) && (b < 100)) || (z)) printf("Success\n");
 </code>
+
+In addition to ''&&'' and ''||'' there is ''!'' which means //NOT// or //INVERSE//. You can combine these with comparisons like ''=='' meaning "is equal to numerically" (the 2 values either side have the same number when boiled down to a series of bits/bytes), ''!='' meaning "is not equal to" (the inverse of ''==''), ''<'' meaning "is less than", ''>'' meaning "is greater than", ''<='' meaning "is less than or equal to" and ''>='' meaning "is greater than or equal to".
 
 Like with arithmetic, it is highly advisable to group your logic into clear order of evaluation with braces. Relying on order of operation can lead to bugs when you happen to not quite remember an order properly, and then someone trying to fix your code later being confused as to exactly what you meant to do. So be clear and use braces liberally. They cost you nothing in performance at runtime, just add clarity in code when it is written.
 
