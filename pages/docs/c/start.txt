@@ -465,11 +465,50 @@ struct mydata
 };
 </code>
 
+If we were to fill this structure with the following code:
+
+<code c>
+struct mydata d;
+
+d.number1 = 1234567;
+strcpy(d.string1, "Hello world!");
+d.number2 = 1;
+d.floating_point1 = 2.0;
+d.char1 = 1;
+d.floating_point2 = 999.999;
+d.short1 = 30000;
+d.number3 = -1;
+d.floating_array[0] = 1.0;
+d.floating_array[1] = 2.0;
+d.floating_array[2] = 3.0;
+</code>
+
 In memory from start to end it looks like:
 
 {{ memory.svg?nolink |Memory layout }}
 
+Note that members will add padding to align members to their natural alignment. This is necessary for correctness and speed reasons across all architectures. Everything is really just a series of bytes in memory. Memory is filled with 1000's or even millions of these bits of data, either one after the other, or spread out. You can jump from one to the other by just using a pointer. Pointers are simply byte numbers from the start of memory (which is 0). The data lives somewhere in memory, and a pointer just says what address it lives at. All data will consume some number of bytes at that address, and may inside contain more pointers pointing to other bits of memory too.
+
+Generally you allocate memory with functions such as ''malloc()'', ''calloc()'', or ''realloc()''. Some libraries you use may do allocations for you. Be sure to read the manuals on them as well as these above. You would free memory you no longer need with ''free()''. All these functions just take a pointer value that .. points at the memory to free, reallocate, or they return a pointer to this place in memory where your new memory block has been arranged. There are some special functions like ''alloca()'' that you don't need to free, and instead allocate on the stack instead of the heap.
+
+==== Stack and heap ===
+
+The memory of your process, other than memory used to store the code/instructions loaded from disk, is primarily made up of 2 elements. The [[stack|http://en.wikipedia.org/wiki/Call_stack]] and the [[heap|http://en.wikipedia.org/wiki/Memory_management]].
+
+The stack is managed for you mostly by the compiler and runtime. As the application runs, every time a function is called, a new blob of memory is "pushed" at the "top" of the stack. This memory contains the parameters passed to the function, and will contain return values from the function as well as a return address to go back (to read instructions from) to when this function returns. It is a very simple structure, and yet incredibly useful. Note that stack often have limited sizes (sometimes in the order of dozens of KB, maybe only a few MB). So don't abuse the stack too much. A function like ''alloca()'' can allocate extra memory on the stack (it pushes a segment of N bytes onto the stack that is cleaned up when the function in which it is allocated returns). This is handy if you need some temporary scratch space that is not too big and a fixed size is not known at compile time.
+
+The heap is where more permanent memory is stored, and data here remains until explicitly freed. Most objects and larger data will life here. Getting memory in the heap is more costly in terms of time, but the limit on memory in the heap is generally "all available memory on the system", given caveats of fragmentation of memory, and possible process allocation limits imposed by the OS.
+
 ==== Libraries ====
+
+A shared library is simple a large bit of code you can "load" when your application (or library) is loaded, where the code in it is shared with other users on the system. It mostly is provided by another group of developers, and thus may change its internals without your application or library needing to be re-compiled. If there is a bug in the library it may be fixed later on by an update to the library. Everyone who installs the update gets the fix. Same for new features. Libraries have no special powers. They have the exact same abilities that the code in your application would have. They can't gain more powers, nor can they hide security-related data "in the library" as all this data is visible to your app.
+
+If you want to do something privileged, or hide data, it needs to cross a process boundary. Normally you're speak some form of IPC to a privileged "root" process for example. Of course all of this "we share everything" with libraries also means that code in your application could corrupt/mess/destroy data the library is maintaining, as well as vice-versa. There is no protection between a library, another library and your process. This lack of protection means performance is very good and you really pay no major price putting code in a shared library, but you get no protection.
+
+The benefit of a shared library is to avoid needing a re-compile to get improvements, save writing all the code the library shares with you, and to share the memory the code in the shared library would consume. As it is a //SHARED// library, the code from that library is loaded only once on the system. It may add to the virtual size of the process, but this space is shared across every process using that library, so the cost is paid just once.
+
+Generally a library exposes an API (a set of functions to call). It will provide header files you #include in your application (or library). you would link to the library and thus, at runtime, the "runtime linker" (ld.so often), will glue in the function symbols in your code to the library you link to. This is all done at the start of process startup before the main() function is called. There is a cost to this, but it is generally worth paying for the benefits. your code will then be able to call the functions from the library (or access it's data) as if the library were part of your own code.
+ 
 ==== API calls ====
 ==== System calls ====
 
