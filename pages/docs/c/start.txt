@@ -508,16 +508,44 @@ If you want to do something privileged, or hide data, it needs to cross a proces
 The benefit of a shared library is to avoid needing a re-compile to get improvements, save writing all the code the library shares with you, and to share the memory the code in the shared library would consume. As it is a //SHARED// library, the code from that library is loaded only once on the system. It may add to the virtual size of the process, but this space is shared across every process using that library, so the cost is paid just once.
 
 Generally a library exposes an API (a set of functions to call). It will provide header files you #include in your application (or library). you would link to the library and thus, at runtime, the "runtime linker" (ld.so often), will glue in the function symbols in your code to the library you link to. This is all done at the start of process startup before the main() function is called. There is a cost to this, but it is generally worth paying for the benefits. your code will then be able to call the functions from the library (or access it's data) as if the library were part of your own code.
- 
+
+You generally would compile your code to link to a library as follows, assuming the source for your application is ''hello.c'', the binary you wish to output is ''hello'' and the libray you want to link to is ''eina'' (often the file on disk will be ''libeina.so'' for the development environment).
+
+   cc hello.c -o hello -leina
+
+This assumes the library is in a standard directory the compiler always looks in. This would be ''/lib'' and ''/usr/lib''. If the library is not there, you need to tell the compiler of a new location to look at with the ''-L'' option such as the following if the eina library you wish to link to is located in ''/usr/local/lib'':
+
+  cc hello.c -o hello -leina -L/usr/local/lib
+
+Of course that is just the linking. The include files may also require an option to tell the compiler to look somewhere other than ''/usr/include''. That option is the ''-I'' option as follows if the include files needed are in ''/usr/local/include/eina-1'':
+
+  cc hello.c -o hello -leina -L/usr/local/lib -I/usr/local/include/eina-1
+
+This of course is rather painful, and that is why a modern system called [[http://en.wikipedia.org/wiki/Pkg-config|Pkg-config]] was created, and it is far easier to use. The above would become a simpler:
+
+  cc hello.c -o hello `pkg-config --cflags --libs eina`
+
+In this case ''pkg-config'' will provide the compiler flags needed to link to eina. If you want to use multiple libraries, just list them as follows:
+
+  cc hello.c -o hello `pkg-config --cflags --libs eina ecore embryo`
+
+Pkg-config relies on setting your ''PKG_CONFIG_PATH'' environment variable to indicate where to look for the ''.pc'' files that contain the include and linking information. You may want to do a one-time setup of this environment variable in your shell setup like:
+
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+
+Add as many directories as you like with a '':'' character between them. They will be searched in order from the first to last, until a matching ''.pc'' file is found.
+
 ==== API calls ====
 ==== System calls ====
 
 ----
-==== Alignment ====
+
 ==== Endianess ====
 ==== Function pointers ====
 ==== Callbacks ====
 ==== Threads ====
+
+----
 
 === Also See ===
 
