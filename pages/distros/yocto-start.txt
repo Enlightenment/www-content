@@ -1,0 +1,32 @@
+~~Title: Yocto~~
+==== Yocto ====
+
+In Yocto, a meta-efl layer is provided by the meta-openembedded layer. It
+contains efl, elementary, enlightenment, terminology and other recipes.
+
+So, the first step is to add this layer in conf/bblayer.conf:
+
+<code bash>
+BBLAYERS ?= \
+  ${TOPDIR}/src/...
+  ...
+  ${TOPDIR}/src/meta-openembedded/meta-efl \
+  ...
+"
+</code>
+
+Next, to install Enlightenment and Terminology, add the following lines to your
+recipe:
+
+<code bash>
+#add enlightenment window manager
+IMAGE_INSTALL += "e-wm"
+IMAGE_INSTALL += "terminology"
+</code>
+
+If you just want Elementary and EFL, just add the lines below or something
+that depends on EFL or Elementary:
+
+<code bash>
+IMAGE_INSTALL += "elementary-tests"
+</code>
