@@ -1,0 +1,75 @@
+==== Simple Text ====
+
+//**__Basic text__**//
+
+Creating a label object, a widget to display text, with simple html-like
+markup:
+
+<code c>
+    //text_label
+    Evas_Object *label;
+    label_text = elm_label_add(win);
+
+    elm_object_text_set(label_text,"My label");
+
+    evas_object_resize(label_text, 90, 0);
+    evas_object_show(label_text);
+</code>
+
+//**__Sliding text__**//
+
+If your text is too long, you can have it set to slide. The duration of the
+slide is to be set: it is set to five seconds in the following example. You
+can also have several styles:
+
+  - default - No animation
+  - marker - Centers the text in the label and makes it bold by default
+  - slide_long - The entire text appears from the right of the screen and slides until it disappears in the left of the screen(reappearing on the right again).
+  - slide_short - The text appears in the left of the label and slides to the right to show the overflow. When all of the text has been shown the position is reset.
+  - slide_bounce - The text appears in the left of the label and slides to the right to show the overflow. When all of the text has been shown the animation reverses, moving the text to the left.
+
+<code c>
+    //sliding text
+    Evas_Object *label_slide;
+    label_slide = elm_label_add(win);
+
+    elm_object_text_set(label_slide, "Some long text for our label_slide, that is long but"
+    "not too long.");
+
+    elm_object_style_set(label_slide,"slide_bounce");
+    elm_label_slide_duration_set(label_slide, 3);
+    elm_label_slide_mode_set(label_slide, ELM_LABEL_SLIDE_MODE_ALWAYS);
+
+    elm_label_slide_go(label_slide);
+
+    evas_object_resize(label_slide, 200, 15);
+    evas_object_move(label_slide,0,40);
+    evas_object_show(label_slide);
+</code>
+
+If needed, you can respond to end of a slide thanks to the slide,end event.
+
+//**__Marker text__**//
+
+A marker is a text that is centered and bold by default. As the default color
+is white, we will also set a color, blue in this example.
+
+<code c>
+elm_object_style_set(label, "marker");
+evas_object_color_set(label, 0, 0, 255, 255);
+</code>
+
+//**__Styling the text__**//
+
+You can apply basic styles to the text. If, for instance, you would like to
+have a bold text, you can do as follows.
+
+<code c>
+elm_object_text_set(label, "<b>This text is bold.</b>");
+</code>
+
+**//The whole code://** {{/tutorial/basic/label.c}}
+
+==== Next Part ====
+
+//**__[[/tutorial/basic/list| Simple List Tutorial]]__**//

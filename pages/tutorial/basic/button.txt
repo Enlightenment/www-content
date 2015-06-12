@@ -1,0 +1,194 @@
+==== Button ====
+
+=== Button styles ===
+
+//**__Basic text button__**//
+
+As seen in [[docs/efl/start|Get started with EFL]] tutorial, a text-only
+button is created as follow :
+
+<code c>
+    //basic text button
+    Evas_Object *button_text;
+    button_text = elm_button_add(win);
+
+    elm_object_text_set(button_text,"Clik me");
+
+    //how a container object should resize a given child within its area
+    evas_object_size_hint_weight_set(button_text, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    //how to align an object
+    evas_object_size_hint_align_set(button_text, EVAS_HINT_FILL, 0.5);
+
+    //100x30 px button
+    evas_object_resize(button_text, 100, 30);
+    evas_object_show(button_text);
+</code>
+
+//**__Basic icon button__**//
+
+Instead of a button having only some text, you can also opt to having an
+icon-only button.
+
+<code c>
+    //Basic icon button
+    Evas_Object *button_icon, *icon;
+    button_icon = elm_button_add(win);
+    icon = elm_icon_add(win);
+
+    //set the image file and the button as an icon
+    elm_image_file_set(icon, "icon.png", NULL);
+    elm_object_part_content_set(button_icon, "icon", icon);
+
+    evas_object_size_hint_weight_set(button_icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set(button_icon, EVAS_HINT_FILL, 0.5);
+
+    //100x30 px button
+    evas_object_resize(button_icon, 100, 30);
+    evas_object_move(button_icon, 110, 0);
+    evas_object_show(button_icon);
+</code>
+
+The function ''elm_object_part_content_set(button_icon, "icon",icon)'' sets
+the content on part on a given container widget. All widgets
+deriving from the Elementary Container Class may match. This sets new content
+to a given part. If any object was already set as a content object, it will be
+deleted.
+
+//**__Icon and text button__**//
+
+You can also have buttons holding both an icon and a label.
+
+<code c>
+    //Icon and text button
+    Evas_Object *button_icon_text, *icon2;
+    button_icon_text = elm_button_add(win);
+    icon2 = elm_icon_add(win);
+
+    elm_image_file_set(icon2, "icon.png", NULL);
+    elm_object_part_content_set(button_icon_text, "icon", icon2);
+    elm_object_text_set(button_icon_text, "Press me");
+    evas_object_size_hint_weight_set(button_icon_text, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set(button_icon_text, EVAS_HINT_FILL, 0.5);
+
+    evas_object_resize(button_icon_text, 100, 30);
+    evas_object_move(button_icon_text, 220, 0);
+    evas_object_show(button_icon_text);
+</code>
+
+//**__Disabled button__**//
+
+If you want to disable your button but still visible:
+
+<code c>
+elm_object_disabled_set(button, EINA_TRUE);
+</code>
+
+== Callbacks ==
+
+Elementary buttons respond to user interactions thanks to several events.
+
+//**__Click event__**//
+
+The “click” event is the most basic and well-known one. The following code
+snippet will change the text of a button upon a click event: a press followed
+by an unpress.
+
+<code c>
+//Click Callback: print Clicked
+static void
+_button_click_cb(void *data, Evas_Object *button, void *event_info){
+    elm_object_text_set(button, "Clicked!");
+}
+
+evas_object_smart_callback_add(button_text, "clicked", button_click_cb, NULL);
+</code>
+
+//**__Press/unpress events __**//
+
+The button can also respond to the press and unpress events instead of the
+whole click.
+
+<code c>
+//Press callback: print Pressed
+static void
+_button_press_cb(void * data, Evas_Object *button, void *event_info){
+    elm_object_text_set(button, "Pressed!");
+}
+
+//Unpress callback: print Unpressed
+static void
+_button_unpress_cb(void *data, Evas_Object *button, void *event_info){
+    elm_object_text_set(button, "Unpressed!");
+}
+
+evas_object_smart_callback_add(button_icon, "pressed", _button_press_cb, NULL);
+evas_object_smart_callback_add(button_icon, "unpressed", _button_unpress_cb, NULL);
+</code>
+
+//**__Repeated events__**//
+
+The button can also receive several events in case it is being held by the
+user. Timings such as the initial timeout and the repeat interval can be set.
+In this example, the initial timeout is set to one second, and the repeat
+interval to half a second.
+
+<code c>
+static void
+_button_repeat_cb(void *data, Evas_Object *button, void *event_info){
+    static int count = 0;
+    char buffer[16];
+
+    snprintf(buffer, sizeof(buffer), "Repeat %d", count++);
+
+    //print the number of time callback was called
+    elm_object_text_set(button, buffer);
+}
+
+    //Get whether the autorepeat feature is enabled.
+    elm_button_autorepeat_set(button_icon_text, EINA_TRUE);
+    //Set the initial timeout before the autorepeat event is generated.
+    elm_button_autorepeat_initial_timeout_set(button_icon_text, 1.0);
+    //gap between two callbacks
+    elm_button_autorepeat_gap_timeout_set(button_icon_text, 0.5);
+    //"repeated": the user pressed the button without releasing it.
+    evas_object_smart_callback_add(button_icon_text, "repeated", _button_repeat_cb, NULL);
+</code>
+
+//**__Focused/unfocused events__**//
+
+The event Focused is equivalent to click indeed callback is called when you
+are "focused" on the button. So, you are unfocused when you are not focused on
+the first button. For having two buttons, a box container will be needed.
+
+The button can also receive event from another button in case it is being
+focused when you click on it and unfocused when you press and unpress another
+one.
+
+<code c>
+static void
+_button_focused_cb(void * data, Evas_Object *button, void *event_info){
+    elm_object_text_set(button, "Focused");
+}
+
+static void
+_button_unfocused_cb(void * data, Evas_Object *button, void *event_info){
+    elm_object_text_set(button, "Unfocused");
+}
+    //Focused/unfocused event
+    Evas_Object *button;
+
+    button = elm_button_add(win);
+    elm_object_text_set(button, "button");
+    evas_object_resize(button, 100, 30);
+    evas_object_move(button, 0, 40);
+    evas_object_show(button);
+
+    evas_object_smart_callback_add(button, "focused", _button_focused_cb, NULL);
+    evas_object_smart_callback_add(button, "unfocused", _button_unfocused_cb, NULL);
+</code>
+\\
+**//The whole code://** {{code_c/tutorial/basic/button.c}}
+
+==== Next Part ====
+
+//**__[[/tutorial/basic/label]]__**//
