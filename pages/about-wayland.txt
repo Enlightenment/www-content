@@ -1,0 +1,116 @@
+=== We support Wayland ===
+
+Current support work is being done to enable client-side applications and a wayland compositor. Currently EFL applications that use the lower-level Ecore-Evas and higher level Elementary API's will work and display correctly in a Wayland compositor, handle input, resizing and moving. Client-side frames are already provided. Both Shared-memory buffers AND EGL/OpenGL-ES2 buffers are supported. The Shared-memory buffers are purely CPU-rendered, meaning that they will work with or without OpenGL hardware acceleration support. They are fast and usable. The OpenGL-ES2 display is fully accelerated with all primitives being rendered by OpenGL (Hardware acceleration) and already work fully due to a long history of supporting this under X11 and other embedded EGL/OpenGL-ES2 environments.
+
+Work is currently underway to land a complete Wayland compositor (stand-alone, no X11 needed) into the master branch of Enlightenment. At this stage, we are undergoing heavy testing and resolving any issues. We will definitely need to extend Wayland protocol to make a fully functioning desktop or mobile environment, but what we do have (based on the existing wayland protocol) is quite usable.
+
+All the source code for Wayland support is already in our source code repositories. You will need to check them out. Please see our Contribute page for information there.
+
+EFL is currently tracking Wayland master and will not function with the 0.85 release.
+
+=== Current Status ===
+
+[**Evas Engines**]
+
+  * Shared Memory Engine
+     * Feature complete including support for double or triple buffering, transparency, and rotation
+     * Supports client-side frame decorations
+
+  * EGL Engine
+     * Feature complete including support for double or triple buffering, transparency, rotation, partial swaps, and buffer ageing
+     * Supports client-side frame decorations
+
+  * DRM Engine
+      * Feature complete including support for double or triple buffering, transparency, and rotation
+      * Supports software rendering
+      * Hardware Accelerated rendering has landed upstream (perhaps prematurely) and requires more testing. It is only compatible with gbm-based drivers at the moment.
+      * Supports client-side frame decorations
+
+[**Ecore_Evas**]
+
+  * Shared Memory Engine
+       * Supports client-side frame decorations
+       * Supports Transparency and Rotation
+       * Supports Wayland Shell & Xdg Shell Maximize and Fullscreen
+       * Provides internally drawn client-side frame decorations if none are supplied
+
+   * EGL Engine
+       * Supports client-side frame decorations
+       * Supports Transparency and Rotation
+       * Supports Wayland Shell & Xdg Shell Maximize and Fullscreen
+       * Provides internally drawn client-side frame decorations if none are supplied
+
+   * DRM Engine
+       * Supports client-side frame decorations
+       * Supports Transparency and Rotation
+       * Supports Wayland Shell & Xdg Shell Maximize and Fullscreen
+       * Provides internally drawn client-side frame decorations if none are supplied
+
+[**Elementary**]
+    * Can utilize Shared Memory, EGL Engine or DRM Engine
+    * Complete support for all widgets provided by the toolkit
+    * Supports Wayland Cursors
+    * Supports Wayland Copy-N-Paste
+    * Supports Wayland Drag-N-Drop
+
+[**Enlightenment 0.18**]
+    * Complete support for rendering Wayland Client applications inside the existing X11 Compositor
+    * Provides a Wayland Shell for use by Wayland Client applications
+
+[**Enlightenment 0.19**]
+    * Complete support for rendering Wayland Client applications inside the existing X11 Compositor
+    * Provides a Wayland Shell for use by Wayland Client applications (both wl_shell and xdg_shell are supported)
+    * Experimental support for running Wayland-Only (without X11) is undergoing heavy testing.
+
+=== Building Wayland Support ===
+The following instructions assume that you have Wayland/Weston installed as per [[http://wayland.freedesktop.org/building.html]]
+
+These steps assume that you have the environment variables set as per the above building instructions.
+
+**NOTE**: If you are using an Intel video card, and wish to also have the Enlightenment X11 Compositor be able to render using OpenGL, then you should build Mesa (from the above instructions) with the //--enable-osmesa// and //--enable-glx-tls// options. This will also require a kernel >= 3.6 for full support. If you are using an Intel video card, you should also be using a kernel >= 3.9.2 or you Will experience various bugs and crashes with the latest Wayland.
+
+[**Compiling EFL**]
+
+To compile EFL with Wayland support, you should compile EFL as you normally would, and enable the desired below options:
+
+    * --enable-wayland
+        * To enable building the Evas Wayland Shared-Memory Engine
+    * --enable-egl --with-opengl=es
+        * To enable building support for the Evas Wayland EGL Engine
+    * --enable-drm
+        * To enable building support for the Evas DRM Engine
+    * --enable-gl-drm
+        * To enable building support for the Evas GL DRM Engine
+
+[**Compiling Elementary**]
+
+Elementary requires no special options to support Wayland however it IS required that EFL was built with Wayland support in order to render Elementary applications inside a Wayland compositor (such as Weston)
+
+[**Compiling Enlightenment 0.18**]
+
+To compile Enlightenment with Wayland Client support, you should compile Enlightenment as you normally would, and enable the desired below options:
+
+    * --enable-wayland-clients
+        * To enable build support for the Enlightenment Compositor to render Wayland Clients
+    * --enable-wayland-egl
+        * To enable build support for the Enlightenment Compositor to render Wayland Clients using EGL
+
+[**Compiling Enlightenment 0.19**]
+
+To compile Enlightenment with Wayland Client support, you should compile Enlightenment as you normally would, and enable the desired below options:
+
+    * --enable-wayland-clients
+        * To enable build support for the Enlightenment Compositor to render Wayland Clients
+    * --enable-wayland-egl
+        * To enable build support for the Enlightenment Compositor to render Wayland Clients using EGL
+    * To build the Experimental Wayland-Only version, please see the README.wayland file located here: [[https://git.enlightenment.org/core/enlightenment.git/tree/README.wayland]]
+
+=== Running ===
+
+For applications that use Ecore_Evas directly set the environment variable **ECORE_EVAS_ENGINE** to either //wayland_egl// or //wayland_shm// depending on whether you wish to use the SHM based interface with software rendering or use EGL.
+
+For applications that use Elementary set the environment variable **ELM_DISPLAY** to //wl//. If you wish to run Elementary applications using the Shared Memory Engine, then also export **ELM_ACCEL**=//none//. If you wish to run Elementary applications using the Wayland EGL engine, then export **ELM_ACCEL**=//opengl//.
+
+For Wayland Client applications running inside the Enlightenment X11 Compositor, no special variables need be set (however you should be sure to restart Enlightenment After following the above build instructions)
+
+**NOTE**: Support for rendering Wayland Clients inside the Enlightenment X11 Compositor Does require that the **XDG_RUNTIME_DIR** environment variable to be set. If it is not set by your distribution, please consult documentation for your distribution on the proper way to set it. If none is set, then the Enlightenment X11 Compositor will use /tmp by default.
