@@ -1,0 +1,278 @@
+~~Title: Debugging~~
+==== Compilation ====
+
+Remember to build EFL, Enlightenment etc. with debugging compile flags. [[docs-efl-start]] has a section on this for your build environment. Remember to have ''-g'' as a ''CFLAGS'' option to ensure binaries and libraries have all the debug information they need. If you didn't build with debugging, simply build again with these flags correctly set and debugging can begin.
+
+==== EFL Logs ====
+
+Sometimes you will see logs as follows:
+
+<code bash>
+CRI<10094>:elementary elm_toolbar.c:1453 _elm_toolbar_elm_widget_theme_apply() Failed to set layout!
+*** Backtrace ***
+/usr/local/lib/libeina.so.1	 0x7f8c2fc0be86 0x7f8c2fbea000
+/usr/local/lib/libeina.so.1	 0x7f8c2fc0d1a9 0x7f8c2fbea000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028c87d 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c302aa086 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c30288d58 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028618c 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028f087 0x7f8c30072000
+/usr/local/bin/terminology	 0x416d58 0x400000
+/usr/local/lib/libevas.so.1	 0x7f8c2f3daca6 0x7f8c2f34a000
+/usr/local/lib/libeo.so.1	 0x7f8c2e5ed37b 0x7f8c2e5e0000
+/usr/local/lib/libeo.so.1	 0x7f8c2e5ebbcb 0x7f8c2e5e0000
+/usr/local/lib/libevas.so.1	 0x7f8c2f3dceaa 0x7f8c2f34a000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87d5e1 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e8837a7 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87e90f 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87eab7 0x7f8c2e7f8000
+/usr/local/lib/libecore.so.1	 0x7f8c2f122d0b 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f11d775 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f1251f8 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f1253d7 0x7f8c2f110000
+/usr/local/bin/terminology	 0x4138b7 0x400000
+/usr/local/bin/terminology	 0x40c74c 0x400000
+/usr/lib/libc.so.6	 0x7f8c2c675800 0x7f8c2c655000
+</code>
+
+This is EFL logging a critical error. There are various levels of error, critical, error, warning and debug are the main ones, but by default you should normally only see ''CRI'' and ''ERR''. Following this log line which gives source file where the complaining is being printed and the line number is a full backtrace. This is not generally human readable because making it so is relatively costly, so it is not done at runtime. But we provide a utility to make this far nicer for humans. The tool is called ''eina_btlog''. Simply do the following:
+
+<code bash>
+cat > mybacktrace.txt
+# copy and paste the above lines following *** Backtrace *** that start with file paths
+# now hit CTRL+D to end input
+cat mybacktrace.txt | eina_btlog
+</code>
+
+And you should end up with a colorized log as below that humans can easily use. This is the log a developer wants to identify the full path used to trigger the issue, with functions called from bottom to top of the stack (newest functions called are at the top of this log), with file paths and line numbers, and even binary files these come from.
+
+<code bash>
+/usr/local/lib/libeina.so.1       |        /home/raster/C/efl/src/lib/eina/eina_log.c           : 1875 @ eina_log_print_cb_stderr()
+/usr/local/lib/libeina.so.1       |        /home/raster/C/efl/src/lib/eina/eina_log.c           : 1272 @ eina_log_print_unlocked()
+/usr/local/lib/libelementary.so.1 |      /home/raster/C/elementary/src/lib/elm_toolbar.c        : 1453 @ _elm_toolbar_elm_widget_theme_apply()
+/usr/local/lib/libelementary.so.1 |      /home/raster/C/elementary/src/lib/elm_widget.eo.c      :  451 @ elm_obj_widget_theme_apply()
+/usr/local/lib/libelementary.so.1 |      /home/raster/C/elementary/src/lib/elm_toolbar.c        : 2949 @ _elm_toolbar_icon_size_set()
+/usr/local/lib/libelementary.so.1 |      /home/raster/C/elementary/src/lib/elm_toolbar.eo.c     :   56 @ elm_obj_toolbar_icon_size_set()
+/usr/local/lib/libelementary.so.1 |      /home/raster/C/elementary/src/lib/elm_toolbar.eo.c     :  354 @ elm_toolbar_icon_size_set()
+/usr/local/bin/terminology        |     /home/raster/C/terminology/src/bin/options.c            :  156 @ options_toggle()
+/usr/local/lib/libevas.so.1       | /home/raster/C/efl/src/lib/evas/canvas/evas_object_smart.c  :   67 @ _eo_evas_smart_cb()
+/usr/local/lib/libeo.so.1         |          /home/raster/C/efl/src/lib/eo/eo_base_class.c      :  712 @ _eo_base_event_callback_call()
+/usr/local/lib/libeo.so.1         |          /home/raster/C/efl/src/lib/eo/eo_base.eo.c         :   94 @ eo_event_callback_call()
+/usr/local/lib/libevas.so.1       | /home/raster/C/efl/src/lib/evas/canvas/evas_object_smart.c  :  787 @ evas_object_smart_callback_call()
+/usr/local/lib/libedje.so.1       |        /home/raster/C/efl/src/lib/edje/edje_match.c         :  557 @ edje_match_callback_exec_check_finals()
+/usr/local/lib/libedje.so.1       |        /home/raster/C/efl/src/lib/edje/edje_program.c       : 1430 @ _edje_emit_cb()
+/usr/local/lib/libedje.so.1       |        /home/raster/C/efl/src/lib/edje/edje_message_queue.c :  788 @ _edje_message_queue_process()
+/usr/local/lib/libedje.so.1       |        /home/raster/C/efl/src/lib/edje/edje_message_queue.c :  155 @ _edje_job()
+/usr/local/lib/libecore.so.1      |       /home/raster/C/efl/src/lib/ecore/ecore_job.c          :  123 @ _ecore_job_event_handler()
+/usr/local/lib/libecore.so.1      |       /home/raster/C/efl/src/lib/ecore/ecore_private.h      :  308 @ _ecore_lock()
+/usr/local/lib/libecore.so.1      |       /home/raster/C/efl/src/lib/ecore/ecore_main.c         : 1928 @ _ecore_main_loop_iterate_internal()
+/usr/local/lib/libecore.so.1      |       /home/raster/C/efl/src/lib/ecore/ecore_main.c         :  983 @ ecore_main_loop_begin()
+/usr/local/bin/terminology        |     /home/raster/C/terminology/src/bin/main.c               :  933 @ elm_main()
+/usr/local/bin/terminology        |     /home/raster/C/terminology/src/bin/main.c               :  970 @ main()
+      /usr/lib/libc.so.6          |                                     ??/??                   :  970 @ __libc_start_main()
+</code>
+
+If you are working on EFL, writing apps that use EFL or just want to report these as a user, it is this resulting ''btlog'' that is useful.
+
+== Log levels ==
+
+EFL use a common method to log error messages called Eina_Log, you can tweak the verbosity of the logs simply by setting some environment vars.
+
+Eina_Log introduce the concept of logging domains (or loggers), which might already be familiar to readers. It is basically a way to separate a set of log messages into a context (e.g. a module) and provide a way of controlling this set as a whole.
+
+The level is used for controlling which messages should appear. It specifies the lowest level that should be displayed (e.g. a message with level 11 being logged on a domain with level set to 10 would be displayed, while a message with level 9 wouldn't).
+
+To set the general log level you can use the EINA_LOG_LEVEL variable:
+
+<code bash>
+EINA_LOG_LEVEL=5 ./myapp
+</code>
+
+Or you can use a finer selection using the EINA_LOG_LEVELS variable:
+
+<code bash>
+EINA_LOG_LEVELS=module1:5,module2:2,module3:0 ./myapp
+</code>
+
+This line would set module1 level to 5, module2 level to 2 and module3 level to 0. 
+
+<code bash>
+EINA_LOG_LEVEL=3 EINA_LOG_LEVELS_GLOB=eina_*:0 ./myapp
+</code>
+
+This will disable eina_log output from all internal eina code thus allowing you to see your own domain messages easier.
+
+==== Debug tools ====
+
+=== GDB ===
+
+== General ==
+
+In general you would run some app "under gdb" like following:
+
+<code bash>
+gdb myapp
+</code>
+
+You can also attach to a running process with:
+
+<code bash>
+gdb myapp PID
+</code>
+
+Where ''PID'' is the process id of the ''myapp'' process you want to attach to and begin debugging. Enlightenment is special because it already has something monitoring enlightenment for crashes (''enlightenment_start'' does this job), so you can't attach gdb to it as normal. This is how enlightenment will produce a ''~/.e-crashdump.txt'' log for every crash that happens. It needs gdb to do this though, but it automated.
+
+Note that on modern systems, gdb attaching is prohibited. You may \explain why no ''.e-crashdump.txt'' file is created. To enable it, please do:
+
+<code bash>
+sudo sysctl -w kernel.yama.ptrace_scope=0
+</code>
+
+== GDB with Enlightenment ==
+
+When Enlightenment crashes, it is stopped and a "white box of death" is displayed on screen. A crashdump file should have been appended too, but if you want to poke around, you need to do some special things. We can now go over to a text console (CTRL+ALT+F1) and log in or use something liks ssh to remotely log into your machine from another one. Now you need to attach gdb to enlightenment. Find out the process ID of enlightenment as shown below. 
+
+short way: 
+
+<code bash>
+kill -SIGUSR1 "$(pidof enlightenment_start)" # tell enlightenment_start to stop monitoring enlightenment
+gdb enlightenment "$(pidof enlightenment)"
+</code>
+
+If the above fails you have to find PIDs manually: 
+
+<code bash>
+ps -auwx | grep enlightenment
+</code>
+
+or:
+
+<code bash>
+pgrep enlightenment
+</code>
+
+Now type:
+
+<code bash>
+kill -SIGUSR1 PID_OF_enlightenment_start
+gdb enlightenment PID_OF_enlightenment
+</code>
+
+Where PID_OF_enlightenment_start is the process id you found. Gdb will load and stream along for a bit then give you a prompt.
+
+== Generic debugging ==
+
+You can now debug. You may want to save the output of gdb to a log file, so the following commands will let you do that. Replace log.txt with any file you prefer, if you don't want to output to this file. 
+
+  (gdb) set logging file log.txt
+  (gdb) set logging on
+
+Now that you are saving everything you do in gdb, try to use gdb's backtrace command: 
+
+  (gdb) bt
+  #0  0xb7d539f8 in select () from /lib/tls/libc.so.6
+  #1  0xb7dff66a in _XEnq () from /usr/X11R6/lib/libX11.so.6
+  #2  0xb7dffa7e in _XRead () from /usr/X11R6/lib/libX11.so.6
+  #3  0xb7e01795 in _XReadEvents () from /usr/X11R6/lib/libX11.so.6
+  #4  0xb7defa88 in XNextEvent () from /usr/X11R6/lib/libX11.so.6
+  #5  0x0809b698 in e_alert_show (
+      text=0x80a34f0 "This is very bad. Enlightenment has segfaulted.\nThis 
+      is not meant to happen and is likely a 
+      sign of a\nbug in Enlightenment
+      or the libraries it relies on.\n\nYou can gdb attach to this process 
+      now to try"...)
+      at e_alert.c:136
+  #6  0x0808f706 in e_sigseg_act (x=11, info=0x80a9fb0, data=0x80aa030)
+      at e_signals.c:54
+  #7  <signal handler called>
+  #8  0xb7d539f8 in select () from /lib/tls/libc.so.6
+  #9  0xb7f814ee in _ecore_main_select (timeout=0) 
+      at ecore_main.c:338
+  #10 0xb7f819ba in _ecore_main_loop_iterate_internal (once_only=0)
+      at ecore_main.c:575
+  #11 xb7f81a2b in ecore_main_loop_begin () at ecore_main.c:79
+  #12 0x08059bb3 in main (argc=1, argv=0xbffff144) at e_main.c:551
+
+This is the stack trace. It basically means the ''main()'' function called ''ecore_main_loop_begin()'', it then called ''_ecore_main_loop_iterate_internal()'', and this function called ''_ecore_main_select()'', and that in turn called ''select()'' etc.
+
+Lets take a look at the function that was called:
+
+  #6  0x0808f706 in e_sigseg_act (x=11, info=0x80a9fb0, data=0x80aa030)
+
+The ''e_sigseg_act()'' function is called when enlightenment segfaults (it is called directly by the kernel interrupting anything e was doing just before it was called - the thing it was doing would have caused the segfault - this is unique to enlightenment and most applications will just crash straight away as opposed to calling a segfault handler). So that means in this example E segfaulted inside the select() function (frame 7 is an intermediate frame that calls the signal handler).
+
+Next we need to get some more info about this crash. We will now go to the stack frame just before the segfault. In this case its stack frame 8. you want a listing of the code there and some info (so we can double check your code there is what we have here too). the gdb commands you then want are:
+
+   * **fr 8** = go to frame 8
+   * **l** = list the source code here
+   * **p ret** = print the value of ret
+
+If you want to get adventurous you should start dumping variable values for us. In this example I can't debug select because its in libc and it is probably not the reason for the crash. We will look to the frame above that, frame 9, to see if any nasty data was being sent to select.
+
+  (gdb) fr 9
+  #9  0xb7f814ee in _ecore_main_select (timeout=0) at ecore_main.c:338
+  338        ret = select(max_fd + 1, &rfds, &wfds, &exfds, t);
+  (gdb) l
+  333               }
+  334          }
+  335     #ifndef WIN32
+  336        if (_ecore_signal_count_get()) return -1;
+  337     #endif
+  338        ret = select(max_fd + 1, &rfds, &wfds, &exfds, t);
+  339        if (ret < 0)
+  340          {
+  341             if (errno == EINTR) return -1;
+  342          }
+
+We can see some variables there and function calls - often variables like pointers may be garbage or NULL and thus causing a segv. We can see what they are using the print (p) command, see the example below: 
+
+  (gdb) p ret
+  $1 = -4
+  (gdb) p rfds
+  $2 = {__fds_bits = {1280, 0 <repeats 31 times>}}
+  (gdb) p wfds
+  $3 = {__fds_bits = {0 <repeats 32 times>}}
+  (gdb) p exfds
+  $4 = {__fds_bits = {0 <repeats 32 times>}}
+
+If the variable is a pointer to something printing it will print the pointer value, not what it points to, what it points to is important. To print that we suggest:
+
+  p *pointer
+
+=Example:=
+
+  (gdb) fr 5
+  #5  0x0809b698 in e_alert_show (
+      text=0x80a34f0 "This is very bad. Enlightenment has segfaulted.\nThis 
+      is not meant to happen and is likely a sign of a\nbug in Enlightenment 
+      or the libraries it relies on.\n\nYou can gdb attach to this process 
+      now to try"...)
+      at e_alert.c:136
+  136             XNextEvent(dd, &ev);
+  (gdb) l
+  131        XSync(dd, False);
+  132        
+  133        button = 0;
+  134        for (; button == 0;)
+  135          {
+  136             XNextEvent(dd, &ev);
+  137             switch (ev.type)
+  138               {
+  139               case KeyPress:
+  140                  key = XKeysymToKeycode(dd, XStringToKeysym("F1")); 
+  (gdb) p dd
+  $5 = (Display *) 0x80d1018
+
+As we know its a pointer (Display *) the * means its a pointer to a Display struct/type. The pointer value looks healthy, it is not 0x0 or a very low number, so we can try and look at the data it is pointing to:
+
+  (gdb) p *dd
+  $6 = <incomplete type>
+
+Nevermind, that's xlib's display struct. It's private and we don't know what's inside - BUT all the types e uses(such as Evas_List) inside that it defines will allow you to do this generally.
+
+In general it's a good idea to spend some quality time with gdb and do all this - mail all the output of gdb during one of these "debugging sessions" and then we can sift through it. it may not mean a lot to you, but it means a world to us. Sometimes the stack is screwed and well - nothing you can do. Often this means you need to resort to valgrind to catch things before the stack gets screwed. this gets a bit more intense, BUT you will need to run E under valgrind - allowing gdb to attach.
+
+=== Valgrind ==
+
+=== Perf ===
+
