@@ -5,34 +5,44 @@ We place all of our releases here:
 
   * [[http://download.enlightenment.org/rel/|download.enlightenment.org]]
 
-For a list of dependencies and general build infor take a look at [[docs-efl-start]]. But just use the below "configure" command instead of "autogen.sh". Everything else is the same.
-
-When compiling from source, our core libraries likely should be build in this order:
-
-  * EFL
-  * Evas Generic Loaders
-  * Emotion Generic Players
-  * Elementary
-
-After this build applications however you like (e.g. Enlightenment, Terminology etc). Please see the README files for projects for information on dependencies, configuration etc. Just remember that all our release tarballs come with configure set up so to compile you just need to do:
-
-<code bash>
-./configure
-make
-sudo make install
-</code>
-
 ==== Releases ====
 
 Our latest releases are:
 
 {{page>download-latest}}
 
-==== Source ====
+When compiling from source, build in this order:
 
-Out source code is developed collaboratively in a pretty typical open source manner. Our master branches are where all new development goes into. We try and keep master working and usable daily, as developers generally are living off master themselves and so bugs affect developers directly and immediately. Sometimes issues happen, but they tend to get fixed rapidly.
+{{page>docs-efl-buildorder}}
 
-If you want to track the latest and greatest, please see our git repositories. If you have issues please refer to our [[contact]] page to get in touch with us.
+==== Dependencies ====
+
+{{page>docs-efl-deps-src}}
+
+==== Build Environment ====
+
+{{page>docs-efl-buildenv}}
+
+==== Compiliation ====
+
+For every tarball you download untar it with ''tar zxf file.tar.gz'' and then go into the directory created. Please see the README file in this directory for each project for information on dependencies, configuration etc. Just remember that all our release tarballs come with configure set up so to compile you just need to do this in the source directory:
+
+<code bash>
+./configure
+make
+sudo make install
+sudo ldconfig # needed on Linux to update linker library database
+</code>
+
+If ''configure'' fails, you are likely missing a dependency - provide it. It should tell you what that dependency is. **NOTE** that you can provide arguments to ''configure'' such as ''--prefix=/opt/e'' or similar. 
+
+----
+
+==== Master source repositories ====
+
+Our source code is developed collaboratively in a pretty typical open source manner. Our master branches in git are where all new development goes into as it happens, thus they are technically "unstable". We try and keep master working and usable daily, as developers generally are living off master themselves, so bugs affect developers directly and immediately. Sometimes issues happen, but they tend to get fixed rapidly.
+
+If you want to track the latest and greatest, please see our git repositories below and follow the [[docs-efl-start]] guide on compiling from upstream source. If you have issues please refer to our [[contact]] page to get in touch with us.
 
 All our git repositories are listed on:
 
