@@ -1,0 +1,17 @@
+You will want to ensure the default prefix ''/usr/local'' is available to build tools. If you know what you are doing, you can change the prefix, but this here shall assume you do not, and the above prefix is used. These environment variables are used during build, so you may want to make them more permanent.
+
+<code bash>
+export PATH=/usr/local/bin:"$PATH"
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:"$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH=/usr/local/lib:"$LD_LIBRARY_PATH"
+</code>
+
+==== Runtime Library Linking ====
+
+Note the ''LD_LIBRARY_PATH'' environment variable is set. You can ensure the system always supports ''/usr/local/lib'' by editing ''/etc/ld.so.conf'' or adding a file to ''/etc/ld.so.conf.d'' and simply have a line in either file that says:
+
+<code bash>
+/usr/local/lib
+</code>
+
+And remember to run ''sudo ldconfig'' tool every time you install a library to ensure caches are updated.
