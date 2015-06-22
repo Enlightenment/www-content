@@ -538,7 +538,32 @@ Pkg-config relies on setting your ''PKG_CONFIG_PATH'' environment variable to in
 Add as many directories as you like with a '':'' character between them. They will be searched in order from the first to last, until a matching ''.pc'' file is found.
 
 ==== API calls ====
+
+A library (or in fact any part of a program can too) exports API calls. These are mostly actual function calls, with the prototypes (telling the compiler the function name, what it returns and what it accepts as parameters) in the header files. The headers may also provide macros to use and perhaps also global variables. When an application runs, it's the functions and variables that matter. These are exposed as "symbols". 
+
+Symbols are listed as strings in a symbol table. This could be thought of as an array of strings, with locations where that function (or variable) is stored in the library. At runtime, libraries are linked and these symbols are looked up, with pointers to these functions being "fixed up" by the runtime linker. If a symbol is missing in a library that something else needs, you will get a runtime linking error (and generally execution stops here before even main() is called).
+
+If the types that a function returns or accepts changes, then there is an ABI (Application Binary Interface) break. Libraries should never do this without also jumping up a major version e.g. from 1.x to 2.0, or 2.x to 3.0 etc. This major version change indicates that there is a break in ABI (or API). On Linux you will see the version of the library in its filename:
+
+  libeina.so.1.4.99
+
+For example. When compiling, the compiler looks for a file called ''libeina.so'' in the link search path (usually ''/lib'' and ''/usr/lib'', unless you also add directories with ''-L'' such as ''-L/usr/local/lib''). If this file (''libeina.so'') is a symbolic link (symlink), this is dereferenced. Generally this is the symlink setup used for shared libraries:
+
+^File                  ^    ^Link                  ^
+|//libeina.so//        | => |//libeina.so.1//      |
+|//libeina.so.1//      | => |//libeina.so.1.4//    |
+|//libeina.so.1.4//    | => |//lineina.so.1.4.99// |
+|**libiena.so.1.4.99** |    |                      |
+
+After this dereferencing, the compiler will embed into the binary being compiled the need to link to ''libiena.so.1''. If this doesn't exist anywhere in the runtime search path (which is different to the compile time one - this is normally ''/lib'' and ''/usr/lib'' and ''/etc/ld.so.conf'' can extend this list, as well as the ''LD_LIBRARY_PATH'' environment variable can set the search path at runtime something like ''/usr/local/lib:/usr/lib:/lib'' which would mean to look in ''/usr/local/lib'' first, then ''/usr/lib'' then ''/lib'' for the shared library.
+
+It is also possible to manually load a shared object file (thus the ''.so'' extension) manually using calls such as ''dlopen()'' and ''dlsym()''. This will led you load a shared object file and manually look for specific symbols in the file and get a pointer per symbol. This is often a way API/ABI calls are found from modules.
+
+The difference between ABI and API is that API covers the interface in general both at compile AND at runtime, but ABI is specifically post-compilation at runtime. If ABI stays the same, but API changes, then existing binaries will keep working fine. If you wish to adapt to the new API you will need to recompile and possibly change some of your code to adapt to these changes.
+
 ==== System calls ====
+
+
 
 ----
 
