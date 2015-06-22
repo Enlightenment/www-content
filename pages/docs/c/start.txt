@@ -596,6 +596,25 @@ A good [[http://man7.org/linux/man-pages/man2/syscalls.2.html|list of system cal
 ----
 
 ==== Endianess ====
+
+Memory is really a sequence of bytes from the view of a CPU, but when you access data types like ''short''s or ''int''s etc. that consume multiple bytes, the order that they are read from in memory and assigned to slots from the LSB (Least Significant Byte) to the MSB (Most Significant byte). There are 2 commonly referred to ways of accessing these bytes in multi-byte types, called **Big Endian** and **Little Endian**. [[http://en.wikipedia.org/wiki/Endianness|Endianess]] these days is mostly the little variety. X86 and x86_64 are both little endian. ARM generally is shipped as little endian, but is capable of being big endian too. PowerPC, SPARC, Alpha and MIPS are generally big endian, but may feature the ability to switch depending on version. Generally if it is possible to switch, this is decided at boot and remains fixed. So generally endianess these days is:
+
+^Architecture ^Endianess ^
+^x86          |Little    |
+|x86_64       |Little    |
+|ARM          |Little    |
+|PowerPC      |Big       |
+|MIPS         |Big       |
+|SPARC        |Big       |
+|Alpha        |Big       |
+
+That means that the majority of people will find themselves programming for a little endian environment. This does not mean you can assume it everywhere. Many file formats store data in a big endian fashion, as do many network protocols, so when you deal with memory and have to save and load it or transmit it across a network, you need to be very careful about endianess and have to convert as necessary. Also be aware that alignment also matters.
+
+In memory, in order from lowest memory address to highest, endianess looks as follows for an 4 byte ''int'' type:
+
+^Decimal    ^Hex          ^Big endian               ^Little endian            ^
+|1393589900 |''53107e8c'' |''53''''10''''7e''''8c'' |''8c''''7e''''10''''53'' |
+
 ==== Function pointers ====
 ==== Callbacks ====
 ==== Threads ====
