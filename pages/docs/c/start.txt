@@ -3,7 +3,7 @@
 
 ==== Preface ====
 
-//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL on todays common architectures. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
+//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL on today's common architectures. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
 
 //It won't cover esoteric details of "strange architectures". It pretty much covers C as a high level assembly language that is portable across a range of modern architectures.//
 
@@ -159,10 +159,10 @@ double things[200];
 
 <code c>
 struct mydata
-  {
-     int count;
-     double items[100];
-  };
+{
+   int count;
+   double items[100];
+};
 
 struct mydata bob;
 </code>
@@ -175,41 +175,41 @@ A function is a basic unit of execution. Conceptually a function hides an implem
 
 <code c>
 struct sandwich
-  {
-    struct bread_slice top;
-    struct bread_slice bottom;
-    enum filling *fillings;
-    int num_fillings;
-  };
+{
+  struct bread_slice top;
+  struct bread_slice bottom;
+  enum filling *fillings;
+  int num_fillings;
+};
 
 enum filling
-  {
-    FILLING_HAM,
-    FILLING_CHEESE,
-    FILLING_BUTTER
-  };
+{
+  FILLING_HAM,
+  FILLING_CHEESE,
+  FILLING_BUTTER
+};
 
 struct sandwich *
 make_sandwich(enum filling *fillings, int num_fillings)
-  {
-    struct sandwich *sandwich;
-    int i;
+{
+  struct sandwich *sandwich;
+  int i;
     
-    sandwich = malloc(sizeof(struct sandwich));
-    if (!sandwich) return NULL;
-    get_bread_top(&(sandwich->top));
-    get_bread_bottom(&(sandwich->bottom));
-    sandwich->fillings = malloc(sizeof(enum filling) * num_fillings);
-    if (!sandwich->fillings)
-      {
-        free(sandwich);
-        return NULL;
-      }
-    for (i = 0; i < num_fillings; i++)
-      sandwich->fillings[i] = fillings[i];
-    sandwich->num_fillings = num_fillings;
-    return sandwich;
-  }
+  sandwich = malloc(sizeof(struct sandwich));
+  if (!sandwich) return NULL;
+  get_bread_top(&(sandwich->top));
+  get_bread_bottom(&(sandwich->bottom));
+  sandwich->fillings = malloc(sizeof(enum filling) * num_fillings);
+  if (!sandwich->fillings)
+    {
+      free(sandwich);
+      return NULL;
+    }
+  for (i = 0; i < num_fillings; i++)
+    sandwich->fillings[i] = fillings[i];
+  sandwich->num_fillings = num_fillings;
+  return sandwich;
+}
 </code>
 
 I may call the function as follows:
@@ -268,19 +268,19 @@ You can  use this with structs and enums as well to make new types that represen
 
 <code c>
 struct sandwich
-  {
-    struct bread_slice top;
-    struct bread_slice bottom;
-    enum filling *fillings;
-    int num_fillings;
-  };
+{
+  struct bread_slice top;
+  struct bread_slice bottom;
+  enum filling *fillings;
+  int num_fillings;
+};
 
 enum filling
-  {
-    FILLING_HAM,
-    FILLING_CHEESE,
-    FILLING_BUTTER
-  };
+{
+  FILLING_HAM,
+  FILLING_CHEESE,
+  FILLING_BUTTER
+};
 
 typedef struct sandwich Sandwich;
 typedef enum filling Filling;
@@ -399,13 +399,13 @@ You can define macros that take parameters. They will produce the code that you 
 <code c>
 int
 myfunc(void)
-  {
+{
 #ifdef _WIN32
-    // windows specific code here
+  // windows specific code here
 #else
-    // generic code here
+  // generic code here
 #endif
-  }
+}
 </code>
 
 Another very common use of the pre-processor is to compile only some pieces of code in specific circumstances. A common use-case is for portability (but you can also use this along with #includes, macros etc. to use the pre-processor as a code-generation tool to save a lot of re-typing of almost the same bits of code). On one platform you may have to have some pieces of code work in a specific way that differs from other platforms. This commonly happens with Windows vs Linux vs BSD etc. so you may end up with segments of code such as above, with platform-specific segments of code (individual lines, or maybe even whole large sections of files of 100's or 1000's of lines of code, or perhaps in header files with sometimes specific include files being included only on certain platforms).
@@ -415,17 +415,17 @@ You can use this also to compile your code with features enabled or not. You can
 <code c>
 int
 myfunc(void)
-  {
+{
 #ifdef MY_FEATURE
-    int i = 0;
+  int i = 0;
     
-    while (i < 0) i = rand();
-    return i;
+  while (i < 0) i = rand();
+  return i;
 #else
-    // feature not implemented, so return -1
-    return -1;
+  // feature not implemented, so return -1
+  return -1;
 #endif
-  }
+}
 </code>
 
 So only compile the active code in when enabled in the compilation process.
@@ -641,10 +641,10 @@ Or in a structure:
 
 <code c>
 struct t
-  {
-    int num;
-    int *(*funcptr) (struct t *tim, int num, char *str);
-  };
+{
+  int num;
+  int *(*funcptr) (struct t *tim, int num, char *str);
+};
 </code>
 
 You may find it easier to typedef these function pointer types so they are simpler to write later such as:
@@ -663,14 +663,14 @@ typedef int *(*MyCallbacktype) (struct t *tim, int num, char *str);
 void dothis(int num, MyCallbacktype funcptr);
 
 int *task_a(struct t *tim, int num, char *str)
-  {
-    // ... content task a here
-  }
+{
+  // ... content task a here
+}
   
 int *task_b(struct t *tim, int num, char *str)
-  {
-    // ... content of task b here
-  }
+{
+  // ... content of task b here
+}
 
 if (rand() < 100) dothis(99, task_b);
 else dothis(100, task_a);
@@ -679,7 +679,111 @@ else dothis(100, task_a);
 Function pointers are extremely important and useful and form the backbone of EFL in the form of the following Callbacks.
 
 ==== Callbacks ====
+
+Callbacks are simply a formal way of naming a function pointer to be //called back// at another point. This is used commonly among software like GUI toolkits for useful behavior handling, such as when someone "clicks" a button, or when a window resizes, or a slider changes value etc. It literally is saying "When X happens, call function Y". For example:
+
+<code c>
+static void
+win_del(void *data, Evas_Object *obj, void *event_info)
+{
+   elm_exit();
+}
+
+// ...
+
+Evas_Object *win;
+
+win = elm_win_add(NULL, "tst", ELM_WIN_BASIC);
+evas_object_smart_callback_add(win, "delete,request", win_del, NULL);
+</code>
+
+In this example, the code creates a new window and then adds a callback to the object to be called on the ''"delete,request"'' event. The function to call whenever this happens is the ''win_del'' function. This function simple calls another function that triggers an exit. Callbacks will keep being be called whenever such an event happens until they are deleted and/or unregistered.
+
+In most cases such callbacks for a GUI toolkit will be called from the main loop function. This main loop will process events and eventually when an event does end up being one that asks to delete a window, then the logic code in the toolkit that figures this out will end up calling all callbacks registered for this event.
+
+Callbacks are a very simple, yet very powerful concept. It is important to understand them and be comfortable with them once you write less trivial C code.
+
 ==== Threads ====
+
+A more advanced concept in programming is threading. This is where multiple pieces of code (functions and children of functions) can execute in the same process at the same time. All threads can read and write to all memory within that process. This is extremely dangerous, so avoid threading until you have fairly well mastered C without threads.
+
+If you must use threads, even if you are experienced, sticking to a model where threads share as little data as possible and very carefully hand off data from one thread to another and then never touch it again is far safer. The lowest levels of C that deal with threads generally is the //pthreads// API. EFL has a wrapper for systems with and without pthreads to ensure portability and compatibility, but this here will cover raw pthreads.
+
+You would begin a thread with ''pthread_create()'' as follows:
+
+<code c>
+#include <stdio.h>
+#include <pthread.h>
+
+static void
+thread1(void *data)
+{
+  for (;;)
+    {
+      sleep(8);
+      printf("THREAD 1, data: %s\n", data);
+    }
+}
+
+static void
+thread2(void *data)
+{
+  for (;;)
+    {
+      sleep(7);
+      printf("THREAD 2, data: %s\n", data);
+    }
+}
+
+int
+main(int argc, char **argv)
+{
+  pthread_t thread1_handle, thread2_handle;
+
+  pthread_create(&thread1_handle, NULL, thread1, "first data");
+  pthread_create(&thread2_handle, NULL, thread2, "second data");
+  for (;;)
+    {
+      sleep(3);
+      printf("MAIN PROCESS\n");
+    }
+  return 0;
+}
+</code>
+
+The pthread API provides various utilities used to synchronize things between threads. There are mutexes (locks used to indicate the lock owner currently owns the data and everyone else has to wait to gain a lock), conditions, spinlocks and more. You would use mutexes (locks) like this:
+
+<code c>
+struct obj
+{
+  pthread_mutex_t lock;
+  int data1, data2;
+  char *str;
+};
+
+struct obj *
+create_obj(void)
+{
+  struct obj *ob = malloc(sizeof(struct obj));
+  if (!ob) return NULL;
+  ob->data1 = 1;
+  ob->data2 = 7;
+  obj->str = strdup("a string");
+  pthread_mutex_init(&(ob->lock));
+  return ob;
+}
+
+void
+set_string(struct obj *ob, char *str)
+{
+  pthread_mutex_lock(&(ob->lock));
+  free(ob->str);
+  ob->str = strdup(str);
+  pthread_mutex_unlock(&(ob->lock));
+}
+</code>
+
+Note that any function modifying or accessing the object like ''set_string()'' first locks the mutex, then does its work, then unlocks. This is a major source of threading bugs. Often some code locks an object, then forgets to unlock, or with more complex lock setups, you end up with deadlocks as 2 pieces of code wait for the other to blink. It is easy to get this wrong and often very difficult to debug it as often the issues only happen rarely in special timing circumstances. Use threads very wisely.
 
 ----
 
