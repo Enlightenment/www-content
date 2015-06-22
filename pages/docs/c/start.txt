@@ -563,7 +563,35 @@ The difference between ABI and API is that API covers the interface in general b
 
 ==== System calls ====
 
+System calls are special API calls. They are almost all buried inside libc. Function calls here inside libc issue a special interrupt to switch into kernel mode and passing in parameters. Once switched into kernel mode, no application code is executing anymore. All code is from the kernel, and its job is to implement the functionality of the system call. This code runs in "kernel space" and basically has full privileges to do anything it likes. Kernels though will enforce access and security policies, so unless there is a bug in the kernel, your process should be limited to what it can do based on these rules. Once the kernel has finished doing what is necessary for the system call, it will return back to userspace and continue execution where the system call was.
 
+System calls are rather expensive. They can cost hundreds if not thousands of CPU cycles. Also once they return, your code will not run at full speed for a while, because Kernels will flush and empty caches, so the L1, L2 (and maybe L3) caches all need to warm up again. Avoid system calls if you can because they are far more expensive than a simple function call within an app or between an app and a library. Also be aware that context switches between 2 processes or a page fault (swapping out memory to disk when low on physical RAM, as well as paging in data from disk such as code or other memory-mapped files) has the same switching overhead in addition to the actual work that needs to be done.
+
+A good [[http://man7.org/linux/man-pages/man2/syscalls.2.html|list of system calls can be found here]], but a common list of important ones is:
+
+  * open()
+  * close()
+  * read()
+  * write()
+  * lseek()
+  * stat()
+  * mmap()
+  * munmap()
+  * madvise()
+  * mprotect()
+  * fcntl()
+  * ioctl()
+  * connect()
+  * accept()
+  * bind()
+  * access()
+  * select()
+  * getpid()
+  * getuid()
+  * gettimeofday()
+  * clock_gettime/()
+  * time()
+  * mkdir()
 
 ----
 
