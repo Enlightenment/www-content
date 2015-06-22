@@ -600,7 +600,7 @@ A good [[http://man7.org/linux/man-pages/man2/syscalls.2.html|list of system cal
 Memory is really a sequence of bytes from the view of a CPU, but when you access data types like ''short''s or ''int''s etc. that consume multiple bytes, the order that they are read from in memory and assigned to slots from the LSB (Least Significant Byte) to the MSB (Most Significant byte). There are 2 commonly referred to ways of accessing these bytes in multi-byte types, called **Big Endian** and **Little Endian**. [[http://en.wikipedia.org/wiki/Endianness|Endianess]] these days is mostly the little variety. X86 and x86_64 are both little endian. ARM generally is shipped as little endian, but is capable of being big endian too. PowerPC, SPARC, Alpha and MIPS are generally big endian, but may feature the ability to switch depending on version. Generally if it is possible to switch, this is decided at boot and remains fixed. So generally endianess these days is:
 
 ^Architecture ^Endianess ^
-^x86          |Little    |
+|x86          |Little    |
 |x86_64       |Little    |
 |ARM          |Little    |
 |PowerPC      |Big       |
@@ -616,6 +616,68 @@ In memory, in order from lowest memory address to highest, endianess looks as fo
 |1393589900 |''53107e8c'' |''53''''10''''7e''''8c'' |''8c''''7e''''10''''53'' |
 
 ==== Function pointers ====
+
+Pointers are the stuff of life when it comes to C and machines. They tell you where everything lives. Where your data is and where the next bit of data after this one is and so on. Following this setup, functions also live somewhere in memory. They actually have pointers. These are function pointers. This is an amazingly powerful feature of C that most don't being to discover until much later. It allows you to do things like say "When this operation has finished, call //THIS// function here". And that function is just a piece of data. A pointer. A function pointer. You can simply pass it around just like any other data. You can store it in structures, in local variables and pass it in as a parameter to another function.
+
+The downside of function pointers is the added mental load to handle the indirection, as well as the horrible syntax. So for a function with a prototype of:
+
+<code c>
+int *myfunc (struct t *tim, int num, char *str);
+</code>
+
+You would declare the function pointer as:
+
+<code c>
+int *(*myfunc) (struct t *tim, int num, char *str)
+</code>
+
+So you pass this function pointer in as parameter ''funcptr'' in the following function:
+
+<code c>
+void dothis(int num, int *(*funcptr) (struct t *tim, int num, char *str));
+</code>
+
+Or in a structure:
+
+<code c>
+struct t
+  {
+    int num;
+    int *(*funcptr) (struct t *tim, int num, char *str);
+  };
+</code>
+
+You may find it easier to typedef these function pointer types so they are simpler to write later such as:
+
+<code c>
+typedef int *(*MyCallbacktype) (struct t *tim, int num, char *str);
+
+void dothis(int num, MyCallbacktype funcptr);
+</code>
+
+You can use any compatible (returns the same types and accepts the same parameters) function names as actual function pointers such as:
+
+<code c>
+typedef int *(*MyCallbacktype) (struct t *tim, int num, char *str);
+
+void dothis(int num, MyCallbacktype funcptr);
+
+int *task_a(struct t *tim, int num, char *str)
+  {
+    // ... content task a here
+  }
+  
+int *task_b(struct t *tim, int num, char *str)
+  {
+    // ... content of task b here
+  }
+
+if (rand() < 100) dothis(99, task_b);
+else dothis(100, task_a);
+</code>
+
+Function pointers are extremely important and useful and form the backbone of EFL in the form of the following Callbacks.
+
 ==== Callbacks ====
 ==== Threads ====
 
