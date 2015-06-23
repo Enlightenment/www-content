@@ -1,42 +1,36 @@
 ~~Title: Enlightenment debugging~~
-==== Enlightenment Debugging ===
+==== Enlightenment Debugging ====
 
-This tutorial aims at providing a comprehensive and reproducible documentation
-to debug Enlightenment. It is divided in two sections:
-    * [[enlightenment_debugging#Debugging_Enlightenment_using_Gdb|Gdb]]
-    * [[enlightenment_debugging#Valgrind|Valgrind]]
+This tutorial aims at providing a comprehensive and reproducible documentation to debug Enlightenment. It is divided in two sections:
 
-Before debugging make sure your debug symbols are enabled, if not, go to the
-[[/docs-efl-start#Enable_debug_symbols_Optional|Enable debug symbols]]
-section.
+    * [[#Debugging_Enlightenment_using_GDB|GDB]]
+    * [[#Valgrind|Valgrind]]
 
+Before debugging make sure your debug symbols are enabled, if not, go to the [[/docs-efl-start#Enable_debug_symbols_Optional|Enable debug symbols]] section.
 
-=== Debugging Enlightenment using Gdb ===
+=== Debugging Enlightenment using GDB ===
 
-In order to use gdb, we will simulate a crash in Enlightenment.
+In order to use GDB, we will simulate a crash in Enlightenment.
 
-Start by running Enlightenment on a machine. Then switch to another tty
-(CTRL+ALT+F1 for tty1).
+Start by running Enlightenment on a machine. Then switch to another tty (CTRL+ALT+F1 for tty1).
 
-At that point, 2 processes are interesting, enlightenment and
-enlightenment_start. Indeed, enlightenment is traced by enlightenment_start.
+At that point, 2 processes are interesting, ''enlightenment'' and ''enlightenment_start''. Indeed, ''enlightenment'' is traced by ''enlightenment_start''.
 
 Then setup SEGV to segfault enlightenment.
+
 <code c>
 kill -SIGSEGV $(pidof enlightenment)
 </code>
 
-enlightenment_start will open a pop-up named Enlightenment Error.
-This pop-up indicates that Enlightenment segfaulted and allows to recover or
-log out but also detaches from the child process (enlightenment) and let
-advanced users use gdb to debug it.
+''enlightenment_start will'' open a pop-up named Enlightenment Error. This pop-up indicates that Enlightenment segfaulted and allows to recover or log out but also detaches from the child process (Enlightenment) and let advanced users use GDB to debug it.
+
 <code bash>
 #gdb on the running enlightenment process
 gdb enlightenment $(pidof enlightenment)
 </code>
 
-After a bit a prompt is available, if you want, you can save the
-traces in a log:
+After a bit a prompt is available, if you want, you can save the traces in a log:
+
 <code bash>
 #save the traces in log.txt
 set logging file log.txt
@@ -45,8 +39,7 @@ set logging on
 
 == Backtrace ==
 
-Use the backtrace command to get information about frames to
-know where the segfault is coming from.
+Use the backtrace command to get information about frames to know where the segfault is coming from.
 
 <code bash>
 (gdb) bt
@@ -74,21 +67,13 @@ know where the segfault is coming from.
 #12 0x08059bb3 in main (argc=1, argv=0xbffff144) at e_main.c:551
 </code>
 
-As you can see in the stack trace, gdb finds the segfault in libc and pops to the
-main function in e_main. But it doesn't seem credible to have a bug in libc or
-x, the important thing is Enlightenment has its own segfault handler which is
-very explicit on frame 5.
+As you can see in the stack trace, GDB finds the segfault in libc and pops to the main function in e_main. But it doesn't seem credible to have a bug in libc or x, the important thing is Enlightenment has its own segfault handler which is very explicit on frame 5.
 
-The e_sigseg_act() function at frame 6 is called directly from the kernel when
-the program segfaults, meaning enlightenment causes the
-segfault. So, the
-segfault comes from the select function (a libc function) at frame 8 called in
-_e_core_main_select_function at frame 9.
+The e_sigseg_act() function at frame 6 is called directly from the kernel when the program segfaults, meaning enlightenment causes the segfault. So, the segfault comes from the select function (a libc function) at frame 8 called in _e_core_main_select_function at frame 9.
 
 == Go in a frame ==
 
-So, the reason of segfault seems to be at frame 9, when //select// function is
-called. Let's go to frame 9:
+So, the reason of segfault seems to be at frame 9, when ''select'' function is called. Let's go to frame 9:
 
 <code bash>
 fr 9
@@ -107,11 +92,7 @@ fr 9
 342          }
 </code>
 
-The first command **//fr 9//** gives useful information: name of the file,
-number of the line, the function called, ...
-The second command **//l//** lists the code around the called function.
-Another useful command allows to print the variables, the parameters, helping
-you to find out the problem, a wrong parameter, a null pointer,...
+The first command **//fr 9//** gives useful information: name of the file, number of the line, the function called, ... The second command **//l//** lists the code around the called function. Another useful command allows to print the variables, the parameters, helping you to find out the problem, a wrong parameter, a null pointer...
 
 <code bash>
 (gdb) p ret
@@ -124,34 +105,27 @@ $3 = {__fds_bits = {0 <repeats 32 times>}}
 $4 = {__fds_bits = {0 <repeats 32 times>}}
 </code>
 
-Gdb is important to start debugging, it will help you to resize the problem
-even if sometimes is not enough.
+GDB is important to start debugging, it will help you to resize the problem even if sometimes is not enough.
 
 ----
 
 === Valgrind ===
 
-Valgrind aims at finding memory problems but for that Enlightenment needs to be run
-through Valgrind.
+Valgrind aims at finding memory problems but for that Enlightenment needs to be run through Valgrind.
 
 == Prerequisites ==
 
-This tutorial will present 3 different ways to run enlightenment through valgrind:
-    * remote debugging
+This tutorial will present 3 different ways to run enlightenment through Valgrind:
+
+    * Remote debugging
     * Xephyr invocation
     * Xinit invocation
 
-The easiest way is certainly Xephyr because it allows to target a window on a
-X server host, sadly Xephyr doesn't yet support OpenGL and any issue that may
-be related to it will need to use the Xinit version.
+The easiest way is certainly Xephyr because it allows to target a window on a X server host, sadly Xephyr doesn't yet support OpenGL and any issue that may be related to it will need to use the Xinit version.
 
 == Remote Debugging ==
 
-Enlightenment_start launcher will handle
-setting up environment variables, paths, and launching any other required
-services before Enlightenment starts.
-Fortunately, there are some options in enlightenment_start that allow to run
-Enlightenment through valgrind:
+Enlightenment_start launcher will handle setting up environment variables, paths, and launching any other required services before Enlightenment starts. Fortunately, there are some options in enlightenment_start that allow to run Enlightenment through Valgrind:
 
 <code bash>
 $enlightenment_start --help
@@ -171,7 +145,7 @@ Options:
         Save valgrind log to file, see valgrind's --log-f
 </code>
 
-First of all, get the ip address of your host machine and connect to it, then
+First of all, get the IP address of your host machine and connect to it, then
 on the distant machine, launch X:
 
 <code bash>
@@ -179,15 +153,14 @@ on the distant machine, launch X:
 sudo X -ac :1 &
 </code>
 
-For example, If you want to check leak and save traces in a log file :
+For example, if you want to check leak and save traces in a log file:
 
 <code bash>
 export DISPLAY=:1
 enlightenment_start -valgrind=4 -valgrind-log-file=log.txt
 </code>
 
-At that point, Enlightenment should have started on your host machine. If the
-session is closed then the summary of valgrind should look like :
+At that point, Enlightenment should have started on your host machine. If the session is closed then the summary of Valgrind should look like:
 
 <code bash>
 ==1488==
@@ -207,7 +180,7 @@ session is closed then the summary of valgrind should look like :
 ==1488== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code>
 
-== Valgrind Invocation - xinit ==
+== Valgrind Invocation - Xinit ==
 
 Create a file called .xinitrc-debug in your home with the following content:
 
@@ -233,8 +206,7 @@ echo "PATH=$enlightenment_install_path/bin: ... " >> $log_file
 $enlightenment_install_path/bin/enlightenment_start -valgrind 2>&1 | tee -a "$log_file"
 </code>
 
-You can now start a debugging session, after X was closed if it is not the
-case log out:
+You can now start a debugging session, after X was closed if it is not the case log out:
 
 <code bash>
 /usr/bin/xinit ~/.xinitrc-debug -- :1 -nolisten tcp
@@ -242,22 +214,20 @@ case log out:
 
 == Valgrind Invocation - Xephyr ==
 
-Xephyr is a display server implementing the X11 display server protocol which
-targets a window on a X Server host. So, for this it is important that X is
-launched, you can even do it in your usual window manager under X.
+Xephyr is a display server implementing the X11 display server protocol which targets a window on a X Server host. So, for this it is important that X is launched, you can even do it in your usual window manager under X.
 
 Of course, you need to install Xephyr.
 
 <code bash>
 Xephyr -ac -br -noreset -screen 800x600 :1
 </code>
+
     *ac: disable access control restrictions
     *br: create root window with black background
     *noreset: don't reset after last client exists
     *screen 800x600: Specify screen characteristics
 
-A black screen should now be displayed, and the interesting thing for us is
-that you can launch a window manager on it with valgrind in addition:
+A black screen should now be displayed, and the interesting thing for us is that you can launch a window manager on it with Valgrind in addition:
 
 <code bash>
 DISPLAY=:1 enlightenment_start -valgrind
