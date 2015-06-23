@@ -1,0 +1,43 @@
+~~Title: Genlist Tutorial~~
+==== Genlist Tutorial ====
+
+This tutorial deals with Elementary genlist, a list widget for large sets of
+elements.  Its API to populate entries reflects that as it uses callbacks.
+
+Also keep in mind that the same widget handles both flat lists and trees and
+this is obviously seen in the API.
+
+=== Initialize the Application  ===
+
+The code below shows a typical Elementary application that creates a window
+entitled "Genlist Basic Tutorial". The genlist goes inside.
+
+<code c>
+#include <Elementary.h>
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+    Evas_Object *win;
+
+    win = elm_win_util_standard_add("Genlist", "Genlist Basic Tutorial");
+    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+    elm_win_autodel_set(win, EINA_TRUE);
+    //win 400x400 px
+    evas_object_resize(win, 400, 400);
+
+    //GENLIST here
+
+    evas_object_show(win);
+    elm_run();
+    return 0;
+}
+ELM_MAIN()
+</code>
+
+Genlist example :{{ :genlist.png?direct |list}}
+
+=== Table of contents ===
+
+  * [[/tutorial/genlist/set-up|Set-up]] : {{/code_c/tutorial/genlist/set-up_genlist.c}}
+  * [[/tutorial/genlist/modifications|Modifications]] : {{/code_c/tutorial/genlist/modifications_genlist.c}}

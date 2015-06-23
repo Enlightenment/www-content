@@ -1,0 +1,252 @@
+~~Title: Genlist Modifications~~
+==== Genlist Modifications ====
+
+=== Choosing Another Item Style to Add or Remove Parts ===
+
+As mentioned above, the number of parts to fill depends on the item style that
+is chosen when adding a new item. This is simply a matter of setting the right
+value when filling the ''Elm_Genlist_Item_Class'' struct:
+
+<code c>
+itc->item_style = "default";
+</code>
+
+The Genlist Widget lists all available item styles:
+  * default
+  * default_style - The text part is a textblock
+  * double_label
+  * icon_top_text_bottom
+  * group_index
+  * one_icon - Only 1 icon at left
+  * end_icon - Only 1 icon at end/right
+  * no_icon - No icon at end/right
+  * full - Only 1 icon, elm.swallow.content, which consumes whole area of genlist item
+
+
+Further customization is achieved by modifying the theme as explained in the
+[[/coming_soon|Edje guide]].
+
+In case the customization is only visual, it is good practice to keep the same
+item style names for new themes. This makes it possible to change theme and
+keep the code the same while also retaining the same overall item placement.
+
+==== Using Item Modes ====
+
+So far the genlist examples have all featured bare lists while the genlist
+widget is able to display trees or even a "group" mode where scrolling keeps
+the item at the top of the widget until another group comes and replaces it.
+
+//**__Group Mode__**//
+
+The group mode makes it possible to keep an element visible as long as one of
+its children is visible. This is most useful for "title" items.
+
+Mark some elements as ''ELM_GENLIST_ITEM_GROUP'' and use the returned
+''Elm_Object_Item'' to establish the parent-children relationship when adding the
+children items.
+
+Since there are two kind of items, create two item classes. Give them
+different styles and callback functions. The callback functions are visible in
+the example, they have no functionalities:
+
+<code c>
+Elm_Genlist_Item_Class *_itc_child = elm_genlist_item_class_new();
+_itc->item_style        = "default_style";
+_itc->func.text_get     = _genlist_text_get_size;
+_itc->func.content_get  = _genlist_content_get_bg;
+_itc->func.state_get    = NULL;
+_itc->func.del          = NULL;
+
+Elm_Genlist_Item_Class *_itc_parent = elm_genlist_item_class_new();
+_itc2->item_style       = "default_style";
+_itc2->func.text_get    = _genlist_text_get_nosize;
+_itc2->func.content_get = _genlist_content_get_icon;
+_itc2->func.state_get   = NULL;
+_itc2->func.del         = NULL;
+</code>
+
+Then add a group header and follow it with 10 children. This is repeated 10
+times.
+
+The parent has type ''ELM_GENLIST_ITEM_GROUP'' while the children have type
+''ELM_GENLIST_ITEM_NONE''.
+
+The other important point is that the value returned by
+''elm_genlist_item_append()'' is stored in it and then sent to the
+''elm_genlist_item_append()'' call that adds the children. This creates the
+parent-children relationship.
+
+<code c>
+for (i = 0; i < 1000; i++)
+  {
+     it = elm_genlist_item_append(list, _itc_parent,
+        (void *)(uintptr_t) (10 * i),
+        NULL,
+        ELM_GENLIST_ITEM_GROUP,
+        NULL,
+        NULL
+     );
+     for (j = 0; j < 10; j++)
+       {
+          elm_genlist_item_append(list, _itc_child,
+             (void *)(uintptr_t) (10 * i + j),
+             it, //parent item
+             ELM_GENLIST_ITEM_NONE,
+             NULL,
+             NULL
+          );
+       }
+  }
+</code>
+
+//**__Tree Mode__**//
+
+Like group mode, tree mode uses the parenting relationship with other items.
+Unlike group mode, the child elements are created on-demand when their parent
+is expanded and deleted when it is contracted. This is done by using smart
+callbacks: ''expand,request'', ''expanded'', ''contract,request'', and
+''contracted''. Like any smart callback, they are registered through
+''evas_object_smat_callback_add'' on the genlist object:
+
+
+<code c>
+    evas_object_smart_callback_add(list, "expand,request",
+            _tree_item_expand_request, _itc_parent);
+    evas_object_smart_callback_add(list, "expanded", _tree_item_expanded,
+            _itc_child);
+
+    evas_object_smart_callback_add(list, "contract,request",
+            _tree_item_contract_request, _itc_child);
+    evas_object_smart_callback_add(list, "contracted", _tree_item_contracted,
+            NULL);
+</code>
+
+The callbacks ''expand,request'' and ''contract,request'' do only one thing:
+decide whether the element is expanded or contracted. This is done by using
+''elm_genlist_item_expanded_set()'' function; if it changes the expansion
+status of the item, the next callback is called (either ''expanded'' or
+''contracted'' , depending on whether it was an ''expand,request'' or
+''contract,request'' event). A minimal implementation of these callbacks is
+therefore:
+
+<code c>
+static void
+_tree_item_expand_request(void *data, Evas_Object *o, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item*) event_info;
+
+    elm_genlist_item_item_class_update(it, data);
+
+    elm_genlist_item_expanded_set(it, EINA_TRUE);
+}
+</code>
+
+<note>
+The example above has an extra line: the call to ''elm_genlist_item_item_class_update()''. It changes the item style and is explained in the [[/tutorial/genlist/modifications#Using_Other_APIs|Changing the item class of an item after its creation section]].^
+</note>
+
+<code c>
+static void
+_tree_item_contract_request(void *data, Evas_Object *o, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item*) event_info;
+
+    elm_genlist_item_item_class_update(it, data);
+
+    elm_genlist_item_expanded_set(it, EINA_FALSE);
+}
+</code>
+
+As said above, once the genlist item status is set to ''expanded'', the
+expanded event is triggered and it is the duty of a callback for that event to
+populate the list with the item's children. This relies on the ''parent''
+parameter of functions like ''elm_genlist_item_append()'', like for the group
+mode.
+
+The function below is a callback implementation for the ''expanded'' event. It
+adds items that are built similarly to previous items, the only change is the
+parent parameter which is not NULL. Conveniently, the
+parent''Elm_Object_Item'' and ''Elm_Genlist_Item_Class'' pointers that are passed to the
+''elm_genlist_item_append()'' function are given in the ''event_info'' and
+''data'' callback and need to be cast.
+
+<code c>
+static void
+_tree_item_expanded(void *data, Evas_Object *o, void *event_info)
+{
+    Elm_Object_Item *it_parent = (Elm_Object_Item*) event_info;
+    int i_parent = (int)(uintptr_t)elm_object_item_data_get(it_parent);
+    Elm_Object_Item *list = o;
+    Elm_Genlist_Item_Class *itc = data;
+
+    int i;
+    for (i = 0; i < 10; i++)
+        {
+            elm_genlist_item_append(list, itc,
+                    (void *)(uintptr_t) (i + i_parent),
+                    it_parent,
+                    ELM_GENLIST_ITEM_NONE,
+                    NULL,
+                    NULL
+                    );
+        }
+}
+</code>
+
+The following code has the callback function for the ''contracted'' event. It
+imply calls ''elm_genlist_item_subitems_clear()'' to clear all children (including
+their own children if they have any) of the given item. Again, the item that
+is being contracted is available through the ''event_info'' parameter to the
+callback.
+
+<code c>
+static void
+_tree_item_contracted(void *data, Evas_Object *o, void *event_info)
+{
+    Elm_Object_Item *it_parent = (Elm_Object_Item*) event_info;
+
+    elm_genlist_item_subitems_clear(it_parent);
+}
+</code>
+
+//**__Mixing Group and Tree Modes__**//
+
+A common UI design is to mix group and tree modes. It allows for a tree
+behavior while also keeping the group header item. The EFLs do not do any
+magic here and the way to get such a behavior is to create an item of type
+group, an item of type tree which parent is the group item. Then add the
+callbacks to populate the children of the tree item in the regular way.
+
+=== Using Other APIs ===
+
+//**__Homogeneous Item Size__**//
+
+Because of the scroller, the actual height and/or width of the genlist must be
+computed. This means summing the sizes of all the items, the sizes must be
+computed. This obviously has a cost and slows down adding items to the
+genlist.
+
+The ''elm_genlist_homogeneous_set()'' function alleviates this issue by
+assuming all the items are the same size as the first one of the list. It
+speeds up large insertions. However, it may lead to serious graphical issues
+if the items are not actually the same size. Use with care.
+
+//**__Changing the Item Class of an Item After Its Creation__**//
+
+Changing the item class of a widget is an easy way to change the appearance
+upon selection or others actions of the user. This is done by calling
+''elm_genlist_item_class_update()'' :
+
+<code c>
+static void
+_tree_item_expand_request(void *data, Evas_Object *o, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item*) event_info;
+
+    elm_genlist_item_item_class_update(it, data);
+
+    elm_genlist_item_expanded_set(it, EINA_TRUE);
+}
+</code>
+\\
+//**__The whole code__**// : {{/code_c/tutorial/genlist/modifications_genlist.c}}

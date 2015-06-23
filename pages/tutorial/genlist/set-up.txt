@@ -1,0 +1,229 @@
+~~Title: Genlist Set-up~~
+==== Genlist Set-up ====
+
+=== Creating a Genlist ===
+
+Call ''elm_genlist_add()'' to create a genlist. Then, new entries can be added.
+In this example, the basic windows is created first, then a genlist is added
+to it, and then 100 elements with text and a colored block on each side of
+it.
+
+<code c>
+Evas_Object *list = elm_genlist_add(win);
+</code>
+
+=== Adding New Entries ===
+
+Before adding new entries, it is necessary to build a basic item class.
+
+//**__Building a Basic Item Class__**//
+
+When adding an item, genlist_item_{append, prepend, insert} function needs
+item class of the item. Given callback parameters are used at retrieving
+{text, content} of added item. Set as NULL if it's not used. If there's no
+available memory, return can be NULL.
+
+The code for the minimal genlist item class is below:
+
+<code c>
+Elm_Genlist_Item_Class *_itc = elm_genlist_item_class_new();
+_itc->item_style = "default";
+_itc->func.text_get = NULL;
+_itc->func.content_get = NULL;
+_itc->func.state_get = NULL;
+_itc->func.del = NULL;
+</code>
+
+It creates a simple item class, sets the ''item_style'' to "default" and
+every other field to NULL. However, this leaves out the ''text_get'' and
+''content_get'' fields which are used to add text and an icon to the list
+entry. This is explained in another section.
+
+//**__Adding the Element__**//
+
+Once the genlist item class object is created, a new element is added to the
+list by calling ''elm_genlist_item_append()''.
+
+<code c>
+elm_genlist_item_append(list,
+   _itc,
+   NULL,                    // Item data
+   NULL,                    // Parent item for trees, NULL if none
+   ELM_GENLIST_ITEM_NONE,   // Item type; this is the common one
+   NULL,                    // Callback on selection of the item
+   NULL                     // Data for that callback function
+);
+</code>
+
+With most parameters as NULL and ''_itc'' having most of its members NULL,
+too, the elements of that list are blank and will not trigger anything when
+selected.
+
+//**__Text in the List Elements__**//
+
+Use ''text_get'' field to add text in the items in the
+''Elm_Genlist_Item_Class'' structure.
+
+<code c>
+_itc->func.text_get = text_get;
+</code>
+
+These callbacks must have a prototype matching to the following:
+
+<code c>
+char * text_get(void *data, Evas_Object *obj, const char *part);
+</code>
+
+This callback returns a C string that is displayed in the part named after the
+''part'' parameter. This callback is called for each user-settable text part
+according to the current theme.
+
+If you are not familiar with the concept of parts in the EFLs, read
+[[/coming_soon|the Write a Simple EDC File]] section.
+
+<note>
+The value returned is freed by the EFLs: the value must be freshly-allocated, do not free it yourself and do not re-use it across list elements.
+</note>
+
+For the default theme there is one part named ''elm.text''. A possible
+implementation of the ''text_get'' callback is therefore:
+
+<code c>
+static char *
+_genlist_text_get(void *data, Evas_Object *obj, const char *part)
+{
+   // Check this is text for the part we're expecting
+   if (strcmp(part, "elm.text") == 0)
+     {
+        return strdup("Some text");
+     }
+   else return NULL;
+}
+</code>
+
+<note>
+The names and positions of parts depends on the item_style chosen when adding new items to the genlist. Setting a custom theme makes it possible to completely change genlists by adding and moving parts. The [[/coming_soon|Edje]] guide explains how to do that.
+</note>
+
+It is possible to behave differently according to data
+that is given to the EFLs during the call to ''elm_genlist_item_append()'' in the
+''data'' parameter. For example, given an integer in that field through casting
+with ''(void *)(uintptr_t) i'', its value is got back using
+''(int)(uintptr_t)data'':
+
+<code c>
+static char *
+_genlist_text_get(void *data, Evas_Object *obj __UNUSED__, const char *part)
+{
+   if (strcmp(part, "elm.text") == 0)
+     {
+        char *buf = malloc(16);
+        snprintf(buf, 16, "Entry %d.", (int)(uintptr_t)data);
+
+        return buf;
+     }
+   else return NULL;
+}
+</code>
+
+//**__Evas_Object in the List Elements__**//
+
+Icons are added in a similar fashion: there is a callback named
+''content_get'' which returns a pointer to an ''Evas_Object'' and is called
+for each part which contents can be set.
+
+<code c>
+_itc->func.content_get = content_get;
+</code>
+
+The prototype of the callback must match this one:
+
+<code c>
+Evas_Object * content_get(void *data, Evas_Object *obj, const char *part);
+</code>
+
+The only difference with the ''text_get'' callback is that it returns an
+''Evas_Object*'' rather than a ''char *''.
+
+This leads to a fairly simple dummy implementation with colored rectangles in
+the parts that are to be set:
+
+<code c>
+static Evas_Object *
+_genlist_content_get(void *data, Evas_Object *obj, const char *part)
+{
+   int i = (int) (uintptr_t) data;
+
+   //the left part
+   if (strcmp(part, "elm.swallow.icon") == 0)
+     {
+        Evas_Object *bg = elm_bg_add(obj);
+        elm_bg_color_set(bg, 255 * cos(i / (double) 10), 0, i % 255);
+
+        return bg;
+     }
+   //the right part
+   else if (strcmp(part, "elm.swallow.end") == 0)
+     {
+        Evas_Object *bg = elm_bg_add(obj);
+        elm_bg_color_set(bg, 0, 255 * sin(i / (double) 10), i % 255);
+
+        return bg;
+     }
+   else return NULL;
+}
+</code>
+
+For the default theme, this displays a red rectangle on the left of each list
+item and a green one on their right.
+
+//**__Event on Gentlist Items__**//
+
+Genlist items triggers a callback when clicked. This callback is chosen when
+adding the new item (for example, when calling ''elm_genlist_item_append()''):
+
+<code c>
+Elm_Genlist_Item_Class *_itc2 = elm_genlist_item_class_new();
+_itc2->item_style        = "group_index";
+_itc2->func.text_get     = _genlist_text_get;
+_itc2->func.content_get  = _genlist_content_get;
+_itc2->func.state_get    = NULL;
+_itc2->func.del          = NULL;
+
+elm_genlist_item_append(list,
+   itc,
+   NULL,                    // item data
+   NULL,                    // parent item for trees, NULL if none
+   ELM_GENLIST_ITEM_NONE,   // item type, other values are used for trees
+   _genlist_selected_cb,      // callback on selection of the item
+   _itc2                     // data for that callback function
+);
+</code>
+
+This callback adheres to the following prototype:
+
+<code c>
+void _contact_selected_cb(void *data, Evas_Object *obj, void *event_info)
+</code>
+
+The implementation below changes the item style of items when they are
+selected:
+
+<code c>
+static void
+_genlist_selected_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item*) event_info;
+    Elm_Genlist_Item_Class *itc2 = (Elm_Genlist_Item_Class *)data;
+te
+
+    //change to group index style
+    elm_genlist_item_item_class_update(it, itc2);
+}
+</code>
+\\
+//**__The whole code__**// : {{/code_c/tutorial/genlist/set-up_genlist.c}}
+
+==== Next Part ====
+
+[[/tutorial/genlist/modifications|Modifications]]
