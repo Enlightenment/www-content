@@ -1,51 +1,46 @@
 ~~Title: Apps debugging~~
 ==== EFL application debugging ====
 
-This tutorial goal is to help you debug your EFL applications with several
-use cases that you can reproduce.
-It gives you approaches to know if the bug comes from your application or
-from EFL libraries.
+> //Please also see [[docs-efl-debug]]. This should probably be merged with this page.//
 
-Then, if you are sure the bug does not come from your
-application, you can [[/debugging/report_bugs|report a bug]].
+This tutorial's goal is to help you debug your EFL applications with several use cases that you can reproduce. It gives you approaches to know if the bug comes from your application or from the EFL libraries.
 
-In this tutorial, log level and 4 use cases will be studied:
+Then, if you are sure the bug does not come from your application, you can [[/debugging/report_bugs|report a bug]].
+
+In this tutorial we'll cover log levels and tracing the sources of bugs:
+
   - [[apps_efl_debugging#Log level]]
   - [[apps_efl_debugging#Wrong function on an object]]
   - [[apps_efl_debugging#Segfault in callback function]]
   - [[apps_efl_debugging#Memory leak]]
   - [[apps_efl_debugging#Clouseau]]
 
-Before debugging, make sure your debug symbols are enabled. If not, go to the
-[[/docs-efl-start#Enable_debug_symbols_Optional|Enable debug symbols]]
-section.
+Before debugging, make sure your debug symbols are enabled. If not, go to the [[/docs-efl-start#Enable_debug_symbols_Optional|Enable debug symbols]] section.
 
-You can also have a look at the
-[[https://phab.enlightenment.org/w/coding_convention/|EFL coding convention]].
+You can also have a look at the [[https://phab.enlightenment.org/w/coding_convention/|EFL coding convention]] if you modify code and want to send patches.
 
 === Log level ===
 
-The Eina log module provides log level traces, there are 5 debugging levels
-with their respective macros:
+The Eina log module provides log level traces, there are 5 debugging levels with their respective macros:
 
-    - Critical log level:           EINA_LOG_LEVEL_CRITICAL()
-    - Error log level:              EINA_LOG_ERR()
-    - Warning log level:            EINA_LOG_WARN()
-    - Info log level:               EINA_LOG_INFO()
-    - Debug log level:              EINA_LOG_DBG()
+^Level    ^Macro                     ^
+|Critical |EINA_LOG_LEVEL_CRITICAL() |
+|Error    |EINA_LOG_ERR()            |
+|Warning  |EINA_LOG_WARN()           |
+|Info     |EINA_LOG_INFO()           |
+|Debug    |EINA_LOG_DBG()            |
 
-Global log level can be set with the EINA_LOG_LEVEL environment variable.
+Global log level can be set with the ''EINA_LOG_LEVEL'' environment variable.
 
 <code bash>
-#debug log level
+# Debug log level
 EINA_LOG_LEVEL=5 ./my_test_efl
 </code>
 
-The EINA_LOG_LEVELS variable provide a way to activate logs only for specific
-modules.
+The ''EINA_LOG_LEVELS'' variable provide a way to activate logs only for specific modules.
 
 <code bash>
-#it will set respectively module1 and module2 level to 5 and to 2
+# This will set module1 and module2 respectively to log level 5 and 2
 EINA_LOG_LEVELS=module1:5,module2:2 ./my_test_efl
 </code>
 
@@ -53,57 +48,47 @@ EINA_LOG_LEVELS=module1:5,module2:2 ./my_test_efl
 
 === Wrong function on an object ===
 
-The code below creates 3 Elementary objects: win, box and btn. It displays a
-window with an //OK// button that closes the window when it is clicked.
-Here, the //elm_box_pack_end()// function is called on a wrong object (win)
-which generates an error:
+The code below creates 3 Elementary objects: win, box and btn. It displays a window with an //OK// button that closes the window when it is clicked. Here, the //elm_box_pack_end()// function is called on a wrong object (win) which generates an error:
 
 <code c hello.c>
-//hello.c
 #include <Elementary.h>
-    static void
+
+static void
 on_done(void *data, Evas_Object *obj, void *event_info)
 {
-    // quit the mainloop (elm_run function will return)
-    elm_exit();
+  // quit the mainloop (elm_run function will return)
+  elm_exit();
 }
 
-    EAPI_MAIN int
+EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
-    Evas_Object *win, *box, *btn;
+  Evas_Object *win, *box, *btn;
 
-    // new window
-    win = elm_win_util_standard_add("hello", "Hello");
+  // new window
+  win = elm_win_util_standard_add("hello", "Hello");
+  // add a box object
+  box = elm_box_add(win);
+  // add object as a resize object for the window (controls window minimum
+  // size as well as gets resized if window is resized)
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  // add a button
+  btn = elm_button_add(win);
+  // set default text of button to "OK"
+  elm_object_text_set(btn, "OK");
+  // pack the button at the end of the box
+  /****ERROR****/
+  elm_box_pack_end(win, btn); //win instead of box
+  evas_object_show(btn);
+  // call on_done when button is clicked
+  evas_object_smart_callback_add(win, "clicked", on_done, NULL);
+  //show the window
+  evas_object_show(win);
 
-    // add a box object
-    box = elm_box_add(win);
-
-    // add object as a resize object for the window (controls window minimum
-    // size as well as gets resized if window is resized)
-    elm_win_resize_object_add(win, box);
-    evas_object_show(box);
-
-    // add a button
-    btn = elm_button_add(win);
-
-    // set default text of button to "OK"
-    elm_object_text_set(btn, "OK");
-
-    // pack the button at the end of the box
-    /****ERROR****/
-    elm_box_pack_end(win, btn); //win instead of box
-    evas_object_show(btn);
-
-    // call on_done when button is clicked
-    evas_object_smart_callback_add(win, "clicked", on_done, NULL);
-
-    //show the window
-    evas_object_show(win);
-
-    // run the mainloop and process events and callbacks
-    elm_run();
-    return 0;
+  // run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
 }
 ELM_MAIN()
 </code>
@@ -116,18 +101,9 @@ gcc -Wall -O1 -march=native -g -ggdb3 -o hello hello.c `pkg-config --cflags --li
 ERR<13670>:eo lib/eo/eo.c:780 _eo_api_op_id_get() in elm_box.eo.c:48: unable to resolve regular api func 'elm_obj_box_pack_end' 0x7f1128f50faf in class 'Elm_Win'.
 </code>
 
-Here, the error log says that the //elm_obj_box_pack_end//
-is not in the api of Elm_win, and so, that this error is coming from your
-application and not from EFL. Guessing you have a more complicated
-application, this trace is not enough to find in your code where is the
-problem. Fortunately, EFL provide a macro to provide backtraces :
-//EINA_LOG_ABORT//.
+Here, the error log says that the ''elm_obj_box_pack_end'' is not in the api of Elm_win, and so, that this error is coming from your application and not from EFL. Guessing you have a more complicated application, this trace is not enough to find in your code where is the problem. Fortunately, EFL provide a macro to provide backtraces: //EINA_LOG_ABORT//.
 
-In fact, a message generated by CRI macro automatically call abort() once some
-given level message is printed. This is controlled by environment variable
-//EINA_LOG_ABORT// and the level to be considered critical with
-//EINA_LOG_ABORT_LEVEL//. That is to say the program will stop at the first
-error met with these two variables.
+In fact, a message generated by CRI macro can automatically call abort() once some given level message is printed. This is controlled by environment variable //EINA_LOG_ABORT// and the level to be considered critical with //EINA_LOG_ABORT_LEVEL//. This means the program will stop at the first error met with these two variables.
 
 Get a backtrace with the following command:
 
@@ -167,8 +143,7 @@ Go to frame 7:
 34    elm_box_pack_end(win, btn); //win instead of box
 </code>
 
-You finally know that win is used as a parameter of //elm_box_pack_end// instead of
-box, at line 34 of hello.c.
+You finally see that win is used as a parameter of //elm_box_pack_end// instead of box, at line 34 of hello.c.
 
 ----
 
@@ -178,57 +153,50 @@ Let's make a segfault in a callback function:
 
 <code c helloworld.c>
 #include <Elementary.h>
-    static void
+
+static void
 on_done(void *data, Evas_Object *obj, void *event_info)
 {
-    int *pi=(int *)0; //pointer on 0x0!!!
-    /**SEGFAULT**/
-    int i=*pi; //segfault accessing 0x0 address
+  int *pi = (int *)0; // pointer on 0x0!!!
+  /**SEGFAULT**/
+  int i = *pi; // segfault accessing 0x0 address
 
-    // quit the mainloop (elm_run function will return)
-    elm_exit();
+  // quit the mainloop (elm_run function will return)
+  elm_exit();
 }
 
-  EAPI_MAIN int
+EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
-    Evas_Object *win, *box, *btn;
+  Evas_Object *win, *box, *btn;
 
-    // new window
-    win = elm_win_util_standard_add("hello", "Hello");
+  // new window
+  win = elm_win_util_standard_add("hello", "Hello");
+  // add a box object
+  box = elm_box_add(win);
+  // add object as a resize object for the window
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  // add a button
+  btn = elm_button_add(win);
+  // set default text of button to "SEG"
+  elm_object_text_set(btn, "SEG");
+  // pack the button at the end of the box
+  elm_box_pack_end(box, btn);
+  evas_object_show(btn);
+  // call on_done when button is clicked
+  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
+  //show the window
+  evas_object_show(win);
 
-    // add a box object
-    box = elm_box_add(win);
-
-    // add object as a resize object for the window
-    elm_win_resize_object_add(win, box);
-    evas_object_show(box);
-
-    // add a button
-    btn = elm_button_add(win);
-
-    // set default text of button to "SEG"
-    elm_object_text_set(btn, "SEG");
-
-    // pack the button at the end of the box
-    elm_box_pack_end(box, btn);
-    evas_object_show(btn);
-
-    // call on_done when button is clicked
-    evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
-
-    //show the window
-    evas_object_show(win);
-
-    // run the mainloop and process events and callbacks
-    elm_run();
-    return 0;
+  // run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
 }
 ELM_MAIN()
 </code>
 
-This program segfaults when the seg button is clicked that is to say that the
-program segfaults in the callback function:
+This program segfaults when the seg button is clicked that is to say that the program segfaults in the callback function:
 
 //**__How to get that with GDB?__**//
 
@@ -272,14 +240,14 @@ gdb helloworld
 #21 0x0000000000400dc2 in main (argc=1, argv=0x7fffffffe398) at helloworld.c:42
 </code>
 
-As you can see, the program failed in the callback function, meaning the
-problem comes from your application, even if callback functions are called
-from evas.
+The program failed in the callback function, meaning the problem comes from your application, even if the callback is called from Evas.
 
-Let's go deeply:
-  -Go to frame 0, the callback function
-  -print pi pointer
-  -print what it points
+Let's go a bit more deeply:
+
+  - Go to frame 0, the callback function
+  - Print pi pointer
+  - Print what it points to
+
 <code bash>
 (gdb) fr 0
 #0  0x0000000000400c86 in on_done (data=0x0, obj=0x8000000800000041, event_info=0x0) at helloworld.c:6
@@ -290,91 +258,78 @@ $1 (int *) 0x0
 Cannot access memory at address 0x0
 </code>
 
-Here in this easy example, the problem is quite clear, address 0x0 cannot be
-accessed! Eventually, even if callback functions are called from evas and so
-generate lots of traces, it is quite simple to know where the bug is coming
-from.
+In this easy example, the problem is quite clear, address 0x0 cannot be accessed! Eventually, even if the callback functions are called from Evas and so generate lots of traces, it is quite simple to know where the bug is coming from.
 
 ----
 
 === Memory leak ===
 
 Valgrind is composed of several tools especially memcheck which checks:
-  - read/write access
-  - memory leaks
-  - non initialized variables
 
-In this example, an Eina array is created on a callback function but it is
-never freed. This generates a memory leak.
+  - Read/write access
+  - Memory leaks
+  - Non-initialized variables
+
+In this example, an Eina array is created in a callback function but it is never freed. This generates a memory leak.
 
 <code c hello_valgrind.c>
-//hello.c
 #include <Elementary.h>
-    static void
+
+static void
 on_done(void *data, Evas_Object *obj, void *event_info)
 {
-    Eina_Array *array;
-    eina_init();
-    array = eina_array_new(100);
-    eina_array_step_set(array, sizeof(*array), 20);
-    unsigned int i;
-    for (i = 0; i < 20; i++)
-        eina_array_push(array, strdup("hello"));
+  Eina_Array *array;
+  unsigned int i;
 
-    /****To free array****/
-    //while (eina_array_count(array))
-    //free(eina_array_pop(array));
-    //eina_array_free(array);
+  eina_init();
+  array = eina_array_new(100);
+  eina_array_step_set(array, sizeof(*array), 20);
+  for (i = 0; i < 20; i++) eina_array_push(array, strdup("hello"));
 
-    //eina_shutdown();
+  /****To free array****/
+  //while (eina_array_count(array))
+  //free(eina_array_pop(array));
+  //eina_array_free(array);
 
-    // quit the mainloop (elm_run function will return)
-    elm_exit();
+  //eina_shutdown();
+
+  // quit the mainloop (elm_run function will return)
+  elm_exit();
 }
 
-  EAPI_MAIN int
+EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
-    Evas_Object *win, *box, *btn;
+  Evas_Object *win, *box, *btn;
 
-    // new window
-    win = elm_win_util_standard_add("hello", "Hello");
+  // new window
+  win = elm_win_util_standard_add("hello", "Hello");
+  // add a box object
+  box = elm_box_add(win);
+  // add object as a resize object for the window (controls window minimum
+  // size as well as gets resized if window is resized)
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  // add a button
+  btn = elm_button_add(win);
+  // set default text of button to "SEG"
+  elm_object_text_set(btn, "SEG");
+  // pack the button at the end of the box
+  elm_box_pack_end(box, btn);
+  evas_object_show(btn);
+  // call on_done when button is clicked
+  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
+  //show the window
+  evas_object_show(win);
 
-    // add a box object
-    box = elm_box_add(win);
-
-    // add object as a resize object for the window (controls window minimum
-    // size as well as gets resized if window is resized)
-    elm_win_resize_object_add(win, box);
-    evas_object_show(box);
-
-    // add a button
-    btn = elm_button_add(win);
-
-    // set default text of button to "SEG"
-    elm_object_text_set(btn, "SEG");
-
-    // pack the button at the end of the box
-    elm_box_pack_end(box, btn);
-    evas_object_show(btn);
-
-
-    // call on_done when button is clicked
-    evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
-
-    //show the window
-    evas_object_show(win);
-
-    // run the mainloop and process events and callbacks
-    elm_run();
-    return 0;
+  // run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
 }
 ELM_MAIN()
 </code>
 
-There can be other traces in the HEAD SUMMARY but here we are just interested
-at leak memories due to your application, so you may have to find
-those which directly depends on your application.
+There can be other traces in the HEAD SUMMARY but here we are just interested in the memory leak due to your application, so you may have to ignore things not relevant to your code.
 
 <code bash>
 ...
@@ -402,93 +357,85 @@ in loss record 349 of 417
 ...
 </code>
 
-All the memory access pass through valgrind, so it shows you a backtrace when
-an allocation is done and not freed.
+All the memory accesses pass through Valgrind, so it shows you a backtrace when an allocation is made and not freed.
 
-As you see in the backtrace, an allocation took place in the //eina_array_new
-function//.
-This function itself is called from //on_done// function on hello.c file.
-You can go up but remember that a callback function is called from evas, so
-there are big chances that the allocation is done in your callback function.
+As in the backtrace, an allocation took place in the //eina_array_new function//. This function itself is called from //on_done// function on hello.c file. You can go up, but remember that a callback function is called from Evas, so there is a big chance that the allocation is made in your callback function.
 
 ----
 
 === Clouseau ===
 
-Clouseau is the EFL UI Inspection tool. It makes it easy to query UI
-components and structure. Moreover it supports remote debugging and works with
-Gdb.
+Clouseau is the EFL UI Inspection tool. It makes it easy to query UI components and structure. Moreover it supports remote debugging and works with GDB. In fact, Clouseau can also give information about different widgets with their properties.
 
-In fact, Clouseau gives information about the different widgets with
-their properties.
-
-You can get Clousseau fom git.
+You can get Clouseau from git:
 
 <code bash>
 git clone http://git.enlightenment.org/tools/clouseau.git
 </code>
 
-Here is a simple helloworld to test with clouseau, it displays a window
-with some text and one button to exit.
+Here is a simple helloworld to test with Clouseau, it displays a window with some text and one button to exit.
 
 <code c hello_clouseau.c>
 #include <Elementary.h>
-    static void
+
+static void
 on_done(void *data, Evas_Object *obj, void *event_info)
 {
-    // quit the mainloop (elm_run function will return)
-    elm_exit();
+  // quit the mainloop (elm_run function will return)
+  elm_exit();
 }
 
-    EAPI_MAIN int
+EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
-    Evas_Object *win, *box, *lab, *btn;
-    // new window - new background
-    win = elm_win_util_standard_add("hello", "Hello");
-    // when the user clicks "close" on a window there is a request to delete
-    evas_object_smart_callback_add(win, "delete,request", on_done, NULL);
-    // add a box object - default is vertical. a box holds children in a row,
-    // either horizontally or vertically. nothing more.
-    box = elm_box_add(win);
-    // make the box horizontal
-    elm_box_horizontal_set(box, EINA_TRUE);
-    // add object as a resize object for the window (controls window minimum
-    // size as well as gets resized if window is resized)
-    elm_win_resize_object_add(win, box);
-    evas_object_show(box);
-    // add a label widget, set the text and put it in the pad frame
-    lab = elm_label_add(win);
-    // set default text of the label
-    elm_object_text_set(lab, "Hello out there world!");
-    // pack the label at the end of the box
-    elm_box_pack_end(box, lab);
-    evas_object_show(lab);
-    // add an ok button
-    btn = elm_button_add(win);
-    // set default text of button to "OK"
-    elm_object_text_set(btn, "OK");
-    // pack the button at the end of the box
-    elm_box_pack_end(box, btn);
-    evas_object_show(btn);
-    // call on_done when button is clicked
-    evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
-    int *p;
-    // now we are done, show the window
-    evas_object_show(win);
-    // run the mainloop and process events and callbacks
-    elm_run();
-    return 0;
+  Evas_Object *win, *box, *lab, *btn;
+
+  // new window - new background
+  win = elm_win_util_standard_add("hello", "Hello");
+  // when the user clicks "close" on a window there is a request to delete
+  evas_object_smart_callback_add(win, "delete,request", on_done, NULL);
+  // add a box object - default is vertical. a box holds children in a row,
+  // either horizontally or vertically. nothing more.
+  box = elm_box_add(win);
+  // make the box horizontal
+  elm_box_horizontal_set(box, EINA_TRUE);
+  // add object as a resize object for the window (controls window minimum
+  // size as well as gets resized if window is resized)
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  // add a label widget, set the text and put it in the pad frame
+  lab = elm_label_add(win);
+  // set default text of the label
+  elm_object_text_set(lab, "Hello out there world!");
+  // pack the label at the end of the box
+  elm_box_pack_end(box, lab);
+  evas_object_show(lab);
+  // add an ok button
+  btn = elm_button_add(win);
+  // set default text of button to "OK"
+  elm_object_text_set(btn, "OK");
+  // pack the button at the end of the box
+  elm_box_pack_end(box, btn);
+  evas_object_show(btn);
+  // call on_done when button is clicked
+  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
+  // now we are done, show the window
+  evas_object_show(win);
+
+  // run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
 }
 ELM_MAIN()
 </code>
 
-To launch it with clouseau :
+To launch it with Clouseau:
+
 <code bash>
 clousseau ./helloworld
 </code>
 
-Here below a screenshot of clouseau and the helloworld application :
+Here below is a screenshot of Clouseau and the helloworld application:
 
 {{:clouseau.png?direct|Clouseau}}
 
@@ -496,10 +443,9 @@ Here below a screenshot of clouseau and the helloworld application :
   - Red : the composition of Helloworld application
   - Blue : The characteristic of Elm and Evas_object
 
-Let's see now what gives us clouseau to compare with code:
+Let's see now what Clouseau shows and how it relates to the code:
 
-First thing the application is composed of 3 main widgets : //Elm_win//,
-//Elm_bg//, //Elm_box//.
+The application is composed of 3 main widgets : //Elm_win//, //Elm_bg//, //Elm_box//.
 
 <code c>
 win = elm_win_util_standard_add("hello", "Hello");
@@ -507,9 +453,7 @@ win = elm_win_util_standard_add("hello", "Hello");
 box = elm_box_add(win);
 </code>
 
-//elm_win_util_standard_add// function creates the window which is the root
-widget often used in an application. It also puts a standard background
-(//Elm_bg//). Then, //elm_box_add// function creates a box widget.
+//elm_win_util_standard_add// function creates the window which is the root widget often used in an application. It also puts a standard background (//Elm_bg//). Then, //elm_box_add// function creates a box widget.
 
 <code c>
 elm_box_pack_end(box, lab);
@@ -517,36 +461,26 @@ elm_box_pack_end(box, lab);
 elm_box_pack_end(box, btn);
 </code>
 
-//elm_box_pack_end// add lab and btn widgets at the end of the pack list. So
-the lab and btn widgets appear as inside the box widget.
+//elm_box_pack_end// add lab and btn widgets at the end of the pack list. So the lab and btn widgets appear as inside the box widget.
 
-Otherwise, the blue section shows a certain number of characteristics of the
-object and widget : position, size, color, ... Of course some of these
-characteristics are dynamic and can be updated with the reload button of
-clouseau.
+Otherwise, the blue section shows a certain number of characteristics of the object and widget: position, size, color, ... of course some of these characteristics are dynamic and can be updated with the reload button of Clouseau.
 
 <code c>
 elm_win_resize_object_add(win, box);
 </code>
 
-This function controls the size of the window such as it takes the minimum
-place. You can see in the blue section that the minimum and maximum size are
-equal as a consequence of this function call.
+This function controls the size of the window such as it takes the minimum place. You can see in the blue section that the minimum and maximum size are equal as a consequence of this function call.
 
 //**__Show objects__**//
 
-As you can see on the picture below, click on setting in yellow and deselect
-//Only show Elementary widgets// in red.
+As you can see on the picture below, click on setting in yellow and deselect //Only show Elementary widgets// in red.
 
 {{:settings_clouseau.png?direct|Clouseau settings}}
 
-In the result below, you see that all the objects are visible and you see that
-widgets are just gathered specific objects.
+In the result below, you see that all the objects are visible and you see that widgets are just gathered specific objects.
 
 {{:clouseau_object.png?direct|Clouseau Objects}}
 
-For example in yellow, it is the Elm_box which is an Evas_box composed of an
-Evas_rectangle, an Elm_Label and an ELm_Button.
+For example in yellow, it is the Elm_box which is an Evas_box composed of an Evas_rectangle, an Elm_Label and an Elm_Button.
 
-A Button widget is an Edje_Object which is composed of 4 Evas_rectangle, one
-Evas_image and 2 Evas_text.
+A Button widget is an Edje_Object which is composed of 4 Evas_rectangle, one Evas_image and 2 Evas_text.
