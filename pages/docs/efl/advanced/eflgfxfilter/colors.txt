@@ -1,0 +1,64 @@
+Go back to [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filter]].
+
+==== Colors ====
+
+Many filter operations will take one (or more) color arguments. \\ Since EFL 1.15, the supported syntax to create colors has expanded using Lua class appropriately named ''color''.
+
+<note tip>The color values used in [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filter]] are **not** premultiplied and range from 0 to 255.</note>
+
+<note important>If alpha is not specified or 0 (in the form '#rgba'), then the color will be opaque (i.e. alpha = 255), **unless** the color is ''invisible'' or '#0000'.</note>
+
+== Syntax ==
+
+<code Lua>
+-- default is black
+color()
+color(nil)
+
+-- with r,g,b,a integers in the range [0-255]
+color(r,g,b)
+color(r,g,b,a)
+color({r = 0, g = 255, b = 128, a = 64})
+
+-- with r,g,b,a hexadecimal values [0-F]
+color('#rgb')
+color('#rgba')
+color('#rrggbb')
+color('#rrggbbaa')
+
+-- predefined colors
+color('red')
+</code>
+
+== Predefined colors ==
+
+Here is the list of predefined colors, based on their equivalent HTML names.
+
+^ Name ^ Value ^ Example ^
+| 'white' | '#FFFFFF' | {{ :docs:efl:advanced:filter-color-white.png |}} |
+| 'black' | '#000000' | {{ :docs:efl:advanced:filter-color-black.png |}} |
+| 'red' | '#FF0000' | {{ :docs:efl:advanced:filter-color-red.png |}} |
+| 'green' | '#008000' | {{ :docs:efl:advanced:filter-color-green.png |}} |
+| 'blue' | '#0000FF' | {{ :docs:efl:advanced:filter-color-blue.png |}} |
+| 'darkblue' | '#0000A0' | {{ :docs:efl:advanced:filter-color-darkblue.png |}} |
+| 'yellow' | '#FFFF00' | {{ :docs:efl:advanced:filter-color-yellow.png |}} |
+| 'magenta' | '#FF00FF' | {{ :docs:efl:advanced:filter-color-magenta.png |}} |
+| 'cyan' | '#00FFFF' | {{ :docs:efl:advanced:filter-color-cyan.png |}} |
+| 'orange' | '#FFA500' | {{ :docs:efl:advanced:filter-color-orange.png |}} |
+| 'purple' | '#800080' | {{ :docs:efl:advanced:filter-color-purple.png |}} |
+| 'brown' | '#A52A2A' | {{ :docs:efl:advanced:filter-color-brown.png |}} |
+| 'maroon' | '#800000' | {{ :docs:efl:advanced:filter-color-maroon.png |}} |
+| 'lime' | '#00FF00' | {{ :docs:efl:advanced:filter-color-lime.png |}} |
+| 'gray' \\ 'grey' | '#808080' | {{ :docs:efl:advanced:filter-color-gray.png |}} |
+| 'silver' | '#C0C0C0' | {{ :docs:efl:advanced:filter-color-silver.png |}} |
+| 'olive' | '#808000' | {{ :docs:efl:advanced:filter-color-olive.png |}} |
+| 'invisible' \\ 'transparent' | '#0000' | {{ :docs:efl:advanced:filter-color-invisible.png |}} |
+
+== Usage examples ==
+
+<code Lua>
+blur { 15, color = color('yellow') }
+blur { 5, color = '#f0f8' }
+blur { 2, color = state.color }
+blend { color = 'white' }
+</code>
