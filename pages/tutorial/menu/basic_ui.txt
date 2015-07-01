@@ -1,0 +1,296 @@
+~~Title: Basic UI Menu~~
+//**__previous__: **//[[/tutorial/menu/theme|Defining the Application Theme]]
+==== Creating the Basic UI ====
+
+The view container ''view/main'' is structured like this:
+
+{{ :view_main.png?direct |View main}}
+
+The naviframe contains and manages the boxes. For more information, see the
+[[/coming_soon|Container programming guide]]. This widget handle views. In
+this example each view is contained in a box and the box is contained in the
+naviframe.
+
+Create the naviframe in the ''elm_main'' function and allocate the memory to
+handle the views and menus of the application.
+
+<code c>
+// Memory allocation
+Menu *me = calloc(1, sizeof(Menu));
+me->main_view = calloc(1, sizeof(Mainview)); // Allocating memory for the main view
+me->cal_view = calloc(1, sizeof(Calview));   // Allocating memory for the calendar view
+me->date_view = calloc(1, sizeof(Dateview)); // allocating memory for the date view
+me->settings_view = calloc(1, sizeof(Setview); //Allocating memory for the settings view
+me->sdmenu_up = EINA_FALSE;
+</code>
+
+Use ''_free_menu_cb'' callback function to free the memory:
+
+<code c>
+evas_object_smart_callback_add(win, "delete,request", _free_menu_cb, me);
+</code>
+
+<code c>
+static void
+_free_menu_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Menu *me = (Menu *)data;
+
+    free(me->menu);
+    free(me->sidemenu);
+    free(me->main_view);
+    free(me->cal_view);
+    free(me->settings_view);
+    free(me);
+    evas_object_del(obj);
+    elm_exit();
+}
+</code>
+
+Create the naviframe:
+
+Create the main menu after most of the containers are created. First create a
+new ''_build_main_menu'' function, it takes an ''Menu'' and the ''win'' as a parameter. This
+function is called by ''elm_main''.
+
+
+<code c>
+static void
+_build_main_menu(Menu *me, Evas_Object *win)
+{
+   //Memory allocation for the main menu function.
+   Tbarmenu *menu = calloc(1, sizeof(Tbarmenu));
+   //Putting the "main" menu in the application data.
+   me->menu = menu;
+
+   // Creation of the "Menu" toolbar
+   menu->tb = elm_toolbar_add(win);
+
+   // Setting the "Menu" Toolbar properties
+   elm_toolbar_shrink_mode_set(menu->tb, ELM_TOOLBAR_SHRINK_NONE);
+   elm_toolbar_transverse_expanded_set(menu->tb, EINA_TRUE);
+   elm_toolbar_homogeneous_set(menu->tb, EINA_FALSE);
+
+   // Adding menu items to the "Menu" toolbar
+   elm_toolbar_item_append(menu->tb, ICON_DIR"home.svg", "Home", _menu_item_selected_cb, me);
+   elm_toolbar_item_append(menu->tb, ICON_DIR"calendar.svg", "Calendar", _menu_item_selected_cb, me);
+   elm_toolbar_item_append(menu->tb, ICON_DIR"clock.svg", "Date", _menu_item_selected_cb, me);
+   elm_toolbar_item_append(menu->tb, ICON_DIR"settings.svg", "Settings", _menu_item_selected_cb, me);
+
+   // Showing the widget
+   evas_object_show(menu->tb);
+
+   // Adding the widget to the "menu/main" SWALLOW container defined in the .edc theme file.
+   //elm_object_part_content_set(me->layout, "menu/main", menu->tb);
+   elm_layout_content_set(me->layout, "menu/main", menu->tb);
+
+   // Set the default view
+   elm_toolbar_item_selected_set(elm_toolbar_first_item_get(menu->tb), EINA_TRUE);
+}
+</code>
+
+Create a toolbar with ''elm_toolbar_add''. This toolbar is a child of the main
+window so set ''win'' as parameter.
+
+Setup the behavior of the toolbar, the display mode is set by using
+''elm_toolbar_shrink_mode_set''. The toolbar does not scroll under
+''#ELM_TOOLBAR_SHRINK_NONE'' mode, but it enforces a minimum size, so that all
+the items fit inside it. It does not scroll or show the items that do not fit
+under ''#ELM_TOOLBAR_SHRINK_HIDE'' mode. Finally, it scrolls under
+''#ELM_TOOLBAR_SHRINK_SCROLL'' mode, and it creates a button to aggregate
+items which did not fit with the ''#ELM_TOOLBAR_SHRINK_MENU'' mode.
+
+In this example, there is only a limited number of menu elements and thus
+''ELM_TOOLBAR_SHRINK_NONE'' is used.
+
+Expand the transverse length of the item according the transverse length of
+the toolbar, giving ''EINA_TRUE'' as second parameter of
+''elm_toolbar_transverse_expanded_set''.
+
+Make the menu items have the same size by setting ''EINA_TRUE'' to
+''elm_toolbar_homogeneous_set''. This activates the homogeneous mode of the
+toolbar.
+
+Add menu items to the toolbar using ''elm_toolbar_item_append''. This function
+takes 4 parameters:
+  * the target toolbar
+  * the icon path for the menu item
+  * the item label
+  * the function to camm when the item is clicked
+  * the data to assciate with the item for related callbacks
+
+For the icons, add some images in a directory and define a macro to contain
+the path to the directory.
+
+<code c>
+#define ICON_DIR "<path_to_icon_directory>"
+</code>
+
+The item label is very important, it is used in the item callback function.
+
+In this example, only one callback is created to manage all the items but
+there can be several callback functions. Pass the application data to the
+callback.
+
+This callback is an ''Evas_Smart_Cb'', it must have this prototype:
+
+<code c>
+_mycallback(void *data, Evas_Object *obj, void *event_info)
+</code>
+
+In this example, the aim of the callback is to create the view which the user
+has requested. It is named ''_menu_item_selected_cb'', and in this function we
+recover the calling object text to call the correct view creation function.
+
+<code c>
+static void
+_menu_item_selected_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Object_Item *it = (Elm_Object_Item*) event_info;
+   Menu * me = (Menu *)data;
+   Evas_Object *view;
+
+   // Get the menu item text
+   const char *str = elm_object_item_text_get(it);
+
+   // Comparing with the possible view names
+   if (!strcmp(str, "Calendar"))
+     {
+        // Build the "Calendar View"
+        _build_calendar_view(me);
+        // Set the view from the application data
+        view = me->cal_view->box;
+     }
+   else if (!strcmp(str, "Date"))
+     {
+        // Build the "Date View"
+        _build_date_view(data);
+        // Set the view from the application data
+        view = me->date_view->box;
+     }
+   else if (!strcmp(str, "Home"))
+     {
+        // Build the "Home or main View"
+        _build_main_view(me);
+        // Set the view from the application data
+        view = me->main_view->box;
+     }
+   else if (!strcmp(str, "Settings"))
+     {
+        // Build the "Settings" view
+        _build_settings_view(data);
+        // Set the view from the application data
+        view = data->settings_view->box;
+     }
+   else if (!strcmp(str, "Clock"))
+     {
+        // Build the "Date View"
+        _build_date_view(me);
+        // Set the view from the application data
+        view = me->date_view->box;
+     }
+   // Show the view in the naviframe
+   elm_object_content_set(me->nf, view);
+}
+</code>
+
+The menu has views, Calendar, Date, Settings, and Home (main view). The view
+names are stored in the menu item label, to get the label compare the returned
+string with the view names. When the name matches, the view is built by
+calling the correct function. Store the view in the application data and set
+up a new content to the naviframe before exit.
+
+This way when the user clicks a menu item, the view changes. The naviframe
+widget destroys its content on each call of ''elm_object_content_set''. That is
+why the content must be built again on each item click.
+
+Create the functions which create the views.
+
+<code c>
+static void
+_build_main_view(Menu *me)
+{
+   Mainview *view = me->main_view;
+   char buf[PATH_MAX];
+
+   //Main box
+   view->box = elm_box_add(me->nf);
+   elm_box_horizontal_set(view->box, EINA_FALSE);
+   elm_box_homogeneous_set(view->box, EINA_TRUE);
+
+   view->img = elm_image_add(view->box);
+   evas_object_size_hint_weight_set(view->img, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(view->img, 0.5, 0.5);
+   evas_object_size_hint_min_set(view->img, 25, 25);
+   snprintf(buf, sizeof(buf), "%s/%s", ICON_DIR, "icon.png");
+   if (!elm_image_file_set(view->img, buf, NULL))
+       elm_object_text_set(view->lb_day, "Problem loading image");
+   elm_box_pack_start(view->box, view->img);
+   evas_object_show(view->img);
+
+   view->lb_day = elm_label_add(view->box);
+   elm_object_text_set(view->lb_day, "Main view");
+   evas_object_size_hint_weight_set(view->lb_day, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_box_pack_end(view->box, view->lb_day);
+   evas_object_show(view->lb_day);
+
+   elm_layout_content_set(me->layout, MAINVIEW, view->box);
+}
+
+static void
+_build_calendar_view(Menu *me)
+{
+   Calview *view = me->cal_view;
+
+   //Main box image = elm_image_add(win);
+
+   view->box = elm_box_add(me->nf);
+   elm_box_horizontal_set(view->box, EINA_FALSE);
+   elm_box_homogeneous_set(view->box, EINA_TRUE);
+
+   view->calendar = elm_calendar_add(me->nf);
+   evas_object_size_hint_weight_set(view->calendar, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(view->calendar, 0.5, 0.5);
+   elm_box_pack_end(view->box, view->calendar);
+   evas_object_show(view->calendar);
+
+   view->lb_cal = elm_label_add(view->box);
+   elm_object_text_set(view->lb_cal, "The calendar view");
+   evas_object_size_hint_weight_set(view->lb_cal, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_box_pack_end(view->box, view->lb_cal);
+   evas_object_show(view->lb_cal);
+
+   elm_layout_content_set(me->layout, MAINVIEW, view->box);
+} // End of_build_calendar_view
+
+static void
+_build_date_view(Menu *me)
+{
+    Dateview *view = me->date_view;
+
+    //Main box image = elm_image_add(win);
+
+    view->box = elm_box_add(me->nf);
+    elm_box_horizontal_set(view->box, EINA_FALSE);
+    elm_box_homogeneous_set(view->box, EINA_TRUE);
+
+    view->datetime = elm_datetime_add(me->nf);
+    //evas_object_size_hint_weight_set(view->datetime, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set(view->datetime, EVAS_HINT_FILL, 0.5);
+    elm_box_pack_end(view->box, view->datetime);
+    evas_object_show(view->datetime);
+
+    view->lb_date = elm_label_add(view->box);
+    elm_object_text_set(view->lb_date, "The calendar view");
+    evas_object_size_hint_weight_set(view->lb_date, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_box_pack_end(view->box, view->lb_date);
+    evas_object_show(view->lb_date);
+
+    elm_layout_content_set(me->layout, MAINVIEW, view->box);
+} // End of_build_calendar_view
+
+</code>
+
+Each function creates a view and stores it in the application data.
+\\
+//**__next__: **//[[/tutorial/menu/hidden_menu|Creating the Hidden Menu]]

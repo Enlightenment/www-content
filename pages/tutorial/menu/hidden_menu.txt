@@ -1,0 +1,94 @@
+~~Title: Hidden Menu Tutorial~~
+//**__previous__: **//[[/tutorial/menu/basic_ui|Creating the Basic UI]]
+==== Creating a Hidden Menu ====
+
+Add a new function called ''_build_side_menu'' to create the side Menu toolbar and
+add some items to it. This function takes the application data as parameter
+and stores the built menu in the sidemenu attribute of the structure.
+
+<code c>
+static void _build_side_menu(Menu *me, Evas_Object *win)
+{
+    Tbarmenu *sidemenu = calloc(1, sizeof(Tbarmenu));
+    me->sidemenu = sidemenu;
+
+    sidemenu->tb = elm_toolbar_add(win);
+
+    elm_toolbar_shrink_mode_set(sidemenu->tb, ELM_TOOLBAR_SHRINK_EXPAND);
+    elm_toolbar_transverse_expanded_set(sidemenu->tb, EINA_TRUE);
+
+    elm_toolbar_item_append(sidemenu->tb, ICON_DIR"/home.svg", "Home", _menu_item_selected_cb, me);
+    elm_toolbar_item_append(sidemenu->tb, ICON_DIR"/account.svg", "Account", NULL, NULL);
+    elm_toolbar_item_append(sidemenu->tb, ICON_DIR"/contact.svg", "Friends", NULL, NULL);
+    elm_toolbar_item_append(sidemenu->tb, ICON_DIR"/clock.svg", "Clock", _menu_item_selected_cb, me);
+    elm_toolbar_homogeneous_set(sidemenu->tb, EINA_FALSE);
+    evas_object_show(sidemenu->tb);
+    elm_object_part_content_set(me->layout, "menu/side", sidemenu->tb);
+    elm_toolbar_horizontal_set(sidemenu->tb, EINA_FALSE);
+    elm_toolbar_item_selected_set(elm_toolbar_first_item_get(sidemenu->tb), EINA_TRUE);
+}
+</code>
+
+The side menu is created but hidden by default, to make it appear the user must
+click Home button.
+
+By default the Basic EDC UI application creates a function ''keydown_cb'' to
+handle the key down events. In ''elm_main'' an ''ecore_event_handler_add''
+function is called with the ''ECORE_EVENT_KEY_DOWN'' macro and with
+''keydown_cb'' as callback. In this callback, the ''KEY_END'' event puts the
+window on the lower state.
+
+<code c>
+keydown_cb(void *data , int type , void *event)
+{
+   Evas_Object *win = data;
+   Ecore_Event_Key *ev = event;
+   if (!strcmp(ev->keyname, KEY_END))
+   {
+      /* Let window go to hide state. */
+      elm_win_lower(win);
+   }
+
+   return ECORE_CALLBACK_DONE;
+}
+</code>
+
+The key name of menu button is ''XF86Send''. Add the menu button key press
+handling to the ''keydown_cb''. The menu is shown on the first press and
+hidden it on the second press. Use ''Eina_Bool sdmenu_up'' on the application
+data to store the menu status during the application execution. If
+''me->sdmenu_up'' is ''EINA_TRUE'' the menu is visible.
+
+A program ''animation,menu_side'' is defined in the ''.edc'' theme file. This
+program is run when the signal ''show,sidemenu'' is received with the source
+''MenuButton''.  Also the program who hides the side menu is defined and is
+called ''animation,menu_side,hide'' which start on signal ''hide,sidemenu''.
+
+Test side menu status by sending the signals using ''elm_object_signal_emit''
+
+<code c>
+static Eina_Bool
+keydown_cb(void *data , int type , void *event)
+{
+   Menu *me = data;
+   Ecore_Event_Key *ev = event;
+   if (!strcmp(ev->keyname, "XF86Send"))
+     {
+        if (me->sdmenu_up == EINA_TRUE)
+          {
+             // If the menu is visible send a "hide,sidemenu" signal
+             elm_object_signal_emit(me->layout, "hide,sidemenu", "MenuButton");
+             // Store the new menu status (hidden).
+             me->sdmenu_up = EINA_FALSE;
+          }
+        else
+          {
+             // If the menu is not visible send a "show,sidemenu" signal
+             elm_object_signal_emit(me->layout, "show,sidemenu", "MenuButton");
+             // Store the new menu status (hidden).
+             me->sdmenu_up = EINA_TRUE;
+          }
+     }
+   return ECORE_CALLBACK_DONE;
+}
+</code>

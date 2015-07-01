@@ -1,0 +1,102 @@
+collections {
+    group {
+        name: "my_layout";
+        parts {
+            part
+            {
+               name: "menu/main";
+               type: SWALLOW;
+               description
+               {
+                  state: "default" 0.0;
+                  rel1.relative: 1.0 0.0;
+                  rel2.relative: 1.0 1.0;
+               }
+               description
+               {
+                  state: "up" 0.0;
+                  rel1.relative: 0.0 0.01;
+                  rel2.relative: 1.0 0.18;
+
+               }
+            } //End menu/main
+            part
+            {
+               name: "view/main";
+               type: SWALLOW;
+               description
+               {
+                  state: "default" 0.0;
+                  rel1.relative: 1.0 1.0;
+                  rel2.relative: 1.0 1.0;
+               }
+               description
+               {
+                  state: "up" 0.0;
+                  rel1.relative: 0.0 1.01;
+                  rel1.to: "menu/main";
+                  rel2.relative: 1.0 1.0;
+                  color: 0 255 0 255;
+               }
+            } // END view/main
+            part
+            {
+               name: "menu/side";
+               type: SWALLOW;
+               description
+               {
+                  state: "default" 0.0;
+                  rel1.relative: -0.3 0.0;
+                  rel2.relative: -0.3 1.0;
+                  color: 255 0 0 255;
+               }
+               description
+               {
+                  state: "up" 0.0;
+                  rel1.relative: 0.0 0.2;
+                  rel2.relative: 0.10 1.0;
+                 color: 255 0 0 255;
+               }
+            } //END menu/side
+        }
+        programs {
+            program
+            {
+               name: "animation,menu_main";
+               source: "";
+               signal: "load";
+               action: STATE_SET "up" 1.0;
+               target: "menu/main";
+               transition: LINEAR 0.5;
+            } // END animation,menu_main
+            program
+            {
+               name: "animation,view_main";
+               source: "";
+               signal: "load";
+               action: STATE_SET "up" 1.0;
+               target: "view/main";
+               transition: LINEAR 0.2;
+            } //END animation,view_main²
+            program
+            {
+               name: "animation,menu_side,hide";
+               source: "MenuButton";
+               signal: "hide,sidemenu";
+               action: STATE_SET "default" 1.0;
+               target: "menu/side";
+               transition: LINEAR 0.2;
+            } //END animation,menu_side,hide
+
+            program
+            {
+               name: "animation,menu_side";
+               source: "MenuButton";
+               signal: "show,sidemenu";
+               action: STATE_SET "up" 1.0;
+               target: "menu/side";
+               transition: LINEAR 0.2;
+            } //END animation,menu_side
+        }
+    }
+}

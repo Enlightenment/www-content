@@ -1,0 +1,170 @@
+~~Title: Application Theme Menu Tutorial~~
+//**__previous__: **//[[/tutorial/menu/structure|Defining the Application "Structure"]]
+==== Defining the Application Theme ====
+
+After the structure is defined, define the UI. In this tutorial, Basic EDC UI
+Application is used.
+
+This application structure is based on this skeleton:
+
+
+{{ :menu_skeleton.png?direct&193 |Menu skeleton }}
+
+The window and the layout are set by the Basic EDC UI Application skeleton.
+Setup the containers for widgets and views.
+
+Create the ''menu/main'' ''SWALLOW'' part in the ''.edc'' file.
+
+<code c>
+part
+{
+   name: "menu/main";
+   type: SWALLOW;
+   description
+   {
+      state: "default" 0.0;
+      rel1.relative: 1.0 0.0;
+      rel2.relative: 1.0 1.0;
+   }
+   description
+   {
+      state: "up" 0.0;
+      rel1.relative: 0.0 0.01;
+      rel2.relative: 1.0 0.19;
+
+   }
+} //End menu/main
+</code>
+
+This part has two descriptions, one for the real position named ''up'' and
+another out of the screen as the default position. Create these states to
+animate the menu on application start. The animation is run by
+''animation,menu_main''.
+
+<code c>
+program
+{
+   name: "animation,menu_main";
+   source: "";
+   signal: "load";
+   action: STATE_SET "up" 1.0;
+   target: "menu/main";
+   transition: LINEAR 0.5;
+} // END animation,menu_main
+</code>
+
+For more information about animations, see the [[/coming_soon|Effects tutorial]].
+
+Create another container for the views. This container is also a "SWALLOW"
+part.
+
+<code c>
+part
+{
+   name: "view/main";
+   type: SWALLOW;
+   description
+   {
+      state: "default" 0.0;
+      rel1.relative: 1.0 1.0;
+      rel2.relative: 1.0 1.0;
+   }
+   description
+   {
+      state: "up" 0.0;
+      rel1.relative: 0.0 1.01;
+      rel1.to: "menu/main";
+      rel2.relative: 1.0 1.0;
+      color: 0 255 0 255;
+   }
+} // END view/main
+</code>
+
+This part has also two descriptions for animation purpose, like the main_menu
+part.
+
+The program:
+<code c>
+program
+{
+   name: "animation,view_main";
+   source: "";
+   signal: "load";
+   action: STATE_SET "up" 1.0;
+   target: "view/main";
+   transition: LINEAR 0.2;
+} //END animation,view_main²
+</code>
+
+The last container is the side menu called ''menu/side''.
+
+<code c>
+part
+{
+   name: "menu/side";
+   type: SWALLOW;
+   description
+   {
+      state: "default" 0.0;
+      rel1.relative: -0.3 0.0;
+      rel2.relative: -0.3 1.0;
+      color: 255 0 0 255;
+   }
+   description
+   {
+      state: "up" 0.0;
+      rel1.relative: 0.0 0.2;
+      rel2.relative: 0.10 1.0;
+     color: 255 0 0 255;
+   }
+} //END menu/side
+</code>
+
+By default, this container is hidden. Clicking menu button makes it appear.
+The second description places the container on the left of the screen. Here is
+the program to run animation:
+
+<code c>
+program
+{
+   name: "animation,menu_side";
+   source: "MenuButton";
+   signal: "show,sidemenu";
+   action: STATE_SET "up" 1.0;
+   target: "menu/side";
+   transition: LINEAR 0.2;
+} //END animation,menu_side
+</code>
+
+This program runs when it receives an event called ''show,sidemenu'' from
+''MenuButton'' source.
+
+Create a program that does the opposite and starts when it receives a signal
+called ''hide,menu_side'' from ''MenuButton'' source.
+
+<code c>
+program
+{
+   name: "animation,menu_side,hide";
+   source: "MenuButton";
+   signal: "hide,sidemenu";
+   action: STATE_SET "default" 1.0;
+   target: "menu/side";
+   transition: LINEAR 0.2;
+} //END animation,menu_side,hide
+
+program
+{
+   name: "animation,menu_side";
+   source: "MenuButton";
+   signal: "show,sidemenu";
+   action: STATE_SET "up" 1.0;
+   target: "menu/side";
+   transition: LINEAR 0.2;
+} //END animation,menu_side
+
+</code>
+\\
+//**__The whole code__ : **// {{/code_c/tutorial/menu/menu.edc}}
+\\
+//**__next__: **//[[/tutorial/menu/basic_ui|Creating the Basic UI]]

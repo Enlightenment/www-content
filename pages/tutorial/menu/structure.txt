@@ -1,0 +1,74 @@
+~~Title: Application "Structure" Menu Tutorial~~
+==== Defining the Application "Structure" ====
+
+Define the structure of the menu application:
+
+<code c>
+typedef struct _Menu
+{
+   Evas_Object* layout;   // The "edje" layout
+   Evas_Object *nf;       // The Naviframe to handle the views
+   Tbarmenu *menu;       // The main menu
+   Tbarmenu *sidemenu;   // The side menu
+   Mainview *main_view; // The main view
+   Calview *cal_view;   // The calendar view
+   Dateview *date_view; // The date and time view
+   Setview *settings_view; //The settings view
+
+   Eina_Bool sdmenu_up;   // A bool variable to keep the side menu status
+} Menu;
+</code>
+
+This structure contains some specific variables for the views and the menus.
+
+Define the main view by using the structure ''mainview'', it is composed of a
+''box'' (the main container), an image img, and a label ''lb_main''.
+
+<code c>
+typedef struct _Mainview
+{
+   Evas_Object *box;         //The main container of the view
+   Evas_Object *img;          //An image
+   Evas_Object *lb_day;      //A label
+} Mainview;
+</code>
+
+The date view is very similar, it contains a ''box'', a ''datetime'' widget
+and a label ''lb_date''.
+
+<code c>
+typedef struct _Dateview
+{
+   Evas_Object *box;      //The main container of the view
+   Evas_Object *datetime; //A datetime widget
+   Evas_Object *lb_date;  //A label
+} Dateview;
+</code>
+
+The last view is the calendar, it contains a ''box'', a ''calendar'' and a
+label ''lb_cal''.
+
+<code c>
+typedef struct _Calview
+{
+   Evas_Object *box;      //The main container of the view
+   Evas_Object *calendar; //A calendar widget
+   Evas_Object *lb_cal;   //A label widget
+} Calview;
+</code>
+
+The last members of the application structure are the 2 menus. The main menu
+is fixed and visible, and the side menu is hidden on application starts. These
+menus are represented by the ''Tbarmenu'' structure.
+
+<code c>
+typedef struct _Tbarmenu
+{
+   Evas_Object *tb;           //The toolbar
+   Elm_Object_Item *submenu; //The submenu item
+} Tbarmenu;
+</code>
+\\
+//**__The whole code__ : **// {{/code_c/tutorial/menu/structure_menu.h}}
+\\
+//**__next__: **//[[/tutorial/menu/theme|Defining the Application Theme]]
