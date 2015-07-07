@@ -1,0 +1,195 @@
+~~Title: Description Preferences~~
+==== Description Preferences ====
+
+A .edc. file contains a collection with one or several page, holding items.
+
+A page is a group of preferences. It has a name, a version number, a title and
+subtitle, and has a graphical representation (widget).
+
+<code c>
+   page {
+      name: "main";
+      version: 1;
+      title: "Main preferences";
+      subtitle: "Some preferences";
+      widget: "elm/vertical_box";
+</code>
+
+In this example, there is a page called “main”, with a version code of 1,
+holding the preferences in a vertical box.
+
+Then, a preference that holds an integer is added.
+
+<code c>
+         item {
+            name: "universe";
+            type: INT;
+            label: "Ultimate Answer of Life, the Universe and Everything";
+            editable: 1;
+            int {
+               min: 0;
+               max: 100;
+               default: 42;
+            }
+         }
+</code>
+
+Here, an editable integer contains a value between 0 and 100, with a
+default value of 42. A label is attached to it.
+
+{{ :preference_int.png }}
+
+The type of graphical interface presented to the user can be specified:
+
+<code c>
+         item {
+            name: "another";
+            type: INT;
+            label: "Spinner";
+            widget: "elm/spinner";
+            int {
+               min: -50;
+               max: 200;
+            }
+         }
+</code>
+
+{{ preference_int-spinner.png }}
+
+If wanted, float values can be added too.
+
+<code c>
+         item {
+            name: "floating";
+            type: FLOAT;
+            editable: 1;
+            label: "floating value";
+            float {
+               default: 0.6;
+               min: 0;
+               max: 1;
+            }
+         }
+</code>
+
+{{ :preference_float.png }}
+
+Boolean preferences can be represented as checkboxes.
+
+<code c>
+         item {
+            name: "boolean";
+            type: BOOL;
+            label: "Check here";
+            bool {
+               default: true;
+            }
+         }
+</code>
+
+{{ :preference_bool.png }}
+
+Adding graphical-only items such as separators or label works the same way.
+
+<code c>
+         item {
+            name: "sep";
+            type: SEPARATOR;
+         }
+         item {
+            name: "label";
+            type: LABEL;
+            label: "Some other preferences…";
+         }
+</code>
+
+{{ :preference_display.png }}
+
+It is possible to add a text entry. In the following example, we will have a
+placeholder text, and a default value. The deny section is filled with a
+regular expression that specifies what the user entered text should not match,
+otherwise refusing the entry.
+
+<code c>
+         item {
+            name: "text";
+            type: TEXT;
+            editable: 1;
+            text {
+               placeholder: "Enter some text here.";
+               default: "default";
+               deny: "^[0-9]*$";
+            }
+         }
+</code>
+
+{{ :preference_text.png }}
+
+For adding a date section, a minimum and maximum date can be set.
+
+<code c>
+         item {
+            name: "date";
+            type: DATE;
+            label: "First EFL Developer Day";
+            date {
+               default: 2012 11 05;
+               min: 1980 11 1;
+               max: 2200 12 2;
+            }
+         }
+</code>
+
+Let's say that display buttons are wanted to be displayed such as one to save, another
+one to reset the form back, and the last one to do some action. They are
+wanted to be shown in a horizontal box. A new page needs to be created to hold
+those items.
+
+<code c>
+   page {
+      name: "buttons";
+      version: 1;
+      title: "Actions";
+      widget: "elm/horizontal_box";
+      items {
+         item {
+            name: "save";
+            type: SAVE;
+            label: "Save";
+         }
+         item {
+            name: "reset";
+            type: RESET;
+            label: "Reset";
+         }
+         item {
+            name: "action";
+            type: ACTION;
+            label: "Action!";
+         }
+      }
+   }
+</code>
+
+{{ :preference_buttons.png }}
+
+This page needs to be added to the main one.
+
+<code c>
+         item {
+            name: "buttons";
+            type: PAGE;
+            source: "buttons";
+         }
+</code>
+
+Our preference collection is now complete, we now have to compile it using
+elm_prefs_cc preference.epc, which will generate a compiled preference.epb file.
+Our preference collenction is now complete, to compile it use ''elm_prefs_cc
+preference.epc'' which will generate a compiled preference.epb file.
+\\
+
+//**__The whole code__: **//{{ code_c/tutorial/preference/preference.epc }}
+\\
+
+//**__next page__: **//[[/tutorial/preference/code|Preferences Code]]

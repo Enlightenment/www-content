@@ -1,0 +1,121 @@
+~~Title: Code Preferences~~
+//**__previous page__: **//[[/tutorial/preference/description|Preferences Description]]
+==== Code Preferences ====
+
+Now that the preferences is fully described, add them to our application.
+
+<code c>
+Evas_Object *prefs;
+prefs = elm_prefs_add(win);
+evas_object_size_hint_weight_set(prefs, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+elm_object_content_set(conform, prefs);
+evas_object_show(prefs);
+elm_prefs_autosave_set(prefs, EINA_FALSE);
+elm_prefs_file_set(prefs, "preference.epb", NULL);
+</code>
+
+{{ :preference_base.png }}
+
+An ''Elm_Prefs'' object is here created, which is the one that will display the
+preferences. The automatic saving is then set to false, and the file holding
+the compiled preferences is defined.
+
+<code c>
+Elm_Prefs_Data *prefs_data;
+prefs_data = elm_prefs_data_new("preference.cfg", NULL, EET_FILE_MODE_READ_WRITE);
+elm_prefs_data_set(prefs, prefs_data);
+</code>
+
+Here, an ''Elm_Prefs_Data'' object is created. It will hold the user-defined
+values. The file in which those values will be stored in and read from at
+start is set in ''prefs_data''. Finally, it is associated with the preferences
+created before.
+
+As you remember, three buttons for three actions were added in preferences: one
+saves the form, one resets it, and a last one does an other action.
+Elementary will generate some events in the lifetime
+of the preferences. For instance, we may want to get notified when the
+preferences are saved or when the action button is clicked.
+
+<code c>
+evas_object_smart_callback_add(prefs, "page,saved", _save_cb, NULL);
+evas_object_smart_callback_add(prefs, "action", _action_cb, NULL);
+elm_prefs_data_event_callback_add(prefs_data, ELM_PREFS_DATA_EVENT_ITEM_CHANGED, _changed_cb, prefs);
+</code>
+
+Those will call the specified callbacks. A specification for a function to be
+called for each and every value change is also added.
+
+<code c>
+static void
+_save_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *prefs;
+   Evas_Object *label;
+   prefs = obj;
+   label = (Evas_Object *) elm_prefs_item_object_get(prefs, "main:label");
+   elm_object_text_set(label, "<i>Preferences have been saved.</i>");
+}
+</code>
+
+The callback for the save action will simply change the label text.
+
+{{ :preference_save.png }}
+
+However, the one for the action is a bit more complex. It will get the value
+from the ''universe'' item, and will set it as the label of the ''action'' button.
+Note how ''main:buttons:'' has to be prefixed as if it were in the buttons page,
+itself is in the "main" page.
+
+<code c>
+static void
+_action_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *prefs;
+   Elm_Prefs_Data *prefs_data;
+   Elm_Prefs_Item_Type type;
+   Eina_Value value;
+   int value_int = -1;
+   Evas_Object *button;
+   char buf[64];
+   prefs = obj;
+   prefs_data = elm_prefs_data_get(prefs);
+   if (elm_prefs_data_value_get(prefs_data, "main:universe", &type, &value))
+     {
+        eina_value_get(&value, &value_int);
+        snprintf(buf, sizeof(buf), "Value: %d", value_int);
+        button = (Evas_Object *) elm_prefs_item_object_get(prefs, "main:buttons:action");
+        elm_object_text_set(button, buf);
+     }
+}
+</code>
+
+{{ :preference_action.png }}
+
+This last function will receive an event for all preferences change. In this
+example, only the ones pertaining to the "another" item are treated: its value
+is read and set to the label.
+
+<code c>
+static void
+_changed_cb(void *data, Elm_Prefs_Data_Event_Type type, Elm_Prefs_Data *prefs_data, void *event_info)
+{
+   Evas_Object *prefs;
+   Elm_Prefs_Data_Event_Changed *event;
+   int value_int;
+   Evas_Object *label;
+   char buf[64];
+   prefs = data;
+   event = event_info;
+   if (strcmp(event->key, "main:another")) return;
+   eina_value_get(event->value, &value_int);
+   snprintf(buf, sizeof(buf), "Spinner: %d", value_int);
+   label = (Evas_Object *) elm_prefs_item_object_get(prefs, "main:label");
+   elm_object_text_set(label, buf);
+}
+</code>
+
+{{ :preference_another.png }}
+
+//**__The whole code__: **//{{ /code_c/tutorial/preference/preference.c }}{{
+/code_c/tutorial/preference/preference.epc }}

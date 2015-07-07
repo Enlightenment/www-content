@@ -1,0 +1,132 @@
+collection {
+//! [page_main_head]
+   page {
+      name: "main";
+      version: 1;
+      title: "Main preferences";
+      subtitle: "Some preferences";
+      widget: "elm/vertical_box";
+//! [page_main_head]
+      items {
+//! [item_int]
+         item {
+            name: "universe";
+            type: INT;
+            label: "Ultimate Answer of Life, the Universe and Everything";
+            editable: 1;
+            int {
+               min: 0;
+               max: 100;
+               default: 42;
+            }
+         }
+//! [item_int]
+//! [item_int_spinner]
+         item {
+            name: "another";
+            type: INT;
+            label: "Spinner";
+            widget: "elm/spinner";
+            int {
+               min: -50;
+               max: 200;
+            }
+         }
+//! [item_int_spinner]
+//! [item_float]
+         item {
+            name: "floating";
+            type: FLOAT;
+            editable: 1;
+            label: "floating value";
+            float {
+               default: 0.6;
+               min: 0;
+               max: 1;
+            }
+         }
+//! [item_float]
+//! [item_bool]
+         item {
+            name: "boolean";
+            type: BOOL;
+            label: "Check here";
+            bool {
+               default: true;
+            }
+         }
+//! [item_bool]
+//! [item_display]
+         item {
+            name: "sep";
+            type: SEPARATOR;
+         }
+         item {
+            name: "label";
+            type: LABEL;
+            label: "Some other preferences…";
+         }
+//! [item_display]
+//! [item_text]
+         item {
+            name: "text";
+            type: TEXT;
+            editable: 1;
+            text {
+               placeholder: "Enter some text here.";
+               default: "default";
+               deny: "^[0-9]*$";
+            }
+         }
+//! [item_text]
+//! [item_date]
+         item {
+            name: "date";
+            type: DATE;
+            label: "First EFL Developer Day";
+            date {
+               default: 2012 11 05;
+               min: 1980 11 1;
+               max: 2200 12 2;
+            }
+         }
+//! [item_date]
+         item {
+            name: "sep";
+            type: SEPARATOR;
+         }
+//! [item_page]
+         item {
+            name: "buttons";
+            type: PAGE;
+            source: "buttons";
+         }
+//! [item_page]
+      }
+   }
+//! [page_buttons]
+   page {
+      name: "buttons";
+      version: 1;
+      title: "Actions";
+      widget: "elm/horizontal_box";
+      items {
+         item {
+            name: "save";
+            type: SAVE;
+            label: "Save";
+         }
+         item {
+            name: "reset";
+            type: RESET;
+            label: "Reset";
+         }
+         item {
+            name: "action";
+            type: ACTION;
+            label: "Action!";
+         }
+      }
+   }
+//! [page_buttons]
+}
