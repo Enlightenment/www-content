@@ -1,0 +1,403 @@
+~~Title: Drawing the Cube - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/creating_cube|Creating the Cube]]
+==== Drawing the Cube with GLView ====
+
+=== Mathematical Functions for Matrices ===
+
+After the model is initialized, create functionality to manipulate the scene.
+OpenGL ES 2.0 provided by GLView requires more preliminary work that the
+previous version of the library, but gives more power and flexibility,
+although our example does not take much benefit.
+
+First, declare additional global variables for specific OpenGL ES 2.0 tasks: a
+program object, an identifier for the vertices buffer and
+another for the colors. Add also three variables to ensure the
+connection with the shader language:
+
+    * ''mvpLoc'' is an identifier for model-view-projection matrix.
+    * ''positionLoc'' is an identifier for the vertex position.
+    * ''colorLoc'' is an identifier for the vertex color.
+
+Declare all these variables in the ''GLData'' object:
+
+<code c>
+struct _GLData
+{
+    GLuint       program;
+    GLuint       vtx_shader;
+    GLuint       fgmt_shader;
+    GLuint       vbo;
+    GLuint       vertexID;
+    GLuint       colorID;
+    GLuint       mvpLoc;
+    GLuint       positionLoc;
+    GLuint       colorLoc;
+}
+</code>
+
+Since OpenGL ES 2.0, some functions for matrix transformations have been
+removed. Define three matrix functions to use: projection matrix, model-view
+matrix, and a combination of these allows you to perform any transformations
+on the initial vertices matrix.
+
+== Matrix Multiplication Function (glMultMatrix) ==
+
+First, define a function that is able to return the inner product of two
+matrices. This function reproduces the behavior of ''glMultMatrix()''
+available in OpenGL ES 1.1. This function is very useful since almost every
+matrix transformation can be translated as multiplications of matrices.
+
+The function takes three arguments, one is for the result and the other 2
+matrices are operands:
+
+<code c>
+static void
+customMutlMatrix(float matrix[16], const float matrix0[16], const float matrix1[16])
+{
+   int i, row, column;
+   float temp[16];
+   for (column = 0; column < 4; column++)
+     {
+        for (row = 0; row < 4; row++)
+          {
+             temp[column * 4 + row] = 0.0f;
+             for (i = 0; i < 4; i++)
+                 temp[column * 4 + row] += matrix0[i * 4 + row] * matrix1[column * 4 + i];
+          }
+     }
+   for (i = 0; i < 16; i++)
+        matrix[i) = temp[i];
+}
+</code>
+
+== Matrix Identity Function (glLoadIdentity) ==
+
+Implement a function equivalent to ''glLoadIdentity()'' that replaces the current
+matrix with the identity matrix:
+
+<code c>
+const float unit_matrix[] =
+{
+   1.0f, 0.0f, 0.0f, 0.0f,
+   0.0f, 1.0f, 0.0f, 0.0f,
+   0.0f, 0.0f, 1.0f, 0.0f,
+   0.0f, 0.0f, 0.0f, 1.0f
+};
+
+static void
+customLoadIdentity(float matrix[16])
+{
+   for (int i = 0; i < 16; i++)
+        matrix[i] = unit_matrix[i];
+}
+</code>
+
+== Matrix Projection Function (glFrustum) ==
+
+Since ''glFrustum'' has been depreciated, implement a function that produces
+perspective projection matrices that are used to transform from eye coordinate
+space to clip coordinate space. This matrix projects a portion of the space
+(the "fustum") to your screen. Many caveats apply (normalized device
+coordinates, perspective divide, etc), but that is the idea:
+
+<code c>
+static int
+customFrustum(float result[16], const float left, const float right, const float bottom, const float top, const float near, const float far)
+{
+   if ((right - left) == 0.0f || (top - bottom) == 0.0f || (far - near) == 0.0f) return 0;
+
+   result[0] = 2.0f / (right - left);
+   result[1] = 0.0f;
+   result[2] = 0.0f;
+   result[3] = 0.0f;
+
+   result[4] = 0.0f;
+   result[5] = 2.0f / (top - bottom);
+   result[6] = 0.0f;
+   result[7] = 0.0f;
+
+   result[8] = 0.0f;
+   result[9] = 0.0f;
+   result[10] = -2.0f / (far - near);
+   result[11] = 0.0f;
+
+   result[12] = -(right + left) / (right - left);
+   result[13] = -(top + bottom) / (top - bottom);
+   result[14] = -(far + near) / (far - near);
+   result[15] = 1.0f;
+
+   return 1;
+}
+</code>
+
+== Matrix Scaling Function (glScale) ==
+
+Depreciated ''glScale()'' function represents a non-uniform scaling along the x,
+y, and z axes. The three parameters indicate the desired scale factor along
+each of the three axes:
+
+<code c>
+const float scale_matrix[] =
+{
+   x,    0.0f, 0.0f, 0.0f,
+   0.0f, y,    0.0f, 0.0f,
+   0.0f, 0.0f, z,    0.0f,
+   0.0f, 0.0f, 0.0f, 1.0f
+}
+</code>
+
+Here is the implementation of the matrix scaling function:
+
+<code c>
+static void
+customScale(float matrix[16], const float sx, const float sy, const float sz)
+{
+    matrix[0]  *= sx;
+    matrix[1]  *= sx;
+    matrix[2]  *= sx;
+    matrix[3]  *= sx;
+
+    matrix[4]  *= sy;
+    matrix[5]  *= sy;
+    matrix[6]  *= sy;
+    matrix[7]  *= sy;
+
+    matrix[8]  *= sz;
+    matrix[9]  *= sz;
+    matrix[10] *= sz;
+    matrix[11] *= sz;
+}
+</code>
+
+== Matrix Rotation Function (glRotate) ==
+
+Define a function to represent a rotation by the vector (x y z). The current
+matrix is multiplied by a rotation matrix:
+
+<code c>
+static void
+customRotate(float matrix[16], const float anglex, const float angley, const float anglez)
+{
+    const float pi = 3.141592f;
+    float temp[16];
+    float rz = 2.0f * pi * anglez / 360.0f;
+    float rx = 2.0f * pi * anglex / 360.0f;
+    float ry = 2.0f * pi * angley / 360.0f;
+    float sy = sinf(ry);
+    float cy = cosf(ry);
+    float sx = sinf(rx);
+    float cx = cosf(rx);
+    float sz = sinf(rz);
+    float cz = cosf(rz);
+
+    customLoadIdentity(temp);
+
+    temp[0] = cy * cz - sx * sy * sz;
+    temp[1] = cz * sx * sy + cy * sz;
+    temp[2] = -cx * sy;
+
+    temp[4] = -cx * sz;
+    temp[5] = cx * cz;
+    temp[6] = sx;
+
+    temp[8] = cz * sy + cy * sx * sz;
+    temp[9] = -cy * cz * sx + sy * sz;
+    temp[10] = cx * cy;
+
+    customMutlMatrix(matrix, matrix, temp);
+}
+</code>
+
+=== Create the Shader ===
+
+Define the source for the shader using a ''GLbyte'' array. First comes out vertex
+shader, which is used to a medium precision for float values. Then build a
+uniform matrix with dimensions 4x4 intended to hold the model-view-projection
+matrix. Also create two vector attributes which have 4 components for the
+vertex position and the color. This varying variable v_color can be accessed
+from the fragment shader. In the main function of the shader, initialize the
+position of the current vertex, gl_Position, with the product of the vertex
+position and the model-view-projection matrix, in order to normalize the
+position for the target screen. The pixel color is calculated by the varying
+variable from the vertex shader.
+
+In the fragment shader, declare a varying variable, then set the color of the
+pixel with this interpolated color.
+
+<code c>
+GLbyte vertex_shader[] =
+    "attribute vec4 a_position;\n"
+    "attribute vec4 a_color;\n"
+    "uniform mat4 u_mvp_mat;\n"
+    "varying vec4 v_color;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = u_mvp_mat*a_position;\n"
+    "   v_color = a_color;\n"
+    "}";
+GLbyte fragment_shader[] =
+    "varying vec4 v_color;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_FragColor = v_color;\n"
+    "}";
+</code>
+
+Create the shaders, attach the source code that is just defined and compile
+the program object:
+
+<code c>
+static int
+init_shaders(GLData *gld)
+{
+   Evas_GL_API *gl = gld->glapi;
+
+   GLbyte vertex_shader[] =
+       "attribute vec4 a_position;\n"
+       "attribute vec4 a_color;\n"
+       "uniform mat4 u_mvp_mat;\n"
+       "varying vec4 v_color;\n"
+       "void main()\n"
+       "{\n"
+       "   gl_Position = u_mvp_mat*a_position;\n"
+       "   v_color = a_color;\n"
+       "}";
+   GLbyte fragment_shader[] =
+       "varying vec4 v_color;\n"
+       "void main()\n"
+       "{\n"
+       "   gl_FragColor = v_color;\n"
+       "}";
+
+   GLint compiled;
+   const char *p;
+
+   /*vertex_shader*/
+   p = vertex_shader;
+   gld->vtx_shader = gl->glCreateShader(GL_VERTEX_SHADER);
+   gl->glShaderSource(gld->vtx_shader, 1, &p, NULL); //get vertex_shader source
+   gl->glCompileShader(gld->vtx_shader); //compile
+   //get compile status
+   gl->glGetShaderiv(gld->vtx_shader, GL_COMPILE_STATUS, &compiled);
+   //if NULL: error
+   if (!compiled)
+     {
+        GLint info_len = 0;
+        gl->glGetShaderiv(gld->vtx_shader, GL_INFO_LOG_LENGTH, &info_len);
+        if (info_len > 1)
+          {
+             char* info_log = malloc(sizeof(char) * info_len);
+             gl->glGetShaderInfoLog(gld->vtx_shader, info_len, NULL, info_log);
+             printf("Error compiling shader:\n%s\n======\n%s\n======\n", info_log, p);
+             free(info_log);
+          }
+        gl->glDeleteShader(gld->vtx_shader);
+     }
+
+   /*fragment_shader*/
+   p = fragment_shader;
+   gld->fgmt_shader = gl->glCreateShader(GL_FRAGMENT_SHADER);
+   gl->glShaderSource(gld->fgmt_shader, 1, &p, NULL);
+   gl->glCompileShader(gld->fgmt_shader);
+   //get compile status
+   gl->glGetShaderiv(gld->fgmt_shader, GL_COMPILE_STATUS, &compiled);
+   //if NULL: error
+   if (!compiled)
+     {
+        GLint info_len = 0;
+        gl->glGetShaderiv(gld->fgmt_shader, GL_INFO_LOG_LENGTH, &info_len);
+        if (info_len > 1)
+          {
+             char* info_log = malloc(sizeof(char) * info_len);
+             gl->glGetShaderInfoLog(gld->fgmt_shader, info_len, NULL, info_log);
+             printf("Error compiling shader:\n%s\n======\n%s\n======\n", info_log, p);
+             free(info_log);
+          }
+        gl->glDeleteShader(gld->fgmt_shader);
+     }
+</code>
+
+Once the shaders are ready, instantiate the program object and link the
+shaders. If the linking succeeds, you can destroy the shaders afterwards
+(using ''glDeleteShader''). Since they are inside the program object, so it is
+pointless to keep them in memory.
+
+<code c>
+    gld->program = gl->glCreateProgram();
+
+    GLint linked;
+    // Load the vertex/fragment shaders
+    gl->glAttachShader(gld->program, gld->vtx_shader);
+    gl->glAttachShader(gld->program, gld->fgmt_shader);
+
+    gl->glDeleteShader(gld->vtx_shader);
+    gl->glDeleteShader(gld->fgmt_shader);
+
+    gl->glBindAttribLocation(gld->program, 0, "a_position");
+    gl->glLinkProgram(gld->program);
+    gl->glGetProgramiv(gld->program, GL_LINK_STATUS, &linked);
+    if (!linked)
+      {
+         GLint info_len = 0;
+         gl->glGetProgramiv(gld->program, GL_INFO_LOG_LENGTH, &info_len);
+         if (info_len > 1)
+           {
+              char* info_log = malloc(sizeof(char) * info_len);
+              gl->glGetProgramInfoLog(gld->program, info_len, NULL, info_log);
+              printf("Error linking program:\n%s\n", info_log);
+              free(info_log);
+           }
+         gl->glDeleteProgram(gld->program);
+         return 0;
+      }
+</code>
+
+For shader process, create identifiers for the attribute variables used in the
+shader program. First create an identifier for the model-view-projection
+matrix, another one for the current vertex position, and a last one for the
+vertex color.
+
+<code c>
+    gld->mvpLoc     = gl->glGetUniformLocation(gld->program, "u_mvp_mat");
+    gld->positionLoc = gl->glGetAttribLocation(gld->program, "a_position");
+    gld->colorLoc   = gl->glGetAttribLocation(gld->program, "a_color");
+</code>
+
+Finally, generate the buffers for the vertex positions and colors.
+
+<code c>
+   gl->glGenBuffers(1, &gld->vertexID);
+   gl->glBindBuffer(GL_ARRAY_BUFFER, gld->vertexID);
+   gl->glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+   gl->glGenBuffers(1, &gld->colorID);
+   gl->glBindBuffer(GL_ARRAY_BUFFER, gld->colorID);
+   gl->glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+
+   gld->initialized = EINA_TRUE;
+</code>
+
+Allocate memory for the matrix and load a unit matrix into it. Then define the
+value that is used in order to build the perspective projection matrix. The
+''customFrustum()'' function is used for it. Multiply this resulting matrix
+with a resizing matrix, so the model is correctly adjusted to the screen.
+
+<code c>
+float aspect;
+
+elm_glview_size_get(obj, &w, &h);
+customLoadIdentity(gld->view);
+
+if (w > h)
+  {
+     aspect = (float) w / h;
+     customFrustum(gld->view, -1.0 * aspect, 1.0 * aspect, -1.0, 1.0, -1.0, 1.0);
+  }
+else
+  {
+     aspect = (float) h / w;
+     customFrustum(gld->view, -1.0, 1.0, -1.0 * aspect, 1.0 * aspect, -1.0, 1.0);
+  }
+</code>
+\\
+//**__next page__: **//[[/tutorial/gl2d/rendering_cube|Rendering the Cube]]

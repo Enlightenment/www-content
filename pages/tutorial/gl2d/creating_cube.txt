@@ -1,0 +1,128 @@
+~~Title: Creating the Cube - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/basic_application|Creating the
+Basic Application]].
+
+==== Creating the Cube ====
+
+Creating and coloring the cube can be separated into two distinct tasks:
+define the vertices and then add the colors to the faces.
+
+{{ :cube.png }}
+
+Declare an array that stores the vertices of the cube in order to make it
+look as the drawing above.
+
+<code c>
+static const float vertices[] =
+{
+    // Front
+    -0.5f, 0.5f, 0.5f,
+    -0.5f, -0.5f, 0.5f,
+    0.5f, 0.5f, 0.5f,
+    0.5f, 0.5f, 0.5f,
+    -0.5f, -0.5f, 0.5f,
+    0.5f, -0.5f, 0.5f,
+    // Right
+    0.5f, 0.5f, 0.5f,
+    0.5f, -0.5f, 0.5f,
+    0.5f, 0.5f, -0.5f,
+    0.5f, 0.5f, -0.5f,
+    0.5f, -0.5f, 0.5f,
+    0.5f, -0.5f, -0.5f,
+    // Back
+    0.5f, 0.5f, -0.5f,
+    0.5f, -0.5f, -0.5f,
+    -0.5f, 0.5f, -0.5f,
+    -0.5f, 0.5f, -0.5f,
+    0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,
+    // Left
+    -0.5f, 0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,
+    -0.5f, 0.5f, 0.5f,
+    -0.5f, 0.5f, 0.5f,
+    -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, 0.5f,
+    // Top
+    -0.5f, 0.5f, -0.5f,
+    -0.5f, 0.5f, 0.5f,
+    0.5f, 0.5f, -0.5f,
+    0.5f, 0.5f, -0.5f,
+    -0.5f, 0.5f, 0.5f,
+    0.5f, 0.5f, 0.5f,
+    // Bottom
+    -0.5f, -0.5f, 0.5f,
+    -0.5f, -0.5f, -0.5f,
+    0.5f, -0.5f, 0.5f,
+    0.5f, -0.5f, 0.5f,
+    -0.5f, -0.5f, -0.5f,
+    0.5f, -0.5f, -0.5f
+};
+</code>
+
+{{ :cube_matrix.png }}
+
+Each triangle is defined with three point coordinates, three vertices for each
+triangle, two triangles per face and six faces, so there are 36 vertices is
+total.
+
+The next step is to specify a color for each face of the cube. Each color is
+represented in the RGBA format for the corresponding vertex, where each
+component is ranged from 0 to 1 where 1 is the maximum value. For example, in
+32-byte color space, the RGB color of (16, 147, 237) is translated as (0.0625,
+0.57421875, 0.92578125). The A of RGBA stands for the alpha channel, which
+represents the transparency of the color. All colors defined in this tutorial
+are opaque to make it simpler, so each alpha value is set to 1.0. In this
+example, different variants of blue are used for the faces of the cube.
+
+Specify the colors of the cube into an array dedicated to this vertex:
+
+<code c>
+static const float colors[] =
+{
+   // Front
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   // Right
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   // Back
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   // Left
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   0.0625f, 0.57421875f, 0.92578125f, 1.0f,
+   // Top
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   0.29296875f, 0.66796875f, 0.92578125f, 1.0f,
+   // Bottom
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f,
+   0.52734375f, 0.76171875f, 0.92578125f, 1.0f
+};
+</code>
+
+//**__next page__: **//[[/tutorial/gl2d/drawing_cube|Drawing the Cube with GLView]]

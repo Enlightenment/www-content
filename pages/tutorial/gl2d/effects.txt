@@ -1,0 +1,53 @@
+~~Title: Implementing Effects - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/widget_interaction|Implementing Widget Interaction]]
+==== Implementing Effects ====
+
+Create a button that resets the scene by putting the background color to black
+and makes the cube bounce back to its original scale. Add the button to the
+GUI:
+
+<code c>
+Evas_Object *btn_reset;
+btn_reset = elm_button_add(inner_box);
+elm_object_text_set(btn_reset, "Reset");
+evas_object_smart_callback_add(btn_reset, "clicked", btn_reset_cb, gld);
+evas_object_size_hint_align_set(btn_reset, EVAS_HINT_FILL, 0);
+elm_box_pack_end(inner_box, btn_reset);
+evas_object_show(btn_reset);
+</code>
+
+Declare a callback that resets the variables that have influence on the
+drawing of the cube. In addition, animate the sliders when they get back to
+their original position using ''Ecore_Animator''.
+
+<code c>
+static Eina_Bool
+animate_reset_cb(void *data, double pos)
+{
+    GLData *gld = data;
+    double frame = pos;
+    float x, y, z;
+
+    frame = ecore_animator_pos_map(pos, ECORE_POS_MAP_BOUNCE, 1.8, 7);
+    x = gld->slx_value * (1 - frame) + 0.75 * frame;
+    y = gld->sly_value * (1 - frame) + 0.75 * frame;
+    z = gld->slz_value * (1 - frame) + 0.75 * frame;
+
+    elm_slider_value_set(gld->slx, x);
+    elm_slider_value_set(gld->sly, y);
+    elm_slider_value_set(gld->slz, z);
+
+    return EINA_TRUE;
+}
+
+static void btn_reset_cb(void *data, Evas_Object *obj,  void *event_info)
+{
+    GLData *gld = data;
+    gld->slx_value = elm_slider_value_get(gld->slx);
+    gld->sly_value = elm_slider_value_get(gld->sly);
+    gld->slz_value = elm_slider_value_get(gld->slz);
+    ecore_animator_timeline_add(1, animate_reset_cb, gld);
+}
+</code>
+\\
+//**__The whole code__: **//{{ code_c/tutorial/gl2d/gl_2d.c }}

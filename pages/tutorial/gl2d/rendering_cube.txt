@@ -1,0 +1,55 @@
+~~Title: Rendering the Cube - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/drawing_cube|Drawing the Cube with GLView]]
+==== Rendering the Cube ====
+
+The viewport is set at 0,0 corresponding to the bottom left edge of the
+window, and the height and width of the GL surface. Clear the depth and the
+color buffers to the values that were selected during initialization. Then
+call the ''glUseProgram()'' function in order to trigger the shader program.
+
+In ''draw_gl'' callback :
+
+<code c>
+gl->glViewport(0, 0, w, h);
+gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+gl->glUseProgram(gld->program);
+</code>
+
+Also bind the position and color identifiers to the buffers defined above.
+
+<code c>
+gl->glEnableVertexAttribArray(gld->positionLoc);
+gl->glBindBuffer(GL_ARRAY_BUFFER, gld->vertexID);
+gl->glVertexAttribPointer(gld->positionLoc, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+
+gl->glEnableVertexAttribArray(gld->colorLoc);
+gl->glBindBuffer(GL_ARRAY_BUFFER, gld->colorID);
+gl->glVertexAttribPointer(gld->colorLoc, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+</code>
+
+After this, initialize and calculate the transformation matrix of the
+model-view matrix by calling the ''customRotate()'' function. This makes the cube
+view rotate a little for a better perspective. Once the model-view matrix is
+ready to display, multiply the projection matrix with the model-view matrix.
+
+<code c>
+customLoadIdentity(gld->model);
+customRotate(gld->model, gld->xangle, gld->yangle, gld->zangle);
+customMutlMatrix(gld->mvp, gld->view, gld->model);
+</code>
+
+Then load the model-view-projection matrix into the shader and call
+''glDrawArrays()'' to draw the model.
+
+<code c>
+gl->glUniformMatrix4fv(gld->mvpLoc, 1, GL_FALSE, gld->mvp);
+gl->glDrawArrays(GL_TRIANGLES, 0, 36);
+gl->glFlush();
+</code>
+
+You now are the proud owner of a nice cube!
+
+{{ :gl_cube.png?500 }}
+\\
+//**__next page__: **//[[/tutorial/gl2d/animating_cube|Animating the Cube]]

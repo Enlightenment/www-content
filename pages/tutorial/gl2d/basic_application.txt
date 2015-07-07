@@ -1,0 +1,87 @@
+~~Title: Basic Application - GL 2D Tutorial~~
+==== Creating the Basic Application ====
+
+This tutorial demonstrates how to create a multicolored 3D rotating cube using
+OpenGL ES 2.0 API provided by GLView library. Several concepts are explained,
+such as the cube geometry, the initialization phase of the model, the
+adjustment of this very model frame by frame, and the way to design the OpenGL
+ES rendering loop.
+
+First create a basic application as explained in the Basic application
+tutorial. This provides a basic UI application skeleton which already makes
+available the window object that contains the GLView canvas. Here an example
+below :
+
+<code c>
+#include <Elementary.h>
+#include <Evas_GL.h>
+#include <stdio.h>
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *box, *gl;
+   Ecore_Animator *ani;
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   win = elm_win_util_standard_add("glview simple", "GLView Simple");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   evas_object_resize(win, 320, 480);
+   evas_object_show(win);
+   // run the mainloop and process events and callbacks
+   elm_run();
+   elm_shutdown();
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+=== OpenGL ES Canvas ===
+
+To develop a GL application, you have to call
+''elm_config_accel_preference_set()'' before creating a window which makes an
+application to use GPU.
+
+<code c>
+elm_config_accel_preference_set("opengl");
+</code>
+
+To call GL functions, you can get the Evas_GL instance from
+''elm_glview_gl_api_get'' function, then you can call the OpenGL ES function
+with the instance.
+
+<code c>
+gl = elm_glview_add(win);
+Evas_GL_API *glapi = elm_glview_gl_api_get(gl);
+evas_object_size_hint_align_set(gl, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_size_hint_weight_set(gl, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+</code>
+
+The next thing to do is to set the GLView mode.
+elm_glview_mode_set(Evas_Object *obj, Elm_GLView_Mode mode) supports alpha,
+depth, stencil, MSAA, and client_side_rotation.
+
+<code c>
+// mode is simply for supporting alpha, depth buffering, and stencil
+// buffering.
+elm_glview_mode_set(gl, ELM_GLVIEW_ALPHA | ELM_GLVIEW_DEPTH);
+</code>
+
+To set up callbacks:
+<code c>
+   // initialize callback function gets registered here
+   elm_glview_init_func_set(gl, _init_gl);
+   // delete callback function gets registered here
+   elm_glview_del_func_set(gl, _del_gl);
+   elm_glview_resize_func_set(gl, _resize_gl);
+   elm_glview_render_func_set(gl, _draw_gl);
+   ani = ecore_animator_add(_anim, gl);
+</code>
+\\
+| Callback for initialisation | ''_init_gl'' | The initialization callback is called when the GLView is first created, after a valid OpenGL ES context and surface have been created. This is called from the main loop, just as the 3 other callbacks. |
+| Callback for resizing | ''_resize_gl'' | The resize callback is called whenever the GLView widget is resized and depends on policy set. A common action to take here is to reset the viewport. \\ ''elm_glview_resize_policy_set(gl, ELM_GLVIEW_RESIZE_POLICY_RECREATE)'' \\ resize policy tells glview what to do with the surface when it resizes. ELM_GLVIEW_RESIZE_POLICY_RECREATE will tell it to destroy the current surface and recreate it to the new size |
+| Callback for drawing | ''_draw_gl'' | The drawing callback is called whenever a new frame has to be drawn. The exact moment when this function is called depends on the policy set when calling. \\ ''elm_glview_render_policy_set(gl, ELM_GLVIEW_RENDER_POLICY_ON_DEMAND)'' \\ Another policy is ELM_GLVIEW_POLICY_ALWAYS, which requests render always even when it is not visible. So on demand policy is probably what you are looking for. The application can now draw anything using GL primitives when this callback is triggered. All draw operations are restricted to the surface of the GLView object previously created. Here it covers the whole window. |
+| Callback for deleting | ''_del_gl'' | The delete callback is triggered when the GLView is being destroyed, from the main loop, and no other callback can be called on the same object afterwards. |
+| Add an animator | ''_anim_gl'' | The application above is technically working but the scene does not get updated unless the object is marked as such. Games might want to use an animator to have a regular update of the scene. \\ Any other event can be used to refresh the view, for example user input if the view needs to be updated. |
+
+//**__next page__: **//[[/tutorial/gl2d/creating_cube|Creating the Cube]]

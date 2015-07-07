@@ -1,0 +1,132 @@
+~~Title: Creating the Cube - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/rendering_cube|Rendering the Cube]].
+==== Animating the Cube ====
+
+''Ecore_Animator'' is used to create an animation.
+
+<code c>
+// just need to notify that glview has changed so it can render
+static Eina_Bool
+_anim(void *data)
+{
+   elm_glview_changed_set(data);
+   return EINA_TRUE;
+}
+</code>
+
+Next define the global variables which are used as parameters of the rendering
+process. Add parameters to the application data object that are used to
+control the scaling and the rotation of the cube. To make the cube rotate on
+one axis, take z, and allow the user to interact with the mouse to make the
+cube rotate on the two other axes x and y. In order to figure out whether the
+user is holding the mouse down, add a Boolean variable to have this
+information. Operations such as shader initialization or program compilation
+are not required at each tick of the animation loop. For better performance,
+isolate such task from the repetitive rendering loop. For such purpose, add a
+Boolean variable which tells whether the initialization is already done.
+
+<code c>
+struct _GLData
+{
+   GLfloat      xangle;
+   GLfloat      yangle;
+   GLfloat      zangle;
+   Eina_Bool    mouse_down : 1;
+   Eina_Bool    initialized : 1;
+} GLData;
+</code>
+
+Here are the modifications that must be done to the rendering loop for
+animation.
+
+First, lighten the recurrent rendering process by adding an initialization
+step:
+
+<code c>
+if (!gld->initialized)
+  {
+     if (!init_shaders(gld))
+       {
+          printf("Error Initializing Shaders\n");
+          return;
+       }
+
+     //generate the buffers for the vertex positions and colors
+     gl->glGenBuffers(1, &gld->vertexID);
+     gl->glBindBuffer(GL_ARRAY_BUFFER, gld->vertexID);
+     gl->glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+     gl->glGenBuffers(1, &gld->colorID);
+     gl->glBindBuffer(GL_ARRAY_BUFFER, gld->colorID);
+     gl->glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+
+     gld->initialized = EINA_TRUE;
+  }
+</code>
+
+Before drawing the vertices, the rotation angle for the model-view matrix must
+be incremented for every tick.
+
+<code c>
+customLoadIdentity(gld->model);
+customRotate(gld->model, gld->xangle, gld->yangle, gld->zangle++);
+customMutlMatrix(gld->mvp, gld->view, gld->model);
+</code>
+
+This makes the cube rotate automatically. The next thing is to use the mouse
+to drag the cube around. To do so, add callbacks for mouse events. The first
+callback defines whether the user is holding the mouse down while moving the
+cursor around:
+
+This makes the cube rotate automatically. The next thing is to use the mouse
+to drag the cube around. To do so, add callbacks for mouse events. The first
+callback defines whether the user is holding the mouse down while moving the
+cursor around:
+
+<code c>
+static void
+_mouse_down_cb(void *data, Evas *e , Evas_Object *obj , void *event_info)
+{
+   GLData *gld = data;
+   gld->mouse_down = EINA_TRUE;
+}
+
+static void
+_mouse_up_cb(void *data, Evas *e , Evas_Object *obj , void *event_info)
+{
+   GLData *gld = data;
+   gld->mouse_down = EINA_FALSE;
+}
+</code>
+
+When the mouse is down, calculate the new rotation angle with the mouse
+movement along the x and y axis:
+
+<code c>
+static void
+_mouse_move_cb(void *data, Evas *e , Evas_Object *obj , void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   ev = (Evas_Event_Mouse_Move *)event_info;
+   GLData *gld = data;
+   float dx = 0, dy = 0;
+
+   if(gld->mouse_down)
+     {
+        dx = ev->cur.canvas.x - ev->prev.canvas.x;
+        dy = ev->cur.canvas.y - ev->prev.canvas.y;
+        gld->xangle += dy;
+        gld->yangle += dx;
+     }
+}
+</code>
+
+Define the mouse events callbacks when creating the image canvas:
+
+<code c>
+evas_object_event_callback_add(gl, EVAS_CALLBACK_MOUSE_DOWN, _mouse_down_cb, gld);
+evas_object_event_callback_add(gl, EVAS_CALLBACK_MOUSE_UP, _mouse_up_cb, gld);
+evas_object_event_callback_add(gl, EVAS_CALLBACK_MOUSE_MOVE, _mouse_move_cb, gld);
+</code>
+\\
+//**__next page__: **//[[/tutorial/gl2d/widget_interaction|Implementing Widget Interaction]]

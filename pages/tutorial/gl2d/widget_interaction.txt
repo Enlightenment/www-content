@@ -1,0 +1,74 @@
+~~Title: Widget Interaction - GL 2D Tutorial~~
+//**__previous page__: **//[[/tutorial/gl2d/animating_cube|Animating the Cube]]
+==== Implementing Widget Interaction ====
+
+Consider using widget to control some aspects of the rendering. For example,
+use some sliders to control the shape of the cube. Declare 3 sliders to play
+with the scaling coordinates of the cube.
+
+struct _GLData
+{
+    Evas_Object *slx;
+    Evas_Object *sly;
+    Evas_Object *slz;
+}
+
+When rendering the GUI, build and show the sliders. Those accept values in a
+range from 0.0 to 1.5 and control the scaling of each axis of the cube.
+
+<code c>
+// Slider for X-axis scale
+gld->slx = elm_slider_add(inner_box);
+evas_object_size_hint_align_set(gld->slx, EVAS_HINT_FILL, 0);
+elm_slider_horizontal_set(gld->slx, EINA_TRUE);
+elm_slider_unit_format_set(gld->slx, "%1.2f units");
+elm_slider_indicator_format_set(gld->slx, "%1.2f units");
+elm_slider_indicator_show_set(gld->slx, EINA_TRUE);
+elm_slider_min_max_set(gld->slx, 0, 1.5);
+elm_slider_value_set(gld->slx, 0.75);
+evas_object_color_set(gld->slx, 0.0, 0.0, 120, 255);
+elm_box_pack_end(inner_box, gld->slx);
+evas_object_show(gld->slx);
+
+// Slider for Y-axis scale
+gld->sly = elm_slider_add(inner_box);
+evas_object_size_hint_align_set(gld->sly, EVAS_HINT_FILL, 0);
+elm_slider_horizontal_set(gld->sly, EINA_TRUE);
+elm_slider_unit_format_set(gld->sly, "%1.2f units");
+elm_slider_indicator_format_set(gld->sly, "%1.2f units");
+elm_slider_indicator_show_set(gld->sly, EINA_TRUE);
+elm_slider_min_max_set(gld->sly, 0, 1.5);
+elm_slider_value_set(gld->sly, 0.75);
+evas_object_color_set(gld->sly, 0.0, 0.0, 120, 255);
+elm_box_pack_end(inner_box, gld->sly);
+evas_object_show(gld->sly);
+
+// Slider for Z-axis scale
+gld->slz = elm_slider_add(inner_box);
+evas_object_size_hint_align_set(gld->slz, EVAS_HINT_FILL, 0);
+elm_slider_horizontal_set(gld->slz, EINA_TRUE);
+elm_slider_unit_format_set(gld->slz, "%1.2f units");
+elm_slider_indicator_format_set(gld->slz, "%1.2f units");
+elm_slider_indicator_show_set(gld->slz, EINA_TRUE);
+elm_slider_min_max_set(gld->slz, 0, 1.5);
+elm_slider_value_set(gld->slz, 0.75);
+evas_object_color_set(gld->slz, 0.0, 0.0, 120, 255);
+elm_box_pack_end(inner_box, gld->slz);
+evas_object_show(gld->slz);
+</code>
+
+Then use the actual the values of sliders and pass them to the scaling function in
+the rendering loop, ''_draw_gl'':
+
+<code c>
+double scalex = elm_slider_value_get(gld->slx);
+double scaley = elm_slider_value_get(gld->sly);
+double scalez = elm_slider_value_get(gld->slz);
+
+customLoadIdentity(gld->model);
+customRotate(gld->model, gld->xangle, gld->yangle, gld->zangle++);
+customScale(gld->model, scalex, scaley, scalez);
+customMutlMatrix(gld->mvp, gld->view, gld->model);
+</code>
+\\
+//**__next page__: **//[[/tutorial/gl2d/effects|Implementing Effects]]
