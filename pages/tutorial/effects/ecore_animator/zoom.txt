@@ -1,0 +1,72 @@
+~~Title: Zoom Effect - Ecore Animator~~
+//**__previous page__: **//[[/tutorial/effects/ecore_animator/rotation|Creating a rotation effect]]
+==== Creating a Zoom Effect ====
+
+The next animation is a zoom, for which an Evas Map is also used.
+
+{{ :ecore_animator_zoom.gif }}
+
+First, the button is created in ''elm_main()'':
+
+<code c>
+// Button 2 : Zoom Effect
+bt2 = elm_button_add(win);
+elm_object_text_set(bt2, "Zoom");
+evas_object_size_hint_weight_set(bt2, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_move(bt2, 315, 0);
+evas_object_resize(bt2, 90, 70);
+evas_object_smart_callback_add(bt2, "clicked", _btn_zoom_cb, target);
+evas_object_show(bt2);
+</code>
+
+Then, the button callback function is created with a new timeline:
+
+<code c>
+static void _btn_zoom_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Evas_Object *target = data;
+   ecore_animator_timeline_add(1, _do_zoom, target);
+}
+</code>
+
+Next, we write the ''_do_zoom()'' animation callback function, which is almost
+identical to the ''_do_rotate()'' callback function, except that we use the
+''evas_map_util_zoom()'' function to create the animation:
+
+<code c>
+static Eina_Bool
+_do_zoom(void *data, double pos)
+{
+   Evas_Object *obj = data;
+   Evas_Map *m;
+   int x, y, w, h;
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   m = evas_map_new(4);
+   evas_map_util_points_populate_from_object(m, obj);
+   evas_map_util_zoom(m, 2 * pos, 2 * pos, x , y);
+   evas_object_map_set(obj, m);
+   evas_object_map_enable_set(obj, EINA_TRUE);
+   evas_map_free(m);
+
+   return EINA_TRUE;
+}
+</code>
+The ''evas_map_util_zoom()'' function takes the following arguments:
+
+  * The map to change
+  * The horizontal zoom factor
+  * The vertical zoom factor
+  * The horizontal position (X coordinate) of the zooming center
+  * The vertical position (Y coordinate) of the zooming center
+
+Here, a horizontal and vertical zoom factor of 2 is used, and the X and Y
+coordinates of the target as the horizontal and vertical center coordinates.
+
+The ''_do_zoom()'' callback function is called at several points along the
+animation timeline, which is why we multiply the horizontal and vertical zoom
+factor values by the timeline position. Each call will zoom more than the
+previous one, thereby creating the animation effect.
+
+\\
+//**__next page__: **//[[/tutorial/effects/ecore_animator/3d_rotation|Creating a 3D rotation effect]]

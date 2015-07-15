@@ -1,0 +1,255 @@
+~~Title: Elementary Animations - Setting Up the Application~~
+=== Elementary Animations ===
+==== Setting Up the Application ====
+
+ In this example, one single object is animated with different type of
+animations.
+
+Create the structure of our animation represented by a struct named
+''Animations''.
+
+<code c>
+typedef struct _Animations{
+    Evas_Object *button;
+    Evas_Object *buttonbck;
+    float *rt_angle;
+    float *zto;
+    float *zfrom;
+} Animations;
+</code>
+
+Then create a basic application with the widgets we need:
+<code c>
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *label, *hbox, *left_vbox, *center_vbox, *right_vbox;
+   Evas_Object *button, *buttonbck;
+   float rt_angle, zto, zfrom;
+
+   win = elm_win_util_standard_add("Elementary Animations", "Elementary Animations Tutorial");
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   elm_win_autodel_set(win, EINA_TRUE);
+   if (elm_win_wm_rotation_supported_get(win))
+     {
+        int rots[4] = { 0, 90, 180, 270 };
+        elm_win_wm_rotation_available_rotations_set(win, (const int *)(&rots), 4);
+     }
+
+   //here will come the animation code
+
+   evas_object_resize(win, 400, 400);
+   evas_object_show(win);
+   elm_run();
+   elm_shutdown();
+   return 0;
+}
+ELM_MAIN()
+
+</code>
+
+Here the main widgets of the application:
+
+    * ''win'': the main window
+    * ''label'': the title label
+    * ''button'': a button object, the target of the animations
+    * ''buttonbck'': a button representing the back of the target button
+    * ''left_vbox'': a vertical box to place the first buttons column
+    * ''center_vbox'': a vertical box to store the second buttons column
+    * ''right_vbox'': a vertical box to store the last buttons column
+    * ''hbox'': a horizontal box to store the vertical boxes
+    * ''rt_angle'', ''zto'', ''zfrom'': these variables are used to store values for animations
+
+Place the widgets on the application's canvas, first create widgets on the
+main window:
+
+Set up the needed values like the rotation angle, the original zoom value
+(''zfrom''), and the destination zoom value (''zto'').
+
+<code c>
+//set the values for animations
+rt_angle = 360.0;
+zfrom = 1.0;
+zto = 2.0;
+</code>
+
+Add a label title to the main window, then create the animation target button
+and the back button.
+
+<code c>
+/* Label*/
+label = elm_label_add(win);
+elm_object_text_set(label, "Effects Tutorial");
+evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+evas_object_move(label, 100, 0);
+evas_object_resize(label, 200, 50);
+evas_object_show(label);
+
+/* Creation a button in the app window*/
+button = elm_button_add(win);
+evas_object_move(button, 100, 100);      // Moving the button to x=50 y=100
+evas_object_resize(button, 200, 50);    // Resizing the button 100x50
+evas_object_show(button);               // Showing the button
+/* Creation a back button in the app window*/
+buttonbck = elm_button_add(win);
+elm_object_text_set(buttonbck, "Button back");
+evas_object_move(buttonbck, 100, 100);
+evas_object_resize(buttonbck, 200, 50);
+
+/*set the structure of pointeurs*/
+Animations anim = { button, buttonbck, &rt_angle, &zto, &zfrom };
+</code>
+
+Now you can create boxes to add a set of buttons to them that starts
+animations on the target.
+
+Create the structure of the box of buttons with three columns (vertical boxes)
+and one horizontal for the main container.
+
+<code c>
+// Creation of the main container box
+hbox = elm_box_add(win);
+elm_box_horizontal_set(hbox, EINA_TRUE);
+elm_box_homogeneous_set(hbox, EINA_TRUE);
+evas_object_move(hbox, 130, 200);
+evas_object_show(hbox);
+
+// Creation of the first column
+left_vbox = elm_box_add(hbox);
+elm_box_horizontal_set(left_vbox, EINA_FALSE);
+elm_box_homogeneous_set(left_vbox, EINA_TRUE);
+evas_object_show(left_vbox);
+elm_box_pack_start(hbox, left_vbox);
+
+// Creation of the second column
+center_vbox = elm_box_add(hbox);
+elm_box_horizontal_set(center_vbox, EINA_FALSE);
+elm_box_homogeneous_set(center_vbox, EINA_TRUE);
+evas_object_show(center_vbox);
+elm_box_pack_end(hbox, center_vbox);
+
+// Creation of the last column
+right_vbox = elm_box_add(hbox);
+elm_box_horizontal_set(right_vbox, EINA_FALSE);
+elm_box_homogeneous_set(right_vbox, EINA_TRUE);
+evas_object_show(right_vbox);
+elm_box_pack_end(hbox, right_vbox);
+</code>
+
+Then create the first action button for the resize effect.
+
+<code c>
+// The resize button
+Evas_Object *btn_resize = elm_button_add(win);
+elm_object_text_set(btn_resize, "Resize");                                      // Setting the button text
+evas_object_size_hint_weight_set(btn_resize, EVAS_HINT_FILL, EVAS_HINT_FILL);   // Setting the hint weight policy
+evas_object_show(btn_resize);                                                   // Showing the button
+evas_object_smart_callback_add(btn_resize, "clicked", _btn_resize_cb, &anim);   // Setting the "clicked" callback
+elm_box_pack_end(left_vbox, btn_resize);                                        // Adding the button to the first column
+</code>
+
+''evas_object_smart_callback_add'' defines the callback function that is to be
+called when the button is clicked. In this example, set a ''_btn_resize_cb''
+function and pass the application data ''anim'' to this callback function.
+
+The callback by itself only sets a new text for the animation target button,
+and calls a function which will actually animate the button.
+
+<code c>
+static void
+_btn_resize_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+   // Starting the rotation effect 360 degrees
+   //evas_object_resize(button, 100, 50);
+   elm_object_text_set(anim->button, "Resize");
+   _resize_effect(anim->button);
+}
+</code>
+
+This function is an ''evas_object_smart_callback'' and thus needs to have its
+specific prototype: it does not return anything and receives three parameters:
+
+    * ''data'': data to be passed
+    * ''btn'': the object the callback is being called about
+    * ''ev'': the actual event, seldom used
+
+In this case, use ''data'' to pass the application data to the callback. However,
+the parameter's type is ''void *'' and not ''Animation *''. Initialize a variable of
+the correct type with the pointer.
+
+<code c>
+Animation * anim = (Animation *)data;
+</code>
+
+Then use the application data in the callback function. At this point create
+the animation directly in the callback function, but it is more
+straightforward to encapsulate the animation process into a dedicated
+function. ''_resize_effect'' implements the animation code:
+
+<code c>
+static void
+_resize_effect(Evas_Object *obj)
+{
+   // Elementary Transition declaration and creation
+   Elm_Transit *trans = elm_transit_add();
+
+   // Adding the transition target object
+   elm_transit_object_add(trans, obj);
+
+   // Setting the resize effect
+   elm_transit_effect_resizing_add(trans, 100, 50, 300, 150);
+
+   // Setting the transition duration
+   elm_transit_duration_set(trans, 3.0);
+
+   // Starting the transition
+   elm_transit_go(trans);
+}
+</code>
+
+Create an ''Elm_Transit *'' object representing the transition.
+
+<code c>
+Elm_Transit *trans = elm_transit_add();
+</code>
+
+Then add the target object to the transition
+
+<code c>
+elm_transit_object_add(trans, obj);
+</code>
+
+Add a resizing transition to the object with the origin and destination width
+and height in pixels.
+
+<code c>
+elm_transit_effect_resizing_add(trans, 100, 50, 300, 150);
+</code>
+
+100 and 50 are respectively the object's width and height when the effect
+begins, whereas 300 and 150 are respectively the object's width and height
+when the effect ends: the object grows from 100×50 to 300×150.
+
+After that set the transition duration with ''elm_transit_duration_set''.
+
+<code c>
+elm_transit_duration_set(trans, 3.0);
+</code>
+
+The animation lasts three seconds. The duration parameter is a double.
+
+Now start the animation by calling ''elm_transit_go'' with the ''Elm_Transit'' object.
+
+<code c>
+elm_transit_go(trans);
+</code>
+
+When the resize button is clicked, the animation target button grows.
+
+All the action buttons are created exactly the same way as the resize button,
+with a callback and an animation function.
+
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/rotation|Creating a Rotation Effect]]

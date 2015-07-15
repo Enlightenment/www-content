@@ -1,0 +1,125 @@
+~~Title: Rotation Effect - Ecore Animator~~
+//**__previous page__: **//[[/tutorial/effects/ecore_animator/setting_up|Setting up the application]]
+==== Creating a Rotation Effect ====
+
+{{ :ecore_animator_rotate.gif }}
+
+After the animation target is created, the first button and associated
+rotation can be created:
+
+<code c>
+// Button 1 : Rotation effect
+bt1 = elm_button_add(win);
+elm_object_text_set(bt1, "Rotate");
+evas_object_size_hint_weight_set(bt1, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_move(bt1, 25, 0);
+evas_object_resize(bt1, 90, 70);
+evas_object_smart_callback_add(bt1, "clicked", _btn_rotate_cb, target);
+evas_object_show(bt1);
+</code>
+
+The button is used for triggering the rotation effect. The button is placed
+and resized, and associated with the ''_btn_rotate_cb()'' callback function.
+This callback function calls the animation on the animation target.
+
+<code c>
+static void
+_btn_rotate_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Evas_Object *target = data;
+   ecore_animator_timeline_add(1, _do_rotate, target);
+}
+</code>
+
+In this callback function, an Ecore animator timeline is created using the
+''ecore_animator_timeline_add()'' function. This function adds an animator that
+runs for a limited time the ''_do_rotate()'' animation callback function
+for 1 second on the ''target'' Evas object.
+
+Next, we write the animation callback function that actually runs the
+animation. This callback is an ''Ecore_Timeline_Cb'' function, meaning it returns
+an ''Eina_Bool'' value and takes as arguments some ''data'' and the current position
+along the animation timeline (''pos'').
+
+To create the rotation animation, an Evas Map is used. The map handles the
+necessary map points and allows you to manipulate the target Evas object on
+the X, Y, and Z axes.
+
+<code c>
+static Eina_Bool
+_do_rotate(void *data, double pos)
+{
+   // Get the animation target
+   Evas_Object *obj = data;
+   // Declaration of an `Evas_Map`
+   Evas_Map *m;
+   // Variables to store the target size and position
+   int x, y, w, h;
+
+   // Getting the size and position of the target
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   // Creation of an `Evas_Map` of 4 points
+   m = evas_map_new(4);
+   // Populate source and destination map points to match exactly object.
+   evas_map_util_points_populate_from_object(m, obj);
+   // Create a rotation of 360° with x+(w/2) "x" center and y +(h/2) "y" center.
+   evas_map_util_rotate(m, 360.0 * pos, x + (w / 2), y + (h / 2));
+   // Setting the object to "animate" in the `Evas_Map`
+   evas_object_map_set(obj, m);
+   // Starting the Animation
+   evas_object_map_enable_set(obj, EINA_TRUE);
+   // Free used memory
+   evas_map_free(m);
+
+   return EINA_TRUE;
+}
+</code>
+
+In the animation callback function, we first declare the ''Evas Map''. To
+implement the rotation, an X and Y center needs to be set, so we create 4
+integer variables to store the size and position of the target. This
+information is provided by the ''evas_object_geometry_get()'' function, which
+returns the X and Y coordinates and the weight and height of the target Evas
+object. Now we have all the required data to build the animation.
+
+An Evas Map is consisted of four points, and these points are populated with
+the animation target:
+
+<code c>
+// Creation of an `Evas_Map` of 4 points
+m = evas_map_new(4);
+// Populate source and destination map points to match exactly object.
+evas_map_util_points_populate_from_object(m, obj);
+</code>
+
+Now the ''evas_map_util_rotate()'' function defines the rotation:
+
+<code c>
+// Create a rotation of 360° with x+(w/2) "x" center and y +(h/2) "y" center.
+evas_map_util_rotate(m, 360.0 * pos, x + (w / 2), y + (h / 2));
+</code>
+
+The animation callback function will be called at several points along the
+timeline, which is why the rotation angle (360°) is multiplied by the timeline
+position (pos) to get the actual animation angle. If we do not do this, we
+will never see the animation take place. Then the target objet is joined to
+the map and we start the animation.
+
+<code c>
+// Setting the object to "animate" in the `Evas_Map`
+evas_object_map_set(obj, m);
+// Starting the Animation
+evas_object_map_enable_set(obj, EINA_TRUE);
+</code>
+
+Each call to the animation callback function will rotate the object (360 *
+timeline position) degrees.
+
+Finally, the memory allocated to the Evas Map is freed up:
+<code c>
+// Free used memory
+evas_map_free(m);
+</code>
+
+\\
+//**__next page__: **//[[/tutorial/effects/ecore_animator/zoom|Creating a zoom effect]]

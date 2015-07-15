@@ -1,0 +1,81 @@
+~~Title: Setting Up - Ecore Animator~~
+==== Setting up the application ====
+
+In this part of the tutorial, we create a simple application that manipulates
+and animates an Evas object. We use a "Basic UI Application" as the basis for
+the application.
+
+First, we set up the widgets we are going to use in the application:
+
+<code c>
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   //Main window
+   Evas_Object *win;
+   //Application Title
+   Evas_Object *label;
+
+   //buttons
+   Evas_Object *bt1, *bt2, *bt3;
+   //Animation target
+   Evas_Object *target;
+
+   elm_run();
+   elm_shutdown();
+   return EXIT_SUCCESS;
+}
+ELM_MAIN()
+</code>
+
+Then the actual widgets are created, starting with the main window and
+application title:
+
+<code c>
+//Main window
+win = elm_win_util_standard_add("Ecore Animator", "Ecore Animator Tutorial");
+elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+elm_win_autodel_set(win, EINA_TRUE);
+
+if (elm_win_wm_rotation_supported_get(win))
+  {
+     int rots[4] = { 0, 90, 180, 270 };
+     elm_win_wm_rotation_available_rotations_set(win, (const int *)(&rots), 4);
+  }
+
+// Application title
+label = elm_label_add(win);
+elm_object_text_set(label, "Ecore Animator Tutorial");
+evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+elm_win_resize_object_add(win, label);
+evas_object_show(label);
+</code>
+
+Next, we create the animation target, which is an Evas object of type
+Elm_Image.
+
+<code c>
+// Animation target
+// Setting the image path
+char buf[PATH_MAX];
+snprintf(buf, sizeof(buf), "icon.png");
+// Adding the image
+target = elm_image_add(win);
+// Setting the image path
+if (!elm_image_file_set(target, buf, NULL))
+       printf("error: could not load image \"%s\"\n", buf);
+evas_object_size_hint_weight_set(target, EVAS_HINT_FILL, EVAS_HINT_FILL);
+//Moving the image
+evas_object_move(target, 130, 100);
+//Resizing the image
+evas_object_resize(target, 200, 100);
+//Showing the image
+evas_object_show(target);
+</code>
+
+The image path is set by calling the ''elm_image_file_set()'' function. This
+function takes as arguments the ''target'' Evas object and the path of the
+image file, built with the ''snprintf()'' function and stored in a buffer.
+
+\\
+//**__next page__: **//[[/tutorial/effects/ecore_animator/rotation|Creating a rotation effect]]

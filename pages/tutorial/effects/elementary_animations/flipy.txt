@@ -1,0 +1,52 @@
+~~Title: Elementary Animations - Creating a Flip on y Axis~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/fade|Creating a Fade Effect]]
+=== Elementary Animations ===
+==== Creating a Flip on y Axis ====
+
+This is same as the flip transition, but on y axis.
+
+{{ :elementary_animations_flipy.gif }}
+
+To create a flip on y axis:
+
+<code c>
+// The flip y button
+Evas_Object *btn_flip_y = elm_button_add(win);
+elm_object_text_set(btn_flip_y, "Flip y");
+evas_object_size_hint_weight_set(btn_flip_y, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_show(btn_flip_y);
+evas_object_smart_callback_add(btn_flip_y, "clicked", _btn_flip_y_cb, &anim);
+elm_box_pack_end(left_vbox, btn_flip_y);
+</code>
+
+The flip on y button callback looks like:
+<code c>
+static void
+_btn_flip_y_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+
+   // Setting the button text
+   elm_object_text_set(anim->button, "Flip 2");
+   _flip_y_effect(anim->button, anim->buttonbck);
+}
+</code>
+
+The animation function:
+<code c>
+static void
+_flip_y_effect(Evas_Object *obj, Evas_Object *obj2)
+{
+  Elm_Transit *trans;
+
+   trans = elm_transit_add();
+   elm_transit_object_add(trans, obj);
+   elm_transit_object_add(trans, obj2);
+   elm_transit_effect_flip_add(trans, ELM_TRANSIT_EFFECT_FLIP_AXIS_Y, EINA_TRUE);
+   elm_transit_duration_set(trans, 3.0);
+   elm_transit_go(trans);
+}
+</code>
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/wipe|Creating a Wipe Effect]]

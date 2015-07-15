@@ -1,0 +1,187 @@
+~~Title: Start Up - Edje Animation~~
+==== Animating on Application Start-up ====
+
+The goal of this tutorial is to create an animation target and buttons to
+start animations, all of this is in an EDC (Edje Data Collection) file.
+
+{{ :edje_animation_start.gif }}
+
+First create an application using Basic EDC UI Application:
+
+<code c>
+#include <Elementary.h>
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *layout;
+   win = elm_win_util_standard_add("Edje Animation", "Edje Animation Tutorial");
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   layout = elm_layout_add(win);
+
+   elm_layout_file_set(layout, "edje_animation.edj", "my_layout");
+
+   evas_object_resize(layout, 300, 300);
+   evas_object_show(layout);
+   evas_object_resize(win, 400, 400);
+   evas_object_show(win);
+   elm_run();
+   elm_shutdown();
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+Animations can be run at application startup. By default the Basic EDC UI
+Application model produces an empty window with a title.
+
+In this example an image is added to the window and the behavior of the window title is
+changed.
+
+Add the image to the Edje images collection.
+<code c>
+images
+{
+   image: "image1.png" COMP;
+   image: "image2.png" COMP;
+}
+</code>
+
+Then add an Edje part using the small image: this part has two states. This is
+the first important notion for animations. The ''STATE'' describes the
+appearance of a part: size, position, color, etc.
+
+In this example, the part has two states, default and down-state:
+
+<code c>
+part
+{
+   name: "image1";
+   type: IMAGE;
+   description
+   {
+      state: "default" 0.0;
+      max: 63 63;
+      min: 63 63;
+      image { normal: "image1.png"; }
+      rel1.relative: 0.2 0.0;
+      rel2.relative: 0.0 0.0;
+   }
+
+   description
+   {
+      state: "down-state" 1.0;
+      inherit: "default" 0.0;
+      rel1.relative: 0.2 0.92;
+      rel2.relative: 0.05 1.0;
+   }
+}
+</code>
+
+The logo part has the IMAGE type. The default state contains in the first
+description of the part sets:
+
+  * the maximum and minimum size using the min and max statements
+  * the image to use in this part
+  * the default position.
+
+The second state, ''"down-state"'', inherits all of the default's attributes, and
+only changes the position to put the image at the bottom of the application
+window.
+
+These two states are the start and end states of the animation. To actually
+create the animation, add a program to the Edge ''programs'' collection.
+
+<code c>
+// Icon drop animation
+program
+{
+   name: "animation,state1";
+   source: "";
+   signal: "load";
+   action: STATE_SET "down-state" 1.0;
+   target: "logo";
+   transition: BOUNCE 2.5 0.0 5.0;
+}
+</code>
+
+This program is named ''animation,state1'' and is started when the application
+receives the ''load'' signal immediately on startup. It runs the ''STATE_SET''
+action so it changes the object state from ''"default"'' to ''"down-state"''. The target
+of the program is the image ''part''.
+
+In order to switch from one state to another, it uses a ''transition'' of the
+''BOUNCE'' type with three parameters, the first one is saying how much time
+the transition will last, the second one is the factor of curviness and the
+last one is saying how many times and object will bounce.
+
+This produces an falling and bouncing effect.
+
+Also add an animation for the window title to make it move from the right to
+the left with a bounce effect while growing the font size.
+
+Create a new state on the part called "txt_title" inside which both the font
+size and position are changed.
+
+<code c>
+part
+{
+   name: "txt_title";
+   type: TEXT;
+   mouse_events: 0;
+
+   // The default State
+   description
+   {
+      state: "default" 0.0;
+      align: 0.0 0.0;
+      rel1 { relative: 0.5 0.0; }
+      rel2 { relative: 1.0 0.5; }
+      text
+      {
+        font: "Sans";
+         size: 22;
+          text: "edje animation";
+      }
+      color: 0 0 0 255;
+   }
+
+   // The "Bigger" state
+   description
+   {
+      state: "Bigger" 0.0;
+      align: 0.0 0.0;
+      rel1 { relative: 0.0 0.0; }
+      rel2 { relative: 1.0 0.2; }
+      text
+      {
+         size: 26;
+          text: "animation terminated";
+      }
+      color: 0 0 0 255;
+   }
+}
+</code>
+
+Create a program to animate this part on startup, just like the small image.
+
+<code c>
+// Make the title bigger
+program
+{
+   name: "animation,bigtitle";
+   source: "";
+   signal: "load";
+   action: STATE_SET "Bigger" 1.0;
+   target: "txt_title";
+   transition: LINEAR 5.0;
+}
+</code>
+This program goes from the default state to the bigger state in five seconds
+with a ''LINEAR'' effect, automatically running on the application startup.
+
+\\
+//**__next page__: **//[[/tutorial/effects/edje_animation/on_click|Animating Object on Click]]
+

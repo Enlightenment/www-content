@@ -1,0 +1,53 @@
+~~Title: Elementary Animations - Creating a Fade Effect~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/blend|Creating a Blend Transition]]
+=== Elementary Animations ===
+==== Creating a Fade Effect ====
+
+The fade effect works exactly the same way as the blend effect.
+
+{{ :elementary_animations_fade.gif }}
+
+First create the button:
+
+<code c>
+   // The fade button
+   Evas_Object *btn_fade = elm_button_add(win);
+   elm_object_text_set(btn_fade, "Fade");
+   evas_object_size_hint_weight_set(btn_fade, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_show(btn_fade);
+   evas_object_smart_callback_add(btn_fade, "clicked", _btn_fade_cb, &anim);
+   elm_box_pack_end(right_vbox, btn_fade);
+</code>
+
+Then add the button's callback:
+
+<code c>
+static void _btn_fade_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+
+   // Setting the button text
+   elm_object_text_set(anim->button, "Fade");
+   _fade_effect(anim->button, anim->buttonbck);
+}
+</code>
+
+The animation function calls ''elm_transit_effect_fade_add'' instead of
+''elm_transit_effect_blend_add''.
+
+<code c>
+static void _fade_effect(Evas_Object *obj, Evas_Object *obj2)
+{
+   Elm_Transit *trans;
+
+   trans = elm_transit_add();
+   elm_transit_object_add(trans, obj);
+   elm_transit_object_add(trans, obj2);
+   elm_transit_effect_fade_add(trans);
+   elm_transit_duration_set(trans, 3.0);
+   elm_transit_go(trans);
+}
+</code>
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/flipy|Creating a Flip on y Axis]]

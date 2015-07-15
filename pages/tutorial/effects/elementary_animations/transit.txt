@@ -1,0 +1,362 @@
+~~Title: Elementary Animations - Transit~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/wipe|Creating a Wipe Effect]]
+=== Elementary Animations ===
+==== Transit: Implementing Elementary Transit Effects ====
+
+This tutorial demonstrates how you can implement a variety of EFL animation effects using
+the Transit API available in the Elementary library.
+
+=== Initializing the Application Layout ===
+
+The application uses widgets, such as elm_naviframe for
+view management, layout classes, such as elm_list for the composition of the
+screen.
+
+The transit is designed to apply various animated transition effects to the
+Evas_Object. The following transition effects are supported in EFL and
+Elementary applications.
+
+  * Blend
+  * Color
+  * Fade
+  * Flip
+  * Rotation
+  * Transition
+  * Wipe
+  * Zoom
+
+The application layout is created by adding two naviframes in order to switch
+from one to another in transitions. Two lists are respectively added to the
+two naviframes.
+
+<code c>
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *navi, *navi2, *list, *list2;
+
+   win = elm_win_util_standard_add("Elementary Animations", "Elementary Animations Tutorial");
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   elm_win_autodel_set(win, EINA_TRUE);
+   if (elm_win_wm_rotation_supported_get(win))
+     {
+        int rots[4] = { 0, 90, 180, 270 };
+        elm_win_wm_rotation_available_rotations_set(win, (const int *)(&rots), 4);
+     }
+
+   Elm_Object_Item *nf_it, *nf_it2;
+
+   /* add two naviframes and two lists to switch
+    * from one to another in some transitions */
+   navi2 = elm_naviframe_add(win);
+   navi = elm_naviframe_add(win);
+   list = elm_list_add(navi);
+   list2 = elm_list_add(navi2);
+   elm_list_mode_set(list, ELM_LIST_COMPRESS);
+   elm_list_mode_set(list2, ELM_LIST_COMPRESS);
+
+   /* store naviframe pointeurs to pass them
+    * in data pointeur parameter */
+   Navi navis = {navi, navi2};
+   Navi navis2 = {navi2, navi};
+
+   /* first list items */
+   elm_list_item_append(list, "Blend", NULL, NULL, blend_cb, &navis);
+   elm_list_item_append(list, "Color", NULL, NULL, color_cb, &navis);
+   elm_list_item_append(list, "Fade", NULL, NULL, fade_cb, &navis);
+   elm_list_item_append(list, "Flip", NULL, NULL, flip_cb, &navis);
+   elm_list_item_append(list, "Rotation", NULL, NULL, rotation_cb, &navis);
+   elm_list_item_append(list, "ResizableFlip", NULL, NULL, resizable_flip_cb, &navis);
+   elm_list_item_append(list, "Translation", NULL, NULL, translation_cb, &navis);
+   elm_list_item_append(list, "Wipe", NULL, NULL, wipe_cb, &navis);
+   elm_list_item_append(list, "Zoom", NULL, NULL, zoom_cb, &navis);
+   elm_list_item_append(list, "Custom", NULL, NULL, custom_cb, &navis);
+   elm_list_go(list);
+
+   /* second list items*/
+   elm_list_item_append(list2, "Blend2", NULL, NULL, blend_cb, &navis2);
+   elm_list_item_append(list2, "Color2", NULL, NULL, color_cb, &navis2);
+   elm_list_item_append(list2, "Fade2", NULL, NULL, fade_cb, &navis2);
+   elm_list_item_append(list2, "Flip2", NULL, NULL, flip_cb, &navis2);
+   elm_list_item_append(list2, "Rotation2", NULL, NULL, rotation_cb, &navis2);
+   elm_list_item_append(list2, "ResizableFlip2", NULL, NULL, resizable_flip_cb, &navis2);
+   elm_list_item_append(list2, "Translation2", NULL, NULL, translation_cb, &navis2);
+   elm_list_item_append(list2, "Wipe2", NULL, NULL, wipe_cb, &navis2);
+   elm_list_item_append(list2, "Zoom2", NULL, NULL, zoom_cb, &navis2);
+   elm_list_item_append(list2, "Custom2", NULL, NULL, custom_cb, &navis2);
+   elm_list_go(list2);
+
+   nf_it = elm_naviframe_item_push(navi, "Transit", NULL, NULL, list, NULL);
+   nf_it2 = elm_naviframe_item_push(navi2, "Transit2", NULL, NULL, list2, NULL);
+
+   evas_object_show(navi);
+   evas_object_show(navi2);
+   evas_object_show(list);
+   evas_object_show(list2);
+   evas_object_resize(navi2, 400, 400);
+   evas_object_resize(navi, 400, 400);
+   evas_object_resize(win, 400, 400);
+   evas_object_show(win);
+   elm_run();
+   elm_shutdown();
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+The Navi structure is used to store the naviframe pointeurs in order to pass
+them in data pointeur as a parameter in callback functions.
+
+<code c>
+/* store naviframe pointeurs */
+typedef struct _Navi
+{
+   Evas_Object *navi;
+   Evas_Object *navi2;
+} Navi;
+</code>
+
+Next the transition effects will be described, there are two kind of transit
+effects, one when the effect applies on one object, the other one when the
+effect is a transition between two objects.
+
+=== Implementing the Rotation Effect ===
+
+{{ :transit_rotate.gif }}
+
+To implement the rotation effect:
+  - Use the ''elm_transit'' object with the ''elm_transit_add()'' function to add the transit effect.
+  - Set the target object with ''elm_transit_object_add()'' function.
+  - Set the effect rotation indication the rotation amount with ''elm_transit_effect_rotation_add()'' function.
+  - Set the transit duration with ''elm_transit_duration_set()''
+  - To start the transit animation, use the ''elm_transit_go()'' function.
+
+<code c>
+static void
+rotation_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Elm_Transit *transit = elm_transit_add();
+
+   // 360 degree rotation effect in the clock-wise direction
+   elm_transit_object_add(transit, navi);
+   elm_transit_effect_rotation_add(transit, 0, 360);
+   elm_transit_duration_set(transit, 1);
+   elm_transit_go(transit);
+}
+</code>
+
+For the transition with one effect, it will be very similar to this one so it
+will be not detailed excepted particular callbacks as the next one for the
+zoom effect.
+
+=== Implementing the Zoom Effect ===
+
+{{ :transit_zoom.gif }}
+
+For the zoom effect, two transitions are set, one for zooming in the other one
+for zooming out.
+
+The ''elm_transit_chain_transit_add()'' function allows to chain the
+transitions:
+
+<code c>
+static void
+zoom_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   // Zoom out to scale 0.6
+   Elm_Transit *transit = elm_transit_add();
+   elm_transit_smooth_set(transit, EINA_FALSE);
+   elm_transit_object_add(transit, navi);
+   elm_transit_effect_zoom_add(transit, 1.0, 0.4);
+   elm_transit_duration_set(transit, 0.5);
+
+   // Zoom in to the original size
+   Elm_Transit *transit2 = elm_transit_add();
+   elm_transit_smooth_set(transit2, EINA_FALSE);
+   elm_transit_object_add(transit2, navi);
+   elm_transit_effect_zoom_add(transit2, 0.4, 1.0);
+   elm_transit_duration_set(transit2, 0.5);
+
+   elm_transit_chain_transit_add(transit, transit2);
+   elm_transit_go(transit);
+}
+</code>
+
+=== Implementing the Wipe Effect ===
+
+{{ :transit_wipe.gif }}
+
+Similarly to the rotation effect but with the ''elm_transit_effect_wipe_add()''
+function by indicating the wipe type and the wiping direction.
+
+<code c>
+static void
+wipe_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_effect_wipe_add(transit, ELM_TRANSIT_EFFECT_WIPE_TYPE_HIDE, ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_go(transit);
+}
+</code>
+
+=== Implementing the Translation Effect ===
+
+{{ :transit_translation.gif }}
+
+Similarly to the rotation effect but with the ''elm_transit_effect_translation_add()''
+function by indicating the position when effect begins and end.
+
+<code c>
+static void
+translation_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_effect_translation_add(transit, 0, 0, 50, 100);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_go(transit);
+}
+</code>
+
+=== Implementing the Color Effect ===
+
+{{ :transit_color.gif }}
+
+Similarly to the rotation effect but with the ''elm_transit_effect_color_add()''
+function by indicating the RGBA color when effect begins and end.
+
+<code c>
+static void
+color_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_effect_color_add(transit,0,0,0,0,255,255,0,255);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_go(transit);
+}
+</code>
+
+=== Implementing the Blend Effect ===
+
+{{ :blend.gif }}
+
+This time, the blend effect is a transition between the two naviframes. So,
+the two naviframes are added to the ''Elm_transit''. Moreover, the
+''elm_transit_objects_final_state_keep_set()'' function allows to set the
+state of the final state of the transition (it could be used for the precedent
+effects too):
+
+<code c>
+static void
+blend_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Evas_Object *navi2=navis->navi2;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_object_add(transit, navi2);
+   elm_transit_effect_blend_add(transit);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_objects_final_state_keep_set(transit, EINA_TRUE);
+   elm_transit_go(transit);
+
+}
+</code>
+
+
+=== Implementing the Fade Effect ===
+
+{{ :transit_fade.gif }}
+
+Similarly to the blend effect but with the ''elm_transit_effect_fade_add()'':
+
+<code c>
+static void
+fade_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Evas_Object *navi2=navis->navi2;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_object_add(transit, navi2);
+   elm_transit_effect_fade_add(transit);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_objects_final_state_keep_set(transit, EINA_TRUE);
+   elm_transit_go(transit);
+
+}
+</code>
+
+=== Implementing the Flip Effect ===
+
+{{ :transit_flip.gif }}
+
+Similarly to the blend effect but with the ''elm_transit_effect_flip_add()''
+by indicating the flipping axis and the flipping direction (''EINA_TRUE'' is
+clock-wise):
+
+<code c>
+static void
+flip_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Evas_Object *navi2=navis->navi2;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_object_add(transit, navi2);
+   elm_transit_effect_flip_add(transit, ELM_TRANSIT_EFFECT_FLIP_AXIS_X, EINA_TRUE);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_objects_final_state_keep_set(transit, EINA_TRUE);
+   elm_transit_go(transit);
+}
+</code>
+
+=== Implementing the Resizable Flip Effect ===
+
+{{ :transit_resizeflip.gif }}
+
+Similarly to the blend effect but with the ''elm_transit_effect_flip_add()''
+by indicating the flipping axis and the flipping direction (''EINA_TRUE'' is
+clock-wise):
+
+<code c>
+static void
+resizable_flip_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Navi *navis = data;
+   Evas_Object *navi=navis->navi;
+   Evas_Object *navi2=navis->navi2;
+   Elm_Transit *transit = elm_transit_add();
+
+   elm_transit_object_add(transit, navi);
+   elm_transit_object_add(transit, navi2);
+   elm_transit_effect_resizable_flip_add(transit, ELM_TRANSIT_EFFECT_FLIP_AXIS_Y, EINA_TRUE);
+   elm_transit_duration_set(transit, 3.0);
+   elm_transit_objects_final_state_keep_set(transit, EINA_TRUE);
+   elm_transit_go(transit);
+}
+</code>
+\\
+//**__The whole code__: **//{{code_c/tutorial/effects/transit.c}}

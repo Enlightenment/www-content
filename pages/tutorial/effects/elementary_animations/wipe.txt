@@ -1,0 +1,61 @@
+~~Title: Elementary Animations - Creating a Wipe Effect~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/flipy|Creating a Flip on y Axis]]
+=== Elementary Animations ===
+==== Creating a Wipe Effect ====
+
+The wipe transition is applied on an Evas object considering the wipe type and
+the direction. Use ''ELM_TRANSIT_EFFECT_WIPE_TYPE_HIDE'' to hide the button,
+and ''ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT'' to do it from left to right.
+
+{{ :elementary_animations_wipe.gif }}
+
+The wipe animation button is as follows:
+
+<code c>
+// The wipe button
+Evas_Object *btn_wipe = elm_button_add(win);
+elm_object_text_set(btn_wipe, "Wipe");
+evas_object_size_hint_weight_set(btn_wipe, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_show(btn_wipe);
+evas_object_smart_callback_add(btn_wipe, "clicked", _btn_wipe_cb, &anim);
+elm_box_pack_end(right_vbox, btn_wipe);
+</code>
+
+The wipe button callback looks like:
+
+<code c>
+static void
+_btn_wipe_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+   // Starting the rotation effect 360 degrees
+   //evas_object_resize(anim->button, 100, 50);
+   // Setting the button text
+   elm_object_text_set(anim->button, "Wipe");
+   _wipe_effect(anim->button);
+}
+</code>
+
+The animation function calls ''elm_transit_effect_wipe_add'' with
+''ELM_TRANSIT_EFFECT_WIPE_TYPE_HIDE'' as the second parameter to hide the button
+and ''ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT'' as last parameter to set the direction
+(left to right).
+
+<code c>
+static void
+_wipe_effect(Evas_Object *obj)
+{
+   Elm_Transit *trans;
+
+   trans = elm_transit_add();
+   elm_transit_object_add(trans, obj);
+   elm_transit_effect_wipe_add(trans, ELM_TRANSIT_EFFECT_WIPE_TYPE_HIDE, ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT);
+   elm_transit_duration_set(trans, 3.0);
+   elm_transit_go(trans);
+}
+</code>
+\\
+//**__The whole code__: **//{{code_c/tutorial/effects/elementary_animations.c}}
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/transit|Implementing Elementary Transit Effects]]

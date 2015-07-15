@@ -1,0 +1,62 @@
+~~Title: Elementary Animations - Creating a Rotation Effect~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/setting_up|Setting Up the Application]]
+=== Elementary Animations ===
+==== Creating a Rotation Effect ====
+
+This effect rotates the animation target button with an angle of 360°. A
+pointer to this angle is stored in the application data as ''anim->rt_angle''.
+
+{{ :elementary_animations_rotate.gif }}
+
+Create the button and add it to the center column.
+
+<code c>
+// The rotation button
+Evas_Object *btn_rotate = elm_button_add(win);
+elm_object_text_set(btn_rotate, "Rotate");
+evas_object_size_hint_weight_set(btn_rotate, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_show(btn_rotate);
+evas_object_smart_callback_add(btn_rotate, "clicked", _btn_rotate_cb, &anim);
+elm_box_pack_end(center_vbox, btn_rotate);
+</code>
+
+In the rotate button callback, call the effect function with the target button
+as first parameter and the rotation angle as the second one.
+
+<code c>
+static void
+_btn_rotate_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+   // Setting the button text
+   elm_object_text_set(anim->button, "Rotate");
+   _rotation_effect(anim->button, *(anim->rt_angle));
+}
+</code>
+
+The animation function rotates the animation target by adding a rotation
+effect with ''elm_transit_effect_rotation_add''. This function takes three
+parameters:
+
+    * ''Elm_Transit''
+    * the rotation position at which the effect begins
+    * the rotation position at which the effect ends
+
+Rotation starts at 0° to finish at 360°. The animation lasts two seconds.
+
+<code c>
+static void
+_rotation_effect(Evas_Object *obj, float angle)
+{
+   Elm_Transit *trans = elm_transit_add();
+   elm_transit_object_add(trans, obj);
+
+   // rotates the object from its original angle to given degrees to the right
+   elm_transit_effect_rotation_add(trans, 0.0, angle);
+   elm_transit_duration_set(trans, 2.0);
+   elm_transit_go(trans);
+}
+</code>
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/zoom|Creating a Zoom Effect]]

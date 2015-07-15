@@ -1,0 +1,62 @@
+~~Title: Drop and Bounce Effects - Ecore Animator~~
+//**__previous page__: **//[[/tutorial/effects/ecore_animator/zoom|Creating a zoom effect]]
+==== Creating Drop and Bounce Effects ====
+
+To finish, we add drop and bounce effects to our buttons at application start.
+
+{{ :ecore_animator_start.gif }}
+
+To do this, we create one timeline per button after creating the buttons in
+''elm_main()'':
+
+<code c>
+//drop and bounce effects
+ecore_animator_timeline_add(2, _do_drop, bt1);
+ecore_animator_timeline_add(2.3, _do_drop, bt2);
+ecore_animator_timeline_add(2.5, _do_drop, bt3);
+</code>
+
+We call the same ''_do_drop()'' animation callback function for each timeline.
+In this callback, instead of using an Evas Map, we simply change the position
+of the target using the ''evas_object_move()'' function:
+
+<code c>
+static Eina_Bool
+_do_drop(void *data, double pos)
+{
+   Evas_Object *obj = data;
+   int x, y, w, h;
+   double frame = pos;
+   frame = ecore_animator_pos_map(pos, ECORE_POS_MAP_BOUNCE, 2, 4);
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   evas_object_move(obj, x, 600 * frame);
+
+   return EINA_TRUE;
+}
+</code>
+
+To get the bounce effect, we use the ''ecore_animator_pos_map()'' function,
+which maps an input position from 0.0 to 1.0 along the timeline to a position
+on a different curve. The curve can be of different types, such as ''LINEAR'',
+''SINUSOIDAL'', and ''BOUNCE''. This function takes the following arguments:
+
+  * The input position to map
+  * The mapping to use (''LINEAR'', ''SINUSOIDAL'', and so on)
+  * v1, which is the first parameter used by the mapping
+  * v2, which is the second parameter used by the mapping
+
+The ''ECORE_POS_MAP_BOUNCE'' map we use starts at 0.0, then drops like a ball
+bouncing to the ground at 1.0, bouncing v2 times with a decay factor of v1.
+Here, we bounce 4 times with a decay factor of 2:
+
+<code c>
+frame = ecore_animator_pos_map(pos, ECORE_POS_MAP_BOUNCE, 2, 4);
+</code>
+This frame is used in the move function to create the animation. The value
+increases on each ''_do_drop()'' call along the timeline, which produces a
+nice drop of the buttons from their initial position to 600 pixels on the
+vertical axis.
+
+\\
+//**__The whole code__: **//{{code_c/tutorial/effects/ecore_animator.c}}

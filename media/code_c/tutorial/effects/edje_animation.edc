@@ -1,0 +1,238 @@
+collections {
+   images
+   {
+      image: "image1.png" COMP;
+      image: "image2.png" COMP;
+   }
+   group {
+      name: "my_layout";
+      parts {
+         // An image using image1
+         part
+         {
+            name: "image";
+            type: IMAGE;
+            description
+            {
+               state: "default" 0.0;
+               max: 63 63;
+               min: 63 63;
+               image { normal: "icon.png"; }
+               rel1.relative: 0.2 0.0;
+               rel2.relative: 0.0 0.0;
+            }
+
+            description
+            {
+               state: "down-state" 1.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 0.92;
+               rel2.relative: 0.05 0.9;
+            }
+         }
+         part
+         {
+            name: "txt_title";
+            type: TEXT;
+            mouse_events: 0;
+
+            // The default State
+            description
+            {
+               state: "default" 0.0;
+               align: 0.0 0.0;
+               rel1 { relative: 0.5 0.0; }
+               rel2 { relative: 1.0 0.5; }
+               text
+               {
+                  font: "Sans";
+                  size: 22;
+                  text: "edje animation";
+               }
+               color: 0 0 0 255;
+            }
+
+            // The "Bigger" state
+            description
+            {
+               state: "Bigger" 0.0;
+               align: 0.0 0.0;
+               rel1 { relative: 0.0 0.0; }
+               rel2 { relative: 1.0 0.2; }
+               text
+               {
+                  size: 26;
+                   text: "animation terminated";
+               }
+               color: 0 0 0 255;
+            }
+         }
+         // Container for the rotate button
+         part
+         {
+            type: SWALLOW;
+            name: "btn/rotate";
+            description
+            {
+               state: "default" 0.0;
+               rel1.relative: 0.30 0.9;
+               rel2.relative: 0.50 0.99;
+            }
+         }
+         // Container for the grow button
+         part
+         {
+            type: SWALLOW;
+            name: "btn/grow";
+            description
+            {
+               state: "default" 0.0;
+               rel1.relative: 1.02 0;
+               rel1.to: "btn/rotate";
+               rel2.relative: 2.02 1;
+               rel2.to: "btn/rotate";
+            }
+         }
+         // The animation target
+         part
+         {
+            name: "atarget";
+            type: IMAGE;
+
+            // Default state
+            description
+            {
+               state: "default" 0.0;
+               image { normal: "c1.svg"; }
+               color: 255 0 0 255; /* red */
+               rel1 { relative: 0.3 0.3; }
+               rel2 { relative: 0.7 0.7; }
+            }
+            // The rotate state
+            description
+            {
+               state: "rotate" 0.0;
+               inherit: "default" 0.0;
+
+               map
+               {
+                  //Enable Map on the part
+                  on: 1;
+                  //Enable smooth rendering
+                  smooth: 1;
+                  //Enable perspective
+                  perspective_on: 1;
+
+                  //Apply rotations on the part
+                  rotation.x: 0;
+                  rotation.y: 0;
+                  rotation.z: 0;
+               }
+               color: 0 255 0 255; /* green */
+            }
+            description
+            {
+               state: "rotate" 1.0;
+               inherit: "rotate" 0.0;
+               map.rotation.z: 360;
+            }
+            // The grow state
+            description {
+               state: "grow" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 255 255; /* blue */
+               rel1
+               {
+                  relative: 0.2 0.2;
+                  offset: 0.3 0.3;
+               }
+               rel2
+               {
+                  relative: 0.7 0.4;
+                  offset: 0.3 0.3;
+               }
+            }
+         }
+      }
+      programs {
+         // Icon drop animation
+         program
+         {
+            name: "animation,state1";
+            source: "";
+            signal: "load";
+            action: STATE_SET "down-state" 1.0;
+            target: "image";
+            transition: BOUNCE 2.5 0.0 5.0;
+         }
+         // Make the title bigger
+         program
+         {
+            name: "animation,bigtitle";
+            source: "";
+            signal: "load";
+            action: STATE_SET "Bigger" 1.0;
+            target: "txt_title";
+            transition: LINEAR 5.0;
+         }
+         // Make the title go back to normal
+         program
+         {
+            name: "animation,normaltitle";
+            source: "image";
+            signal: "mouse,clicked,*";
+            action: STATE_SET "default" 1.0;
+            target: "txt_title";
+            transition: LINEAR 0.5;
+         }
+         // Change the color of target to green
+         program
+         {
+            name: "rotate,target";
+            source: "btn/rotate";
+            signal: "mouse,clicked,*";
+            action: STATE_SET "rotate" 0.0;
+            target: "atarget";
+            transition: SIN 0.2;
+            after: "rotate,target,2";
+         }
+         // Rotate 360°
+         program
+         {
+            name: "rotate,target,2";
+            action: STATE_SET "rotate" 1.0;
+            target: "atarget";
+            transition: SIN 0.7;
+            after: "rotate,end";
+         }
+         // Go back to the normal.
+         program
+         {
+            name: "rotate,end";
+            action: STATE_SET "rotate" 0.0;
+            target: "atarget";
+            transition: LINEAR 0.2;
+         }
+         // Grow the target and go back to normal state
+         program
+         {
+            name: "grow,target";
+            source: "btn/grow";
+            signal: "mouse,clicked,*";
+            action: STATE_SET "grow" 1.0;
+            after: "go,default";
+            target: "atarget";
+            transition: SINUSOIDAL 1.0;
+         }
+         // Go back to normal (default) state
+         program
+         {
+            name: "go,default";
+            action: STATE_SET "default" 1.0;
+            target: "atarget";
+            transition: SIN 1.0;
+         }
+      }
+   }
+}
+

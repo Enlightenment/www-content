@@ -1,0 +1,75 @@
+~~Title: 3D Rotation Effect - Ecore Animator~~
+//**__previous page__: **//[[/tutorial/effects/ecore_animator/zoom|Creating a zoom effect]]
+==== Creating a 3D Rotation Effect ====
+
+The last animation is a 3D rotation. For this one, we are going to rotate the
+Evas object on all three axes (X, Y, Z).
+
+{{ :ecore_animator_3D.gif }}
+
+First, create the button and its callback function:
+
+<code c>
+// Button 3 : 3D Rotation Effect
+bt3 = elm_button_add(win);
+elm_object_text_set(bt3, "3D");
+evas_object_size_hint_weight_set(bt3, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_move(bt3, 170, 0);
+evas_object_resize(bt3, 90, 70);
+evas_object_smart_callback_add(bt3, "clicked", _btn_3d_cb, target);
+evas_object_show(bt3);
+
+
+static void _btn_3d_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Evas_Object *target = data;
+   ecore_animator_timeline_add(1, _do_3d, target);
+}
+</code>
+
+Next, we create the ''_do_3d()'' animation callback function, which is very
+similar to the rotate and zoom callback functions. To create the animation, we
+use the ''evas_map_util_3d_rotate()'' function, which allows you to rotate any
+Evas object on all three axes.
+
+<code c>
+static Eina_Bool
+_do_3d(void *data, double pos)
+{
+   Evas_Object *obj = data;
+   Evas_Map *m;
+   int x, y, w, h;
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   m = evas_map_new(4);
+   evas_map_util_points_populate_from_object(m, obj);
+   evas_map_util_3d_rotate(m, pos * 360, pos * 360, pos * 360, x + (w / 3), y + 60, 0);
+   evas_object_map_set(obj, m);
+   evas_object_map_enable_set(obj, EINA_TRUE);
+   evas_map_free(m);
+
+   return EINA_TRUE;
+}
+</code>
+
+The ''evas_map_util_3d_rotate()'' function takes the following arguments:
+
+  * The map to change
+  * The angle (0-360°) to rotate around the X axis
+  * The angle (0-360°) to rotate around the Y axis
+  * The angle (0-360°) to rotate around the Z axis
+  * The X coordinate of the rotation center
+  * The Y coordinate of the rotation center
+  * The Z coordinate of the rotation center
+
+Here, we rotate 360 degrees around each axis. The horizontal (X) rotation
+center is the X position of the target plus its width divided by 2. The
+vertical (Y) rotation center is the Y position of the target plus 60. The Z
+rotation center is 0.
+
+As with the rotation and zoom animations, we multiply the angles by the
+timeline position to gently rotate the target on each call to the ''_do_3d()''
+callback function along the timeline.
+
+\\
+//**__next page__: **//[[/tutorial/effects/ecore_animator/drop_bounce|Creating drop and bounce effects]]

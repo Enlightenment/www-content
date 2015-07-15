@@ -1,0 +1,54 @@
+~~Title: Elementary Animations - Creating a Zoom Effect~~
+//**__previous page__: **//[[/tutorial/effects/elementary_animations/rotation|Creating a Rotation Effect]]
+=== Elementary Animations ===
+==== Creating a Zoom Effect ====
+
+The zoom effect zooms on the animation target to make it twice bigger. Store
+the source rate and the destination rate in the application data using
+''anim->zfrom'' and ''anim->zto''.
+
+{{ :elementary_animations_zoom.gif }}
+
+Create the button and add it to the center column.
+
+<code c>
+// The zoom button
+Evas_Object *btn_zoom = elm_button_add(win);
+elm_object_text_set(btn_zoom, "Zoom");
+evas_object_size_hint_weight_set(btn_zoom, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_show(btn_zoom);
+evas_object_smart_callback_add(btn_zoom, "clicked", _btn_zoom_cb, &anim);
+elm_box_pack_end(right_vbox, btn_zoom);
+</code>
+
+Then add a callback function in order to perform the animation.
+<code c>
+static void _btn_zoom_cb(void *data, Evas_Object *btn, void *ev)
+{
+   Animations *anim = (Animations *)data;
+
+   // Starting the rotation effect 360 degrees
+   //evas_object_resize(anim->button, 100, 50);
+   elm_object_text_set(anim->button, "Zoom");
+   _zoom_effect(anim->button, *(anim->zfrom), *(anim->zto));
+}
+</code>
+
+To create the zoom effect, use ''elm_transit_effect_zoom_add'' with the start
+rate and the destination rate stored in application data (''anim->zfrom'' and
+''anim->zto'')
+
+<code c>
+static void
+_zoom_effect(Evas_Object *obj, float from, float to)
+{
+   Elm_Transit *trans = elm_transit_add();
+   elm_transit_object_add(trans, obj);
+
+   elm_transit_effect_zoom_add(trans, from, to);
+   elm_transit_duration_set(trans, 2.0);
+   elm_transit_go(trans);
+}
+</code>
+\\
+//**__next page__: **//[[/tutorial/effects/elementary_animations/flip|Creating a Flip Effect]]
