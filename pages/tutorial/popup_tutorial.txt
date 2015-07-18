@@ -8,7 +8,7 @@ This tutorial explains how to use Popup in the application.
   * [[#Initializing_the_Application|Initializing the Application]]
   * [[#Creating_a_Popup_Widget|Creating a Popup Widget]]
  
-A popup example : {{ :panes.png?direct |list}}
+A popup example : {{ :popup.png?direct |list}}
 
 //**__The whole code__ : **//{{/code_c/tutorial/popup/popup.c}}
 --------
@@ -19,6 +19,13 @@ The code below shows a typical elementary application that creates a window
 entitled "Popup Tutorial" and a button which opens up popup on click. 
 <code c>
 #include <Elementary.h>
+
+static void 
+_btn_click_cb(void *data, Evas_Object *objEINA_UNUSED,
+              void *event_info EINA_UNUSED)
+{
+  //popup code here  
+}
 
 EAPI_MAIN int
 elm_main(int argc, char **argv)
@@ -46,203 +53,25 @@ ELM_MAIN()
 </code>
 
 === Creating a popup Widget ===
-
-The elm_panes widget adds a draggable bar between two contents. When dragged,
-this bar resizes the contents. To create a new Panes into an Elementary
-object, use the ''elm_panes_add()'' function:
+This widget is an enhancement of Notify. In addition to content area, there are two optional sections, namely title area and action area.
 
 <code c>
-// Add an elm_panes
-Evas_Object *panes;
-panes = elm_panes_add(win);
-evas_object_size_hint_weight_set(panes, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-elm_win_resize_object_add(win, panes);
-evas_object_show(panes);
-</code>
+  // Add an elm popup
+   Evas_Object *popup;
+   Evas_Object *btn;
 
-=== Configure the Panes ===
+   popup = elm_popup_add(data);
+   elm_object_text_set(popup, "This Popup has content area and "
+                       "action area set, action area has one button Close");
 
-By default, the orientation of the Panes is vertical. To modify the
-orientation, use the ''elm_panes_horizontal_set()'' function.
+   // popup buttons
+   btn = elm_button_add(popup);
+   elm_object_text_set(btn, "Close");
+   elm_object_part_content_set(popup, "button1", btn);
+   evas_object_smart_callback_add(btn, "clicked", _popup_close_cb, popup);
 
-<code c>
-Evas_Object *panes_h;
-// Add a horizontal elm_panes
-panes_h = elm_panes_add(win);
-elm_panes_horizontal_set(panes_h, EINA_TRUE);
-</code>
-
-The code above creates another Panes object and sets the horizontal
-orientation. To add content in a panes, use the
-''elm_object_part_content_set()'' function. Here we add the horizontal Panes
-''panes_h'' to the "left" part of the first Panes ''panes'' created.
-
-<code c>
-elm_object_part_content_set(panes, "left", panes_h);
-</code>
-
-This is how to set a button object to the "right" side of our vertical Panes
-widget.
-
-<code c>
-// Create a button object
-bt = elm_button_add(win);
-elm_object_text_set(bt, "Right");
-evas_object_size_hint_weight_set(bt, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-evas_object_size_hint_align_set(bt, EVAS_HINT_FILL, EVAS_HINT_FILL);
-evas_object_show(bt);
-
-// and set it to the "right" part of the vertical Panes
-elm_object_part_content_set(panes, "right", bt);
-</code>
-
-The content of the horizontal Panes is set with two button objects (up and
-down). When populating a vertically displayed Panes, the left content is
-placed at the top, and the right content is placed at the bottom.
-
-<code c>
-// Create a "Up" button
-bt = elm_button_add(win);
-elm_object_text_set(bt, "Up");
-evas_object_size_hint_weight_set(bt, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-evas_object_size_hint_align_set(bt, EVAS_HINT_FILL, EVAS_HINT_FILL);
-evas_object_show(bt);
-elm_object_part_content_set(panes_h, "left", bt);
-
-// Create a "Down" button
-bt = elm_button_add(win);
-elm_object_text_set(bt, "Down");
-evas_object_size_hint_weight_set(bt, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-evas_object_size_hint_align_set(bt, EVAS_HINT_FILL, EVAS_HINT_FILL);
-evas_object_show(bt);
-elm_object_part_content_set(panes_h, "right", bt);
-</code>
-
-The elm_panes can be dragged with the mouse but the proportion can also be set
-with the ''elm_panes_content_left_size_set()'' and
-''elm_panes_content_right_size_set()'' functions. As an example, this is how to
-set the left size of both panes to 80%.
-
-<code c>
-// Set the proportion of the panes to 80%
-elm_panes_content_left_size_set(panes, 0.8);
-elm_panes_content_left_size_set(panes_h, 0.8);
-</code>
-
-The Panes proportions can also be fixed so that the user is not able to drag
-them. To do this, use the ''elm_panes_fixed_set()'' function.
-
-<code c>
-// Fix the Panes proportion
-elm_panes_fixed_set(panes_h, EINA_TRUE);
-</code>
-
-==== Handling Signals ====
-
-The Panes widgets emit four different signals, depending on the users'
-interaction with the draggable bar.
-
-    * "press" - The pane is pressed.
-    * "unpressed" - The pane is released after being pressed.
-    * "clicked" - The pane is clicked.
-    * "clicked,double" - The pane is double clicked.
-
-A callback function is added for each of them.
-
-//**__"click" Signal__**//
-
-The callback function for the clicked signal prints "Clicked" to standard
-output.
-
-<code c>
-// click callback
-static void
-_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-   printf("Clicked\n");
+   // popup show should be called after adding all the contents and the buttons
+   // of popup to set the focus into popup's contents correctly.
+   evas_object_show(popup);
 }
 </code>
-
-This is how to register this callback function to the vertical panes.
-<code c>
-    evas_object_smart_callback_add(panes, "clicked", _clicked_cb, panes);
-</code>
-
-//**__"press" Signal__**//
-
-The callback function for the clicked signal prints "Clicked" to standard
-output.
-
-<code c>
-// press callback
-static void
-_press_cb(void *data, Evas_Object *obj, void *event_info)
-{
-   printf("Pressed\n");
-}
-</code>
-
-The callback function for the "press" signal prints "Pressed" to the standard
-output.
-
-<code c>
-evas_object_smart_callback_add(panes, "press", _press_cb, panes);
-</code>
-
-//**__"unpress" Signal__**//
-
-For the "unpress" signal, the proportion size of the left content of the Panes
-widget is printed to the standard output. To do this, use the
-''elm_panes_content_left_size_get()'' function.
-
-<code c>
-static void
-_unpress_cb(void *data, Evas_Object *obj, void *event_info)
-{
-   printf("Unpressed, size : %f\n", elm_panes_content_left_size_get(obj));
-}
-</code>
-
-This is how to register this callback function to the vertical panes.
-<code c>
-evas_object_smart_callback_add(panes, "unpress", _unpress_cb, panes);
-</code>
-
-//**__"clicked,double" Signal__**//
-
-Hide the left part of the Panes widget on the "clicked,double" signal and set
-the left proportion to 0.0. To restore the left part proportion with a double
-click on the hidden part of the Panes widget, use the
-''elm_panes_content_left_size_get()'' and
-''elm_panes_content_left_size_set()'' functions, and a variable to store the
-value of the current proportion.
-
-<code c>
-// double clicked callback
-static void
-_clicked_double_cb(void *data, Evas_Object *obj, void *event_info)
-{
-   static double size = 0.0;
-   double tmp_size = 0.0;
-   tmp_size = elm_panes_content_left_size_get(obj);
-   if (tmp_size > 0)
-     {
-        elm_panes_content_left_size_set(obj, 0.0);
-        printf("Double clicked, hidden.\n");
-     }
-   else
-     {
-        elm_panes_content_left_size_set(obj, size);
-        printf("Double clicked, restoring size.\n");
-     }
-   size = tmp_size;
-}
-</code>
-
-This is how to register this callback function to the Panes.
-
-<code c>
-evas_object_smart_callback_add(panes, "clicked,double", _clicked_double_cb, panes);
-</code>
-\\
-//**__The whole code__ : **//{{/code_c/tutorial/panes/panes.c}}
