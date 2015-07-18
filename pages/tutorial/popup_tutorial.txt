@@ -21,7 +21,7 @@ entitled "Popup Tutorial" and a button which opens up popup on click.
 #include <Elementary.h>
 
 static void 
-_btn_click_cb(void *data, Evas_Object *objEINA_UNUSED,
+_btn_click_cb(void *data, Evas_Object *obj EINA_UNUSED,
               void *event_info EINA_UNUSED)
 {
   //popup code here  
@@ -56,6 +56,19 @@ ELM_MAIN()
 This widget is an enhancement of Notify. In addition to content area, there are two optional sections, namely title area and action area.
 
 <code c>
+static void
+_popup_close_cb(void *data, Evas_Object *obj EINA_UNUSED,
+                void *event_info EINA_UNUSED)
+{
+  Evas_Object *popup = data;
+  //delete popup
+  evas_object_del(popup);
+}
+
+static void 
+_btn_click_cb(void *data, Evas_Object *obj EINA_UNUSED,
+              void *event_info EINA_UNUSED)
+{ 
   // Add an elm popup
    Evas_Object *popup;
    Evas_Object *btn;
