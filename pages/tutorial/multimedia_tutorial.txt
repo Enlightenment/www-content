@@ -1,0 +1,254 @@
+~~Title: Multimedia Tutorial~~
+==== Multimedia Tutorial ====
+
+In this tutorial, we will see how to play a multimedia file (video) in an
+application.
+
+=== Table of Contents ===
+
+  * [[#Basic_video_widgets|Basic video widgets]]
+  * [[#Getting_more_information|Getting more information]]
+    * [[#Playing_Status|Playing Status]]
+    * [[#Get_the_file_name_and_location|Get the file name and location]]
+    * [[#Get_time_position_and_duration|Get time position and duration]]
+    * [[#Get_the_video_dimensions|Get the video dimensions]]
+
+Multimedia example: {{ :multimedia.png }}
+//**__The whole code__: **//{{:code_c/tutorial/multimedia/multimedia.c}}
+
+\\
+The EFL have a special library for multimedia file playing purposes: Emotion.
+That library has some wrappers in Elementary to let you easily write
+applications: these are ''Elm_Video'' and ''Elm_Player''.
+
+    * Elm_Video provides a simple video object.
+    * Elm_Player provides an interface to show a bar with basic actions (like rewind, fast forward, pause, etc.) to interract with a playing video.
+
+-----------
+
+=== Basic video widgets ===
+
+<code c>
+Evas_Object *video;
+video = elm_video_add(win);
+evas_object_size_hint_weight_set(video, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+elm_video_file_set(video, FILE);
+elm_video_play(video);
+evas_object_show(video);
+</code>
+
+Create a new ''Elm_Video'' object. This object is the main widget for a video.
+The actual video file is then set (which is here the ''FILE'' macro).
+''Elm_Video'' can take either a path to a file or any kind of URL. Finally,
+the video starts playing
+
+<code c>
+Evas_Object *player;
+player = elm_player_add(win);
+evas_object_size_hint_weight_set(player, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+elm_object_content_set(player, video);
+evas_object_smart_callback_add(player, "info,clicked", _player_info_cb, video);
+evas_object_show(player);
+</code>
+
+Now create an ''Elm_Player'' object. This object wraps around an ''Elm_Video''
+to have it automatically resized, to show a user interface with basic buttons,
+a progress bar and other stuff. A callback is added for the
+''info,clicked'' event, which is launched when the user clicks on the
+information button in the player interface. This callback will be detailed
+further.
+
+The player interface is eventually set as a naviframe item.
+
+<code c>
+Elm_Object_Item *it = elm_naviframe_item_push(nav, "Video", NULL, NULL, player, NULL);
+elm_naviframe_item_title_enabled_set(it, EINA_FALSE, EINA_FALSE);
+</code>
+
+=== Getting more information ===
+
+The purpose is to display some information about the video the user wants to. For
+instance, the video file name, its location, duration, and
+image size will be displayed. This list is of course not exhaustive and much
+more information could be added.
+
+Some are not directly available in ''Elm_Video'' nor in
+''Elm_Player''. But the underlaying Emotion object is available with the
+''elm_video_emotion_get(video)'' function.
+
+== Playing Status ==
+
+Set the label to display the playing status in ''_player_info_cb''.
+
+<code c>
+label = elm_label_add(table);
+evas_object_show(label);
+_player_info_status_update(label, emotion, NULL);
+elm_table_pack(table, label, 0, 0, 2, 1);
+evas_object_smart_callback_add(emotion, "playback_finished", _player_info_status_update, label);
+</code>
+
+That function is also registered as a callback upon ''playback_finished'' so
+that the status is updated upon playback completion.
+
+Get the playing status with ''_player_info_status_update'' callback:
+The ''emotion_object_play_get'' return true if the video is playing, if not
+the video is in paused or ended.
+
+<code c>
+static void
+_player_info_status_update(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *emotion = obj, *label = data;
+   char buf[256];
+
+   //switch on main item
+   if (!info)
+     {
+        evas_object_smart_callback_del(obj, "playback_finished", _player_info_status_update);
+        return;
+     }
+
+   //update
+   double position = emotion_object_position_get(emotion);
+   double duration = emotion_object_play_length_get(emotion);
+   if (emotion_object_play_get(emotion))
+        elm_object_text_set(label, "<b>Playing</b>");
+   else if (position < duration)
+        elm_object_text_set(label, "<b>Paused</b>");
+   else
+        elm_object_text_set(label, "<b>Ended</b>");
+}
+</code>
+
+== Get the file name and location ==
+
+Get the file name and location with ''emotion_object_file_get'' and
+''ecore_file_file_get'' functions.
+
+<code c>
+label = elm_label_add(table);
+elm_object_text_set(label, "File:");
+evas_object_show(label);
+elm_table_pack(table, label, 0, 1, 1, 1);
+
+const char *file = emotion_object_file_get(emotion);
+label = elm_label_add(table);
+elm_object_text_set(label, ecore_file_file_get(file));
+evas_object_show(label);
+elm_table_pack(table, label, 1, 1, 1, 1);
+
+label = elm_label_add(table);
+elm_object_text_set(label, "Location:");
+evas_object_show(label);
+elm_table_pack(table, label, 0, 2, 1, 1);
+
+label = elm_label_add(table);
+elm_object_text_set(label, ecore_file_dir_get(file));
+evas_object_show(label);
+elm_table_pack(table, label, 1, 2, 1, 1);
+</code>
+
+== Get time position and duration ==
+
+Get video time position and duration using ''elm_video_play_position_get'' and
+''elm_video_play_length_get'' functions. These functions returns double time
+values in seconds.
+
+<code c>
+label = elm_label_add(table);
+elm_object_text_set(label, "Time:");
+evas_object_show(label);
+elm_table_pack(table, label, 0, 3, 1, 1);
+
+label = elm_label_add(table);
+double position = elm_video_play_position_get(video);
+double duration = elm_video_play_length_get(video);
+int p_sec = (int) position % 60;
+int p_min = position / 60;
+int p_hour = position / 3600;
+int d_sec = (int) duration % 60;
+int d_min = duration / 60;
+int d_hour = duration / 3600;
+snprintf(buf, sizeof(buf), "%d:%02d:%02d / %d:%02d:%02d", p_hour, p_min, p_sec, d_hour, d_min, d_sec);
+elm_object_text_set(label, buf);
+evas_object_show(label);
+elm_table_pack(table, label, 1, 3, 1, 1);
+evas_object_smart_callback_add(emotion, "position_update", _player_info_time_update, label);
+evas_object_smart_callback_add(emotion, "length_change", _player_info_time_update, label);
+</code>
+
+Here, a callback on both position_update and length_change events are added so
+that timings are always up-to-date.
+
+<code c>
+static void
+_player_info_time_update(void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *emotion = obj, *label = data;
+    char buf[256];
+
+    //switch on main item
+    if (!info)
+      {
+         evas_object_smart_callback_del(emotion, "position_update", _player_info_time_update);
+         evas_object_smart_callback_del(emotion, "length_change", _player_info_time_update);
+         return;
+      }
+
+    //update
+    double position = emotion_object_position_get(emotion);
+    double duration = emotion_object_play_length_get(emotion);
+    int p_sec = (int) position % 60;
+    int p_min = position / 60;
+    int p_hour = position / 3600;
+    int d_sec = (int) duration % 60;
+    int d_min = duration / 60;
+    int d_hour = duration / 3600;
+    snprintf(buf, sizeof(buf), "%d:%02d:%02d / %d:%02d:%02d", p_hour, p_min, p_sec, d_hour, d_min, d_sec);
+    elm_object_text_set(label, buf);
+}
+</code>
+
+In this callback, the emotion functions ''emotion_object_position_get'' and
+''emotion_object_play_length_get'' are used instead of ''elm_video_play_position_get'' and
+''elm_video_play_length_get''. They have the exact same semantics, but are shown
+here so that you know that some data exposed through Emotion may also be
+available thanks to ''Elm_Video'': ''_player_info_status_update'' could also
+have been called directly after the widget creation as for
+''_player_info_time_update''.
+
+== Get the video dimensions ==
+
+Finally get the video dimensions using ''emotion_object_size_get'' by giving
+width and height pointers as parameters:
+
+<code c>
+label = elm_label_add(table);
+elm_object_text_set(label, "Size:");
+evas_object_show(label);
+elm_table_pack(table, label, 0, 4, 1, 1);
+label = elm_label_add(table);
+int w, h;
+emotion_object_size_get(emotion, &w, &h);
+snprintf(buf, sizeof(buf), "%d × %d", w, h);
+elm_object_text_set(label, buf);
+evas_object_show(label);
+elm_table_pack(table, label, 1, 4, 1, 1);
+</code>
+
+All of this is shown in a separate naviframe item.
+
+<code c>
+Elm_Object_Item *it = elm_naviframe_item_push(nav, "Information", NULL, NULL, table, NULL);
+elm_naviframe_item_pop_cb_set(it, _player_info_del_cb, NULL);
+</code>
+
+The ''_player_info_del_cb'' function is here registered in order to be called
+when the naviframe item is popped. This callback sets the global boolean
+''info'' to ''EINA_FALSE'', and so allows other delete callbacks to be
+called.
+
+{{ :multimedia_info.png }}
+\\
+//**__The whole code__: **//{{:code_c/tutorial/multimedia/multimedia.c}}
