@@ -1,0 +1,122 @@
+~~Title: Datetime Widget PG~~
+{{page>widgets_index}}
+----
+===== Datetime Widgets =====
+{{ :widgets_datetime_tree.png }}{{ :widgets_datetime.png }}
+
+The datetime widget displays and adds date and time values.
+
+This widget inherits from the Layout one, so that all the functions acting on
+it also work for datetime objects.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Datetime|Adding a Datetime]]
+  * [[#Setting_Datetime_Format|Setting Datetime Format]]
+  * [[#Using_Datetime_Callbacks|Using Datetime Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Datetime.html|Datetime Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/datetime_example.html|A Datetime Example]]
+
+==== Adding a Datetime ====
+
+The widget is created with ''elm_datetime_add()''. It is then possible to select
+the visible fields with ''elm_datetime_field_visible_set()''. The following fields
+can be controlled:
+
+  * ''ELM_DATETIME_YEAR'': The Year field
+  * ''ELM_DATETIME_MONTH'': The Month field
+  * ''ELM_DATETIME_DATE'': The Date field
+  * ''ELM_DATETIME_HOUR'': The Hour field
+  * ''ELM_DATETIME_MINUTE'': The Minute field
+  * ''ELM_DATETIME_AMPM'': The AM/PM field
+
+As an example, this is how to create a datetime widget and set the HOUR and
+MINUTE fields visible.
+
+<code c>
+Evas_Object *datetime = elm_datetime_add(parent);
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_HOUR, EINA_TRUE);
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_MINUTE, EINA_TRUE);
+
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_YEAR, EINA_FALSE);
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_MONTH, EINA_FALSE);
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_DATE, EINA_FALSE);
+elm_datetime_field_visible_set(datetime, ELM_DATETIME_AMPM, EINA_FALSE);
+</code>
+
+==== Setting Datetime Format ====
+
+The format of the date and time can be configured with
+''elm_datetime_format_set()'' using a combination of allowed Libc date format
+specifiers.
+
+Elm_datetime supports only the following sub set of libc date format
+specifiers:
+
+| ''%Y'' | The year as a decimal number including the century (example: 2011).|
+| ''%y'' | The year as a decimal number without a century (range 00 to 99)|
+| ''%m'' | The month as a decimal number (range 01 to 12).|
+| ''%b'' | The abbreviated month name according to the current locale.|
+| ''%B'' | The full month name according to the current locale.|
+| ''%h'' | The abbreviated month name according to the current locale(same as %b).|
+| ''%d'' | The day of the month as a decimal number (range 01 to 31).|
+| ''%e'' | The day of the month as a decimal number (range 1 to 31). single digits are preceded by a blank.|
+| ''%I'' | The hour as a decimal number using a 12-hour clock (range 01 to 12).|
+| ''%H'' | The hour as a decimal number using a 24-hour clock (range 00 to 23).|
+| ''%k'' | The hour (24-hour clock) as a decimal number (range 0 to 23). single digits are preceded by a blank.|
+| ''%l'' | The hour (12-hour clock) as a decimal number (range 1 to 12); single digits are preceded by a blank.|
+| ''%M'' | The minute as a decimal number (range 00 to 59).|
+| ''%p'' | Either 'AM' or 'PM' according to the given time value, or the corresponding strings for the current locale. Noon is treated as 'PM' and midnight as 'AM'|
+| ''%P'' | Like p but in lower case: 'am' or 'pm' or a corresponding string for the current locale.|
+| ''%c'' | The preferred date and time representation for the current locale.|
+| ''%x'' | The preferred date representation for the current locale without the time.|
+| ''%X'' | The preferred time representation for the current locale without the date.|
+| ''%r'' | The complete calendar time using the AM/PM format of the current locale.|
+| ''%R'' | The hour and minute in decimal numbers using the format H:M.|
+| ''%T'' | The time of day in decimal numbers using the format H:M:S.|
+| ''%D'' | The date using the format %m/%d/%y.|
+| ''%F'' | The date using the format %Y-%m-%d.|
+
+//For more reference on the available LIBC date format specifiers, please visit
+the link:
+[[http://www.gnu.org/s/hello/manual/libc.html#Formatting-Calendar-Time|Formatting
+Calendar Time]].//
+
+
+Here, as an example, we set the format to: "HH : MM".
+
+<code c>
+elm_datetime_format_set(datetime, "%H : %M");
+</code>
+
+==== Using Datetime Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - whenever Datetime field value is changed, this signal is sent.
+  * ''"language,changed"'' - whenever system locale changes, this signal is sent.
+  * ''"focused"'' - When the datetime has received focus. (since 1.8)
+  * ''"unfocused"'' - When the datetime has lost focus. (since 1.8)
+
+A callback can be registered on the ''"changed"'' signal to detect when the
+Datetime field values are changed. The ''event_info'' parameter is NULL.
+
+<code c>
+evas_object_smart_callback_add(datetime, "changed", _changed_cb, data);
+</code>
+<code c>
+static void
+_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Datetime field changed. \n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/datetime_example.html|A Datetime Example]]__**//
+\\
+----
+{{page>widgets_index}}

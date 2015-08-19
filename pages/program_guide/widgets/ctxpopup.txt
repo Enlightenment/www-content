@@ -1,0 +1,103 @@
+~~Title: Ctxpopup Widget PG~~
+{{page>widgets_index}}
+----
+===== Ctxpopup Widgets =====
+{{ :widgets_ctxpopup_tree.png }}{{ :widgets_ctxpopup.png }}
+
+Ctxpopup is a contextual popup, which can show a list of items.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Ctxpopup|Adding a Ctxpopup]]
+  * [[#Configuring_Ctxpopup|Configuring Ctxpopup]]
+  * [[#Managing_Ctxpopup_Items|Managing Ctxpopup Items]]
+  * [[#Using_Ctxpopup_Callbacks|Using Ctxpopup Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ctxpopup.html|Ctxpopup Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_ctxpopup.html|A Ctxpopup Example]]
+
+==== Adding a Ctxpopup ====
+
+A ctxpopup can be created with ''elm_ctxpopup_add()'' and when shown, it
+automatically chooses an area inside its parent object's view (set via
+''elm_ctxpopup_hover_parent_set()'') to optimally fit into it.
+
+<code c>
+Evas_Object *ctxpopup = elm_ctxpopup_add(parent);
+</code>
+
+==== Configuring Ctxpopup ====
+
+The context popup orientation can be set with
+''elm_ctxpopup_horizontal_set()''.  Here we set it to horizontal.
+
+<code c>
+elm_ctxpopup_horizontal_set(ctxpopup, EINA_TRUE);
+</code>
+
+We can also disable auto hiding if we want the ctxpopup never to be hidden.
+(Auto hide is enabled by default.)
+
+<code c>
+elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
+</code>
+
+==== Managing Ctxpopup Items ====
+
+The ctxpopup can contain a small number of items. Each of them can have a
+label and an icon. Here we append an item with the "Test" label and no icon.
+
+<code c>
+Elm_Object_Item *it = elm_ctxpopup_item_append(ctxpopup, "test", NULL, _ctxpopup_item_cb, NULL);
+</code>
+
+The ''_ctxpopup_item_cb()'' callback will be called when the item is clicked. This
+is how to write the definition of this callback.
+
+<code c>
+static void
+_ctxpopup_item_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("ctxpopup item selected\n");
+}
+</code>
+
+Then the item label is set to "New label".
+
+<code c>
+elm_object_item_part_text_set(it, "default", "New label");
+</code>
+
+And its icon is modified to the standard "home" icon.
+
+<code c>
+Evas_Object *home_icon = elm_icon_add(ctxpopup);
+elm_icon_standard_set(home_icon, "home");
+
+elm_object_item_part_content_set(it, "icon", home_icon);
+</code>
+
+==== Using Ctxpopup Callbacks ====
+
+The context popup emits the "dismissed" signal when it is dismissed. We can
+register a callback to this signal. The event_info parameter is NULL.
+
+<code c>
+evas_object_smart_callback_add(ctxpopup, "dismissed", _dismissed_cb, data);
+</code>
+<code c>
+static void
+_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+      printf("ctxpopup dismissed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_ctxpopup.html|A Ctxpopup Example]]__**//
+\\
+----
+{{page>widgets_index}}
+

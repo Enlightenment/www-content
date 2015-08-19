@@ -1,0 +1,132 @@
+~~Title: Flip Widget PG~~
+{{page>widgets_index}}
+----
+===== Flip Widgets =====
+{{ :widgets_flip_tree.png }}{{ :widgets_flip.png }}
+
+The flip widget can hold two Evas Objects and allows the user flip between
+them using several pre-defined animations.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Flip|Adding a Flip]]
+  * [[#Configuring_Flip_Animation|Configuring Flip Animation]]
+  * [[#Interacting_With_the_User|Interacting With the User]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Flip.html|Flip Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_flip.html|A Flip Example]]
+
+==== Adding a Flip ====
+
+This is how to create a flip widget.
+
+<code c>
+Evas_Object *flip, *content1, *content2;
+flip = elm_flip_add(parent);
+</code>
+
+We can add content to the flip widget. content1 is set to the "front" content
+and content2 is set to the "back" mode.
+
+<code c>
+elm_object_part_content_set(flip, "front", content1);
+elm_object_part_content_set(flip, "back", content2);
+</code>
+
+==== Configuring Flip Animation ====
+
+Now we can run an flip animation.
+
+<code c>
+elm_flip_go(flip, ELM_FLIP_CUBE_UP);
+</code>
+
+This animation flips up the "front" content object as if it was on a side of a
+cube, letting the down facing side of the cube appear with the "back" content
+object. Several animations are available:
+
+  * ''ELM_FLIP_ROTATE_X_CENTER_AXIS'' - Rotate the currently visible content around a horizontal axis in the middle of its height, the other content is shown as the other side of the flip.
+  * ''ELM_FLIP_ROTATE_Y_CENTER_AXIS'' - Rotate the currently visible content around a vertical axis in the middle of its width, the other content is shown as the other side of the flip.
+  * ''ELM_FLIP_ROTATE_XZ_CENTER_AXIS'' - Rotate the currently visible content around a diagonal axis in the middle of its width, the other content is shown as the other side of the flip.
+  * ''ELM_FLIP_ROTATE_YZ_CENTER_AXIS'' - Rotate the currently visible content around a diagonal axis in the middle of its height, the other content is shown as the other side of the flip.
+  * ''ELM_FLIP_CUBE_LEFT'' - Rotate the currently visible content to the left as if the flip was a cube, the other content is show as the right face of the cube.
+  * ''ELM_FLIP_CUBE_RIGHT'' - Rotate the currently visible content to the right as if the flip was a cube, the other content is show as the left face of the cube.
+  * ''ELM_FLIP_CUBE_UP'' - Rotate the currently visible content up as if the flip was a cube, the other content is show as the bottom face of the cube.
+  * ''ELM_FLIP_CUBE_DOWN'' - Rotate the currently visible content down as if the flip was a cube, the other content is show as the upper face of the cube.
+  * ''ELM_FLIP_PAGE_LEFT'' - Move the currently visible content to the left as if the flip was a book, the other content is shown as the page below that.
+  * ''ELM_FLIP_PAGE_RIGHT'' - Move the currently visible content to the right as if the flip was a book, the other content is shown as the page below that.
+  * ''ELM_FLIP_PAGE_UP'' - Move the currently visible content up as if the flip was a book, the other content is shown as the page below that.
+  * ''ELM_FLIP_PAGE_DOWN'' - Move the currently visible content down as if the flip was a book, the other content is shown as the page below that.
+
+{{ :elm_flip.png }}
+
+<note>
+''elm_flip_go_to(flip,front,ELM_FLIP_CUBE_UP)'' is the same as
+''elm_flip_go()'' except if front is ''EINA_TRUE'' it makes front visible,
+otherwise makes back.
+</note>
+
+==== Interacting With the User ====
+
+By default, the user cannot interact with the flip. We can set the interaction
+to be possible, but we have to choose which animation appears on the
+interaction (rotation has been selected in the following example).
+
+<code c>
+elm_flip_interaction_set(flip, ELM_FLIP_INTERACTION_ROTATE);
+</code>
+
+The available modes of interaction are
+
+  * ''ELM_FLIP_INTERACTION_NONE'' - No interaction is allowed
+  * ''ELM_FLIP_INTERACTION_ROTATE'' - Interaction causes a rotating animation
+  * ''ELM_FLIP_INTERACTION_CUBE'' - Interaction causes a cube animation
+  * ''ELM_FLIP_INTERACTION_PAGE'' - Interaction causes a page animation
+
+We must also choose, which interaction directions are enabled (only right and
+left in the following example).
+
+<code c>
+elm_flip_interaction_direction_enabled_set(flip, ELM_FLIP_DIRECTION_LEFT, EINA_TRUE);
+elm_flip_interaction_direction_enabled_set(flip, ELM_FLIP_DIRECTION_RIGHT, EINA_TRUE);
+</code>
+
+We can also set the amount of the flip that is sensitive to user interaction.
+In the following example, it is set to the entire flip (1) to make the flip
+easy to interact with.
+
+<code c>
+elm_flip_interaction_direction_hitsize_set(flip, ELM_FLIP_DIRECTION_LEFT, 1);
+elm_flip_interaction_direction_hitsize_set(flip, ELM_FLIP_DIRECTION_RIGHT, 1);
+</code>
+
+==== Using Flip Callbacks ====
+
+Two signals are emitted by the flip: one when an animation starts and one when
+it ends. For these signals, event_info parameter is NULL.
+
+  * ''"animate,begin"'' - A flip animation is started
+  * ''"animate,done"'' - A flip animation is finished
+
+We can register a callback on the "animation,begin" signal.
+
+<code c>
+evas_object_smart_callback_add(entry, "animate,begin", _anim_start_cb, data);
+
+// Callback function for the "animate,begin" signal
+// This callback is called when the flip animation starts
+static void
+_anim_start_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Animation starts\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_flip.html|A Flip Example]]__**//
+\\
+----
+{{page>widgets_index}}
+

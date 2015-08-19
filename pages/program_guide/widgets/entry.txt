@@ -1,0 +1,437 @@
+~~Title: Entry Widget PG~~
+{{page>widgets_index}}
+----
+===== Entry Widgets =====
+{{ :widgets_entry_tree.png }}{{ :widgets_entry.png }}
+
+The entry widget is a box where the user can enter text. It supports the
+following features:
+
+  * text wrapping
+  * multiline
+  * scrolling
+  * formatted markup text
+  * password mode
+  * filtering text
+  * read/write from a file
+  * theme style overrides
+
+=== Table of Contents ===
+
+  * [[#Adding_an_Entry|Adding an Entry]]
+  * [[#Using_Text_Edition|Using Text Edition]]
+  * [[#Setting_Password_Mode|Setting Password Mode]]
+  * [[#Entry_Line_Modes_And_Wrapping|Entry Line Modes And Wrapping]]
+  * [[#Selecting_Text|Selecting Text]]
+  * [[#Controlling_Cursor|Controlling Cursor]]
+  * [[#Formatting_Text|Formatting Text]]
+  * [[#Using_Special_Markups|Using Special Markups]]
+  * [[#Overriding_Style|Overriding Style]]
+  * [[#Filtering_Text|Filtering Text]]
+  * [[#File_Load/Save|File Load/Save]]
+  * [[#Using_Entry_Theme_Content|Using Entry Theme Content]]
+  * [[#Using_Entry_Theme_Texts|Using Entry Theme Texts]]
+  * [[#Using_Entry_Callbacks|Using Entry Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Entry.html|Entry Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/entry_example.html|A Simple Editing example]]
+
+==== Adding an Entry ====
+
+The entry widget is created with the ''elm_entry_add()'' function, and the text
+inside the entry can be set with ''elm_entry_entry_set()''.
+
+<code c>
+Evas_Object *entry = elm_entry_add(parent);
+elm_entry_entry_set(entry, "A short text.");
+</code>
+
+By default, entries are:
+
+  * not scrolled
+  * multi-line
+  * word wrapped
+  * autosave is enabled
+
+==== Using Text Edition ====
+
+We can also append text to the end of existing content,
+
+<code c>
+elm_entry_entry_append(entry, "END");
+</code>
+
+or insert text at the current cursor position.
+
+<code c>
+elm_entry_entry_insert(entry, "CURSOR");
+Eina_Bool Empty = elm_entry_is_empty(entry);
+</code>
+
+Call ''elm_entry_is_empty()'' to see whether the entry is empty. Here, the boolean
+variable Empty will return ''EINA_FALSE''.
+
+By default, the user can enter text in the entry widget when it is in the
+focus. We can prevent the user from editing text if needed.
+
+<code c>
+elm_entry_editable_set(entry, EINA_FALSE);
+</code>
+
+<note>
+It is still possible to use the previous functions to modify the text of a
+non-editable entry.
+</note>
+
+==== Setting Password Mode ====
+
+When dealing with password content, the password mode activates to hide what
+the user is typing. In this mode, the display of any text is replaced by
+asterisks (*), and the entry is single line (there is no line wrap).
+
+<code c>
+elm_entry_password_set(entry, EINA_TRUE);
+</code>
+
+==== Entry Line Modes And Wrapping ====
+
+The entry widget has two line modes:
+
+  * single line mode
+  * multiline mode
+
+First, we set the entry in single line mode.
+
+<code c>
+elm_entry_single_line_set(entry, EINA_TRUE);
+</code>
+
+In this mode, the text does not wrap when reaching the edge, but the entry
+grows horizontally instead. Pressing the "Enter" key in this mode generates an
+"activate" event instead of adding a new line.
+
+When the entry is set to multiline mode (single line off), the text wraps at
+the end of the entry and pressing "Enter" creates a new line.
+
+<code c>
+elm_entry_single_line_set(entry, EINA_FALSE);
+elm_entry_line_wrap_set(entry, ELM_WRAP_WORD);
+</code>
+
+In multiline entries, ''elm_entry_line_wrap_set()'' provides a way to cut the text
+implicitly into a new line when it reaches the far edge of the widget. The
+following wrap modes are available:
+
+  * ''ELM_WRAP_NONE'': No wrap
+  * ''ELM_WRAP_CHAR'': Wrap between characters
+  * ''ELM_WRAP_WORD'': Wrap in allowed wrapping points (as defined in the unicode standard)
+  * ''ELM_WRAP_MIXED'': Word wrap, and if that fails, char wrap
+
+==== Selecting Text ====
+
+Text selections can be made with different functions. This selects all the
+content of the entry widget.
+
+<code c>
+elm_entry_select_all(entry);
+</code>
+
+We can drop the current selection with
+
+<code c>
+elm_entry_select_none(entry);
+</code>
+
+To select part of the text, use ''elm_entry_select_region_set()''. The code
+below selects the first twenty characters of the entry content.
+
+<code c>
+elm_entry_select_region_set(entry, 0, 20);
+</code>
+
+Current selected text within the entry can be retrieved like this.
+
+<code c>
+const char *selection;
+
+selection = elm_entry_selection_get(entry);
+</code>
+
+If the entry text is empty, ''elm_entry_selection_get()'' will return NULL.
+
+We can copy or cut the selection to the clipboard. (There is an example of a
+cut below.)
+
+<code c>
+elm_entry_selection_cut(entry);
+</code>
+
+This selection can be pasted in the same or a different entry.
+
+<code c>
+elm_entry_selection_paste(entry);
+</code>
+
+==== Controlling Cursor ====
+
+The cursor represents the current position in the entry, where the next action
+is done (for example, text insertion or deletion). Usually, the cursor is
+represented as a blinking character, but that depends on the theme
+configuration. Cursor position can be modified by using several functions.
+
+It can be moved to the beginning of the entry,
+
+<code c>
+elm_entry_cursor_begin_set(entry);
+</code>
+
+or to the end.
+
+<code c>
+elm_entry_cursor_end_set(entry);
+</code>
+
+It can be moved one line down or up.
+
+<code c>
+elm_entry_cursor_down(entry);
+elm_entry_cursor_up(entry);
+</code>
+
+It can also be moved one character to the left or right,
+
+<code c>
+elm_entry_cursor_prev(entry);
+elm_entry_cursor_next(entry);
+</code>
+
+or set at a specific position (15th character, for example).
+
+<code c>
+elm_entry_cursor_pos_set(entry, 15);
+</code>
+
+We can start a selection at the current cursor position, move five characters
+to the right and end the selection.
+
+<code c>
+elm_entry_cursor_selection_begin(entry);
+
+for(i = 0; i < 5; i++)
+  {
+     elm_entry_cursor_next(entry);
+  }
+
+elm_entry_cursor_selection_end(entry);
+</code>
+
+==== Formatting Text ====
+
+The markup tags supported by the Entry are defined by the theme, but even when
+writing new themes or extensions it's a good idea to stick to a sane default,
+to maintain coherency and avoid application breakages. Currently defined by
+the default theme are the following tags:
+
+  * ''<br>'': Inserts a line break.
+  * ''<ps>'': Inserts a paragraph separator. This is preferred over line breaks.
+  * ''<tab>'': Inserts a tab.
+  * ''<em>...</em>'': Emphasis. Sets the oblique style for the enclosed text.
+  * ''<b>...</b>'': Sets the bold style for the enclosed text.
+  * ''<link>...</link>'': Underlines the enclosed text.
+  * ''<hilight>...</hilight>'': Highlights the enclosed text.
+  * ''<title>...</title>'': Main title.
+  * ''<subtitle>...</subtitle>'': Secondary level title.
+  * ''<bigger>...</bigger>'': A really big text, not so big as the titles.
+  * ''<big>...</big>'': Big text.
+  * ''<small>...</small>'': Small text.
+  * ''<smaller>...</smaller>'': Really small text, at the point of unreadability.
+
+Entry also support tags for code syntax highlight. Note that this does not mean
+that the entry will automatically perform code highlight, application are
+responsible of applying the correct tag to code blocks. The default theme
+define the following tags:
+
+  * ''<code>...</code>'': Monospace font without shadows.
+  * ''<comment>...</comment>'': Code comments.
+  * ''<string>...</string>'': Strings of text.
+  * ''<number>...</number>'': Numeric expression (ex: 1, 2, 0.34, etc)
+  * ''<brace>...</brace>'': Braces used for code syntax.
+  * ''<type>...</type>'': Variables types (ex: int, float, char, Evas_Object, etc)
+  * ''<class>...</class>'': Class names, when defined, not when used.
+  * ''<function>...</function>'': Function names, when defined, not called.
+  * ''<param>...</param>'': Generic parameters.
+  * ''<keyword>...</keyword>'': Language keywords (ex: return, NULL, while, for, etc)
+  * ''<preprocessor>...</preprocessor>'': Preprocessors definitions.
+  * ''<line_added>...</line_added>'': Diff addeded lines.
+  * ''<line_removed>...</line_removed>'': Diff removed lines.
+  * ''<line_changed>...</line_changed>'': Diff changed lines.
+
+==== Using Special Markups ====
+
+Special markups can be added within the text of the entry.
+
+  * ''<a href = ..>...</a>'': Anchors
+  * ''<item size = .. vsize = .. href = ..>...</item>'': Items
+
+Anchors generate an "anchor,clicked" signal when the user clicks on them. The
+href attribute is used to identify the anchor. It also reacts to the
+"anchor,in" (mouse in), "anchor,out" (mouse out), "anchor,down" (mouse down),
+and "anchor,up" (mouse up) events.
+
+The item markup provides a way to insert any Evas_Object in the text. The
+Evas_Object name has to be specified in the href attribute.
+
+==== Overriding Style ====
+
+To tweak the style of the text within the entry widget, it is possible to
+override parts of the theme style to the textblock object by using
+''elm_entry_text_style_user_push()''. This function pushes a new style on top of
+the user style stack that overrides the current style. Remove the style in the
+top of user style stack with ''elm_entry_text_style_user_pop()''.
+
+==== Filtering Text ====
+
+Text within an entry can be filtered in size. Here we set the maximum number
+of characters allowed in the entry to eight.
+
+<code c>
+static Elm_Entry_Filter_Limit_Size limit_size =
+{
+   .max_char_count = 8,
+   .max_byte_count = 0
+};
+
+// Append a new callback to the list, this function will be called each time
+// a text is inserted in the entry. Pass the limit_size struct previously
+// created to set the maximum number of characters allowed to 8
+
+elm_entry_markup_filter_append(entry, elm_entry_filter_limit_size,
+         &limit_size);
+</code>
+
+Content can be filtered by passing an ''Elm_Entry_Filter_Accept_Set'' structure.
+This structure contains the accepted characters and rejected characters. In
+the example below we reject the '+', '-', '*', and '/' characters.
+
+<code c>
+static Elm_Entry_Filter_Accept_Set accept_set =
+{
+   .accepted = NULL,
+   .rejected = "+*-/"
+};
+
+elm_entry_markup_filter_append(entry, elm_entry_filter_accept_set,
+         &accept_set);
+</code>
+
+==== File Load/Save ====
+
+The entry content can be saved to a file (/tmp/test.txt, for example).
+
+<code c>
+// Set the file in which the entry text will be saved. This function
+// implicitly loads the existing file content
+elm_entry_file_set(entry, "/tmp/test.txt", ELM_TEXT_FORMAT_MARKUP_UTF8);
+</code>
+
+Autosave is activated by default and changes are written back to the file
+after a short delay. This feature can be deactivated and we can manually save
+the content when needed.
+
+<code c>
+// Disable autosaving
+elm_entry_autosave_set(entry, EINA_FALSE);
+
+// Trigger saving when needed
+elm_entry_file_save(entry);
+</code>
+
+==== Using Entry Theme Content ====
+
+Two content parts of the default theme are available: "icon" and "end". Here
+we set an icon in the "end" content part.
+
+<code c>
+Evas_Object *icon;
+
+ic = elm_icon_add(entry);
+elm_image_file_set(ic, "icon.png", NULL);
+elm_object_part_content_set(entry, "end", icon);
+</code>
+
+==== Using Entry Theme Texts ====
+
+The default theme allows the use of the following text parts:
+
+  * "default" - text of the entry
+  * "guide" - placeholder of the entry
+
+This is how to set the placeholder text of the entry to "Hello World".
+
+<code c>
+elm_object_part_text_set(entry, "Hello World");
+</code>
+
+==== Using Entry Callbacks ====
+
+Entry widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"aborted"'': The escape key was pressed on a single line entry. (since 1.7)
+  * ''"activated"'': The enter key was pressed on a single line entry.
+  * ''"anchor,clicked"'': An anchor has been clicked. The event_info parameter for the callback will be an #Elm_Entry_Anchor_Info.
+  * ''"anchor,down"'': Mouse button has been pressed on an anchor. The event_info parameter for the callback will be an #Elm_Entry_Anchor_Info.
+  * ''"anchor,hover,opened"'': The anchor is clicked.
+  * ''"anchor,in"'': Mouse cursor has moved into an anchor. The event_info parameter for the callback will be an #Elm_Entry_Anchor_Info.
+  * ''"anchor,out"'': Mouse cursor has moved out of an anchor. The event_info parameter for the callback will be an #Elm_Entry_Anchor_Info.
+  * ''"anchor,up"'': Mouse button has been unpressed on an anchor. The event_info parameter for the callback will be an #Elm_Entry_Anchor_Info.
+  * ''"changed"'': The text within the entry was changed.
+  * ''"changed,user"'': The text within the entry was changed because of user interaction.
+  * ''"clicked"'': The entry has been clicked (mouse press and release).
+  * ''"clicked,double"'': The entry has been double clicked.
+  * ''"clicked,triple"'': The entry has been triple clicked.
+  * ''"cursor,changed"'': The cursor has changed position.
+  * ''"cursor,changed,manual"'': The cursor has changed position manually.
+  * ''"focused"'': The entry has received focus.
+  * ''"unfocused"'': The entry has lost focus.
+  * ''"language,changed"'': Program language changed.
+  * ''"longpressed"'': A mouse button has been pressed and held for a couple
+  * ''"maxlength,reached"'': Called when a maximum length is reached.
+  * ''"preedit,changed"'': The preedit string has changed.
+  * ''"press"'': A mouse button has been pressed on the entry. seconds.
+  * ''"redo,request"'': Called on redo request.
+  * ''"selection,changed"'': The current selection has changed.
+  * ''"selection,cleared"'': The current selection has been cleared.
+  * ''"selection,copy"'': A copy of the selected text into the clipboard was requested.
+  * ''"selection,cut"'': A cut of the selected text into the clipboard was requested.
+  * ''"selection,paste"'': A paste of the clipboard contents was requested.
+  * ''"selection,start"'': A selection has begun and no previous selection existed.
+  * ''"text,set,done"'': Whole text has been set to the entry.
+  * ''"theme,changed"'': Called when the theme is changed.
+  * ''"undo,request"'': Called on undo request.
+  * ''"rejected"'': Called when some of inputs are rejected by the filter. (since 1.9)
+
+For signals, where ''event_info'' has not been explicitly described, it is set to
+NULL.
+
+As an example, we register a callback to the "focused" signal.
+
+<code c>
+evas_object_smart_callback_add(entry, "focused", _focused_cb, data);
+
+// Callback function for the "focused" signal
+// This callback is called when the entry receive the focus
+static void
+_focused_cb(void *data, Evas_Object *obj, void *event_info)
+{
+  printf("Entry focused\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/entry_example.html|A Simple Editing example]]__**//
+\\
+----
+{{page>widgets_index}}
+

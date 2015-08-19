@@ -1,0 +1,105 @@
+~~Title: Tooltips Widget PG~~
+{{page>widgets_index}}
+----
+===== Tooltips Widgets =====
+{{ :widgets_tooltips_tree.png }}{{ :widgets_tooltips.png }}
+
+The tooltip widget is a smart object that shows a content in a frame when
+mouse hovers a parent object. The widget provides tips or information about
+the parent object.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Tooltips|Adding a Tooltips]]
+  * [[#Activating_the_Tooltip|Activating the Tooltip]]
+  * [[#Configuring_Tooltip|Configuring Tooltip]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Tooltips.html|Tooltips Widget API]]
+
+==== Adding a Tooltips ====
+
+The tooltip widget cannot be created with the ''elm_tooltip_add()'' function.
+This widget is already contained in a widget when it is created. We can only
+activate or disable it.
+
+==== Activating the Tooltip ====
+
+To activate the tooltip on a parent object, we can set a tooltip text to the
+parent object,
+
+<code c>
+elm_object_tooltip_text_set(parent, "The tooltip text");
+</code>
+
+or set a content to the parent object.
+
+<code c>
+elm_object_tooltip_content_cb_set(parent,
+                                  tooltip_content_cb,
+                                  NULL,
+                                  tooltip_content_del_cb);
+</code>
+<code c>
+Evas_Object*
+tooltip_content_cb(void*data, Evas_Object *obj, Evas_Object *tooltip)
+{
+   // Create the tooltip content
+}
+
+static void
+tooltip_content_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   // Destroy the tooltip content
+}
+</code>
+
+When passing content to the tooltip, the ''tooltip_content_cb'' function is
+called each time the tooltip is showed. The role of this function is to create
+the content to set in the tooltip. It returns a pointer to an Evas_Object.
+
+When the tooltip disappears, the ''tooltip_content_del_cb'' function is
+called. This function is in charge of deleting the previously allocated
+Evas_Object.
+
+Once set, the tooltip can be manually hidden or shown.
+
+<code c>
+elm_object_tooltip_hide(parent);
+elm_object_tooltip_show(parent);
+</code>
+
+The tooltip can be removed from the parent object when it is not needed.
+
+<code c>
+elm_object_tooltip_unset(parent);
+</code>
+
+<note>
+When content is set into the tooltip object, unsetting it calls the callback
+provided as ''del_cb'' to notify that the tooltip cannot be used any longer.
+</note>
+
+==== Configuring Tooltip ====
+
+Set the orientation of the tooltip widget relative to its parent. By default,
+''ELM_TOOLTIP_ORIENT_NONE'' is set.
+
+  * ''ELM_TOOLTIP_ORIENT_NONE'': Default value, Tooltip moves with mouse pointer.
+  * ''ELM_TOOLTIP_ORIENT_TOP_LEFT'': Tooltip should appear at the top left of parent.
+  * ''ELM_TOOLTIP_ORIENT_TOP'': Tooltip should appear at the top of parent.
+  * ''ELM_TOOLTIP_ORIENT_TOP_RIGHT'': Tooltip should appear at the top right of parent.
+  * ''ELM_TOOLTIP_ORIENT_LEFT'': Tooltip should appear at the left of parent.
+  * ''ELM_TOOLTIP_ORIENT_CENTER'': Tooltip should appear at the center of parent.
+  * ''ELM_TOOLTIP_ORIENT_RIGHT'': Tooltip should appear at the right of parent.
+  * ''ELM_TOOLTIP_ORIENT_BOTTOM_LEFT'': Tooltip should appear at the bottom left of parent.
+  * ''ELM_TOOLTIP_ORIENT_BOTTOM'': Tooltip should appear at the bottom of parent.
+  * ''ELM_TOOLTIP_ORIENT_BOTTOM_RIGHT'': Tooltip should appear at the bottom right of parent.
+  * ''ELM_TOOLTIP_ORIENT_LAST'': Sentinel value, don't use.
+
+A tooltip object is not a widget, so it does not emit signals. There are no
+registered callbacks for it.
+
+----
+{{page>widgets_index}}

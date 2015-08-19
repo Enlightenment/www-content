@@ -1,0 +1,125 @@
+~~Title: Win Widget PG~~
+{{page>widgets_index}}
+----
+===== Win Widgets =====
+{{ :widgets_win_tree.png }}{{ :widgets_win.png }}
+
+The window widget is the root widget that is often used in an application. It
+allows the developer create content in it, and it is handled by the window
+manager.
+
+The window widget is created with elm_win_add() or
+''elm_win_util_standard_add()''. Content can be added in the window with
+''elm_win_resize_object_add()'' so that a window resize also resizes the content
+inside.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Win|Adding a Win]]
+  * [[#Closing_a_Window|Closing a Window]]
+  * [[#Using_the_Window_Callbacks|Using the Window Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Win.html|Win Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/win_example_01.html|A Win Example]]
+
+==== Adding a Win ====
+
+Create a new window and change the title.
+
+<code c>
+Evas_Object *window;
+// Creating a window
+window = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+// Change window title
+elm_win_title_set(window, "Example Window");
+</code>
+
+The first element of ''elm_win_add()'' is the parent window. For example, for a
+dialog you want to have the main window as the parent. Here, it is NULL
+meaning there is no parent. "main" is the name of the window used by the
+window manager for identifying the window uniquely amongst all the windows
+within this application (and all instances of the application). The type is a
+basic window (the final parameter).
+
+Create a new window with a title and a background. This API is a shortcut of
+the previous one. It also creates a standard background to the window with
+''elm_bg_add''. The window created is of the type ''ELM_WIN_BASIC''.
+
+<code c>
+Evas_Object *window;
+
+// Creating a standard window
+window = elm_win_util_standard_add("main", "Example Window");
+</code>
+
+==== Closing a Window ====
+
+When the user closes the window outside of the program control, a
+"delete,request" signal is emitted to indicate that this event occurred. The
+developer can take any action, for example, destroy the window object.
+
+When the autodel parameter is set, the window is automatically destroyed after
+the signal is emitted. If autodel is ''EINA_FALSE'', the window is not destroyed
+and the program does so when required. The default is ''EINA_FALSE'', where the
+window is not destroyed automatically.
+
+The autodel is set using the following call:
+
+<code c>
+elm_win_autodel_set(window, EINA_TRUE);
+</code>
+
+To close the window, use the ''evas_object_del'' API. The window is destroyed and
+the signal "delete,request" is sent.
+
+==== Using the Window Callbacks ====
+
+The window widget emits the following signals:
+
+  * ''"delete,request"'': the user requested to close the window. See ''elm_win_autodel_set()'' and elm_win_autohide_set().
+  * ''"focus,in"'': window got focus (deprecated. use "focused" instead.)
+  * ''"focus,out"'': window lost focus (deprecated. use "unfocused" instead.)
+  * ''"moved"'': window that holds the canvas was moved
+  * ''"withdrawn"'': window is still managed normally but removed from view
+  * ''"iconified"'': window is minimized (perhaps into an icon or taskbar)
+  * ''"normal"'': window is in a normal state (not withdrawn or iconified)
+  * ''"stick"'': window has become sticky (shows on all desktops)
+  * ''"unstick"'': window has stopped being sticky
+  * ''"fullscreen"'': window has become fullscreen
+  * ''"unfullscreen"'': window has stopped being fullscreen
+  * ''"maximized"'': window has been maximized
+  * ''"unmaximized"'': window has stopped being maximized
+  * ''"ioerr"'': there has been a low-level I/O error with the display system
+  * ''"indicator,prop,changed"'': an indicator's property has been changed
+  * ''"rotation,changed"'': window rotation has been changed
+  * ''"profile,changed"'': profile of the window has been changed
+  * ''"focused" '': When the win has received focus. (since 1.8)
+  * ''"unfocused" '': When the win has lost focus. (since 1.8)
+  * ''"theme,changed"'': The theme was changed. (since 1.13)
+
+With all these signals, event_info is NULL.
+
+This is an example to register a callback function called on the "fullscreen"
+signal.
+
+<code c>
+evas_object_smart_callback_add(window, "fullscreen", _fullscreen_cb, data);
+</code>
+
+<code c>
+// Callback function for the "fullscreen" signal
+// This callback is called when the window becomes fullscreen
+static void
+_fullscreen_cb(void *data, Evas_Object *obj, void *event_info)
+{
+  printf("Window fullscreen\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/win_example_01.html|A Win Example]]__**//
+
+----
+{{page>widgets_index}}

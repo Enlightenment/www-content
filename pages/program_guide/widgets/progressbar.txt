@@ -1,0 +1,135 @@
+~~Title: Progressbar Widget PG~~
+{{page>widgets_index}}
+----
+===== Progressbar Widgets =====
+{{ :widgets_progressbar_tree.png }}{{ :widgets_progressbar.png }}
+
+The progress bar is a widget for visually representing the progress status of
+a given job/task.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Progressbar|Adding a Progressbar]]
+  * [[#Using_Progressbar_Styles|Using Progressbar Styles]]
+  * [[#Using_the_Progressbar|Using the Progressbar]]
+  * [[#Configuring_the_Progressbar|Configuring the Progressbar]]
+  * [[#Using_Progressbar_Callbacks|Using Progressbar Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Progressbar.html|Progressbar Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/progressbar_example.html|A Progressbar Example]]
+
+==== Adding a Progressbar ====
+
+This widget is used to display the progress status of a given job. It inherits
+from the layout widget, so all function concerning the layout widget is used
+on the progressbar widget.
+
+This is how to create a progressbar widget.
+
+<code c>
+Evas_Object *pb = elm_progressbar_add(win);
+</code>
+
+==== Using Progressbar Styles ====
+
+This widget has the following styles:
+
+  * "default"
+  * "wheel" (simple style, no text, no progression, only "pulse" effect is available)
+
+==== Using the Progressbar ====
+
+By default, the progressbar does not show a label or an icon, and the unit
+label is set to "%.0f % %".
+
+This is how to set a label (in this example, it is named "Test label").
+
+<code c>
+elm_object_text_set(pb, "Test label");
+</code>
+
+An icon is set with ''elm_object_part_content_set()'' using the partname "icon".
+
+<code c>
+elm_object_part_content_set(pb, "icon", icon_object);
+</code>
+
+The unit label format string can be modified using a "printf" style format. We
+set it to be a float number with two decimals.
+
+<code c>
+elm_progressbar_unit_format_set(pb, "%1.2f%%");
+</code>
+
+==== Configuring the Progressbar ====
+
+The progressbar pulse mode is activated to make the progressbar loop
+infinitely between the start and end position.
+
+<code c>
+elm_progressbar_pulse_set(pb, EINA_TRUE);
+elm_progressbar_pulse(pb, EINA_TRUE);
+</code>
+
+It can be inverted. In that mode, the values are inverted so that the high
+values are on the left and the low values on the right.
+
+<code c>
+elm_progressbar_inverted_set(pb, EINA_TRUE);
+</code>
+
+The progressbar emits the "changed" signal when the progress value changes.
+The value is changed with the ''elm_progressbar_value_set()'' function. Here
+the pb progress value is set to 20%.
+
+<code c>
+elm_progressbar_value_set(pb, 0.2);
+</code>
+
+The current value can be read.
+
+<code c>
+double value = elm_progressbar_value_get(pb);
+</code>
+
+We can set the orientation of the progressbar to vertical instead of the
+default horizontal orientation.
+
+<code c>
+elm_progressbar_horizontal_set(pb, EINA_FALSE);
+</code>
+
+==== Using Progressbar Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - when the value is changed (since 1.7)
+  * ''"focused"'' - When the progressbar has received focus. (since 1.8)
+  * ''"unfocused"'' - When the progressbar has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.9)
+
+The "changed" signal is the only signal specifically emitted by the
+progressbar widget.
+
+This is how to register a callback on this signal.
+
+<code c>
+evas_object_smart_callback_add(pb, "changed", changed_cb, data);
+</code>
+<code c>
+// Callback function for the "changed" signal
+// This callback is called when the progressbar value changes
+static void
+changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("The value has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/progressbar_example.html|A Progressbar Example]]__**//
+
+----
+{{page>widgets_index}}

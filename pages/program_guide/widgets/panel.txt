@@ -1,0 +1,94 @@
+~~Title: Panel Widget PG~~
+{{page>widgets_index}}
+----
+===== Panel Widgets =====
+{{ :widgets_panel_tree.png }}{{ :widgets_panel.png }}
+
+The panel widget is an animated object that can contain subobjects. It can be
+expanded or contracted by clicking on the button on its edge.
+
+Panel inherits from layout widget, so the layout API can be used on this
+widget.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Panel|Adding a Panel]]
+  * [[#Using_the_Panel|Using the Panel]]
+  * [[#Add_a_Content|Add a Content]]
+  * [[#Using_Panel_Callbacks|Using Panel Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Panel.html|Panel Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_panel.html|A Panel Example]]
+
+==== Adding a Panel ====
+
+This is how to add a panel and set its orientation to left.
+
+<code c>
+Evas_Object *panel = elm_panel_add(parent);
+elm_panel_orient_set(panel, ELM_PANEL_ORIENT_LEFT);
+</code>
+
+==== Using the Panel ====
+
+The panel is manually hidden.
+
+<code c>
+elm_panel_hidden_set(panel, EINA_TRUE);
+</code>
+
+It can be toggled if we do not know the hidden state of the widget.
+
+<code c>
+elm_panel_toggle(panel);
+</code>
+
+It can be set scrollable.
+
+<code c>
+elm_panel_scrollable_set(panel, EINA_TRUE);
+</code>
+
+==== Add a Content ====
+
+This is how to add a content to the panel, in our example the content is a
+label:
+
+<code c>
+content = elm_label_add(parent);
+elm_object_text_set(content,"content");
+evas_object_show(content);
+elm_object_content_set(panel, content);
+</code>
+
+==== Using Panel Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"scroll"'' : When the content has been scrolled (moved). (since 1.10) This signal is emitted only when the panel is scrollable. Elm_Panel_Scroll_Info will be passed by event_info argument.
+  * ''"focused"'' : When the panel has received focus. (since 1.8)
+  * ''"unfocused"'' : When the panel has lost focus. (since 1.8)
+
+We can register a callback on the ''"scroll"'' signal, when the user scrolls the
+panel. The event_info parameter is of the type ''Elm_Panel_Scroll_Info''.
+
+<code c>
+evas_object_smart_callback_add(pan, "scroll", scroll_cb, data);
+</code>
+<code c>
+// Callback function for the "scroll" signal
+// This callback is called when the user scrolls the panel
+static void
+scroll_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Panel_Scroll_Info *scrollinfo = event_info;
+   printf("The panel was scrolled.\n");
+}
+</code>
+
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_panel.html|A Panel Example]]__**//
+\\
+----
+{{page>widgets_index}}

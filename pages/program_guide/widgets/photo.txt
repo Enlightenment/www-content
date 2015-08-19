@@ -1,0 +1,63 @@
+~~Title: Photo Widget PG~~
+{{page>widgets_index}}
+----
+===== Photo Widgets =====
+{{ :widgets_photo_tree.png }}{{ :widgets_photo.png }}
+
+The photo widget is used to display a photo (such as a contact image). If no
+photo is set on it, it displays a person icon to show that it is a photo
+placeholder.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Photo|Adding a Photo]]
+  * [[#Using_Photo_Widget|Using Photo Widget]]
+  * [[#Using_Photo_Callbacks|Using Photo Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Photo.html|Photo Widget API]]
+
+==== Adding a Photo ====
+
+This is how to create a photo object.
+
+<code c>
+Evas_Object *photo, *parephotoslider = elm_photo_add(parent);
+photo = elm_photo_add(parent);
+</code>
+
+==== Using Photo Widget ====
+
+A file can be set to the photo widget. Here, ''PHOTO_FILENAME'' is a string
+corresponding to the photo file name on the system.
+
+<code c>
+elm_photo_file_set(photo, PHOTO_FILENAME);
+</code>
+
+We can set the photo as editable, so it can be copied, cut or dragged in
+another region of the screen.
+
+<code c>
+elm_photo_editable_set(photo, EINA_TRUE);
+</code>
+
+It can also be completely visible on the screen.
+
+<code c>
+elm_photo_fill_inside_set(photo, EINA_TRUE);
+</code>
+
+==== Using Photo Callbacks ====
+
+The following callbacks are registered on the photo widget.
+
+  * ''"clicked"'' - The user has clicked the photo.
+  * ''"drag,start"'' - The user starts dragging the inner image out of the photo's frame.
+  * ''"drag,end"'' - The user drops the dragged image.
+
+event_info is always NULL.
+
+----
+{{page>widgets_index}}

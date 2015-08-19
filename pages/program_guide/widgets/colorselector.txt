@@ -1,0 +1,183 @@
+~~Title: Colorselector Widget PG~~
+{{page>widgets_index}}
+----
+===== Colorselector Widgets =====
+{{ :widgets_colorselector_tree.png }}{{ :widgets_colorselector.png }}
+
+The colorselector widget provides a color selection solution to the user.
+There are different modes available, each of them showing a different
+configuration of the colorselector widget.
+
+The Palette mode displays several color items that enable the user to choose a
+color in the items displayed. It is possible to add new items, or to update
+the color of the current item. The list of color items is called a palette, it
+is associated with a unique identifier. This enable the developer to create
+new series of colors (new palette) and save it under another identifier. By
+default, the color palette is using the "default" identifier.
+
+This widget inherits from the layout widget, so all function concerning the
+layout widget can also be used on the colorselector widget.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Colorselector|Adding a Colorselector]]
+  * [[#Setting_Colorselector_Modes|Setting Colorselector Modes]]
+  * [[#Using_Colorselector_Callbacks|Using Colorselector Callbacks]]
+  * [[#Clear_the_Palette|Clear the Palette]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Colorselector.html|Colorselector Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_colorselector.html|A Colorselector Example]]
+
+==== Adding a Colorselector ====
+
+This is how to create a colorselector object.
+
+<code c>
+Evas_Object *colorsel = elm_colorselector_add(parent);
+</code>
+
+==== Setting Coloselector Modes ====
+
+There are 7 enumeration macros that defines the different modes supported by a
+colorselector object.
+
+^Mode^Description^
+|''ELM_COLORSELECTOR_PALETTE''|Only the color palette is displayed|
+|''ELM_COLORSELECTOR_COMPONENTS''|Only the color selector is displayed|
+|''ELM_COLORSELECTOR_BOTH''|Both the Palette and the selector is displayed, default|
+|''ELM_COLORSELECTOR_PICKER''|Only the color picker is displayed|
+|''ELM_COLORSELECTOR_PLANE''|Only the color plane is displayed|
+|''ELM_COLORSELECTOR_PALETTE_PLANE''|Both the palette and the plane is displayed|
+|''ELM_COLORSELECTOR_ALL''|All possible color selectors are displayed|
+
+This is how to set the mode of the colorselector to the palette mode.
+
+<code c>
+elm_colorselector_mode_set(colorsel, ELM_COLORSELECTOR_PALETTE);
+</code>
+
+We want to create a new palette called "mypalette". This new palette will be
+saved by elementary config and it will be loaded again later. Three colors are
+then added in "mypalette": red, green, and blue.
+
+<code c>
+elm_colorselector_palette_name_set(colorsel, "mypalette");
+elm_colorselector_palette_color_add(colorsel, 255, 0, 0, 255);
+elm_colorselector_palette_color_add(colorsel, 0, 255, 0, 255);
+elm_colorselector_palette_color_add(colorsel, 0, 0, 255, 255);
+</code>
+
+The "default" palette already contains 14 colors.
+
+<code c>
+elm_colorselector_palette_name_set(colorsel, "default");
+</code>
+
+''elm_colorselector_palette_name_get()'' allows to get the palette name.
+
+When the user clicks on the color elements, it changes the color that is set
+to the colorselector widget. The function allows to get the
+current selected color.
+
+<code c>
+int r, g, b, a;
+elm_colorselector_color_get(colorsel, &r, &g, &b, &a);
+</code>
+
+''elm_colorselector_color_set()'' color the current selected color.
+
+==== Using Colorselector Callbacks ====
+
+The colorselector emits the following signals:
+
+
+  * "changed" - When the color value changes on selector event_info is NULL.
+  * "color,item,selected" - When user clicks on color item. The event_info parameter of the callback will be the selected color item.
+  * "color,item,longpressed" - When user long presses on color item. The event info parameter of the callback contains selected color item.
+  * "focused" - When the colorselector has received focus. (since 1.8)
+  * "unfocused" - When the colorselector has lost focus. (since 1.8)
+  * "language,changed" - the program's language changed (since 1.9)
+
+To register a callback on the "changed" signal:
+
+<code c>
+evas_object_smart_callback_add(colorsel, "changed", _changed_cb, data);
+</code>
+
+The callback function changed the color of data to the current color of the
+colorselector.
+
+<code c>
+static void
+_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   int r, g, b, a;
+   elm_colorselector_color_get(obj, r, g, b, a);
+   //ensure colors are pre-multiplierd by alpha
+   evas_color_argb_premul(a, &r, &g, &b);
+   evas_object_color_set(data, r, g, b, a);
+}
+</code>
+
+''elm_colorselector_mode_get()'' returns the colorselector's mode.
+
+==== The Colorselector Items ====
+
+According to the mode, several items of the colorselector are set, the palette
+list is available with:
+
+<code c>
+Eina_list palette_items = elm_colorselector_palette_items_get(colorsel);
+</code>
+
+You can get or set/unset the selected one (''NULL'' if none is selected):
+<code c>
+Evas_Object_Item *item_selected = elm_colorselector_palette_selected_item_get(colorsel);
+if(item_selected)
+  {
+     /* unset */
+     elm_colorselector_palette_selected_item_set(item_selected, EINA_FALSE);
+     /* set */
+     elm_colorselector_palette_selected_item_set(item_selected, EINA_TRUE);
+  }
+</code>
+
+Plus, ''elm_colorselector_palette_item_selected_get()'' returns the selected state of color palette item.
+
+You finally can get and set the color of palette item with the two following
+functions, in the example below each palette item sets its color to the next
+item in the list:
+
+<code c>
+const Eina_List * items = elm_colorselector_palette_items_get(colorsel);
+Elm_Object_Item *item, *first_item = NULL;
+int r = 0, g = 0, b = 0, a = 0;
+int r_prec = 0, g_prec = 0, b_prec = 0, a_prec = 0;
+Eina_Iterator *itr = eina_list_iterator_new(items);
+EINA_ITERATOR_FOREACH(itr, item)
+  {
+     if(!first_item) first_item = item;
+     elm_colorselector_palette_item_color_get(item, &r, &g, &b, &a);
+     elm_colorselector_palette_item_color_set(item, r_prec, g_prec, b_prec, a_prec);
+     r_prec = r; g_prec = g; b_prec = b, a_prec = a;
+  }
+elm_colorselector_palette_item_color_set(first_item, r_prec, g_prec, b_prec, a_prec);
+eina_iterator_free(itr);
+</code>
+
+==== Clear the Palette ====
+
+To clear the palette items:
+
+<code c>
+elm_colorselector_palette_clear(colorsel);
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_colorselector.html|A Colorselector Example]]__**//
+\\
+----
+{{page>widgets_index}}
+

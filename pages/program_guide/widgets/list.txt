@@ -1,0 +1,224 @@
+~~Title: List Widget PG~~
+{{page>widgets_index}}
+----
+===== List Widgets =====
+{{ :widgets_list_tree.png }}{{ :widgets_list.png }}
+
+This widget is a very simple type of a list widget. It is not to be used to
+manage a lot of items. For that, genlists are a better option.
+
+The list items can contain a text and two contents ("start", and "end"). These
+are set with the ''elm_object_item_*()'' functions.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_List|Adding a List]]
+  * [[#Using_the_List|Using the List]]
+  * [[#Adding_Item_to_the_List|Adding Item to the List]]
+  * [[#Changing_Text_Or_Icon_of_an_Item|Changing Text Or Icon of an Item]]
+  * [[#Retrieving_Selected_Items|Retrieving Selected Items]]
+  * [[#List_Item_Operations|List Item Operations]]
+  * [[#Using_List_Callbacks|Using List Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__List.html|List Widget API]]
+  * [[/tutorial/basic/list|Basic List Tutorial]]
+
+^List Examples^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_01.html|A List Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_02.html|A List Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_03.html|Item management Example]]|
+
+==== Adding a List ====
+
+To create a list:
+
+<code c>
+Evas_Object *list = elm_list_add(parent);
+</code>
+
+==== Using the List ====
+
+This widget implements the scrollable interface, so the scroller widget
+functions can be used on it. For example, if you want to change the bounce
+property of the scroller or the scrolling policy:
+
+<code c>
+Evas_Object *list;
+
+// Change the scroller policy to fix the scroll only vertically
+elm_scroller_policy_set(list, ELM_SCROLLER_POLICY_ON,
+ELM_SCROLLER_POLICY_OFF);
+// Enable bounce effect when the list reaches the upper and lower limits
+elm_scroller_bounce_set(list, EINA_TRUE, EINA_TRUE);
+</code>
+
+The ''elm_list_multi_select_set()'' function can be called to enable
+multi-selection of items. Each time an item is clicked, the state changes to
+"selected".
+
+<code c>
+Evas_Object *list;
+
+// Activate multi selection
+elm_list_multi_select_set(list, EINA_TRUE);
+</code>
+
+==== Adding Item to the List ====
+
+Items are added ''with elm_list_item_append()'' or ''elm_list_item_prepend()''. Here
+an example of adding ten items with text and one icon on the front: The last
+two arguments are the callback function when the created item is clicked and
+the data passed to the callback function.
+
+<code c>
+Evas_Object *list;
+int i;
+
+// This function is called when the list item is selected
+static void
+_selected_item_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Object_Item *list_it = elm_list_selected_item_get(obj);
+   Eina_Bool selected = elm_list_item_selected_get(list_it);
+   printf("item is %s\n", selected? "selected": "unselected");
+}
+
+for (i = 0; i < 10; i++)
+  {
+     Evas_Object *ic;
+     char tmp[8];
+     snprintf(tmp, sizeof(tmp), "Item %02d", i);
+     // Create an icon
+     ic = elm_icon_add(win);
+     // Set the file to the icon file
+     elm_image_file_set(ic, "path/to/file", NULL);
+     // Add item to the list
+     elm_list_item_append(list, tmp, ic, NULL, _selected_item_cb, NULL);
+  }
+</code>
+
+==== Changing Text Or Icon of an Item ====
+
+If you want to change the state of an item, you can do it by using all the
+functions relative to ''Elm_Object_Item''. Each item of the list contains two
+evas_object. Give those as the third and the fourth arguments when you append
+or prepend the item in the list. Those evas objects are changed with
+''elm_object_item_part_content_set''. The first object is referenced as the
+"start" object in the theme, whereas the second one is referenced as the "end"
+object. Give these names when you use the ''elm_object_item_part_content_set''.
+The label of the item is changed by using ''elm_object_item_text_set''.
+
+<code c>
+Evas_Object *list;
+Eina_List *l;
+Elm_Object_Item *it;
+
+// Retrieve the current selected item
+it = elm_list_selected_item_get(list);
+if (!it)
+   return;
+
+ic = elm_icon_add(win);
+// Set the file to the icon file
+elm_image_file_set(ic, "path/to/file", NULL);
+// Change the first icon
+elm_object_item_part_content_set(it, "start", ic);
+// Change the second icon
+elm_object_item_part_content_set(it, "end", ic);
+// Change the label
+elm_object_item_text_set(it, "I've been selected !");
+</code>
+
+==== Retrieving Selected Items ====
+
+The list of the currently selected items is retrieved with
+''elm_list_selected_items_get()''. If the multiselect mode is false, you can
+retrieve the only selected item with ''elm_list_selected_item_get()''. For
+example, this is how to unselect all previously selected items.
+
+<code c>
+Evas_Object *list; Eina_List *l;
+Eina_List *selected_items;
+// List of Elm_Object_Item
+Elm_Object_Item *it;
+
+selected_items = elm_list_selected_items_get(list);
+EINA_LIST_FOREACH(selected_items, l, it)
+   elm_list_item_selected_set(it, EINA_FALSE);
+</code>
+
+==== List Item Operations ====
+
+To find out if an item is selected, call elm_list_item_selected_get. This
+function returns ''EINA_TRUE'' if the item is selected, otherwise ''EINA_FALSE''.
+
+Elementary list provides two functions for sliding a list to a specific item.
+''elm_list_item_show'' shows the item passed as an argument, whereas
+''elm_list_item_bring_in'' shows the item, but only after animating the slide.
+
+You can go to the item immediately preceding a specific item with the function
+''elm_list_item_prev'', or to the one immediately following a specific item with
+the function ''elm_list_item_next''.
+
+The following example shows selecting the item immediately following the
+currently selected one, unselecting it, selecting the next one and bringing it
+to the screen.
+
+<code c>
+Evas_Object *list;
+Elm_Object_Item *current, *next;
+current = elm_list_selected_item_get(list);
+elm_list_item_selected_set(current, EINA_FALSE);
+next = elm_list_item_next(current);
+elm_list_item_selected_set(next, EINA_TRUE);
+elm_list_item_bring_in(next);
+</code>
+
+==== Using List Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+    * ''"activated"'' - The user has double-clicked or pressed (enter|return|spacebar) on an item. The event_info parameter is the item that was activated.
+    * ''"clicked,double"'' - The user has double-clicked an item. The event_info parameter is the item that was double-clicked.
+    * ''"clicked,right"'' - The user has right-clicked an item. The event_info parameter is the item that was right-clicked. (since 1.13)
+    * ''"selected"'' - when the user selected an item
+    * ''"unselected"'' - when the user unselected an item
+    * ''"longpressed"'' - an item in the list is long-pressed
+    * ''"edge,top"'' - the list is scrolled until the top edge
+    * ''"edge,bottom"'' - the list is scrolled until the bottom edge
+    * ''"edge,left"'' - the list is scrolled until the left edge
+    * ''"edge,right"'' - the list is scrolled until the right edge
+    * ''"highlighted"'' - an item in the list is highlighted. This is called when the user presses an item or keyboard selection is done so the item is physically highlighted. The event_info parameter is the item that was highlighted.
+    * ''"unhighlighted"'' - an item in the list is unhighlighted. This is called when the user releases an item or keyboard selection is moved so the item is physically unhighlighted. The event_info parameter is the item that was unhighlighted.
+    * ''"language,changed"'' - the program's language changed
+    * ''"focused"'' - When the list has received focus. (since 1.8)
+    * ''"unfocused"'' - When the list has lost focus. (since 1.8)
+    * ''"item,focused"'' - When the list item has received focus. (since 1.10)
+    * ''"item,unfocused"'' - When the list item has lost focus. (since 1.10)
+
+You can register to the ''"clicked,double"'' signal with the following code. Note
+that the currently double-clicked item can be retrieved via the event_info
+pointer. This code registers to the "double,clicked" signal and unselects the
+item that has been double-clicked.
+
+<code c>
+Evas_Object *list;
+evas_object_smart_callback_add(list, "clicked,double", _double_clicked_cb, data);
+</code>
+<code c>
+// Callback function for the "clicked" signal
+// This callback is called when the button is clicked by the user
+static void
+_double_clicked_cb(void *data, Evas_Object *obj, void  *event_info)
+{
+   elm_Object_Item *it = event_info;
+   elm_list_selected_item_set(it,  EINA_FALSE);
+}
+</code>
+
+\\
+^List Examples^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_01.html|A List Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_02.html|A List Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/list_example_03.html|Item management Example]]|
+
+----
+{{page>widgets_index}}

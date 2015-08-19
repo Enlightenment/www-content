@@ -1,0 +1,69 @@
+~~Title: Plug Widget PG~~
+{{page>widgets_index}}
+----
+===== Plug Widgets =====
+{{ :widgets_plug_tree.png }}{{ :widgets_plug.png }}
+
+The plug widget shows an Evas_Object created by an other process. It can be
+used anywhere the same way as any other elementary widget.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Plug|Adding a Plug]]
+  * [[#Using_the_Plug|Using the Plug]]
+  * [[#Using_Plug_Callbacks|Using Plug Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Plug.html|Plug Widget API]]
+
+==== Adding a Plug ====
+
+This is how to create a plug.
+
+<code c>
+Evas_Object *plug;
+plug = elm_plug_add(parent);
+</code>
+
+The socket image provides the service where we can connect the plug object
+with the ''elm_plug_connect()'' function. In this process we use the service
+name and number set by the socket we want to connect to.
+
+As an example, we connect to a service named "plug_test" on the number 0.
+
+<code c>
+elm_plug_connect(plug, "plug_test", 0, EINA_FALSE);
+</code>
+
+The Evas_Object corresponding to the distant image is retrieved with the ''elm_plug_image_object_get()'' function.
+
+<code c>
+Evas_Object *plug_img = elm_plug_image_object_get(plug);
+</code>
+
+<note>
+The socket we try to connect to must be started with the
+''elm_win_socket_listen()'' function in the other process on the remote window
+object (it is called remote_win here).
+</note>
+
+<code c>
+// Create a remote window in the other process
+Elm_Win *remote_win = elm_win_add(NULL,
+   "Window Socket",
+   ELM_WIN_SOCKET_IMAGE);
+// Create a socket named "plug_test" and listen to it
+elm_win_socket_listen(remote_win, "plug_test", 0, EINA_FALSE);
+</code>
+
+==== Using Plug Callbacks ===
+
+This widget emits the following signals:
+
+  * ''"clicked"'': the user clicked the image (press/release). The event parameter of the callback will be NULL.
+  * ''"image,deleted"'': the server side was deleted. The event parameter of the callback will be NULL.
+  * ''"image,resized"'': the server side was resized. The event parameter of the callback will be Evas_Coord_Size (two integers).
+
+----
+{{page>widgets_index}}

@@ -1,0 +1,94 @@
+~~Title: Segmentcontrol Widget PG~~
+{{page>widgets_index}}
+----
+===== Segment Control Widgets =====
+{{ :widgets_segmentcontrol_tree.png }}{{ :widgets_segmentcontrol.png }}
+
+This widget consists of several segment items. A segment item is similar to a
+discrete two state button. Any time, only one segment item can be selected. A
+segment item is composed of a label (text) and an icon.
+
+This widget inherits from the layout widget, so all the layout widgets API can
+be used on segmentcontrol objects.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Segmentcontrol|Adding a Segmentcontrol]]
+  * [[#Adding_Items|Adding Items]]
+  * [[#Using_the_Segmentcontrol_Callbacks|Using the Segmentcontrol Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__SegmentControl.html|Segmentcontrol Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/segment_control_example.html|A Segment Control Example]]
+
+==== Adding a Segmentcontrol ====
+
+This is how to add a segmentcontrol widget.
+
+<code c>
+Evas_Object *segcontrol = elm_segment_control_add(parent);
+</code>
+
+==== Adding Items ====
+
+We can add items to it. Here we add four items containing only text labels (no icons).
+
+<code c>
+Elm_Object_Item *it;
+
+elm_segment_control_item_add(segcontrol, NULL, "item1");
+elm_segment_control_item_add(segcontrol, NULL, "item2");
+elm_segment_control_item_add(segcontrol, NULL, "item3");
+it = elm_segment_control_item_add(segcontrol, NULL, "item4");
+</code>
+
+We can insert an item at a specific position starting at 0
+
+<code c>
+elm_segment_control_item_insert_at(segcontrol, NULL, "item7", 2);
+</code>
+
+or delete an item.
+
+<code c>
+elm_segment_control_item_del_at(segcontrol, 2);
+</code>
+
+We can also set the selected state of an item manually
+
+<code c>
+elm_segment_control_item_selected_set(it, EINA_TRUE);
+</code>
+
+or disable the whole segment control.
+
+<code c>
+elm_object_disabled_set(segcontrol, EINA_TRUE);
+</code>
+
+==== Using the Segmentcontrol Callbacks ====
+
+This is how to register a callback on the "changed" signal. It is called when
+the user clicks on a segment item which is not previously selected. The
+event_info parameter is the segment item pointer.
+
+<code c>
+evas_object_smart_callback_add(segcontrol, "changed", _changed_cb, data);
+</code>
+<code c>
+// Callback function for the "changed" signal
+// This callback is called when the segcontrol selected item changes
+static void
+_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Segment_Item *it = event_info;
+   printf("The selected segment item has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/segment_control_example.html|A Segment Control Example]]__**//
+
+----
+{{page>widgets_index}}

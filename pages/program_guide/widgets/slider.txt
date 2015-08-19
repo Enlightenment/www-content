@@ -1,0 +1,124 @@
+~~Title: Slider Widget PG~~
+{{page>widgets_index}}
+----
+===== Slider Widgets =====
+{{ :widgets_slider_tree.png }}{{ :widgets_slider.png }}
+
+The slider widget is a draggable bar that is used to select a value within a
+certain range.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Slider|Adding a Slider]]
+  * [[#Configuring_the_Slider|Configuring the Slider]]
+  * [[#Using_Slider_Callbacks|Using Slider Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Slider.html|Slider Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/slider_example.html|A Slider Example]]
+
+==== Adding a Slider ====
+
+This is how to create a slider object.
+
+<code c>
+Evas_Object *slider;
+slider = elm_slider_add(parent);
+</code>
+
+==== Configuring the Slider ====
+
+Orientation is set with the ''elm_slider_horizontal_set()'' function, and it
+is inverted the same way as the progressbar widget. Here we set it vertical
+and inverted.
+
+<code c>
+elm_slider_horizontal_set(slider, EINA_FALSE);
+elm_slider_inverted_set(slider, EINA_TRUE);
+</code>
+
+It can contain icons ("icon" and "end" partnames), a label, a unit label and
+an indicator label.
+
+<code c>
+Evas_Object *icon1, *icon2;
+
+// Set the icons
+elm_object_part_content_set(slider, "icon", icon1);
+elm_object_part_content_set(slider, "end", icon2);
+
+// Set the label
+elm_object_part_text_set(slider, "default", "slider label");
+
+// Set the unit format
+elm_slider_unit_format_set(slider, "%1.2f meters");
+</code>
+
+Before using the slider, its minimum and maximum values are set with
+''elm_slider_min_max_set()''. The current value is set with
+(''elm_slider_value_set()''). Here we set the minimum value to 0, the maximum
+value to 100, and the current value to 50.
+
+<code c>
+elm_slider_min_max_set(slider, 0.0, 100.0);
+elm_slider_value_set(slider, 50.0);
+</code>
+
+The span of the slider represents its length (horizontally or vertically). It
+is set with ''elm_slider_span_size_set()'' and is scaled by the object or
+applications scaling factor.
+
+We can retrieve the current value of the slider anytime.
+
+<code c>
+double value = elm_slider_value_get(slider);
+</code>
+
+By default, the slider indicator becomes bigger when the user drags it. This
+can be disabled if we want the slider indicator to keep its default size. Here
+we set the state of the indicator enlargement and then invert the behavior.
+
+<code c>
+// Get the current state of the indicator
+Eina_Bool enlarge = elm_slider_indicator_show_get(slider);
+
+// Invert the behavior
+elm_slider_indicator_show_set(slider, !enlarge);
+ </code>
+
+==== Using Slider Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - Whenever the slider value is changed by the user.
+  * ''"slider,drag,start"'' - dragging the slider indicator around has started.
+  * ''"slider,drag,stop"'' - dragging the slider indicator around has stopped.
+  * ''"delay,changed"'' - A short time after the value is changed by the user. This will be called only when the user stops dragging for a very short period or when they release their finger/mouse, so it avoids possibly expensive reactions to the value change.
+  * ''"focused"'' - When the slider has received focus. (since 1.8)
+  * ''"unfocused"'' - When the slider has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.9)
+
+For all these signals, event_info is NULL.
+
+This is how to register a callback on the "changed" signal.
+
+<code c>
+evas_object_smart_callback_add(slider, "changed", _changed_cb, data);
+</code>
+
+<code c>
+// Callback function for the "changed" signal
+// This callback is called when the slider value changes
+static void
+_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("The slider has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/slider_example.html|A Slider Example]]__**//
+
+----
+{{page>widgets_index}}

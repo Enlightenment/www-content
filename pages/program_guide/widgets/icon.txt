@@ -1,0 +1,104 @@
+~~Title: Icon Widget PG~~
+{{page>widgets_index}}
+----
+===== Icon Widgets =====
+{{ :widgets_icon_tree.png }}{{ :widgets_icon.png }}
+
+The icon widget inherits from the image widget. It is used to display images
+in an icon context.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Icon|Adding a Icon]]
+  * [[#Changing_Image_File|Changing Image File]]
+  * [[#Using_Icon_Callbacks|Using Icon Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Icon.html|Icon Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_icon.html|An Icon Example]]
+
+==== Adding a Icon ====
+
+We can create an icon and set it as a "Home" standard icon.
+
+<code c>
+Evas_Object *icon = elm_icon_add(parent);
+elm_icon_standard_set(icon, "Home");
+</code>
+
+Default images provided by Elementary's default theme are described below.
+
+^standard (since 1.13)^toolbar^menu^media player^
+| "folder"                 |"home"       |"menu/home"       |"media_player/forward"|
+| "user-home"              |"close"      |"menu/close"      |"media_player/info"|
+| "user-trash"             |"apps"       |"menu/apps"       |"media_player/next"|
+| "view-close"             |"arrow_up"   |"menu/arrow_up"   |"media_player/pause"|
+| "view-refresh"           |"arrow_down" |"menu/arrow_down" |"media_player/play"|
+| "window-close"           |"arrow_left" |"menu/arrow_left" |"media_player/prev"|
+| "document-close"         |"arrow_right"|"menu/arrow_right"|"media_player/rewind"|
+| "document-edit"          |"chat"       |"menu/chat"       |"media_player/stop"|
+| "dialog-info"            |"clock"      |"menu/clock"      |
+| "dialog-close"           |"delete"     |"menu/delete"     |
+| "arrow-up"               |"edit"       |"menu/edit"       |
+| "arrow-down"             |"refresh"    |"menu/refresh"    |
+| "arrow-left"             |"folder"     |"menu/folder"     |
+| "arrow-right"            |"file"       |"menu/file"       |
+| "arrow-up-left"          |
+| "arrow-up-right"         |
+| "arrow-down-left"        |
+| "arrow-down-right"       |
+| "edit-delete"            |
+| "application-chat"       |
+| "application-clock"      |
+| "media-seek-forward"     |
+| "media-seek-backward"    |
+| "media-skip-forward"     |
+| "media-skip-backward"    |
+| "media-playback-pause"   |
+| "media-playback-start"   |
+| "media-playback-stop"    |
+| "media-eject"            |
+| "audio-volume"           |
+| "audio-volume-muted"     |
+
+==== Changing Image File ====
+
+We can change the image by using an image in the filesystem (for example,
+/tmp/Home.png),
+
+<code c>
+elm_image_file_set(icon, "/tmp/Home.png", NULL);
+</code>
+
+or a group in an Edje file (for example, /tmp/Home.edj).
+
+<code c>
+elm_image_file_set(icon, "/tmp/Home.edj", "elm/icon/Home/default");
+</code>
+
+A thumbnail can be generated and cached for future use. (For this, you need
+the Ethumb library support.)
+
+<code c>
+elm_icon_thumb_set(icon, "/tmp/Home.png", NULL);
+</code>
+
+This function sets the file in the icon and enables the use of a cached
+thumbnail if it already exists. Otherwise, it creates a new thumbnail and
+caches it for future use.
+
+==== Using Icon Callbacks ====
+
+The icon widget emits the following signals:
+
+  * ''"thumb,done"'' - elm_icon_thumb_set() is completed with success.
+  * ''"thumb,error"'' - elm_icon_thumb_set() fails.
+
+In both cases, event_info is NULL;
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_icon.html|An Icon Example]]__**//
+\\
+----
+{{page>widgets_index}}

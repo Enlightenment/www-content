@@ -1,0 +1,120 @@
+~~Title: Elementary Basics PG~~
+{{page>widgets_index}}
+----
+===== Elementary Basics =====
+
+Elementary widgets are built in a hierarchical fashion. The idea is to
+factorize as much code as possible between widgets that behave in a similar
+manner, so as to facilitate the creation of new widgets. The Elementary
+widgets that we will use inherit a lot of their code from the container
+widgets and the layout widget (a container widget that takes a standard Edje
+design file and wraps it very thinly). We can therefore use the container and
+layout functions on them. We can also use Elementary object functions on them,
+such as ''elm_object_part_content_set()'', ''elm_object_part_content_get()'', and
+''elm_object_part_content_unset()''.
+
+This programming guide does not describe the container widgets. More
+information about containers can be found in
+[[/program_guide/containers_pg|Container Widgets]].
+
+Generally, an Elementary widget can be added with the
+''elm_[widget_name]_add()''
+function, which returns an Evas object (''Evas_Object*''). The Evas object is then
+be passed to the functions that are used to configure the widget.
+
+At the end of your application, the ''elm_shutdown()'' function takes care of
+freeing the allocated Elementary objects, so there is no need to separately
+deallocate widgets.
+
+==== First Use of the Elementary Library ====
+
+A minimal Elementary application looks like this:
+
+<code c>
+#include <Elementary.h>
+int main(int argc, char **argv)
+{
+   elm_init(argc, argv);
+   elm_run();
+   elm_shutdown();
+
+   return 0;
+}
+</code>
+
+First of all, before using the Elementary library, it has to be initialized
+with the ''elm_init()'' function. The Elementary main loop can then be started
+with the ''elm_run()'' function, which will not return, and will constantly loop
+and run the event and processing tasks. A call to the ''elm_exit()'' function will
+tell the main loop to stop and return to the main function. At the end of the
+application, the ''elm_shutdown()'' function will clean up all resources that were
+allocated with Elementary in the main loop, and finally shut down Elementary.
+
+<note>
+An Elementary application should use the ''ELM_MAIN()'' macro, which already
+calls the ''elm_init()'' function. [[docs/efl/start|EFL Hello World Tutorial]]
+shows a basic Elementary application that uses this macro.
+</note>
+
+==== Elementary Objects ====
+
+Objects created using Elementary are always of type ''Evas_Object*''. This
+means that Evas and Elementary functions can be used on an Elementary object.
+However, use Elementary functions on Elementary objects only when you do not
+know which API to use.
+
+Since an Elementary object can take up a lot of memory, the
+''Elm_Object_Item'' type has been created for situations where you need to use
+a lot of items, such as in a genlist or gengrid widget, and save memory. Using
+the ''Elm_Object_Item'' type, an Elementary widget can, in theory, contain a
+lot of items while maintaining a small memory footprint. In practice,
+''Elm_Object_Item'' is bigger than expected, but it is still a good idea to
+use it.
+
+==== Elementary callbacks ====
+
+Several callbacks can be registered on an Elementary object. The following is
+an overview of the different callback types and how they differ. For more
+information about events, see [[/coming_soon|Handling Events]]. For more
+information about Evas objects and smart objects, see [[/coming_soon|Rendering
+Concept and Method in Evas]].
+
+=== Evas Event Callback ===
+
+Using the ''evas_object_event_callback_add()'' function, this callback can be
+registered on an Elementary object. It adds a callback for input events (key
+up, key down, mouse wheel) on an Evas object. In the case of an Elementary
+object, the callback will be registered on the underlying Evas object without
+considering the Elementary object infrastructure (no event propagation).
+
+=== Evas Smart Callback ===
+
+Using the ''evas_object_smart_callback_add()'' function, this callback can be
+registered on a "smart event" emitted by an Elementary object. Smart callbacks
+can only be registered on smart objects, and the "smart event" we want to
+register must be implemented by the corresponding smart object. Otherwise, the
+callback will do nothing. The callback has nothing to do with input events
+(keyboard or mouse)
+
+=== Edje Signal Callbacks ===
+
+Using the ''edje_object_signal_callback_add()'' function, this callback can be
+registered on a signal coming from an Edje object (a theme object).
+
+=== Elementary Signal Callback ===
+
+Using the ''elm_object_signal_callback_add()'' function, this callback can be
+registered on a signal coming from an Elementary widget's theme. The callback
+has nothing to do with input events (keyboard or mouse).
+
+=== Elementary Event Callback ===
+
+Using the ''elm_object_event_callback_add()'' function, this callback can be
+registered on an input event (keyboard or mouse) coming from an Elementary
+object. In contrast to the Evas event callback, the Elementary event callback
+takes the hierarchy of the object into account: the event can be propagated to
+the parents of the object, and the parents can then process the event.
+
+\\
+----
+{{page>widgets_index}}

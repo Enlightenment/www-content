@@ -1,0 +1,122 @@
+~~Title: Index Widget PG~~
+{{page>widgets_index}}
+----
+===== Index Widgets =====
+{{ :widgets_index_tree.png }}{{ :widgets_index.png }}
+
+An index widget gives you an index for fast access to whichever group of other
+UI items you have. By default hidden, the index appears when the user clicks
+over its reserved area in the canvas. In the default theme, it is a one finger
+wide area on the right side of the index widget's container. Generally, an
+index is used together with lists, generic lists or generic grids.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Index|Adding a Index]]
+  * [[#Adding_Items|Adding Items]]
+  * [[#Sorting_Index_Items|Sorting Index Items]]
+  * [[#Using_Index_Callbacks|Using Index Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Index.html|Index Widget API]]
+
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/index_example_01.html|A first Index Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/index_example_02.html|A second index example]]|
+
+==== Adding a Index ====
+
+Call ''elm_index_add()'' to create a new index widget.
+
+<code c>
+
+Evas_Object *index;
+index = elm_index_add(parent);
+</code>
+
+==== Adding Items ====
+
+Here we add the listitem object at the letter "A", calling the smart callback ''it_select_cb()'' when this item is selected.
+
+<code c>
+Elm_Object_Item *list_item1, *list_item2;
+elm_index_item_append(index, "A", _it_select_cb, list_item1);
+</code>
+
+This is how to define the smart callback.
+
+<code c>
+// Callback function called when the list_item1 object
+// is selected
+static void
+_it_select_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Item1 selected\n");
+}
+</code>
+
+In the previous case, the indexes are appended to the existing ones. It is also possible to prepend index items with ''elm_index_item_prepend()''.
+
+==== Sorting Index Items ====
+
+We can insert index items using a sorting function. Indexes can be sorted, for example, by alphabetic order.
+
+We must write a compare function that returns a positive int, 0 or a negative int when the data2 item parameter is respectively greater than, equal to or lower than the data1 parameter.
+
+<code c>
+static int
+_index_icmp(const void *data1, const void *data2)
+{
+   int result;
+   // Code that does the item comparison will be written here
+   return result;
+}
+</code>
+
+We add a new item at the "B" index using the compare function to sort the indexes.
+
+<code c>
+elm_index_item_sorted_insert(index, "B", NULL, list_item2, _index_icmp, NULL);
+</code>
+
+==== Using Index Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - When the selected index item changes. event_info is the selected item's data pointer.
+  * ''"delay,changed"'' - When the selected index item changes, but after a small idling period. event_info is the selected item's data pointer.
+  * ''"selected"'' - When the user releases a mouse button and selects an item. event_info is the selected item's pointer.
+  * ''"level,up"'' - when the user moves a finger from the first level to the second level
+  * ''"level,down"'' - when the user moves a finger from the second level to the first level
+  * ''"language,changed"'' - the program's language changed
+  * ''"focused"'' - When the index has received focus. (since 1.8)
+  * ''"unfocused"'' - When the index has lost focus. (since 1.8)
+
+The ''"delay,changed"'' event is so that it'll wait a small time before actually
+reporting those events and, moreover, just the last event happening on those
+time frames will actually be reported.
+
+When the user selects an item in the index, the ''"selected"'' signal is emitted.
+The developer can then implement the associated callback to do the appropriate
+action (to show a given area or child object depending on the index item
+selected, for example). Here is an example of such a callback.
+
+<code c>
+static void
+_index_selected_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Object_Item *lit = event_info;
+   // Code that does the desired action
+}
+</code>
+
+Then we register this callback to the "selected" signal.
+
+<code c>
+evas_object_smart_callback_add(index, "selected", _index_selected_cb, NULL);
+</code>
+
+\\
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/index_example_01.html|A first Index Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/index_example_02.html|A second index example]]|
+
+----
+{{page>widgets_index}}

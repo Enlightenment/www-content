@@ -1,0 +1,155 @@
+~~Title: Toolbar Widget PG~~
+{{page>widgets_index}}
+----
+===== Toolbar Widgets =====
+{{ :widgets_toolbar_tree.png }}{{ :widgets_toolbar.png }}
+
+This widget is a scrollable list of items and shows a menu when an item is
+selected. Only one item can be selected at a time.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Toolbar|Adding a Toolbar]]
+  * [[#Using_Toolbar_Styles|Using Toolbar Styles]]
+  * [[#Configuring_the_Toolbar|Configuring the Toolbar]]
+  * [[#Adding_Items_to_the_Toolbar|Adding Items to the Toolbar]]
+  * [[#Adding_Items_with_States|Adding Items with States]]
+  * [[#Using_Toolbar_Callbacks|Using Toolbar Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Toolbar.html|Toolbar Widget API]]
+
+^   Toolbar Examples    ^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_01.html|Simple Items]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_02.html|Items with States]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_03.html|Items with Menus]]|
+
+==== Adding a Toolbar ====
+
+Use the following function to create a toolbar.
+
+<code c>
+Evas_Object *toolbar;
+toolbar = elm_toolbar_add(parent);
+</code>
+
+==== Using Toolbar Styles ====
+
+The toolbar has the following styles:
+
+  * "default"
+  * "transparent"
+
+Here, we set the style to "transparent".
+
+<code c>
+elm_object_style_set(toolbar, "transparent");
+</code>
+
+==== Configuring the Toolbar ====
+
+The toolbar displays its items in one of the following options.
+
+   * ''ELM_TOOLBAR_SHRINK_NONE'': Toolbar sets a minimum size to its items so that all of them fit without scrolling.
+   * ''ELM_TOOLBAR_SHRINK_HIDE'': Toolbar does not scroll or show the items that do not fit in.
+   * ''ELM_TOOLBAR_SHRINK_SCROLL'': Toolbar scrolls to show the items that do not fit in.
+   * ''ELM_TOOLBAR_SHRINK_MENU'': Toolbar creates a button to popup hidden items.
+
+Here we set the Toolbar to ''ELM_TOOLBAR_SHRINK_NONE''.
+
+<code c>
+elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_NONE);
+</code>
+
+By default, the toolbar displays items homogeneously. Items with long labels
+occupy a lot of space. To avoid that, we can disable the homogeneous mode.
+
+<code c>
+elm_toolbar_homogeneous_set(toolbar, EINA_FALSE);
+</code>
+
+==== Adding Items to the Toolbar ====
+
+In the following code, we add two items and choose the associated icon, label,
+and function to call when the item is clicked.
+
+<code c>
+Elm_Object_Item *home_it, *help_it;
+home_it = elm_toolbar_item_append(toolbar, "home", "Home", _home_item_pressed_cb, NULL);
+help_it = elm_toolbar_item_append(toolbar, "help", "Help", _help_item_pressed_cb, NULL);
+</code>
+<code c>
+static void
+_home_item_pressed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Home item clicked\n");
+}
+</code>
+<code c>
+static void
+_help_item_pressed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Help item clicked \n");
+}
+</code>
+
+An item may be disabled. This is how to disable the help item. The disabled
+item does not receive input and, if the theme supports it, is themed
+differently (usually greyed out) from its normal state.
+
+<code c>
+elm_object_item_disabled_set(help_it, EINA_TRUE);
+</code>
+
+==== Adding Items with States ====
+
+Items have two or more states. Each state has its own icon, label, and
+function to call when an item is clicked. As an example, we create two states
+to the help item with the same icon but two different labels.
+
+<code c>
+elm_toolbar_item_state_add(help_it, "help", "Help state 1", _help_item_pressed_cb, NULL);
+elm_toolbar_item_state_add(help_it, "help", "Help state 2", _help_item_pressed_cb, NULL);
+</code>
+
+We can cycle through the states of the help item by using the following code.
+
+<code c>
+elm_toolbar_item_state_set(help_it, elm_toolbar_item_state_next(help_it));
+</code>
+
+==== Using Toolbar Callbacks ====
+
+Smart callbacks one can listen to:
+
+  * ''"clicked"'' - when the user clicks on a toolbar item and becomes selected.
+  * ''"longpressed"'' - when the toolbar is pressed for a certain amount of time.
+  * ''"language,changed"'' - when the program language changes.
+  * ''"focused"'' - When the toolbar has received focus. (since 1.8)
+  * ''"unfocused"'' - When the toolbar has lost focus. (since 1.8)
+  * ''"item,focused"'' - When the toolbar item has received focus. (since 1.10)
+  * ''"item,unfocused"'' - When the toolbar item has lost focus. (since 1.10)
+  * ''"selected"'' - when an item is selected. event_info is a selected item. (since 1.11)
+  * ''"unselected"'' - when an item is unselected. event_info is a unselected item. (since 1.11)
+
+This is how to register a callback on the "clicked" signal.
+
+<code c>
+evas_object_smart_callback_add(toolbar, "clicked", _clicked_cb, data);
+</code>
+<code c>
+// Callback function for the "clicked" signal
+// This callback is called when a toolbar item is clicked
+static void
+_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Elm_Toolbar_Item * item = event_info;
+   printf("Item clicked\n");
+}
+</code>
+
+\\
+^   Toolbar Examples    ^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_01.html|Simple Items]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_02.html|Items with States]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/toolbar_example_03.html|Items with Menus]]|
+
+----
+{{page>widgets_index}}

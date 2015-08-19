@@ -1,0 +1,87 @@
+~~Title: Label Widget PG~~
+{{page>widgets_index}}
+----
+===== Label Widgets =====
+{{ :widgets_label_tree.png }}{{ :widgets_label.png }}
+
+The label widget displays text with simple html-like markup.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Label|Adding a Label]]
+  * [[#Using_Label_Styles|Using Label Styles]]
+  * [[#Configuring_the_Label|Configuring the Label]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Label.html|Label Widget API]]
+  * [[/tutorial/basic/label|Basic Label Tutorial]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_label.html|A Label Example]]
+
+==== Adding a Label ====
+
+To add a label and set the text in it, use the following functions.
+
+<code c>
+Evas_Object *label = elm_label_add(win);
+elm_object_text_set(label, "Some long text for our label, that is not so long");
+</code>
+
+==== Using Label Styles ====
+
+Label displays the text with several predefined styles.
+
+  * ''default'' - No animation
+  * ''marker'' - Centers the text in the label and makes it bold by default
+  * ''slide_long'' - The entire text appears from the right of the screen and slides until it disappears in the left of the screen(reappearing on the right again).
+  * ''slide_short'' - The text appears in the left of the label and slides to the right to show the overflow. When all of the text has been shown the position is reset.
+  * ''slide_bounce'' - The text appears in the left of the label and slides to the right to show the overflow. When all of the text has been shown the animation reverses, moving the text to the left.
+
+Here we set the style to ''"slide_long"''.
+
+<code c>
+elm_object_style_set(label, "slide_long");
+</code>
+
+==== Configuring the Label ====
+
+The duration of the animation and the slide mode can be set.
+
+<code c>
+elm_label_slide_duration_set(label, 3);
+elm_label_slide_mode_set(label, ELM_LABEL_SLIDE_MODE_ALWAYS);
+</code>
+
+The style can be modified.
+
+<code c>
+elm_object_style_set(label, "slide_bounce");
+</code>
+
+==== Using Label Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"language,changed"'': The program's language changes.
+  * ''"slide,end"'': The slide reaches the end.
+
+Here we register a callback on the ''"slide,end"'' signal.
+
+<code c>
+evas_object_smart_callback_add(label, "slide,end", _slide_end_cb, data);
+</code>
+<code c>
+// Callback function for the "slide,end" signal
+// This callback is called when the label slide reaches the end
+static void
+_slide_end_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Slide has reach the end.\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_label.html|A Label Example]]__**//
+\\
+----
+{{page>widgets_index}}

@@ -1,0 +1,114 @@
+~~Title: Spinner Widget PG~~
+{{page>widgets_index}}
+----
+===== Spinner Widgets =====
+{{ :widgets_spinner_tree.png }}{{ :widgets_spinner.png }}
+
+The spinner widget increases or decreases a numeric value with the arrow
+buttons.
+
+This widget inherits from the layout widget, so all functions concerning the
+layout widget are used on the spinner widget.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Spinner|Adding a Spinner]]
+  * [[#Configuring_the_Spinner|Configuring the Spinner]]
+  * [[#Using_Spinner_Callbacks|Using Spinner Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Spinner.html|Spinner Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/spinner_example.html|A Spinner Example]]
+
+==== Adding a Spinner ====
+
+This is how to create a spinner object.
+
+<code c>
+Evas_Object *spin;
+spin = elm_spinner_add(parent);
+</code>
+
+This widgets allows a "vertical" style: up/down buttons at the right side
+and text left aligned.
+
+==== Configuring the Spinner ====
+
+The label format is set to a different value:
+
+<code c>
+elm_spinner_label_format_set(spin, "%1.2f meters");
+</code>
+
+You can determine the result of clicking the arrow buttons. In this example, a
+click on an arrow increases or decreases with 2.0 units:
+
+<code c>
+elm_spinner_step_set(spin, 2.0);
+</code>
+
+The wrapping mode is activated. In this mode, the spinner wraps when it reaches its minimum or maximum value.
+
+<code c>
+elm_spinner_wrap_set(spin, EINA_TRUE);
+</code>
+
+We set the minimum and maximum values of the spinner.
+
+<code c>
+elm_spinner_min_max_set(spin, -25.0, 100.0);
+</code>
+
+The spinner object can be set vertical, and the change interval when the user
+presses the arrows long can be modified so that it changes faster.
+
+<code c>
+elm_object_style_set(spin, "vertical");
+elm_spinner_interval_set(spin, 0.1);
+</code>
+
+If the user has to select between text values instead of numerical values, it
+is possible to add our own text labels. Here spin2 object shows three numbers
+written in text characters.
+
+<code c>
+Evas_Object *spin2 = elm_spinner_add(parent);
+elm_spinner_min_max_set(spin2, 1, 3);
+elm_spinner_special_value_add(spin2, 1, "One");
+elm_spinner_special_value_add(spin2, 2, "Two");
+elm_spinner_special_value_add(spin2, 3, "Three");
+</code>
+
+==== Using Spinner Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - Whenever the spinner value is changed.
+  * ''"delay,changed"'' - A short time after the value is changed by the user. This will be called only when the user stops dragging for a very short period or when they release their finger/mouse, so it avoids possibly expensive reactions to the value change.
+  * ''"language,changed"'' - the program's language changed
+  * ''"focused"'' - When the spinner has received focus. (since 1.8)
+  * ''"unfocused"'' - When the spinner has lost focus. (since 1.8)
+  * ''"spinner,drag,start"'' - When dragging has started. (since 1.8)
+  * ''"spinner,drag,stop"'' - When dragging has stopped. (since 1.8)
+
+This is how to register a callback on the "delay,changed" signal.
+
+<code c>
+evas_object_smart_callback_add(spin, "delay,changed", _delay_changed_cb, data);
+</code>
+<code c>
+// Callback function for the "delay,changed" signal
+// This callback is called a short time after the spinner value changes
+static void
+_delay_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf(The spinner value has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/spinner_example.html|A Spinner Example]]__**//
+
+----
+{{page>widgets_index}}

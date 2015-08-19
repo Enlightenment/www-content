@@ -1,0 +1,91 @@
+~~Title: Notify Widget PG~~
+{{page>widgets_index}}
+----
+===== Notify Widgets =====
+{{ :widgets_notify_tree.png }}{{ :widgets_notify.png }}
+
+This widget displays a container in a particular region of the parent object.
+It can receive some content, and can be automatically hidden after a certain
+amount of time.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Notify|Adding a Notify]]
+  * [[#Configuring_Notify_Widget|Configuring Notify Widget]]
+  * [[#Using_Notify_Callbacks|Using Notify Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Notify.html|Notify Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_notify.html|A Notify Example]]
+
+==== Adding a Notify ====
+
+This is how to create a notify object.
+
+<code c>
+Evas_Object *notify;
+notify = elm_notify_add(parent);
+</code>
+
+==== Configuring Notify Widget ====
+
+We create a label and add it to the notify object.
+
+<code c>
+Evas_Object *content;
+
+// Create the label and set some text to it
+content = elm_label_add(parent);
+
+elm_object_text_set(content, "A label text");
+evas_object_show(content);
+
+// Add the label object to the notify widget
+elm_object_content_set(notify, content);
+</code>
+
+In this example, we show the notify object on the bottom left corner of the
+parent object.
+
+<code c>
+elm_notify_align_set(notify, 1.0, 1.0);
+evas_object_show(notify);
+</code>
+
+We can set a timeout interval, after which the notify widget is hidden. In
+this example, the timeout interval is five seconds.
+
+<code c>
+elm_notify_timeout_set(notify, 5.0);
+</code>
+
+==== Using Notify Callbacks ====
+
+The notify widget emits the following signals:
+
+   * ''"timeout"'' - The timeout count ends and the notify is hidden
+   * ''"block,clicked"'' - The user clicks outside of the notify
+
+For both these signals event_info is NULL.
+
+Here we register a callback on the "timeout" signal.
+
+<code c>
+evas_object_smart_callback_add(notify, "timeout", _timeout_cb, data);
+</code>
+<code c>
+// Callback function for the "timeout" signal
+// The timeout expires and the notify object is hidden
+static void
+_timeout_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Notify is hidden\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_notify.html|A Notify Example]]__**//
+
+----
+{{page>widgets_index}}

@@ -1,0 +1,137 @@
+~~Title: Popup Widget PG~~
+{{page>widgets_index}}
+----
+===== Popup Widgets =====
+{{ :widgets_popup_tree.png }}{{ :widgets_popup.png }}
+
+The popup widget shows a popup area that may contain
+
+  * a title area (optional)
+  * a content area
+  * an action area (optional)
+
+The optional title area may contain an icon and text, the action area may
+contain up to three buttons.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Popup|Adding a Popup]]
+  * [[#Setting_the_Popup_Areas|Setting the Popup Areas]]
+  * [[#Using_Popup_Callbacks|Using Popup Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Popup.html|Popup Widget API]]
+  * [[/tutorial/popup_tutorial|Popup Tutorial]]
+
+^   Popup Examples  ^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_01_c.html|A First Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_02_c.html|A Second Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_01_c.html|A Third Example]]|
+
+==== Adding a Popup ====
+
+This is how to create a popup widget.
+
+<code c>
+Evas_Object *popup = elm_popup_add(parent);
+</code>
+
+==== Setting the Popup Areas ====
+
+<code c>
+elm_object_style_set(popup, "toast");
+</code>
+
+We configure the title area. We set the icon object using the part name
+"title,icon". We set the title text to "Test popup" using the partname
+"title,text".
+
+<code c>
+
+Evas_Object *icon;
+
+// Adding an icon to the title area
+elm_object_part_content_set(popup, "title,icon", icon);
+
+// Setting the title text
+elm_object_part_text_set(popup, "title,text", "Test popup");
+</code>
+
+We set the content of the popup. It can be a simple text
+
+or an Evas object.
+
+<code c>
+elm_object_part_text_set(popup, "default", "Test popup");</code>
+
+<code c>
+Evas_Object *content;
+
+elm_object_content_set(popup, content);
+</code>
+
+We set the buttons of the action area by creating an "OK" button, a "Cancel"
+button and a "Help" button.
+
+<code c>
+Evas_Object *button1, *button2, *button3;
+
+// Create the three buttons
+
+button1 = elm_button_add(popup);
+elm_object_text_set(button1, "OK");
+
+button2 = elm_button_add(popup);
+elm_object_text_set(button2, "Cancel");
+
+button3 = elm_button_add(popup);
+elm_object_text_set(button3, "Help");
+
+// Set the buttons to the action area
+elm_object_part_content_set(popup, "button1", button1);
+elm_object_part_content_set(popup, "button2", button2);
+elm_object_part_content_set(popup, "button3", button3);
+</code>
+
+==== Using Popup Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"timeout"'' - whenever popup is closed as a result of timeout.
+  * ''"block,clicked"'' - whenever user taps on Blocked Event area.
+  * ''"focused"'' - When the popup has received focus. (since 1.8)
+  * ''"unfocused"'' - When the popup has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.8)
+  * ''"item,focused"'' - When the popup item has recieved focus. (since 1.10)
+  * ''"item,unfocused"'' - When the popup item has lost focus. (since 1.10)
+
+''elm_popup_timeout_set()'' is used to hide the popup after a certain time. In
+this example, we set the timeout to five seconds.
+
+<code c>
+elm_popup_timeout_set(popup, 5.0);
+</code>
+
+When the timeout expires, the "timeout" signal is sent to the user.
+
+<code c>
+evas_object_smart_callback_add(popup, "timeout", _timeout_cb, data);
+</code>
+
+<code c>
+static void
+_timeout_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Timeout \n");
+}
+</code>
+
+The visible region of the popup is surrounded by a translucent region called
+Blocked Event area. By clicking on this area, the signal "block,clicked" is
+sent to the application.
+
+\\
+^   Popup Examples  ^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_01_c.html|A First Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_02_c.html|A Second Example]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/popup_example_01_c.html|A Third Example]]|
+
+----
+{{page>widgets_index}}

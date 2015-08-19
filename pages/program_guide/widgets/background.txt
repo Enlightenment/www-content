@@ -1,0 +1,88 @@
+~~Title: Background Widget PG~~
+{{page>widgets_index}}
+----
+===== Background Widgets =====
+{{ :widgets_background_tree.png }}{{ :widgets_background.png }}
+
+The background widget can be used to set a solid background decoration to a
+window or to a container object. It works like an image, but has some
+background specific properties, for example it can be set to tiled, centered,
+scaled or stretched mode. There are no specific signals relative to background
+object
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Background|Adding a Background]]
+  * [[#Change_Color_of_the_Background|Change Color of the Background]]
+  * [[#Change_Image_of_the_Background|Change Image of the Background]]
+  * [[#Using_Overlay|Using Overlay]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Bg.html|Background Widget API]]
+
+^Background Examples^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_01_example_page.html|Plain color background]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_02_example_page.html|Image background]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_03_example_page.html|Background preperties]]|
+
+==== Adding a Background ====
+
+A background is created with the ''elm_bg_add()''.
+
+<code c>
+Evas_Object *bg;
+
+// Creating a background
+bg = elm_bg_add(parent);
+</code>
+
+==== Change Color of the Background ====
+
+You can set the color of the bg with ''elm_bg_color_set()''. Here we set the
+background color to red.
+
+<code c>
+Evas_Object *bg;
+
+// Use red color for background
+elm_bg_color_set(bg, 0xFF, 0x00, 0x00);
+</code>
+
+==== Change Image of the Background ====
+
+It is also possible to set an image or an Edje group with
+''elm_bg_file_set()''.
+The display mode of the image in the background can be chosen with
+''elm_bg_option_set()'', where the following modes are available:
+
+    * ''ELM_BG_OPTION_CENTER'': center the background image
+    * ''ELM_BG_OPTION_SCALE'': scale the background image, retaining aspect ratio
+    * ''ELM_BG_OPTION_STRETCH'': stretch the background image to fill the widget's area
+    * ''ELM_BG_OPTION_TILE'': tile background image at its original size
+
+<code c>
+Evas_Object *bg;
+
+// Set a file on the disk as background image
+elm_bg_file_set(bg, "/path/to/the/image", NULL);
+// Set an edje group as background image
+elm_bg_file_set(bg, "/path/to/the/edje", "edje_group");
+elm_bg_option_set(bg, ELM_BG_OPTION_STRETCH)
+</code>
+
+==== Using Overlay ====
+
+An overlay can be set using the "overlay" part name.
+
+<code c>
+elm_object_part_content_set(bg, "overlay", over);
+</code>
+
+Here, over is an Edje object that will be displayed on top of the current bg
+object.
+
+\\
+^Background Examples^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_01_example_page.html|Plain color background]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_02_example_page.html|Image background]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/bg_03_example_page.html|Background preperties]]|
+\\
+----
+{{page>widgets_index}}

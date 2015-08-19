@@ -1,0 +1,123 @@
+~~Title: Glview Widget PG~~
+{{page>widgets_index}}
+----
+===== Glview Widgets =====
+{{ :widgets_glview_tree.png }}{{ :widgets_glview.png }}
+
+This widget renders OpenGL in an elementary object, which hides Evas GL
+complexity.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Glview|Adding a Glview]]
+  * [[#Using_GLView_API|Using GLView API]]
+  * [[#Using_GLView_Callbacks|Using GLView Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__GLView.html|Glview Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/glview_example_01_8c-example.html|A Glview Example]]
+
+==== Adding a Glview ====
+
+Create a GLView widget with the elm_glview_add() function.
+
+<code c>
+Evas_Object *glview = elm_glview_add(parent);
+</code>
+
+In this example, the size of the GLView is set to 200x200 pixels.
+
+<code c>
+elm_glview_size_set(glview, 200, 200);
+</code>
+
+==== Using GLView API ====
+
+We can configure the GLView rendering mode by activating the following
+rendering modes:
+
+^''ELM_GLVIEW_ALPHA''               |Alpha channel enabled rendering mode.                              ^''ELM_GLVIEW_DEPTH''           |Depth buffer enabled rendering mode (24 bits by default)   |
+^''ELM_GLVIEW_STENCIL''             |Stencil buffer enabled rendering mode (8 bits by default)          ^''ELM_GLVIEW_DIRECT''          |Request direct rendering, unless there must be a fallback. |
+^''ELM_GLVIEW_CLIENT_SIDE_ROTATION''|Client will handle GL view rotation if direct rendering is enabled.^''ELM_GLVIEW_DEPTH_8''         |Request min. \\ 8 bits for the depth buffer                |
+^''ELM_GLVIEW_DEPTH_16''            |Request min. \\ 16 bits for the depth buffer                       ^''ELM_GLVIEW_DEPTH_24''        |Request min. \\ 24 bits for the depth buffer (default)     |
+^''ELM_GLVIEW_DEPTH_32''            |Request min. \\ 32 bits for the depth buffer                       ^''ELM_GLVIEW_STENCIL_1''       |Request min. \\ 1 bits for the stencil buffer              |
+^''ELM_GLVIEW_STENCIL_2''           |Request min. \\ 2 bits for the stencil buffer                      ^''ELM_GLVIEW_STENCIL_4''       |Request min. \\ 4 bits for the stencil buffer              |
+^''ELM_GLVIEW_STENCIL_8''           |Request min. \\ 8 bits for the stencil buffer (default)            ^''ELM_GLVIEW_STENCIL_16''      |Request min. \\ 16 bits for the stencil buffer             |
+^''ELM_GLVIEW_MULTISAMPLE_LOW''     |MSAA with minimum number of samples.                               ^''ELM_GLVIEW_MULTISAMPLE_MED'' |MSAA with half the number of maximum samples.              |
+^''ELM_GLVIEW_MULTISAMPLE_HIGH''    |MSAA with maximum number of samples.                               ^                               |                                                           |
+
+In this example, we enable alpha channel and depth buffer rendering mode.
+
+<code c>
+elm_glview_mode_set(glview, ELM_GLVIEW_ALPHA | ELM_GLVIEW_DEPTH);
+</code>
+
+We decide what to do with the GL surface when the GLView widget is resized.
+
+<code c>
+elm_glview_resize_policy_set(glview, ELM_GLVIEW_RESIZE_POLICY_RECREATE);
+</code>
+
+The GL surface is destroyed and recreated to the new size (default function).
+The resize policy can also be set to ''ELM_GLVIEW_RESIZE_POLICY_SCALE''. In that
+case, only the image object is scaled, not the underlying GL surface.
+
+This is how to set the GLView rendering policy.
+
+<code c>
+elm_glview_render_policy_set(glview, ELM_GLVIEW_RENDER_POLICY_ALWAYS);
+</code>
+
+The glview object is always redrawn during the rendering loop. It can also be
+set to ''ELM_GLVIEW_RENDER_POLICY_ON_DEMAND'' (default function), where glview
+widget is redrawn only when it is visible.
+
+We can register callbacks:
+
+<code c>
+elm_glview_init_func_set(glview, _init_gl_cb);
+elm_glview_del_func_set(glview, _del_gl_cb);
+elm_glview_resize_func_set(glview, _resize_gl_cb);
+elm_glview_render_func_set(glview, _draw_gl_cb);
+</code>
+
+''elm_glview_init_func_set()'' registers an init callback that is called at the
+GLView object creation.
+
+''elm_glview_del_func_set()'' registers a del function that is called when the
+GLView object is deleted.
+
+''elm_glview_resize_func_set()'' registers the resize function that is called
+during the rendering loop when the GLView object is resized.
+
+''elm_glview_render_func_set()'' registers the render function that is called when
+the GLView object must be redrawn.
+
+==== Using GLView Callbacks ====
+
+GLView widget emits the following signals, besides the ones sent from GLView:
+
+  * ''"focused"'' - when glview has received focus.
+  * ''"unfocused"'' - when glview has lost focus.
+  * ''"language,changed"'' - the program's language changed
+
+This is how to register a callback.
+
+<code c>
+evas_object_smart_callback_add(glview, "focused", _focused_cb, data);
+
+// Callback function for the "focused" signal
+// This callback is called when the GLView is focused
+static void
+_focused_cb(void *data, Evas_Object *obj, void  *event_info)
+{
+   Elm_Focus_Info *fi = event_info;
+   printf("GLView is focused\n");
+}
+</code>
+
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/glview_example_01_8c-example.html|A Glview Example]]__**//
+\\
+----
+{{page>widgets_index}}

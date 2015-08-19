@@ -1,0 +1,135 @@
+~~Title: Check Widget PG~~
+{{page>widgets_index}}
+----
+===== Check Widgets =====
+{{ :widgets_check_tree.png }}{{ :widgets_check.png }}
+
+The check widget is similar to the radio widget, except that it does not work
+as a group. It toggles the value of a boolean between true and false.
+
+This widget inherits from the layout widget. All layout functions can be used
+on the check widget.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Check|Adding a Check]]
+  * [[#Modifying_Check_Styles|Modifying Check Styles]]
+  * [[#Using_Check_Widget|Using Check Widget]]
+  * [[#Using_Check_Callbacks|Using Check Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Check.html|Check Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_check.html|A Check Example]]
+
+==== Adding a Check ====
+
+This is how to create a check widget.
+
+<code c>
+Evas_Object *check;
+check = elm_check_add(parent);
+</code>
+
+==== Modifying Check Styles ====
+
+Check widget style can be set with the ''elm_object_style_set()'' function. The
+following styles are available:
+
+  * ''"default"''
+  * ''"toggle"''
+
+''elm_object_style_get()'' allows to get the current style.
+
+==== Using Check Widget ====
+
+After having created a check object, it is possible to set its boolean value
+to ''EINA_TRUE''.
+
+<code c>
+elm_check_state_set(check, EINA_TRUE);
+</code>
+
+We can also retrieve the current value of the check object.
+
+<code c>
+Eina_Bool value = elm_check_state_get(check);
+</code>
+
+As with the radio object, an icon and a label can be set.
+
+Default content parts of the check widget that you can use for are:
+
+  * ''"icon"'' - An icon of the check
+
+Default text parts of the check widget that you can use for are:
+
+  * ''"default"'' - A label of the check
+  * ''"on"'' - On state label of the check (only valid for "toggle" style.)
+  * ''"off"'' - Off state label of the check (only valid for "toggle" style.)
+
+
+<code c>
+// Create a Home icon
+Evas_Object *icon;
+
+icon = elm_icon_add(parent);
+elm_icon_standard_set(icon, "home");
+
+// Set it to the check object
+elm_object_part_content_set(check, "icon", icon);
+
+// Set the check label
+elm_object_text_set(check, "Check label");
+</code>
+
+We can also modify the "on" and "off" labels (only valid for '"toggle" style).
+
+<code c>
+elm_object_part_text_set(check, "on", "True");
+elm_object_part_text_set(check, "off", "False");
+</code>
+
+The get functions of the elementary object API can be used to retrieve the
+content set to the check object.
+
+<code c>
+// Get the current set text of the check label
+char *text = elm_object_text_get(check);
+
+// Get the content set in the icon part
+Evas_Object *icon = elm_object_part_content_get(check, "icon");
+</code>
+
+==== Using Check Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - This is called whenever the user changes the state of the check objects (event_info is always NULL).
+  * ''"focused"'' - When the check has received focus. (since 1.8)
+  * ''"unfocused"'' - When the check has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.9)
+
+When the value is changed by the user, the ''changed'' signal is emitted.
+''event_info'' parameter is ''NULL''.
+
+This example shows how to register a callback on this signal.
+
+<code c>
+evas_object_smart_callback_add(check, "changed", _changed_cb, data);
+
+// Callback function for the "changed" signal
+// This callback is called when the check value changes
+static void
+_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("The value has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_check.html|A Check Example]]__**//
+\\
+----
+{{page>widgets_index}}
+

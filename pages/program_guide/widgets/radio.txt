@@ -1,0 +1,119 @@
+~~Title: Radio Widget PG~~
+{{page>widgets_index}}
+----
+===== Radio Widgets =====
+{{ :widgets_radio_tree.png }}{{ :widgets_radio.png }}
+
+This widget displays one or more options, but the user can only select one of
+them. It is composed of an indicator (selected/unselected), an optional icon
+and an optional label. Usually grouped with two or more other radio objects,
+it can also be used alone.
+
+The radio widget inherits from the layout widget. All the layout functions can
+be used with radio objects.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Radio|Adding a Radio]]
+  * [[#Changing_Radio_Value|Changing Radio Value]]
+  * [[#Managing_Radio_Groups|Managing Radio Groups]]
+  * [[#Using_Radio_Callbacks|Using Radio Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Radio.html|Radio Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_radio.html|A Radio Example]]
+
+==== Adding a Radio ====
+
+We create a radio widget and set a label to it.
+
+<code c>
+Evas_Object *radio;
+
+// Creating a radio
+radio = elm_radio_add(parent);
+
+// Set a label to it
+elm_object_text_set(radio, "Radio widget");
+</code>
+
+We set an icon to the radio object.
+
+<code c>
+// Create a Home icon
+Evas_Object *icon;
+
+icon = elm_icon_add(parent);
+elm_icon_standard_set(icon, "home");
+
+// Set it to the radio widget
+elm_object_part_content_set(radio, "icon", icon);
+</code>
+
+==== Changing Radio Value ====
+
+The user can select one of a set of values with the radio widget. Each radio
+object from a group of radio objects represents an integer value. Here we set
+the value one to the new radio object.
+
+<code c>
+elm_radio_state_value_set(radio, 1);
+</code>
+
+==== Managing Radio Groups ====
+
+We create a group of radio objects with at least two radio widgets.
+
+<code c>
+// Create another radio object
+Evas_Object *radio2 = elm_radio_add(parent);
+elm_radio_state_value_set(radio2, 2);
+
+// Create a group composed of radio and radio2
+Evas_Object *group = radio;
+elm_radio_group_add(radio2, group);
+</code>
+
+Now that we have a group composed of two radio objects, we can choose which
+one is selected. Here we select radio2.
+
+<code c>
+elm_radio_value_set(group, 2);
+</code>
+
+We can use ''elm_radio_value_get()'' to see the currently selected radio of
+the group.
+
+==== Using Radio Callbacks ====
+
+This widget emits the following signals, besides the ones sent from Layout:
+
+  * ''"changed"'' - This is called when the radio object is selected. If you want to trace the state change of a radio group, you should add this callback to all the radio objects in that group.
+  * ''"focused"'' - When the radio has received focus. (since 1.8)
+  * ''"unfocused"'' - When the radio has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.9)
+
+When the state of a radio is modified in a group of radio objects, the
+"changed" signal is emitted.
+
+This is how to register a callback on this signal.
+
+<code c>
+evas_object_smart_callback_add(radio, "changed", _changed_cb, data);
+</code>
+<code c>
+// Callback function for the "changed" signal
+// This callback is called when the radio value changes
+static void
+changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("The value has changed\n");
+}
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_radio.html|A Radio Example]]__**//
+
+----
+{{page>widgets_index}}

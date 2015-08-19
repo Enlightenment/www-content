@@ -1,0 +1,142 @@
+~~Title: Button Container PG~~
+{{page>widgets_index}}
+----
+===== Button Widgets =====
+{{ :widgets_button_tree.png }}{{ :widgets_button.png }}
+
+The Elementary button widget is a simple push button. It is composed of a
+label icon and an icon object and has autorepeat feature.
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Button|Adding a Button]]
+  * [[#Adding_an_Icon_Inside_a_Button|Adding an Icon Inside a Button]]
+  * [[#Adding_Text_Inside_a_Button|Adding Text Inside a Button]]
+  * [[#Using_Button_Style|Using Button Style]]
+  * [[#Using_Button_Callbacks|Using Button Callbacks]]
+  * [[#Using_Autorepeat_Feature|Using Autorepeat Feature]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Button.html|Button Widget API]]
+  * [[/tutorial/basic/button|Basic Button Tutorial]]
+
+^Button Examples^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/button_example_00.html|Hello, Button!]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/button_example_01.html|Complete Example]]|
+
+==== Adding a Button ====
+
+<code c>
+//Creating a button
+Evas_Object *button = elm_button_add(parent);
+</code>
+
+==== Adding an Icon Inside a Button ====
+
+The icon can be updated with ''elm_object_part_content_set()'' function with the
+"icon" part name.
+
+<code c>
+Evas_Object *ic;
+ic = elm_icon_add(button);
+elm_image_file_set(ic, "icon.png", NULL);
+elm_object_part_content_set(button, "icon", ic);
+</code>
+
+==== Adding Text Inside a Button ====
+
+The label can be modified using the ''elm_object_text_set()'' function.
+
+<code c>
+elm_object_text_set(button, "Click me!");
+</code>
+
+==== Using Button Style ====
+
+Also, defined in the default theme, the button has the following styles
+available:
+
+  * ''default'': a normal button.
+  * ''anchor'': Like default, but the button fades away when the mouse is not over it, leaving only the text or icon.
+  * ''hoversel_vertical'': Internally used by Hoversel to give a continuous look across its options.
+  * ''hoversel_vertical_entry'': Another internal for Hoversel.
+  * ''naviframe'': Internally used by Naviframe for its back button.
+  * ''colorselector'': Internally used by Colorselector for its left and right buttons.
+
+
+To change the style of the button, we call the ''elm_object_style_set()'' function
+on our button object.
+
+<code c>
+elm_object_style_set(button,"naviframe");
+</code>
+
+==== Using Button Callbacks ====
+
+Button emits the following signals:
+
+  * ''"clicked"'': the user clicked the button (press/release).
+  * ''"repeated"'': the user pressed the button without releasing it.
+  * ''"pressed"'': button was pressed.
+  * ''"unpressed"'': button was released after being pressed.
+  * ''"focused"'': When the button has received focus. (since 1.8)
+  * ''"unfocused"'': When the button has lost focus. (since 1.8) In all cases, the event parameter of the callback will be NULL.
+
+For all these signals the ''event_info'' parameter returned in the callback is
+NULL.
+
+This is an example to register and define callback function called by the
+clicked signal.
+
+<code c>
+evas_object_smart_callback_add(button, "clicked", _clicked_cb, data);
+// Callback function for the "clicked" signal
+// This callback is called when the button is clicked by the user
+
+static void
+_clicked_cb (void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Button clicked\n");
+}
+</code>
+
+==== Using Autorepeat Feature ====
+
+The autorepeat feature (enabled by default) consists of calling the "repeated"
+signal when the user keeps the button pressed. This feature can be disabled
+with the ''elm_button_autorepeat_set()'' function. The autorepeat is configured
+with
+
+    * ''elm_button_autorepeat_initial_timeout_set()'': to set the initial timeout before the autorepeat event is generated
+    * ''elm_button_autorepeat_gap_timeout_set()'': to set the interval between two autorepeat events
+
+Disable the autorepeat feature:
+
+<code c>
+elm_button_autorepeat_set(button, EINA_FALSE);
+</code>
+
+Enable the autorepeat feature (enabled by default):
+
+<code c>
+elm_button_autorepeat_set(button, EINA_TRUE);
+</code>
+
+Set the initial timeout to five seconds:
+
+<code c>
+elm_button_autorepeat_initial_timeout_set(button, 5.0);
+</code>
+
+Set the gap between two signals to 0.5 seconds:
+
+<code c>
+elm_button_autorepeat_gap_timeout_set(button, 0.5);
+</code>
+
+\\
+^Button Examples^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/button_example_00.html|Hello, Button!]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/button_example_01.html|Complete Example]]|
+\\
+----
+{{page>widgets_index}}

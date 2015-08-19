@@ -1,0 +1,109 @@
+~~Title: Image Widget PG~~
+{{page>widgets_index}}
+----
+===== Image Widgets =====
+{{ :widgets_image_tree.png }}{{ :widgets_image.png }}
+
+The image widget can load and display an image from a disk file or a memory
+region.
+
+=== Table of Contents ===
+
+  * [[#Adding_an_Image|Adding a Image]]
+  * [[#Configuring_Image_Widget|Configuring Image Widget]]
+  * [[#Using_Image_Callbacks|Using Image Callbacks]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Image.html|Image Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_image.html|An Image Example]]
+
+==== Adding an Image ====
+
+This object is created with ''elm_image_add()''.
+
+<code c>
+Evas_Object *image = elm_image_add(parent);
+</code>
+
+==== Configuring Image Widget ====
+
+Various properties of the image can be tuned. First, we disable elementary
+scaling so that the image does not scale but resizes on both directions.
+
+<code c>
+elm_image_no_scale_set(image, EINA_TRUE);
+elm_image_resizable_set(image, EINA_TRUE, EINA_TRUE);
+</code>
+
+When scaling images, the smooth scaling algorithm can be used. It provides a
+better quality image but is slower than the default algorithm.
+
+<code c>
+elm_image_smooth_set(image, EINA_TRUE);
+</code>
+
+Preloading is used to load images without blocking the user interface. This
+preserves the reactivity of the user experience. The image is loaded in a
+thread. It can be disabled if desired.
+
+<code c>
+elm_image_preload_disabled_set(image, EINA_TRUE);
+</code>
+
+The image can be rotated or flipped. Here we rotate our image 180 degrees.
+
+<code c>
+elm_image_orient_set(image, ELM_IMAGE_ROTATE_180);
+</code>
+
+The following orientations are available:
+
+  * ''ELM_IMAGE_ORIENT_0'': No orientation change
+  * ''ELM_IMAGE_ROTATE_90'': Rotate the image 90 degrees clockwise
+  * ''ELM_IMAGE_ROTATE_180'': Rotate the image 180 degrees clockwise
+  * ''ELM_IMAGE_ROTATE_270'': Rotate the image 90 degrees counter-clockwise
+  * ''ELM_IMAGE_FLIP_HORIZONTAL'': Flip the image horizontally
+  * ''ELM_IMAGE_FLIP_VERTICAL'': Flip the image vertically
+  * ''ELM_IMAGE_FLIP_TRANSPOSE'': Flip the image along the bottom-left to top-right line
+  * ''ELM_IMAGE_FLIP_TRANSVERSE'': Flip the image along the top-left to bottom-right line
+
+If we want to keep the original aspect ration when resizing the image, we must
+define how the image fits into the object's area.
+
+<code c>
+// Tell the image to keep original aspect ratio
+elm_image_aspect_fixed_set(image, EINA_TRUE);
+// Then let the image fit the entire object
+elm_image_fill_outside_set(image, EINA_TRUE);
+</code>
+
+In this configuration, part of the image may go outside the object. If
+''elm_image_fill_outside_set'' is set to ''EINA_FALSE'', the image stays inside the
+limits of the parent object.
+
+==== Using Image Callbacks ====
+
+The image widget emits the signals below:
+
+  * ''"drop"'': The user drops an image typed object onto the object in question - the event info argument is the path to that image file
+  * ''"clicked"'': The user clicks the image. event_info is NULL.
+
+Here is how to register a callback when a user clicks on the image:
+
+<code c>
+evas_object_smart_callback_add(image, "clicked", _clicked_cb, data);
+
+// Callback function for the "clicked" signal
+// This callback is called when the image is clicked
+static void
+_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Image clicked\n");
+}
+</code>
+
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_image.html|An Image Example]]__**//
+\\
+----
+{{page>widgets_index}}

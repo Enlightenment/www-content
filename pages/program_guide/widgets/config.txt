@@ -1,0 +1,378 @@
+~~Title: Config Widget PG~~
+{{page>widgets_index}}
+----
+===== Elementary configuration =====
+
+An Elementary configuration is composed of a set of options linked to a given
+Elementary profile. Once loaded, the Elementary profile will configure all
+these options and affect the look and feel of your entire Elementary
+application.
+
+An Elementary configuration can be used to store the desired set
+of options that fits your application. Below, we list the different options
+that can be saved in an Elementary profile.
+
+=== Table of Contents ===
+
+  * [[#General_functions|General functions]]
+  * [[#Managing_profiles|Managing profiles]]
+  * [[#Widget_scaling|Widget scaling]]
+  * [[#Configuring_cache|Configuring cache]]
+  * [[#Theme|Theme]]
+  * [[#Configuring_focus|Configuring focus]]
+  * [[#Configuring_gesture_layer|Configuring gesture layer]]
+  * [[#Configuring_scrolling|Configuring scrolling]]
+  * [[#Configuring_longpress|Configuring longpress]]
+  * [[#Configuring_tooltip|Configuring tooltip]]
+  * [[#Configuring_password_show_last|Configuring password show last]]
+  * [[#Configuring_Elementary_engine|Configuring Elementary engine]]
+  * [[#Configuring_access_mode|Configuring access mode]]
+  * [[#Configuring_selection|Configuring selection]]
+  * [[#Configuring_mirroring|Configuring mirroring]]
+  * [[#Configuring_frame_rate|Configuring frame rate]]
+
+
+==== General Functions ====
+
+The ''elm_config_save()'' function provides a way to save the current
+Elementary configuration so that it can be reused in another session:
+
+<code c>
+elm_config_save();
+</code>
+
+When a profile is selected, we can ask Elementary to reload its configuration
+with the saved profile:
+
+<code c>
+elm_config_reload();
+</code>
+
+==== Managing Profiles ====
+
+A profile is a set of preconfigured options that affects the entire look and
+feel of an application.
+
+We can list the existing profiles:
+
+<code c>
+Eina_List *list = elm_config_profile_list_get();
+</code>
+
+We can set a particular profile:
+
+<code c>
+elm_config_profile_set("myprofile");
+</code>
+
+We can get the current profile:
+
+<code c>
+char *profile = elm_config_profile_get();
+</code>
+
+==== Scaling Widgets ====
+
+An Elementary configuration allows you to configure widget scaling both in
+terms of interactive areas and readable areas.  For more information about
+widget scaling, see [[/coming_soon|Scaling Widgets]].
+
+Setting the global scaling factor to 2.0 will double the size of all scalable
+widgets:
+
+<code c>
+elm_config_scale_set(2.0);
+</code>
+
+We can also set the finger size:
+
+<code c>
+elm_config_finger_size_set(1.5);
+</code>
+
+==== Configuring the Cache ====
+
+We can enable the globally configured cache flush, and we can then set the
+flush interval to 60 seconds:
+
+<code c>
+elm_config_cache_flush_enabled_set(EINA_TRUE);
+elm_config_cache_flush_interval_set(60);
+</code>
+
+We can configure the font cache size to 500 bytes and the image cache size to
+5 000 000 bytes:
+
+<code c>
+elm_config_cache_font_cache_size_set(500);
+elm_config_cache_image_cache_size_set(5000000);
+</code>
+
+Finally, we can set the Edje collection cache size and the Edje file cache
+size:
+
+<code c>
+elm_config_cache_edje_file_cache_size_set(500);
+elm_config_cache_edje_collection_cache_size_set(500);
+</code>
+
+==== Customizing Themes ====
+
+Elementary uses Edje to theme its widgets. Edje provides a default theme for
+each widget. This theme can be changed per application using the ''ELM_THEME''
+environment variable, or it can be modified globally with the
+''elementary_config'' utility.
+
+When you need custom styles, use extensions. Extensions allow you to write
+styles for specific widgets. Once set, the extension will completely replace
+the default theme of the widget.
+
+<note>
+When developing an extension, to respect the signals emitted and the elements
+that need to be in place, it is important to know how the widget is themed. If
+something is missing from the extension, it can break the widget's behavior.
+</note>
+
+The ''elm_theme_extension_add()'' function is used to add the new extension to
+the list of Elementary themes. The style can then be applied to the widget
+with the ''elm_object_style_set()'' function.
+
+Overlay is another solution to modify Elementary themes. It can replace the
+look of all widgets by overriding the default styles. As with extensions, it
+is up to you to write the correct overlay theme for a widget. When looking for
+a theme to apply, Elementary first checks the list of overlays, then the set
+theme, and finally the list of extensions. With overlays, it is therefore
+possible to replace the default view so that every widget is affected. This is
+very similar to setting the theme for the whole application, and will probably
+clash with end user options. It also runs the risk of none-matching styles
+across the application. Unless you have a very good reason to use them, avoid
+overlays. An overlay can be added with the ''elm_theme_overlay_add()''
+function. It can be removed with the ''elm_theme_overlay_del()'' function.
+
+For more information about widget theme customization, see
+[[/coming_soon|Customizing Widgets]].
+
+==== Configuring Focus ====
+
+When an Elementary object has the focus, input events are directly passed to
+that object in the window of the application. The focused object can also
+change its decoration to show the user where the focus is. The focus can be
+set to an Elementary object at any time with the ''elm_object_focus_set()''
+function. This will take the focus away from the previous focused object and
+give the focus to the new object. In an Elementary application, only one
+object can have the focus at a time. It is also possible to make an object
+unfocusable with the ''elm_object_focus_allow_set()'' function, so that the
+object will never take the focus.
+
+<note>
+Only visible objects can be focused.
+</note>
+
+Elementary also supports focus chains, which allow you to cycle through all
+the focusable objects in a window. By default, the focus chain is defined by
+the order in which the widgets were added to the code. It is also possible to
+define custom focus chains when needed.
+
+To define a custom focus chain, create an ''Eina_List'', and add the
+Elementary objects to it in the desired focus order. After you have inserted
+all the objects to the ''Eina_List'', use the
+''elm_object_focus_custom_chain_set()'' function to set this list as the
+custom focus chain of the parent object (here ''container_object'').
+
+<code c>
+Eina_List *obj_list = NULL;
+
+list = eina_list_append(list, obj1);
+list = eina_list_append(list, obj4);
+list = eina_list_append(list, obj2);
+list = eina_list_append(list, obj3);
+
+elm_object_focus_custom_chain_set(container_object, list);
+</code>
+
+Use the ''elm_object_focus_custom_chain_unset()'' function to remove the
+custom focus chain and use the default focus chain instead.
+
+Use the ''elm_object_focus_next()'' function to programmatically cycle through
+the focus chain.
+
+For detailed information about focus, see
+[[/coming_soon|Managing Widget Focus]].
+
+We can show a highlight on the focused object:
+
+<code c>
+elm_config_focus_highlight_enabled_set(EINA_TRUE);
+</code>
+
+We can also activate an animation when the focus shifts from one object to
+another:
+
+<code c>
+elm_config_focus_highlight_animate_set(EINA_TRUE);
+</code>
+
+==== Configuring the Gesture Layer ====
+
+We can configure the duration of the long tap and double tap events on gesture
+layer objects. Here, we set the duration to 500 ms:
+
+<code c>
+elm_config_glayer_long_tap_start_timeout_set(0.5);
+elm_config_glayer_double_tap_timeout_set(0.5);
+</code>
+
+==== Configuring Scrolling ====
+
+An Elementary configuration provides several functions for configuring
+scrolling in widgets.
+
+You can enable bouncing, which makes the scroller bounce when it reaches its
+viewport's edge during scrolling:
+
+<code c>
+elm_config_scroll_bounce_enabled_set(EINA_TRUE);
+</code>
+
+You can control the inertia of the bounce animation. Here, the inertia is set
+to 0.5:
+
+<code c>
+elm_config_scroll_bounce_friction_set(0.5);
+</code>
+
+You can also set the friction for a page scroll, include animations, and zoom
+animations.
+
+You can use the ''elm_config_scroll_thumbscroll_enabled_set()'' function to
+set the scroller to be draggable. You can configure several drag options, such
+as friction, sensitivity, acceleration, and momentum.
+
+Here, we set the scroller to be draggable, and we set the number of pixels one
+should travel while dragging the scroller's view to actually trigger scrolling
+to 20 pixels:
+
+<code c>
+// Set the scroller to be draggable
+elm_config_scroll_thumbscroll_enabled_set(EINA_TRUE);
+
+// Set the thumbscroll threshold to 20 pixels
+elm_config_scroll_thumbscroll_threshold_set(20);
+</code>
+
+==== Configuring Long Press ====
+
+Long press events can be configured using the ''elm_config'' API. Here, we get
+the current timeout before a long press event happens and increase it by 1
+second:
+
+<code c>
+// Get the long press timeout
+double lp_timeout = elm_config_longpress_timeout_get();
+
+// Increase it by 1 second
+elm_config_longpress_timeout_set(lp_timeout + 1.0);
+</code>
+
+==== Configuring Tooltips ====
+
+The duration after which a tooltip is shown can be configured through the
+''elm_config'' API. Here, we set the delay to 2 seconds:
+
+<code c>
+elm_config_tooltip_delay_set(2.0);
+</code>
+
+==== Configuring the Password Show Last Feature ====
+
+The password show last feature enables users to view the last input entered
+for a few seconds before it is masked. The following functions allow you to
+set this feature in the password mode of the entry widget and to change the
+duration over which the input has to be visible.
+
+First, we enable the password show last feature:
+
+<code c>
+elm_config_password_show_last_set(EINA_TRUE);
+</code>
+
+Then, we set the visibility timeout to 5 seconds:
+
+<code c>
+elm_config_password_show_last_timeout_set(5.0);
+</code>
+
+==== Configuring the Elementary Engine ====
+
+We can use ''elm_config'' to set the rendering engine that Elementary will use
+to draw the windows. The following rendering engines are supported:
+
+   * "software_x11"
+   * "fb"
+   * "directfb"
+   * "software_16_x11"
+   * "software_8_x11"
+   * "xrender_x11"
+   * "opengl_x11"
+   * "software_gdi"
+   * "software_16_wince_gdi"
+   * "sdl"
+   * "software_16_sdl"
+   * "opengl_sdl"
+   * "buffer"
+   * "ews"
+   * "opengl_cocoa"
+   * "psl1ght"
+
+Here, we set the engine to "opengl_x11":
+
+<code c>
+elm_config_engine_set("opengl_x11");
+</code>
+
+==== Configuring the Access Mode ====
+
+When the access mode is active, information about an Elementary object is read
+when the object receives an ''EVAS_CALLBACK_MOUSE_IN'' event. Here, we
+activate the access mode:
+
+<code c>
+elm_config_access_set(EINA_TRUE);
+</code>
+
+==== Configuring Selection ====
+
+Selection behavior can be set to be cleared when the entry widget is
+unfocused:
+
+==== Configuring Mirroring ====
+
+<code c>
+elm_config_selection_unfocused_clear_set(EINA_TRUE);
+</code>
+
+Elementary allows UI mirroring both on a single object and on the entire UI.
+If activated with the ''elm_object_mirrored_set()'' function, an Elementary
+widget will display as if there was a vertical mirror in the middle of it.
+Only the controls and the disposition of the widget are mirrored. Text is not
+mirrored.
+
+The default mirror mode of widgets can be set with ''elm_config''. Here, we
+activate the mirror mode by default:
+
+==== Configuring Frame Rate ====
+
+<code c>
+elm_config_mirrored_set(EINA_TRUE);
+</code>
+
+We can also set the frames per second (FPS) value for
+''ecore_animator_frametime'' and ''edje_frametime'' calculations. Here, we set
+the FPS to 60:
+
+<code c>
+elm_config_fps_set(60.0);
+</code>
+
+----
+{{page>widgets_index}}
