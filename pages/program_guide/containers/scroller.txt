@@ -1,0 +1,200 @@
+~~Title: Scroller Container PG~~
+{{page>index}}
+----
+===== Scroller Container =====
+
+{{ :container_scroller_tree.png }}{{ :container_scroller.png }}
+
+A scroller holds (and clips) a single object and allows you to scroll across
+it. This means that the user can use a scroll bar or their finger to drag the
+viewable region across the object, moving through a much larger area than is
+contained in the viewport. The scroller will always have a default minimum
+size that is not limited by its contents.
+
+The scroller widget inherits all the functions of the
+[[/program_guide/container/layout|Layout Container]].
+
+=== Table of Contents ===
+
+  * [[/program_guide/containers/scroller#Creating_a_Scroller|Creating a Scroller]]
+  * [[/program_guide/containers/scroller#Adding_Objects_to_the_Scroller|Adding Objects to the Scroller]]
+  * [[/program_guide/containers/scroller#Managing_the_Properties_of_the_Scroller|Managing the Properties of the Scroller]]
+  * [[/program_guide/containers/scroller#Signals|Signals]]
+  * [[/program_guide/containers/scroller#Example|Example]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Scroller.html|Scroller Container API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_scroller.html|A Scroller Example]]
+
+===== Creating a Scroller =====
+
+To create a scroller, use the ''elm_scroller_add()'' function:
+
+<code c>
+Evas_Object *scroller = elm_scroller_add(parent);
+</code>
+
+==== Adding Objects to the Scoller ====
+
+To add an object to the scroller, use the ''elm_object_content_set()'' function:
+
+<code c>
+Evas_Object *image;
+
+image = elm_image_add(parent);
+elm_image_file_set(image, "image.png", NULL);
+evas_object_show(image);
+evas_object_size_hint_min_set(image, 2560, 1600);
+elm_object_content_set(scroller, image);
+</code>
+
+In the above code, we set a minimum size of 2560 x 1600 pixels for the image.
+The scroller is smaller than the image, so you can scroll across the image.
+
+If you want to be informed when the user begins scrolling the image, use the
+following code:
+
+<code c>
+evas_object_smart_callback_add(scroller, "scroll,drag,start",
+_scroll_start_cb, NULL);
+
+// Callback function for the "animate,begin" signal.
+// This callback is called when the user begins scrolling the image.
+void _scroll_start_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("Scroll starts\n");
+}
+</code>
+
+==== Managing the Properties of the Scroll ====
+
+When scrolling content, the scroller may "bounce" when reaching the edge of
+the content. This is a visual way of indicating that there is no more content
+to scroll in that direction. Bounce is enabled by default for both axes. To
+enable or disable the bounce for either or both axes, use the
+elm_scroller_bounce_set() function. The following code disables the bounce for
+the horizontal axis and enables it for the vertical axis:
+
+<code c>
+elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+</code>
+
+The scroller can limit the scrolling to "pages". In this case, the scrolling
+occurs in page-sized chunks of content rather than in a purely continuous
+fashion, with the scroller displaying a single "page" at a time. This feature
+sets the size of the page relative to the viewport of the scroller. A size of
+1.0 equals 1 viewport (horizontally or vertically). A size of 0.0 disables
+paging for that axis. These settings are mutually exclusive with page size
+(see the ''elm_scroller_page_size_set()'' function). A size of 0.5 equals half a
+viewport. Usable size values are normally between 0.0 and 1.0, including 1.0.
+If you only want a single axis to scroll in pages, use 0.0 for the other axis.
+
+==== Signals ====
+
+The scroller emits the following signals, which you can catch in your
+application:
+
+  * ''"edge,left"'' - the left edge of the content has been reached
+  * ''"edge,right"'' - the right edge of the content has been reached
+  * ''"edge,top"'' - the top edge of the content has been reached
+  * ''"edge,bottom"'' - the bottom edge of the content has been reached
+  * ''"scroll"'' - the content has been scrolled (moved)
+  * ''"scroll,left"'' - the content has been scrolled (moved) leftwards
+  * ''"scroll,right"'' - the content has been scrolled (moved) rightwards
+  * ''"scroll,up"'' - the content has been scrolled (moved) upwards
+  * ''"scroll,down"'' - the content has been scrolled (moved) downwards
+  * ''"scroll,anim,start"'' - scrolling animation has started
+  * ''"scroll,anim,stop"'' - scrolling animation has stopped
+  * ''"scroll,drag,start"'' - dragging the contents around has started
+  * ''"scroll,drag,stop"'' - dragging the contents around has stopped
+  * ''"vbar,drag"'' - the vertical scroll bar has been dragged
+  * ''"vbar,press"'' - the vertical scroll bar has been pressed
+  * ''"vbar,unpress"'' - the vertical scroll bar has been unpressed
+  * ''"hbar,drag"'' - the horizontal scroll bar has been dragged
+  * ''"hbar,press"'' - the horizontal scroll bar has been pressed
+  * ''"hbar,unpress"'' - the horizontal scroll bar has been unpressed
+  * ''"scroll,page,changed"'' - the visible page has changed
+  * ''"focused"'' - When the scroller has received focus. (since 1.8)
+  * ''"unfocused"'' - When the scroller has lost focus. (since 1.8)
+
+
+==== Example ====
+
+A good example of the scroller is a picture slideshow: we add images to the
+scroller and limit the scrolling to pages (one picture at a time). In the
+following code, we disable the scroll bars for both axes, limit the scrolling
+to pages by using the ''elm_scroller_page_scroll_limit_set()'' function, and lock
+the scrolling on the Y axis by using the ''elm_object_scroll_lock_y_set()''
+function:
+
+<code c>
+elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
+elm_scroller_page_scroll_limit_set(scroller, 1, 0);
+elm_object_scroll_lock_y_set(scroller, EINA_TRUE);
+</code>
+
+We create a horizontal box, which will contain all the images, and which
+itself will be contained by the scroller:
+
+<code c>
+box = elm_box_add(scroller);
+elm_box_horizontal_set(box, EINA_TRUE);
+elm_object_content_set(scroller, box);
+evas_object_show(box);
+</code>
+
+We then create all the images and add them to the horizontal box:
+
+<code c>
+img = elm_image_add(scroller);
+snprintf(buf, sizeof(buf), IMAGE_DIR"/%d.jpg", i);
+elm_image_file_set(img, buf, NULL);
+evas_object_show(img);
+pages = eina_list_append(pages, img);
+elm_box_pack_end(box, img);
+</code>
+
+We store references to the images in an ''eina_list'' for easy retrieval later.
+
+Finally, we display the first page of the scroller:
+
+<code c>
+elm_scroller_page_show(scroller, 0, 0);
+</code>
+
+The size of the scroller depends on the size of the parent. When the parent
+changes, for example when the window is resized or rotated, the scroller is
+also resized. Since we need to be informed when the scroller is resized, we
+add a callback on the ''EVAS_CALLBACK_RESIZE'' event for the scroller:
+
+<code c>
+evas_object_event_callback_add(scroller, EVAS_CALLBACK_RESIZE, _scroller_resize_cb, NULL);
+</code>
+
+The callback retrieves the new size of the scroller by using the
+''evas_object_geometry_get()'' function on the object pointer. The pointer is
+relative to the object that has been resized, which in our case is the
+scroller itself. We can then iterate through the images of the scroller and
+set the minimum size to fit the scroller size:
+
+<code c>
+EINA_LIST_FOREACH(images, l, page)
+{
+   evas_object_size_hint_min_set(page, w, h);
+}
+</code>
+
+Finally, we set the page size of the scroller to match the scroller size and
+display the first page:
+
+<code c>
+elm_scroller_page_size_set(obj, w, h);
+elm_scroller_page_show(obj, 0, 0);
+</code>
+
+\\
+[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_scroller.html|A Scroller Example]]
+\\
+----
+{{page>index}}

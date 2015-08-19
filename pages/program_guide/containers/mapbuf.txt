@@ -1,0 +1,89 @@
+~~Title: Mapbuf Container PG~~
+{{page>index}}
+----
+===== Mapbuf Container =====
+
+{{ :container_mapbuf_tree.png }}{{ :container_mapbuf.png }}
+
+A mapbuf widget is a container widget that uses an Evas map to hold a content
+object. This widget is used to improve the moving and resizing performance of
+complex widgets.
+
+The content object is treated as a single image by the Evas map. If you have a
+content object containing several child objects, frequently moving the mapbuf
+widget will be faster than frequently moving the content object.
+
+The mapbuf widget inherits all the functions of the container class.
+
+=== Table of Contents ===
+
+  * [[/program_guide/containers/mapbuf#Creating_a_Mapbuf|Creating a Mapbuf]]
+  * [[/program_guide/containers/mapbuf#Adding_Content_to_the_Mapbuf|Adding Content to the Mapbuf]]
+  * [[/program_guide/containers/mapbuf#Activating_the_Mapbuf|Activating the Mapbuf]]
+  * [[/program_guide/containers/mapbuf#Signals|Signals]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Mapbuf.html|Mapbuf Container API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/mapbuf_example.html|A Mapbuf Example ]]
+
+==== Creating a Mapbuf ====
+
+To create a mapbuf widget, use the ''elm_mapbuf_add()'' function:
+
+<code c>
+Evas Object* mapbuf = elm_mapbuf_add(parent);
+</code>
+
+==== Adding Content to the Mapbuf ====
+
+To add content to the mapbuf widget, use the ''elm_object_content_set()'' function
+with the "default" part:
+
+<code c>
+elm_object_content_set(mapbuf, content);
+</code>
+
+<note>
+Calling ''elm_object_content_set(mapbuf, content)'' is equivalent to calling
+''elm_object_part_content_set(mapbuf, "default", content)''.
+</note>
+
+To activate smooth map rendering and alpha rendering for the mapbuf widget:
+
+<code c>
+elm_mapbuf_smooth_set(mapbuf, EINA_TRUE);
+elm_mapbuf_alpha_set(mapbuf, EINA_TRUE);
+</code>
+
+==== Activating the Mapbuf ====
+
+Finally, to use the mapbuf widget, you must activate it:
+
+<code c>
+elm_mapbuf_enabled_set (mapbuf, EINA_TRUE);
+</code>
+
+This enables the map that is set or disables it. On enable, the object
+geometry will be saved, and the new geometry will change (position and size)
+to reflect the map geometry set.
+
+Also, when enabled, alpha and smooth states will be used, so if the content
+isn't solid, alpha should be enabled, for example, otherwise a black rectangle
+will fill the content.
+
+When disabled, the stored map will be freed and geometry prior to enabling the
+map will be restored.
+
+It's disabled by default.
+
+==== Signals ====
+
+The mapbuf widget does not emit any signals and therefore does not provide any
+callbacks that you can register.
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/mapbuf_example.html|A Mapbuf Example ]]__**//
+\\
+----
+{{page>index}}

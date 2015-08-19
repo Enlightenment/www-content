@@ -1,0 +1,257 @@
+~~Title: Box Container PG~~
+{{page>index}}
+----
+===== Box Container =====
+{{ :container_box_tree.png }}{{ :container_box.png }}
+
+Most of the time, you want to display widgets on the screen in a specific
+order. In Form Tutorial, for example, the user information is arranged
+vertically. This basic container is called a box. There is no theme for a box
+layout. It is just a linear method of arranging widgets horizontally or
+vertically.
+
+=== Table of Contents ===
+
+  * [[#Creating_a_Box|Creating a Box]]
+  * [[#Adding_Objects_to_the_Box|Adding Objects to the Box]]
+  * [[#Setting_the_Padding|Setting the Padding]]
+  * [[#Handling_Element_Size|Handling Element Size]]
+  * [[#Setting_the_Alignment|Setting the Alignment]]
+  * [[#Using_Size_Hints|Using Size Hints]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Box.html|Box Container API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/box_example_01.html|A Basic Box Example]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/box_example_02.html|A Layout Transition Example]]
+
+==== Creating a Box ====
+
+By default, the box will start in the vertical orientation, placing its elements ordered
+from top to bottom.
+
+To create a new vertical box:
+
+<code c>
+Evas_Object *vbox = elm_box_add(parent);
+</code>
+
+By default, the ''elm_box_add()'' function creates a vertical box. If you want
+to create a horizontal box, use the  function:
+
+To change the orientation, use ''elm_box_horizontal_set()'' function. When
+horizontal is set, the order will go from left to right.
+
+<code c>
+Evas_Object *hbox = elm_box_add(parent);
+elm_box_horizontal_set(hbox, EINA_TRUE);
+</code>
+
+<note>
+A box is a non-graphical object. It adds no graphics to or around the objects
+it holds.
+</note>
+
+==== Addind Objects to the Box ====
+
+You can add any Evas object to the box. There are multiples ways to add an
+object to a box, 4 functions can be used:
+
+|''elm_box_pack_end()''|Add an object at the end of the pack list.\\ \\ Pack the object into the box, placing it last in the list of children objects. The actual position the object will get on screen depends on the layout used. If no custom layout is set, it will be at the bottom or right, depending if the box is vertical or horizontal, respectively.|
+|''elm_box_pack_start()''|Add an object to the beginning of the pack list. \\ \\ Pack object into the box, placing it first in the list of children objects. The actual position the object will get on screen depends on the layout used. If no custom layout is set, it will be at the top or left, depending if the box is vertical or horizontal, respectively.|
+|''elm_box_pack_before()''|Adds an object to the box before the indicated object.\\ \\ This will add the object to the box indicated before the object indicated with before. If before is not already in the box, results are undefined. Before means either to the left of the indicated object or above it depending on orientation.|
+|''elm_box_pack_after()''|Adds an object to the box after the indicated object. \\ \\ This will add the object to the box indicated after the object indicated with after. If after is not already in the box, results are undefined. After means either to the right of the indicated object or below it depending on orientation.|
+
+Below, an example shows how works these 4 functions. First, 2 button widgets
+are added to the box with ''elm_box_pack_end()'' then ''elm_box_pack_before()''
+function adds a button before the last added button and
+''elm_box_pack_start()'' adds a button at the top of the box list. Finally a
+button is added just after the top button in the box list with
+''elm_box_pach_after()'':
+
+<code c>
+Evas_Object *bt_end, *bt_start, *bt_before, *bt_after;
+int i;
+char tmp[16];
+//add 2 buttons
+for (i = 0; i < 2; i++)
+  {
+     snprintf(tmp, sizeof(tmp), "Button %d", i);
+     bt_end = elm_button_add(vbox);
+     elm_object_text_set(bt_end, tmp);
+     elm_box_pack_end(vbox, bt_end);
+     evas_object_show(bt_end);
+  }
+
+//add bt_before before bt_end(button 1)
+bt_before = elm_button_add(vbox);
+elm_object_text_set(bt_before, "Button Before");
+elm_box_pack_before(vbox, bt_before, bt_end);
+evas_object_show(bt_before);
+
+//add bt_start
+bt_start = elm_button_add(vbox);
+elm_object_text_set(bt_start, "Button Start");
+elm_box_pack_start(vbox, bt_start);
+evas_object_show(bt_start);
+
+//add bt_start
+bt_after = elm_button_add(vbox);
+elm_object_text_set(bt_after, "Button After");
+elm_box_pack_after(vbox, bt_after,bt_start);
+evas_object_show(bt_after);
+</code>
+
+==== Setting the Padding ====
+
+You can set the padding between the objects in a box by using the
+''elm_box_padding_set()'' function. The padding values are the number of
+pixels horizontally and vertically.
+
+<code c>
+elm_box_padding_set(vbox, 16, 6);
+</code>
+
+==== Handling Element Size ====
+
+You can add different-size elements to a container. For example, to add an
+image with a size of 128x128 pixels as the first element in a box, use the
+''elm_box_pack_start()'' function:
+
+<code c>
+Evas_Object *ic = elm_icon_add(vbox);
+elm_image_file_set(ic, "./c1.png", NULL);
+evas_object_size_hint_min_set(ic, 128, 128);
+evas_object_show(ic);
+elm_box_pack_start(vbox, ic);
+</code>
+
+We ask Evas to set the size hint for the icon object by using the
+''elm_object_size_hint_min_set()'' function. Evas will try to set the minimum size
+of this object accordingly.
+
+If you want to create a homogeneous box, where all objects have the same
+height or width, depending on the orientation of the box, use the
+''elm_box_homogeneous_set()'' function:
+
+<code c>
+elm_box_homogeneous_set(vbox, EINA_TRUE);
+</code>
+
+Elementary will set the height of the tallest object as the height of all
+objects, or the width of the widest element as the width of all objects.
+
+==== Setting the Alignment ====
+
+You can set the alignment of widgets inside a box using the
+''elm_box_align_set()'' function. The function takes two doubles values, a
+horizontal value and a vertical value, representing the percentage between 0
+and 1.0 of the alignment in the horizontal and vertical axes. When you add a
+widget with the ''elm_box_pack_end()'' or ''elm_box_pack_start()'' function,
+Elementary computes the global size of the box. If the global size is bigger
+than the size of the box's parent, the box will take up all the space occupied
+by the parent, and the size of the parent may be extended to hold the box. If
+the global size is smaller than the parent's size, the alignment values will
+set the position of the box inside the parent.
+
+{{ :container_box_align.png }}
+
+Here, we set an alignment of 0.8 vertically:
+
+<code c>
+elm_box_align_set(vbox, 0.0, 0.8);
+</code>
+
+<note>
+The alignment only takes effect in the opposite direction than the one defined
+with the ''elm_box_horizontal_set()'' function.
+</note>
+
+The ''elm_box_layout_transition()'' function provides the ability to animate
+the motion of the objects in a box when switching from one layout to another.
+
+==== Using Size Hints ====
+
+Size hints are a set of functions that can be used on any Evas object. You
+request Evas to take care of various properties, and Evas will honor these
+requests if it can. This is why they are called "hints". The size hint
+functions are:
+
+  * ''evas_object_size_hint_min_set()''
+  * ''evas_object_size_hint_max_set()''
+  * ''evas_object_size_hint_aspect_set()''
+  * ''evas_object_size_hint_align_set()''
+  * ''evas_object_size_hint_weight_set()''
+
+You can also use the respective get functions to get the current hint values.
+
+In case of the ''evas_object_size_hint_min_set()'' function, you ask Evas to
+respect the minimum size you define for the object. For example, to set the
+minimum size of an icon to 64x46 pixels:
+
+<code c>
+evas_object_size_hint_min_set(ic, 64, 64);
+</code>
+
+You can also set a maximum size for the same icon:
+
+<code c>
+evas_object_size_hint_max_set(ic, 128, 128);
+</code>
+
+When you resize the parent of the icon, if there are no constraints to the
+parent, the minimum size of the parent will be the minimum hint size of the
+icon. If you increase the parent size, the icon will grow larger until its
+maximum hint size is reached. After this point, the icon will not grow any
+larger and there will be empty space around the icon within the parent.
+
+When the aspect size hint is set, Evas tries to fix the dimensional
+proportions of the object. Here, the proportion of the icon is respected, and
+the width will be the same as the height:
+
+<code c>
+evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 1,1);
+</code>
+
+Here, the width will be twice the height:
+
+<code c>
+evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 2,1);
+</code>
+
+If we want to change the alignment of the icon relative to the parent, we can
+use the ''evas_object_size_hint_align()'' function. By default, the icon is
+centered, so it is aligned with a value of 0.5. You can change the alignment
+as follows:
+
+<code c>
+evas_object_size_hint_align_set(ic, EVAS_HINT_FILL, EVAS_HINT_FILL);
+</code>
+
+In the above case, the icon is aligned to the bottom left corner of the
+parent.
+
+We can also play with the size of the icon inside its container by using the
+weight size hint. By default, the weight is not set, so the size of the icon
+will be the minimum size. But if you set this value to 1, the icon will be
+expand as much as it can inside the container:
+
+<code c>
+evas_object_size_hint_weight_set(ic, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+</code>
+
+You can also use the alignment and weight hints together. Here, we want the
+icon to take up all the space in its parent:
+
+<code c>
+evas_object_size_hint_align_set(ic, EVAS_HINT_FILL, EVAS_HINT_FILL);
+evas_object_size_hint_weight_set(ic, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+</code>
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/box_example_01.html|A Basic Box Example]]__**//
+-
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/box_example_02.html|A Layout Transition Example]]__**//
+\\
+----
+{{page>index}}

@@ -1,0 +1,54 @@
+~~Title: Conformant Container PG~~
+{{page>index}}
+----
+===== Conformant Container =====
+
+{{ :container_conformant_tree.png }}{{ :container_conformant.png }}
+
+A conformant is a container widget that accounts for the space taken by the
+indicator, virtual keyboard, and softkey windows. The content area of the
+conformant is resized and positioned based on the space available. When the
+virtual keyboard is displayed, the content area is not resized.
+
+=== Table of Contents ===
+
+  * [[/program_guide/containers/conformant#Creating_a_Conformant|Creating a Conformant]]
+  * [[/program_guide/containers/conformant#Adding_Content_to_the_Conformant|Adding Content to the Conformant]]
+  * [[/program_guide/containers/conformant#Signals|Signals]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Conformant.html|Conformant Container API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/conformant_example_02_8c-example.html|A Conformant container example]]
+
+==== Creating a Conformant ====
+
+To create a conformant, use the ''elm_conformant_add()'' function:
+
+<code c>
+Evas_Object *conformant = elm_conformant_add(parent);
+</code>
+
+==== Adding Content to the Conformant ====
+
+To add content to the conformant, use the ''elm_object_content_set()'' function:
+
+<code c>
+elm_object_content_set(conformant, main_view);
+</code>
+
+==== Signals ====
+
+To receive notifications about the state of the virtual keyboard and
+clipboard, listen to the following Evas signals:
+
+    * ''"virtualkeypad,state,on"'': The virtual keyboard has been switched on.
+    * ''"virtualkeypad,state,off"'': The virtual keyboard has been switched off.
+    * ''"virtualkeypad,size,changed"'': The virtual keyboard size has changed.
+    * ''"clipboard,state,on"'': The clipboard has been switched on.
+    * ''"clipboard,state,off"'': The clipboard has been switched off.
+
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/conformant_example_02_8c-example.html|A Conformant container example]]__**//
+\\
+----
+{{page>index}}

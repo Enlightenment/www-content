@@ -1,0 +1,71 @@
+~~Title: Grid Container PG~~
+{{page>index}}
+----
+===== Grid Container =====
+
+In a grid, objects are placed at specific positions along a fixed grid, where
+the position of each object is given as a percentage of the full width and
+height of the grid. By default, the size of the grid is 100 x 100 pixels.
+
+=== Table of Contents ===
+
+  * [[#Creating_a_Grid|Creating a Grid]]
+  * [[#Adding_Items_to_the_Grid|Adding Items to the Grid]]
+  * [[#Changing_Position_and_Size|Changing Position and Size]]
+  * [[#Clearing_the_Grid|Clearing the Grid]]
+
+=== Relative Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Grid.html|Grid Container API]]
+
+==== Creating a Grid ====
+
+{{ :container_grid_tree.png }}{{ :container_grid.png }}
+
+To create a grid, use the ''elm_grid_add()'' function:
+
+<code c>
+Evas_Object *grid = elm_grid_add(parent);
+</code>
+
+==== Adding Items to the Grid ====
+
+To add an item to the grid, use the ''elm_grid_pack_set()'' function. Provide
+the X and Y coordinates, and the width and height in the grid as parameters.
+The following code adds 12 icons in a circle formation:
+
+<code c>
+for (i = 0; i < 12; i++)
+  {
+     ic = elm_icon_add(grid);
+     elm_image_file_set(ic, "c1.png", NULL);
+     evas_object_size_hint_min_set(ic, 128, 128);
+     evas_object_show(ic);
+     x = 40 * cos(2.0 * M_PI / 12 * i);
+     y = 40 * sin(2.0 * M_PI / 12 * i);
+     elm_grid_pack(grid, ic,  40 + x,  40 + y,  20 , 20);
+  }
+evas_object_show(grid);
+</code>
+
+==== Changing Position and Size ====
+
+To change the position of an item in the grid, use the ''elm_grid_pack_set()''
+function. The first parameter is the item you want to move, and the following
+parameters are the same as for the ''elm_grid_pack()'' function.
+
+To change the size of the grid, use the ''elm_grid_size_set()'' function. You
+can set the new width and height for the grid. The position and size of the
+items in the grid are changed accordingly.
+
+==== Clearing the Grid ====
+
+To clear the grid, use the ''elm_grid_clear()'' function. All items are
+removed from the grid. If you set the clear parameter, all the items are also
+deleted, with the ''evas_object_del()'' function called on each item.
+
+\\
+//**__A Grid container example__: **//{{
+:code_c/programming_guide/container/grid.c }}
+----
+{{page>index}}

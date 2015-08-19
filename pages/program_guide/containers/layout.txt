@@ -1,0 +1,82 @@
+~~Title: Layout Container PG~~
+{{page>index}}
+----
+===== Layout Container =====
+{{ :container_layout_tree.png }}{{ :container_layout.png }}
+
+A layout is a container widget that takes a standard Edje design file and
+wraps it very thinly in a widget. Layouts are the basis of a lot of graphics
+widgets used in Elementary.
+
+An Edje design file describes how the elements of the UI are positioned and
+how they behave when interacted with. For more information about Edje, see the
+[[/coming_soon|Edje guide]].
+
+=== Table of Contents ===
+
+  * [[#Creating_a_Layout|Creating a Layout]]
+  * [[#Adding_Objects_to_the_Layout|Adding Objects to the Layout]]
+  * [[#Using_Layout_Themes|Using Layout Themes]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Layout.html|Layout Container API]]
+
+^Layout Examples^^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_01.html|Content, Table and Box]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_02.html|Predefined Layout]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_03.html|Signals and Size Changed ]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_edc.html|Layout Theme File]]|
+
+==== Creating a Layout ====
+
+To create a new layout, use the ''elm_layout_add()'' function:
+
+<code c>
+Evas_Object *layout = elm_layout_add(parent);
+</code>
+
+
+==== Adding Objects to the Layout ====
+
+To add an Evas object to the layout:
+
+<code c>
+elm_object_part_content_set(ly, "elm.swallow.content", view);
+</code>
+
+''elm.swallow.content'' is the swallow part of the application layout, and with
+this call you integrate the view inside the swallow object of the layout.
+
+==== Using Layout Themes ====
+
+Layout container offers predefined themes that come with the default
+Elementary theme. These themes can be set with ''elm_layout_theme_set()'', and
+provide some basic functionality depending on the theme used.
+
+Most of them already send some signals, some already provide a toolbar or back
+and next buttons.
+
+These are the available predefined theme layouts. All of them have class =
+layout, group = application, and style = one of the following options:
+
+  * ''"toolbar-content"'' - for applications with a toolbar and main content area
+  * ''"toolbar-content-back"'' - for applications with a toolbar and main content (with a back button) and title areas
+  * ''"toolbar-content-back-next"'' - for applications with a toolbar and main content (with back and next buttons) and title areas
+  * ''"content-back"'' - for application with main content (with a back button) and title areas
+  * ''"content-back-next"'' - for applications with main content (with back and next buttons) and title areas
+  * ''"toolbar-vbox"'' - for applications with a toolbar and main content area as a vertical box
+  * ''"toolbar-table"'' - for applications with a toolbar and main content area as a table
+
+To set a theme:
+
+<code c>
+Evas_Object *ly;
+
+ly = elm_layout_add(parent);
+elm_layout_theme_set(ly, "layout", "application", "toolbar-content");
+</code>
+
+\\
+^Layout Examples^^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_01.html|Content, Table and Box]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_02.html|Predefined Layout]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_03.html|Signals and Size Changed ]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/layout_example_edc.html|Layout Theme File]]|
+
+----
+{{page>index}}

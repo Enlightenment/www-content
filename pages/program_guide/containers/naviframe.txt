@@ -1,0 +1,109 @@
+~~Title: Naviframe Container PG~~
+{{page>index}}
+----
+===== Naviframe Container =====
+
+{{ :container_naviframe_tree.png }}
+
+A naviframe widget consists of a stack of views. New views are pushed on top
+of previous ones, and only the top-most view on the stack is displayed. The
+previous views are not deleted. A previous view is displayed when the view on
+top of it is popped. Transitions can be animated on a push or a pop, depending
+on the theme applied to the widget.
+
+=== Table of Contents ===
+
+  * [[/program_guide/containers/naviframe#Creating_a_Naviframe|Creating a Naviframe]]
+  * [[/program_guide/containers/naviframe#Adding_and_Deleting Views|Adding and Deleting Views]]
+  * [[/program_guide/containers/naviframe#Adding_Fixed_Content|Adding Fixed Content]]
+  * [[/program_guide/containers/naviframe#Signals|]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Naviframe.html|Naviframe Container API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/naviframe_example_8c-example.html|A Naviframe  Example ]]
+
+==== Creating a Naviframe ====
+
+To create a naviframe, use the ''elm_naviframe_add()'' function:
+
+<code c>
+Evas_Object *nav = elm_naviframe_add(parent);;
+</code>
+
+==== Addind and Deleting Views ====
+
+The naviframe is a stack of views. A new view is always pushed to the top of
+the stack. The top-most view is deleted by popping it.
+
+To add a new view to the naviframe stack (and show it):
+
+<code c>
+Elm_Object_Item *nav_it = elm_naviframe_item_push(nav, title_label, prev_button, next_button, view, item_style);
+</code>
+
+^Parameters^^
+|''title_label''|The label in the title area. The name of the title label part is "elm.text.title"|
+|''prev_button''|The button to go to the previous item. If it is NULL, then naviframe will create a back button automatically. The name of the prev_btn part is "elm.swallow.prev_btn" |
+|''next_button''|The button to go to the next item. Or It could be just an extra function button. The name of the next_btn part is "elm.swallow.next_btn" |
+|''view''|The main content object. The name of content part is "elm.swallow.content" |
+|''item_style''|The current item style name. NULL would be default. |
+
+In fact, you can simply use ''elm_naviframe_item_push()'' with default
+parameters:
+
+<code c>
+Elm_Object_Item *nav_it = elm_naviframe_item_push(nav, NULL, NULL, NULL, view, NULL);
+</code>
+
+When you push a new view to the stack, you receive an ''Elm_Object_Item'' for the
+view. You can use this item to modify the view.
+
+The item pushed becomes one page of the naviframe, this item will be deleted
+when it is popped with ''elm_naviframe_item_pop()'':
+
+<code c>
+elm_naviframe_item_pop(nav);
+</code>
+
+==== Adding Fixed Content ====
+
+The naviframe can also display fixed content on top of the current (top-most)
+view. Use the ''elm_object_item_part_content_set()'' function to set this content.
+Use the following part names to specify the location of the content:
+
+  * ''"default"'' - The main content of the current page
+  * ''"icon"'' - An icon in the title area of the current page
+  * ''"prev_btn"'' - A button of the current page to go to the previous page
+  * ''"next_btn"'' - A button of the current page to go to the next page
+
+For example, to add a button to the naviframe:
+
+<code c>
+btn = elm_button_add(nav);
+elm_object_item_part_content_set(nav_it, "prev_btn", btn);
+</code>
+
+To set the title labels of the naviframe, use the
+''elm_object_item_part_text_set()'' function and specify one of the following
+label locations:
+
+  * ''"default"'': Sets the title label in the title area of the current view.
+  * ''"subtitle"'': Sets the subtitle label in the title area of the current view.
+
+==== Signals ====
+
+The naviframe emits the following signals:
+
+  * ''"transition,finished"'' - When the transition is finished in changing the item
+  * ''"title,transition,finished"'' - When the title area's transition is finished in changing the state of the title
+  * ''"title,clicked"'' - User clicked title area
+  * ''"focused"'' - When the naviframe has received focus. (since 1.8)
+  * ''"unfocused"'' - When the naviframe has lost focus. (since 1.8)
+  * ''"language,changed"'' - the program's language changed (since 1.9)
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/naviframe_example_8c-example.html|A Naviframe  Example ]]__**//
+\\
+----
+{{page>index}}

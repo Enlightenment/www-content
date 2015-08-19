@@ -1,0 +1,218 @@
+~~Title: Genlist Container PG~~
+{{page>index}}
+----
+===== Genlist Container =====
+{{ :container_genlist_tree.png }}{{ :container_genlist.png }}
+
+Genlist is a container that displays a scrollable list of items. It allows a lot of entries while being fast and has a low memory footprint (only the visible items are allocated in the memory).
+
+=== Table of Contents ===
+
+  * [[#Genlist_Item_Style|Genlist Item Style]]
+  * [[#Adding_a_Genlist|Adding a Genlist]]
+  * [[#Creating_And_Deleting_Items|Creating And Deleting Items]]
+  * [[#Managing_Items|Managing Items]]
+  * [[#Selection|Selection]]
+  * [[#Using_Genlist_Callbacks|Using Genlist Callbacks]]
+
+=== Related Info ===
+
+  * [[/tutorial/genlist_tutorial|Genlist Tutorial]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Genlist.html|Genlist Widget API]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/genlist_example.html|A Genlist Example]]
+
+==== Genlist Item Style ====
+
+An item can have 0 or more texts, 0 or more contents, and 0 or more boolean
+states. This is defined in the Edje item theme style. Genlist looks for data
+items named respectively "labels", "contents", and "states" in the Edje file.
+The "default" item style provides one text part ("elm.text"), two content
+parts ("elm.swalllow.icon" and "elm.swallow.end") and no state parts.
+
+The following item styles are available:
+
+  * default
+  * default_style - The text part is a textblock
+  * double_label
+  * icon_top_text_bottom
+  * group_index
+  * one_icon - Only 1 icon (left) (since 1.7)
+  * end_icon - Only 1 icon (at end/right) (since 1.7)
+  * no_icon - No icon (at end/right) (since 1.7)
+  * full - Only 1 icon, elm.swallow.content, which consumes whole area of genlist itemj (since 1.7)
+
+If one wants to use more icons and texts than are offered in theme, there are
+two solutions. One is to use 'full' style that has one big swallow part. You
+can swallow anything there. The other solution is to customize genlist item
+style in application side by using ''elm_theme_extension_add()'' and its own edc.
+
+==== Adding a Genlist ====
+
+Genlist widget is added with the ''elm_genlist_add()'' function.
+
+<code c>
+
+Evas_Object *genlist;
+genlist = elm_genlist_add(parent);
+</code>
+
+==== Creating And Deleting Items ====
+
+To save up memory, genlist allocates and deletes items on the go, while the
+user is scrolling the list. To enable that, the user creates and fills a
+''Elm_Genlist_Item_Class'' structure that informs the genlist widget which
+callbacks to call when an item is created or deleted.
+
+<code c>
+
+Elm_Genlist_Item_Class *itc = elm_genlist_item_class_new();
+
+itc->item_style = "default";
+itc->decorate_item_style = NULL;
+itc->decorate_all_item_style = NULL;
+itc->func.text_get = _item_label_get;
+itc->func.content_get = _item_content_get;
+itc->func.state_get = _item_state_get;
+itc->func.del = _item_del;
+</code>
+
+The ''item_style'', ''decorate_item_style'', and ''decorate_all_item_style''
+attributes define the names of the item style, the decorate mode item style
+and the decorate all item style.
+
+The ''func'' structure contains pointers to functions that are called when an
+item is going to be created or deleted. All of them receive a data parameter
+that points to the same data passed to the ''elm_genlist_item_append()'' and
+related item creation functions, and an obj parameter that points to the
+genlist object itself.
+
+|''text_get''|This function receives a PART parameter that is the name string of one of the existing text parts in the Edje group implementing the item's theme. It has to return a string (duplicated with the ''strdup()'' function) corresponding to the PART parameter. The caller is in charge of freeing the string when done.|
+|''content_get''|The PART parameter is the name string of one of the existing swallow parts in the Edje group. When no content is desired it must return NULL, or otherwise, a valid object handle. The object is deleted by the genlist on its deletion or when the item is "unrealized".|
+|''state_get''|The PART parameter is the name string of one of the state parts in the Edje group implementing the item's theme. It returns EINA_FALSE for false/off or EINA_TRUE for true/on. The default is false. Genlists emit a signal to the PART parameter's theming Edje object with "elm,state,xxx,active" as "emission" and "elm" as "source" argument, when the state is true. xxx is the name of the (state) part.|
+|''del''|This function is called when the genlist item is deleted. It deletes any data that is allocated at the item creation.|
+
+==== Managing Items ====
+
+To add an item, several functions can be used. ''elm_genlist_item_append()''
+adds an item to the end of the list, or if there is a parent list, to the end
+of all the child items of the parent list. ''elm_genlist_item_prepend()'' is
+otherwise the same but adds to the beginning of the list or children lists.
+''elm_genlist_item_insert_before()'' inserts an item before the indicated item
+and ''elm_genlist_item_insert_after()'' inserts an item after the indicated
+item.
+
+The previous functions take a "type" parameter that can be one of the following.
+
+   * ''ELM_GENLIST_ITEM_NONE''
+   * ''ELM_GENLIST_ITEM_TREE''
+   * ''ELM_GENLIST_ITEM_GROUP''
+
+
+If ''ELM_GENLIST_ITEM_TREE'' is set, this item is displayed as being able to
+expand and have child items. If ''ELM_GENLIST_ITEM_GROUP'' is set, this item is a
+group index item that is displayed at the top until the next group appears.
+
+{{ :container_genlist_treemode.png }}
+
+The application clears the list with ''elm_genlist_clear()'', which deletes
+all the items in the list. ''elm_object_item_del()'' deletes a specific item.
+''elm_genlist_item_subitems_clear()'' clears all items that are children of
+the indicated parent item.
+
+To help inspect list items, move to the item at the top of the list with
+''elm_genlist_first_item_get()'', which returns the item pointer.
+''elm_genlist_last_item_get()'' moves to the item at the end of the list.
+''elm_genlist_item_next_get()'' and ''elm_genlist_item_prev_get()'' move to
+the next and previous items relative to the indicated item. Using these calls
+you can go through the entire item list or tree.
+
+<note>
+As a tree, the items are flattened on the list, so
+''elm_genlist_item_parent_get()'' gives you the name of the parent item (even to
+skip them if needed).
+</note>
+
+''elm_genlist_item_show()'' scrolls the scroller to show the desired item as visible.
+
+''elm_object_item_data_get()'' returns the data pointer set by the item creation functions.
+
+If an item changes (state, boolean, text or content change), use
+''elm_genlist_item_update()'' for the genlist to update the item. Genlist will
+re-realize the item and call the functions in the ''Elm_Genlist_Item_Class'' for
+it.
+
+==== Selection ====
+
+Items are manually selected or unselected with
+''elm_genlist_item_selected_set()'' or disabled with
+''elm_object_item_disabled_set()''. In case there is a tree or a group item,
+the ''elm_genlist_item_expanded_set()'' function is used to expand or contract
+the item.
+
+<note>
+Calling this function does not show or hide any child of an item (if it is a
+parent). You must manually delete and create them on the callbacks of the
+"expanded" or "contracted" signals.
+</note>
+
+By default, the genlist is in single-selection mode: only one item can be
+selected at a time. You can use ''elm_genlist_multi_select_set()'' to select
+multiple items. In single-selection mode, the
+''elm_genlist_selected_item_get()'' function can be called to retrieve the
+selected item. If several items are selected, the
+''elm_genlist_selected_items_get()'' returns a list of the current selected
+items.
+
+In the picture below, there is a genlist in multi-selection mode with two
+items selected (#4 and #5) and one item disabled (#2).
+
+{{ :container_genlist_multi.png }}
+
+==== Using Genlist Callbacks ====
+
+The genlist widget emits the following signals:
+
+   * ''"activated"'': The user has double-clicked or pressed (enter | return | spacebar) on an item. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"clicked,double"'': The user has double-clicked an item. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"selected"'': The user selects an item. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"unselected"'': The user unselects an item. event_info in the callback function points at an object of type Elm_Object_Item that contains the activated item.
+   * ''"expanded"'': The item is to be expanded with ''elm_genlist_item_expanded_set()''. This callback fills in the child items. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"contracted"'': The item is to be contracted with ''elm_genlist_item_expanded_set()''. This callback deletes the child items. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"expand,request"'': The user wants to expand a tree branch item. The callback decides if the item can expand (if it has any children) and calls ''elm_genlist_item_expanded_set()'' to set the state. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"contract,request"'': The user wants to contract a tree branch item. The callback decides if the item can contract (if it has any children) and calls ''elm_genlist_item_expanded_set()'' to set the state. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"realized"'': The item is created as a real evas object. event_info in the callback function points at an object of the type Elm_Object_Item, that contains the activated item.
+   * ''"unrealized"'': An item is going to be unrealized. Content objects provided are deleted and the item object is deleted or put into a floating cache. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag,start,up"'': The item in the list is dragged (not scrolled) up. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag,start,down"'': The item in the list is dragged (not scrolled) down. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag,start,left"'': The item in the list is dragged (not scrolled) left. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag,start,right"'': The item in the list is dragged (not scrolled) right. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag,stop"'': The item in the list has stopped being dragged. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"drag"'': The item in the list is being dragged. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"longpressed"'': The item is pressed for a certain amount of time. The default specified time is one second. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"scroll,anim,start"'': The scrolling animation is started. event_info is NULL.
+   * ''"scroll,anim,stop"'': The scrolling animation is stopped. event_info is NULL.
+   * ''"scroll,drag,start"'': Dragging the content is started. event_info is NULL.
+   * ''"scroll,drag,stop"'': Dragging the content is stopped. event_info is NULL.
+   * ''"edge,top"'': The genlist is scrolled to the top edge. event_info is NULL.
+   * ''"edge,bottom"'': The genlist is scrolled to the bottom edge. event_info is NULL.
+   * ''"edge,left"'': The genlist is scrolled to the left edge. event_info is NULL.
+   * ''"edge,right"'': The genlist is scrolled to the right edge. event_info is NULL.
+   * ''"multi,swipe,left"'': The genlist is multi-touch swiped left. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"multi,swipe,right"'': The genlist is multi-touch swiped right. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"multi,swipe,up"'': The genlist is multi-touch swiped up. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"multi,swipe,down"'': The genlist is multi-touch swiped down. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"multi,pinch,out"'': The genlist is multi-touch pinched out. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"multi,pinch,in"'': The genlist is multi-touch pinched in. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"swipe"'': The genlist is swiped. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"moved"'': A genlist item is moved in the reorder mode. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"moved,after"'': A genlist item is moved after another item in the reorder mode. To access the relative previous item, use ''elm_genlist_item_prev_get()''. This signal is called along with the "moved" signal. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"moved,before"'': A genlist item is moved before another item in the reorder mode. To access the relative previous item, use ''elm_genlist_item_next_get()''. This signal is called along with the "moved" signal. event_info in the callback function points at an object of the type Elm_Object_Item that contains the activated item.
+   * ''"language,changed"'': The program's language is changed. event_info is NULL.
+   * ''"tree,effect,finished"'': A genlist tree effect is finished. event_info is NULL.
+
+\\
+//**__[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/genlist_example.html|A Genlist Example]]__**//
+\\
+----
+{{page>index}}
+
