@@ -1,0 +1,76 @@
+~~Title:PG: Basic application struture~~
+{{page>index}}
+----
+===== Basic Application Structure Program Guide =====
+
+Get more information about the EFL concept overview here:
+[[https://phab.enlightenment.org/w/efl_concept_overview/]]
+
+===== Structure of EFL Applications =====
+
+The Enlightenment Foundation Libraries (EFL) provide all the libraries you
+need to create powerful applications. This section presents an overview of the
+libraries and when to use them in developing applications.
+
+Enlightenment is a window manager, which in the X Window System means that it
+handles the borders, iconification, expansion, and movement of windows on the
+screen. Enlightenment can also provide multiple virtual desktops. The initial
+version was developed in the 1990s by Rasterman (Carsten Haitzler).
+Enlightenment has since become much more than a simple window manager. To
+create this window manager, the Enlightenment team needed powerful libraries
+to base their work on, which is where the EFL come in. The EFL are the
+libraries on which the window manager was initially based on, but which have
+since then become more powerful, more memory efficient, and especially more
+useful for the embedded world and for touchscreen interfaces.
+
+The EFL are a set of layered libraries, as shown in the following diagram:
+
+{{ :efllibs.png }}
+
+When you create a basic EFL application, you use the following main libraries
+as a basis:
+
+  * **Elementary** is the top-most library with which you create your EFL application. It provides all the functions you need to create a window, create simple and complex layouts, manage the life cycle of a view, and add widgets. Go to [[/coming_soon|Widgets program guide]]
+  * **Edje**  is the library used by Elementary to provide a powerful theme. You can also use Edje to create your own objects and use them in your application. You may also want to extend the default theme. You will find more information about Edje and the EDC format in [[/coming_soon|Edje]] and [[/coming_soon|Customizing Widgets]].
+  * **Ecore** is the library which manages the main loop of your application. The main loop is one of the most important concepts you need to know about to develop an application. The main loop is where events are handled, and where you interact with the user through the callback mechanism. The main loop mechanisms are explained in the [[/coming_soon|Main Loop guide]].
+  * **Evas**  is the canvas engine. Evas is responsible for managing the drawing of your content. All graphical objects that you create are Evas objects. Evas handles the entire state of the window by filling the canvas with objects and manipulating their states. In contrast to other canvas libraries, such as Cairo, OpenGL, and XRender, Evas is not a drawing library but a scene graph library that retains the state of all objects. The Evas concept is explained in [[/coming_soon|Rendering Concept and Method in Evas]]. Evas objects are created and then manipulated until they are no longer needed, at which point they are deleted. This allows the developer to work in the same terms that a designer thinks in: it is a direct mapping, as opposed to having to convert the concepts into drawing commands in the right order, calculate minimum drawing calls needed to get the job done, and so on.
+  * **Eina** is the basis of all the EFL libraries. Eina is a toolbox that implements an API for data types in an efficient way. It contains all the functions needed to create lists and hashes, manage shared strings, open shared libraries, and manage errors and memory pools. Eina concepts are explained in [[/coming_soon|Using Data Types]].
+
+The EFL include more than just the above libraries(here the complete
+list:[[https://phab.enlightenment.org/w/efl_overview/|Efl Overview]]), but the
+above are the most important libraries to get started with. The other
+libraries, such as Eet, Embryo, and Emotion, will be explored later in the
+programming guides and the
+[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/index.html|API
+Reference]].
+
+==== Concept of Elementary ====
+
+Before writing an application, you should already have an answer to the
+following question: What is an application? An application is a process
+launched by the user. Every application has at least one window for presenting
+its content. Users can interact with the content through events. Different
+sources of events can modify the life cycle of the application. The
+application may receive data from a network connection, and it may also
+receive touch and key events. From the computer's point of view, an
+application is a collection of code that reacts to events and displays content
+on the screen. Elementary bridges this divide between the user and the code.
+
+Elementary provides a variety of pre-built UI components, such as layout
+objects and widgets, that allow you to build rich graphical user interfaces
+for your applications. Every Elementary application has at least one window
+for presenting its content. The window provides the area in which to display
+the content and where the Evas canvas is placed.
+
+There are three main groups of objects provided by Elementary:
+
+    * [[/coming_soon|Widgets]]: These are the widgets with which you build your application UI.
+    * [[/coming_soon|Containers]]: These are the containers that hold the widgets.
+    * Infrastructure: These are the modules that deal with Elementary as a whole.
+
+[[/docs/efl/start|EFL Hello World Tutorial]] shows you how to develop your first application with
+Elementary and the EFL.
+
+\\
+----
+{{page>index}}
