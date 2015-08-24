@@ -1,0 +1,463 @@
+~~Title: Edje Animation~~
+{{page>index}}
+----
+===== Edje Animation =====
+
+The Edje animations are based on a very simple principle: going from one state to another. If you want to animate something with Edje, you must define two states and move from the first state to the second.
+
+=== Table of Contents ===
+
+  * [[#Animating_a_Rectangle|Animating a Rectangle]]
+  * [[#Actions|Actions]]
+  * [[#Transitions|Transitions]]
+  * [[#Chaining_Edje_Programs|Chaining Edje Programs]]
+  * [[#Playing_on_Signals|Playing on Signals]]
+  * [[#Rotate_with_Edje|Rotate with Edje]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/edcref.html|Edje Data Collection Reference]]
+
+
+==== Animating a Rectangle ====
+
+This example shows how to animate a rectangle. It is positioned in the top left corner of the window and is moved to the bottom right corner in five seconds. To do that with Edje, define a ''part'' called "rectangle" with the ''type RECT:'' this part has two descriptions (or states). In the first state, the rectangle is in is the top left corner. In the second state, it is in is the bottom right corner. To create the transition, set this EDC code for Edje to switch the object from its current state to another.
+
+<code c>
+
+collections
+{
+   group
+   {
+      name: "main";
+      parts
+      {
+         part
+         {
+            name: "rectangle";
+            type: RECT;
+            description
+            {
+               state: "default" 0.0;
+               align: 0.0 0.0;
+               rel1 {relative: 0.0 0.0;}
+               rel2 {relative: 0.3 0.1;}
+               color: 0 0 255 255;
+            }
+            description
+            {
+               state: "default" 0.5;
+               align: 0.0 0.0;
+               rel1 {relative: 0.7 0.9;}
+               rel2 {relative: 1.0 1.0;}
+               color: 0 0 255 255;
+            }
+         }
+      }
+      programs
+      {
+         program
+         {
+            name: "animation,state1";
+            source: "";
+            signal: "load";
+            action: STATE_SET "default" 0.5;
+            target: "rectangle";
+            transition: LINEAR 5;
+         }
+      }
+   }
+}
+</code>
+
+The "rectangle" part has two descriptions that share the same name, but have a different "version".
+
+<code c>
+
+part
+{
+   name: "rectangle";
+   type: RECT;
+   description
+   {
+      state: "default" 0.0;
+   }
+   description
+   {
+      state: "default" 0.5;
+   }
+}
+</code>
+
+The program defines when and how to move from one state to another. A program is called upon reception of a signal from a source. Here the program is called when the signal load is received from any source.
+
+<code c>
+
+program
+{
+   name: "animation,state1";
+   source: "";
+   signal: "load";
+}
+</code>
+
+An action is performed upon the signal reception. In this example, the state is changed.
+
+<code c>
+
+action: STATE_SET "default" 0.5;
+</code>
+
+The program has a target, here the "rectangle".
+
+<code c>
+
+target: "rectangle";
+</code>
+
+The program uses a transition to perform the action.
+
+<code c>
+
+transition: LINEAR 5;
+</code>
+
+This example produces a blue rectangle that moves from the upper left to the lower right corner with a linear transition in five seconds.
+
+==== Actions ====
+
+The Edje programs are not only for animations. There are different actions, for example ''STATE_SET'' and ''ACTION_STOP''. You may also send signals with ''SIGNAL_EMIT''.
+
+The ''STATE_SET'' action changes the state of the "target".
+
+In the following example, the state of the part named "image" changes to "default" "0.0".
+
+<code c>
+
+program
+{
+   name: "animate";
+   signal: "animate";
+   action: STATE_SET "default" 0.0;
+   transition: LINEAR 3.0;
+   target: "image";
+}
+</code>
+
+The ''ACTION_STOP'' stops the program specified by "target".
+
+<code c>
+
+program
+{
+   name: "animate_stop";
+   signal: "animate_stop";
+   action: ACTION_STOP;
+   target: "animate_loop";
+}
+</code>
+
+The previous example stops the program defined as "target" named ''animate_loop''. This program runs on the ''animate_stop'' signal.
+
+The ''SIGNAL_EMIT'' emits a signal that is used to communicate with the application directly from the theme.
+
+The following example emits a signal ''frame_move'' "start" when it receives the signal ''mouse,down,*'' from the ''video_over'' part. In other words, it sends the signal ''frame_move'' "start" when the mouse is pressed in the ''video_over'' part.
+
+<code c>
+
+program
+{
+   name: "video_move_start";
+   signal: "mouse,down,*";
+   source: "video_mover";
+   action: SIGNAL_EMIT "frame_move" "start";
+}
+</code>
+
+==== Transitions ====
+
+The transitions available are:
+
+   * ''LIN'' or ''LINEAR'': makes a linear transition and takes the duration in seconds as the parameter
+   * ''SIN'' or ''SINUSOIDAL'': makes a sinusoidal transition and takes the duration in seconds as the parameter
+   * ''ACCEL'' or ''ACCELERATE'': makes an accelerated transition and takes the duration in seconds as the parameter
+   * ''DECEL'' or ''DECELERATE'': makes a decelerated transition and takes the duration in seconds as the parameter
+   * ''ACCEL_FAC'' or ''ACCELERATE_FACTOR'': makes an accelerated transition and takes the duration and the factor as the parameters
+   * ''DECEL_FAC'' or ''DECELERATE_FACTOR'': makes a decelerated transition and takes the duration and the factor as the parameters
+   * ''SIN_FAC'' or ''SINUSOIDAL_FACTOR'': makes a sinusoidal transition and takes the duration and the factor as the parameters
+   * <li>the duration
+   * the initial gradient start (0.0 is horizontal, 1.0 is diagonal (linear), 2.0 is twice the gradient of linear, and so on)
+   * an integer factor that defines how much the value swings outside the gradient to come back to the final resting spot at the end. 0.0 for the third parameter is equivalent to linear interpolation. Note that DIVIS may exceed 1.0.
+
+
+   * the duration
+   * how much the bounce decays, with 0.0 giving linear decay per bounce, and higher values giving more decay
+   * the number of bounces (rounded down to the nearest integer value)
+
+
+   * the duration
+   * the decay, with the level exceeding 1.0 on the outer swings
+   * the number of spring swings
+
+
+There are graphical representations of these effects in the ''Ecore_Evas'' section above.
+
+==== Chaining Edje Programs ====
+
+To define a couple of Edje programs and chain them, we can, for example, create a program to make the rectangle return to its initial state with another transition (such as ''BOUNCE'').
+
+Use the statement ''after'' in the first ''program''. ''after'' takes the name of the transition to run when the program is done.
+
+<code c>
+
+after: "animation,state0";
+</code>
+
+This is how to add the bounce animation. To return the blue rectangle to its initial position with a ''BOUNCE'' transition: it bounces with a factor of 1.8, six times. This program is only to be used at the end of the first one, so it does not have any signal statement.
+
+<code c>
+
+program
+{
+   name: "animation,state0";
+   source: "";
+   signal: "";
+   action: STATE_SET "default" 0.0;
+   target: "rectangle";
+   transition: BOUNCE 5 1.8 6;
+}
+</code>
+
+==== Playing on Signals ====
+
+The programs start when they receive a signal from a source. Edje handles many kind of signals, including mouse events.
+
+<note>
+<strong>Note: </strong>To show the signals, use <code>edje_player -p myfile.edj</code>.
+</note>
+
+For example, in another transition the rectangle is left clicked. The corresponding signal name is ''mouse,clicked,1''.
+
+For this transition, define a new state. This state changes the color and the position of the rectangle.
+
+<code c>
+
+// To be place in the "part" definition
+description
+{
+   state: "color" 0.0;
+   rel1 {relative: 0.3 0.3;}
+   rel2 {relative: 0.7 0.4;}
+   color: 255 0 0 255;
+}
+</code>
+
+The program is as follows:
+
+<code c>
+
+program
+{
+   name: "animation,color";
+   source: "rectangle";
+   signal: "mouse,clicked,1";
+   action: STATE_SET "color" 0.0;
+   target: "rectangle";
+   transition: SIN 2;
+}
+</code>
+
+This starts when the rectangle is left clicked.
+
+If you want to send a signal from your application when you use signals to start transitions, create a program waiting for your own special signal. For example:
+
+<code c>
+
+program
+{
+   name: "animation,menu_side,hide";
+   source: "MenuButton";
+   signal: "hide,sidemenu";
+   action: STATE_SET "default" 1.0;
+   target: "menu/side";
+   transition: LINEAR 0.2;
+}
+</code>
+
+This program changes the state of the target named ''animation,menu_side,hide'' to ''"default" 1.0''. It waits for the ''hide,sidemenu'' signal emitted by a source called ''MenuButton''.
+
+<code c>
+
+edje_object_signal_emit(layout, "hide,sidemenu", "MenuButton");
+</code>
+
+This statement sends a signal named ''hide,sidemenu'' with a source named ''MenuButton'' to the object called ''layout''.
+
+The ''edje_object_signal_emit'' function emits a signal on an ''Evas_Object'' part of the application.
+
+<code c>
+
+edje_object_signal_emit(Evas_Object *obj,
+                        const char *emission,
+                        const char *source)
+</code>
+
+If you use the Elementary in the application, you can use ''elm_object_signal_emit''. It functions exactly the same way as ''edje_object_signal_emit'' and takes the same parameters.
+
+<note>
+<strong>Note: </strong>To find a complete example, use <code>elm_object_signal_emit</code> in the <a href="/documentation/tutorials/native-application/ui/ui-control/menu-0">Menu Tutorial</a>.
+</note>
+
+==== Rotate with Edje ====
+
+The Edje library allows you to rotate objects, using the ''map'' statement. For example, if you want to rotate the blue rectangle on a right click, you must define a new rotate state. To enable the ''map'' on you object you must add a ''map'' part to your default state.
+
+<code c>
+
+map
+{
+   on: 1;
+   smooth: 1;
+   perspective_on: 1;
+   rotation.x: 0;
+   rotation.y: 0;
+   rotation.z: 0;
+}
+</code>
+
+To add a new rotate state with a rotation around any axis, do the following.
+
+<code c>
+
+description
+{
+   state: "rotate" 0.0;
+   inherit: "default" 0.0;
+   map.rotation.z: 120;
+}
+</code>
+
+This rotate state inherits all the default state properties, but changes the value of ''map.rotation.z'' from 0° to 120°.
+
+To set a program to run the rotate state, do the following.
+
+<code c>
+
+program
+{
+   name: "animation,rotate";
+   source: "rectangle";
+   signal: "mouse,clicked,3";
+   action: STATE_SET "rotate" 0.0;
+   target: "rectangle";
+   transition: LIN 5;
+}
+</code>
+
+This program runs on a right click on the rectangle object.
+
+The complete code of this example is as follows.
+
+<code c>
+
+collections
+{
+   group
+   {
+      name: "main";
+      parts
+      {
+         part
+         {
+            name: "rectangle";
+            type: RECT;
+            description
+            {
+               state: "default" 0.0;
+               align: 0.0 0.0;
+               rel1 {relative: 0.0 0.0;}
+               rel2 {relative: 0.3 0.1;}
+               map
+               {
+                  on: 1;
+                  smooth: 1;
+                  perspective_on: 1;
+                  rotation
+                  {
+                     z: 0;
+                     x: 0;
+                     y: 0;
+                  }
+               }
+               color: 0 0 255 255;
+            }
+            description
+            {
+               state: "default" 0.5;
+               align: 0.0 0.0;
+               rel1 {relative: 0.7 0.9;}
+               rel2 {relative: 1.0 1.0;}
+               color: 0 0 255 255;
+            }
+            description
+            {
+               state: "color" 0.0;
+               rel1 {relative: 0.3 0.3;}
+               rel2 {relative: 0.7 0.4;}
+               color: 255 0 0 255;
+            }
+            description
+            {
+               state: "rotate" 0.0;
+               inherit: "default" 0.0;
+               map.rotation.z: 120;
+            }
+         }
+      }
+      programs
+      {
+         program
+         {
+            name: "animation,state1";
+            source: "";
+            signal: "load";
+            action: STATE_SET "default" 0.5;
+            target: "rectangle";
+            transition: LINEAR 1;
+            after: "animation,state0";
+         }
+         program
+         {
+            name: "animation,state0";
+            source: "";
+            signal: "";
+            action: STATE_SET "default" 0.0;
+            target: "rectangle";
+            transition: BOUNCE 2 1.8 26;
+         }
+         program
+         {
+            name: "animation,color";
+            source: "rectangle";
+            signal: "mouse,clicked,1";
+            action: STATE_SET "color" 0.0;
+            target: "rectangle";
+            transition: SIN 2;
+         }
+         program
+         {
+            name: "animation,rotate";
+            source: "rectangle";
+            signal: "mouse,clicked,3";
+            action: STATE_SET "rotate" 0.0;
+            target: "rectangle";
+            transition: LIN 5;
+         }
+      }
+   }
+}
+</code>
+
+\\
+------
+{{page>index}}

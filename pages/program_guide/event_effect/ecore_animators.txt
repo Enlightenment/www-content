@@ -1,0 +1,441 @@
+~~Title: Ecore Animator~~
+{{page>index}}
+----
+===== Ecore Animator =====
+
+Ecore provides a facility for animations called ''Ecore_Animator''. Ecore animators use the Ecore main loop for creating animations, running a specific action on each tick of a timer in the main loop.
+
+=== Table of Contents ===
+
+  * [[#Create_an_Ecore_Animation|Create an Ecore Animation]]
+  * [[#Creating_an_Animation_with_a_Finite_Duration|Creating an Animation with a Finite Duration]]
+  * [[#Position_Mappings|Position Mappings]]
+  * [[#Using_Position_Mappings|Using Position Mappings]]
+  * [[#Creating_an_Infinite_Animation|Creating an Infinite Animation]]
+  * [[#Chaining_Animations|Chaining Animations]]
+  * [[#Pausing_and_Resuming_Animations|Pausing and Resuming Animations]]
+  * [[#Freeing_Up_Memory|Freeing Up Memory]]
+  * [[#Frametime|Frametime]]
+  * [[#Custom_Timer|Custom Timer]]
+
+=== Related Info ===
+
+  * [[/tutorial/effects_tutorial|Effects Tutorial]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__Animator__Group.html|Ecore Animator Functions API]] ([[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_main.html|Ecore API]])
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_ecore_animator.html|Ecore animator example]]
+==== Create an Ecore Animation ====
+
+To create an Ecore animation:
+
+  - Determine the duration of the animation.
+  - Define a callback function that performs the animation with that duration.
+
+To use Ecore animators in your application, you must include the ''<Ecore.h>''
+file. This file is included by default if you are already using the
+''<Elementary.h>'' file in your application. You then declare an
+''Ecore_Animator*'' variable and use the variable in the ''ecore_animator_*''
+functions.
+
+The following example shows how to create a simple animation with a finite
+duration:
+
+<code c>
+static Eina_Bool
+_do_animation(void *data, double pos)
+{
+   evas_object_move(data, 100 * pos, 100 * pos);
+   // Do some more animating...
+}
+</code>
+<code c>
+ecore_animator_timeline_add(2, _do_animation, my_evas_object);
+</code>
+
+In the above example, we create a linear transition to move ''my_evas_object''
+from position (0,0) to position (100,100) in 2 seconds.
+
+==== Creating an Animation with a Finite Duration ====
+
+Most of the time, you will want to create animations that last for a
+predefined time.
+
+The ''ecore_animator_timeline_add()'' function allows you to define an
+animator that is automatically deleted after the animation is finished:
+
+<code c>
+Ecore_Animator* ecore_animator_timeline_add(double            runtime,
+                                            Ecore_Timeline_Cb func,
+                                            const void        *data
+)
+</code>
+
+
+  * ''runtime'' is the duration of the animation in seconds. The duration is not affected by frame rate.
+  * ''func'' is the callback function that performs the animation.
+  * ''data'' is the parameter passed to the callback function. This is usually the Evas object to animate.
+
+
+<note>
+The callback function can return ''ECORE_CALLBACK_RENEW'' to keep the animator
+running or ''ECORE_CALLBACK_CANCEL''> to stop the animator and have it be
+deleted automatically at any time. The callback function is also passed a
+timeline position parameter with a value between 0.0 (start) to 1.0 (end) to
+indicate where along the timeline the animator is running.
+</note>
+
+The following example performs a linear horizontal translation of 500 pixels
+in 8 seconds:
+
+<code c>
+
+static Eina_Bool
+_my_animation(void *data, double pos)
+{
+   Evas_Object *obj = data;                       // Get the target object
+   int x, y, w, h;                                // Target object geometry
+   evas_object_geometry_get(obj, &x, &y, &w, &h); // Get current object position and size attributes
+   evas_object_move(obj, 500 * pos, y);           // Linear translation of the Evas object
+}
+</code>
+<code c>
+ecore_animator_timeline_add(8, _my_animation, my_evas_object);
+</code>
+
+==== Position Mappings ====
+
+The ''Ecore_Pos_Map'' position mappings are used to define the evolution of a
+given position in accordance with the desired effects. The value ranges from
+0.0 to 1.0 on a given timeline. This position variation allows you to apply
+dynamic changes to any attribute of your Evas object, such as position, width,
+height, scale, angle, and color.
+
+Ecore supports the following position mappings (with the listed v1 and v2
+parameters):
+
+  * ''ECORE_POS_MAP_LINEAR'': linear 0.0 - 1.0
+    * v1: not used
+    * v2: not used
+  * ''ECORE_POS_MAP_ACCELERATE'': start slow, then speed up
+    * v1: not used
+    * v2: not used
+  * ''ECORE_POS_MAP_DECELERATE'': start fast, then slow down
+    * v1: not used
+    * v2: not used
+  * ''ECORE_POS_MAP_SINUSOIDAL'': start slow, speed up, then slow down at the end
+    * v1: not used
+    * v2: not used
+  * ''ECORE_POS_MAP_ACCELERATE_FACTOR'': start slow, then speed up
+    * v1: power factor: 0.0 is linear, 1.0 is standard acceleration, 2.0 is a much more pronounced acceleration (squared), 4.0 is cubed, and so on
+    * v2: not used
+  * ''ECORE_POS_MAP_DECELERATE_FACTOR'': start fast, then slow down
+    * v1: power factor: 0.0 is linear, 1.0 is standard deceleration, 2.0 is a much more pronounced deceleration (squared), 3.0 is cubed, and so on
+    * v2: not used
+  * ''ECORE_POS_MAP_SINUSOIDAL_FACTOR'': start slow, speed up, then slow down at the end
+    * v1: power factor: 0.0 is linear, 1.0 is a standard sinusoidal, 2.1 is a much more pronounced sinusoidal (squared), 3.0 is cubed, and so on
+    * v2: not used
+  * ''ECORE_POS_MAP_DIVISOR_INTERP'': start at gradient * v1, interpolated via power of v2 curve
+    * v1: multiplication factor for gradient
+    * v2: curve value
+  * ''ECORE_POS_MAP_BOUNCE'': start at 0.0, then "drop" like a ball bouncing to the ground at 1.0, and bounce v2 times, with a decay factor of v1
+    * v1: bounce decay factor
+    * v2: number of bounces
+  * ''ECORE_POS_MAP_SPRING'': start at 0.0, then "wobble" like a spring until rest position at 1.0, and wobble v2 times, with a decay factor of v1
+    * v1: wobble decay factor
+    * v2: number of wobbles
+
+{{ :event_effect_ecore_animator_position_mapping.png }}
+
+==== Using Position Mappings ====
+
+When using the animation callback function, the animator passes a timeline
+position parameter with a value between 0.0 (start) and 1.0 (end) to indicate
+where along the timeline the animator is running.
+
+If you want to create a non-linear animation, map the position value to one of
+several curves and mappings:
+
+<code c>
+double ecore_animator_pos_map(double pos,
+                              Ecore_Pos_Map map,
+                              double v1,
+                              double v2
+                             )
+</code>
+
+  * ''pos'' is the current position value, which ranges from 0.0 to 1.0.
+  * ''map'' is the position mapping you want to apply.
+  * ''v1'' is the first parameter (v1) to pass to the position mapping.
+  * ''v2'' is the second parameter (v2) to pass to the position mapping.
+
+<note>
+The v1 and v2 arguments are specific to the chosen position mapping. For
+example, if you are using ''ECORE_POS_MAP_BOUNCE'', v1 represents the
+bouncing level and v2 the number of bounces.
+</note>
+
+The following example performs a transition that bounces 7 times, diminishing
+by a factor of 1.8 over 5 seconds:
+
+<code c>
+static Eina_Bool
+_my_animation_callback(void *data, double pos)
+{
+   Evas_Object *obj = data;                                           // Get the target object
+   int x, y, w, h;                                                    // Target object geometry
+   double frame = pos;                                                // Actual position variation
+   frame = ecore_animator_pos_map(pos, ECORE_POS_MAP_BOUNCE, 1.8, 7); //Get frame relative position depending on desired effect
+   evas_object_geometry_get(obj, &x, &y, &w, &h);                     // Get current object position and size attributes
+   evas_object_move(obj, x, 600 * frame);                             // Move the Evas object according to desired effect
+
+   return EINA_TRUE;
+}
+</code>
+<code c>
+ecore_animator_timeline_add(5, _my_animation_callback, my_evas_object);
+</code>
+
+==== Creating an Infinite Animation ====
+
+If you want the animation to run for an unspecified amount of time, use the
+''ecore_animator_add()'' function. This function works the same way as the
+''ecore_animation_timeline_add()'' function, except its interval is based on
+frame rate. Using frame rate as the basis benefits performance, especially if
+you define multiple animations, since you may want to have a different timer
+for each callback function.
+
+<code c>
+Ecore_Animator* ecore_animator_add(Ecore_Task_Cb func,
+                                   const void    *data
+                                  )
+</code>
+
+  * ''func'' is the callback function that performs the animation.
+  * ''data'' is the parameter passed to the callback function. This is usually the Evas object to animate.
+
+<note>
+The function returns a pointer to an ''Ecore_Animator'' object, which you can
+use to adjust the animation.
+</note>
+
+The following example creates a rectangle sliding from left to right and back
+again. When the rectangle hits one edge of the screen, it changes direction.
+
+<code c>
+static Eina_Bool
+_slide_back_and_forth(void *data)
+{
+   typedef enum {LEFT, RIGHT} direction_t;    // Direction datatype
+   static int x = 0;                          // Initial position
+   static direction_t direction = RIGHT;      // Initial direction
+   if (x >= 250)
+      direction = LEFT;                       // Change direction
+   else if (x <= 0)
+      direction = RIGHT;                      // Change direction
+   if (direction == RIGHT)
+      evas_object_move(data, ++x, 350);       // Slide to right
+   else if (direction == LEFT)
+      evas_object_move(data, --x, 350);       // Slide to left
+
+   return EINA_TRUE;
+}
+int
+main(int argc, char *argv[])
+{
+   // Declarations
+
+   // Ecore Evas init
+
+   // Draw Evas objects
+
+   // Animations go here
+   anim = ecore_animator_add(_slide_back_and_forth, rectangle);
+   // Ecore main loop
+
+   // Free memory
+}
+</code>
+
+<note>
+To use this code, you have to merge it with the Ecore transition example
+above.
+</note>
+
+==== Chaining Animations ====
+
+You may sometimes want to delay animating an object. This can be useful if,
+for example, you want to start an animation only after another one has
+finished.
+
+You can simply set a delay to the second animation equal to the duration of
+the first animation:
+
+<code c>
+static int runtime = 5;
+static int delay = runtime;
+
+static Eina_Bool
+_start_fold_animation(void *data)
+{
+   ecore_animator_timeline_add(runtime, _fold_animation, data);
+
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_start_unfold_animation(void *data)
+{
+   ecore_animator_timeline_add(runtime, _unfold_animation, data);
+
+   return EINA_FALSE;
+}
+
+_start_fold_animation(my_evas_object);
+ecore_timer_add(delay, _start_unfold_animation, my_evas_object);
+</code>
+
+==== Pausing and Resuming Animations ====
+
+You can pause and resume Ecore animations. To pause a running animation, use
+the ''ecore_animator_freeze()'' function:
+
+The parameter is the ''Ecore_Animator'' to pause.
+
+<code c>
+ecore_animator_freeze(Ecore_Animator *animator)
+</code>
+
+To resume the paused animation, use the ''ecore_animator_thaw()'' function:
+
+<code c>
+ecore_animation_thaw(Ecore_Animator *animator)
+</code>
+
+The parameter is the ''Ecore_Animator'' to resume.
+
+The following example pauses a transition after 5 seconds and resumes it after
+5 more seconds:
+
+<code c>
+static Eina_Bool
+_freeze_animation(void *data)
+{
+   ecore_animator_freeze(data);
+
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_thaw_animation(void *data)
+{
+   ecore_animator_thaw(data);
+
+   return EINA_FALSE;
+}
+
+ecore_timer_add(5, _freeze_animation, animator);
+ecore_timer_add(10, _thaw_animation, animator);
+</code>
+
+==== Freeing Up Memory ====
+
+When you create an animation that does not have a timeout, you will have to
+manually free up the memory allocated to the ''Ecore_Animator'' object. By
+comparison, if the animation has a timeout, Ecore implements the mechanisms to
+automatically delete the animator from the list of pointers: When your
+animation callback returns 0 or ''ECORE_CALLBACK_CANCEL'', the animator
+manager takes care of freeing up the allocated memory.
+
+To manually free up the memory, delete the pointer by using the
+''ecore_animator_del()'' function:
+
+<code c>
+ecore_animator_del(Ecore_Animator *animator)
+</code>
+
+The argument is the ''Ecore_Animator'' whose memory allocation to free up.
+
+Regardless of the type of animation, it is good practice to always ensure that
+the allocated memory is freed up before the program exits:
+
+<code c>
+if (animator != NULL)
+   ecore_animator_del(animator);
+</code>
+
+==== Frametime ====
+
+In most cases, you will want to use the default timer
+''ECORE_ANIMATOR_SOURCE_TIMER''. This timer ticks every "frametime" seconds
+and allows you to perform transitions within a predefined timeline. The timer
+uses the system clock to tick over every Nth second, with the default being
+1/30th of a second.
+
+To tweak performance, you can change the frametime value:
+
+The argument is the new frametime value.
+
+<code c>
+ecore_animator_frametime_set(double frametime)
+</code>
+
+<note>
+Too small a value can cause performance issues, whereas too high a value can
+cause your animation to seem jerky.
+</note>
+
+If you want to get the current frametime value, use the
+''ecore_animator_frametime_get()'' function.
+
+==== Custom Timer ====
+
+You may want to specify a custom timer to match your animation to third-party
+events. For example, the filling speed of a progress bar will mainly depend on
+the time it takes for a task to complete and the velocity at which the
+remaining time estimation evolves. This kind of animation requires you to use
+a custom timer.
+
+To use a custom timer, first set ''ECORE_ANIMATOR_SOURCE_CUSTOM'' as the timer
+source, and then drive the timer based on an input tick source (such as
+another application via IPC or a vertical blanking interrupt):
+
+<code c>
+void ecore_animator_custom_source_tick_begin_callback_set(Ecore_Cb func,
+                                                     const void *data
+                                                    )
+</code>
+
+  * ''func'' is the callback function to call on the tick start.
+  * ''data'' is the data to pass to the callback function.
+
+<code c>
+void ecore_animator_custom_source_tick_end_callback_set(Ecore_Cb func,
+                                                        const void *data
+                                                       )
+</code>
+
+  * ''func'' is the callback function to call on the tick end.
+  * ''data'' is the data to pass to the callback function to set the functions that will be called to start and stop the ticking source.
+
+Next, trigger a tick over one frame:
+
+<code c>
+ecore_animator_custom_tick(void)
+</code>
+
+The following example supposes a progress bar that will be refreshed every
+time some progress occurs:
+
+<code c>
+ecore_animator_source_set(ECORE_ANIMATOR_SOURCE_CUSTOM);
+void _on_progress_update()
+{
+   // Called when some progress occurs
+   ecore_animator_custom_tick(); // Tick (next frame in progress bar animation)
+}
+</code>
+
+Finally, to get the current animator source, use the ''ecore_animator_source_get()'' function.
+
+\\
+------------
+{{page>index}}

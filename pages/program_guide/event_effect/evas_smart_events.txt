@@ -1,0 +1,162 @@
+~~Title: Evas Smart Object Events~~
+{{page>index}}
+----
+===== Evas Smart Object Events =====
+
+Evas smart objects events are the most widely-used type of events in graphical
+applications, since they are used for signals such as "clicked",
+"clicked,double" (double-click), "pressed", etc. They are identified by
+strings and each smart object is able to define its own events (although the
+names follow conventions).
+
+
+=== Table of Contents ===
+
+  * [[#Adding_a_Callback_on_an_Event:_evas_object_smart_callback_add()|Adding a Callback on an Event: evas_object_smart_callback_add()]]
+  * [[#Removing_a_Callback_on_an_Event:_evas_object_smart_callback_del()|Removing a Callback on an Event: evas_object_smart_callback_del()]]
+  * [[#Examples|Examples]]
+    * [[#Basic_Usage:_Button_with_a_Callback_on_the_"clicked"_Signal|Basic Usage: Button with a Callback on the "clicked" Signal]]
+    * [[#Usage_with_evas_object_smart_callback_del():_Clicking_on_the_Button_Removes_the_Callback|Usage with evas_object_smart_callback_del(): Clicking on the Button Removes the Callback]]
+
+=== Related Info ===
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Smart__Object__Group.html#ga18a8b179f94d21b2b09e19db11741061|Smart Object Functions API]]
+
+==== Adding a Callback on an Event: evas_object_smart_callback_add() ====
+
+Use the ''evas_object_smart_callback_add()'' function to add a callback for an
+event to an object. Its prototype is
+
+<code c>
+void evas_object_smart_callback_add(Evas_Object* obj,
+                                    const char* event,
+                                    Evas_Smart_Cb func,
+                                    const void* data
+                                   )
+</code>
+
+  * ''obj'' a smart object
+  * ''event'' the event's name string
+  * ''func'' the callback function
+  * ''data'' user data to be passed to the callback function
+
+Evas smart objects' "smart callback" has the following signature:
+
+<code c>
+void (* Evas_Smart_Cb) (void *data, Evas_Object *obj, void *event_info)
+</code>
+
+The callback function definition is similar to
+
+<code c>
+void some_evas_smart_cb(void *data, Evas_Object *obj, void *event_info);
+</code>
+
+  * ''data'' is the same as the ''data'' which is given as the parameter to ''evas_object_smart_callback_add()''.
+  * ''obj'' is the object for which the event happened.
+  * ''event_info'' is data, which depends on the object type and event at play. The actual type is given in the documentation for the callback that is triggered
+
+The following defines the ''_button_clicked()'' function and sets it as the
+callback for the ''clicked'' event of an ''Evas_Object'' (a button here).
+
+<code c>
+static void
+_button_clicked(void *data, Evas_Object *obj, void *event_info)
+{
+   // Insert function body here
+}
+</code>
+<code c>
+static void
+some_function(void)
+{
+   // Code to build the window object
+   Evas_Object *button = elm_button_add(window);
+   evas_object_smart_callback_add(button, "clicked", _button_clicked, NULL);
+}
+</code>
+
+If some of the arguments are not used by the callback function, the compiler
+may raise the "unused parameter" warning. To avoid it, you can annotate the
+argument with the ''__UNUSED__'' macro, which is a compiler-independent way to
+let the compiler know that the parameter is willingly unused rather than by a
+mistake.
+
+<code c>
+void cb(void *data __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__);
+</code>
+
+For a given object and event, callbacks are called in the order they have been
+added. The ''evas_object_smart_callback_add()'' function does not execute any
+special processing if it is called several times with the same callback
+function and/or data. Callbacks are called as many times as they have been
+added and in the order they have been added.
+
+==== Removing a Callback on an Event: evas_object_smart_callback_del() ====
+
+The ''evas_object_smart_callback_del()'' function enables deleting a callback
+for a signal on an object. Its prototype is
+
+<code c>
+void* evas_object_smart_callback_del(Evas_Object* obj,
+                                     const char* event,
+                                     Evas_Smart_Cb func
+                                    )
+</code>
+
+It removes the first match for the given event and callback and returns the
+''data'' pointer that was used in the corresponding call to
+''evas_object_smart_callback_add()''.
+
+==== Examples ====
+
+=== Basic Usage: Button with a Callback on the "clicked" Signal ===
+
+<code c>
+static void
+_button_clicked(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   fprintf(stdout, "Button clicked.\n");
+   fflush(stdout);
+   elm_exit();
+}
+
+static void
+_add_button(Evas_Object *window)
+{
+   Evas_Object *button;
+
+   button = elm_button_add(window);
+   elm_object_text_set(button, "Click Me To Exit!");
+   evas_object_smart_callback_add(button, "clicked", _button_clicked, NULL);
+
+   evas_object_show(button);
+}
+</code>
+
+=== Usage with evas_object_smart_callback_del(): Clicking on the Button Removes the Callback ===
+
+<code c>
+static void
+_button_clicked(void *data __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   fprintf(stdout, "Button clicked.\n");
+   fflush(stdout);
+   evas_object_smart_callback_del(obj, "clicked", _button_clicked);
+}
+
+static void
+_add_button(Evas_Object *window)
+{
+   Evas_Object *button;
+
+   button = elm_button_add(window);
+   elm_object_text_set(button, "Click Me!");
+   evas_object_smart_callback_add(button, "clicked", _button_clicked, NULL);
+
+   evas_object_show(button);
+}
+</code>
+
+\\
+----
+{{page>index}}

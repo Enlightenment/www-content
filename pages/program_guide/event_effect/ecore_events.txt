@@ -1,0 +1,303 @@
+~~Title: Ecore Events~~
+{{page>index}}
+----
+===== Ecore Events =====
+
+Ecore events are used for low-level handling of events such as key presses,
+network connections, and communication with sub-processes.
+
+The low-level handling of key presses is particularly useful for shortcuts:
+instead of adding a signal handler to a specific graphical element, you can
+add one globally. This guarantees that no matter which widget is currently
+receiving events, the shortcut is caught.
+
+Note that ecore events are also used to implement new graphical back-ends, but
+they are low-level and not useful for most applications.
+
+=== Table of Contents ===
+
+  * [[#Ecore_Events_Useful_for_Shortcuts|Ecore Events Useful for Shortcuts]]
+  * [[#Add_an_Event_Handler:_ecore_event_handler_add()|Add an Event Handler: ecore_event_handler_add()]]
+  * [[#Remove_an_Event_Handler:_ecore_event_handler_del()|Remove an Event Handler: ecore_event_handler_del()]]
+  * [[#Send_Events_to_the_Main_Loop_Yourself:_ecore_event_add()|Send Events to the Main Loop Yourself: ecore_event_add()]]
+  * [[#Create_Your_Own_Type_of_Events:_ecore_event_type_new()|Create Your Own Type of Events: ecore_event_type_new()]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__Event__Group.html|Ecore Event functions API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_event_example_01_c.html|Ecore Event Example]]
+
+==== Ecore Events Useful for Shortcuts ====
+
+There are eight ecore events for shortcuts:
+
+<code c>
+int ECORE_EVENT_KEY_DOWN;
+int ECORE_EVENT_KEY_UP;
+int ECORE_EVENT_MOUSE_BUTTON_DOWN;
+int ECORE_EVENT_MOUSE_BUTTON_UP;
+int ECORE_EVENT_MOUSE_MOVE;
+int ECORE_EVENT_MOUSE_WHEEL;
+int ECORE_EVENT_MOUSE_IN;
+int ECORE_EVENT_MOUSE_OUT;
+</code>
+
+The callbacks receive additional data through a ''void *'' object, whose type
+depends on the event that has been received.
+
+  * for ''ECORE_EVENT_KEY_DOWN'' and ''ECORE_EVENT_KEY_UP'':
+
+<code c>
+typedef struct _Ecore_Event_Key Ecore_Event_Key;
+
+struct _Ecore_Event_Key
+{
+   const char *keyname;
+   const char *key;
+   const char *string;
+   const char *compose;
+   Ecore_Window window;
+   Ecore_Window root_window;
+   Ecore_Window event_window;
+
+   unsigned int timestamp;
+   unsigned int modifiers;
+
+   int same_screen;
+};
+</code>
+
+  * for ''ECORE_EVENT_MOUSE_BUTTON_DOWN'' and ''ECORE_EVENT_MOUSE_BUTTON_UP'':
+
+<code c>
+typedef struct _Ecore_Event_Mouse_Button Ecore_Event_Mouse_Button;
+
+struct _Ecore_Event_Mouse_Button
+{
+   Ecore_Window window;
+   Ecore_Window root_window;
+   Ecore_Window event_window;
+
+   unsigned int timestamp;
+   unsigned int modifiers;
+   unsigned int buttons;
+   unsigned int double_click;
+   unsigned int triple_click;
+   int same_screen;
+
+   int x;
+   int y;
+   struct
+   {
+      int x;
+      int y;
+   } root;
+
+   struct
+   {
+      int device;                         // 0 if normal mouse, 1+ for other mouse-devices (eg multi-touch - other fingers)
+      double radius, radius_x, radius_y;  // Radius of press point - radius_x and y if its an ellipse (radius is the average of the 2)
+      double pressure;                    // Pressure - 1.0 == normal, > 1.0 == more, 0.0 == none
+      double angle;                       // Angle relative to perpendicular (0.0 == perpendicular), in degrees
+      double x, y;                        // Same as x, y root.x, root.y, but with sub-pixel precision, if available
+      struct
+      {
+         double x;
+         double y;
+      } root;
+   } multi;
+};
+</code>
+
+  * for ''ECORE_EVENT_MOUSE_MOVE'' and ''ECORE_EVENT_MOUSE_WHEEL'':
+
+<code c>
+typedef struct _Ecore_Event_Mouse_Wheel Ecore_Event_Mouse_Wheel;
+struct _Ecore_Event_Mouse_Wheel
+{
+   Ecore_Window window;
+   Ecore_Window root_window;
+   Ecore_Window event_window;
+
+   unsigned int timestamp;
+   unsigned int modifiers;
+
+   int same_screen;
+   int direction;
+   int z;
+
+   int x;
+   int y;
+   struct
+   {
+      int x;
+      int y;
+   } root;
+};
+</code>
+
+  * for ''ECORE_EVENT_MOUSE_IN ''and ''ECORE_EVENT_MOUSE_OUT'':
+
+<code c>
+typedef struct _Ecore_Event_Mouse_Move Ecore_Event_Mouse_Move;
+struct _Ecore_Event_Mouse_Move
+{
+   Ecore_Window window;
+   Ecore_Window root_window;
+   Ecore_Window event_window;
+
+   unsigned int timestamp;
+   unsigned int modifiers;
+
+   int same_screen;
+
+   int x;
+   int y;
+   struct
+   {
+      int x;
+      int y;
+   } root;
+
+   struct
+   {
+      int device;                         // 0 if normal mouse, 1+ for other mouse-devices (eg multi-touch - other fingers)
+      double radius, radius_x, radius_y;  // radius of press point - radius_x and y if it is an ellipse (radius is the average of the two)
+      double pressure;                    // pressure - 1.0 == normal, > 1.0 == more, 0.0 == none
+      double angle;                       // angle relative to perpendicular (0.0 == perpendicular), in degrees
+      double x, y;                        // same as x, y root.x, root.y, but with sub-pixel precision, if available
+      struct
+      {
+         double x, y;
+      } root;
+   } multi;
+};
+</code>
+
+==== Add an Event Handler: ecore_event_handler_add() ====
+
+The ''ecore_event_handler_add()'' function enables registering a callback for
+the given event. Its prototype is:
+
+<code c>
+Ecore_Event_Handler* ecore_event_handler_add(int                    type,
+                                             Ecore_Event_Handler_Cb func,
+                                             const void*            data
+                                            )
+</code>
+
+
+  * ''type'' is an identifier for the event; for example, if you wish to receive notifications when keys are pressed, give ''ECORE_EVENT_KEY_DOWN''.
+  * ''func'' is the callback that is called when the event takes place.
+  * ''data'' is a pointer to additional data that is given as the argument to the callback; it is optional and ''NULL'' is an acceptable value.
+  * return value is a pointer to the event handler, which can be used later to uninstall the handler.
+
+The type of the callback function is defined as follows.
+
+<code c>
+Eina_Bool (* Ecore_Event_Handler_Cb) (void *data, int type, void *event)
+</code>
+
+The callback function declaration is similar to:
+
+<code c>
+Eina_Bool some_ecore_event_cb(void *data, int type, void *event);
+</code>
+
+
+  * ''data'' is the same as the ''data'' which was given as a parameter to ''ecore_event_handler_add()''.
+  * ''type'' is the same as the type which was given as a parameter to ''ecore_event_handler_add()''.
+  * ''event'' is an object whose actual type depends on the value of the ''type'' parameter and is one of ''Ecore_Event_Key'', ''Ecore_Event_Mouse_Button'', ''Ecore_Event_Mouse_Wheel'', ''Ecore_Event_Mouse_Move''.
+  * The return value is either ''ECORE_CALLBACK_PASS_ON'', to allow other callbacks for that event be called, or ''ECORE_CALLBACK_DONE'' to not call them.
+
+
+
+The code below is a short example of how to set a global variable to
+''EINA_TRUE'' when the Control key is pressed.
+
+<code c>
+Eina_Bool ctrl_pressed = EINA_FALSE;
+
+static Eina_Bool
+_key_down_cb(void *data __UNUSED__, int type __UNUSED__, void *ev)
+{
+   // The callback is used with the ECORE_EVENT_KEY_DOWN signal: the
+   // parameter "void *ev" is therefore of the actual type Ecore_Event_Key
+   // The following renders its fields accessible
+   Ecore_Event_Key *event = ev;
+
+   // Test whether the key that is pressed is Ctrl.
+   if (!strcmp("Control_L", event-&gt;key))
+     {
+        // If it is, store that piece of information
+        ctrl_pressed = EINA_TRUE;
+     }
+
+   // Let the event continue to other callbacks which have not been called yet
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, NULL);
+</code>
+
+==== Remove an Event Handler: ecore_event_handler_del() ====
+
+To remove an event handler, use the ''ecore_event_handler_del()'' function.
+The prototype is:
+
+<code c>
+void* ecore_event_handler_del(Ecore_Event_Handler *event_handler)
+</code>
+
+  * event_handler is the value returned by ''ecore_event_handler_add()''.
+  * The return value is the data pointer that was used in the corresponding ''call to ecore_event_handler_add()''.
+
+==== Send Events to the Main Loop Yourself: ecore_event_add() ====
+
+You can send events to the main-loop, which helps to handle actions of various
+origins through the same codepath. Note that this is a thread-safe operation.
+
+To send an event, use the ''ecore_event_add()'' function. The prototype is
+
+<code c>
+Ecore_Event* ecore_event_add(int          type,
+                             void*        ev,
+                             Ecore_End_Cb func_free,
+                             void*        func_free_data
+                            )
+</code>
+
+  * ''type'' is the event type. For example, ECORE_EVENT_KEY_DOWN.
+  * ''ev'' is the event data. It is given as a parameter to the callback.
+  * ''func_free'' is a function to free ev after the callback is called. It is optional: ''NULL'' is an acceptable value.
+  * ''func_free_data'' is a pointer to additional data that is given as an argument to the ''func_free'' callback. It is optional: ''NULL'' is an acceptable value.
+
+The type of the ''func_free'' function is defined as follows.
+
+<code c>
+void (* Ecore_End_Cb)(void *user_data, void *func_free_data)
+</code>
+
+The callback function declaration is thus similar to
+
+<code c>
+void some_func_free(void *user_data, void *func_free_data);
+</code>
+
+==== Create Your Own Type of Events: ecore_event_type_new() ====
+
+You can create your own events. It also helps to use a single codepath.
+
+The function for creating your own events is ''ecore_event_type_new()''. The
+prototype is:
+
+<code c>
+int ecore_event_type_new(void);
+</code>
+
+It generates a new unique identifier, which you can use as ''type'' in the
+functions described above.
+
+\\
+-----
+{{page>index}}

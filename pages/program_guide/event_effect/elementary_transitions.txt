@@ -1,0 +1,999 @@
+~~Title: Elementary Animations~~
+{{page>index}}
+----
+===== Elementary Animations =====
+
+Elementary transitions (''Elm_Transit'') allow you to apply various transition
+effects, such as translation and rotation, to Evas objects. Elementary
+transitions are mostly based on Ecore animators, but provide some transition
+methods at a higher level of abstraction. Elementary transitions provide a
+simpler way of animating objects than Ecore animators or Edje animations.
+
+To use Elementary transitions, you must create an ''Elm_Transit'' object and
+define the desired transitions using the methods of this object. After the
+transitions are registered, they will be automatically managed: their callback
+functions will be called for the set duration, and they will be deleted upon
+completion.
+
+Use Elementary transitions only when Edje animations are not sufficient. Edje
+animations are better at handling transitions, have more flexibility, and can
+be manipulated inside themes. The only drawback is that Edje animations have
+their own definition language. If you want to code with the C language, use
+Elementary transitions.
+
+=== Table of Contents ===
+
+  * [[#Getting_Started|Getting Started]]
+  * [[#Adding_Objects_to_an_Animation|Adding Objects to an Animation]]
+  * [[#Animation_Duration|Animation Duration]]
+  * [[#Animation_Acceleration_Mode_("Tween_Mode")|Animation Acceleration Mode ("Tween Mode")]]
+  * [[#Animation_Repeat|Animation Repeat]]
+  * [[#Animation_Auto-reverse|Animation Auto-reverse]]
+  * [[#Transitions|Transitions]]
+  * [[#Built-in_Transitions|Built-in Transitions]]
+    * [[#Translation|Translation]]
+    * [[#Color_Transition|Color Transition]]
+    * [[#Rotation|Rotation]]
+    * [[#Wipe_Effect|Wipe Effect]]
+    * [[#Zoom_Effect|Zoom Effect]]
+    * [[#Resizing_Effect|Resizing Effect]]
+    * [[#Flip_Effect|Flip Effect]]
+    * [[#Resizable_Flip_Effect|Resizable Flip Effect]]
+    * [[#Fade_Effect|Fade Effect]]
+    * [[#Blend_Effect|Blend Effect]]
+  * [[#Combining_Transitions|Combining Transitions]]
+  * [[#Animation_Chain|Animation Chain]]
+  * [[#Animation_Timeline|Animation Timeline]]
+  * [[#Custom_Transition|Custom Transition]]
+
+=== Related Info ===
+
+  * [[/tutorial/effects_tutorial|Effects Tutorial]]
+  * [[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Transit.html|Elementary Transit API]]
+
+^   Elm Transit Examples  ^^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_01_explained.html|Basic Transit Usage]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_02_explained.html|Chained Transitions]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_03_explained.html|Combined effects and options]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_04_c.html|Combined effects over two objects]]|
+
+==== Getting Started ====
+
+The first thing you need to do when creating an transition with
+''Elm_Transit'' is to build your transit object using the
+''elm_transit_add()'' function:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+</code>
+
+You now have an ''Elm_Transit'' instance that will allow you to perform
+transitions on one or more objects. The transit object holds the information
+about the target objects and the transition effects that will be used. The
+transit object also contains information about animation duration, number of
+repetitions, auto-reverse, and so on. The transit object starts playing as
+soon as the application enters the main loop.
+
+==== Adding Objects to an Animation ====
+
+You can add your Evas objects to your transition using the
+''elm_transit_object_add()'' function:
+
+<code c>
+void elm_transit_object_add (Elm_Transit* transit,
+                             Evas_Object* obj
+                            )
+</code>
+
+  * ''transit'' handles the transition.
+  * ''obj'' is the Evas object to animate.
+
+<note>
+The Evas object can be a low-level component, such as a rectangle, but also a
+widget, such as a button, image, or calendar.
+
+If you want to animate an Evas object handled by a container, such as a box,
+you need to either unpack the object before the animation or animate the whole
+container.
+</note>
+
+If you want to know which objects are currently in your transition, use the
+''elm_transit_objects_get()'' function. You will get a list of all the objects
+that are subject to the transition.
+
+At any time, you can remove objects from the transition:
+
+<code c>
+void elm_transit_object_remove(Elm_Transit *transit,
+                               Evas_Object *obj
+                              )
+</code>
+
+  * ''transit'' handles the transition.
+  * ''obj'' is the Evas object to remove from the transition.
+
+<note>
+After you have added at least one Evas object to your transition, if the list
+of objects gets emptied somehow, be it because the transition has been
+terminated or all objects have been deleted, the transition will be
+automatically deleted. Otherwise, you will have to delete the transition by
+yourself using the ''elm_transit_del()'' function. If you delete the
+transit while the transition is running, the transition will stop.
+</note>
+
+=== Adding Images to an Animation ===
+
+If you do not want to manage widgets for animating images, ''Elm_Transit''
+provides a helper function for directly manipulating images:
+
+<code c>
+Elm_Transit* elm_transit_effect_image_animation_add(Elm_Transit *transit,
+                                                    Eina_List   *images
+                                                   )
+</code>
+
+  * ''transit'' handles the transition.
+  * ''images'' is a list of the image paths.
+
+<note>
+This list and its contents will be deleted after the effect ends by the
+''elm_transit_effect_image_animation_context_free()'' function.
+</note>
+
+You can now define your image transitions exactly the same way as with any
+Evas object.
+
+The following example shows how to use ''Elm_Transit'' with images:
+
+<code c>
+char buf[PATH_MAX];
+Eina_List *images = NULL;
+Elm_Transit *transit = elm_transit_add();
+snprintf(buf, sizeof(buf), "%s/images/btn_default.png", PACKAGE_DATA_DIR);
+images = eina_list_append(images, eina_stringshare_add(buf));
+snprintf(buf, sizeof(buf), "%s/images/btn_hover.png", PACKAGE_DATA_DIR);
+images = eina_list_append(images, eina_stringshare_add(buf));
+elm_transit_effect_image_animation_add(transit, images);
+</code>
+
+==== Animation Duration ====
+
+With ''Elm_Transit'', setting the transition duration is mandatory. To set the
+duration, use the ''elm_transit_duration_set()'' function:
+
+<code c>
+void elm_transit_duration_set(Elm_Transit *transit,
+                              double      duration
+                             )
+</code>
+
+  * ''transit'' handles the transition.
+  * ''duration'' is the duration in seconds.
+
+<note>
+The purpose of ''Elm_Transit'' is to abstract the low-level details
+of object interpolation, so you cannot create an infinite transition by
+specifying the duration. However, you can make your transition last forever
+using the repeat function.
+</note>
+
+The following example shows how to make a complete revolution of the target
+Evas object in 2 seconds:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_rotation_add(transit, 0.0, 360);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_go(transit);
+</code>
+
+To get the duration of the transition, use the ''elm_transit_duration_get()''
+function.
+
+==== Animation Acceleration Mode ("Tween Mode") ====
+
+''Elm_Transit'' supports a number of built-in interpolation methods. By
+default, all interpolations are linear. If you want to change the animation's
+dynamics, use the ''elm_transit_tween_mode_set()'' function:
+
+<code c>
+void elm_transit_tween_mode_set(Elm_Transit *          transit,
+                                Elm_Transit_Tween_Mode tween_mode
+                               )
+</code>
+
+  * ''transit'' handles the transition.
+  * ''tween_mode'' is the tween mode of the transition.
+
+
+''tween_mode'' can be one of the following:
+
+  * ''ELM_TRANSIT_TWEEN_MODE_LINEAR'' Constant speed.
+  * ''ELM_TRANSIT_TWEEN_MODE_SINUSOIDAL'' Starts slow, increase speed over time, then decrease again and stop slowly, v1 being a power factor.
+  * ''ELM_TRANSIT_TWEEN_MODE_DECELERATE'' Starts fast and decrease speed over time, v1 being a power factor.
+  * ''ELM_TRANSIT_TWEEN_MODE_ACCELERATE'' Starts slow and increase speed over time, v1 being a power factor.
+  * ''ELM_TRANSIT_TWEEN_MODE_DIVISOR_INTERP'' Start at gradient v1, interpolated via power of v2 curve.
+  * ''ELM_TRANSIT_TWEEN_MODE_BOUNCE'' Start at 0.0 then "drop" like a ball bouncing to the ground at 1.0, and bounce v2 times, with decay factor of v1.
+  * ''ELM_TRANSIT_TWEEN_MODE_SPRING'' Start at 0.0 then "wobble" like a spring rest position 1.0, and wobble v2 times, with decay factor of v1.
+  * ''ELM_TRANSIT_TWEEN_MODE_BEZIER_CURVE'' Since 1.13: Follow the cubic-bezier curve calculated with the control points (x1, y1), (x2, y2)
+
+
+To get the current tween mode, use the ''elm_transit_tween_mode_get()''
+function.
+
+==== Animation Repeat ====
+
+To set a transition to repeat, use the ''elm_transit_repeat_times_set()''
+function:
+
+<code c>
+void elm_transit_repeat_times_set(Elm_Transit * transit,
+                                  int           repeat
+                                 )
+</code>
+
+   * ''transit'' is the transition you want to repeat.
+   * ''repeat'' is the number of times the transition repeats.
+
+<note>
+If the ''repeat'' argument is set to 0, the transition will not loop at all.
+If set to 1, the transition will run twice. If set to a negative value, the
+transition will repeat forever.
+</note>
+
+To get the repeat value, use the ''elm_transit_repeat_times_get()'' function.
+The default value is 0.
+
+The following example shows how to make an Evas object spin for 3 complete
+revolutions in 6 seconds:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_rotation_add(transit, 0.0, 360);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_repeat_set(transit, 3.0);
+elm_transit_go(transit);
+</code>
+
+==== Animation Auto-reverse ====
+
+''Elm_Transit'' provides a helper function for automatically reversing the
+transition once it finishes:
+
+<code c>
+void elm_transit_auto_reverse_set(Elm_Transit * transit,
+                                  Eina_Bool     reverse
+                                 )
+</code>
+
+  * ''transit'' is the transition you want to reverse.
+  * ''reverse'' is the reverse state. If the reverse state is set to ''EINA_TRUE'', this function will perform the same transition backwards as soon as the first transition is complete.
+
+<note>
+Reversing the transition doubles the duration of the transition. Moreover, if
+the transition is set to repeat, the transition will run back and forth until
+the repeat count is finished.
+
+You can calculate the duration as follows if
+both auto-reverse and repeat are set: 2 * duration * repeat.
+</note>
+
+The following example shows how to make an object perform half a turn and then
+reverse the animation to its original position in 4 seconds:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_rotation_add(transit, 0.0, 360);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_auto_reverse_set(transit, EINA_TRUE);
+elm_transit_go(transit);
+</code>
+
+To determine whether the auto-reverse mode is enabled, use the
+''elm_transit_auto_reverse_get()'' function.
+
+==== Transitions ====
+
+We distinguish two main transition types:
+
+   * Transitions that are applied to the properties of objects, such as position, size, angle, and color.
+   * Transitions from one object to another, where the first object is hidden to let the second one appear.
+
+
+All transitions are based on the same principle: we set the starting and the
+ending values for the properties we want to animate, we then set the lifespan
+of the animation, and finally we inquire the preferred interpolation method
+(such as linear, acceleration, or bounce).
+
+You must declare the transitions after the parent window has been created,
+since the transition effects make use of the geometric properties of the
+parent window. If the parent window does not yet exist when calculating the
+interpolation, the interpolation may end up being based on wrong information.
+
+==== Built-in Transitions ====
+
+''Elm_Transit'' provides several built-in transition definitions that are
+useful for the most common cases, so you that will not have to code them from
+scratch.
+
+All these built-in effects are implemented as follows:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_effect_add(transit,
+                       elm_transit_effect_translation_op,
+                       elm_transit_effect_translation_context_new(),
+                       elm_transit_effect_translation_context_free);</code>
+
+  * ''transit'': The ''Elm_Transit'' object that contains the target Evas objects and all the information needed to setup the transition.
+  * ''elm_transit_effect_translation_op'': The callback function that performs the transition (resizing interpolation in this example).
+  * ''elm_transit_effect_translation_context_new()'': The callback function that returns the context used in the transition for calculations. In this example, the context is the coordinates of the before and after objects.
+  * ''elm_transit_effect_translation_context_free'': The callback function that frees up the memory once the transition is complete.
+
+All the definitions above can be rewritten as follows:
+
+<code c>
+
+Elm_Transit *transit = elm_transit_add();
+elm_transit_effect_translation_add(transit, from_x, from_y, to_x, to_y);
+</code>
+
+=== Translation ===
+
+To perform a translation on an Evas object, use the following method:
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_translation_add(Elm_Transit * transit,
+                                                       Evas_Coord    from_dx,
+                                                       Evas_Coord    from_dy,
+                                                       Evas_Coord    to_dx,
+                                                       Evas_Coord    to_dy
+                                                      )
+</code>
+
+  * ''transit'' is the transit object that contains (among other things) all the Evas objects subject to the translation.
+  * ''from_dx'': The starting X coordinate (source).
+  * ''from_dy'': The starting Y coordinate (source).
+  * ''to_dx'': The ending X coordinate (destination).
+  * ''to_dy'': The ending Y coordinate (destination).
+
+The following example shows how to slide an Evas object (a rectangle) on a
+45-degree diagonal, from bottom-left to top-right, at a constant speed, and in
+1 second:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, rectangle);
+elm_transit_effect_translation_add(transit, 0, 0, 280, 280);
+elm_transit_duration_set(transit, 1);
+elm_transit_go(transit);
+</code>
+
+=== Color Transition ===
+
+Color transitions allow you to dynamically change the color of Evas objects.
+The first argument is the transit object, while the other arguments will be
+used to define the color transition using RGB colors. There is also an alpha
+channel that controls the opacity of the color (the background of the object,
+not the object itself).
+
+<code c>
+
+Elm_Transit_Effect * elm_transit_effect_color_add(Elm_Transit * transit,
+                                                  unsigned int  from_r,
+                                                  unsigned int  from_g,
+                                                  unsigned int  from_b,
+                                                  unsigned int  from_a,
+                                                  unsigned int  to_r,
+                                                  unsigned int  to_g,
+                                                  unsigned int  to_b,
+                                                  unsigned int  to_a
+                                                 )
+</code>
+
+
+  * ''transit'': The transit object that contains (among other things) all the Evas objects subject to the translation.
+  * ''from_r'': The start value for "Red".
+  * ''from_g'': The start value for "Green".
+  * ''from_b'': The start value for "Blue".
+  * ''from_a'': The start value for "Alpha".
+  * ''to_r'': The end value for "Red".
+  * ''to_g'': The end value for "Green".
+  * ''to_b'': The end value for "Blue".
+  * ''to_a'': The end value for "Alpha".
+
+The following example shows how to transit a rectangle from red to blue in 3
+seconds:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, rectangle);
+elm_transit_effect_color_add(transit,         // Target object
+                             255, 0, 0, 255,  // From color
+                             0, 0, 255, 255); // To color
+elm_transit_duration_set(transit, 3);
+elm_transit_go(transit);
+</code>
+
+=== Rotation ===
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_rotation_add(Elm_Transit * transit,
+                                                    float         from_degree,
+                                                    float         to_degree
+                                                   )
+</code>
+
+  * ''transit'': The transit object that contains (among other things) all the Evas objects subject to the translation.
+  * ''from_degree'': The start degree of rotation.
+  * ''to_degree'': The end degree of rotation.
+
+This function can be used to perform a rotation on any Evas object. It works
+the same way as the other transit effects and takes two arguments for the
+starting and ending angles. Note that if you apply a rotation on multiple
+objects, they will individually mill around and not act as a group. If you
+want several objects to revolve around a common point, you must encapsulate
+the objects into a single parent object and apply the rotation to the parent
+object. The following example shows how to achieve this:
+
+<code c>
+// Parent container
+Evas_Object *parent = elm_box_add(my_window);
+evas_object_show(parent);
+elm_box_horizontal_set(parent, EINA_TRUE);
+elm_box_homogeneous_set(parent, EINA_TRUE);
+
+// Button 1
+Evas_Object *btn1 = elm_button_add(parent);
+elm_object_text_set(btn1, "Btn1");
+elm_box_pack_start(parent, btn1);
+evas_object_show(btn1);
+
+// Button 2
+Evas_Object *btn2 = elm_button_add(parent);
+elm_object_text_set(btn2, "Btn2");
+elm_box_pack_end(parent, btn2);
+evas_object_show(btn2);
+
+// Make the parent container do a 360 degrees spin
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, parent);
+elm_transit_effect_rotation_add(transit, 0.0, 360);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_go(transit);
+</code>
+
+=== Wipe Effect ===
+
+The wipe effect is designed to dynamically hide or show any element on the
+scene.
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_wipe_add(Elm_Transit *                transit,
+                                                Elm_Transit_Effect_Wipe_Type type,
+                                                Elm_Transit_Effect_Wipe_Dir  dir
+                                               )
+</code>
+
+In addition to the ''Elm_Transit'' instance passed as the first argument, the
+function takes the following arguments:
+
+  * ''type'': The wipe type ''Elm_Transit_Effect_Wipe_Type'' defines whether to show or hide the target elements. The value can be one of the following:
+    * ''ELM_TRANSIT_EFFECT_WIPE_TYPE_HIDE'': Hide the object during the animation.
+    * ''ELM_TRANSIT_EFFECT_WIPE_TYPE_SHOW'': Show the object during the animation.
+  * ''dir'': The wipe direction ''Elm_Transit_Effect_Wipe_Dir'' defines in which direction the target will progressively appear or disappear. The value can be one of the following:
+    * ''ELM_TRANSIT_EFFECT_WIPE_DIR_LEFT''
+    * ''ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT''
+    * ''ELM_TRANSIT_EFFECT_WIPE_DIR_UP''
+    * ''ELM_TRANSIT_EFFECT_WIPE_DIR_DOWN''
+
+The following example shows how to make an object disappear progressively from
+left to right:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_wipe_add(transit,
+                            ELM_TRANSIT_EFFECT_TYPE_HIDE,
+                            ELM_TRANSIT_EFFECT_WIPE_DIR_RIGHT);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_go(transit);
+</code>
+
+=== Zoom Effect ===
+
+''Elm_Transit'' provides a zoom function.
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_zoom_add(Elm_Transit * transit,
+                                                float         from_rate,
+                                                float         to_rate
+                                               )
+</code>
+
+
+  * ''transit'': The transit object that contains (among other things) all the Evas objects subject to the translation.
+  * ''from_rate'': The starting level of the zoom.
+  * ''to_rate'': The ending level of the zoom.
+
+The ''from_rate'' argument defines the scale of the target objects at the
+beginning of the animation. A value of 1 represents the initial scale of the
+objects.
+
+Setting the value of the ''to_rate'' argument to 2 will double the size of the
+target objects (double the width and double the height). When using this
+effect, the width and height of a target object will remain proportional to
+one another. If you want to customize the zoom effect, use the
+''elm_transit_effect_resizing_add()'' function.
+
+The following example shows how to implement a zoom-out transition. At the end
+of the 2-secondstransition, the animated object will be half its original
+size.
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_zoom_add(transit, 1, 0.5);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_go(transit);
+</code>
+
+=== Resizing Effect ===
+
+The resizing effect allows you to design an interpolation of the width and
+height attributes of one or more target elements.
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_resizing_add(Elm_Transit * transit,
+                                                    Evas_Coord    from_w,
+                                                    Evas_Coord    from_h,
+                                                    Evas_Coord    to_w,
+                                                    Evas_Coord    to_h)
+                                                   )
+</code>
+
+
+  * ''transit'': The transit object that contains (among other things) all the Evas objects subject to the translation.
+  * ''from_w'': The starting width.
+  * ''from_h'': The starting height.
+  * ''to_w'': The ending width.
+  * ''to_h'': The ending height.
+
+The ''from_w'' and ''from_h'' arguments define the size at the beginning of
+the animation. The ''to_w'' and ''to_h'' arguments define the size at the end.
+
+<note>
+If you are planning to use this method to hide an Evas object by setting one
+of the length attributes to zero, consider using the
+''elm_transit_effect_wipe_add()'' function instead.
+</note>
+
+The following example shows how to make a rectangle exchange its width and
+height properties in a 2-second transition:
+
+<code c>
+Evas_Coord w, h;
+evas_object_geometry_get(my_evas_object, NULL, NULL, &w, &h);
+
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, my_evas_object);
+elm_transit_effect_resize_add(transit,            // Transition object
+                              w, h,               // Original sizing
+                              h, w);              // Target sizing
+elm_transit_duration_set(transit, 2.0);
+elm_transit_go(transit);
+</code>
+
+=== Flip Effect ===
+
+This transition combines the target Evas objects in pairs, so that one object
+will show up while the other one disappears. This association relates the even
+objects in the transit list of objects with the odd ones. The even objects are
+shown at the beginning of the animation, and the odd objects shown when the
+transition is complete. In other words, the effect applies to each pair of
+objects in the order in which they are listed in the transit list of objects.
+
+The flip effect itself is a pseudo-3D effect where the first object in the
+pair is the front object and the second one is the back object. When the
+transition launches, the front object rotates around a preferred axis in order
+to let the back object take its place.
+
+<code c>
+
+Elm_Transit_Effect* elm_transit_effect_flip_add(Elm_Transit *                transit,
+                                                Elm_Transit_Effect_Flip_Axis axis,
+                                                Eina_Bool                    cw
+                                               )
+</code>
+
+  * ''transit'' is the transit object.
+  * ''axis'' is the prefered axis of rotation:
+    * ''ELM_TRANSIT_EFFECT_FLIP_AXIS_X''
+    * ''ELM_TRANSIT_EFFECT_FLIP_AXIS_Y''
+  * ''cw'' is the direction of the rotation:
+    * ''EINA_TRUE'' is clockwise.
+    * ''EINA_FALSE'' is counterclockwise.
+
+
+The following example shows how to create a coin that flips indefinitely. Note
+that we use images as Elementary widgets for demonstration purposes. You can
+use the ''elm_transit_effect_image_animation_add()'' function if you do not
+want to bother creating widgets.
+
+<code c>
+// Coin Heads
+Evas_Object *coin_heads = elm_image_add(win);
+if (!elm_image_file_set(coin_heads, IMG_DIR"/coin_heads.png", NULL))
+   printf("error: could not load image");
+elm_win_resize_object_add(win, coin_heads);
+
+// Coin Tails
+Evas_Object *coin_tails = elm_image_add(win);
+if (!elm_image_file_set(coin_tails, IMG_DIR"/coin_tails.png", NULL))
+   printf("error: could not load image");
+elm_win_resize_object_add(win, coin_tails);
+
+// Transition definition
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, coin_heads);
+elm_transit_object_add(transit, coin_tails);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_auto_reverse_set(transit, EINA_TRUE);
+elm_transit_repeat_times_set(transit, -1);
+elm_transit_effect_flip_add(transit, ELM_TRANSIT_EFFECT_FLIP_AXIS_X, EINA_TRUE);
+elm_transit_go(transit);
+</code>
+
+{{ :event_effect_elementary_transitions_coin_flip.png }}
+
+=== Resizable Flip Effect ===
+
+In the flip example above, we used two objects that have the same size.
+However, you may sometimes want to flip from one object to another object with
+different size attributes. The most common example would be using buttons with
+dimensions that depend on their contents (such as labels). If you decide to
+use the classic ''elm_transit_effect_flip_add()'' function, the size of the
+object will change at the moment one object becomes completely hidden and the
+other one begins to show up. If you wish to interpolate the size attributes as
+well, use the ''elm_transit_effect_resizable_flip_add()'' function:
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_resizable_flip_add(Elm_Transit *                transit,
+                                                          Elm_Transit_Effect_Flip_Axis axis,
+                                                          Eina_Bool                    cw
+                                                         )
+</code>
+
+  * ''transit'' is the transit object.
+  * ''axis'' is the preferred axis of rotation:
+    * ''ELM_TRANSIT_EFFECT_FLIP_AXIS_X''
+    * ''ELM_TRANSIT_EFFECT_FLIP_AXIS_Y''
+  * ''cw'' is the direction of the rotation:
+    * ''EINA_TRUE'' is clockwise.
+    * ''EINA_FALSE'' is counterclockwise.
+
+This function works the exact same way as the standard flip effect function.
+
+=== Fade Effect ===
+
+This effect is used to transition from one Evas object to another one using a
+fading effect: the first object will slowly disappear to let the second object
+take its place.
+
+<code c>
+Elm_Transit_Effect* elm_transit_effect_fade_add(Elm_Transit *transit)
+</code>
+
+This effect is applied to each pair of objects in the order in which they are
+listed in the transit list of objects. The first object in the pair will be
+the before object and the second one will be the after object.
+
+Building on the coin flip example, the following example shows how to fade out
+one face of the coin while fading in the other face:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, coin_heads);
+elm_transit_object_add(transit, coin_tails);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_effect_fade_add(transit);
+elm_transit_go(transit);
+</code>
+
+If you simply want to hide an object with a fade transition, consider using a
+transparent after object.
+
+=== Blend Effect ===
+
+Another transition involving at least two Evas objects is the blend effect.
+This transition makes the before object blurry before the after object
+appears.
+
+<code c>
+elm_transit_effect_blend_add(Elm_Transit *transit)
+</code>
+
+The argument is the transition target of the blend effect.
+
+Building on the coin flip example, the following example shows how to blur out
+one face of the coin while blurring in the other face:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, coin_heads);
+elm_transit_object_add(transit, coin_tails);
+elm_transit_duration_set(transit, 2.0);
+elm_transit_effect_blend_add(transit);
+elm_transit_go(transit);
+</code>
+
+If you simply want to hide an object with a blur transition, consider using a
+transparent after object.
+
+==== Combining Transitions ====
+
+To use multiple transitions at the same time on the same objects, simply
+declare the transitions one after the other.
+
+Building on the coin flip example, the following example shows how to roll the
+coin on the ground using a rotation and a translation effect:
+
+<code c>
+Evas_Object *coin_heads = elm_image_add(parent);
+if (!elm_image_file_set(coin_heads, IMG_DIR"/coin_heads.png", NULL))
+   printf("error: could not load image");
+evas_object_resize(coin_heads, 100, 100);
+evas_object_show(coin_heads);
+
+Elm_Transit *transit = elm_transit_add();
+elm_transit_object_add(transit, coin_heads);
+elm_transit_duration_set(transit, 5.0);
+elm_transit_effect_translation_add(transit, 0, 0, 3.1415 * 2 * 100, 0);
+elm_transit_effect_rotation_add(transit, 0, 360);
+elm_transit_go(transit);
+</code>
+
+==== Animation Chain ====
+
+Now that we have listed all the effects that can be implemented using
+''Elm_Transit'', we will see how to chain transitions into sequences. To
+create complex, chained animations without worrying about synchronization
+between the transitions, use the ''elm_transit_chain_transit_add()'' function.
+This function takes as arguments two ''Elm_Transit'' objects and will
+automatically take care of the chaining for you: the second transition will
+start as soon as the first transition is finished.
+
+The following example shows how to move a datetime widget on a square
+trajectory:
+
+<code c>
+Evas_Object *dt = elm_datetime_add(parent);
+evas_object_resize(dt, 350, 50);
+evas_object_show(dt);
+
+// The first transition
+Elm_Transit *t1 = elm_transit_add();
+elm_transit_object_add(t1, dt);
+elm_transit_duration_set(t1, 2);
+elm_transit_effect_translation_add(t1, 0, 0, 100, 0);
+
+// The second transition
+Elm_Transit *t2 = elm_transit_add();
+elm_transit_object_add(t2, dt);
+elm_transit_duration_set(t2, 2);
+elm_transit_effect_translation_add(t2, 100, 0, 100, 100);
+
+// The third transition
+Elm_Transit *t3 = elm_transit_add();
+elm_transit_object_add(t3, dt);
+elm_transit_duration_set(t3, 2);
+elm_transit_effect_translation_add(t3, 100, 100, 0, 100);
+
+// The fourth transition
+Elm_Transit *t4 = elm_transit_add();
+elm_transit_object_add(t4, dt);
+elm_transit_duration_set(t4, 2);
+elm_transit_effect_translation_add(t4, 0, 100, 0, 0);
+
+// Chaining the transitions
+elm_transit_chain_transit_add(t1, t2);
+elm_transit_chain_transit_add(t2, t3);
+elm_transit_chain_transit_add(t3, t4);
+
+// Starting the transitions
+elm_transit_go(t1);
+</code>
+
+Note that we cannot use transition chaining to make a loop animation, since
+the transit object is automatically destroyed as soon as the transition
+completes. Therefore, you cannot do something like this:
+
+<code c>
+elm_transit_chain_transit_add(t4, t1);
+</code>
+
+To create a looped animation chain, you have to use low-level components
+provided by the Ecore and Evas transition libraries, or you can use the
+''elm_transit_del_cb_set()'' function to define a callback function for when a
+transition gets deleted. This way, you could recreate your objects and
+reiterate the transition chain as soon as the last transition ends.
+
+<code c>
+void elm_transit_del_cb_set(Elm_Transit *      transit,
+                            Elm_Transit_Del_Cb cb,
+                            void *             data
+                           )
+</code>
+
+  * ''transit'' is the transition object.
+  * ''cb'' is the callback function to run on transition delete.
+  * ''data'' is the data to pass to the callback function.
+
+You can severe the chain relationship between two transits by using the
+''elm_transit_chain_transit_del()'' function:
+
+<code c>
+void elm_transit_chain_transit_del(Elm_Transit * transit,
+                                   Elm_Transit * chain_transit
+                                  )
+</code>
+
+  * ''transit'' is the first transition in the chain.
+  * ''chain_transit'' is the second transition in the chain.
+
+To get the current chain transit list, use the
+''elm_transit_chain_transits_get()'' function.
+
+==== Animation Timeline ====
+
+After you have defined all the properties that define your transition, start
+the transition with the ''elm_transit_go()'' function:
+
+<code c>
+void elm_transit_go(Elm_Transit *transit)
+</code>
+
+You can maintain full control over the execution process even after the
+transition has started. You can pause the transition by setting the paused
+argument to ''EINA_TRUE'':
+
+<code c>
+elm_transit_paused_set(Elm_Transit * transit,
+                       Eina_Bool     paused
+                      )
+</code>
+
+You can resume the transition by using the same method but setting the paused
+argument to ''EINA_FALSE''. If you want to know whether the transition is
+currently paused, use the ''elm_transit_paused_get()'' function.
+
+You can remain informed about the present transition flow and get the current
+frame by using the ''elm_transit_progress_value_get()'' function. This
+function will return the timeline position of the animation, ranging between
+0.0 (start) and 1.0 (end).
+
+==== Custom Transition ====
+
+''Elm_Transit'' provides a standard function for defining any effect of your
+choosing that will be applied to some context data:
+
+<code c>
+elm_transit_effect_add(Elm_Transit *                    transit,
+                       Elm_Transit_Effect_Transition_Cb transition_cb,
+                       Elm_Transit_Effect *             effect,
+                       Elm_Transit_Effect_End_Cb        end_cb
+                      )
+</code>
+
+  * ''transit'' is the transition target of the new effect.
+  * ''transition_cb'' is the transition callback function.
+  * ''effect'' is the new effect.
+  * ''end_cb'' is the callback function to call at the end of the effect.
+
+As described earlier in this programming guide, this function embraces three
+callbacks that will allow you to define every aspects of your transition from
+its creation to its deletion. The following is an example of how to build a
+custom resizing animation.
+
+First, we define a structure capable of holding the context information about
+resizing an Evas object:
+
+<code c>
+typedef struct
+{
+   struct _size
+   {
+      Evas_Coord w, h;
+   }
+   from, to;
+}
+Custom_Effect;
+</code>
+
+We can now implement our custom resizing callback function. This function
+takes the following arguments:
+
+   * ''data'' is the context data that holds the custom properties of our transition, which are used as parameters to calculate the interpolation.
+   * ''transit'' is the transit object that contains the list of our Evas objects to animate and all the information about duration, auto-reverse, looping, and so on.
+   * ''progress'' is the progress (position along the animation timeline) that ranges from 0.0 to 1.0 and allows us to calculate the desired interpolation for each frame.
+
+<code c>
+static void
+_custom_op(void *data, Elm_Transit *transit, double progress)
+{
+   if (!data) return;
+   Evas_Coord w, h;
+   Evas_Object *obj;
+   const Eina_List *elist;
+   Custom_Effect *custom_effect = data;
+   const Eina_List *objs = elm_transit_objects_get(transit);
+   if (progress &lt; 0.5)
+     {
+        h = custom_effect->from.h + (custom_effect->to.h * progress * 2);
+        w = custom_effect->from.w;
+     }
+   else
+     {
+        h = custom_effect->from.h + custom_effect->to.h;
+        w = custom_effect->from.w + (custom_effect->to.w * (progress - 0.5) * 2);
+     }
+   EINA_LIST_FOREACH(objs, elist, obj)
+      evas_object_resize(obj, w, h);
+}
+</code>
+
+The callback function above resizes our Evas objects in two steps. During the
+first half of the transition, only the height changes, while the width remains
+the same. During the second half, it is the other way around until we get to
+the desired size.
+
+You must then define the context used by your animation:
+
+<code c>
+static void*
+_custom_context_new(Evas_Coord from_w, Evas_Coord from_h, Evas_Coord to_w, Evas_Coord to_h)
+{
+   Custom_Effect *custom_effect;
+
+   custom_effect = calloc(1, sizeof(Custom_Effect));
+   if (!custom_effect) return NULL;
+
+   custom_effect->from.w = from_w;
+   custom_effect->from.h = from_h;
+   custom_effect->to.w = to_w - from_w;
+   custom_effect->to.h = to_h - from_h;
+
+   return custom_effect;
+}
+</code>
+
+You must define the function that will take care of deleting all the context
+objects used by your custom transition and free up the allocated memory:
+
+<code c>
+static void
+_custom_context_free(void *data, Elm_Transit *transit __UNUSED__)
+{
+   free(data);
+}
+</code>
+
+Finally, apply your custom transition to your ''Elm_Transit'' object:
+
+<code c>
+Elm_Transit *transit = elm_transit_add();
+elm_transit_effect_add(transit,
+                       _custom_op,
+                       _custom_context_new(),
+                       _custom_context_free);
+</code>
+
+If you want to delete an effect from your effects list, use the
+''elm_transit_effect_del()'' function.
+
+\\
+^   Elm Transit Examples  ^^^^^
+|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_01_explained.html|Basic Transit Usage]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_02_explained.html|Chained Transitions]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_03_explained.html|Combined effects and options]]|[[https://build.enlightenment.org/job/nightly_elm_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/transit_example_04_c.html|Combined effects over two objects]]|
+
+------
+{{page>index}}

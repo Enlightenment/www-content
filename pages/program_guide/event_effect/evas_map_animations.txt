@@ -1,0 +1,577 @@
+~~Title: Evas Map Effects~~
+{{page>index}}
+----
+===== Evas Map Effects =====
+
+Evas Map animations allow you to apply transformations to all types of objects
+by way of UV mapping.
+
+In UV mapping, you map points in the source object to 3D space positions in
+the target object. This allows for rotation, perspective, scale, and other
+transformation effects, depending on the map. In addition, each map point can
+carry a multiplier color, which, if properly calculated, can be used to apply
+3D shading effects on the target object.
+
+Evas provides both raw and easy-to-use functions for UV mapping. The raw
+functions allow you to create UV maps outside Evas and import them into your
+application, for example by loading them from an external file. The
+easy-to-use functions allow you to create UV maps directly in Evas by
+calculating the map points based on high-level parameters, such as rotation
+angle and ambient light.
+
+=== Table of Contents ===
+
+    * [[#Map_Points|Map Points]]
+    * [[#Utility_Functions|Utility Functions]]
+    * [[#Zoom|Zoom]]
+    * [[#3D_Maps|3D Maps]]
+    * [[#3D_Rotation_and_Perspective|3D Rotation and Perspective]]
+    * [[#Color_and_Lighting|Color and Lighting]]
+    * [[#Mapping|Mapping]]
+    * [[#Lighting|Lighting]]
+    * [[#Alpha_Channel|Alpha Channel]]
+    * [[#Smoothing|Smoothing]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Object__Group__Map.html | Evas Map API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/Example_Evas_Map_Overview.html|Evas Map Example]]
+
+==== Map Points ====
+
+A map consists of a set of points. (Currently, only four points are
+supported.) Each point contains X and Y canvas coordinates that can be used to
+alter the geometry of the mapped object, and a Z coordinate that indicates the
+depth of the point. The Z coordinate does not normally affect the map, but
+several utility functions use it to calculate the right position of the point
+given the other parameters.
+
+First, create an ''Evas_Map'' object using the ''evas_map_new()'' function.
+This function creates the specified number of map points (currently only up to
+four points). Each point is empty and ready to be modified with ''Evas_Map''
+functions.
+
+<code c>
+Evas_Map *m = evas_map_new(4);
+</code>
+
+If you want to get the size (number of points) of an existing map, use the
+''evas_map_count_get()'' function.
+
+To set the coordinates for each point, use the ''evas_map_point_coord_set()''
+function:
+
+<code c>
+evas_map_point_coord_set(Evas_Map *m, int idx, Evas_Coord x, Evas_Coord y, Evas_Coord z)
+</code>
+
+The following example shows a common way to define a map that matches the
+geometry of a rectangle (a square in this case):
+
+<code c>
+evas_map_point_coord_set(m, 0, 100, 100, 0);
+evas_map_point_coord_set(m, 1, 300, 100, 0);
+evas_map_point_coord_set(m, 2, 300, 300, 0);
+evas_map_point_coord_set(m, 3, 100, 300, 0);
+</code>
+
+{{ :event_effect_evas_map_1.png }}
+
+The following examples all produce the same result as the above example, but
+with simpler code:
+
+  * To create a rectangle map using the starting X and Y coordinates combined with width and height, use the ''evas_map_util_points_populate_from_geometry()'' function:
+
+<code c>
+evas_map_util_points_populate_from_geometry(Evas_Map *m, Evas_Coord x,
+Evas_Coord y, Evas_Coord w, Evas_Coord h, Evas_Coord z)
+</code>
+
+The following example creates the same map as above:
+
+<code c>
+evas_map_util_points_populate_from_geometry(m, 100, 100, 200, 200, 0);
+</code>
+
+  * To create a map based on the geometry of a given object, use the ''evas_map_util_points_populate_from_object()'' or ''evas_map_util_points_populate_from_object_full()'' function. The former sets the Z coordinate of all points to 0, whereas the latter allows you to define the same custom Z coordinate for all points:
+
+<code c>
+evas_map_util_points_populate_from_object(Evas_Map *m, const Evas_Object *obj)
+</code>
+<code c>
+evas_map_util_points_populate_from_object_full(Evas_Map *m, const Evas_Object *obj, Evas_Coord z)
+</code>
+The following example creates the same map as above:
+
+<code c>
+Evas_Object *o;
+evas_object_move(o, 100, 100);
+evas_object_resize(o, 200, 200);
+evas_map_util_points_populate_from_object(m, o);
+// OR
+evas_map_util_points_populate_from_object_full(m, o, 0);
+</code>
+
+You can apply several effects to an object by simply setting each point of the
+map to the appropriate coordinates. The following example shows how to create
+a simulated perspective:
+
+{{ :event_effect_evas_map_2.png }}
+
+<code c>
+evas_map_point_coord_set(m, 0, 100, 100, 0);
+evas_map_point_coord_set(m, 1, 250, 120, 0);
+evas_map_point_coord_set(m, 2, 250, 280, 0);
+evas_map_point_coord_set(m, 0, 100, 300, 0);
+</code>
+
+In the above example, the Z coordinate is unused: when setting points by hand,
+the Z coordinate is irrelevant.
+
+If you want to get the actual coordinates of a map, use the
+''evas_map_point_coord_get()'' function:
+
+<code c>
+evas_map_point_coord_get(const Evas_Map *m, int idx, Evas_Coord *x, Evas_Coord *y, Evas_Coord *z)
+</code>
+
+After you have defined the map points, apply them to your map for
+transformation:
+
+<code c>
+evas_object_map_set(o, m);
+evas_object_map_enable_set(o, EINA_TRUE);
+</code>
+
+Finally, after you are done with the map, release the memory allocated to it
+using the ''evas_map_free()'' function:
+
+<code c>
+evas_map_free(m);
+</code>
+
+The utility functions described in the next section allow you to perform the
+above tasks with less coding work.
+
+==== Utility Functions ====
+
+Utility functions take an already configured map and allow you to easily
+modify it to produce specific effects. For example, to rotate an object around
+its center, you need the rotation angle and the coordinates of each corner of
+the object to perform the math required to get the new set of coordinates that
+needs to be set for the map. Evas provides a utility function that does the
+math for you:
+<code c>
+void evas_map_util_rotate(Evas_Map * m,
+                          double     degrees,
+                          Evas_Coord cx,
+                          Evas_Coord cy
+                         )
+</code>
+
+  * ''m'' map to change.
+  * ''zoomx'' horizontal zoom to use.
+  * ''zoomy'' vertical zoom to use.
+  * ''cx''  zooming center horizontal position.
+  * ''cy''  zooming center vertical position.
+
+This function rotates the map based on the angle and the center coordinates of
+the rotation provided as arguments. A positive angle rotates the map
+clockwise, while a negative angle rotates the map counterclockwise.
+
+The following example shows how to rotate an object around its center point by
+45 degrees clockwise. In the following figure, the center of rotation is the
+red dot.
+
+<code c>
+evas_object_geometry_get(o, &x, &y, &w, &h);
+m = evas_map_new(4);
+evas_map_util_points_populate_from_object(m, o);
+evas_map_util_rotate(m, 45, x + (w / 2), y + (h / 2));
+evas_object_map_set(o, m);
+evas_object_map_enable_set(o, EINA_TRUE);
+evas_map_free(m);
+</code>
+
+{{ :event_effect_evas_map_3.png }}
+
+You can rotate the object around any other point simply by setting the last
+two arguments of the ''evas_map_util_rotate()'' function to the appropriate
+values:
+
+<code c>
+evas_map_util_rotate(m, 45, x + w - 20, y + h - 20);
+</code>
+
+{{ :event_effect_evas_map_4.png }}
+
+You can also set the center of the window as the center of the rotation using
+the appropriate coordinates of the Evas canvas:
+
+<code c>
+evas_output_size_get(evas, &amp;w, &amp;h);
+m = evas_map_new(4);
+evas_map_util_points_populate_from_object(m, o);
+evas_map_util_rotate(m, 45, w, h);
+evas_object_map_set(o, m);
+evas_object_map_enable_set(o, EINA_TRUE);
+evas_map_free(m);
+</code>
+
+==== Zoom ====
+
+The ''evas_map_util_zoom()'' function zooms the points of the map from a
+center point, defined by ''cx'' and ''cy''. The ''zoomx'' and ''zoomy''
+arguments specify how much to zoom in on the X and Y axes. A value of 1.0
+means no zoom, 2.0 means double the size, 0.5 means half the size, and so on.
+All the coordinates are global canvas coordinates.
+
+<code c>
+void evas_map_util_zoom(Evas_Map * m,
+                        double     zoomx,
+                        double     zoomy,
+                        Evas_Coord cx,
+                        Evas_Coord cy
+                       )
+</code>
+
+  * ''m'' map to change.
+  * ''zoomx'' horizontal zoom to use.
+  * ''zoomy'' vertical zoom to use.
+  * ''cx''  zooming center horizontal position.
+  * ''cy''  zooming center vertical position.
+
+==== 3D Maps ====
+
+Maps can also be used to achieve a 3D effect. In a 3D effect, the Z coordinate
+of each point is meaningful: the higher the value, the further back the point
+is located. Smaller values (usually negative) mean that the point is closer to
+the user.
+
+3D also introduces the concept of the back face of an object. An object is
+said to be facing the user when all its points are placed in a clockwise
+formation, as shown in the left map in the following figure. Rotating the map
+around its Y axis swaps the order of the points into a counterclockwise
+formation, making the object face away from the user, as shown in the right
+map in the following figure. The back face is especially relevant in lighting
+(see below).
+
+{{ :event_effect_evas_map_5.png }}
+
+To determine whether a map is facing the user, use the
+''evas_map_util_clockwise_get()'' function. This function returns
+''EINA_TRUE'' if the map is facing the user and ''EINA_FALSE'' if the map is
+facing away from the user. This is normally done after all the other
+operations are applied to the map.
+
+<code c>
+Eina_Bool evas_map_util_clockwise_get(Evas_Map *m)
+</code>
+
+==== 3D Rotation and Perspective ====
+
+The ''evas_map_util_3d_rotate()'' function transforms a map to apply a 3D
+rotation to the mapped object. You can apply the rotation around any point in
+the canvas (including a Z coordinate). You can also apply the rotation around
+any of the three axes.
+
+<code c>
+evas_map_util_3d_rotate(Evas_Map * m,
+                        double     dx,
+                        double     dy,
+                        double     dz,
+                        Evas_Coord cx,
+                        Evas_Coord cy,
+                        Evas_Coord cz
+                      )
+</code>
+
+  * ''m'': map to change.
+  * ''dx'':  amount of degrees from 0.0 to 360.0 to rotate around X axis.
+  * ''dy'':  amount of degrees from 0.0 to 360.0 to rotate around Y axis.
+  * ''dz'':  amount of degrees from 0.0 to 360.0 to rotate around Z axis.
+  * ''cx'':  rotation's center horizontal position.
+  * ''cy'':  rotation's center vertical position.
+  * ''cz'':  rotation's center vertical position.
+
+Starting from this simple setup, and setting the maps so that the blue square
+rotates around the Y axis, we get the following:
+
+{{ :event_effect_evas_map_6.png }}
+
+A simple overlay over the image shows the original geometry of each object and
+the axis around which they are being rotated. The Z axis is not shown, since
+it is orthogonal to the screen. To show the Z axis, that is, to add 3D
+perspective to the transformation, use the ''evas_map_util_3d_perspective()''
+function on the map after its position has been set:
+
+<code c>
+void evas_map_util_3d_perspective(Evas_Map * m,
+                                  Evas_Coord px,
+                                  Evas_Coord py,
+                                  Evas_Coord z0,
+                                  Evas_Coord foc
+                                 )
+</code>
+
+  * ''m'': map to change.
+  * ''px'':  The perspective distance X coordinate
+  * ''py'':  The perspective distance Y coordinate
+  * ''z0'':  The "0" z plane value
+  * ''foc'': The focal distance
+
+The result makes the vanishing point the center of each object:
+
+{{ :event_effect_evas_map_7.png }}
+
+==== Color and Lighting ====
+
+Each point in a map can be set to a color, which will be multiplied with the
+object’s own color and linearly interpolated between adjacent points. To set
+the color separately for each point, use the ''evas_map_point_color_set()''
+function:
+
+<code c>
+void evas_map_point_color_set(Evas_Map * m,
+                              int        idx,
+                              int        r,
+                              int        g,
+                              int        b,
+                              int        a
+                             )
+</code>
+
+  * ''m'' map to change the color of.
+  * ''idx'' index of point to change. Must be smaller than map size.
+  * ''r'' red (0 - 255)
+  * ''g'' green (0 - 255)
+  * ''b'' blue (0 - 255)
+  * ''a'' alpha (0 - 255)
+
+To set the same color for every point, use the
+''evas_map_util_points_color_set()'' function:
+
+<code c>
+void evas_map_util_points_color_set(Evas_Map *m, int r, int g, int b, int a)
+</code>
+
+When using a 3D effect, colors can be used to improve its look by simulating a
+light source. The ''evas_map_util_3d_lighting()'' function makes this task
+easier by taking the coordinates of the light source and its color, along with
+the color of the ambient light. Evas then sets the color of each point based
+on its distance to the light source, the angle at which the object is facing
+the light source, and the ambient light. Here, the orientation of each point
+is important.
+
+<code c>
+evas_map_util_3d_lighting(Evas_Map * m,
+                          Evas_Coord lx,
+                          Evas_Coord ly,
+                          Evas_Coord lz,
+                          int        lr,
+                          int        lg,
+                          int        lb,
+                          int        ar,
+                          int        ag,
+                          int        ab
+                         )
+</code>
+
+  * ''m'' map to change.
+  * ''lx''  X coordinate in space of light point
+  * ''ly''  Y coordinate in space of light point
+  * ''lz''  Z coordinate in space of light point
+  * ''lr''  light red value (0 - 255)
+  * ''lg''  light green value (0 - 255)
+  * ''lb''  light blue value (0 - 255)
+  * ''ar''  ambient color red value (0 - 255)
+  * ''ag''  ambient color green value (0 - 255)
+  * ''ab''  ambient color blue value (0 - 255)
+
+If the map points are defined counterclockwise, the object faces away from the
+user and is therefore obscured, since no light is reflecting back from it.
+
+{{ :event_effect_evas_map_8.png }}
+
+==== Mapping ====
+
+Images need special handling when mapped. While Evas can easily handle objects, it is completely oblivious to the contents of images. This means that each point in a map needs to be mapped to a specific pixel in the source image. Failing to do this can result in unexpected behavior.
+
+Let's get started with the following three images, each sized at 200 × 200 pixels:
+
+{{ :event_effect_evas_map_9.png }}
+
+The following three images illustrate the case where a map is set to an image
+object without setting the right UV mapping for each map point. The objects
+themselves are mapped properly to their new geometries, but the images are not
+displayed correctly within the mapped objects.
+
+{{ :event_effect_evas_map_10.png }}
+
+To transform an image correctly, Evas needs to know how to handle the image
+within the map. You can do this using the ''evas_map_point_image_uv_set()''
+function, which allows you to map a given point in a map to a given pixel in a
+source image:
+
+<code c>
+void evas_map_point_image_uv_set(Evas_Map *m,
+                                 int idx,
+                                 double u,
+                                 double v
+                                )
+</code>
+
+  * ''m'' map to change the point of.
+  * ''idx'' index of point to change. Must be smaller than map size.
+  * ''u'' the X coordinate within the image/texture source
+  * ''v'' the Y coordinate within the image/texture source
+
+To match our example images to the maps above, all we need is the size of each
+image, which we can get using the ''evas_object_image_size_get()'' function.
+
+<code c>
+// Tux 1: Some cropping and stretch up
+evas_map_point_image_uv_set(m, 0, 0, 20);
+evas_map_point_image_uv_set(m, 1, 200, 20);
+evas_map_point_image_uv_set(m, 2, 200, 180);
+evas_map_point_image_uv_set(m, 3, 0, 180);
+evas_object_map_set(tux1, m);
+evas_object_map_enable_set(tux1, EINA_TRUE);
+
+// Inverted texture for shadow:
+evas_map_point_image_uv_set(m, 0, 0, 180);
+evas_map_point_image_uv_set(m, 1, 200, 180);
+evas_map_point_image_uv_set(m, 2, 200, 20);
+evas_map_point_image_uv_set(m, 3, 0, 20);
+evas_object_map_set(tux1_shadow, m);
+evas_object_map_enable_set(tux1_shadow, EINA_TRUE);
+
+// Tux 2: Make it fit to the map:
+evas_map_point_image_uv_set(m, 0, 0, 0);
+evas_map_point_image_uv_set(m, 1, 200, 0);
+evas_map_point_image_uv_set(m, 2, 200, 200);
+evas_map_point_image_uv_set(m, 3, 0, 200);
+evas_object_map_set(tux2, m);
+evas_object_map_enable_set(tux2, EINA_TRUE);
+
+// Tux 3: Zoom and fit relatively to image size
+evas_object_image_size_get(evas_object_image_source_get(tux3), &w, &h);
+evas_map_point_image_uv_set(m, 0, 0.1 * w, 0.1 * h);
+evas_map_point_image_uv_set(m, 1, 0.9 * w, 0.1 * h);
+evas_map_point_image_uv_set(m, 2, 0.9 * w, 0.9 * h);
+evas_map_point_image_uv_set(m, 3, 0.1 * w, 0.9 * h);
+evas_object_map_set(tux3, m);
+evas_object_map_enable_set(tux3, EINA_TRUE);
+</code>
+
+{{ :event_effect_evas_map_11.png }}
+
+You can also set a map to use only part of an image, or you can even map the
+points in inverted order. Combined with the ''evas_object_image_source_set()''
+function, you can achieve more interesting results still.
+
+==== Lighting ====
+
+''Evas_Map'' allows you to define an ambient light and a light source within
+the scene. Both of these light sources have their own colors.
+
+<code c>
+void evas_map_util_3d_lighting(Evas_Map * m,
+                               Evas_Coord lx,
+                               Evas_Coord ly,
+                               Evas_Coord lz,
+                               int        lr,
+                               int        lg,
+                               int        lb,
+                               int        ar,
+                               int        ag,
+                               int        ab
+                              )
+</code>
+
+  * ''m'' map to change.
+  * ''lx''  X coordinate in space of light point
+  * ''ly''  Y coordinate in space of light point
+  * ''lz''  Z coordinate in space of light point
+  * ''lr''  light red value (0 - 255)
+  * ''lg''  light green value (0 - 255)
+  * ''lb''  light blue value (0 - 255)
+  * ''ar''  ambient color red value (0 - 255)
+  * ''ag''  ambient color green value (0 - 255)
+  * ''ab''  ambient color blue value (0 - 255)
+
+The above function is used to apply lighting calculations (from a single light
+source) to a given map. The red, green, and blue values of each vertex will be
+modified to reflect the lighting based on the light source coordinates, its
+color, the ambient color, and the angle at which the map faces the light
+source. The points of a surface should be defined in a clockwise formation if
+the surface is facing the user, since faces have a logical side for lighting.
+
+To get the reflections (gradient) in the shadow of our previous example, you
+have to define a source of light close enough to the user and a very bright
+ambient light, for example:
+
+<code c>
+evas_map_util_3d_lighting(m,                  // Evas_Map object
+                          250/2, 150/2, -100, // Spot light coordinates
+                          255, 255, 255,      // Spot light color
+                          200, 200, 200);     // Ambient light color
+</code>
+
+==== Alpha Channel ====
+
+You can also use an alpha channel on your map by enabling the alpha channel
+feature:
+
+<code c>
+evas_map_alpha_set(Evas_Map *m, Eina_Bool enabled)
+</code>
+
+Next, set the alpha value separately for each map point:
+
+<code c>
+evas_map_point_color_set(Evas_Map *m, int idx, int r, int g, int b, int a)
+</code>
+
+Alternatively, you can set the same alpha value to all map points:
+
+<code c>
+evas_map_util_points_color_set(Evas_Map *m, int r, int g, int b, int a)
+</code>
+
+The following code sets the shadow transparency for the first image in the
+above three-image example:
+
+<code c>
+// Set object transparency to 50%:
+evas_map_util_points_color_set(m, 255, 255, 255, 127);
+
+// Tux's head is almost invisible in the shadow:
+evas_map_point_color_set(m, 3, 255, 255, 255, 15);
+evas_map_point_color_set(m, 4, 255, 255, 255, 15);
+</code>
+
+==== Smoothing ====
+
+To enable smoothing when rendering a map, use the ''evas_map_smooth_set()''
+function:
+
+<code c>
+evas_map_smooth_set(Evas_Map *m, Eina_Bool enabled)
+</code>
+
+The first argument is the ''Evas_Map'' object to apply smoothing to. The second argument sets whether to enable the smoothing:
+
+   * ''EINA_TRUE'': Enable smoothing.
+   * ''EINA_FALSE'': Disable smoothing.
+
+If the object is of a type that has its own smoothing settings, the smoothing
+settings must be disabled for both the object and the map. Map smoothing is
+enabled by default. To check whether map smoothing is enabled, use the
+''evas_map_smooth_get()'' function.
+
+\\
+[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/Example_Evas_Map_Overview.html|Evas Map Example]]
+
+-------
+{{page>index}}

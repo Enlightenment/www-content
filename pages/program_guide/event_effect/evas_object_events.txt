@@ -1,0 +1,87 @@
+~~Title: Evas Object Events~~
+{{page>index}}
+----
+===== Evas Object Events =====
+
+Each of the evas objects on a given evas canvas can be manipulated
+independently. They send events, to which callbacks can be attached through
+''evas_object_event_callback_add()'' and removed with
+''evas_object_event_callback_del()''. These events all relate to single
+objects, not the whole canvas.
+
+=== Table of Contents ===
+
+  * [[#Adding_and_Removing_Callbacks:_evas_object_event_callback_add/del|Adding and Removing Callbacks: evas_object_event_callback_add/del]]
+  * [[#Types_of_Evas_Object_Events|Types of Evas Object Events]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Object__Group__Events.html|Object Events API]]
+
+==== Adding and Removing Callbacks: evas_object_event_callback_add/del ====
+
+Callbacks are added with ''evas_event_callback_add()''. Its prototype is
+
+<code c>
+void evas_object_event_callback_add(Evas_Object*         obj,
+                                    Evas_Callback_Type   type,
+                                    Evas_Object_Event_Cb func,
+                                    const void*          data
+                                   )
+</code>
+
+
+  * ''obj'' is the object to attach the callback to.
+  * ''type'' is the type of event that triggers the callback (the list is in the next section).
+  * ''func'' is the function that is called.
+  * ''data'' is a pointer to additional data that is given as the argument to the callback. It is optional and ''NULL'' is an acceptable value.
+
+The type of the callback function is defined as follows.
+
+<code c>
+void (* Evas_Object_Event_Cb) (void *data, Evas *e, Evas_Object *obj, void *event_info)
+</code>
+
+The callback function definition is similar to
+
+<code c>
+void some_evas_object_event_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+</code>
+
+
+  * ''data'' is the same as the data which was given as the parameter to ''evas_object_smart_callback_add()''.
+  * ''e'' is the canvas on which the event occurred.
+  * ''obj'' is the object to which the event happened.
+  * ''event_info'' is data which depends on the object type and event at play. The documentation must be read for each event.
+
+==== Types of Evas Object Events ====
+
+The values are defined from the ''Evas_Callback_Type'' enum. Some of them are
+not used for ''evas_object_event_callback_add()'', but are used in the next
+section.
+
+   * ''EVAS_CALLBACK_MOUSE_IN'': the pointer got over an object (with no other object between the two). This takes place no matter how the pointer becomes directly above the object. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_In'' struct.
+   * ''EVAS_CALLBACK_MOUSE_OUT'': triggered similarly to ''EVAS_CALLBACK_MOUSE_IN'', but when the pointer goes outside an object's area. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_Out'' struct.
+   * ''EVAS_CALLBACK_MOUSE_DOWN'': a mouse button is pressed while the object is receiving events (either because the pointer is on top of the object or because the object had focus). ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_Down'' struct.
+   * ''EVAS_CALLBACK_MOUSE_UP'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_Up'' struct.
+   * ''EVAS_CALLBACK_MOUSE_MOVE'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_Move'' struct.
+   * ''EVAS_CALLBACK_MOUSE_WHEEL'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_Wheel'' struct.
+   * ''EVAS_CALLBACK_MULTI_DOWN'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Multi_Down'' struct.
+   * ''EVAS_CALLBACK_MULTI_UP'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Multi_Up'' struct.
+   * ''EVAS_CALLBACK_MULTI_MOVE'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Multi_Move'' struct.
+   * ''EVAS_CALLBACK_KEY_DOWN'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Key_Down'' struct.
+   * ''EVAS_CALLBACK_KEY_UP'': triggered similarly to ''EVAS_CALLBACK_MOUSE_DOWN''. ''event_info'' in the callback is a pointer to an ''Evas_Event_Key_Up'' struct.
+   * ''EVAS_CALLBACK_FOCUS_IN'': the object gained focus. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_In'' struct.
+   * ''EVAS_CALLBACK_FOCUS_OUT'': the object lost focus. ''event_info'' in the callback is a pointer to an ''Evas_Event_Mouse_In'' struct.
+   * ''EVAS_CALLBACK_SHOW'': the object is shown by a call to ''evas_object_show()''. ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_HIDE'': the object is hidden by a call to ''evas_object_hide()''. ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_MOVE'': the object's origin was moved (origin is the top-left corner at the creation time of the object). ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_RESIZE'': the object is resized. ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_RESTACK'': the object is re-stacked by ''evas_object_stack_below()'', ''evas_object_stack_above()'' or other events. ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_DEL'': the object is deleted.
+   * ''EVAS_CALLBACK_FREE'': for internal use only. Do not use (the object resources are about to be freed). ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_HOLD'': for internal use only. ''event_info'' in the callback is a pointer to an ''Evas_Event_Hold'' struct.
+   * ''EVAS_CALLBACK_CHANGED_SIZE_HINTS'': the size hints of the object changed.
+   * ''EVAS_CALLBACK_IMAGE_PRELOADED'': an image which was preloaded through ''evas_object_image_preload()'' is loaded. ''event_info'' in the callback is NULL.
+   * ''EVAS_CALLBACK_IMAGE_UNLOADED'': the image data is unloaded. ''event_info'' in the callback is NULL.
+

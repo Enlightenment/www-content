@@ -1,0 +1,69 @@
+~~Title: Evas Events~~
+{{page>index}}
+----
+===== Evas Events =====
+
+Evas events happen on a canvas as a whole. This kind of events are too
+low-level for writing applications and are most often used when writing the
+graphical toolkit itself.
+
+=== Table of Contents ===
+
+  * [[#Adding_Callbacks_to_Canvases:_evas_event_callback_add/del</a>|Adding Callbacks to Canvases: evas_event_callback_add/del]]
+  * [[#Types_of_Evas_Events|Types of Evas Events]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Canvas__Events.html|Canvas Events API]] ([[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas.html#gad64cde0da38a60e7cb7905b3ab216968|Evas API]])
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/Example_Evas_Events.html|Evas events example]]
+
+==== Adding Callbacks to Canvases: evas_event_callback_add/del ====
+
+The callbacks are added with ''evas_event_callback_add()''. Its prototype is
+
+<code c>
+void evas_event_callback_add(Evas*              e,
+                             Evas_Callback_Type type,
+                             Evas_Event_Cb      func,
+                             const void*        data
+                            )
+</code>
+
+  * ''e'' is the evas canvas on which the events happen. If needed, it can be
+obtained from an Evas_Object through the ''evas_object_evas_get()'' function.
+  * ''type'' is the type of event that triggers the callback (the list is in the next section).
+  * ''func'' is the function that is called.
+  * ''data'' is a pointer to additional data that is given as an argument to the callback. It is optional and ''NULL'' is an acceptable value.
+
+The type of the callback function is defined as follows.
+
+<code c>
+void (* Evas_Event_Cb) (void *data, Evas *e, void *event_info)
+</code>
+
+The callback function definition is similar to
+
+<code c>
+void some_evas_object_event_cb(void *data, Evas *e, void *event_info);
+</code>
+
+  * ''data'' is the same as the data which was given as the parameter to ''evas_event_callback_add()''.
+  * ''e'' is the canvas on which the event occurred.
+  * ''event_info'' is data which depends on the object type and the event at play. The documentation must be read for each such event.
+
+==== Types of Evas Events ====
+
+The values are defined from the ''Evas_Callback_Type'' enum. Some of them are
+not used for ''evas_event_callback_add()'' but are used in the previous
+section.
+
+  * ''EVAS_CALLBACK_CANVAS_FOCUS_IN        '':       Image has been preloaded.
+  * ''EVAS_CALLBACK_CANVAS_FOCUS_OUT       '':       Canvas got focus as a whole.
+  * ''EVAS_CALLBACK_RENDER_FLUSH_PRE       '':       Canvas lost focus as a whole.
+  * ''EVAS_CALLBACK_RENDER_FLUSH_POST      '':       Called just before rendering is updated on the canvas target.
+  * ''EVAS_CALLBACK_CANVAS_OBJECT_FOCUS_IN '':       Called just after rendering is updated on the canvas target.
+  * ''EVAS_CALLBACK_CANVAS_OBJECT_FOCUS_OUT'':       Canvas object got focus.
+
+\\
+--------
+{{page>index}}

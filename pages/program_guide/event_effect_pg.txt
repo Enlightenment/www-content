@@ -1,0 +1,119 @@
+~~Title: Event and Effect PG~~
+{{page>index}}
+===== Event and Effect =====
+
+EFL and Elementary allow you to manage different kinds of events and create various types
+of effects and animations in your application.
+
+=== Table of Contents ===
+
+  * [[#Handling_Events|Handling Events]]
+    * [[/program_guide/event_effect/evas_smart_events|Evas smart events]]: the most comon king of GUI pregramming
+    * [[/program_guide/event_effect/ecore_events|Ecore events]]: for system events
+    * [[/program_guide/event_effect/edje_events|Edje events]]: signals and messages to or from themes
+    * [[/program_guide/event_effect/evas_object_events|Evas object events]]: drawing- or focus-related low-level events for specific objects on a canvas
+    * [[/program_guide/event_effect/evas_events|Evas events]]: drawing or focus-related low-level events for a whole canvas
+  * [[#Creating_Animations_and_Effects|Creating Animations and Effects]]
+    * [[/program_guide/event_effect/ecore_animators|Ecore Animators]]
+    * [[/program_guide/event_effect/elementary_transitions|Elementary Transitions]]
+    * [[/program_guide/event_effect/edje_animations|Edje Animations]]
+    * [[/program_guide/event_effect/evas_map_animations|Evas Map Animations]]
+
+==== Handling Events ====
+
+The EFLs rely on events and callbacks. In case of an event, (for example, a
+key press, mouse click or a battery running low), the mainloop calls the
+callback functions that are associated to that specific event. After the
+callbacks have finished, the mainloop takes over and waits for new events,
+upon which to trigger new callbacks.
+
+It is important to do light work in the callbacks and to return to the
+mainloop relatively quickly. If there is heavy work to do, it is best to use
+an asynchronous mechanism like Ecore_con for network I/O or threads for
+CPU-intensive tasks. Failure to return quickly to the mainloop blocks the
+application's UI and it appears frozen.
+
+=== EFL Event Types ===
+
+There are several event types in the EFLs, and their use depends on the level
+of the event. The event types from lower- to higher-level are:
+
+    * [[/program_guide/event_effect/evas_smart_events|Evas smart events]] are the most often used and take place on collections of evas objects (which are most typically handled). They are called "smart" because they have internal logic and can define their own events while other event types are fixed.
+    * [[/program_guide/event_effect/ecore_events|Ecore events]] are the lowest-level events and come directly from the system. Except for application-wide shortcuts, it is not advisable to use them.
+    * [[/program_guide/event_effect/evas_object_events|Evas object events]] events concern the objects that are on the canvas.
+    * [[/program_guide/event_effect/evas_events|Evas events]] are events on the graphical canvas as a whole. They are fairly low-level and mostly useful when drawing directly on the canvas.
+
+Event types in the EFLs: Inner boxes are more specific than outer ones{{ :event_effect_scope.png |Event types in the EFLs: Inner boxes are more specific than outer ones}}
+
+<note>
+There are also [[/program_guide/event_effect/edje_events|Edje signals]], which
+come from program sections in themes; they can be used from high-level
+Elementary APIs or a low-level Edje API.
+</note>
+
+=== Basic Event Flow ===
+
+A realistic scenario involving various types of events is an application
+showing a button, which triggers the download of a file to be processed. There
+are progress bars for the operations.
+
+Create the window, create a box, set it vertical and add a button and two
+progress bars. At first, only the button is fully visible.
+
+When the user clicks on the button, an evas smart object event named "clicked"
+is emitted. The callback then starts the download in Ecore_con, displays the
+first progress bar and adds a callback to monitor the download progress. When
+the download progress changes, the callback updates the progress bar.
+
+After the download is finished, the second progress bar is displayed and the
+file processing is offloaded to another thread through Ecore_thread. The
+processing function regularly updates the progress bar (wrapped in
+''ecore_main_loop_thread_safe_call_async()'' because GUI operations are not
+thread-safe).
+
+Events enable operations taking more than a few milliseconds' time to be
+executed outside of the mainloop, therefore not blocking UI redraws.
+
+Below is an illustration for the event flow that follows a click on the
+screen.
+
+{{ :event_effect_flow.png |Event flow for a user click}}
+
+==== Creating Animations and Effects ====
+
+This programming guide introduces the animation functionalities provided by
+the EFL: Ecore animators, Elementary transitions, Edje animations, and Evas
+Map animations.
+
+The first option for creating animations with EFL is to use
+[[/program_guide/event_effect/ecore_animators|Ecore
+animators]]. To create an Ecore animation, you must first determine the
+duration of the animation, and then define a callback function that performs
+the animation with that duration.
+
+You can also create animations using
+[[/program_guide/event_effect/elementary_transitions|Elementary transitions]].
+Elementary transitions allow you to apply various transition effects, such as
+translation and rotation, to Evas objects. Elementary transitions are mostly
+based on Ecore animators, but provide some transition methods at a higher
+level of abstraction. Elementary transitions provide a simpler way of
+animating objects than Ecore animators or Edje animations.
+
+A third option for animating objects is to use
+[[/program_guide/event_effect/edje_animations|Edje animations]], which are
+based on a simple principle: transitioning from one state to another. To
+animate an object with Edje, you have to first define the start and end states
+of the animation, and then transition the object from the start state to the
+end state.
+
+Finally, [[/program_guide/event_effect/evas_map_animations|Evas Map
+animations]] allow you to apply transformations to all types of objects by way
+of UV mapping. In UV mapping, you map points in the source object to 3D space
+positions in the target object. This allows for rotation, perspective, scale,
+and other transformation effects, depending on the map. In addition, each map
+point can carry a multiplier color, which, if properly calculated, can be used
+to apply 3D shading effects on the target object.
+
+\\
+----
+{{page>index}}

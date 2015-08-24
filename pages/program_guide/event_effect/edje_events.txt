@@ -1,0 +1,121 @@
+~~Title: Edje Events~~
+{{page>index}}
+----
+===== Edje Events =====
+
+Edje themes have ''program'' sections. These are small sections triggered upon
+the reception of a signal that can execute actions, such as changing the state
+of an edje part and running another program.
+
+For more information on themes and programs, see the [[/coming_soon|Edje
+guide]].
+
+=== Table of Contents ===
+
+  * [[#Basic_Usage,_for_a_Single_Part|Basic Usage, for a Single Part]]
+  * [[#Usual_Usage_for_Parts_Aggregated_in_Groups:_with_Layouts|Usual Usage for Parts Aggregated in Groups: with Layouts]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/edcref.html|Edje Data Collection Reference]]
+
+==== Basic Usage for a Single Part ====
+
+An example ''program'' is shown below:
+
+<code c>
+program
+{
+   name: "change_color";
+   signal: "mouse,clicked,*";
+   source: "*";
+   action: SIGNAL_EMIT "got.a.click" "color_changer";
+}
+</code>
+
+This is a program named "change_color", which triggers on mouse clicks on the
+current part and emits a signal "got.a.click". The source is set to
+"color_changer".
+
+To catch this signal from the C side, you need to use either
+''edje_object_signal_callback_add()'' or ''elm_object_signal_callback_add()''.
+The only difference between the two is that the previous one operates on an
+edje object and the latter one on an elementary object. Unless you do not use
+Elementary at all, use the Elementary variant.
+
+The prototypes of these two functions are shown below.
+
+<code c>
+void edje_object_signal_callback_add(Edje_Object    *obj,
+                                     const char     *emission,
+                                     const char     *source,
+                                     Edje_Signal_Cb func,
+                                     void           *data
+                                    )
+</code>
+<code c>
+void elm_object_signal_callback_add(Evas_Object    *obj,
+                                    const char     *emission,
+                                    const char     *source,
+                                    Edje_Signal_Cb func,
+                                    void           *data
+                                   )
+</code>
+
+  * ''obj'' the object which emits the signal that you react on.
+  * ''emission'' is the signal name ("*" acts as a wildcard).
+  * ''source'' is the signal source (the second parameter to ''SIGNAL_EMIT'' above). ("*" acts as a wildcard.)
+  * ''func'' is the callback when ''emission'' and ''source'' match.
+  * ''data'' is a pointer to additional data to pass that is given as the argument to the callback. It is optional and NULL is an acceptable value.
+
+The type of the callback function is defined as follows.
+
+<code c>
+void (*Edje_Signal_Cb) (void *data, Evas_Object *obj, const char *emission, const char *source);
+</code>
+
+The callback function definition is similar to
+
+<code c>
+void func(void *data, Evas_Object *obj, const char *emission, const char *source);
+</code>
+
+
+  * ''data'' is the same as the data which was given as parameter to either ''edje_object_signal_callback_add()'' or ''elm_object_signal_callback_add()''.
+  * ''obj'' is the object which emits the signal.
+  * ''emission'' is the signal name.
+  * ''source'' is the signal source.
+
+==== Usual Usage for Parts Aggregated in Groups: with Layouts ====
+
+Most of the time, edje and elementary are used together. In particular, you
+can define a group in Edje and use it as a layout in Elementary. This enables
+doing the theming and object placement in Edje while benefiting from the
+higher-level functions of Elementary. This is achieved through ''layouts'',
+which contain several parts and are explained in the
+[[/program_guide/containers/layout|Layout Container guide]].
+
+Since there are several parts in a layout, it is not possible to use
+''elm_object_signal_callback_add()'' and
+''edje_object_signal_callback_add()'', as they require a single emitter
+object. The solution is to use the dedicated function
+''elm_layout_signal_callback_add()''. Its prototype is shown below.
+
+<code c>
+void elm_layout_signal_callback_add(Evas_Object    *obj,
+                                    const char     *emission,
+                                    const char     *source,
+                                    Edje_Signal_Cb func,
+                                    void           *data
+                                   )
+</code>
+
+''elm_layout_signal_callback_add()'' works very similarly to the functions
+described in the previous section. The only difference is the type of the
+object in the first parameter. For ''elm_layout_signal_callback_add()'' it is
+a pointer to an Evas_Object, which is obtained through ''elm_layout_add()'' as
+described in the [[/program_guide/containers/layout|Layout Container guide]].
+
+\\
+------
+{{page>index}}
