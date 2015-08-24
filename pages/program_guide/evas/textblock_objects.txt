@@ -1,0 +1,64 @@
+~~Title: Textblock Objects~~
+{{page>index}}
+-----
+===== Textblock Objects =====
+
+Unlike basic text objects, a textblock handles complex text, managing multiple
+styles and multiline text based on HTML-like tags. However, these extra
+features are heavier on memory and processing cost.
+
+The textblock objects is an object that shows big chunks of text. Textblock
+supports many features, including text formatting, automatic and manual text
+alignment, embedding items (icons, for example). Textblock has three important
+parts: the text paragraphs, the format nodes and the cursors.
+
+To set markup to format text, use for example
+''<font_size=50>Big!</font_size>''. Set more than one style
+directive in one tag with ''<font_size=50 color=#F00>Big and
+Red!</font_size>''. Please note that we used ''</font_size>''
+although the format also included color. This is because the first format
+determines the matching closing tag's name. You can use anonymous tags, such
+as ''<font_size=30>Big</>'', which pop any type of format, but it
+is advisable to use the named alternatives instead.
+
+Textblock supports the following formats:
+
+   * ''font'': Font description in fontconfig such as format, for example "Sans:style=Italic:lang=hi". or "Serif:style=Bold".
+   * ''font_weight'': Overrides the weight defined in "font". For example, "font_weight=Bold" is the same as "font=:style=Bold". The supported weights are "normal", "thin", "ultralight", "light", "book", "medium", "semibold", "bold", "ultrabold", "black", and "extrablack".
+   * ''font_style'': Overrides the style defined in "font". For example, "font_style=Italic" is the same as "font=:style=Italic". The supported styles are "normal", "oblique", and "italic".
+   * ''font_width'': Overrides the width defined in "font". For example, "font_width=Condensed" is the same as "font=:style=Condensed". The supported widths are "normal", "ultracondensed", "extracondensed", "condensed", "semicondensed", "semiexpanded", "expanded", "extraexpanded", and "ultraexpanded".
+   * ''lang'': Overrides the language defined in "font". For example, "lang=he" is the same as "font=:lang=he".
+   * ''font_fallbacks'': A comma delimited list of fonts to try if finding the main font fails.
+   * ''font_size'': The font size in points.
+   * ''font_source'': The source of the font, for example an eet file.
+   * ''color'': The text color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''underline_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''underline2_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''outline_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''shadow_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''glow_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''glow2_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''strikethrough_color'': The color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''align'': The text alignment in one of the following formats: "auto" (according to text direction), "left", "right", "center" or "middle", which take a value between 0.0 and 1.0 or a value between 0% to 100%.
+   * ''valign'': The vertical text alignment in one of the following formats: "top", "bottom", "middle", "center", "baseline" or "base", which take a value between 0.0 and 1.0 or a value between 0% to 100%.
+   * ''wrap'': The text wrap in one of the following formats: "word", "char", "mixed", or "none".
+   * ''left_margin'': Either "reset" or a pixel value indicating the margin.
+   * ''right_margin'': Either "reset" or a pixel value indicating the margin.
+   * ''underline'': The style of underlining in one of the following formats: "on", "off", "single", or "double".
+   * ''strikethrough'': The style of text that is either "on" or "off".
+   * ''backing_color'': The background color in one of the following formats: "#RRGGBB", "#RRGGBBAA", "#RGB", or "#RGBA".
+   * ''backing'': The background color enabled or disabled: "on" or "off".
+   * ''style'': The style of the text in one of the following formats: "off", "none", "plain", "shadow", "outline", "soft_outline", "outline_shadow", "outline_soft_shadow", "glow", "far_shadow", "soft_shadow" or "far_soft_shadow". The direction is selected by adding "bottom_right", "bottom", "bottom_left", "left", "top_left", "top", "top_right" or "right". For example, "style=shadow,bottom_right".
+   * ''tabstops'': The pixel value for tab width.
+   * ''linesize'': To force a line size in pixels.
+   * ''linerelsize'': Either a floating point value or a percentage indicating the wanted size of the line relative to the calculated size.
+   * ''linegap'': To force a line gap in pixels.
+   * ''linerelgap'': Either a floating point value or a percentage indicating the wanted size of the line relative to the calculated size.
+   * ''item'': Creates an empty space that is filled by an upper layer. Use "size", "abssize", or "relsize" to define the item"s size, and an optional vsize = full/ascent to define the item's position in the line.
+   * ''linefill'': Either a float value or percentage indicating how much to fill the line.
+   * ''ellipsis'': A value between 0.0 and 1.0 to indicate the type of ellipsis, or -1.0 to indicate that an ellipsis is not wanted.
+   * ''password'': Either "on" or "off", this is used to specifically turn replacing chars with the password mode (that is, replacement char) on and off.
+
+\\
+-----
+{{page>index}}

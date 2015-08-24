@@ -1,0 +1,413 @@
+~~Title: Image Objects~~
+{{page>index}}
+-----
+===== Image Objects =====
+
+Using Evas, you can create and manipulate image objects. Evas supports image
+loaders of various formats as plug-in modules.
+
+The image formats that Evas supports include ''bmp'', ''edj'', ''gif'',
+''ico'', ''jpeg'', ''pmaps'', ''png'', ''psd'', ''svg'', ''tga'', ''tiff'',
+''wbmp'', ''webp'', and ''xpm''.
+
+{{ :evas_image_loader.png }}
+
+=== Table of Contents ===
+
+  * [[#Evas_Object_Image_Functions|Evas Object Image Functions]]
+  * [[#Creating_an_Image_Object_and_Setting_the_Image_Data_Source|Creating an Image Object and Setting the Image Data Source]]
+  * [[#Image_Scaling|Image Scaling]]
+  * [[#Setting_Raw_Data_to_Image_Object|Setting Raw Data to Image Object]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Object__Image.html|Image Object Functions API]]
+
+==== Evas Object Image Functions ====
+
+Evas has over 70 image object functions. The following functions are discussed
+in this document:
+
+<code c>
+Evas_Object *evas_object_image_add(Evas *e);
+void evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key);
+void evas_object_image_fill_set(Evas_Object *obj, int x, int y, int w, int h);
+void evas_object_image_filled_set(Evas *e, Eina_Bool setting);
+Evas_Object *evas_object_image_filled_add(Evas *e);
+void evas_object_image_smooth_scale_set(Evas_Object *obj, Eina_Bool smoothscale);
+void evas_object_image_load_size_set(Evas_Object *obj, int w, int h);
+void evas_object_image_data_set(Evas_Object *obj, void *data);
+void *evas_object_image_data_get(const Evas_Object *obj, Eina_Bool for_writing);
+void evas_object_image_size_set(Evas_Object *obj, int w, int h);
+void evas_object_image_data_update_add(Evas_Object *obj, int x, int y, int w, int h);
+Eina_Bool evas_object_image_save(const Evas_Object *obj, const char *file, const char *key, const char *flags);
+</code>
+
+==== Creating an Image Object and Setting the Image Data Source ====
+
+A common use case of an image object is to set a file as the image data
+source. The process has 3 steps and each one involves the following API calls:
+
+
+  * The ''evas_object_image_add()'' function creates an image object and returns the pointer.
+<code c>
+Evas_Object *evas_object_image_add(Evas *e);
+</code>
+  * The ''evas_object_image_file_set()'' function sets a source file on the image object. The object fetches the image pixel data from the source file.
+<code c>
+void evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key);
+</code>
+  * The ''evas_object_image_fill_set()'' sets how to fill the image object's area with the given pixel data.
+<code c>
+void evas_object_image_fill_set(Evas_Object *obj, int x, int y, int w, int h);
+</code>
+
+In the following code example, the ''main()'' function creates an image object
+and displays it on a window. The image object size is 300x300 and the source
+image resolution is 100x127. The image is scaled into 300 by 300 to fill the
+image object area using the ''evas_object_image_fill_set()'' function.
+
+<code c>
+#include <Elementary.h>
+
+int main(int argc, char **argv)
+{
+   elm_init(argc, argv);
+
+   // Create a window object
+   Evas_Object *win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+   evas_object_resize(win, 400, 400);
+   evas_object_show(win);
+
+   // Return Evas handle from window
+   Evas *e = evas_object_evas_get(win);
+
+   // Create an image object
+   Evas_Object *img = evas_object_image_add(e);
+
+   // Set a source file to fetch pixel data
+   evas_object_image_file_set(img, "./logo.png", NULL);
+
+   // Set the size and position of the image on the image object area
+   evas_object_image_fill_set(img, 0, 0, 300, 300);
+
+   evas_object_move(img, 50, 50);
+   evas_object_resize(img, 300, 300);
+   evas_object_show(img);
+
+   elm_run();
+   elm_shutdown();
+
+   return 0;
+}
+</code>
+
+{{ :evas_object_display.png }}
+
+==== Image Scaling ====
+
+Users can decide how to fill the image object area with the given image pixel
+data by setting the position, width, and height of the image using the
+''evas_object_image_fill_set()'' function. Without setting this information,
+the image is not displayed. If the size of the image is bigger than the image
+object area, only a sub-region of the original image is displayed. If the
+image is smaller than the area, images are tiled repeatedly to fill the object
+area.
+
+{{ :evas_image_scaling.png }}
+
+{{ :evas_scaling.png }}
+
+the ''evas_object_image_filled_set()'' function scales the image to fit the
+object area. Resizing the image object automatically triggers an internal call
+to the ''evas_object_image_fill_set()'' function.
+
+<code c>
+void evas_object_image_filled_set(Evas *    e,
+                                  Eina_Bool setting
+                                 )
+</code>
+
+The ''evas_object_image_filled_add()'' function creates a new image object
+that automatically scales its bound image to the object area. This is a helper
+function around the ''evas_object_image_add()'' and
+''evas_object_image_filled_set()'' functions.
+
+Scaled images' quality can differ according to scaling algorithms. Smooth
+scaling improves the image quality in the process of size reducing or
+enlarging. Evas runs its own smooth scaling algorithm by default and provides
+an API so users can disable the function.
+
+<code c>
+Evas_Object *evas_object_image_filled_add(Evas *e);
+</code>
+
+<code c>
+void evas_object_image_smooth_scale_set(Evas_Object * obj,
+                                        Eina_Bool     smoothscale
+                                       )
+</code>
+
+The algorithm is implemented using the SIMD (Single Instruction Multiple Data)
+vectorization in case of software rendering. It is optimized on Intel and ARM
+CPU through MMX and NEON command respectively.
+
+There is a trade-off between image smoothness and rendering performance. The
+load gets bigger as the image gets bigger. Users can avoid such scaling
+overload by using the same size of the image object and the source image.
+
+In the following code, 2 image objects are created to show the effects of
+smooth scaling. The one with smooth scaling applied appears softer on the
+screen.
+
+<code c>
+
+#include <Elementary.h>
+
+int main(int argc, char **argv)
+{
+   elm_init(argc, argv);
+
+   // Create a window object
+   Evas_Object *win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+   evas_object_resize(win, 400, 200);
+   evas_object_show(win);
+
+   // Return Evas handle from window
+   Evas *e = evas_object_evas_get(win);
+
+   // Create an image object
+   Evas_Object *img = evas_object_image_filled_add(e);
+   evas_object_image_file_set(img, "./logo.png", NULL);
+   evas_object_move(img, 0, 0);
+   evas_object_resize(img, 200, 200);
+   evas_object_show(img);
+
+   // Create another image object
+   Evas_Object *img2 = evas_object_image_filled_add(e);
+   evas_object_image_file_set(img2, "./logo.png", NULL);
+
+   // Disable smooth scaling
+   evas_object_image_smooth_scale_set(img2, EINA_FALSE);
+   evas_object_move(img2, 200, 0);
+   evas_object_resize(img2, 200, 200);
+   evas_object_show(img2);
+
+   elm_run();
+
+   elm_shutdown();
+
+   return 0;
+}
+</code>
+
+Smooth scaling disabled:
+
+{{ :evas_smooth_disabled.png }}
+
+Smooth scaling enabled:
+
+{{ :evas_smooth_enabled.png }}
+
+Evas caches scaled image data and reuses them. Users can save the memory by
+loading the image in the scaled size to the memory at the beginning. This
+option is available only for ''jpeg'' format at the moment.
+
+<code c>
+void evas_object_image_load_size_set(Evas_Object * obj,
+                                     int           w,
+                                     int h
+                                    )
+</code>
+
+An example code is as follows.
+
+<code c>
+
+#include <Elementary.h>
+
+int main(int argc, char **argv)
+{
+   elm_init(argc, argv);
+
+   // Create a window object
+   Evas_Object *win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+   evas_object_resize(win, 400, 200);
+   evas_object_show(win);
+
+   // Return Evas handle from window
+   Evas *e = evas_object_evas_get(win);
+
+   // Create an image object
+   Evas_Object *img = evas_object_image_filled_add(e);
+
+   // Load the image scaled into the object size
+   // before evas_object_image_file_set() is called
+   evas_object_image_load_size_set(img, 300, 300);
+
+   evas_object_image_file_set(img, "./logo.png", NULL);
+
+   evas_object_move(img, 50, 50);
+   evas_object_resize(img, 300, 300);
+   evas_object_show(img);
+
+   elm_run();
+
+   elm_shutdown();
+
+   return 0;
+}
+</code>
+
+==== Setting Raw Data to Image Object ====
+
+Users can set raw data to the image object manually using  the
+''evas_object_image_data_set()'' function instead of setting an image file as
+the data source. The image data should be in raw data form. In case of an
+200x200 sized image with alpha channel enabled (32 bits per pixel), the size
+of the image data is 14000 (=200*200*4) bytes.
+
+<code c>
+void evas_object_image_data_set(Evas_Object * obj,
+                                void *        data
+                               )
+</code>
+
+Image objects fetch metadata such as width or height from the header of the
+image files. Since the raw data does not have the metadata, users must set the
+size of the image using the ''evas_object_image_size_set()'' function.
+
+<code c>
+void evas_object_image_size_set(Evas_Object * obj,
+                                int           w,
+                                int           h
+                               )
+</code>
+
+The ''evas_object_image_data_get()'' function returns the data pointer of an
+image object and requires a parameter to determine whether the data is
+modified or not. If users pass ''EINA_TRUE'' for ''for_writing'', Evas updates
+the image pixels in the next rendering cycle.
+
+<code c>
+void* evas_object_image_data_get(const Evas_Object * obj,
+                                 Eina_Bool           for_writing
+                                )
+</code>
+
+The ''evas_object_image_data_update_add()'' helps to mark the updated area for
+rendering efficiency.
+
+<code c>
+void evas_object_image_data_update_add(Evas_Object * obj,
+                                       int           x,
+                                       int           y,
+                                       int           w,
+                                       int           h
+                                      )
+</code>
+
+The following example code and figure show how to specify the area to update.
+
+<code c>
+evas_object_image_data_update_add(image, 100, 100, 50, 50);
+evas_object_image_data_update_add(image, 180, 100, 50, 50);
+evas_object_image_data_update_add(image, 85, 200, 160, 80);
+</code>
+
+{{ :evas_partial_update.png }}
+
+The following code creates an image object and sets a source file on it. Then
+it implements the blur effect to the pixel data and saves them using the
+''evas_object_image_save()'' function.
+
+<code c>
+Eina_Bool evas_object_image_save(const Evas_Object * obj,
+                                 const char *        file,
+                                 const char *        key,
+                                 const char *        flags
+                                )
+</code>
+
+<code c>
+#include <Elementary.h>
+
+void image_blur(Evas_Object *img)
+{
+   unsigned char *img_src = evas_object_image_data_get(img, EINA_TRUE);
+
+   int w, h;
+   evas_object_image_size_get(img, &w, &h);
+   int blur_size = 4;
+   int x, y, xx, yy;
+
+   for (y = 0; y < h; y++)
+   {
+      for (x = 0; x < w; x++)
+      {
+         int avg_color[3] = {0, 0, 0};
+         int blur_pixel_cnt = 0;
+
+         for (xx = x; (xx < x + blur_size) && (xx < w); xx++)
+         {
+            for (yy = y; (yy < y + blur_size) && (yy < h); yy++)
+            {
+               int idx = (yy * w * 4) + (xx * 4);
+               avg_color[0] += img_src[idx + 0];
+               avg_color[1] += img_src[idx + 1];
+               avg_color[2] += img_src[idx + 2];
+               ++blur_pixel_cnt;
+            }
+         }
+         avg_color[0] /= blur_pixel_cnt;
+         avg_color[1] /= blur_pixel_cnt;
+         avg_color[2] /= blur_pixel_cnt;
+
+         for (xx = x; (xx < x + blur_size) && (xx < w); xx++)
+         {
+            for (yy = y; (yy < y + blur_size) && (yy < h); yy++)
+            {
+               int idx = (yy * w * 4) + (xx * 4);
+               img_src[idx + 0] = avg_color[0];
+               img_src[idx + 1] = avg_color[1];
+               img_src[idx + 2] = avg_color[2];
+            }
+         }
+      }
+   }
+   evas_object_image_data_update_add(img, 0, 0, w, h);
+}
+
+int main(int argc, char **argv)
+{
+   elm_init(argc, argv);
+
+   Evas_Object *win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+   evas_object_resize(win, 200, 200);
+   evas_object_show(win);
+
+   Evas *e = evas_object_evas_get(win);
+
+   Evas_Object *img = evas_object_image_filled_add(e);
+   evas_object_image_file_set(img, "./logo.png", NULL);
+   evas_object_resize(img, 200, 200);
+   evas_object_show(img);
+
+   image_blur(img);
+
+   evas_object_image_save(img, "logo2.png", NULL, "quality=100 compress=8");
+
+   elm_run();
+   elm_shutdown();
+
+   return 0;
+}
+</code>
+
+Before: {{ :evas_blur1.png }}
+
+After: {{ :evas_blur2.png }}
+
+\\
+-----
+{{page>index}}

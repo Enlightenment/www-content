@@ -1,0 +1,172 @@
+~~Title: UI Rendering Mode~~
+{{page>index}}
+-----
+===== UI Rendering Mode =====
+
+Evas removes the need to know about the characteristics of your display system
+or what graphics calls are used to draw them and how. It deals on an object
+level where all you do is create and manipulate objects in a canvas, set their
+properties, and the rest is done for you. This rendering method is called the
+retained mode, whereas the immediate mode is an alternative rendering method.
+
+=== Table of Contents ===
+
+    * [[#Immediate_Mode|Immediate Mode]]
+    * [[#Retained_Mode|Retained Mode]]
+    * [[#Evas_Rendering|Evas Rendering]]
+
+==== Immediate Mode ====
+
+The immediate mode is the most commonly used in graphics toolkit libraries,
+such as GTK+, GDI, and GDI+. The application is responsible for repainting the
+portion of the client area that is invalidated.
+
+{{ :evas_immediate_mode.png }}
+
+The application commands any drawing issues as it needs, and the display
+system draws some GUIs. After the drawing is done, it appears in the
+destination. This mode allows you to have a exact control over the render
+cycles. However, if the draw commands are misused, unnecessary drawing can be
+performed or drawing never happen at all.
+
+The following example explains the common usage of the immediate mode:
+
+<code c>
+void update()
+{
+   Image *img = load_image(NEW_IMG);
+
+   // Switch button image to new one
+   update_button_image(img);
+
+   // Issue the invalidate area (button area) to be redrawn on the screen
+   invalidate_area(button_x, button_y, button_w, button_h);
+
+   // Move rectangle from (200, 200) to (300, 300)
+   int rect_prev_x = rect_x;
+   int rect_prev_y = rect_y;
+   rectangle_x = 300;
+   rectangle_y = 300;
+   set_rect_position(rect_x, rect_y);
+
+   // Issue the invalidate area (changed area) to be redrawn on the screen
+   int diff_x = rect_x – rect_prev_x;
+   int diff_y = rect_y – rect_prev_y;
+   invalidate_area(rect_prev_x, rect_prev_y, (rect_w + diff_x), (rect_h + diff_y));
+
+
+   // After setting the invalidate area, request rendering to update the screen
+   render();
+
+   // Now you can see how the button image and rectangle position are changed
+}
+</code>
+
+==== Retained Mode ====
+
+A graphics system adopting the retained mode is basically responsible for
+responding to all repaint requests for rendering the application objects.
+Clients do not directly cause actual rendering, but objects are redrawn when
+parts of them are updated.
+
+{{ :evas_retained_mode.png }}
+
+Since Evas works with the retained mode, there is no need to command any
+drawings. The following example shows how to write a GUI code with Evas for
+your application:
+
+<code c>
+
+void create_image()
+{
+   // Initialize an image object to be displayed on the screen
+   Evas_Object *img = evas_object_image_add(e);
+
+   // Set image resource
+   evas_object_image_file_set(img, IMG, NULL);
+
+   // Set image position
+   evas_object_move(img, 100, 100);
+
+   // Set image size
+   evas_object_resize(img, 200, 200);
+
+   // Set image visibility (show or hide)
+   evas_object_show(img);
+}
+
+void create_rectangle()
+{
+   // Initialize an rectangle object to be displayed on the screen
+   Evas_Object *rect = evas_object_rectangle_add(e);
+
+   // Set rectangle color
+   evas_object_color_set(rect, 255, 0, 0, 255);
+
+   // Set rectangle position
+   evas_object_move(rect, 200, 200);
+
+   // Set rectangle size
+   evas_object_resize(rect, 200, 200);
+
+   // Set rectangle visibility (show or hide)
+   evas_object_show(rect);
+}
+</code>
+
+A few main loops later you can replace the image with another one and move the
+rectangle. You only need to set a new image file to the image object and move
+the rectangle object. Evas computes the invalidate area and redraws the image
+and rectangle behind the application when it's on rendering time.
+
+<code c>
+void update()
+{
+   // Set new image resource
+   elm_image_file_set(img, NEW_IMG, NULL);
+
+   // Set new rectangle position
+   evas_object_move(rect, 300, 300);
+}
+</code>
+
+==== Evas Rendering ====
+
+EFL and/or Elementary applications work on the ecore main loop, and the loop
+goes on a few steps for every frame. Evas redraws some changes in the objects
+when the main loop goes to the idle enterer step. If there are no changes,
+Evas rendering is skipped. Otherwise, Evas calculates any changed portions of
+all display objects and redraws them.
+
+{{ :evas_rendering_main_loop.png }}
+
+To minimize the rendering, Evas tracks the states of all display objects, such
+as position, size, visibility, and color. Even if some of these states are
+changed but the object is hidden by other obscured objects, it is not redrawn.
+In other words, Evas draws only the necessary changes in the screen.
+
+The following figures illustrate how Evas redraws the changed area:
+
+  * In the first example, there is a blue-color background object (a sky-blue color rectangle) and a partially hidden cloud image object. Above them, there are a red and green rectangle, and the "Hello out there" text is printed on the green rectangle.
+{{ :evas_redrawing01.png }}
+  * In the second example, some of the objects have moved (the cloud image is moved to right and the green rectangle is moved downwards).
+{{ :evas_redrawing02.png }}
+  * As a result, the third example illustrates some regions that require updates.
+{{ :evas_redrawing03.png }}
+  * Evas decides which portions are invalid and to be redrawn. The fourth example shows the cleaned portion of the screen, which is the redrawn area.
+
+Evas redraws the content only in the redrawn portions.
+
+{{ :evas_redrawing04.png }}
+
+  * Finally, the fifth example shows how the screen is updated and the result is visible.
+{{ :evas_redrawing05.png }}
+
+If Evas worked in an immediate mode style, the application would need to
+calculate the changed areas themselves, adding extra work. With Evas, you can
+let Evas figure out the updates and you can yourself concentrate on the
+application and UI core and logic.
+
+\\
+-----
+{{page>index}}

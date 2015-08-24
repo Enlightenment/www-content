@@ -1,0 +1,180 @@
+~~Title: Mapping Objects~~
+{{page>index}}
+-----
+===== Mapping Objects =====
+
+Evas allows different transformations to be applied to all kinds of objects.
+These are applied by means of UV mapping. With UV mapping, one map points in
+the source object to a 3D space positioning at target. This allows rotation,
+perspective, scale, and many other effects depending on the map that is used.
+
+=== Table of Contents ===
+
+  * [[#Creating_a_Map_|Creating a Map ]]
+  * [[#Manual_Point_Setting|Manual Point Setting]]
+  * [[#Applying_a_Map_|Applying a Map ]]
+  * [[#Basic_Utility_Functions_|Basic Utility Functions ]]
+  * [[#3D_Utility_Functions_|3D Utility Functions ]]
+  * [[#Color_and_Lighting_|Color and Lighting ]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Evas__Object__Group__Map.html|UV Mapping (Rotation, Perspective, 3D...) API]]
+
+==== Creating a Map  ====
+
+A map consists of a set of points, but currently only four are supported. Each
+of these points contains a set of canvas coordinates x and y that are used to
+alter the geometry of the mapped object, and a z coordinate that indicates the
+depth of that point. This last coordinate does not normally affect the map,
+but is used by several of the utility functions to calculate the right
+position of the point given other parameters.
+
+The coordinates for each point are set with ''evas_map_point_coord_set(map,
+index, x, y, z)''. In the example below, there is a rectangle whose
+coordinates are (100, 100) and (300, 300).
+
+<code c>
+Evas_Object *object = evas_object_rectangle_add(evas);
+evas_object_move(object, 100, 100);
+evas_object_resize(object, 200, 200);
+Evas_Map map = evas_map_new(4);
+evas_map_point_coord_set(map, 0, 100, 100, 0);
+evas_map_point_coord_set(map, 1, 300, 100, 0);
+evas_map_point_coord_set(map, 2, 300, 300, 0);
+evas_map_point_coord_set(map, 3, 100, 300, 0);
+</code>
+
+There are functions to ease the process.
+
+Use ''evas_map_util_points_populate_from_geometry(map, x, y, w, h, z)'', where
+the map coordinates are set to the given rectangle, and ''z'' is the
+coordinate in the Z axis, which is the same for all points.
+
+<code c>
+Evas_Object *object = evas_object_rectangle_add(evas);
+evas_object_move(object, 100, 100);
+evas_object_resize(object, 200, 200);
+Evas_Map map = evas_map_new(4);
+evas_map_util_points_populate_from_geometry(map, 100, 100, 200, 200, 0);
+</code>
+
+You can also use ''evas_map_util_points_populate_from_object(map, object)''.
+
+<code c>
+Evas_Object *object = evas_object_rectangle_add(evas);
+evas_object_move(object, 100, 100);
+evas_object_resize(object, 200, 200);
+Evas_Map map = evas_map_new(4);
+evas_map_util_points_populate_from_object(map, object);
+</code>
+
+You can also use ''evas_map_util_points_populate_from_object_full(map, object,
+z)'', where ''z'' is the coordinate in the Z axis, which is the same for all
+points.
+
+<code c>
+Evas_Object *object = evas_object_rectangle_add(evas);
+evas_object_move(object, 100, 100);
+evas_object_resize(object, 200, 200);
+Evas_Map map = evas_map_new(4);
+evas_map_util_points_populate_from_object_full(map, object, 0);
+</code>
+
+==== Manual Point Setting ====
+
+Several effects are applied to an object by setting each point of the map to
+the right coordinates. For example, a simulated perspective is achieved as
+follows.
+
+<code c>
+evas_map_point_coord_set(map, 0, 300, 100, 0);
+evas_map_point_coord_set(map, 1, 450, 120, 0);
+evas_map_point_coord_set(map, 2, 450, 260, 0);
+evas_map_point_coord_set(map, 3, 300, 300, 0);
+</code>
+
+The Z coordinate is not used when setting points by hand; thus its value is
+not important.
+
+==== Applying a Map  ====
+
+Regardless of the specific way you create a map, to apply it to a specific
+object, use
+
+<code c>
+evas_object_map_set(object, map);
+evas_object_map_enable_set(object, EINA_TRUE);
+</code>
+
+==== Basic Utility Functions  ====
+
+Evas provides utility functions for common transformations:
+
+   * ''evas_map_util_rotate(map, angle, cx, cy)'': This performs a rotation of the ''angle'' degrees around the center point with the coordinates (cx, cy).
+   * ''evas_map_util_zoom(map, zoomx, zoomy, cx, cy)'': This performs a ''zoomx'' and ''zoomy'' zoom in the X and Y directions respectively, with the center point with the coordinates (cx, cy).
+
+
+For example, the following code rotates an object around its center.
+
+<code c>
+int x, y, w, h;
+evas_object_geometry_get(object, &x, &y, &w, &h);
+Evas_Map *map = evas_map_new(4);
+evas_map_util_points_populate_from_object(map, object);
+evas_map_util_rotate(map, 45, x + (w / 2), y + (h / 2));
+evas_object_map_set(object, map);
+evas_object_map_enable_set(object, EINA_TRUE);
+evas_map_free(m);
+</code>
+
+The following code rotates an object around the center of the window.
+
+<code c>
+int w, h;
+evas_output_size_get(evas, &w, &h);
+Evas_Map *map = evas_map_new(4);
+evas_map_util_points_populate_from_object(map, object);
+evas_map_util_rotate(map, 45, w / 2, h / 2);
+evas_object_map_set(object, map);
+evas_object_map_enable_set(object, EINA_TRUE);
+evas_map_free(m);
+</code>
+
+==== 3D Utility Functions  ====
+
+Evas provides utility functions for 3D transformations.
+
+To make a 3D rotation, use ''evas_map_util_3d_rotate(map, anglex, angley,
+anglez, cx, cy, cz)''. With this code, you can set the Z coordinate of the
+rotation center, and the angles to rotate through around all axes.
+
+Rotating in the 3D space does not look natural. A more natural look becomes by
+adding perspective to the transformation, which is done with
+''evas_map_util_3d_perspective(map, px, py, z0, focal)'' on the map after its
+position has been set.
+
+   * ''px'' and ''py'' specify the "infinite distance" point in the 3D conversion, where all lines converge to.
+   * ''z0'' specifies the Z value at which there is a 1:1 mapping between spatial coordinates and screen coordinates: any points on this Z value do not have their X and Y coordinates modified in the transform, while those further away (Z value higher) shrink into the distance, and those less than this value expand.
+   * ''focal'' determines the "focal length" of the camera: this is the distance in reality between the camera lens plane (the rendering results are undefined at or closer than this) and the ''z0'' value; this function allows for some "depth" control.
+
+
+==== Color and Lighting  ====
+
+Each point in a map can be set to a color, which is multiplied with the
+object's own color and linearly interpolated in between adjacent points. To do
+this, use ''evas_map_point_color_set(map, index, r, g, b, a)'' for each point
+of the map, or ''evas_map_util_points_color_set(map, r, g, b, a)'' to set
+every point into the same color.
+
+To add lighting for the objects, which is useful with 3D transforms, use
+''evas_map_util_3d_lighting(map, lightx, lighty, lightz, lightr, lightg,
+lightb, ambientr, ambientg, ambientb)'':
+
+   * ''lightx'', ''lighty'' and ''lightz'' are the local light source coordinates;
+   * ''lightr'', ''lightg'' and ''lightb'' are the local light source colors;
+   * ''ambientr'', ''ambientg'' and ''ambientb'' are the ambient light colors. Evas sets the color of each point based on the distance to the light source, the angle with which the object is facing the light and the ambient light. The orientation of each point is important. If the map is defined counter-clockwise, the object faces away from the user and becomes obscured, since no light does not reflect from it.
+
+\\
+------
+{{page>index}}

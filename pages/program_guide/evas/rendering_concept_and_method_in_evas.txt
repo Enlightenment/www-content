@@ -1,0 +1,116 @@
+~~Title: Rendering Concept and Method in Evas~~
+{{page>index}}
+-----
+===== Rendering Concept and Method in Evas =====
+
+Evas is a canvas display library. It is markedly different from most display
+and windowing systems as the canvas is structural and is also a state engine,
+whereas most display and windowing systems are immediate mode display targets.
+Evas handles the logic between a structural display via its state engine, and
+controls the target windowing system in order to produce rendered results of
+the current canvas' state on the display.
+
+Immediate mode display systems retain very little or no state. A program
+executes a series of commands, as in the following pseudo code.
+
+<code c>
+draw line from position (0, 0) to position (100, 200);
+
+draw rectangle from position (10, 30) to position (50, 500);
+
+bitmap_handle = create_bitmap();
+scale bitmap_handle to size 100 x 100;
+draw image bitmap_handle at position (10, 30);
+</code>
+
+The series of commands is executed by the windowing system and the results are
+typically displayed on the screen. Once the commands are executed, the display
+system does not know how to reproduce this image again, and has to be
+instructed by the application on how to redraw sections of the screen if
+needed. Each successive command is executed as instructed by the application
+and either emulated by software or sent to the graphics hardware on the device
+to be performed.
+
+The advantage of such a system is that it is simple and gives a program tight
+control over how something looks and is drawn. Given the increasing complexity
+of displays and demands by users to have better looking interfaces, more work
+needs to be done at this level by the internals of widget sets, custom display
+widgets and other programs. This means that more logic and display rendering
+code needs to be written again each time the application needs to figure out
+how to minimize redraws so that display is fast and interactive, and keep
+track of redraw logic.
+
+For example, if in the scene below, the windowing system requires the
+application to redraw the area from 0, 0 to 50, 50 (also referred to as the
+"expose event"). Then the programmer calculates manually the updates and
+repaints it again.
+
+<code c>
+Redraw from position (0, 0) to position (50, 50):
+
+// What was in area (0, 0, 50, 50)?
+
+// 1. intersection part of line (0, 0) to (100, 200)?
+   draw line from position (0, 0) to position (25, 50);
+
+// 2. intersection part of rectangle (10, 30) to (50, 500)?
+   draw rectangle from position (10, 30) to position (50, 50)
+
+// 3. intersection part of image at (10, 30), size 100 x 100?
+   bitmap_subimage = subregion from position (0, 0) to position (40, 20)
+   draw image bitmap_subimage at position (10, 30);
+</code>
+
+If all elements in the above scene are opaque, the system is doing useless
+paints: part of the line is behind the rectangle, and part of the rectangle is
+behind the image. These useless paints tend to be very costly.
+
+Evas is a structural system in which the programmer creates and manages
+display objects and their properties, and as a result of this higher level
+state management, the canvas is able to redraw the set of objects when needed
+to represent the current state of the canvas.
+
+For example, see the following pseudo code.
+
+<code c>
+line_handle = create_line();
+set line_handle from position (0, 0) to position (100, 200);
+show line_handle;
+
+rectangle_handle = create_rectangle();
+move rectangle_handle to position (10, 30);
+resize rectangle_handle to size 40 x 470;
+show rectangle_handle;
+
+bitmap_handle = create_bitmap();
+scale bitmap_handle to size 100 x 100;
+move bitmap_handle to position (10, 30);
+show bitmap_handle;
+
+render scene;
+</code>
+
+This looks longer, but when the display needs to be refreshed or updated, the
+programmer only moves, resizes, shows, hides etc. the objects that need to
+change. The programmer thinks at the object logic level, and the canvas
+software does the rest of the work, figuring out what changed in the canvas
+since it was last drawn, how to most efficiently redraw the canvas and its
+contents to reflect the current state, and doing the actual drawing of the
+canvas.
+
+This allows the programmer think in a more natural way when dealing with a
+display, and saves time and effort of working out how to load and display
+images, to render given the current display system etc. Since Evas is portable
+across different display systems, this gives the programmer the ability to
+port and display the code on different display systems with little work.
+
+Evas is a display system somewhere between a widget set and an immediate mode
+display system. It retains basic display logic, but does little high-level
+logic such as scrollbars, sliders, push buttons etc.
+
+For more information on the UI rendering modes (immediate and retained), see
+[[/program_guide/evas/ui_rendering_mode|UI Rendering Mode]].
+
+\\
+-----
+{{page>index}}

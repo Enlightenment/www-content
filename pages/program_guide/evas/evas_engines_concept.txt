@@ -1,0 +1,27 @@
+~~Title: Evas Engines Concept~~
+{{page>index}}
+-----
+===== Evas Engines Concept =====
+
+Evas delegates most of the actual rendering work to its engines. Engines are
+the backends that Evas uses to render (primitive) objects on a canvas. The
+canvas can be the screen, or a buffer in the memory.
+
+Evas can work with and provides multiple engines, such as (this list is
+non-exhaustive):
+
+   * buffer: all the rendering takes place in a buffer
+   * fb: the rendering takes place in the system's framebuffer
+   * software_x11: this is the most used, using X11
+   * gl_x11: this also renders to an X11 window, except that it uses OpenGL
+
+These implement the rendering of all the basic objects by themselves, because
+they often can be accelerated by the hardware or backend software libraries to
+provide fast rendering.
+
+If a particular engine does not have the provision for a certain primitive
+object, it reverts back to using a default software version.
+
+\\
+-----
+{{page>index}}

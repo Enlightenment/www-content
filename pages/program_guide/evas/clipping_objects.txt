@@ -1,0 +1,48 @@
+~~Title: Clipping Objects~~
+{{page>index}}
+------
+===== Clipping Objects =====
+
+==== Limiting Visibility  ====
+
+An Evas object can be clipped – in other words, its visible area is restricted
+with the clipper object.
+
+It is often necessary to show only parts of an object, and while it may be
+possible to create an object that corresponds only to the part that must be
+shown (which is not always possible), it is usually easier to use a clipper. A
+clipper is a rectangle that defines what is visible and what is not. The way
+to do this is to create a solid white rectangle (by default, so you need not
+use ''evas_object_color_set()'') and give it a position and size of what is
+wanted visible. The following code exemplifies showing the center half of
+my_evas_object:
+
+<code c>
+Evas_Object *clipper = evas_object_rectangle_add(evas_canvas);
+evas_object_move(clipper, my_evas_object_x / 4, my_evas_object_y / 4);
+evas_object_resize(clipper, my_evas_object_width / 2, my_evas_object_height / 2);
+evas_object_clip_set(my_evas_object, clipper);
+evas_object_show(clipper);
+</code>
+
+==== Layer of Color  ====
+
+A solid white clipper does not produce a change in the color of the clipped
+object, only hides what is outside the clipper's area.  Changing the color of
+an object is accomplished by using a colored clipper. Clippers with color
+function by multiplying the colors of the clipped object. The following code
+shows how to remove all the red from an object.
+
+<code c>
+Evas_Object *clipper = evas_object_rectangle_add(evas);
+evas_object_move(clipper, my_evas_object_x, my_evas_object_y);
+evas_object_resize(clipper, my_evas_object_width, my_evas_object_height);
+evas_object_color_set(clipper, 0, 255, 255, 255);
+evas_object_clip_set(obj, clipper);
+evas_object_show(clipper);
+</code>
+
+\\
+-----
+{{page>index}}
+
