@@ -1,0 +1,121 @@
+~~Title: Scaling Objects~~
+{{page>index}}
+-----
+===== Scaling Objects =====
+
+=== Table of Contents ===
+
+  * [[#Part_Scaling|Part Scaling]]
+  * [[#Using_Image_Set|Using Image Set]]
+  * [[#Resizing_Borders|Resizing Borders]]
+
+==== Part Scaling ====
+
+When scaling an Edje object, only the parts that are declared scalable in the
+EDC file follow the scale request. This is done using the "scale" parameter.
+
+As an example, the previous "rectangle2" part is set as scalable, so that it
+is scaled when the Edje object is scaled.
+
+<code c>
+part
+{
+   name: "rectangle2";
+   type: RECT;
+   scale: 1;
+   description
+   {
+      state: "green" 0.0;
+   }
+}
+</code>
+
+==== Using Image Set ====
+
+When using images in the Edje EDC file, image file names must be listed in a
+images block, so that Edje can use them in the theme. In this block, the
+compression level and compression method of the image can also be defined.
+
+Here is an example of an images block that lists two image files.
+
+<code c>
+images
+{
+   image: "image1.jpg" COMP;
+   image: "image2.png" LOSSY 99;
+}
+</code>
+
+As the devicescan have different screen sizes and resolutions, it is possible
+to define that the used image set depends on the resolution.
+
+In the example below the image named "image3" selects different files
+depending on image size.
+
+<code c>
+images
+{
+   set
+   {
+      name: "image3";
+      image
+      {
+         image: "image3_1.png" LOSSY 90;
+         size: 0 0 50 50;
+      }
+      image
+      {
+         image: "image3_2.png" LOSSY 90;
+         size: 51 51 200 200;
+      }
+      image
+      {
+         image: "image3_3.png" LOSSY 90;
+         size: 201 201 500 500;
+      }
+   }
+}
+</code>
+
+This is done with the "size" attribute that specifies the minimal width and
+height and maximal width and height. If the width and height of the object are
+below 50px, ''image3_1.png'' picture file is used. If they are bigger than
+201px, ''image3_3.png'' file is used.
+
+==== Resizing Borders ====
+
+Sometimes it is needed to keep the borders of an image intact when resizing or
+scaling it. The ''border'' attribute is here to do that.
+
+<code c>
+border [left] [right] [top] [bottom]
+</code>
+
+If set, the area (in pixels) of each side of the image is displayed as a fixed
+size border, from the side -&gt; inwards. This prevents the corners from being
+changed on a resize.
+
+Here is a code example how to set a border of 10px on each side of the image.
+This 10px border will not be resized when scaling the image.
+
+<code c>
+part
+{
+   name: "image_border";
+   type: IMAGE;
+   scale: 1;
+   description
+   {
+      image
+      {
+         normal: "image1.jpg";
+         border: 10 10 10 10;
+      }
+   }
+}
+</code>
+
+
+\\
+-------
+{{page>index}}

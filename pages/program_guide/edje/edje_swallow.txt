@@ -1,0 +1,85 @@
+~~Title: Edje Swallow~~
+{{page>index}}
+-----
+===== Edje Swallow =====
+
+The parent of all layout widgets is Edje. Edje as explained in the
+[[/program_guide/edje/edje_parts_and_blocks|Edje Parts and Blocks]] using text
+description. One of its main features is the possibility to create "Swallows"
+objects. When this kind of object is added in an Evas, it contains any other
+''Evas_Object''. To create a swallow part, create first the EDC file:
+
+<code c>
+collections
+{
+   group
+   {
+      name: "container";
+      parts
+      {
+         part
+         {
+            name: "part.swallow"
+            type: SWALLOW;
+            description
+            {
+               state: "default" 0.0;
+               rel1.offset: 31 31;
+               rel2.offset: -32 -32;
+            }
+         }
+      }
+   }
+}
+</code>
+
+This EDC describes a group named "container", with one part inside of type
+SWALLOW and with the name ''part.swallow''. This part is centered inside the
+parent (it is the default behavior) but there are 32 pixels free all around
+this part. Use ''edje_cc'' to compile the EDC file into a binary EDJ file:
+
+<code c>
+edje_cc -o container.edj container.edc
+</code>
+
+Create an Edje object and load this file:
+
+<code c>
+edje = edje_object_add(evas_object_evas_get(parent));
+edje_object_file_set(edje, "container.edj", "container");
+</code>
+
+<note>
+''edje_object_add'' as opposed as all elementary object, does not take an
+''Evas_Object'' as a parent. Give it the Evas on which the object is added. As
+the parent is already added on an Evas by elementary, retrieve a reference on
+it by using the ''evas_object_evas_get'' API.
+</note>
+
+''edje_object_file_set'' is used to set the Edje file from which the object is
+loaded. The object itself is the name of the group as defined in the EDC file,
+in this case it is "container".
+
+Use the API ''edje_object_swallow'' to swallow any kind of ''Evas_Object''
+inside.
+
+<code c>
+ic = elm_icon_add(parent);
+elm_image_file_set(ic, "c1.png", NULL);
+edje_object_part_swallow(edje, "part.swallow", ic);
+</code>
+
+<note>
+The ''elm_image_file_set()'' function parameters are linked to Edje. The
+second argument in this example is a PNG file; however, it can also be an Edje
+file. In that case, the third argument must be the Edje group to load, exactly
+as previously shown with the ''edje_object_file_set()'' function.
+</note>
+
+Create complex layout for your application with Edje. It is may not be the
+most easy way, but it is the most powerful. This Edje layout is used all
+around elementary and is the basis of the layout widget.
+
+\\
+-------
+{{page>index}}

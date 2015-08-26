@@ -1,0 +1,302 @@
+{{page>index}}
+------
+===== Edje Blocks =====
+
+A typical Edje file starts with the following definitions:
+
+<code c>
+images {}
+fonts {}
+color_classes {}
+styles {}
+collections
+{
+   sounds
+   {
+      tone: "tone-1" 2300;
+      tone: "tone-2" 2300;
+      sample
+      {
+         name: "sound1" RAW;
+         source: "sound_file1.wav";
+      }
+   }
+   group {}
+   group {}
+}
+</code>
+
+<note>
+This guide is based on original work from Andres Blanc (dresb)
+andresblanc@gmail.com, it has been heavily expanded and edited since then.
+</note>
+
+=== Table of Contents ===
+
+    * [[#Images_Block|Images Block]]
+    * [[#Fonts_Block|Fonts Block]]
+    * [[#Data_Block|Data Block]]
+    * [[#Color_classes_Block|Color_classes Block]]
+    * [[#Styles_Block|Styles Block]]
+    * [[#Collections_Block|Collections Block]]
+    * [[#Sounds_Block|Sounds Block]]
+
+==== Images Block ====
+
+<code c>
+images
+{
+   image: "filename1.ext" COMP;
+   image: "filename2.ext" LOSSY 99;
+   set {}
+   set {}
+}
+</code>
+
+The ''images'' block is used to list each image file which are used in the
+theme. If any compression method is used, it is also defined here. Besides the
+document's root, additional ''images'' blocks can be included inside other
+blocks, usually ''collections'', ''group'', and ''part''. This makes file list
+maintenance easier when the theme is split among multiple files.
+
+   * ''RAW'': Uncompressed
+   * ''COMP'': Lossless compression
+   * ''LOSSY [0-100]'': JPEG lossy compression with quality from 0 to 100
+   * ''USER'': Not embedded to the file, refer to the external file instead
+
+=== Images.set Block ===
+
+<code c>
+set
+{
+   name: "image_name_used";
+   image {}
+   image {}
+}
+</code>
+
+The ''set'' block is used to define an image with different content depending
+on their size. Besides the document's root, additional ''set'' blocks can be
+included inside other blocks, normally ''collections'', ''group'' and
+''part''. This makes file list maintenance easier when the theme is split
+among multiple files.
+
+   * ''name [image name]''
+
+
+=== Images.set.image Block ===
+
+<code c>
+image
+{
+   image: "filename4.ext" COMP;
+   size: 51 51 200 200;
+   border: 0 0 0 0;
+   border_scale_by: 0.0;
+}
+</code>
+
+The ''image'' block inside a ''set'' block defines the characteristic of an
+image. Every block describes one image and the size rule to use it.
+
+For full documentation, see [[#Image]].
+
+  * ''image [image file] [compression method] (compression level)'' \\ This is included in each image file. The full path to the directory holding the images can be defined later with ''edje_cc'''s ''-id'' option. Available compression methods are:
+    * ''RAW'': Uncompressed
+    * ''COMP'': Lossless compression
+    * ''LOSSY [0-100]'': JPEG lossy compression with quality from 0 to 100
+    * ''USER'': Not embedded to the file, refer to the external file instead
+
+  * '' size [minw] [minh] [maxw] [maxh]'' \\ Defines the minimum and maximum size that selects the specified image.
+
+  * ''border [left] [right] [top] [bottom]'' \\ If set, the area (in pixels) of each side of the image is displayed as a fixed size border, from the side to inwards, preventing the corners from being changed on a resize.
+
+  * ''border_scale_by [value]'' \\ If border scaling is enabled then normally the OUTPUT border sizes (e.g. if 3 pixels on the left edge are set as a border, then normally at scale 1.0, those 3 columns are always the exact 3 columns of output, or at scale 2.0 they will be 6 columns, or 0.33 they will merge into a single column). This property multiplies the input scale factor by this multiplier, allowing the creation of supersampled borders to make much higher resolution outputs possible by always using the highest resolution artwork and then runtime scaling it down. Valid values are: 0.0 or bigger (0.0 or 1.0 to turn it off).
+
+==== Fonts Block ====
+
+<code c>
+fonts
+{
+   font: "filename1.ext" "fontname";
+   font: "filename2.ext" "otherfontname";
+}
+</code>
+
+The ''fonts'' block is used to list each font file with an alias used later in
+the theme. As with the ''images'' block, additional ''fonts'' blocks can be
+included inside other blocks.
+
+   * ''font [font filename] [font alias]'' \\ Defines each ''font file'' and ''alias'', the full path to the directory containing the font files can be defined with ''edje_cc'''s ''-fd'' option.
+
+==== Data Block ====
+
+<code c>
+data
+{
+   item: "key" "value";
+   file: "otherkey" "filename.ext";
+}
+</code>
+
+This block behaves in the same way as the data block inside the parts, only
+the use-cases are different: this is useful for data that is for the whole
+theme, for instance license information, version, authors, and so on.
+
+==== Color_classes Block ====
+
+<code c>
+color_classes
+{
+   color_class
+   {
+      name: "colorclassname";
+      color: [0-255] [0-255] [0-255] [0-255];
+      color2: [0-255] [0-255] [0-255] [0-255];
+      color3: [0-255] [0-255] [0-255] [0-255];
+   }
+}
+</code>
+
+The ''color_classes'' block contains a list of one or more ''color_class''
+blocks.  Each ''color_class'' allows the designer to name an arbitrary group
+of colors to be used in the theme, the application can use that name to alter
+the color values at runtime.
+
+  * ''name [color class name]'' \\ Sets the name for the color class, used as reference by both the theme and
+the application.
+
+  * ''color [red] [green] [blue] [alpha]'' \\ The main color.
+
+  * ''color2 [red] [green] [blue] [alpha]'' \\ Used as outline in text and textblock parts.
+
+  * ''color3 [red] [green] [blue] [alpha]'' \\ Used as shadow in text and textblock parts.
+
+==== Styles Block ====
+
+<code c>
+
+styles
+{
+   style
+   {
+      name: "stylename";
+      base: "..default style properties..";
+      tag: "tagname" "..style properties..";
+   }
+}
+</code>
+
+The ''styles'' block contains a list of one or more ''style'' blocks. A
+''style'' block is used to create style ''<tags>'' for advanced
+TEXTBLOCK formatting.
+
+  * ''name [style name]'' \\ The name of the style to be used as reference later in the theme.
+
+  * ''base [style properties string]'' The default style properties that is applied to the complete text. The available tags that can be used in the style property are the following:
+    * font
+    * font_size
+    * color
+    * color_class
+    * text_class
+    * ellipsis
+    * wrap
+    * style
+    * valign
+    * align
+<note>
+The font size is a point size, and the size of the rendered text is affected
+by the ppi information. The system basic ppi is 96, and you can change it on
+the Emulator menu.
+</note>
+
+  * ''tag [tag name] [style properties string]'' \\ Style to be applied only to text between style ''<tags>..</tags>''. When creating paired tags, like ''<bold></bold>'', a '+' sign must be added at the start of the style properties of the first part (''<bold>''). If the second part (''</bold>'') is also defined, a '-' sign must be added to its style properties. This applies only to paired tags; single tags, like ''<tab>'', must not have a starting '+'.
+    * br
+    * tab
+    * b
+    * match
+
+The following code is the sample of a text style for the text style:
+
+<code c>
+style
+{
+   name: "list_text_main";
+   base: "font=Sans:style=Regular font_size=30 color=#ffffff ellipsis=1.0";
+   tag: "br" "\n";\
+   tag: "ps" "ps";\
+   tag: "tab" "\t";\
+   tag: "b" "+ font_weight=Bold";
+}
+</code>
+
+==== Collections Block ====
+
+<code c>
+collections
+{
+   base_scale: 1.8;
+   sounds
+   {
+      tone: "tone-1" 2300;
+      tone: "tone-2" 440;
+      sample
+      {
+         name: "sound_file1" RAW;
+         source: "sound_file1.wav";
+      }
+   }
+   group
+   {
+      name: "groupname";
+      alias: "anothername;"
+      min: width height;
+      max: width height;
+      parts {}
+      scripts {}
+      limits {}
+      data {}
+      programs {}
+   }
+}
+</code>
+
+The ''collections'' block is used to list the groups that compose the theme.
+Additional ''collections'' blocks do not prevent overriding group names.
+
+The ''sounds'' block contains a list of one or more sound sample and tone
+items.
+
+=== Base Scale ===
+
+  * ''base_scale: [scale factor]'' \\ Information about the scale factor in the edc file.
+
+Object scaling must be defined in the ''config.xml'' file of this application
+to show the application in a proper size in other devices. However, the
+scaling must be based on the scale 1.0 or, if the application is based on
+another scale, this scale must be defined in the ''config.xml'' file. This
+predefined scale is called the "base scale".
+
+The size of a scalable object is multiplied with the device scale value. If
+the scalable object with the size 10 is created in a device with the scale
+1.0, the size of the object is 20 in a device with the scale 2.0, and 40 in a
+device with the scale 4.0.
+
+==== Sounds Block ====
+
+   * ''tone [tone name] [frequency]'' \\ A sound of the given frequency.
+
+=== Sounds.sample Block ===
+
+The sample block defines the sound sample.
+
+  * ''name [sample name] [compression type] (quality)'' \\ Used to include each sound file. The full path to the directory holding the sounds can be defined later with ''edje_cc'''s ''-sd'' option. Valid types are:
+    * ''RAW'': Uncompressed
+    * ''COMP'': Lossless compression
+    * ''LOSSY [-0.1 - 1.0]'': Lossy compression with quality from 0.0 to 1.0
+    * ''AS_IS'': No compression or encoding, write the file information as it is
+
+   * ''source [file name]'' \\ The sound source file name (source can be mono/stereo WAV file. Only files with 44.1 KHz sample rate are supported for now).
+
+------
+{{page>index}}

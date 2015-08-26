@@ -1,0 +1,120 @@
+~~Title: ELM Layout~~
+{{page>index}}
+-----
+===== ELM Layout =====
+
+Layout is a container widget. The basic use of ''elm_layout'', with default
+style is already documented in the [[/program_guide/containers_pg|Container
+guide]]. Elm layout takes a standard Edje design file and wraps it in a
+widget. Layouts are the basis of graphical widgets which are used in
+Elementary.
+
+=== Table of Content ===
+
+  * [[#Adding_Layout|Adding Layout]]
+  * [[#Signals|Signals]]
+
+==== Adding Layout ====
+
+Create a new elementary layout using ''elm_layout_add'':
+
+<code c>
+Evas_Object *layout;
+layout = elm_layout_add(parent);
+</code>
+
+As for Edje swallows, load an Edje file. Create first an Edje file, that
+contains a black rectangle and an icon in the center.
+
+<code c>
+images
+{
+   image: "c1.png" COMP;
+}
+
+collections
+{
+   group
+   {
+      name: "my_layout";
+      parts
+      {
+         part
+         {
+            name: "background";
+            type: RECT; description
+            {
+               state: "default" 0.0; color: 0 0 0 255;
+            }
+         }
+         part
+         {
+            name: "background";
+            type: IMAGE;
+            description
+            {
+               state: "default" 0.0;
+               rel1.offset: 31 31;
+               rel2.offset: -32 -32;
+               default.image: "c1.png";
+            }
+         }
+      }
+   }
+}
+</code>
+
+Compile it with ''edje_cc -o edje_example.edj edje_example.edc''.
+
+This file can be loaded with ''elm_layout_file_set'':
+
+<code c>
+elm_layout_file_set(layout, "edje_example.edj", "my_layout");
+</code>
+
+The layout widget may contain as many parts/children as described in its theme
+file (EDC). Some of these children can have special types:
+
+   * ''SWALLOW'' (content holder)
+   * ''BOX''
+   * ''TABLE''
+
+
+Only one object can be added to a ''SWALLOW''. The
+''elm_layout_content_set()/get/unset'' functions are used to manage objects in
+a ''SWALLOW'' part. After being set to this part, the object's size, position,
+visibility, clipping and other description properties are controlled by the
+description of the given part (inside the Edje theme file).
+
+The BOX layout can be used through the ''elm_layout_box_*()'' set of
+functions. It is very similar to the ''elm_box'' widget but the BOX layout's
+behavior is completely controlled by the Edje theme. The TABLE layout is like
+the BOX layout, the difference is that it is used through the
+''elm_layout_table_*()'' set of functions.
+
+==== Signals ====
+
+Elm can send Edje signals to the EDC part by using the
+''elm_layout_signal_emit''. You can also use
+''elm_layout_signal_callback_add'' to receive signals.
+
+Use the following code to listen to any signals sent by the layout:
+
+<code c>
+elm_layout_signal_callback_add(layout, "*", "*", _signal_cb, NULL);jj
+
+static void
+_signal_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   printf("Info received from layout : %s %s\n", emission, source);
+}
+</code>
+
+For more details on this, see the
+[[/program_guide/event_effect/edje_events#Usual_Usage_for_Parts_Aggregated_in_Groups:_with_Layouts|section
+on edje signals and layouts]].
+
+\\
+-------
+{{page>index}}
+
