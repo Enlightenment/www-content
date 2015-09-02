@@ -1,0 +1,427 @@
+{{page>index}}
+------
+===== Multilingual Programming Guide =====
+
+=== Table of Contents ===
+
+  * [[#Concepts|Concepts]]
+  * [[#Internationalization_in_EFL|Internationalization in EFL]]
+    * [[#Marking_text_parts_as_translatable|Marking text parts as translatable]]
+    * [[#Translating_texts_directly|Translating texts directly]]
+        * [[#Plurals|Plurals]]
+        * [[#Handling_language_changes_at_runtime|Handling language changes at runtime]]
+        * [[#compiling_and_running_a_Localized_Application|compiling and running a Localized Application]]
+    * [[#Extracting_messages_for_translation|Extracting messages for translation]]
+  * [[#Internationalization_tips|Internationalization tips]]
+    * [[#Don't_make_assumptions_about_languages|Don't make assumptions about languages]]
+    * [[#Translations_will_be_of_different_lengths|Translations will be of different lengths]]
+    * [[#For_source_control,_don't_commit_.po_if_only_line_indicators_have_changed|For source control, don't commit .po if only line indicators have changed]]
+    * [[#Using__()_as_a_shorthand_to_the_gettext()_function|Using _() as a shorthand to the gettext() function]]
+      * [[#Proper_sorting:_strcoll()|Proper sorting: strcoll()]]
+      * [[#Working_with_translators|Working with translators]]
+
+==== Concepts ====
+
+Internationalization (also called i18n) is done by using strings in a specific
+language in the code (typically English) and then translating them to the
+target language.
+
+Not using resource identifiers but actual strings make it much more convenient
+and readable. A typical code to create a button that will be translated is:
+
+<code c>
+Evas_Object *button = elm_button_add(parent);
+elm_object_translatable_text_set(button, "Click Here");
+</code>
+
+The messages that require translations are typically automatically extracted
+from the sources and put into .po files, one per language. For the example
+above, the "fr.po" file could contain:
+
+<code c>
+#: some_file.c:43 another_file.c:41
+msgid "Click Here"
+msgstr "Cliquez ici"
+</code>
+
+In the example above, the program that extracts strings has found two
+occurrences of the same string, one in some_file.c at line 43 and another one
+in another_file.c at line 41. It gives the original string after "msgid" and
+the translation goes after "msgstr".
+
+Strings without translation are stored as the empty string "" in the .po file
+and the program will use the original strings, providing a sane fallback.
+
+It is possible that the "fuzzy" keyword is added by the extractor program on
+the line before "msgid"; it means the original string has changed and needs
+review.
+
+<note>
+Don't be surprised if the translation is correct even though you didn't change
+it: the extractor program is sometimes able to "guess" the updated
+translation!
+</note>
+
+==== Internationalization in EFL ====
+
+=== Marking text parts as translatable ===
+
+The most common way to use a translation involves the following APIs:
+
+<code c>
+elm_object_translatable_text_set(Evas_Object *obj, const char *text)
+elm_object_item_translatable_text_set(Elm_Object_Item *it, const char *text)
+</code>
+
+They set the untranslated string for the "default" part of the given
+''Evas_Object'' or ''Elm_Object_Item'' and mark the string as translatable.
+
+Similar functions are available if you wish to set the text for a part that is
+not "default":
+
+<code c>
+elm_object_translatable_part_text_set(Evas_Object *obj, const char *part, const char *text)
+elm_object_item_translatable_part_text_set(Elm_Object_Item *it, const char *part, const char *text)
+</code>
+
+It is important to provide the untranslated string to these functions because
+the EFLs will trigger the translation themselves and re-translate the strings
+automatically should the system language change.
+
+It is also possible to set the text and the translatable property separately.
+Setting the text is done as usual while the translatable property is set
+through the ''elm_object_part_text_translatable_set()'':
+
+There are also ''get()'' counterparts to the ''set()'' functions above.
+
+=== Translating texts directly ===
+
+The approach described in the previous section is not applicable all of the
+time. For instance, it won't work if you are populating a genlist, if you need
+plurals in the translation or if you want to do something else with the
+translation than putting it in elementary widgets.
+
+It is however possible to retrieve the translation for a given text using
+gettext from ''<libintl.h>'' :
+
+<code c>
+char * gettext(const char * msgid);
+</code>
+
+This function takes as input a string (that will be copied to an msgid field
+in the .po files) and returns the translation (the
+corresponding msgstr field).
+
+In order to use gettext, you have to set the local before:
+
+<code c>
+setlocale(LC_ALL,"");
+</code>
+
+''LC_ALL'' is a catch-all Locale Category (LC).  Setting it will alter all LC
+categories as ''LC_MESSSAGES'' and ''LC_TYPES'' which are other categories for
+translation: ''LC_MESSSAGES'' is for message translations and ''LC_TYPES''
+indicates the character set supported.
+
+By setting the locale to ''""'', you are implicitly assigning the locale to
+the user's defined locale (grabbed from the user's LC or LANG environment
+variables). If there is no user-defined locale, the default locale "C" is
+used.
+
+<code c>
+bindtextdomain("hello","/usr/share/locale/");
+</code>
+
+This command binds the name ''"hello"'' to the directory root of the message
+files. In fact, the program will be looking for your ''hello.mo'' in
+''/usr/share/locale/<your_language>/LC_MESSAGES/'' directory where
+''<your_language>'' can be ''fr_FR'' for example defining in the user's
+defined locale. This is used to specify where you want your locale files
+stored. You will use ''"hello"'' when setting the gettext domain through
+''textdomain()'', and it corresponds to the name of the file to be looked up
+in the appropriate locale directory.
+
+The ''bindtextdomain()'' call is not mandatory; if you choose to install your
+file in the system's default locale directory it can be omitted. Since the
+default can change from system to system, however, it is recommended.
+
+<code c>
+textdomain("hello");
+</code>
+
+This sets the application name as ''"hello"'', as cited above. This makes gettext
+calls look for the file ''hello.mo'' in the appropriate directory. By binding
+various domains and setting the textdomain (or using ''dcgettext()'',
+explained elsewhere) at runtime, you can switch between different domains as
+desired.
+
+When giving the text for a genlist item, you could use it in a similar manner
+as the one below:
+
+<code c>
+#include<libintl.h>
+#include<locale.h>
+
+#define _(str) gettext(str)
+
+static char *
+_genlist_text_get(void *data, Evas_Object *obj, const char *part)
+{
+   return strdup(gettext("Some Text"));
+   /* or usual way
+    * return strdup(_("Some Text"));
+    */
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   setlocale(LC_ALL,"");
+   bindtextdomain("hello","/usr/share/locale");
+   textdomain("hello");
+
+   /* ... */
+
+   elm_run();
+   elm_shutdown();
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+== Plurals ==
+
+Plurals are handled in a similar way but through the ''ngettext()'' function.
+Its prototype is shown below:
+
+<code c>
+char * ngettext (const char * msgid, const char * msgid_plural, unsigned long int n);
+</code>
+
+  * ''msgid'' is the same as before, i.e. the untranslated string
+  * ''msgid_plural'' is the plural form of msgid
+  * the quantity (with English, 1 would be singular and anything else would be plural)
+
+A matching fr.po file would contain the following lines:
+
+<code c>
+msgid "%d Comment"
+msgid_plural "%d Comments"
+msgstr[0] "%d commentaire"
+msgstr[1] "%d commentaires"
+</code>
+
+__Several plurals__
+
+It is even possible to have several plural forms. For instance, the .po file
+for Polish could contain:
+
+The index values after msgstr are defined in system-wide settings. The ones
+for Polish are given below:
+
+<code c>
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+</code>
+
+There are 3 forms (including singular). The index is 0 (singular) if the given
+integer n is 1. Then, if ''(n % 10 &gt;= 2 &amp;&amp; % 10 &lt;= 4 &amp;&amp;
+(n % 100 < 10 || n % 100 >= 20)'', the index is 1 and otherwise it is 2.
+
+== Handling language changes at runtime ==
+
+The user can change the system language settings at any time. When that is
+done, Ecore Events notifies the application which can then change the language used
+in elementary. The widgets then receive a "language,changed" signal and can
+set their text again.
+
+The first step is to handle the ecore event:
+
+<code c>
+static Eina_Bool
+_app_language_changed(void *data, int type, void *event)
+{
+   // Set the language in elementary
+   elm_language_set(setlocale(LC_ALL,NULL));
+}
+
+int
+main(int argc, char *argv[])
+{
+    ...
+
+    // Retrieve the current system language
+    ecore_event_handler_add(ECORE_EVENT_LOCALE_CHANGED , _app_language_changed, NULL);
+
+    ...
+}
+</code>
+
+The call to ''elm_language_set()'' above will trigger the emission of the
+"language,changed" signal which can then be handled like usual smart events
+signals.
+
+=== Extracting messages for translation ===
+
+The xgettext tool can extract strings to translate to a .pot file (po
+template) while msgmerge can maintain existing .po files. The typical workflow
+is as follows:
+
+  * run xgettext once; it will generate a .pot file
+  * when adding a new translation, copy the .pot file to <locale>.po and translate that file
+  * new runs of xgettext will update the existing .pot file and msgmerge will update .po files
+
+A typical call to xgettext looks like:
+
+<code bash>
+ xgettext --directory=src --output-dir=res/po --keyword=_ --keyword=N_ --keyword=elm_object_translatable_text_set:2 --keyword=elm_object_item_translatable_text_set:2 --add-comments= --from-code=utf-8 --foreign-user
+</code>
+
+This will extract all strings that are used inside the "_()" function (usaual
+optional short-hand for gettext()), use UTF-8 as the encoding and add the
+comments right before the strings to the output files.
+
+A typical call to msgmerge looks like:
+
+<code bash>
+msgmerge --width=120 --update res/po/fr.po res/po/ref.pot
+</code>
+
+POT file (.pot) stands for Portable Object Template file.
+It contains a series of lines in pair starting with the keywords msgid and msgstr
+respectively. In the above example there is only one such pair & msgid is
+shown first followed by a string in the source language, followed by a msgstr
+in the next line which is immediately followed by a blank string.
+
+Now in order to translate the application, these POT files are copied as PO
+(.po) files in respective language folders and then translated. What I mean by
+translation here is that, corresponding to every string adjacent to msgid
+there is a translated string (in local script), adjacent to msgstr. For Hindi
+it will look something like this:
+
+<code bash>
+msgid "Click Here\n"
+msgstr "Cliquez ici\n"
+</code>
+
+===  compiling and running a Localized Application ===
+
+Create an MO (.mo) file using the following command:
+
+<code c>
+msgfmt helloworld.po -o helloworld.mo
+</code>
+
+In root mode copy the MO file to /usr/share/locale/<LANGUAGE>/LC_MESSAGES. For
+French, do something like this:
+
+<code bash>
+cp helloworld.mo /usr/share/locale/fr_FR/LC_MESSAGES/
+</code>
+
+Don't forget to export your language here:
+
+<code bash>
+export LANG=fr_FR.utf8
+</code>
+
+Then compile and execute your program.
+
+==== Internationalization tips ====
+
+=== Don't make assumptions about languages ===
+
+Languages vary wildly and even though you might know several of them, you
+shouldn't assume there is any common logic to them.
+
+For instance, with English typography no character must appear before colons
+and semicolons (':' and ';'). However, with French typography, there should be
+"espace fine insécable", i.e. a non-breakable space (HTML's &nbsp;) that
+is narrower that regular spaces.
+
+This prevents proper translation in the following construct:
+
+<code c>
+snprintf(buf, some_size, "%s: %s", gettext(error), gettext(reason));
+</code>
+
+The proper way to do it is to use a single string and let the translators
+manage the punctuation. This means, translating the format string instead:
+
+<code c>
+snprintf(buf, some_size, gettext("%s: %s"), gettext(error), gettext(reason));
+</code>
+
+Of course, it might not always be doable but you should strive for this unless
+a specific issue arises.
+
+=== Translations will be of different lengths ===
+
+Depending on the language, the translation will have a different length on
+screen. Some languages have shorter constructs than other in some cases while
+it is reversed for others; some languages can also have a word for a concept
+while others won't and will require a circumlocution (designating something by
+using several words).
+
+=== For source control, don't commit .po if only line indicators have changed ===
+
+From the example above, a translation block looks like:
+
+<code c>
+#: some_file.c:43 another_file.c:41
+msgid "Click Here"
+msgstr "Cliquez ici"
+</code>
+
+In case you insert a new line at the top of "some_file.c", the line indicator
+will change to look like
+
+<code c>
+#: some_file.c:44 another_file.c:41
+</code>
+
+Obviously, on non-trivial projects, such changes will happen often. If you use
+source control (you should) and commit such changes even though no actual
+translation change has happened, each and every commit will probably contain a
+change to .po files. This will hamper readability of the change history and in
+case several people are working in parallel and need to merge their changes,
+this will create huge merge conflicts each time.
+
+Only commit changes to .po files when actual translation changes have
+happened, not merely because line comments have changed.
+
+=== Using _() as a shorthand to the gettext() function ===
+
+Since calling ''gettext()'' might happen very often, it is often abbreviated
+to ''_()'':
+
+<code c>
+#define _(str) gettext(str)
+</code>
+
+== Proper sorting: strcoll() ==
+
+Quite often you will want to sort data for display. There is a string
+comparison tailored for that: ''strcoll()''. It works the same as ''strcmp()''
+but sorts according to the current locale settings.
+
+<code c>
+int strcmp(const char *s1, const char *s2);
+int strcoll(const char *s1, const char *s2);
+</code>
+
+The function prototype is a standard one and indicates how to order strings. A
+detailed explanation would be out of scope for this guide but chances are you
+will be able to provide the ''strcoll()'' function as the comparison function
+for sorting the data set you are using.
+
+== Working with translators ==
+
+The system described above is a common one and will likely be known to
+translators, meaning that giving its name ("gettext") might be enough to
+explain how to work. In addition to this documentation, there is extensive
+additional documentation and questions and answers on the topic on the
+Internet.
+
+Don't hesitate to put comments in your code right above the strings to
+translate since they can be extracted along with the strings and put in the
+.po files for the translator to see them.
