@@ -1,0 +1,72 @@
+{{page>index}}
+-------
+==== Ecore_con_ssl usage  ====
+
+Several functions are available to be able to use SSL. These functions can be
+used on the server side.
+
+First, we can check whether SSL is supported on the host.
+
+<code c>
+int ssl = ecore_con_ssl_available_get();
+</code>
+
+This function returns ''1'' if SSL is provided by GnuTLS, ''2'' if provided by
+OpenSSL, and ''0'' if SSL is not supported.
+
+Several functions are available to add SSL certificate and private keys for
+use when connecting or listening:
+
+  * ''ecore_con_ssl_server_cert_add()'' to add a SSL PEM certificate;
+  * ''ecore_con_ssl_server_privkey_add()'' to add a SSL PEM private key;
+  * ''ecore_con_ssl_server_crl_add()'' to add a SSL PEM CRL file;
+  * ''ecore_con_ssl_server_cafile_add()'' to add a SSL PEM CA file.
+
+We can then enable certification verification on the server object against
+loaded certificates.
+
+<code c>
+ecore_con_ssl_server_verify(svr);
+</code>
+
+Certification verification can be done using <em>only</em> the hostnames.
+
+<code c>
+ecore_con_ssl_server_verify_basic(svr);
+</code>
+
+Sometimes, the certificate hostname does not match with the hostname we are
+trying to connect to. We can set the hostname to verify against in certificate
+verification. Here we set the hostname to “enlightenment.org”.
+
+<code c>
+ecore_con_ssl_server_verify_name_set(svr, "enlightenment.org");
+</code>
+
+==== Upgrade a connection  ====
+
+We can also upgrade a connection to a specified level of encryption.
+
+From the client:
+
+<code c>
+ecore_con_ssl_server_upgrade(srv, ECORE_CON_USE_SSL3);
+</code>
+
+<note>
+Never use this function on the server side!
+</note>
+
+From the server:
+
+<code c>
+ecore_con_ssl_client_upgrade(srv, ECORE_CON_USE_SSL3);
+</code>
+
+These functions will start a SSL handshake on a connection. Once the upgrade
+has been completed, ''ECORE_CON_EVENT_SERVER_UPGRADE'' or
+''ECORE_CON_EVENT_CLIENT_UPGRADE'' events will be emitted. The connection
+should be treated as disconnected until the next event.
+
+-------
+{{page>index}}

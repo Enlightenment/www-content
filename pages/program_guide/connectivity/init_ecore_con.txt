@@ -1,0 +1,85 @@
+{{page>index}}
+-------
+===== Init Ecore_Con =====
+
+Before using the Ecore_Con library, it needs to be initialized.
+
+<code c>
+#include <Ecore_Con.h>
+// Init ecore_con library.
+int ret = ecore_con_init();
+// ret is the number of times the library has been initialized
+// without shutdown.
+
+</code>
+
+==== Asynchronous DNS lookup  ====
+
+We can do a simple DNS lookup using the following function:
+
+<code c>
+EAPI Eina_Bool ecore_con_lookup(const char *     name,
+                                Ecore_Con_Dns_Cb done_cb,
+                                const void *     data
+                               )
+</code>
+
+in which:
+
+  * ''name'': the IP address or the server name to translate;
+  * ''done_cb'': a callback to notify when the request is done;
+  * ''data'': the data to be passed to the callback.
+
+The ''done_cb'' function prototype is :
+
+
+<code c>
+void done_cb(const char *      canonname,
+             const char *      ip,
+             struct sockaddr * addr,
+             int               addrlen,
+             void *            data
+            )
+</code>
+
+where:
+
+  * ''canonname'': the canonical name associated with the address;
+  * ''ip'': the resolved IP address;
+  * ''addr'': a pointer to the socket address;
+  * ''addrlen'': the length of the socket address, in bytes;
+  * ''data'': the data passed to the callback.
+
+As an example, we want to know the canonical name of the 140.211.167.135 IP
+address. Let’s first declare the ''done_cb'' callback that will be called when
+the DNS lookup will finish.
+
+<code c>
+static void
+done_cb(const char *canonname, const char *ip, struct sockaddr *addr, int addrlen, void *data)
+{
+   printf("140.211.167.135 name is %s\n", canonname);
+}
+
+</code>
+
+Then we can call the ''ecore_con_lookup()'' function to do the query.
+
+<code c>
+// Call ecore_con_lookup.
+ret = ecore_con_lookup("140.211.167.135", done_cb, NULL);
+// If ret is EINA_FALSE the request failed to set up.
+</code>
+
+When the request succeeds it shall call the ''done_cb()'' callback that will
+printthe name associated with the IP address we gave.
+
+When the library is not be used anymore, it has to be shut down.
+
+<code c>
+// Shutdown the library.
+ret = ecore_con_shutdown();
+</code>
+
+------
+{{page>index}}

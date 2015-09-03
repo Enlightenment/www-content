@@ -1,0 +1,120 @@
+{{page>index}}
+-------
+===== Basic usage of Ecore_Con_Url  =====
+
+The Ecore URL connection library is an HTTP abstraction. It makes it easy to
+perform HTTP requests like ''POST'', ''GET'', …
+
+=== Table of Contents ===
+
+  * [[#Initialisation_and_URL_set|Initialisation and URL set]]
+  * [[#Download_a_file|Download a file]]
+  * [[#Ecore_File_usage|Ecore File usage]]
+
+==== Initialisation and URL set  ====
+
+First, we need to initialise the Ecore URL connection library and create a
+''Ecore_Con_Url'' object.
+
+<note>
+The Ecore_Con library shall also be initialized as described in the previous
+chapter.
+</note>
+
+<code c>
+Ecore_Con_Url *ec_url = NULL;
+// Initiate Ecore Url connection library.
+ecore_con_url_init();
+// Create the Ecore_Con_Url object passing the URL that will receive the
+// requests as an argument.
+ec_url = ecore_con_url_new("http://www.enlightenment.org");
+</code>
+
+<note>
+''ecore_con_url_new()'' will return NULL on error, so be careful to check the
+returned object before using it.
+</note>
+
+The URL can be modified using ''ecore_con_url_url_set()''. Here we will set it
+to [[https://docs.enlightenment.org/efl/1.15.0/index.html]].
+
+<code c>
+Eina_Bool ret = ecore_con_url_url_set(ec_url, "https://docs.enlightenment.org/efl/1.15.0/index.html");
+</code>
+
+The ''return'' value will contain ''EINA_FALSE'' if the new URL cannot be set.
+
+==== Download a file  ====
+
+To download a file, we first need to create a local file and open it with
+write access. We can then give the file descriptor to the Ecore URL connection
+library so that it can write to it.
+
+We can then register a callback on the following events:
+
+^   ''ECORE_CON_EVENT_URL_PROGRESS''    |happens when the URL object transfer has made progress. \\ It gives the total and current data status of the transfer (upload and download).|
+^   ''ECORE_CON_EVENT_URL_COMPLETE''    |happens when the URL object has completed a transfer. \\ It returns the HTTP status code of the operation.|
+^   ''ECORE_CON_EVENT_URL_DATA''        |happens when the URL object has received data. \\ It gives the size of the received data and a buffer containing the data.|
+
+<note>
+''ECORE_CON_EVENT_URL_DATA'' event will not be emitted if a file has been set
+to receive the response data with ''ecore_con_url_fd_set()''.
+</note>
+
+Here we only register callbacks for the complete and progress events.
+
+<code c>
+static Eina_Bool
+_url_progress_cb(void *data __UNUSED__, int type __UNUSED__, void *event_info)
+{
+   Ecore_Con_Event_Url_Progress *url_progress = event_info;
+   printf("Download progress : %d\n", (url_progress->down.now / url_progress->down.total) * 100);
+   return EINA_TRUE;
+}
+
+static Eina_Bool
+_url_complete_cb(void *data __UNUSED__, int type __UNUSED__, void *event_info)
+{
+   Ecore_Con_Event_Url_Complete *url_complete = event_info;
+   printf("Download completed with status: %d\n", url_complete->status);
+   return EINA_TRUE;
+}
+
+ecore_event_handler_add(ECORE_CON_EVENT_URL_PROGRESS, _url_progress_cb, NULL);
+ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, _url_complete_cb, NULL);
+</code>
+
+Once the URL is set up and the callbacks are registered, we can launch the GET
+request.
+
+<code c>
+ecore_con_url_get(ec_url);
+</code>
+
+The status of the request will be shown in the ''_url_complete_cb()'' and the
+progress will be reported by the ''_url_progress_cb()'' function.
+
+==== Ecore File usage  ====
+
+The Ecore File library provides an abstraction of the Ecore URL connection
+library. All that we described previously can be done with one function call.
+
+<code c>
+Ecore_File_Download_Job *jobret;
+ecore_file_download(http://www.enlightenment.org,
+                    file:
+                    _url_complete_cb,
+                    _url_progress_cb,
+                    NULL,
+                    &job_ret);
+</code>
+
+We first pass the url string we want to download, the local filename where it
+needs to be written, then the complete and progress callbacks with the data to
+pass to them (here ''NULL''). Finally, it takes a ''Ecore_File_Download_Job''
+structure that is filled by the function and which can be used with
+''ecore_file_download_abort()'' to cancel the current download.
+
+
+-------
+{{page>index}}

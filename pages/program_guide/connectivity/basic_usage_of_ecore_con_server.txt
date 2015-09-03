@@ -1,0 +1,159 @@
+{{page>index}}
+-------
+===== Basic usage of Ecore_Con_Server  =====
+
+=== Table of Contents ===
+
+    * [[#Start_a_server|Start a server ]]
+    * [[#Configure_the_server|Configure the server ]]
+    * [[#Register_callbacks_on_events|Register callbacks on events]]
+    * [[#Sending_data_to_the_client|Sending data to the client]]
+
+==== Start a server  ====
+
+We create a ''Ecore_Con_Server'' object with the ''ecore_con_server_add''.
+This function takes a connection type parameter that defines the type of the
+connection that will be created with the client. This type can be composed of
+several of the follwing values:
+
+   * ''ECORE_CON_LOCAL_USER'': local user socket in “~/.ecore”;
+   * ''ECORE_CON_LOCAL_SYSTEM'': local system socket in “/tmp”;
+   * ''ECORE_CON_LOCAL_ABSTRACT'': abstract socket;
+   * ''ECORE_CON_REMOTE_TCP'': remote TCP server;
+   * ''ECORE_CON_REMOTE_UDP'': remote UDP server;
+   * ''ECORE_CON_REMOTE_MCAST'': remote multicast server;
+   * ''ECORE_CON_REMOTE_BROADCAST'': remote broadcast server;
+   * ''ECORE_CON_REMOTE_NODELAY'': remote connection sending data immediately without buffering;
+   * ''ECORE_CON_REMOTE_CORK'': remote connection sending large chunks of data;
+   * ''ECORE_CON_USE_SSL3'': enable SSL3;
+   * ''ECORE_CON_USE_TLS'': enable TLS;
+   * ''ECORE_CON_USE_MIXED'': enable both SSL3 and TLS;
+   * ''ECORE_CON_LOAD_CERT'': use a loaded certificate;
+   * ''ECORE_CON_NO_PROXY'': disable proxy on the server.
+
+<note>
+To compose a type with more than one value, add a '|' between them.
+</note>
+
+Here we will create a remote TCP server on the local host (127.0.0.1) that
+will be listening on the port 8080.
+
+<code c>
+Ecore_Con_Server *svr;
+svr = ecore_con_server_add(ECORE_CON_REMOTE_TCP, "127.0.0.1", 8080, NULL));
+</code>
+
+<note>
+The ''ecore_con_server_add()'' function can return NULL if it cannot create
+the server.
+</note>
+
+==== Configure the server  ====
+
+We will set a maximum number of simultaneous connections to our server in
+order to prevent it from being overloaded. As an example we will limit the
+connections to three clients: if three clients are connected, a new oncoming
+client will have to wait until one of the connected clients disconnects before
+being able to actually connect to the server.
+
+<code c>
+ecore_con_server_client_limit_set(svr, 3, 0);
+</code>
+
+The last parameter of this function determines how the excess clients will be
+rejected. If set to ''1'', the client that tries to connect will be
+disconnected if there are already too many of them connected, whereas setting
+to ''0'' will have the client wait until another client disconnects.
+
+To avoid a client holding a connection for too long, we can set a timeout
+after which an inactive client will be disconnected. In the following example,
+we set a ten seconds timeout.
+
+<code c>
+ecore_con_server_timeout_set(svr, 10);
+</code>
+
+==== Register callbacks on events  ====
+
+We need to register callbacks on events to be able to know when clients
+connect to the server or send data. We can register callbacks on the following
+events:
+
+   * ''ECORE_CON_EVENT_CLIENT_ADD'': a client connects to the server;
+   * ''ECORE_CON_EVENT_CLIENT_DEL'': a client disconnects;
+   * ''ECORE_CON_EVENT_CLIENT_ERROR'': an error occurred while trying to reach the client;
+   * ''ECORE_CON_EVENT_CLIENT_DATA'': a connected client has sent data.
+
+
+Here we only register callbacks on add, del and data events. The ''_add_cb()''
+callback prints the IP address and port of the client that just connected, and
+also whether it is still connected. It then returns ''ECORE_CALLBACK_RENEW''
+to keep the callback handler on the ''ECORE_CON_EVENT_CLIENT_ADD'' event.
+
+The ''_del_cb()'' callback prints the IP address and the uptime of the client
+that disconnects. It then calls ''ecore_con_client_del()'' to close the
+connection and free the memory allocated to the client.
+
+Finally the ''_data_cb()'' callback prints the size of the data received by
+the client.
+
+__Callbacks definition__:
+
+<code c>
+static Eina_Bool
+_add_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Client_Add *ev)
+{
+   printf("Client connection: ip %s, port %d, connected = %d!\n",
+   ecore_con_client_ip_get(ev->client),
+   ecore_con_client_port_get(ev->client),
+   ecore_con_client_connected_get(ev->client));
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_del_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Client_Del *ev)
+{
+   printf("Client disconnected: ip %s uptime %0.3f seconds\n",
+   ecore_con_client_ip_get(ev->client),
+   ecore_con_client_uptime_get(ev->client));
+   // Close the connection with the client
+   ecore_con_client_del(ev->client);
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_data_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Client_Data *ev)
+{
+   printf("Received data from client: ip %s port %d size %i bytes\n",
+   ecore_con_client_ip_get(ev->client),
+   ecore_con_client_port_get(ev->client,ev->size);
+   // ev->data contains the data sent by the client
+   printf("%s\n",ev->data);
+   return ECORE_CALLBACK_RENEW;
+}
+</code>
+
+Here are the callback registrations:
+
+<code c>
+ecore_event_handler_add(ECORE_CON_EVENT_CLIENT_ADD, (Ecore_Event_Handler_Cb)_add_cb, NULL);
+ecore_event_handler_add(ECORE_CON_EVENT_CLIENT_DEL, (Ecore_Event_Handler_Cb)_del_cb, NULL);
+ecore_event_handler_add(ECORE_CON_EVENT_CLIENT_DATA, (Ecore_Event_Handler_Cb)_data_cb, NULL);
+</code>
+
+==== Sending data to the client  ====
+
+Once connected, we can send data to the client.
+
+<code c>
+char hello[] = "hello Client ! I am the server.";
+ecore_con_client_send(ev->client, hello, sizeof(hello));
+ecore_con_client_flush(ev->client);
+</code>
+
+The ''ecore_con_client_send()'' function is used to send the data, and the
+''ecore_con_client_flush()'' function is to avoid buffering and sending this
+data to the client immediately.
+
+{{page>index}}
+-------

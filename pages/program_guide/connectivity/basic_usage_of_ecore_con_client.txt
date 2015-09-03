@@ -1,0 +1,98 @@
+{{page>index}}
+-------
+===== Basic usage of Ecore_Con_Client  =====
+
+==== Connecting to the server  ====
+
+On the client side, we need to connect to the previously created server.
+
+<code c>
+Ecore_Con_Server *svr;
+svr = ecore_con_server_connect(ECORE_CON_REMOTE_TCP, "127.0.0.1", 8080, NULL);
+</code>
+
+<note>
+Here we consider that the client and the server are running on the same host.
+</note>
+
+==== Registering callbacks  ====
+
+Like for the server, we then need to register callbacks on server events:
+
+   * ''ECORE_CON_EVENT_SERVER_ADD'': to be notified when the server answers the connection request;
+   * ''ECORE_CON_EVENT_SERVER_DEL'': when the server disconnects;
+   * ''ECORE_CON_EVENT_SERVER_ERROR'': an error occurred when trying to reach the server;
+   * ''ECORE_CON_EVENT_SERVER_DATA'': a connected server has sent data.
+
+The ''_add_cb()'' calllback prints the name, IP address and port of the
+server. It also prints if the client is well connected to the server.
+''_del_cb()'' prints the IP address of the server and closes the connection on
+the client side. ''_data_cb()'' prints the IP address of the server and the
+length of the received data. The data is available to use thanks to the
+''ev-&gt;data'' structure.
+
+Here follow the callbacks definitions:
+
+<code c>
+Eina_Bool
+_add_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
+{
+   printf("Server connection: ip %s, name %s port %d, connected = %d\n",
+           ecore_con_server_ip_get(ev->server),
+           ecore_con_server_name_get(ev->server),
+           ecore_con_server_port_get(ev->server),
+           ecore_con_server_connected_get(ev->server));
+   return ECORE_CALLBACK_RENEW;
+}
+
+Eina_Bool
+_del_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev)
+{
+   printf("Server disconnected: ip %s\n",
+           ecore_con_server_ip_get(ev->server));
+   // Close the connection with the server.
+   ecore_con_server_del(ev->server);
+   return ECORE_CALLBACK_RENEW;
+}
+
+Eina_Bool
+_data_cb(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Data *ev)
+{
+   printf("Received data from server: ip %s port %d size %i bytes\n",
+           ecore_con_server_ip_get(ev->server),
+           ecore_con_server_port_get(ev->server),
+           ev->size);
+   // ev->data holds the data sent by the server.
+   printf("%s\n",ev->data);
+
+   return ECORE_CALLBACK_RENEW;
+}
+</code>
+
+and the registration for the server events:
+
+<code c>
+/* set event handler for server connect */
+ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ADD, (Ecore_Event_Handler_Cb)_add_cb, NULL);
+/* set event handler for server disconnect */
+ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, (Ecore_Event_Handler_Cb)_del_cb, NULL);
+/* set event handler for receiving server data */
+ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, (Ecore_Event_Handler_Cb)_data_cb, NULL);
+</code>
+
+==== Sending data to the server  ====
+
+Once connected, we can send data to the server.
+
+<code c>
+char hello[] = "hello Server ! I am the client.";
+ecore_con_server_send(ev->server, hello, sizeof(hello));
+ecore_con_server_flush(ev->server);
+</code>
+
+The ''ecore_con_server_send()'' function is used to send the data, and the
+''ecore_con_server_flush()'' function is to avoid buffering and send this data
+immediately to the server.
+
+-------
+{{page>index}}
