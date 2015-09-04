@@ -1,0 +1,177 @@
+{{page>index}}
+-------
+===== Managing UI Component Focus =====
+
+=== Table of Contents ===
+
+    * [[#Focus_Presentation|Focus Presentation]]
+      * [[#Concept_of_Focus|Concept of Focus]]
+      * [[#Giving_Focus|Giving Focus]]
+    * [[#Moving_Focus|Moving Focus]]
+      * [[#Concept_of_Focus_Chain|Concept of Focus Chain]]
+      * [[#Focusable_Objects|Focusable Objects]]
+      * [[#Handling_Key_Input|Handling Key Input]]
+      * [[#Hiding,_Deleting_or_Disabling_a_Focused_Object|Hiding, Deleting or Disabling a Focused Object]]
+      * [[#Selecting_Next_Object|Selecting Next Object]]
+    * [[#Customizing_Focus|Customizing Focus]]
+      * [[#Customizing_Object's_Focus_Exit_Chain_|Customizing Object's Focus Exit Chain ]]
+      * [[#Customizing_Whole_Application's_Focus_Chain|Customizing Whole Application's Focus Chain]]
+      * [[#Customizing_Collision_of_Both|Customizing Collision of Both]]
+    * [[#Focus_on_UI_Component|Focus on UI Component]]
+
+==== Focus Presentation ====
+
+=== Concept of Focus ===
+
+Focus is a graphical user interface concept. A component, for example, a UI
+component, has a focus when it is selected to receive input from the user. The
+input can be an event, such as mouse button click or key press.
+
+=== Giving Focus ===
+
+Focusing can be immediate (selected by the touchscreen or mouse) or relative
+(selected by a key press).
+
+There are mainly two ways to set focus on a graphical elements:
+
+   * Direct selection: this is done by clicking on the element.
+   * Relative selection: this is done by moving the selection from a UI component to another, such as going to the previous or next one; this is done with a keyboard.
+
+Direct selection does not really need any kind of special treatment as the
+user explicitly selects the UI component to interact with.
+
+Relative selection' default order is the one the UI components have been added
+to the canvas. That may not be appropriate, if they are added programmatically
+in different order than they appear on-screen.
+
+==== Moving Focus ====
+
+=== Concept of Focus Chain ===
+
+The order the focus goes from a UI component to another is called the focus
+chain. As said before, the default focus chain is set to the order the UI
+components have been added to the canvas.
+
+=== Focusable Objects ===
+
+An object can be focused if the following conditions apply:
+
+   * object is visible
+   * object is enabled
+   * object accepts focus
+   * object's subtree (if any) is focusable
+   * all of object's parents have their subtrees focusable
+
+If any of these conditions do not apply, the object is unfocusable.
+
+=== Handling Key Input ===
+
+Handling of the keys is done automatically by Elementary. According to which
+key the user pressed, Elementary switches the focus in the selected direction.
+For example, using the ''Tab'' key the focus goes to the next object in the
+natural order, whereas using the direction keys the focus goes to the next
+object in the requested direction.
+
+=== Hiding, Deleting or Disabling a Focused Object ===
+
+When a UI component is hidden, deleted, or disabled, it becomes unfocusable.
+
+When a focused object is unfocusable, the focus is moved to another object.
+
+=== Selecting Next Object ===
+
+When the user wants to switch the focus to the next object (i.e. cycle focus),
+Elementary searches the first object which is focusable.
+
+If there is a disabled or read-only object in the focus chain, the focus goes
+to the following object in the requested direction.
+
+==== Customizing Focus ====
+
+There are several reasons why to customize the focus chain of an application,
+for example:
+
+   * If you have created a form with labels and text entries next to them, the focus moves to the entry field when the user clicks on the associated label.
+   * If you have created an interface with several columns (table), set the focus chain as you wish, for example, going horizontally instead of going vertically, regardless whatever the order the UI components are added.
+
+
+=== Customizing Object's Focus Exit Chain  ===
+
+Set the object to focus after other object in a specific direction using
+''elm_object_focus_next_object_set(object, next, direction)''. Use the
+following directions:
+
+   * ''ELM_FOCUS_NEXT'': next UI component in natural order
+   * ''ELM_FOCUS_PREVIOUS'': previous UI component in natural order
+   * ''ELM_FOCUS_UP'': UI component to focus when going up
+   * ''ELM_FOCUS_DOWN'': UI component to focus when going down
+   * ''ELM_FOCUS_RIGHT'': UI component to focus when going right
+   * ''ELM_FOCUS_LEFT'': UI component to focus when going left
+
+Set the object next to another in a specific direction using
+''elm_object_focus_next_object_get(object, direction)''.
+
+=== Customizing Whole Application's Focus Chain ===
+
+To customize the application's custom chain:
+
+<code c>
+Evas_Object *main, obj1, obj2, obj3, obj4, obj5;
+
+Eina_List *focus_chain = NULL;
+focus_chain = eina_list_append(focus_chain, obj3);
+focus_chain = eina_list_append(focus_chain, obj2);
+// The chain is obj3, then obj2. We set it.
+elm_object_focus_custom_chain_set(main, focus_chain);
+// Here we prepend obj5 at the beginning of the chain.
+elm_object_focus_chain_prepend(main, NULL, obj5);
+// We append obj1 after obj3.
+elm_object_focus_chain_append(main, obj3, obj1);
+// We prepend obj4 before obj1.
+elm_object_focus_chain_prepend(main, obj1, obj4);
+</code>
+
+The focus chain is ''obj5, obj3, obj4, obj1, obj2''.
+
+This actually applies to any container: it is possible to set the focus chain
+of, for example, a box.
+
+=== Customizing Collision of Both ===
+
+If an object is part of a focus chain and has the next focused object defined,
+the next object takes precedence over the focus chain.
+
+Following on the previous example, if ''obj4'' has ''obj5'' defined as its
+next object, the actual focus chain is ''obj5, obj3, obj4'', and loop back to
+''obj5''.
+
+==== Focus on UI Component ====
+
+If your Evas object has several sub-objects, set its focus chain using the
+same functions as for the application. Elementary first follows the main focus
+chain, and then the focus chain of each UI component if applicable.
+
+Use ''elm_object_focus_get(object)'' to set whether a specific object has the
+focus. Set the focus to an object using ''elm_object_focus_set(object, set)'',
+where ''set'' is a Boolean value. If it is set to ''EINA_TRUE'', the focus is
+set to that given object. If it is set to ''EINA_False'', the focus is unset
+and passed back to the previous element in the focus chain. Set the focus only
+after the object is shown, that is, after ''evas_object_show(object)'' has
+been called. Call the function back when the object receives or loses focus by
+registering on smart event "focused" or "unfocused"
+
+Use ''elm_object_tree_focus_allow_set(object, focusable)'' to tell Elementary
+whether an object and its children are focusable, where ''focusable'' is a
+Boolean value. Get the current value using
+''elm_object_tree_focus_allow_get(object)''.
+
+The similar functions for a specific object are
+''elm_object_focus_allow_set(object, focusable)'' and
+''elm_object_focus_allow_get(object)''.
+
+For more details about customizing the look and feel of the UI components with
+custom styles which are not provided as defaults, see the
+[[/coming_soon|ThemeExtension]] sample.
+
+------
+{{page>index}}
