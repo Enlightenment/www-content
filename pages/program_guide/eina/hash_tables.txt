@@ -1,0 +1,338 @@
+{{page>index}}
+-------
+===== Hash Tables =====
+
+The ''Eina_Hash'' provides a way to store values in association with a key.
+For example, if you want to store some tuples into a table, you can do it
+using the ''Eina_Hash''.
+
+The ''Eina_Hash'' is implemented using an array of "buckets" where each bucket
+is a pointer to a structure that is the head of a red-black tree. This
+implementation makes it very robust against week keys as in the worst case
+scenario, you can still depend on an efficient binary tree implementation.
+
+=== Table of Contents ===
+
+    * [[#Creating_a_Hash_Table|Creating a Hash Table]]
+    * [[#Modifying_Hash_Table_Content|Modifying Hash Table Content]]
+        * [[#To_add_some_data_to_a_hash|To add some data to a hash]]
+        * [[#To_modify_an_entry|To modify an entry]]
+        * [[#To_change_the_key_associated_with_the_data_without_freeing_and_creating_a_new_entry|To change the key associated with the data without freeing and creating a new entry]]
+        * [[#To_delete_entries_from_a_hash_table|To delete entries from a hash table]]
+    * [[#Accessing_Hash_Table_Data|Accessing Hash Table Data]]
+        * [[#To_retrieve_an_entry_based_on_its_key|To retrieve an entry based on its key]]
+        * [[#To_get_the_number_of_entries_in_a_hash|To get the number of entries in a hash]]
+        * [[#To_iterate_through_a_hash_table|To iterate through a hash table]]
+        * [[#To_iterate_over_the_keys|To iterate over the keys]]
+        * [[#To_iterate_over_the_hash_data|To iterate over the hash data]]
+        * [[#To_iterate_over_a_tuple_composed_of_keys_and_data|To iterate over a tuple composed of keys and data]]
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Eina__Hash__Group.html|Hash Table API]]
+
+|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_01_8c-example.html|Hash Table Example 1]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_02_8c-example.html|Hash Table Example 2]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_03_8c-example.html|Hash Table Example 3]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_04_8c-example.html|Hash Table Example 4]]|
+|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_05_8c-example.html|Hash Table Example 5]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_06_8c-example.html|Hash Table Example 6]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_07_8c-example.html|Hash Table Example 7]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_hash_08_8c-example.html|Hash Table Example 8]]|
+
+==== Creating a Hash Table ====
+
+To create the hash table, use the ''eina_hash_new()'' function:
+
+   * The first parameter is the function called when getting the size of the key.
+   * The second parameter is the function called when comparing the keys.
+   * The third parameter is the function called when getting the values.
+   * The fourth parameter is the function called on each value when the hash table is freed, or when an item is deleted from it. ''NULL'' can be passed as the callback.
+   * The last parameter is the size of the buckets.
+
+When you create an ''Eina_Hash'' instance, you have to create 4 potentially
+long callback functions. To make the functions shorter, ''Eina_Hash'' offers
+some predefined functions to create the following kinds of hash tables:
+
+   * ''eina_hash_string_djb2_new()'' creates a new hash table using the djb2 algorithm for strings.
+   * ''eina_hash_string_superfast_new()'' creates a new hash table for use with strings (better with long strings).
+   * ''eina_hash_string_small_new()'' creates a new hash table for use with strings with a small bucket size.
+   * ''eina_hash_int32_new()'' and ''eina_hash_int64_new()'' create a new hash table for use with 32-bit and 64-bit integers.
+   * ''eina_hash_pointer_new()'' creates a new hash table for use with pointers.
+   * ''eina_hash_stringshared_new()'' creates a new hash table for use with shared strings.
+
+All these predefined functions require only one parameter, which is the
+function to free the data you store in the hash table.
+
+The following example shows how to manage a small phone book using the
+''eina_hash_string_superfast_new()'' function to create the hash table.
+
+__**1**__. Create the phone book structure and some static data:
+
+<code c>
+struct _Phone_Entry
+{
+   const char *name; // Full name
+   const char *number; // Phone number
+};
+
+typedef struct _Phone_Entry Phone_Entry;
+
+static Phone_Entry _start_entries[] =
+{
+   { "Wolfgang Amadeus Mozart", "+01 23 456-78910" },
+   { "Ludwig van Beethoven", "+12 34 567-89101" },
+   { "Richard Georg Strauss", "+23 45 678-91012" },
+   { "Heitor Villa-Lobos", "+34 56 789-10123" },
+   { NULL, NULL }
+};
+</code>
+
+__**2**__. Create the callback to free the data:
+
+<code c>
+static void
+_phone_entry_free_cb(void *data)
+{
+   free(data);
+}
+</code>
+
+The free callback can be changed later using the ''eina_hash_free_cb_set()''
+function. You need to pass the hash and the new callback function.
+
+__**3**__. Create and destroy the hash table.
+
+The ''eina_hash_free_buckets()'' function frees all hash table buckets. It
+empties the hash but does not destroy it, and you can still use it for another
+purpose. When ''eina_hash_free()'' is called, the space allocated for the hash
+is freed.
+
+<code c>
+int free_data()
+{
+   Eina_Hash *phone_book = NULL;
+   phone_book = eina_hash_string_superfast_new(_phone_entry_free_cb);
+
+   // Empty the phone book without destroying it
+   eina_hash_free_buckets(phone_book);
+   eina_hash_free(phone_book);
+}
+</code>
+
+==== Modifying Hash Table Content ====
+
+=== To add some data to a hash ===
+
+Use the ''eina_hash_add()'' function. This function takes the hash, the key to
+access the data, and the data as its parameters. \\ \\ The following example shows how to add the initial data declared earlier to the hash:
+
+<code c>
+for (i = 0; _start_entries[i].name != NULL; i++)
+  {
+     eina_hash_add(phone_book, _start_entries[i].name, strdup(_start_entries[i].number));
+  }
+</code>
+
+The ''Eina_Hash'' offers various ways to add elements to a hash, such as the
+''eina_hash_direct_add()'' function, which adds the entry without duplicating
+the string key. The key is stored in the struct, so this function can be used
+with ''eina_stringshare'' to avoid key data duplication.
+
+<code c>
+for (i = 0; _start_entries[i].name != NULL; i++)
+  {
+     // Allocating memory for the phone entry
+     Phone_Entry *e = malloc(sizeof(Phone_Entry));
+
+     // Creating an eina_stringshare for the name and the phone number
+     e->name = eina_stringshare_add(_start_entries[i].name);
+     e->number = eina_stringshare_add(_start_entries[i].number);
+
+     // Adding the entry to the hash
+     eina_hash_direct_add(phone_book, e->name, e);
+  }
+</code>
+
+=== To modify an entry ===
+
+Use ''eina_hash_modify()'' function passing the hash, the key of the data to
+change, and the new data. The function returns the old data on success.
+
+The ''eina_hash_set()'' function does the same work as ''eina_hash_modify()'',
+but if the entry does not exist, the function creates a new one.
+
+<code c>
+char *old_phone = NULL;
+char *phone = NULL;
+// Replace the phone number of Richard Strauss
+old_phone = eina_hash_modify(phone_book, "Richard Georg Strauss", strdup("+23 45 111-11111"));
+phone = eina_hash_set(phone_book, "Philippe de Magalhães", strdup("+33 6 111-11111"));
+eina_hash_set(phone_book, "Richard Georg Strauss", strdup("+23 45 111-117711"));
+</code>
+
+=== To change the key associated with the data without freeing and creating a new entry ===
+
+Use the ''eina_hash_move()'' function. You only have to pass the hash, the old
+key, and the new key. If the operation succeeds, the function returns
+''EINA_TRUE'', if not, it returns ''EINA_FALSE''.
+
+<code c>
+Eina_Bool res;
+res = eina_hash_move(phone_book, "Philippe de Magalhães", "Filipe de Magalhães");
+</code>
+
+=== To delete entries from a hash table ===
+
+Use the ''eina_hash_del()'' function to remove the entry identified by a key
+or data from the given hash table:
+
+<code c>
+Eina_Bool r;
+const char *entry_name = "Heitor Villa-Lobos";
+r = eina_hash_del(phone_book, entry_name, NULL);
+</code>
+
+Use the ''eina_hash_del_by_key()'' function to remove an entry based on the
+key:
+
+<code c>
+r = eina_hash_del_by_key(phone_book, "Richard Georg Strauss");
+</code>
+
+Use the ''eina_hash_del_by_data()'' function to remove an entry based on the
+data:
+
+<code c>
+r = eina_hash_del_by_data(phone_book, "+12 34 567-89101");
+</code>
+
+==== Accessing Hash Table Data ====
+
+To find hash table elements and get data based on the key name:
+
+=== To retrieve an entry based on its key ===
+
+Use the ''eina_hash_find()'' function by passing the hash and the key you are
+looking for:
+
+<code c>
+char *phone = NULL;
+const char *entry_name = "Heitor Villa-Lobos";
+
+// Look for a specific entry and get its phone number
+phone = eina_hash_find(phone_book, entry_name);
+</code>
+
+=== To get the number of entries in a hash ===
+
+Use the ''eina_hash_population()'' function. Pass the hash as the only
+argument.
+
+<code c>
+unsigned int nb_elm;
+nb_elm = eina_hash_population(phone_book);
+</code>
+
+=== To iterate through a hash table ===
+
+You can use various methods:
+  * to iterate over the hash table, use the ''eina_hash_foreach()'' function:
+    * The first parameter is the hash.
+    * The second parameter is the callback function called on each iteration. \\ \\ The callback function has to return an ''Eina_Bool'', ''EINA_TRUE'' if the iteration has to continue and ''EINA_FALSE'' if the iteration has to stop.
+    * The last parameter one is the data passed to the callback function.
+
+The following example prints the key and the data of the hash entry (the name and the phone number):
+
+<code c>
+static Eina_Bool
+pb_foreach_cb(const Eina_Hash *phone_book, const void *key, void *data, void *fdata)
+{
+   const char *name = key;
+   const char *number = data;
+   printf("%s: %s\n", name, number);
+
+   // Return EINA_FALSE to stop this callback from being called
+   return EINA_TRUE;
+}
+
+printf("List of phones:\n");
+
+// Running the callback on the hash called phone_book
+eina_hash_foreach(phone_book, pb_foreach_cb, NULL);
+printf("\n");
+</code>
+
+=== To iterate over the keys ===
+
+Use the ''eina_hash_iterator_key_new()'' function:
+
+<code c>
+// Declaration of the Eina_Iterator
+Eina_Iterator *it;
+
+// Variable to handle the current iteration "data"
+void *data;
+
+// Iterate over the keys (names)
+printf("List of names in the phone book:\n");
+
+it = eina_hash_iterator_key_new(phone_book);
+
+// Use the generic eina_iterator_next()
+while (eina_iterator_next(it, &data))
+{
+   const char *name = data;
+   printf("%s\n", name);
+}
+
+// Free the iterator
+eina_iterator_free(it);
+</code>
+
+=== To iterate over the hash data ===
+
+Use the ''eina_hash_iterator_data_new()'' function the same way as
+''eina_hash_iterator_key_new()'':
+
+<code c>
+// Declaration of the Eina_Iterator
+Eina_Iterator *it;
+
+// Variable to handle the current iteration "data"
+void *data;
+
+// Iterate over hash data
+printf("List of numbers in the phone book:\n");
+
+it = eina_hash_iterator_data_new(phone_book);
+while (eina_iterator_next(it, &data))
+  {
+     const char *number = data;
+     printf("%s\n", number);
+  }
+
+// Free the iterator
+eina_iterator_free(it);
+</code>
+
+=== To iterate over a tuple composed of keys and data ===
+
+Use the ''eina_hash_iterator_tuple_new()'' function:
+
+<code c>
+// Declaration of the Eina_Iterator
+Eina_Iterator *tit;
+
+// Variable to handle the current iteration "data"
+void *tuple;
+
+printf("List of phones:\n");
+tit = eina_hash_iterator_tuple_new(phone_book);
+while (eina_iterator_next(tit, &tuple))
+  {
+     Eina_Hash_Tuple *t = tuple;
+     const char *name = t->key;
+     const char *number = t->data;
+     printf("%s: %s\n", name, number);
+  }
+
+// Always free the iterator after its use
+eina_iterator_free(tit);
+</code>
+
+-------
+{{page>index}}

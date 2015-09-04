@@ -1,0 +1,115 @@
+{{page>index}}
+-------
+===== String =====
+
+When creating applications, you always need to manipulate strings. Eina
+provides a very useful API for manipulating C strings:
+
+=== Table of Contents ===
+
+    * [[#The_most_common_string_manipulation_is_the_"split"|The most common string manipulation is the "split"]]
+    * [[#To_change_the_string_to_lowercase_or_uppercase|To change the string to lowercase or uppercase]]
+    * [[#If_you_need_to_"join"_2_strings_of_known_length|If you need to "join" 2 strings of known length]]
+    * [[#To_check_whether_a_string_starts_or_ends_with_another_string|To check whether a string starts or ends with another string]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Eina__String__Group.html|String Tools API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/tutorial_eina_string.html|Example]]
+
+=== The most common string manipulation is the "split" ===
+
+If you have a string, such as
+"Rasterman:Bluebugs:Tasn:Illogict:billiob:Puppet_Master", and you want to
+print it in an easily readable format, you can use the ''eina_str_split()''
+function to split the string using a delimiter. The first parameter is the
+string to split, the second determines where to split the string, and the
+final parameter is the maximum number of strings to split the string into. If
+you set a number less than 1, it splits the string as many times as possible.
+
+The function returns a newly-allocated ''NULL''-terminated array of strings,
+or NULL, if it fails to allocate the array. Always remember to free the memory
+allocated by the ''eina_str_split()'' function.
+
+<code c>
+char *nicks = "Rasterman:Bluebugs:Tasn:Illogict:billiob:Puppet_Master";
+char **result_arr;
+int i;
+
+// Splitting the string with ':' delimiter
+result_arr = eina_str_split(names, ":", 0);
+// Printing the result
+for (i = 0; result_arr[i]; i++)
+   printf("Nick : %s\n", result_arr[i]);
+// Remember to free memory
+free(arr[0]);
+free(arr);
+</code>
+
+=== To change the string to lowercase or uppercase ===
+
+Use the ''eina_str_tolower()'' and ''eina_str_toupper()'' functions. They
+change the case for all characters of the given string. These functions modify
+the original strings.
+
+<code c>
+char *str;
+// Initialize the string
+str = malloc(sizeof(char) * 4);
+strcpy(str, "bsd");
+// Change the string to uppercase
+eina_str_toupper((char **)&str);
+printf("%s\n", str);
+// Change the string to lowercase
+eina_str_tolower(&str);
+printf("%s\n", str);
+// Free the allocated memory
+free(str);
+</code>
+
+=== If you need to "join" 2 strings of known length ===
+
+Use the ''eina_str_join()'' function. The fist parameter is the buffer to
+store the result, the second is the size of the buffer, the third is the
+separator between the 2 strings, and the 2 final parameters are the stings to
+be joined.
+
+<code c>
+char *part1 = "Elementary powered by";
+char *part2 = "Enlightenment Foundation Libraries";
+char *res;
+size_t size;
+// Calculate the string size + 1 for the delimiter
+size = strlen(part1) + strlen(part2) + 1
+// Allocate memory for the result
+res = malloc(sizeof(char) * size);
+// Join the strings
+eina_str_join(res, size, ' ', part1, part2);
+printf("%s\n", res);
+// Free the allocated memory
+free(res):
+</code>
+
+=== To check whether a string starts or ends with another string ===
+use the
+''eina_str_has_prefix()'' or ''eina_str_has_suffix()'' function. You can also
+check whether a string has a particular extension with the
+''eina_str_has_extension()'' function.
+
+These functions return ''EINA_TRUE'' if the given string contains the
+specified prefix, suffix, or extension, and ''EINA_FALSE'' if it does not.
+
+<code c>
+char *names = "Carsten;Cedric;Tom;Chidambar;Boris;Philippe"
+if (eina_str_has_prefix(names, "Carsten"))
+   printf("String starts with 'Carsten'")
+if (eina_str_has_suffix(names, "Philippe"))
+   printf("String ends with 'Philippe'")
+if (eina_str_has_extension(names, "philippe"))
+   printf("String has extension 'philippe'")
+else
+   printf("String does not have extension "philippe)
+</code>
+
+-------
+{{page>index}}

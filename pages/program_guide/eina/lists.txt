@@ -1,0 +1,601 @@
+{{page>index}}
+-------
+===== Lists =====
+
+The ''Eina_List'' is a double-linked list that can store data of any type as
+void pointers. It provides a set of functions to create and manipulate the
+list to avoid the access to the struct's fields, similar to a self-made
+double-link list.
+
+In addition to the previous and next node and its data, the ''Eina_List''
+nodes keep a reference to an accounting structure. The accounting structure is
+used to improve the performance of some functions. The structure is private
+and must not be modified.
+
+In an ''Eina_List'', everything is a "list": the list itself is a list where
+each node is a list as well.
+
+Eina provides 2 list types: the classic list (''Eina_List'') and an inline
+list (''Eina_Inlist'').
+
+=== Table of Contents ===
+
+  * [[#Creating_and_Destroying_a_List|Creating and Destroying a List]]
+  * [[#Modifying_List_Content|Modifying List Content]]
+      * [[#To_add_data_to_a_list|To add data to a list]]
+      * [[#To_set_data_in_a_list_member|To set data in a list member]]
+      * [[#To_remove_a_node_from_the_list|To remove a node from the list]]
+      * [[#To_move_elements_in_a_list|To move elements in a list]]
+      * [[#To_reverse_all_the_elements_of_a_list|To reverse all the elements of a list]]
+      * [[#To_sort_a_list|To sort a list]]
+      * [[#To_merge_2_list_into_1|To merge 2 list into 1]]
+      * [[#To_split_a_list|To split a list]]
+      * [[#To_copy_a_list|To copy a list]]
+  * [[#Accessing_List_Data|Accessing List Data]]
+      * [[#To_find_some_data_on_your_list|To find some data on your list]]
+      * [[#To_search_for_data_in_a_list|To search for data in a list]]
+      * [[#To_get_data_from_a_list_element|To get data from a list element]]
+      * [[#To_move_in_a_list|To move in a list]]
+      * [[#To_count_the_list_elements|To count the list elements]]
+      * [[#To_iterate_through_an_array|To iterate through an array]]
+  * [[#Using_an_Inline_List|Using an Inline List]]
+
+=== Related Info ===
+
+    * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Eina__List__Group.html|List API]]
+
+|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_list_01_8c-example.html|List Example 1]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_list_02_8c-example.html|List Example 2]]||[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_list_03_8c-example.html|List Example 3]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_list_04_8c-example.html|List Example 4]]|
+
+==== Creating and Destroying a List ====
+
+To use an ''Eina_List'':
+
+__**1**__. Declare the list with ''NULL'' as the default value:
+
+<code c>
+int list()
+{
+   // Declaration of the Eina_List with NULL as default value;
+   Eina_List *list = NULL;
+</code>
+
+__**2**__. Call the ''eina_list_append()'' function with the list and the data you
+want to append as parameters.
+
+The list must be a pointer to the first element of the list (or ''NULL''). The
+function returns a pointer to the list.
+
+<code c>
+   // Creating the first element of the list
+   list = eina_list_append(list, "watch");
+
+   // Adding more elements
+   list = eina_list_append(list, "phone");
+   list = eina_list_append(list, "ivi");
+   list = eina_list_append(list, "notebook");
+</code>
+
+__**3**__. When you no longer need the list, free it:
+
+<code c>
+   // Free the Eina_List
+   eina_list_free(list);
+
+   return 0;
+}
+</code>
+
+==== Modifying List Content ====
+
+=== To add data to a list ===
+
+  * To add data at the end of the list, use the ''eina_list_append()'' function. To add data at the top of the list, use ''eina_list_prepend()''. The functions work in the same way, only adding the data to different places.
+
+<code c>
+list = eina_list_prepend(list, "set-top box");
+</code>
+
+  * To insert data into the list after a specified data, use the ''eina_list_append_relative()'' function. As the last parameter, define the element after which the data is added. \\ \\ For example to append data after the "phone" element:
+
+<code c>
+list = eina_list_append_relative(list, "single-board computer", "phone");
+</code>
+
+  * To add a new entry before a specified data, use the ''eina_list_prepend_relative()'' function. It is similar to the ''eina_list_append_relative()'' function.
+
+<code c>
+list = eina_list_prepend_relative(list, "ultrabook", "ivi");
+</code>
+
+  * To append a list node to a linked list after a specified member, use the ''eina_list_append_relative_list()'' function. To prepend a list node to a linked list before a specified member, use the ''Eina_List * eina_list_prepend_relative_list()'' function.
+
+=== To set data in a list member ===
+Use the ''eina_list_data_set()'' function. Pass the
+"list" (node) as the first argument and the data to set as the second.
+
+The following example also shows the usage of the ''eina_list_last()''
+function, which returns the last element of an ''Eina_List''.
+
+<code c>
+// Setting new data for the last element
+eina_list_data_set(eina_list_last(list), eina_stringshare_add("Boris"));
+</code>
+
+=== To remove a node from the list ===
+
+Use the ''eina_list_remove()'' function. This function removes the first
+instance of the specified data from the given list.
+
+<code c>
+list = eina_list_remove(list, "ultrabook");
+</code>
+
+You can also remove a "list" (node) from a list using the
+''eina_list_remove_list()'' function. Pass the list you want to delete an
+element from and a 'list' (node) you want to delete.
+
+<code c>
+Eina_List *app_list = NULL;
+Eina_List *to_remove = NULL;
+
+// Adding some elements to the list (using stringshares)
+app_list = eina_list_append(app_list, eina_stringshare_add("enna"));
+app_list = eina_list_append(app_list, eina_stringshare_add("ebird"));
+app_list = eina_list_append(app_list, eina_stringshare_add("calaos"));
+app_list = eina_list_append(app_list, eina_stringshare_add("rage"));
+app_list = eina_list_append(app_list, eina_stringshare_add("terminology"));
+app_list = eina_list_append(app_list, eina_stringshare_add("enlightenment"));
+app_list = eina_list_append(app_list, eina_stringshare_add("eyelight"));
+app_list = eina_list_append(app_list, eina_stringshare_add("ephoto"));
+
+// Finding the "list" to remove
+to_remove = eina_list_data_find_list(list, eina_string_share_add("enlightenment"));
+
+list = eina_list_remove_list(list, to_remove);
+</code>
+
+=== To move elements in a list ===
+
+You can use various function, such as ''eina_list_promote_list()'' that
+promotes an element to the top of the list or ''eina_list_demote_list()'' that
+puts the specified element at the end of the list. Remember that everything is
+a list so the second parameter represents the "list" (node) you want to move.
+Use the functions just like the ''eina_list_remove_list()'' function.
+
+<code c>
+list = eina_list_promote_list(list, eina_list_data_find_list(list, "ivi"));
+</code>
+
+=== To reverse all the elements of a list ===
+
+Use the ''eina_list_reverse()'' function.  To obtain a reversed copy of the
+list while keeping the initial list unchanged, use the
+''eina_list_reverse_clone()'' function.
+
+<code c>
+Eina_List *rev_copy;
+
+app_list = eina_list_reverse(app_list);
+rev_copy = eina_list_reverse_clone(app_list);
+</code>
+
+=== To sort a list ===
+
+Use the ''eina_list_sort()'' function. This function takes a list which needs
+to be sorted, the maximum number of elements to be sorted, and a callback
+function that compares data. To sort all list elements, set the maximum number
+of elements to 0.
+
+<code c>
+int sort_cb(const void *d1, const void *d2)
+{
+   const char *txt = d1;
+   const char *txt2 = d2;
+   if(!txt) return(1);
+   if(!txt2) return(-1);
+
+   return(strcmp(txt, txt2));
+}
+
+extern Eina_List *list;
+list = eina_list_sort(list, 0, sort_cb);
+</code>
+
+=== To merge 2 list into 1 ===
+
+Use the ''eina_list_merge()'' function. The ''eina_list_sorted_merge()''
+function merges 2 sorted lists according to the ordering function that you
+pass as the last argument.
+
+<code c>
+int sort_cb(void *d1, void *d2)
+{
+   const char *txt = NULL;
+   const char *txt2 = NULL;
+   if(!d1) return(1);
+   if(!d2) return(-1);
+
+   return(strcmp((const char*)d1, (const char*)d2));
+}
+
+Eina_List *sorted1;
+Eina_List *sorted2;
+Eina_List *newlist;
+
+// Insert some values and sort your lists
+
+// Simply merge 2 lists without any process
+newlist = eina_list_merge(sorted1, sorted2);
+
+newlist = eina_list_sorted_merge(sorted1, sorted2, sort_cb);
+</code>
+
+=== To split a list ===
+
+Use the eina_list_split_list() function:
+   * The first parameter is the list to split.
+   * The second parameter is the "list" (element) after which the list is split.
+   * The last parameter is the head of the second list.
+
+<code c>
+// Original list (left list)
+Eina_List *list = NULL;
+
+// New list (right list)
+Eina_List *other_list = NULL;
+
+// Eina_List (element)
+Eina_List *l;
+
+list = eina_list_append(list, "super tux");
+list = eina_list_append(list, "frozen bubble");
+list = eina_list_append(list, "lincity-ng");
+
+// Sorting the list (just for fun)
+list = eina_list_sort(list, 0, cmp_func);
+
+// Looking for the 'split' element
+l = eina_list_search_sorted_list(list, cmp_func, "frozen bubble");
+
+// Splitting the list
+list = eina_list_split_list(list, l, &other_list);
+</code>
+
+=== To copy a list ===
+
+Use the ''eina_list_clone()'' function. The function copies all the elements
+in the list in the exact same order.
+
+<code c>
+Eina_List *app_list_copy;
+
+app_list_copy = eina_list_clone(app_list);
+</code>
+
+==== Accessing List Data ====
+
+=== To find some data on your list ===
+
+Use the ''eina_list_data_find()'' function. Pass the list containing your data
+as the first parameter and the data you are looking for as the last one. The
+function returns the found member data pointer if found, ''NULL'' otherwise.
+
+The ''eina_list_data_find()'' function searches the list from the beginning to
+the end for the first member for which the data pointer is data. If it is
+found, the data is returned, otherwise ''NULL'' is returned. The function only
+compares pointers, which is why using ''Eina_Stringshare'' is very useful with
+lists, because it always returns the same pointer for the same string.
+
+<code c>
+Eina_List *app_list = NULL;
+const char *res_str;
+
+// Adding some elements to the list (using stringshares)
+app_list = eina_list_append(app_list, eina_stringshare_add("enna"));
+app_list = eina_list_append(app_list, eina_stringshare_add("ebird"));
+app_list = eina_list_append(app_list, eina_stringshare_add("calaos"));
+app_list = eina_list_append(app_list, eina_stringshare_add("rage"));
+app_list = eina_list_append(app_list, eina_stringshare_add("terminology"));
+app_list = eina_list_append(app_list, eina_stringshare_add("enlightenment"));
+app_list = eina_list_append(app_list, eina_stringshare_add("eyelight"));
+app_list = eina_list_append(app_list, eina_stringshare_add("ephoto"));
+
+// Finding the data
+res_str = eina_list_data_find(list, eina_string_share_add("enlightenment"));
+if (res_str == eina_stringshare_add("enlightenment"))
+   printf("Data is present");
+else
+   printf("Data not present");
+</code>
+
+The above example returns "Data is present".
+
+The ''eina_list_data_find_list()'' function does the same thing as
+''eina_list_data_find()'', but returns an ''Eina_List''. For an example, see
+the ''eina_list_remove_list()'' function.
+
+You can access the data or a "list" (node) of an ''Eina_List'' using the
+''eina_list_nth()'' and ''eina_list_nth_list()'' functions. The first one returns a
+pointer to the data of the "n" element and the second a pointer to the "list".
+To access the data of the 3rd element of an ''Eina_List'':
+
+<code c>
+const char *res;
+Eina_List *res_lst;
+
+res = eina_list_nth(app_list, 2);
+res_lst = eina_list_nth_list(app_list, 2);
+</code>
+
+The ''res'' variable contains the pointer to the string "calaos". The
+''res_lst'' variable is the list containing "calaos".
+
+=== To search for data in a list ===
+
+Select your function based on whether the list is sorted or unsorted.
+  * To search in an unsorted list, use the ''eina_list_search_unsorted()'' function:
+    * The first parameter is the list.
+    * The second parameter is a callback function for comparison.
+    * The last parameter is the data you are looking for.
+
+The ''eina_list_search_unsorted_list()'' function does the same but returns an
+"Eina_List".
+
+The following example shows 2 searches using both the
+''eina_list_search_unsorted()'' and ''eina_list_search_unsorted_list()''
+functions:
+
+<code c>
+int search_list()
+{
+   // Declaring the list
+   Eina_List *list = NULL;
+   Eina_List *l;
+   // Little trick to use strcmp as Eina_Compare_Cb
+   Eina_Compare_Cb cmp_func = (Eina_Compare_Cb)strcmp;
+
+   void *data;
+   int cmp_result;
+
+   list = eina_list_append(list, "debian");
+   list = eina_list_append(list, "archlinux");
+   list = eina_list_append(list, "centos");
+
+   data = eina_list_search_unsorted(list, cmp_func, "archlinux");
+   l = eina_list_search_unsorted_list(list, cmp_func, "archlinux");
+   if (l->data != data)
+     {
+        eina_list_free(list);
+
+        return 1;
+     }
+
+   eina_list_free(list);
+
+   return 0;
+}
+</code>
+  * To search in sorted lists, use the ''eina_list_search_sorted_list()'' and ''eina_list_search_sorted()'' functions. They work similarly as the ''eina_list_search_unsorted()'' function.
+
+=== To get data from a list element ===
+
+Use the ''eina_list_data_get()'' function. The function returns the data
+contained in the given list.
+
+The following example uses the ''eina_list_next()'' function to move through
+the list in a statement.
+
+<code c>
+int list_data_set()
+{
+   // Declaring the list
+   Eina_List *list = NULL;
+   // Eina_List in which to place the elements or lists
+   Eina_List *l;
+
+   void *list_data;
+
+   list = eina_list_append(list, eina_stringshare_add("Bertrand"));
+   list = eina_list_append(list, eina_stringshare_add("Cedric"));
+   list = eina_list_append(list, eina_stringshare_add("Nicolas"));
+   list = eina_list_append(list, eina_stringshare_add("Vincent"));
+   list = eina_list_append(list, eina_stringshare_add("Raoul"));
+   list = eina_list_append(list, eina_stringshare_add("Fabien"));
+   list = eina_list_append(list, eina_stringshare_add("Philippe"));
+   list = eina_list_append(list, eina_stringshare_add("billiob"));
+
+   for(l = list; l; l = eina_list_next(l))
+      // Printing the data returned by eina_list_data_get
+      printf("%s\n", (char*)eina_list_data_get(l));
+
+   EINA_LIST_FREE(list, list_data)
+      eina_stringshare_del(list_data);
+
+   return 0;
+}
+</code>
+
+=== To move in a list ===
+
+Use the ''eina_list_last()'', ''eina_list_next()'', or ''eina_list_prev()''
+functions to move to the last, next, or previous element in the list.
+
+The following example scrolls backwards starting from the end of the list:
+
+<code c>
+
+for(l = eina_list_last(list); l; l = eina_list_prev(l))
+   printf("%s\n", (char*)eina_list_data_get(l));
+</code>
+
+=== To count the list elements ===
+
+Use the ''eina_list_count()'' function. The function returns the number of
+items in a list.
+
+<code c>
+printf("List size: %d\n", eina_list_count(list));
+</code>
+
+=== To iterate through an array ===
+
+You can use various iterators:
+
+  * To iterate over a list from the beginning to the end, use the ''EINA_LIST_FOREACH'' macro:
+    * The first parameter is the list to iterate.
+    * The second parameter is an ''Eina_List *'' to hold the current "List" (node).
+    * The last parameter receives the current data during the run.
+
+The following example prints the data of each "List" (node) of the list:
+
+<code c>
+Eina_List *list = NULL;
+Eina_List *l;
+void *list_data;
+
+list = eina_list_append(list, "ls");
+list = eina_list_append(list, "top");
+list = eina_list_append(list, "rmdir");
+list = eina_list_append(list, "uname");
+
+EINA_LIST_FOREACH(list, l, list_data)
+   printf("%s\n", (char*)list_data);
+
+eina_list_free(list);
+</code>
+
+  * To iterate from the last element to the first, use the ''EINA_LIST_REVERSE_FOREACH'' macro. It works similarly as ''EINA_LIST_FOREACH()''.
+  * To iterate over a list from the beginning to the end, you can also use the
+''EINA_LIST_FOREACH_SAFE'' macro. It is called safe, because it stores the next "List" (node), so you can safely remove the current "List" (node) and continue the iteration.
+
+<code c>
+Eina_List *list;
+Eina_List *l;
+Eina_List *l_next;
+char *data;
+
+list = eina_list_append(list, "enlightenment");
+list = eina_list_append(list, "enlightenment");
+list = eina_list_append(list, "enlightenment");
+list = eina_list_append(list, "enlightenment");
+
+// Using EINA_LIST_FOREACH_SAFE to free the elements that match "enlightenment"
+
+EINA_LIST_FOREACH_SAFE(list, l, l_next, data)
+   if (strcmp(data, "enlightenment") == 0)
+     {
+        free(data);
+        list = eina_list_remove_list(list, l);
+     }
+</code>
+
+  * To remove each list element while having access to the node's data, use the ''EINA_LIST_FREE'' macro. Pass the list and a pointer to hold the current data.
+
+<code c>
+Eina_List *list;
+char *data;
+
+// List is filled
+
+EINA_LIST_FREE(list, data)
+   free(data);
+</code>
+
+==== Using an Inline List ====
+
+The ''Eina_Inlist'' is a special data type drawn to store nodes pointers in
+the same memory as data. This way the memory is less fragmented, but
+operations, such as sort and count, are slower. The ''Eina_Inlist'' has its
+own purpose, but if you do not understand what the purpose is, use the regular
+''Eina_List'' instead.
+
+The ''Eina_Inlist'' nodes can be part of a regular ''Eina_List'', simply added
+with the ''eina_list_append()'' or ''eina_list_prepend()'' functions.
+
+To use the inline list:
+
+__**1**__. Define the structure of the data before creating the inline list:
+
+<code c>
+struct my_struct
+{
+   EINA_INLIST;
+   int a, b;
+};
+</code>
+
+The structure is composed of 2 integers, the real data, and the
+''EINA_INLIST'' type which is composed of 3 pointers defining the inline list
+structure:
+   * ''Eina_Inlist * next'': next node
+   * ''Eina_Inlist * prev'': previous node
+   * ''Eina_Inlist * last'': last node
+
+__**2**__. To create the inlist nodes, allocate the memory and use the
+''eina_inlist_append()'' function:
+
+  * The first parameter is the existing list head or NULL to create a new list. \\ \\ The following example passes NULL to create a new list.
+  * The second parameter is the new list node, and it must not be NULL. \\ \\ You must use the ''EINA_INLIST_GET()'' macro to get the inlist object of the datastruct.
+
+<code c>
+struct my_struct *d, *cur;
+Eina_Inlist *list, *itr, *tmp;
+
+d = malloc(sizeof(*d));
+d->a = 1;
+d->b = 10;
+
+list = eina_inlist_append(NULL, EINA_INLIST_GET(d));
+</code>
+
+Repeat this operation for every new node:
+
+<code c>
+d = malloc(sizeof(*d));
+d->a = 2;
+d->b = 20;
+list = eina_inlist_append(list, EINA_INLIST_GET(d));
+</code>
+
+__**3**__. To add data to the inline list:
+
+  * Put data at the end of the inline list with the ''eina_inlist_prepend()'' function:
+
+<code c>
+d = malloc(sizeof(*d));
+d->a = 3;
+d->b = 30;
+list = eina_inlist_prepend(list, EINA_INLIST_GET(d));
+</code>
+
+  * Add a node before or after a given node with the ''eina_inlist_prepend_relative()'' and ''eina_inlist_append_relative()'' functions. \\ \\ In both functions, the first parameter is the target list, the second is the element you want to add, and the last is the reference element to place data after (in this case). Similarly as in a regular ''Eina_List'', everything is a list, so the last parameter is an ''Eina_Inlist'' typed variable.
+
+<code c>
+d = malloc(sizeof(*d));
+d->a = 4;
+d->b = 40;
+list = eina_inlist_append_relative(list, EINA_INLIST_GET(d), list);
+</code>
+
+__**4**__. To sort and iterate an inline list, to find and move list elements, and to perform other inline list operations, see the Inline List API.
+
+__**5**__. When the inline list is no longer needed, destroy it by looping over the list to free each ''EINA_INLIST'' structure and the data using allocated memory. Use the ''eina_inlist_remove()'' function on each node.
+
+In the following example, the ''EINA_INLIST_CONTAINER_GET()'' macro returns
+the container object of an inlist (the ''EINA_INLIST'' of ''my_struct''), and
+the list element is removed and the allocated memory of the container "object"
+is freed.
+
+<code c>
+while (list)
+  {
+     struct my_struct *aux = EINA_INLIST_CONTAINER_GET(list, struct my_struct);
+
+     // Remove the current list element
+     list = eina_inlist_remove(list, list);
+     free(aux);
+  }
+</code>
+
+------
+{{page>index}}

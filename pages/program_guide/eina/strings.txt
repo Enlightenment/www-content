@@ -1,0 +1,153 @@
+{{page>index}}
+-------
+===== Strings =====
+
+=== Table of Contents ===
+
+  * [[#Stringshare]]
+  * [[String_Buffer|String Buffer]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Eina__Stringshare__Group.html|Stringshare API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Eina__String__Buffer__Group.html|String Buffer API]]
+
+|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_str_01_8c-example.html|String Example]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_strbuf_01_8c-example.html|String Buffer Example]]|[[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/eina_stringshare_01_8c-example.html|Stringshare Example]]|
+
+==== Stringshare ====
+
+The ''Eina_Stringshare'' data type functions allow you to store a single copy
+of a string and use it in multiple places throughout your program. This way
+you can save a lot of strings with less memory. It improves string creation
+and destruction speed, reduces memory use, and decreases memory fragmentation.
+
+With this data type you can reduce the number of duplicated strings kept in
+memory. It is common for the same strings to be dynamically allocated
+repeatedly between applications and libraries, especially in circumstances
+where you can have multiple copies of a structure that allocates the string.
+Rather than duplicating and freeing these strings, request a read-only pointer
+to an existing string and only incur the overhead of a hash lookup. This can
+sound like micro-optimizing, but profiling has shown that this can have a
+significant impact as the number of copies grows.
+
+=== To manage stringshares ===
+
+__**1**__. To create a stringshare, declare a string variable and call the ''eina_stringshare_add()'' function:
+
+<code c>
+
+const char *mystr;
+const char *prologue = "Enlightenment is not just a window manager for Linux/X11 and others"
+
+mystr = eina_stringshare_add(prologue);
+</code>
+
+__**2**__. To retrieve or modify the string data:
+  *  Retrieve a string for use in a program from a format string using the ''eina_stringshare_printf()'' function. If you have a "format" string to pass to a function like ''printf'', you can store it as a stringshare as well. \\ The following example produces "1 desktop manager to rule them all".
+
+<code c>
+const char *myfmtstr = "%d desktop manager to rule them all";
+const char *str;
+
+str = eina_stringshare_printf(myfmtstr, 1);
+
+print(str)
+</code>
+  * Replace the value of a stringshare with the ''eina_stringshare_replace()'' function. Pass the pointer address and the new value to the function.
+<code c>
+eina_stringshare_replace(&str,"One desktop manager to rule them all");
+</code>
+  * Retrieve the length of the stringshare value with the ''eina_stringshare_strlen()'' function.
+<code c>
+    printf("length: %d\n", eina_stringshare_strlen(str));
+</code>
+
+__**3**__. When the string is no longer needed, delete it using the
+''eina_stringshare_del()'' function:
+
+<code c>
+eina_stringshare_del(mystr);
+</code>
+
+==== String Buffer ====
+
+The string buffer data type is designed to be a mutable string, allowing you
+to append, prepend or insert a string to a buffer. It allows easy handling of
+buffers in your applications.
+
+=== To manage string buffer ===
+
+__**1**__. Initialize the ''Eina_Strbuf'' instance and create the buffer:
+
+<code c>
+Eina_Strbuf *buf;
+mybuffer = eina_strbuf_new();
+</code>
+
+__**2**__. Manage the buffer content:
+  * To append characters to the buffer:
+
+//For basic strings, use the ''eina_strbuf_append()'' function//:
+<code c>
+eina_strbuf_append(mybuffer, "This is my string.");
+</code>
+//To append 1 character to your buffer, use the ''eina_strbuf_append_char()''
+function. You can also append a sized string to the buffer using the
+''eina_strbuf_append_length()'' function//:
+<code c>
+eina_strbuf_append_length(mybuffer, "Buffe", 5);
+eina_strbuf_append_char(mybuffer, 'r');
+</code>
+//To handle "printf" format strings, use the
+''eina_strbuf_append_printf()'' function to add formatted strings to the
+buffer//:
+
+<code c>
+eina_strbuf_append_printf(buf, "%s%c", "buffe", 'r');
+</code>
+
+  * To remove characters from one position to another, use the ''eina_strbuf_remove()'' function. The first parameter is the buffer, the second is the start position of the characters you want to delete, and the last the end position. \\ This example removes the first 19 characters of the buffer:
+
+<code c>
+eina_strbuf_remove(buf, 0, 18);
+</code>
+
+  * To replace characters:
+    * ''eina_strbuf_replace()'' replaces a specific occurrence of a given string in the buffer with another string.
+    * ''eina_strbuf_replace_all()'' replaces all occurrences of a given string in the buffer with another string.
+
+<code c>
+eina_strbuf_append(mybuffer, "buffer buffer buffer");
+
+// Replacing one occurrence of "buffer" by "B-U-F-F-E-R"
+eina_strbuf_replace(mybuffer, "buffer", "B-U-F-F-E-R", 1);
+
+// Replacing all the occurrences of "buffer" by "B-U-F-F-E-R"
+eina_strbuf_replace_all(mybuffer, "buffer", "B-U-F-F-E-R");
+
+// Replacing all the occurrences of "B-U-F-F-E-R" by "Buffer"
+eina_strbuf_replace_all(mybuffer, "B-U-F-F-E-R", "Buffer");
+</code>
+
+  * To insert a string at the specified position, use the ''eina_strbuf_insert()'' function. Use the ''eina_strbuf_insert_printf()'' function with formatted strings.
+
+<code c>
+eina_strbuf_insert(mybuffer, "More buffer", 10);
+
+// Using eina_strbuf_length_get to get the buffer length
+eina_strbuf_insert_printf(buf, " %s: %d", 6, "length", eina_strbuf_length_get(buf));
+</code>
+
+  * To get the complete length of the string and the buffer, use the ''eina_strbuf_string_get()'' and ''eina_strbuf_length_get()'' functions:
+
+<code c>
+printf("%s : %d\n", eina_strbuf_string_get(mybuffer), eina_strbuf_length_get(buf));
+</code>
+
+__**3**__. When no longer needed, free the buffer with the ''eina_strbuf_free()'' function. You can also free the content of ''Eina_Strbuf'' without freeing the buffer itself using the ''eina_strbuf_string_free()'' function.
+
+<code c>
+eina_strbuf_free(mybuffer);
+</code>
+-------
+{{page>index}}
