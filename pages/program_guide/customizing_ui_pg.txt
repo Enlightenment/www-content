@@ -1,0 +1,503 @@
+{{page>index}}
+--------
+===== Customizing UI Components =====
+
+Elementary UI components use the Edje library EDC themes to manage their look.
+
+=== Table of Contents ===
+
+    * [[#Elementary_Theme|Elementary Theme]]
+      * [[#Overlay|Overlay]]
+      * [[#Extension|Extension]]
+    * [[#Customizing_a_UI_Component_Style|Customizing a UI Component Style]]
+      * [[#Swallow_Parts|Swallow Parts]]
+      * [[#Text_Parts|Text Parts]]
+
+==== Elementary Theme ====
+
+An Elementary theme is an Edje EDC file that contains groups composed of parts
+and programs. For more information about Edje, refer to the
+[[/program_guide/edje_pg|Edje Guide]].
+
+== Use Theme Styles ==
+
+Elementary UI components provide a way to modify only some parts of the styles
+using the default theme. A style is a part of the EDC theme (a group) that
+concerns only one UI component. For example, you can create a new style for a
+button component to change its appearance without modifying the default theme.
+
+<note>
+When creating a new style, knowledge of how each UI component is themed is
+required, because setting another style always replaces the entire group used
+by the UI component. Important signals and parts must be there for the object
+to behave properly.
+</note>
+
+When several styles are loaded in the current theme, you can set a different
+style to a specific UI component using the ''elm_object_style_set()''
+function. It is also possible to see the current style with the
+''elm_object_style_get()'' function.
+
+The default theme specifies several styles for the button component. The code
+below shows how to set the "anchor" style of a newly created button component.
+
+<code c>
+Evas_Object *parent, *button;
+
+// Create a button object
+button = elm_button_add(parent);
+
+// Set its style to "anchor""
+elm_object_style_set(button, "anchor");
+</code>
+
+== Load Theme Styles ==
+
+Once written and compiled with Edje tools, the Elementary provides two methods
+to load the style in the application theme:
+
+   * overlays
+   * extensions
+
+When looking for a theme, the Elementary checks the list of overlays, if any
+are defined. Then it takes the default theme, and if it cannot find a theme
+for the UI component, it looks at the extensions list.
+
+=== Overlay ===
+
+An overlay can replace the look of all UI components by overriding the default
+style. If we create a new style called "default" for the button component and
+add it as an overlay, the Elementary uses the overlay for all button
+components overriding the default theme.
+
+Here is how to add an overlay to your application's theme.
+
+<code c>
+elm_theme_overlay_add(NULL, "./theme_button.edj");
+</code>
+
+<note>
+Here we assume that the "theme_button.edj" file only contains a new theme for
+the button component.
+</note>
+
+<note>
+Doing this is not recommended. Adding a file as an overlay makes the
+Elementary use the new theme for all the button components defined in the
+application. You must make sure that the "theme_button.edj" file reimplements
+everything that was previously defined in the default theme concerning the
+button component.
+</note>
+
+This is how to remove the previously added overlay to return to the default
+theme.
+
+<code c>
+elm_theme_overlay_del(NULL, "./theme_button.edj");
+</code>
+
+=== Extension ===
+
+With extensions, we can write styles that we can apply to some UI components
+(not all of them) by using the ''elm_object_style_set()'' function.
+
+The application adds a theme to the list of extensions with the following
+call.
+
+<code c>
+elm_theme_extension_add(NULL, "./theme_button_style_custom.edj");
+</code>
+
+<note>
+Here we assume that the "theme_button_style_custom.edj" file contains a new
+button style called "custom".
+</note>
+
+This is how to use the new "custom" style on a button component.
+
+<code c>
+Evas_Object *parent, *button;
+
+// Create a button object
+button = elm_button_add(parent);
+
+// Set its style to "custom"
+elm_object_style_set(button, "custom");
+</code>
+
+<note>
+When using ''elm_theme_extension_add'' or ''elm_theme_overlay_add'' to add a
+new theme extension or overlay to a Theme object (here called the default
+theme), the Elementary calls the ''elm_theme_flush'' function to flush
+Elementary theme caches. Thus, the theme of all UI components that use the
+default theme is reloaded.
+</note>
+
+== Create a New Theme ==
+
+This is how to create a new theme object.
+
+<code c>
+Elm_Theme *new_theme = elm_theme_new();
+</code>
+
+This function creates an empty specific theme that only uses the default
+theme. It has its own private set of extensions and overlays (which are empty
+by default). Specific themes do not fall back to the themes of parent objects.
+They are not intended for this use.
+
+This is how to apply this theme to a UI component and its children (a button,
+for example).
+
+<code c>
+// Create a button component
+Evas_Object *button = elm_button_add();
+
+// Set the new theme to the button component
+elm_object_theme_set(button, new_theme);
+</code>
+
+==== Customizing a UI Component Style ====
+
+UI component themes are written in Edje EDC source files (.edc). These files
+are compiled with Edje tools to make an .edj file that is used by the
+application. For more information on using the EDC language, see the
+[[/program_guide/edje_pg|Edje Guide]].
+
+A new Edje style can be added for a UI component. The best way is to copy the
+existing "default" style, rename it, and update it to your needs.
+
+== Create a Customized Style for the Check Component ==
+
+As an example, we show how to create a new style for the ''check'' component.
+The aim is to update the background and the main pictures of this UI component
+with custom pictures.
+
+The EDC source file concerning the check component (check.edc file) is
+composed of several groups.
+
+<code c>
+group
+{
+   name: "elm/check/base/default";
+}
+
+group
+{
+   name: "elm/check/base/toggle";
+}
+</code>
+
+Those two groups define two different styles for the check component (the
+"default" style and the "toggle" style).
+
+We copy the group corresponding to the "default" style in a new file to create
+a new style called "custom". This new style is saved in the "check_custom.edc"
+file.
+
+<code c>
+group
+{
+   name: "elm/check/base/custom";
+   // Here is the copy of the content of "default" style
+}
+</code>
+
+In the new group ("elm/check/base/custom"), we have to find the parts we want
+to modify. Here, the appropriate parts are "bg" and "check" parts.
+
+<code c>
+part
+{
+   name: "bg";
+   mouse_events: 0;
+   scale: 1;
+   description
+   {
+      state: "default" 0.0;
+      rel1.offset: 1 1;
+      rel2.relative: 0.0 1.0;
+      rel2.offset: 1 -2;
+      align: 0.0 0.5;
+      min: 16 16;
+      max: 16 16;
+      aspect: 1.0 1.0;
+      aspect_preference: VERTICAL;
+      image
+      {
+         normal: "check_base.png";
+         border: 5 5 5 5;
+         middle: 0;
+      }
+      fill.smooth: 0;
+   }
+}
+part
+{
+   name: "check";
+   mouse_events: 0;
+   scale: 1;
+   description
+   {
+      state: "default" 0.0;
+      rel1
+      {
+         to: "bg";
+         offset: 1 1;
+      }
+      rel2
+      {
+         to: "bg";
+         offset: -2 -2;
+      }
+      visible: 0;
+      color: 255 255 255 255;
+      image.normal: "check.png";
+   }
+   description
+   {
+      state: "visible" 0.0;
+      inherit: "default" 0.0;
+      visible: 1;
+   }
+   description
+   {
+      state: "disabled" 0.0;
+      inherit: "default" 0.0;
+      visible: 0;
+      color: 128 128 128 128;
+   }
+   description
+   {
+      state: "disabled_visible" 0.0;
+      inherit: "default" 0.0;
+      color: 128 128 128 128;
+      visible: 1;
+   }
+}
+</code>
+
+We do not detail all the options that can be modified here, but assume that
+the user is familiar with [[/program_guide/edje_pg|Edje]] and knows Edje
+basics.
+.
+Our custom pictures filenames are:
+
+   * check_base_custom.png for the bg part
+   * check_custom.png for the check part
+
+We must update the image.normal attribute in both parts with our custom
+pictures filenames to modify the pictures of this style.
+
+<code c>
+part
+{
+   name: "bg";
+   description
+   {
+      state: "default" 0.0;
+
+      image
+      {
+         normal: "check_base_custom.png";
+         border: 5 5 5 5;
+         middle: 0;
+      }
+
+   }
+}
+part
+{
+   name: "check";
+
+   description
+   {
+      state: "default" 0.0;
+
+      image.normal: "check_custom.png";
+   }
+
+}
+</code>
+
+<note>
+Here, we assume that the custom images are the same size as the "default"
+images.
+</note>
+
+== Use the New Style ==
+
+This is how to add the new theme file as an extension in the application.
+
+<code c>
+char edj_path[PATH_MAX] = {0, };
+
+// Get the full path of the edj file
+app_get_resource("/edje/check_custom.edj", edj_path, (int)PATH_MAX);
+
+// Load check custom style as an extension
+elm_theme_extension_add(NULL, edj_path);
+</code>
+
+Use the "custom" style on a new check component.
+
+<code c>
+Evas_Object *parent, *check;
+
+// Create a check object
+check = elm_check_add(parent);
+
+// Set its style to "custom"
+elm_object_style_set(check, "custom");
+</code>
+
+== Special Theme Parts ==
+
+Some parts of the EDC file can be interacted with the Elementary. The content
+of parts of the type ''TEXT'' are modified using the
+''elm_object_part_set_text()'' function. The content of ''SWALLOW'' parts is
+updated using the ''elm_object_part_content_set()'' function.
+
+=== Swallow Parts ===
+
+In the previous example (the check component "default" style), there is a part
+called "elm.swallow.content" that is of the type ''SWALLOW''.
+
+<code c>
+part
+{
+   name: "elm.swallow.content";
+   type: SWALLOW;
+   scale: 1;
+   description
+   {
+      state: "default" 0.0;
+      fixed: 1 0;
+      visible: 0;
+      align: 0.0 0.5;
+      rel1.to_x: "bg";
+      rel1.relative: 1.0 0.0;
+      rel1.offset: 1 1;
+      rel2.to_x: "bg";
+      rel2.offset: 1 -2;
+      rel2.relative: 1.0 1.0;
+   }
+   description
+   {
+      state: "visible" 0.0;
+      inherit: "default" 0.0;
+      fixed: 1 0;
+      visible: 1;
+      aspect: 1.0 1.0;
+      min: 16 16;
+   }
+   description
+   {
+      state: "disabled" 0.0;
+      inherit: "default" 0.0;
+      color: 255 255 255 128;
+   }
+   description
+   {
+      state: "disabled_visible" 0.0;
+      inherit: "default" 0.0;
+      color: 255 255 255 128;
+      fixed: 1 0;
+      visible: 1;
+      aspect: 1.0 1.0;
+   }
+}
+</code>
+
+We can push content (Evas_Object) to this part from the application anytime.
+The size and position of the content pushed is controlled by the EDC theme.
+
+<code c>
+Evas_Object *parent, *check1, *content;
+
+// Create a check object
+check1 = elm_check_add(parent);
+
+// Set the content of the check object
+elm_object_part_content_set(check1, "elm.swallow.content", content);
+</code>
+
+<note>
+We can add new ''SWALLOW'' parts when customizing a UI component's style, if
+we want to be able to control more content from the application. Note that
+removing existing ''SWALLOW'' parts changes the UI component's behavior.
+</note>
+
+=== Text Parts ===
+
+The same is done with parts of the type ''TEXT''. The check "default" style
+contains a part named "elm.text".
+
+<code c>
+part
+{
+   name: "elm.text";
+   type: TEXT;
+   mouse_events: 0;
+   scale: 1;
+   description
+   {
+      state: "default" 0.0;
+      visible: 0;
+      rel1.to_x: "elm.swallow.content";
+      rel1.relative: 1.0 0.0;
+      rel1.offset: 1 1;
+      rel2.relative: 1.0 1.0;
+      rel2.offset: -2 -2;
+      color: 0 0 0 255;
+      text
+      {
+         font: "Sans,Edje-Vera";
+         size: 10;
+         min: 0 1;
+         align: -1.0 0.5;
+      }
+   }
+   description
+   {
+      state: "visible" 0.0;
+      inherit: "default" 0.0;
+      visible: 1;
+      text.min: 1 1;
+   }
+   description
+   {
+      state: "disabled" 0.0;
+      inherit: "default" 0.0;
+      color: 0 0 0 128;
+      color3: 0 0 0 0;
+   }
+   description
+   {
+      state: "disabled_visible" 0.0;
+      inherit: "default" 0.0;
+      color: 0 0 0 128;
+      color3: 0 0 0 0;
+      visible: 1;
+      text.min: 1 1;
+   }
+}
+</code>
+
+This is how to modify the content of the "elm.text" part from the application.
+The position of the text, its size, color, look and feel are managed by the
+EDC theme.
+
+<code c>
+Evas_Object *parent, *check2;
+
+// Create a check object
+check2 = elm_check_add(parent);
+
+// Set the text of the check object
+elm_object_part_text_set(check2, "elm.text", "Test text");
+</code>
+
+------
+{{page>index}}
+
