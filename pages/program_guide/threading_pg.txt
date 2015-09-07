@@ -1,0 +1,29 @@
+{{page>index}}
+===== Threading Programming Guide =====
+
+Threads are concurrent execution environments that are lighter than full-blown
+processes because they share some operating system resources. Threads make it
+possible to do several things at the same time while using less resources and
+offering simpler synchronization and data exchange compared to processes.
+
+If you move a blocking operation to a separate thread, it cannot block the
+event loop and keeps the user interface reactive. Blocking the event loop and
+using long-running callbacks means the application cannot update its graphical
+user interface.
+
+While threads can be useful, they are not always the best choice:
+
+   * The first rule to using threads is to avoid them as much as possible, as there are often better tools and approaches. For example, to do network transfers, use ''Ecore_Con'' that integrates with the event loop to use a function based on callbacks. Being able to use such a function means that specific support work has been done in libraries. In some cases, using a function and libraries is impossible, and in those situations threads are required.
+   * Use threads in CPU-intensive tasks and disk IOs. For example, a thread is the appropriate way to apply filters to an image or to a video without blocking the interface.
+   * Use threads to take advantage of multiple available CPU cores, if the workload can be split into several units of work and spread across the cores. A typical example for an image processing application on a quad-core CPU is to process 4 images at once, each on 1 thread. For such tasks, the thread pool helps with the creation and scheduling of the threads, handling all the grunt work.
+
+=== Table of Contents ===
+
+  * [[/program_guide/threading/thread_safety|Thread Safety]]
+  * [[/program_guide/threading/thread_pools|Thread Pools]]
+  * [[/program_guide/threading/thread_management_with_ecore|Thread Management with ECore]]
+  * [[/program_guide/threading/low-level_functions|Low-level Functions]]
+  * [[/program_guide/threading/thread_use_examples|Thread Use Example]]
+
+--------
+{{page>index}}

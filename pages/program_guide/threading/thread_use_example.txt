@@ -1,0 +1,124 @@
+{{page>index}}
+-------
+===== Thread Use Example =====
+
+The following examples display a window with a label. An auxiliary thread
+semi-regularly changes the text of the label. If you want to display a regular
+animation, use the Ecore animators described in the
+[[/program_guide/main_loop_pg|Main Loop guide]].
+
+To use the ''ecore_thread_feedback()'' function:
+
+**__1__**. Implement the GUI function that sets the text of a label and can be
+called from the main thread.
+
+<code c>
+static void
+_set_label_text(void *data, Ecore_Thread *thread __UNUSED__, void *msgdata)
+{
+   char buf[64];
+   Evas_Object *label = data;
+   snprintf(buf, sizeof(buf), "Tick %d", (int)(uintptr_t)msgdata);
+   elm_object_text_set(label, buf);
+}
+</code>
+
+**__2__**. Send the feedback from the other thread using the ''ecore_thread_feedback()''
+function. The following function does nothing besides sending the feedback and
+sleeping.
+
+<code c>
+static void
+_long_function(void *data __UNUSED__, Ecore_Thread *thread)
+{
+   int iteration;
+   // Change the text roughly every 1 second. This is only an example; if you
+   // want regular animations, use Ecore animators!
+   for (iteration = 0; ; iteration++)
+     {
+        // Since you are running from another thread, you need to take special
+        // care and instead send data to the main thread and have it run the
+        // feedback function given when creating the thread
+        ecore_thread_feedback(thread, (void*)(uintptr_t)iteration);
+        // Sleep for roughly one second
+        sleep(1);
+     }
+}
+</code>
+
+**__3__**. Create an end function that is called when the thread exits. In
+this example, the end function is called only right before the application
+exits. However, if the blocking function is more complex, it can trigger the
+end function.
+
+<code c>
+static void
+_end_func(void *data, Ecore_Thread *thread __UNUSED__)
+{
+   Evas_Object *label = data;
+   elm_object_text_set(label, "Ticks over");
+}
+</code>
+
+**__4__**. Call the ''ecore_thread_feedback_run()'' function to start the thread:
+
+<code c>
+ecore_thread_feedback_run(_long_function, _set_label_text, _end_func, NULL, label, EINA_FALSE);
+</code>
+
+To use the ''ecore_main_loop_thread_safe_call_sync()'' function:
+
+**__1__**. Implement the GUI function that sets the text of a label and can be
+called from the main thread. The function receives data as a structure and
+alternatively displays "Tick d" or "Tock d".
+
+<code c>
+struct thd
+{
+   Evas_Object *label;
+   Eina_Bool tick_not_tock;
+   int iteration;
+};
+
+static void *
+_set_label_text_tick_tock(void *data)
+{
+   char buf[64];
+   struct thd *thd = data;
+   snprintf(buf, sizeof(buf), "%s %d", (thd->tick_not_tock ? "Tick" : "Tock"), thd->iteration);
+   elm_object_text_set(thd->label, buf);
+
+   return NULL;
+}
+</code>
+
+**__2__**. Use the ''ecore_main_loop_thread_safe_call_sync()'' function call
+the GUI function. Differentiate between the ticks and the tocks:
+
+<code c>
+static void
+_long_function_tick_tock(void *data, Ecore_Thread *thread __UNUSED__)
+{
+   struct thd *thd = malloc(sizeof(struct thd));
+   thd->label = data;
+   for (thd->iteration = 0; ; (thd->iteration)++)
+     {
+        thd->tick_not_tock = EINA_TRUE;
+        ecore_main_loop_thread_safe_call_sync(_set_label_text_tick_tock, thd);
+        sleep(1);
+        thd->tick_not_tock = EINA_FALSE;
+        ecore_main_loop_thread_safe_call_sync(_set_label_text_tick_tock, thd);
+        sleep(1);
+     }
+   free(thd);
+}
+</code>
+
+**__3__**. Start the thread through the ''ecore_thread_run()'' function:
+
+<code c>
+ecore_thread_run(_long_function_tick_tock, _end_func, NULL, label);
+</code>
+
+-------
+{{page>index}}

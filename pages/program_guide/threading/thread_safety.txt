@@ -1,0 +1,30 @@
+{{page>index}}
+-------
+===== Thread Safety =====
+
+If several strings have to work on the same resources, conflicts can happen as
+the threads are run in parallel. For example, if thread A modifies several
+values while thread B is reading them, it is likely that some of the values
+read by B are outdated. Similar issues can happen if both threads are
+modifying data concurrently.
+
+These kinds of conflicts are called race-conditions: depending on which thread
+is faster, the output changes and can be incorrect. Avoiding such issues is
+called thread safety. Thread safety involves critical sections, which are
+blocks of code that operate on shared resources and must not be accessed
+concurrently by another thread.
+
+The usual solution for ensuring exclusive access to shared resources is mutual
+exclusion: only 1 thread can operate on the data at any given time. Mutual
+exclusion is often implemented through locks. Before attempting to operate on
+a shared resource, the thread waits until it can lock something called a mutex
+(stands for mutual exclusion), then operates on the resource, and unlocks the
+mutex. Operating systems guarantee that only 1 thread can lock a mutex at a
+given time: this ensures that only 1 thread operates on the shared resource at
+one time.
+
+For more information on thread safety, see
+[[/program_guide/threading/low-level_functions|Low-level Functions]].
+
+------
+{{page>index}}

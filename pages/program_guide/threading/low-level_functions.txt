@@ -1,0 +1,71 @@
+{{page>index}}
+-------
+===== Low-level Functions =====
+
+Eina offers low-level functions that are portable across the operating system,
+such as locks, conditions, semaphores, barriers, and spinlocks. The functions
+follow closely the logic of pthreads.
+
+While these functions are useful, they are building blocks and not usually
+useful in EFL applications considering the higher-level functions that are
+available in Ecore.
+
+For an introduction to threads and pthreads in particular, see:
+
+   * [[http://www.ibm.com/developerworks/library/l-pthred/index.html|Basic use of pthreads]] (IBM developerWorks)
+   * [[https://computing.llnl.gov/tutorials/pthreads/|POSIX Threads Programming]] (Lawrence Livermore National Laboratory)
+   * [[http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/pthread.h.html|POSIX 2003 specification]] (opengroup)
+
+If you are already familiar with threads, see the standard pthreads
+documentation and the Eina reference documentation, or the following function
+lists. Remember that the Eina functions map very closely to the pthreads
+functions.
+
+^    Lock (mutual exclusions)    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''pthread_mutex_new()''|''eina_lock_new()''|
+|''pthread_mutex_destroy()''|''eina_lock_free()''|
+|''pthread_mutex_lock()''|''eina_lock_take()''|
+|''pthread_mutex_trylock()''|''eina_lock_take_try()''|
+|''pthread_mutex_unlock()''|''eina_lock_release()''|
+|none (prints debug information on the lock)|''eina_lock_debug()''|
+
+^     Conditions (notifications when condition objects change)    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''pthread_cond_init()''      |''eina_condition_new()''           |
+|''pthread_cond_destroy''     |''eina_condition_free()''          |
+|''pthread_cond_wait()''      |''eina_condition_wait()''          |
+|''pthread_cond_timedwait()'' |''eina_condition_timedwait()''     |
+|''pthread_cond_broadcast()'' |''eina_condition_broadcast()''     |
+|''pthread_cond_signal()''    |''eina_condition_signal()''        |
+
+^      RWLocks (Read-write locks, for multiple-readers/single-writer scenarios)    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''pthread_rwlock_init()''         |''eina_rwlock_new()''          |
+|''pthread_rwlock_destroy()''      |''eina_rwlock_free()''         |
+|''pthread_rwlock_rwlock_rdlock()''|''eina_rwlock_take_read()''    |
+|''pthread_rwlock_rwlock_wrlock()''|''eina_rwlock_take_write()''   |
+|''pthread_rwlock_unlock()''       |''eina_rwlock_release()''      |
+
+^       TLS (Thread-Local Storage)    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''pthread_key_create()''      |''eina_tls_new()''  |
+|''pthread_key_delete()''      |''eina_tls_free()'' |
+|''pthread_getspecific()''     |''eina_tls_get()''  |
+|''pthread_setspecific()''     |''eina_tls_set()''  |
+
+^        Semaphores (access restrictions for a set of resources)    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''sem_init()''    |''eina_semaphore_new()''     |
+|''sem_destroy()'' |''eina_semaphore_free()''    |
+|''sem_wait()''    |''eina_semaphore_lock()''    |
+|''sem_post()''    |''eina_semaphore_release()'' |
+
+^        Barriers    ^^
+|   **pthreads function**   |   **eina equivalent**     |
+|''pthread_barrier_init()''   |''eina_barrier_new()''  |
+|''pthread_barrier_destroy()''|''eina_barrier_free()'' |
+|''pthread_barrier_wait()''   |''eina_barrier_wait()'' |
+
+-------
+{{page>index}}

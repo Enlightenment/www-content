@@ -1,0 +1,52 @@
+{{page>index}}
+-----------
+===== Thread Pools =====
+
+Threads are operating system resources: while much lighter than processes,
+they still have a cost. Moreover, spawning a thousand threads means that each
+of them only gets 1/1000th of the total CPU time: each thread is progressed
+slowly and, in the worst case, the system wastes all of its time switching
+between threads without doing any actual work.
+
+Thread pools solve this problem. In thread pools, upto a maximum number of
+threads are created on-demand and used to execute tasks. When the tasks are
+finished, they are kept alive but sleeping. This avoids the cost of creating
+and destroying them.
+
+In EFL, the thread pool is controlled by a ''thread_max'' parameter, which
+defines the maximum number of threads running at the same time. Another
+control feature is the ''func_end()'' callback that runs from the main loop
+thread after a task has completed and is typically used to extract the data
+from the finished task and make it available to the main loop.
+
+To manage the maximum number of threads:
+
+
+  * To retrieve the current value, use the ''ecore_thread_max_get()'' function.
+  * To set the value, use the ''ecore_thread_max_set()'' function. The value has a maximum of 16 times the CPU count.
+  * To reset the maximum number of threads, use the ''ecore_thread_max_reset()'' function.
+  * To get the number of available threads in the pool, use the ''ecore_thread_available_get()'' function. The function returns the current maximum number of threads minus the number of running threads. The number can be a negative value, if the maximum number of threads has been lowered.
+
+The following figures illustrate the thread pool. The first figure shows the
+occupancy of a hypothetical thread pool. There are several tasks, of which 4
+are running. The  ''thread_max'' parameter of the pool is 4, and the other
+tasks are waiting. There is no thread with its ''func_end()'' callback
+currently called.
+
+{{ :threading_pool_lifecycle_1.png }}
+
+When a task, applying the sepia filter on image1, finishes, the corresponding
+''func_end()'' function is invoked from the main loop.
+
+{{ :threading_pool_lifecycle_2.png }}
+
+With the task done, one of the threads from the pool becomes available, and
+another thread, adding the reverberation effect on audio3, can run in it.
+
+{{ :threading_pool_lifecycle_3.png }}
+
+As long as there are tasks to be done, the thread pool continues the same way,
+running tasks in its threads whenever a thread is available.
+
+-----
+{{page>index}}

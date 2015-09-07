@@ -1,0 +1,61 @@
+{{page>index}}
+===== Thread Management with Ecore =====
+
+Ecore offers a simplified API for managing threads in EFL applications. The
+Ecore API applies to a typical scenario where the main thread creates another
+thread, which in turn sends data back to the main thread or calls GUI-related
+functions. GUI-related functions are not thread-safe.
+
+==== Creating Threads with Ecore ====
+
+The threads created with Ecore are by default integrated with the thread pool
+and offer simple callback-based ways to interact with the main loop. New
+threads are created as needed until the maximum capacity of the thread pool is
+reached.
+
+== To return values to the main thread ==
+
+Use the ''ecore_thread_feedback_run()'' function to send intermediate feedback
+from the thread to the main loop.
+
+== To return only the final value to the main thread ==
+
+To create and run a thread, use the ''ecore_thread_run()'' function. It runs a
+function inside a thread from the thread pool and takes care of all the
+low-level work. It returns the corresponding thread handler or ''NULL'' on
+failure.
+
+The most common way to return data from one thread to the main thread is
+to put a pointer to it in the data. When the thread is aborted or finishes,
+either ''func_cancel()'' or ''func_end()'' is called from the main loop. The
+functions are running in the simpler context of a single thread running at
+once and therefore avoid race-conditions.
+
+The data pointer approach can only be used when the data is shared between the
+one thread and the main thread only. However, this does not prevent you from
+using the ''func_end()'' callback to merge the results into a single data
+structure. For example, you can add all the values computed by the threads to
+an ''Eina_List'', as all the operations on the list happen from a single
+thread and therefore one after the other and not concurrently.
+
+==== Running Callbacks from the Main Loop ====
+
+If you are performing operations in another thread and want to update a
+progress bar, the update operation must be done from the main thread. The
+simplest way is to use the ''ecore_main_loop_thread_safe_call_async()''
+function, which takes a function and some data as parameters and instructs the
+main loop to execute the given function with the given data.
+
+Depending on the kind of thread the function is called from, the process
+differs:
+
+   * If the function is called from a thread that is not the main one, the function sends a message to the main loop and returns quickly. The message is processed in order, similarly to others.
+   * If the function is called from the main thread, the function is called immediately as if it were a direct call.
+
+If you want to wait until the callback is called and returns, use the
+''ecore_main_loop_thread_safe_call_sync()'' function, which is similar but
+synchronous. Since it is synchronous, it can also return the value returned by
+the callback.
+
+-----
+{{page>index}}
