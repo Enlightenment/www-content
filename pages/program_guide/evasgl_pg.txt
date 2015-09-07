@@ -1,0 +1,426 @@
+{{page>index}}
+===== Evas GL Programming Guide =====
+
+This guide assumes that the application uses EvasGL directly instead of using
+the GLView. (If the application uses a GLView, EvasGL is created internally.)
+
+=== Table of Contents ===
+
+  * [[#What_is_OpenGL_?|WhatisOpenGL?]]
+    * [[#The_graphics_pipeline|Thegraphicspipeline]]
+    * [[#The_vertex_and_element_array|Thevertexandelementarray]]
+    * [[#Uniform_states_and_textures|Uniformstatesandtextures]]
+    * [[#The_vertex_shader|Thevertexshader]]
+    * [[#Triangle_assembly|Triangleassembly]]
+    * [[#Rasterization|Rasterization]]
+    * [[#The_fragment_shader|Thefragmentshader]]
+    * [[#Framebuffer,_testing_and_blending|Framebuffer,testingandblending]]
+    * [[#Benefit_of_Evas_GL_compared_with_direct_OpenGL_usage|BenefitofEvas_GLcomparedwithdirectOpenGLusage]]
+  * [[#Declaration_of_EvasGL_Objects|DeclarationofEvasGLObjects]]
+  * [[#Creating_the_Elm_Window_and_EvasGL|CreatingtheElmWindowandEvasGL]]
+  * [[#Getting_OpenGL_ES_APIs|GettingOpenGLESAPIs]]
+  * [[#Callbacks|Callbacks]]
+  * [[#Setting_a_Surface_into_the_Image_Object|SettingaSurfaceintotheImageObject]]
+
+=== Related Info ===
+
+  * [[tutorial/gl_2d_tutorial|GL 2D Tutorial]]
+
+==== What is OpenGL ? ====
+
+OpenGL (Open Graphics Library) is a cross-language, multi-platform application
+programming interface (API) for rendering 2D and 3D vector graphics. The API
+is typically used to interact with a graphics processing unit (GPU), to
+achieve hardware-accelerated rendering. In recent years, the Khronos group has
+taken stewardship of the OpenGL standard, updating it to support the features
+of modern programmable GPUs, pushing it into the mobile and online domains
+with OpenGL ES and WebGL, and streamlining it in OpenGL 3 by deprecating the
+outdated features that cluttered earlier versions of the library. For this
+programming guide, I'm going to assume you're already a programmer and that
+you know C, but that you haven't necessarily seen OpenGL or done graphics
+programming before. Knowing at least some basic algebra and geometry will help
+a lot though. We are going to cover standards from the API of OpenGL ES 2.0,
+which is used by Evas_GL library.
+
+==== The graphics pipeline ====
+
+{{ :evasgl_graphics_pipeline.png }}
+
+Ever since the early days of real-time 3d, the triangle has been the
+paintbrush with which scenes have been drawn. Although modern GPUs can perform
+all sorts of flashy effects to cover up this dirty secret, underneath all the
+shading, triangles are still the medium in which they work. The graphics
+pipeline that OpenGL implements reflects this: the host program fills
+OpenGL-managed memory buffers with arrays of vertices; these vertices are
+projected into screen space, assembled into triangles, and rasterized into
+pixel-sized fragments; finally, the fragments are assigned color values and
+drawn to the framebuffer. Modern GPUs get their flexibility by delegating the
+"project into screen space" and "assign color values" stages to uploadable
+programs called shaders. Let's look at each stage in more detail:
+
+=== The vertex and element array ===
+
+The graphic pipeline starts with a set of one or more vertex buffers, filled
+with arrays of vertex attributes which are used as inputs to the vertex
+shaders. The vertex attributes can be for example the location of the vertex
+in 3d space, or some sets of texture coordinates that map the vertex to a
+sample point on one or more textures. We call the vertex array the set of
+vertex buffers supplying data to the rendering job. When a render job is
+submitted, we supply an additional element array, an array of indexes into the
+vertex array that select which vertices get fed into the pipeline. We will see
+later on that the order of the indexes also controls how the vertices get
+assembled.
+
+=== Uniform states and textures ===
+
+The uniform state provides a set of shared read-only values to the shaders at
+each programmable stage of the graphics pipeline. It allows the shader program
+to use parameters that don't change between vertices or fragments. The uniform
+state include texture that are commonly used to map texture images onto
+surfaces. These textures are translated into one-, two-, or three-dimensional
+arrays that can be sampled by shaders. They can be used as datasets for
+various kind of effects ot as lookup tables for precalculated functions.
+
+=== The vertex shader ===
+
+The vertex shader is a program that takes a set of vertex attributes as inputs
+and outputs a new set of attributes. refered to as varying values, that are
+given to the rasterizer. The GPU begins by reading each selected vertex out of
+the vertex array and running it through the vertex shader. The vertex shader
+calculates the projected position of the vertex in screen space. The vertex
+shader can also be used to generate other varying outputs such as a color or
+texture coordinates, for the rasterizer to blend across the surface of the
+triangles connecting the vertex.
+
+=== Triangle assembly ===
+
+Afterwards, the GPU connects the projected vertices to draw triangles. This is
+done by taking the vertices in the order spécified by the element array and
+grouping them by group of three. There is a few ways to group the vertices
+rtices of the next.
+
+  * ''TRIANGLES'': Take every three elements as independent triangle.
+  * ''TRIANGLE_STRIP'': Reusing the last two vertices of each triangle as the first two vertices of the next.
+  * ''TRIANGLE_FAN'': Connecting the first element to every subsequent pair of elements.
+
+The following diagram shows how the three different modes behave :
+
+{{ :evasgl_triangle_assembly.png }}
+
+=== Rasterization ===
+
+The resterization step consist in taking each triangle, clipping it and
+discarding parts that are outside the screen. The remaining visible parts are
+then broken into pixel-sized fragments. The vertex shaders varying outputs are
+also interpolated across the rasterized surface of each triangle, assigning a
+smooth gradient of values to each fragment. If the vertex shader assigns a
+color value to each vertex for instance, the rasterizer will blend those
+colors across the pixelated surface as shown in the diagram below :
+
+{{ :evasgl_rasterization.png }}
+
+=== The fragment shader ===
+
+The generated fragments will then pass through another program called the
+fragment shader. The fragment shader takes as arguments the varying values
+output by the vertex shader and interpolated by the rasterizer as inputs. The
+program returns the color and the depth values that get drawn into the
+framebuffer. Most common fragment shader operations include lighting and
+texture mapping. It can perform the most sophisticated special effects since
+the fragment shader runs independently for every pixel drawn. However, it is
+also the most performance-sensitive part of the graphics pipeline.
+
+=== Framebuffer, testing and blending ===
+
+The framebuffer is the rendering job's output. OpenGL allows you to render the
+final scene to the screen using the default framebuffer, but it also lets you
+make framebuffer objets that draw into offscreen renderbuffers or into
+textures. Those textures can be used as inputs to other rendering jobs. With
+Evas_GL, the framebuffer will be most of the time a single 2d image widget. In
+addiction to the color buffers, a framebuffer can have a depth buffer and/or
+stencil buffer, which can filter fragments before they are drawn : Depth
+testing discards fragments from objects that are behind the ones already
+drawn, and stencil testing uses shapes drawn into the stencil buffer to
+constrain the drawable part of the framebuffer. Fragments that remain after
+these two gauntlets have their color value alpha blended with the color value
+they are overwritting. The final color, depth and stencil values are drawn
+into the target buffers.
+
+=== Benefit of Evas_GL compared with direct OpenGL usage ===
+
+Evas allows you to use OpenGL to render into specially set up image objects
+(which act as render target surfaces). Such mechanism permits you to take full
+advantage of all methods and callbacks provided by Elementary widgets directly
+into the framebuffer. Indeed, the framebuffer is a image widget with which we
+can manage events such as mouse mouvement, click or even keyboard input. The
+rendering pipeline is implemented directly within a function that will be
+called every time the program is getting pixels from the image. Using
+Ecore_Evas animation loop, it allows us to mark pixels as "dirty" at every
+single tick of the clock in order implement any animation of our choice.
+
+Evas_GL provides the OpenGL ES 1.x and 2.x API, which give full control over
+the scene to the user. In this version of OpenGL, there is many functions that
+have been depreciated from the previous API such as matrix transformation,
+translation, rotation, but it is for the better. OpenGL ES 2.0 introduces the
+programmable pipeline on mobile devices discarding the old fixed-pipeline
+approach; probably for this reason you find it more difficult to use, but just
+a change of mindset and some hours passed on coding will make you change your
+idea about this. And we will see that, it isn't so hard to code back the
+missing bricks, if you remember your math lessons.
+
+==== Declaration of EvasGL Objects ====
+
+This is how to define the application data structure to hold all the objects
+for your EvasGL application:
+
+<code c>
+typedef struct appdata
+{
+   Evas_Object *win;
+   Evas_Object *img;
+
+   Evas_GL *evasgl;
+   Evas_GL_API *glapi;
+   Evas_GL_Context *ctx;
+   Evas_GL_Surface *sfc;
+   Evas_GL_Config *cfg;
+   Evas_Coord sfc_w;
+   Evas_Coord sfc_h;
+
+   unsigned int program;
+   unsigned int vtx_shader;
+   unsigned int fgmt_shader;
+   unsigned int vbo;
+} appdata_s;
+</code>
+
+  * ''Evas_Object *win'': Application window.
+  * ''Evas_Object *img'': OpenGL ES canvas.
+  * ''Evas_GL *evasgl'': EvasGL Object for rendering gl in Evas.
+  * ''Evas_GL_API *glapi'': EvasGL API object that contains the GL APIs to be used in Evas GL.
+  * ''Evas_GL_Context *ctx'': EvasGL Context object, a GL rendering context in Evas GL.
+  * ''Evas_GL_Surface *sfc'': EvasGL Surface object, a GL rendering target in Evas GL.
+  * ''Evas_GL_Config *cfg'': EvasGL Surface configuration object for surface creation.
+
+==== Creating the Elm Window and EvasGL ====
+
+To create the Elm window and EvasGL:
+
+**__1__**. Manage HW acceleration
+
+To develop a GL application, call the ''elm_config_accel_preference_set()''
+function before creating a window. This makes an application to use GPU.
+
+To use the Direct Rendering mode of EvasGL, set the same option values (depth,
+stencil, and MSAA) to a rendering engine and a ''Evas_GL_Surface'' object. You
+can set the option values to a rendering engine using the
+''elm_config_accel_preference_set()'' function and to a ''Evas_GL_Surface''
+object using the ''Evas_GL_Config'' object. If the ''Evas_GL_Config'' object
+option values are bigger or higher than the rendering engine's, the Direct
+Rendering mode is disabled or abnormal rendering occurs.
+
+<code c>
+Evas_Object *win;
+
+// To use OpenGL ES, the application must switch on hardware acceleration
+// To enable that, call elm_config_accel_preference_set() with "opengl"
+// before creating the Elm window
+elm_config_accel_preference_set("opengl");
+// Creating Elm window
+ad->win = elm_win_util_standard_add("Evas_GL Example", "Evas_GL Example");
+</code>
+
+You can create your EvasGL handler using the ''evas_gl_new(Evas * e)''
+function. This initializer takes as a parameter the Evas canvas on which
+OpenGL ES is to be used. When developing an application with Elementary, use
+the canvas of your window:
+
+<code c>
+ad->evasgl = evas_gl_new(evas_object_evas_get(ad->win));
+</code>
+
+To free the memory allocated to this handler, use the ''evas_gl_free(Evas_GL
+*evas_gl)'' function.
+
+**__2__**. Create a surface.
+
+You must allocate a new config object to fill the surface out using the
+''evas_gl_config_new()'' function. As long as Evas creates a config object for
+the user, it takes care of the backward compatibility issue. Once you have
+your config object, you can specify the surface settings:
+
+<code c>
+appdata_s *ad;
+ad->cfg = evas_gl_config_new();
+ad->cfg->color_format = EVAS_GL_RGBA_8888; // Surface Color Format
+ad->cfg->depth_bits = EVAS_GL_DEPTH_BIT_24; // Surface Depth Format
+ad->cfg->stencil_bits = EVAS_GL_STENCIL_NONE; // Surface Stencil Format
+ad->cfg->options_bits = EVAS_GL_OPTIONS_NONE; // Configuration options (here, no extra options)
+</code>
+
+Once we have configured the surface behavior, we must initialize the surface
+using ''evas_gl_surface_create(Evas_GL* evas_gl, Evas_GL_Config * cfg, int w,
+int h)''. This function takes the given Evas_GL object as the first parameter
+and the pixel format, and configuration of the rendering surface as the second
+parameter. The last two parameters are the width and height of the surface,
+which we recover directly from the window.
+
+<code c>
+Evas_Coord w, h;
+evas_object_geometry_get(ad->win, NULL, NULL, &w, &h);
+ad->sfc = evas_gl_surface_create(ad->evasgl, ad->cfg, w, h);
+</code>
+
+To manually delete a GL surface, use the ''evas_gl_surface_destroy(Evas_GL
+*evas_gl, Evas_GL_Surface *surf)'' function.
+
+**__3__**. Create a context.
+
+Create a context for Evas_GL using the ''evas_gl_context_create(Evas_GL *
+evas_gl, Evas_GL_Context * share_ctx)'' function. You can merge the context
+with a higher context definition you must pass as a second parameter.
+
+<code c>
+ad->ctx = evas_gl_context_create(ad->evasgl, NULL);
+</code>
+
+To delete the context later, use the ''evas_gl_context_destroy(Evas_GL
+*evas_gl, Evas_GL_Context *ctx)'' function. To delete the entire configuration
+object, use the ''evas_gl_config_free(Evas_GL_Config *cfg)'' function instead.
+
+==== Getting OpenGL ES APIs ====
+
+If you want to get the API of OpenGL ES, you can get the API for rendering
+OpenGL ES with the ''evas_gl_api_get(Evas_GL *evas_gl_)''function. This
+function returns a structure that contains all the OpenGL ES functions you can
+use to render in Evas. These functions consist of all the standard OpenGL ES
+2.0 functions and any extra ones Evas has decided to provide in addition. If
+you have your code ported to OpenGL ES 2.0, it is easy to render to Evas.
+
+If you already use a global macro, such as ''EVAS_GL_GLOBAL_GLES2_XXX'', you need not get the APIs.
+
+<code c>
+ad->glapi = evas_gl_api_get(ad->evasgl);
+</code>
+
+==== Callbacks ====
+
+Now that we have configured the EvasGL environment, we declare a UI component
+in which all the OpenGL ES transformation takes place. In the example below,
+we selected the image component because it provides callbacks that allow us to
+play with the mouse events and coordinates, and we set up an image object that
+inherits the size of the parent window.
+
+<code c>
+ad->img = evas_object_image_filled_add(evas_object_evas_get(ad->win));
+</code>
+
+We define the "OpenGL ES main loop" function that is called every time the
+program attempts to have pixels from the image. We put all the OpenGL ES
+statements in charge of rendering the scene in this callback.
+
+<code c>
+evas_object_image_pixels_get_callback_set(ad->img, img_pixels_get_cb, ad);
+</code>
+
+To define a function that takes care of the drawing using EvasGL (called the
+OpenGL ES main loop), use:
+
+<code c>
+static void
+img_pixels_get_cb(void *data, Evas_Object *obj)
+{
+   appdata_s *ad = data;
+   Evas_GL_API *gl = ad->glapi;
+
+   // Rendering process
+   evas_gl_make_current(ad->evasgl, ad->sfc, ad->ctx);
+   // Because the surface size can be changed, set the viewport in this callback
+   gl->glViewport(0, 0, ad->sfc_w, ad->sfc_h);
+   // Paint it blue
+   gl->glClearColor(0.2, 0.2, 0.6, 1.0);
+   gl->glClear(GL_COLOR_BUFFER_BIT);
+   // The usual OpenGL ES draw commands come here
+   // draw_scene();
+}</code>
+
+At every tick, we must set the given context as a current context for the
+given surface using ''evas_gl_make_current(Evas_GL *evas_gl, Evas_GL_Surface
+*surf, Evas_GL_Context *ctx)''.
+
+You can use the ''Ecore_Animator'' to define the OpenGL ES main loop. To do
+so, create a callback that is called on every animation tick. This animation
+callback is used only to mark the image as "dirty", meaning that it needs an
+update next time Evas renders. It calls the pixel get callback that redraws
+the scene.
+
+<code c>
+static Eina_Bool
+animate_cb(void *data)
+{
+   Evas_Object *img = data;
+   evas_object_image_pixels_dirty_set(img, EINA_TRUE);
+
+   return ECORE_CALLBACK_RENEW;
+}
+
+ecore_animator_add(animate_cb, ad->img);
+</code>
+
+You can define several other callbacks that have an impact on the drawing
+depending on the mouse, resize, and deletion events.
+
+<code c>
+evas_object_event_callback_add(ad->img, EVAS_CALLBACK_DEL, img_del_cb, ad);
+evas_object_event_callback_add(ad->img, EVAS_CALLBACK_MOUSE_DOWN, mouse_down_cb, ad);
+evas_object_event_callback_add(ad->img, EVAS_CALLBACK_MOUSE_UP, mouse_up_cb, ad);
+evas_object_event_callback_add(ad->img, EVAS_CALLBACK_MOUSE_MOVE, mouse_move_cb, ad);
+evas_object_event_callback_add(ad->win, EVAS_CALLBACK_RESIZE, win_resize_cb, ad);
+</code>
+
+Because the window size can be changed, you must set a resize callback for the
+window. In addition, you must recreate an ''Evas_GL_Surface'' in the resize
+callback and reset the viewport size with the new window size:
+
+<code c>
+static void
+win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   appdata_s *ad = data;
+
+   if (ad->sfc)
+     {
+        evas_object_image_native_surface_set(ad->img, NULL);
+        evas_gl_surface_destroy(ad->evasgl, ad->sfc);
+        ad->sfc = NULL;
+     }
+
+   evas_object_geometry_get(obj, NULL, NULL, &ad->sfc_w, &ad->sfc_h);
+   evas_object_image_size_set(ad->img, ad->sfc_w, ad->sfc_h);
+   evas_object_resize(ad->img, ad->sfc_w, ad->sfc_h);
+   evas_object_show(ad->img);
+
+   if (!ad->sfc)
+     {
+        Evas_Native_Surface ns;
+
+        ad->sfc = evas_gl_surface_create(ad->evasgl, ad->cfg, ad->sfc_w, ad->sfc_h);
+        evas_gl_native_surface_get(ad->evasgl, ad->sfc, &ns);
+        evas_object_image_native_surface_set(ad->img, &ns);
+        evas_object_image_pixels_dirty_set(ad->img, EINA_TRUE);
+     }
+}</code>
+
+==== Setting a Surface into the Image Object ====
+
+We can also fill in the native Surface information from the given EvasGL surface. For example, to adapt the surface to the target image when the size of the canvas changes, use the following code.
+
+<code c>
+Evas_Native_Surface ns;
+evas_gl_native_surface_get(ad->evasgl, ad->sfc, &ns);
+evas_object_image_native_surface_set(ad->img, &ns);
+</code>
+
+
+-----
+{{page>index}}
