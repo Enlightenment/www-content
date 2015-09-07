@@ -1,0 +1,123 @@
+{{page>index}}
+---------
+===== Threads ====
+
+EFL is not entirely thread-safe. This means that if a task is running in
+another thread and, for example, an Evas object shows the status progress of
+this task, the object cannot be updated from within the thread. Updating can
+only be done from the main thread that runs the main loop.
+
+Ecore provides a facility to perform tasks on separate worker threads. It is
+not a simple wrapper around standard threads provided by the operating system.
+With Ecore threads, it is easier to dispatch a worker function to perform some
+heavy tasks and get the result once it completes. It does not block the
+application UI. It is also easy to cancel and reschedule threads. Several
+threads can be launched simultaneously, since Ecore schedules them according
+to the number of processors the system has and the maximum amount of
+concurrent threads set for the application.
+
+Ecore has 2 kinds of threads:
+
+   * Short jobs do not give any kind of information on their status to the parent. They are best used for short computing-intensive snippets of code.
+   * Feedback jobs give information on their status to the parent. They are best used for longer snippets requiring a feedback loop, such as an ongoing file download.
+
+=== Table of Contents ===
+
+  * [[#To_manage_threads|To manage threads]]
+    * [[#To_cancel_a_thread|To cancel a thread]]
+    * [[#To_execute_a_thread_later|To execute a thread later]]
+    * [[#To_get_the_maximum_number_of_concurrent_threads|To get the maximum number of concurrent threads]]
+    * [[#To_query_the_number_of_active_threads|To query the number of active threads]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__Thread__Group.html|Ecore Thread functions API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_thread_example_c.html|Ecore Thread Example]]
+
+Ecore creates a pool of worker threads. The exact count is computed from the
+number of CPUs or cores, or it can be specified by the application itself.
+
+When a worker thread is idle, it picks a job to execute from the waiting list
+until there is none left. In the following example, there are 2 threads
+defined by ''my_short_job()'' and ''my_feedback_job()''. Both threads take 2
+parameters: some data passed to them, and the actual thread running. Call a
+callback when the jobs end, whether they are cancelled (''my_job_cancel()'')
+or end normally (''my_job_end()'').
+
+<code c>
+struct feedback_msg
+{
+   int pos;
+};
+
+void my_short_job(void *data, Ecore_Thread *thread)
+{
+   usleep(200000);
+}
+
+void my_feedback_job(void *data, Ecore_Thread *thread)
+{
+   int i;
+   for (i = 0; i &lt; 100; i++)
+     {
+        usleep(50000); // You can have some real computation done
+        struct feedback_msg *message = malloc(sizeof(struct feedback_msg));
+        if (message)
+          {
+             message->pos = i;
+             ecore_thread_feedback(thread, message);
+          }
+        if (ecore_thread_check(thread))
+           return;
+     }
+}
+
+void my_feedback_job_notify(void *data, Ecore_Thread *thread, void *msg)
+{
+   struct feedback_msg *message = msg;
+   free(message);
+}
+
+void my_job_end(void *data, Ecore_Thread *thread)
+{
+   printf("Thread has normally ended.\n");
+}
+
+void my_job_cancel(void *data, Ecore_Thread *thread)
+{
+   printf("Thread has been cancelled.\n");
+}
+
+ecore_thread_run(my_short_job, my_job_end, my_job_cancel, my_data);
+ecore_thread_feedback_run(my_feedback_job, my_feedback_job_notify, my_job_end, my_job_cancel, my_data, EINA_FALSE);
+</code>
+
+==== To manage threads ====
+
+== To cancel a thread ==
+
+Use the ''ecore_thread_cancel()'' function. However, note that this is done
+cooperatively: the thread continues to run until it exists. Call the
+''ecore_thread_check()'' function regularly to check whether the thread has
+been marked for cancellation and exit if ''true''.
+
+== To execute a thread later ==
+
+Use the ''ecore_thread_reschedule()'' function. This function is added to the
+end of the pending tasks.
+
+== To get the maximum number of concurrent threads ==
+
+Use the ''ecore_thread_max_get()'' function. If needed, set it by using the
+''ecore_thread_max_set()'' function, or reset the default value using the
+''ecore_thread_max_reset()'' function.
+
+== To query the number of active threads ==
+
+Use the ''ecore_thread_active_get()'' function. To query the number of
+available worker threads, use the ''ecore_thread_available_get()'' function,
+which is basically the same as the ''ecore_thread_max_get()'' -
+''ecore_thread_active_get()''.
+
+---------
+{{page>index}}

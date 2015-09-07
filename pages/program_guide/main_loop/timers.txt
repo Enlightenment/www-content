@@ -1,0 +1,105 @@
+{{page>index}}
+---------
+===== Timers =====
+
+Ecore provides timers, which schedule events that are executed later at a
+specific time. The event can occur once or several times at specific
+intervals.
+
+=== Table of Contents ===
+
+  * [[#To_create_and_destroy_a_timer|To create and destroy a timer]]
+    * [[#To_create_a_timer|To create a timer]]
+    * [[#To_delete_the_timer|To delete the timer]]
+  * [[#To_manage_a_timer|To manage a timer]]
+    * [[#To_change_the_timer's_interval|To change the timer's interval]]
+    * [[#To_get_the_timer's_pending_time|To get the timer's pending time]]
+    * [[#To_delay_the_timer's_next_occurrence|To delay the timer's next occurrence]]
+    * [[#To_pause_the_currently_running_timer|To pause the currently running timer]]
+    * [[#To_query_the_current_value_of_the_defined_timer_infrastructure_precision|To query the current value of the defined timer infrastructure precision]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__Timer__Group.html|Ecore Timer functions API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_timer_example_c.html|Ecore Timers Example]]
+
+A timer callback prototype looks like the ''my_timed_cb()'' callback function.
+This function receives data from the application, and returns a Boolean value
+to specify whether it is called again or completed. The following macros are
+also provided:
+
+   * ''ECORE_CALLBACK_RENEW'': the function is called again after the timeout.
+   * ''ECORE_CALLBACK_CANCEL'': the function is not called again, Ecore destroys automatically everything associated with the timer.
+
+==== To create and destroy a timer ====
+
+== To create a timer ==
+
+Use the ''ecore_timer_add()'' function. The interval, specified
+in seconds, indicates when the given function is called, and receives the
+specified data as a parameter. It returns an ''Ecore_Timer'' object.
+
+In the following example, the ''my_timed_cb()'' function is run after 2
+seconds and it receives ''my_data''. It is renewed while its count variable
+value is under 5, and stops after that.
+
+<code c>
+Eina_Bool my_timed_cb(void *data)
+{
+   static int count = 0;
+   count++;
+
+   if (count < 5)
+      return ECORE_CALLBACK_RENEW;
+
+   return ECORE_CALLBACK_CANCEL;
+}
+ecore_timer_add(2.0, my_timed_cb, my_data);
+</code>
+
+== To delete the timer ==
+
+Use the ''ecore_timer_del()'' function. The timer to delete must still be
+running, that is, it has not returned a ''false'' value. If the timer is not
+running, the function cannot be called.
+
+=== To manage a timer ===
+
+== To change the timer's interval ==
+
+Use the ''ecore_timer_interval_set()'' function. The interval is specified in
+seconds. If set during a timer call, this affects the next interval. Use the
+''ecore_timer_interval_get()'' function to get the timer's current interval.
+
+== To get the timer's pending time ==
+
+Use the ''ecore_timer_pending_get()'' function.
+
+== To delay the timer's next occurrence ==
+
+Use the ''ecore_timer_delay()'' function. The function adds the specified time
+to the current interval. It does not change the future occurrences' interval.
+You can also reset the current interval to its full value by using the
+''ecore_timer_reset()'' function.
+
+== To pause the currently running timer ==
+
+Use the ''ecore_timer_freeze()'' function. The remaining time is saved and
+used again when the timer is resumed with the ''ecore_timer_thaw()'' function.
+
+== To query the current value of the defined timer infrastructure precision ==
+
+Use the ''ecore_timer_precision_get()'' function. A higher delay means that
+more timers can be run together. It diminishes the need to use system wake-ups
+and thus lowers the power consumption.
+
+To set the precision, use the ''ecore_timer_precision_set()'' function. This sets
+the precision for all timers. For example, there are 2 timers, one that
+expires in 2.0 seconds and another that expires in 2.1 seconds. If the
+precision is set to 0.1 seconds, Ecore requests the next expiration to happen
+in 2.1 seconds and runs both callbacks at once, instead of one at 2.0 seconds
+and the other one 0.1 seconds later. However, if there is no timer expiring in
+2.1 seconds, the timeout is at the minimum interval, 2 seconds.
+
+--------
+{{page>index}}

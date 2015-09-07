@@ -1,0 +1,70 @@
+{{page>index}}
+--------------
+===== Idlers =====
+
+When the rendering is done and all work is finished, the main loop enters its idle state until the next loop. You can get the functions of your application called back before the main loop enters or exits the idle state, or when it is in the idle state. They are respectively called ''Ecore_Idle_Enterer'', ''Ecore_Idle_Exiter'', and ''Ecore_Idler''.
+
+{{ :mainloop_idlers.png }}
+
+The idle enterers, exiters, and idlers all have the same prototype,
+''my_idler()'', which receives data and returns ''ECORE_CALLBACK_RENEW'' or
+''ECORE_CALLBACK_CANCEL'' to tell Ecore whether it wants to be called again or
+is finished.
+
+=== Table of Contents ===
+
+  * [[#To_manage_the_idlers|To manage the idlers]]
+    * [[#To_add_an_idler|To add an idler]]
+    * [[#To_delete_an_idler|To delete an idler]]
+    * [[#To_add_and_delete_idle_exiters|To add and delete idle exiters]]
+    * [[#To_add_and_delete_idle_enterers|To add and delete idle enterers]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__Idle__Group.html|Ecore Idle functions API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_idler_example_c.html|Ecore Idle Example]]
+
+=== To manage the idlers ===
+
+== To add an idler ==
+
+Use the ''ecore_idler_add()'' function.
+
+== To delete an idler ==
+
+Use the ''ecore_idler_del()'' function.
+
+== To add and delete idle exiters ==
+
+Use the ''ecore_idle_exiter_add()'' and ''ecore_idle_exiter_del()'' functions.
+
+== To add and delete idle enterers ==
+
+Use the ''ecore_idle_enterer_add()'' and ''ecore_idle_enterer_del()''
+functions. The ''ecore_idle_enterer_before_add()'' function is also available,
+if you want your function to be added at the top of the list so that it is
+called before the others.
+
+<code c>
+Eina_Bool my_idle_enterer_cb(void *data)
+{
+   return ECORE_CALLBACK_RENEW;
+}
+
+Eina_Bool my_idle_exiter_cb(void *data)
+{
+   return ECORE_CALLBACK_CANCEL;
+}
+
+Eina_Bool my_idler(void *data)
+{
+   return ECORE_CALLBACK_RENEW;
+}
+
+ecore_idle_enterer_add(my_idle_enterer_cb, my_data);
+ecore_idle_exiter_add(my_idle_exiter_cb, my_data);
+ecore_idler_add(my_idler_cb, my_data);
+</code>
+
+-------
+{{page>index}}

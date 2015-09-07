@@ -1,0 +1,96 @@
+{{page>index}}
+---------
+===== File Descriptors =====
+
+Ecore provides an infrastructure to monitor file descriptors, so that files do
+not have to be blocked or polled to read or write on them. Instead, monitor
+sockets, pipes, or other streams are used to get a file descriptor.
+
+=== Table of Contents ===
+
+  * [[#To_manage_the_file_descriptors|To manage the file descriptors]]
+    * [[#To_set_a_callback|To set a callback]]
+    * [[#To_listen_to_events|To listen to events]]
+    * [[#To_wait_for_incoming_data_on_the_file_descriptor|To wait for incoming data on the file descriptor]]
+    * [[#To_delete_a_file_descriptor_handler|To delete a file descriptor handler]]
+    * [[#To_get_the_handler's_file_descriptor|To get the handler's file descriptor]]
+    * [[#To_select_whether_a_flag_is_active_on_a_handler|To select whether a flag is active on a handler]]
+    * [[#To_change_the_flags_the_handler_is_monitoring|To change the flags the handler is monitoring]]
+
+=== Related Info ===
+
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/group__Ecore__FD__Handler__Group.html|File Descriptor Handling Functions API]]
+  * [[https://build.enlightenment.org/job/nightly_efl_gcc_x86_64/lastSuccessfulBuild/artifact/doc/html/ecore_fd_handler_example_c.html|File Descriptors Example]]
+
+==== To manage the file descriptors ====
+
+== To set a callback ==
+
+Use the ''_my_cb_func()'' function. Its first parameter is the data passed to
+it (optional), and the second one is the Ecore file descriptor handler. Its
+return value is, as in most Ecore callbacks, ''ECORE_CALLBACK_RENEW'' or
+''ECORE_CALLBACK_CANCEL''. It tells Ecore whether it wants to be called again
+or whether its treatment is finished.
+
+== To listen to events ==
+
+Use the ''ecore_main_fd_handler_add()'' function.
+
+== To wait for incoming data on the file descriptor ==
+
+To wait for incoming data (that is, to read data) on the ''my_fd'' file
+descriptor, passing ''my_data'':
+
+<code c>
+Eina_Bool my_fd_cb(void *data, Ecore_Fd_Handler *handler)
+{
+   int fd;
+   fd = ecore_main_fd_handler_fd_get(handler);
+   count = read(fd, buf, sizeof(buf)); // This is guaranteed not to block
+
+   return ECORE_CALLBACK_RENEW;
+}
+ecore_main_fd_handler_add(my_fd, ECORE_FD_READ, my_fd_cb, my_data, NULL, NULL);
+</code>
+
+== To delete a file descriptor handler ==
+
+Use the ''ecore_main_fd_handler_del()'' function. This does not close the file
+descriptor. Always delete the handlers before closing the actual file
+descriptors.
+
+== To get the handler's file descriptor ==
+
+Use the ''ecore_main_fd_handler_fd_get()'' function.
+
+== To select whether a flag is active on a handler ==
+
+Use the
+''ecore_main_fd_handler_active_get()'' function. For example, the handler is
+set to monitor both ''ECORE_FD_READ'' and ''ECORE_FD_ERROR''. The following
+example finds out whether the function was called because of an error:
+
+<code c>
+Eina_Bool my_fd_cb(void *data, Ecore_Fd_Handler *handler)
+{
+   int fd;
+   fd = ecore_main_fd_handler_fd_get(handler);
+   if (ecore_main_fd_handler_active_get(handler, ECORE_FD_ERROR) == EINA_TRUE)
+     {
+        // We have an error!
+
+        return ECORE_CALLBACK_CANCEL;
+     }
+   count = read(fd, buf, sizeof(buf)); // This is guaranteed not to block
+
+   return ECORE_CALLBACK_RENEW;
+}
+ecore_main_fd_handler_add(my_fd, ECORE_FD_READ | ECORE_FD_ERROR, my_fd_cb, my_data, NULL, NULL);
+</code>
+
+== To change the flags the handler is monitoring ==
+
+Use the ''ecore_main_fd_handler_active_set()'' function.
+
+-------
+{{page>index}}
