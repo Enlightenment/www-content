@@ -1,0 +1,77 @@
+{{page>index}}
+------------
+===== Key Concepts =====
+
+When designing the application layout to be scalable, you must pay attention
+to the following key concepts:
+
+=== Table of Contents ===
+
+  * [[#Understand_the_character_of_the_relative_position_and_the_fixed_position|Understand the character of the relative position and the fixed position]]
+  * [[#Use_the_relative_position|Use the relative position]]
+  * [[#Do_not_fill_the_width_or_height_out_with_a_fixed_size_only|Do not fill the width or height out with a fixed size only]]
+
+=== Understand the character of the relative position and the fixed position ===
+
+In the relative position, the size is determined in proportion to the size
+of the referred object. For example, if an orange rectangle occupies 30% of
+the green rectangle, and the green rectangle is expanded, the orange rectangle
+is expanded accordingly. However, if the scaling value is changed and the
+green rectangle is not scaled, the orange rectangle remains unchanged too.
+
+{{ :scalability_scale_relative.png }}
+
+In the fixed position, the size is determined by a value set for the object.
+For example, the orange rectangle set to the size of 10. If the green
+rectangle is expanded, the orange rectangle does not change. However, if the
+scaling value is, for example, doubled, the size of the orange rectangle grows
+to 20.
+
+{{ :scalability_scale_fixed.png }}
+
+=== Use the relative position ===
+
+If you set the object size as a percentage, the ratio remains fixed regardless
+of the changes in the screen size or resolution. If you want the object size
+changed in proportion of the window size, use the relative position.
+
+{{ :scalability_scale_relative_scaled.png }}
+
+=== Multiply the scaling value, if you use the fixed size ===
+
+
+If you use the EDC file to set up the layout, you can set the scale in the
+''part'' element:
+
+<code c>
+parts
+{
+   part
+   {
+      name: "box";
+      type: RECT;
+      scale: 1;
+   }
+}
+</code>
+
+If you set the fixed size in C code, you can use the ''ELM_SCALE_SIZE'' macro:
+
+<code c>
+evas_object_size_hint_min_set(object, ELM_SCALE_SIZE(100), ELM_SCALE_SIZE(100));
+</code>
+
+=== Do not fill the width or height out with a fixed size only  ===
+
+If you fill the entire height out with a fixed size only and it is scaled, the
+end result can be larger than the screen size.
+
+{{ :scalability_scale_fixed_height.png }}
+
+If you set a partial width or height with a fixed size and leave the remaining
+area flexible, the layout does not expand outside the screen.
+
+{{ :scalability_scale_flexible_height.png }}
+
+------------
+{{page>index}}

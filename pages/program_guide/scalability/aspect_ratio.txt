@@ -1,0 +1,46 @@
+{{page>index}}
+--------
+===== Aspect Ratio =====
+
+Sometimes you want the application to be shown in a specific aspect ratio,
+regardless of the screen size.
+
+As images are scaled in different devices, they are resized based on the
+container size. The images have specific properties that define the area to be
+shown when resized.
+
+For example, the following table illustrates what happens to the parts marked
+with yellow rectangles in the following figures, when scaling properties are
+applied.
+
+{{ :scalability_scale_original_image.png }}
+
+<note>
+To set the required aspect ratio, use the
+''evas_object_size_hint_aspect_set()'' function or the ''aspect_preference''
+attribute in the EDC.
+</note>
+
+^   Image resizing effects with a specific aspect ratio   ^^^
+|   **Aspect**            |     **Container area**  \\ **720x384 (15:8)** --- **720x640 (9:8)**   ||
+|''HORIZONTAL''\\ Resizing based on the container width while keeping the image aspect ratio. \\ Extra height goes outside the image area and is clipped. |   {{ :scalability_effect_1.png }}   |   {{ :scalability_effect_2.png }} |
+|''VERTICAL''\\ Resizing based on the container area while keeping the image aspect ratio. \\ No extra width or height goes outside the image area, so the entire image is always shown.|   {{ :scalability_effect_3.png }}   |   {{ :scalability_effect_4.png }} |
+|''BOTH''\\ Resizing based on the container area while keeping the image aspect ratio. \\ No extra width or height goes outside the image area, so the entire image is always shown.|   {{ :scalability_effect_5.png }}   |   {{ :scalability_effect_6.png }} |
+|''NONE''\\ Resizing to fill the available area while keeping the image aspect ratio. \\ Extra width or height goes outside the image area and is clipped.|   {{ :scalability_effect_7.png }}   |   {{ :scalability_effect_8.png }} |
+
+==== Setting the Image Aspect Ratio ====
+
+In case of an image object, you can set its aspect ratio with additional APIs:
+
+  * ''elm_image_fill_outside_set()'' \\ If the function is set to ''TRUE'', the image resizes to fill the entire area while keeping its aspect ratio. It lets the extra width or height go outside of the area (same result as with the aspect NONE in the above table).
+
+  * ''elm_image_aspect_fixed_set()'' \\ If the function is set to FALSE, the image resizes to fill the entire are without keeping its original aspect ratio. The image can be distorted to fit the area.
+
+^    Image resizing without keeping the aspect ratio    ^^
+|     **Container area**    ||
+|     **720x384 (15:8)**    |   **720x640 (9:8)**   |
+|   {{ :scalability_effect_9.png }}         |     {{ :scalability_effect_10.png }}    |
+
+
+------
+{{page>index}}
