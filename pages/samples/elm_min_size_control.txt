@@ -1,0 +1,89 @@
+~~Title: Controlling Minimum Size of Elementary Widgets~~
+~~CODE-c~~
+
+{{page>index}}
+
+==== Controlling Minimum Size ====
+
+Often people need to control the minimum size of an object, perhaps to make it larger than normal. Some widgets like scrollers have **VERY** small minimum sizes, so to make these expand to some acceptable size. You may be tempted to just call evas_object_size_hint_min_set() to set the minimum size of a widget, but this would be wrong. This same call is used internally by widgets as they calculate and update their own minimum sizes based on content and state. All this ends up doing is becoming a fight as to who last called this function.
+
+What you want is a SECOND control point that can expand a widget to be bigger (if its own native minimum size happens to be smaller). This will allow for scaling, resizing and finger size handling to work right by possibly expanding to be bigger than the extra control point if font sizes or other factors force sizing to increase. This second control point can be modified separately to the widget being controlled (in this example below, a button).
+
+The way to get a second control point is to use a table, place a rectangle into it as a control point and modify its minimum size (remember to account for scaling), and in the exact same cell, place the widget to be controlled.
+
+So add a table with:
+
+<code c>
+tab = elm_table_add(win);
+</code>
+
+Then create a basic rectangle with:
+
+<code c>
+rec = evas_object_rectangle_add(evas_object_evas_get(win));
+</code>
+
+And set some custom size hinting on the rectangle:
+
+<code c>
+evas_object_size_hint_min_set(rec, 200 * elm_config_scale_get(), 300 * elm_config_scale_get());
+</code>
+
+And now pack it into the table. Do not show it or do anything else. Keep it hidden. This is your extra control point to adjust sizing of the entire table and its contents. Do not forget that weight and align also affect how the rectangle controls sizing.
+
+<code c>
+elm_table_pack(tab, rec, 0, 0, 1, 1);
+</code>
+
+Here is the full example with all hints set up correctly:
+
+<code c minsize.c>
+#include <Elementary.h>
+
+static void
+on_click(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *tab, *rec, *btn;
+
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+
+   win = elm_win_util_standard_add("Main", "Min Size Control");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   tab = elm_table_add(win);
+   evas_object_size_hint_weight_set(tab, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_win_resize_object_add(win, tab);
+   evas_object_show(tab);
+
+   rec = evas_object_rectangle_add(evas_object_evas_get(win));
+   evas_object_size_hint_weight_set(rec, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(rec, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_min_set(rec, 200 * elm_config_scale_get(), 300 * elm_config_scale_get());
+   elm_table_pack(tab, rec, 0, 0, 1, 1);
+
+   btn = elm_button_add(win);
+   elm_object_text_set(btn, "Bigger Button");
+   evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_table_pack(tab, btn, 0, 0, 1, 1);
+   evas_object_smart_callback_add(btn, "clicked", on_click, win);
+   evas_object_show(btn);
+
+   evas_object_show(win);
+
+   elm_run();
+
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+----
+
+~~DISCUSSIONS~~
