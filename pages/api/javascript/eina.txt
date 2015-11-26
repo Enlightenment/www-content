@@ -6,7 +6,7 @@ This document describes the parts that make Eina and their usage in the eyes of 
 
 ===== Data types =====
 
-Currently, two data types are available: Lists and Arrays. Both represent sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations, like push/pop and indexed get/set.
+Currently, two data types are available: Lists and Arrays. Both represent a sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations, like push/pop and indexed get/set.
 
 One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
 
@@ -30,29 +30,89 @@ The following types are supported using the respective type name:
 
 ==== Handling sequences ====
 
-The following methods and operations are available for both types of sequences.
+The methods and operations below are supported for both types of sequences.
 
 === Inserting items ===
 
-''obj.push(item)'' - Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
+Syntax
+
+<code javascript>
+var size = obj.push(item)
+</code>
+
+Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
+
+The method returns the size of the container after adding the new element.
 
 Usage example:
 
 <code javascript>
+var mylist = new efl.List("int");
 mylist.push(3);
-myarray.push("Foobar");
+var myarray = new efl.Array("string");
+var new_size = myarray.push("Foobar");
 </code>
+
+<note warning>
+Although Javascript is weak typed, the binding functions are rather strong typed, doing minimal type conversions, like int to floats. Trying to push an element of a different type from the one provided in the constructor will raise TypeError.
+<code javascript>
+var obj = new efl.List("float");
+obj.push("44"); // CRASH!!!!
+</code>
+</note>
 
 === Getting items ===
 
-''obj[index]'' - Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
+Syntax
 
 <code javascript>
-mylist[42] # Gets the 42nd element
-mylist[0] # Gets the first element.
+var myvar = obj[index];
 </code>
 
+Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
+
+Usage example:
+
+<code javascript>
+mylist[42] // Gets the 42nd element
+mylist[0] // Gets the first element.
+</code>
+
+<note important>
+Trying to access an element with an index out of bounds will return ''undefined''.
+</note>
+
 === Setting items ===
+
+Syntax
+
+<code javascript>
+obj[index] = value;
+var v = (obj[index] = value);
+</code>
+
+Works like Javascript indexed setter method. It sets the value at the given index to the given value, //generally// not changing the container size (see note below). On success, the operation returns the value recently set.
+
+<note important>
+Trying to set a value at an index equal or larger than the size of the container will extend the container up to that index and fill value up to the last one with ''undefined'', and setting the given value in the last position.
+<code javascript>
+var obj = new efl.List("int");
+obj[42] = 42; // Obj now has 42 undefined's leading up to 42 in the last position.
+</code>
+</note>
+
+Usage example:
+
+<code javascript>
+var obj = new efl.List("int");
+obj.push(3) // [3]
+obj.push(2) // [3,2]
+obj[0] = 42; // [42, 2]
+</code>
+
+<note warning>
+As with pushing elements, trying to push an element of a different type from the one given to the constructor will raise TypeError.
+</note>
 
 === Deleting and removing items ===
 
