@@ -1,0 +1,25 @@
+====== Javascript - Eina - Data types and tools ======
+
+The Eina library provides a number of data types and tools targeted at working with the remainder of the EFL framework although they can be used on their own. For example, Lists and Arrays can be used both to send collections of objects to a native function or get the result of a native function. Or someone can use just the logging facilities.
+
+This document describes the parts that make Eina and their usage in the eyes of the Javascript developer.
+
+===== Data types =====
+
+Currently, two data types are available: Lists and Arrays. Both aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations. One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
+
+Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations in the middle of the collection while ''efl.Array'' objects are contiguous memory arrays, with fast data access (compared to Lists) but costly to insert or delete items in the middle of the collection.
+
+==== Creating collections ====
+
+In order to create collections, you call the respective constructor passing the name of the type that will be stored on that collection:
+
+<code javascript>
+var mylist = new efl.List("int");
+var myarray = new efl.List("array");
+</code>
+
+Currently the following types are available:
+
+
+===== Tools and utilities =====
