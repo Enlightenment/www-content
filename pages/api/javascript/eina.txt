@@ -6,20 +6,56 @@ This document describes the parts that make Eina and their usage in the eyes of 
 
 ===== Data types =====
 
-Currently, two data types are available: Lists and Arrays. Both aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations. One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
+Currently, two data types are available: Lists and Arrays. Both represent sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations. One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
 
 Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations in the middle of the collection while ''efl.Array'' objects are contiguous memory arrays, with fast data access (compared to Lists) but costly to insert or delete items in the middle of the collection.
 
-==== Creating collections ====
+==== Creating sequences ====
 
-In order to create collections, you call the respective constructor passing the name of the type that will be stored on that collection:
+In order to create a collection of items, you call the respective constructor passing the name of the type that will be stored on that collection:
 
 <code javascript>
 var mylist = new efl.List("int");
-var myarray = new efl.List("array");
+var myarray = new efl.Array("string");
 </code>
 
-Currently the following types are available:
+The following types are supported using the respective type name:
 
+   * Integers - "int"
+   * Floating point numbers - "float"
+   * Boolean values - "bool"
+   * Strings of characters - "string"
+
+==== Handling sequences ====
+
+The following methods and operations are available for both types of sequences.
+
+=== Inserting items ===
+
+''obj.push(item)'' - Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
+
+Usage example:
+
+<code javascript>
+mylist.push(3);
+myarray.push("Foobar");
+</code>
+
+=== Getting items ===
+
+''obj[index]'' - Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
+
+<code javascript>
+mylist[42] # Gets the 42nd element
+mylist[0] # Gets the first element.
+</code>
+
+=== Setting items ===
+
+=== Deleting and removing items ===
+
+=== Getting the number of Elements ===
+
+=== Printing the elements ===
 
 ===== Tools and utilities =====
