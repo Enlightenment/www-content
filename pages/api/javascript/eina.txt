@@ -1,141 +1,19 @@
-====== Javascript - Eina - Data types and tools ======
+====== Javascript binding API - Eina - Data types and tools ======
 
 The Eina library provides a number of data types and tools targeted at working with the remainder of the EFL framework although they can be used on their own. For example, Lists and Arrays can be used both to send collections of objects to a native function or get the result of a native function. Or someone can use just the logging facilities.
 
-This document describes the parts that make Eina and their usage in the eyes of the Javascript developer.
-
 ===== Data types =====
 
-Currently, two data types are available: Lists and Arrays. Both represent a sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Arrays]] for the most common operations, like push/pop and indexed get/set.
-
-One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
-
-Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations in the middle of the collection while ''efl.Array'' objects are contiguous memory arrays, with fast data access (compared to Lists) but costly to insert or delete items in the middle of the collection.
-
-==== Creating sequences ====
-
-In order to create a collection of items, you call the respective constructor passing the name of the type that will be stored on that collection:
-
-<code javascript>
-var mylist = new efl.List("int");
-var myarray = new efl.Array("string");
-</code>
-
-The following types are supported using the respective type name:
-
-   * Integers - "int"
-   * Floating point numbers - "float"
-   * Boolean values - "bool"
-   * Strings of characters - "string"
-
-==== Handling sequences ====
-
-The methods and operations below are supported for both types of sequences.
-
-=== Inserting items ===
-
-Syntax
-
-<code javascript>
-var size = obj.push(item)
-</code>
-
-Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
-
-The method returns the size of the container after adding the new element.
-
-Usage example:
-
-<code javascript>
-var mylist = new efl.List("int");
-mylist.push(3);
-var myarray = new efl.Array("string");
-var new_size = myarray.push("Foobar");
-</code>
-
-<note warning>
-Although Javascript is weak typed, the binding functions are rather strong typed, doing minimal type conversions, like int to floats. Trying to push an element of a different type from the one provided in the constructor will raise TypeError.
-<code javascript>
-var obj = new efl.List("float");
-obj.push("44"); // CRASH!!!!
-</code>
-</note>
-
-=== Getting items ===
-
-Syntax
-
-<code javascript>
-var myvar = obj[index];
-</code>
-
-Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
-
-Usage example:
-
-<code javascript>
-mylist[42] // Gets the 42nd element
-mylist[0] // Gets the first element.
-</code>
-
-<note important>
-Trying to access an element with an index out of bounds will return ''undefined''.
-</note>
-
-=== Setting items ===
-
-Syntax
-
-<code javascript>
-obj[index] = value;
-var v = (obj[index] = value);
-</code>
-
-Works like Javascript indexed setter method. It sets the value at the given index to the given value, //generally// not changing the container size (see note below). On success, the operation returns the value recently set.
-
-<note important>
-Trying to set a value at an index equal or larger than the size of the container will extend the container up to that index and fill value up to the last one with ''undefined'', and setting the given value in the last position.
-<code javascript>
-var obj = new efl.List("int");
-obj[42] = 42; // Obj now has 42 undefined's leading up to 42 in the last position.
-</code>
-</note>
-
-Usage example:
-
-<code javascript>
-var obj = new efl.List("int");
-obj.push(3) // [3]
-obj.push(2) // [3,2]
-obj[0] = 42; // [42, 2]
-</code>
-
-<note warning>
-As with pushing elements, trying to push an element of a different type from the one given to the constructor will raise TypeError.
-</note>
-
-=== Deleting and removing items ===
-
-Syntax
-
-<code javascript>
-var value = obj.pop();
-</code>
-
-Behaves like Javascript ''Array.pop()'', removing the last element of the list and returning it.
-
-Example code:
-<code javascript>
-// obj is [1,2,3,4,5]
-var value = obj.pop(); // value now is 5 and obj is [1,2,3,4]
-</code>
-
-<note important>
-Trying to pop an item from an empty list will return undefined and leave the list empty.
-</note>
-
-=== Getting the number of Elements ===
-
-=== Printing the elements ===
+[[api/javascript/eina/containers|Containers API reference]] - A [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array|JS Array]]-like set of containers for interacting with EFL functions.
 
 ===== Tools and utilities =====
+
+[[api/javascript/eina/logging|Logging API reference]] - The Logging framework allows setting up different log domains and levels.
+
+[[api/javascript/eina/error|Error handling API reference]] - EFL offers a C's errno-like way of handling error through error codes. These codes are translated to Javascript Exceptions.
+
+[[api/javascript/eina/iterator|Iterator functions API reference]] - Allows sequential item access to Eina containers using iterator functions.
+
+[[api/javascript/eina/accessor|Acessor functions API reference]] -  Allows random item access to Eina containers using accessor functions.
+
+[[api/javascript/eina/value|Value wrapping API reference]] - Abstracts generic data storage and access.
