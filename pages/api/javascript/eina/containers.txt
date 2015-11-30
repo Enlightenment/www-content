@@ -1,10 +1,10 @@
 ====== Javascript binding API - Eina Containers ======
 
-Currently, two data types are available: Lists and Arrays. Both represent a sequence of items and aim to have a similar interface to the native  for the most common operations, like push/pop and indexed get/set.
+Currently, two data types are available: Lists and Arrays. Both represent a sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array|Javascript Arrays]] for the most common operations like push/pop and indexed get/set.
 
 One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
 
-Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations in the middle of the collection while ''efl.Array'' objects are contiguous memory arrays, with fast data access (compared to Lists) but costly to insert or delete items in the middle of the collection.
+Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations while ''efl.Array'' objects are contiguous memory regions, with fast data access (compared to Lists) but allowing to insert or delete items only at the extremities of the container.
 
 <note important>
 Apart from the constructors, both containers have the exact same API.
@@ -38,7 +38,11 @@ Syntax
 var new_container = objA.concat(objC);
 </code>
 
-Concatenates two containers returning the result as a new container object. It performs a shallow copy of the container. Object **references** are copied (i.e. changes in the object will appear in both containers) and basic types are copied.
+Concatenates two containers returning the result as a new container object.
+
+<note important>
+It performs a shallow copy of the container. Object **references** are copied (i.e. changes in the object will appear in both containers) and basic types are copied.
+</note>
 
 <note warning>
 The concatenation operation will work only on the same type of containers (e.g. lists of ints with lists of ints). Wrong arguments will raise TypeError.
