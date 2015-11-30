@@ -170,8 +170,27 @@ Syntax
 var new_container = objA.concat(objC);
 </code>
 
-Concatenates two containers returning the result as a new container object.
+Concatenates two containers returning the result as a new container object. It performs a shallow copy of the container. Object **references** are copied (i.e. changes in the object will appear in both containers) and basic types are copied.
 
 <note warning>
-The concatenation operation will work only on the same type of containers (e.g. lists of ints with lists of ints).
+The concatenation operation will work only on the same type of containers (e.g. lists of ints with lists of ints). Wrong arguments will raise TypeError.
 </note>
+
+=== slice([begin,[end]]) ===
+
+Syntax
+
+<code javascript>
+var x = obj.slice();
+var y = obj.slice(startIndex);
+var z = obj.slice(startIndex, endIndex);
+</code>
+
+The slice method retrieves portions of the container. The first argument is the index to start the slice operation (default is 0, beginning of the list) and the second argument indicates the index where the extraction should stop, not including it (defaults to the container size).
+
+It also performs a shallow copy like concat().
+
+Example usage:
+
+<code javascript>
+</code>
