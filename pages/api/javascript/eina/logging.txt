@@ -20,6 +20,8 @@ The log levels are ranked according to their usual severity. Critical errors can
    * ''efl.LOG_LEVEL_INFO''
    * ''efl.LOG_LEVEL_DBG''
 
+The levels are also ordered numerically, with the most severe (CRITICAL) being the smallest value and the least severe (DBG) the largest value.
+
 === State ===
 
 The states are used in ''efl.logTiming'' to indicate transitions in phases for a given domain.
@@ -35,13 +37,45 @@ By default, Eina offers a global domain to be used by the application.
 
 ==== Functions ====
 
-=== checkLogLevel(...) ===
+=== checkLogLevel(level) ===
 
-=== getLogAbortOnCritical(...) ===
+Syntax
 
-=== getLogAbortOnCriticalLevel(...) ===
+<code javascript>
+var willBeLogged = efl.checkLogLevel(level);
+</code>
 
-=== getLogColorDisable(...) ===
+Checks whether the given log level will be logged or ignored. The ''level'' argument must be one of the given log level constants (see above).
+
+=== getLogAbortOnCritical() ===
+
+Syntax 
+
+<code javascript>
+var willAbortOnCritical = efl.getLogAbortOnCritical();
+</code>
+
+Returns ''true'' if events with level equal or smaller to ''efl.getLogAbortOnCriticalLevel()'' should abort the program.
+
+=== getLogAbortOnCriticalLevel() ===
+
+Syntax
+
+<code javascript>
+var abortLevel = efl.getLogAbortOnCriticalLevel();
+</code>
+
+Returns the largest level that will trigger the program termination upon happening. Events most severe than the value returned also trigger termination.
+
+=== getLogColorDisable() ===
+
+Syntax
+
+<code javascript>
+var colorDisabled = efl.getLogColorDisable();
+</code>
+
+Determines whether colors are disabled in the log messages.
 
 === getLogDomainLevel(...) ===
 
