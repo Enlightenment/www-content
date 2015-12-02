@@ -39,7 +39,7 @@ By default, Eina offers a global domain to be used by the application.
 
 === Colors ===
 
-The logging system uses the [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|terminal colors format]] to specify the color of the message. Currently, the following constants are exported as shortcuts:
+The logging system uses the [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|terminal colors format]] to specify the color of the message. Currently, the following string constants are exported as shortcuts:
 
    * ''efl.COLOR_LIGHTRED''
    * ''efl.COLOR_RED''
@@ -210,7 +210,7 @@ Parameters
 
    * message - The string to be logged.
 
-Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_CRITICAL'' to the global domain.
+Helper wrapper around ''efl.logPrint'' that prints a message with ''efl.LOG_LEVEL_CRITICAL'' to the global domain.
 
 === logDebug(message) ===
 
@@ -224,7 +224,7 @@ Parameters
 
    * message - The string to be logged.
 
-Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_DBG'' to the global domain.
+Helper wrapper around ''efl.logPrint'' that prints a message with ''efl.LOG_LEVEL_DBG'' to the global domain.
 
 === logError(message) ===
 
@@ -234,7 +234,11 @@ Syntax
 efl.logError(message);
 </code>
 
-Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_ERR'' to the global domain.
+Parameters
+
+   * message - The String to be logged.
+
+Helper wrapper around ''efl.logPrint'' that prints a message with ''efl.LOG_LEVEL_ERR'' to the global domain.
 
 === logInfo(message) ===
 
@@ -244,7 +248,11 @@ Syntax
 efl.logInfo(message);
 </code>
 
-Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_INFO'' to the global domain.
+Parameters
+
+   * message - The string to be logged.
+
+Helper wrapper around ''efl.logPrint'' that prints a message with ''efl.LOG_LEVEL_INFO'' to the global domain.
 
 === logPrint(domain, level, message) ===
 
@@ -253,6 +261,12 @@ Syntax
 <code javascript>
 efl.logPrint(domain, level, message)
 </code>
+
+Parameters
+
+   * domain - The id (integer) of the target domain.
+   * level - The severity level (integer) of the event. Usually one of the ''efl.LOG_LEVEL_*'' constants.
+   * message - The string to be logged.
 
 Prints the string ''message'' related ''domain'' with severity ''level''. If ''level'' is of a lower severity (higher numerical value) than the value from ''efl.getLogLevel'', the call is ignored.
 
@@ -279,6 +293,7 @@ Parameters
    * state - State indicating if we are starting or stopping a phase.
    * phase - The phase of the name to be used in the log.
 
+Starts or stop the timing of a phase.
 
 === logWarning(message) ===
 
