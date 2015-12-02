@@ -4,7 +4,7 @@ The Eina framework provides a comprehensive system to manage logging events in y
 
 The main workhorse is ''efl.log_print''. It will call the function defined in ''efl.log_print_cb_set'', defaulting to a function that will print to the stderr. You can pass many options to ''log_print'' to control the output.
 
-Log domains are used to group messages, like messages from different modules, different features, etc. You can filter domains by means of log levels through ''efl.log_domain_level_set''. By default, the only domain available is ''efl.LOG_DOMAIN_GLOBAL''. They are represented by a name that you pass to ''efl.registerDomain'' and an id (integer) that it returns.
+Log domains are used to group messages, like messages from different modules, different features, etc. You can filter domains by means of log levels through ''efl.log_domain_level_set''. By default, the only domain available is ''efl.LOG_DOMAIN_GLOBAL''. They are represented by a name that you pass to ''efl.registerLogDomain'' and an id (integer) that it returns.
 
 Levels customize the amount of actual output that will be produced and can be used to abort the execution if a given level message appears.
 
@@ -219,7 +219,21 @@ efl.logWarning(message);
 
 Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_WARN'' to the global domain.
 
-=== registerLogDomain(...) ===
+=== registerLogDomain(name, color) ===
+
+Syntax
+
+<code javascript>
+var domainId = efl.registerLogDomain(domainname, color);
+</code>
+
+Registers a new domain with name ''name'' and color ''color''. The returned id will be used to reference the domain on the other log functions. If a negative number is returned, a log event occurred.
+
+Example usage
+
+<code javascript>
+var myid = efl.registerLogDomain("mydomain", efl.COLOR_CYAN);
+</code>
 
 === setLogAbortOnCritical(...) ===
 
@@ -229,7 +243,7 @@ Syntax
 efl.setLogAbortOnCritical(boolvar);
 </code>
 
-Sets whether the program should terminate upon a logging event with level at least of the same severity of ''efl.getLogAbortOnCriticalLevel''.
+Sets whether the program should terminate upon a logging event with a level at least of the same severity of ''efl.getLogAbortOnCriticalLevel''.
 
 <note important>
 Upon initializaton, it takes the value from the environment variable ''EINA_LOG_ABORT''.
@@ -259,9 +273,27 @@ efl.setLogColorDisable(boolvar);
 
 Sets whether the colored logging should be disabled or not.
 
-=== setLogDomainLevel(...) ===
+=== setLogDomainLevel(domainname, level) ===
 
-=== setLogDomainRegisteredLevel(...) ===
+Syntax
+
+<code javascript>
+efl.setLogDomainLevel(name, level);
+</code>
+
+Sets the trigger level for a given domain with name ''name''. It works like setting the environment variable ''EINA_LOG_LEVELS=<name>:<level>''.
+
+If the domain name was not registered before, it is marked as a pending set and is applied upon registration.
+
+=== setLogDomainRegisteredLevel(domainname, level) ===
+
+Syntax
+
+<code javascript>
+efl.setLogDomainRegisteredLevel(name, level);
+</code>
+
+Sets the trigger level for a given domain with name ''name''. It's a much faster version of ''efl.setLogDomainLevel'', requiring a previously registered domain.
 
 === setLogFileDisable(bool) ===
 
