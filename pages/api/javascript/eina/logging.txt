@@ -80,12 +80,12 @@ var colorDisabled = efl.getLogColorDisable();
 
 Determines whether colors are disabled in the log messages.
 
-=== getLogDomainLevel(domainname) ===
+=== getLogDomainLevel(domain) ===
 
 Syntax
 
 <code javascript>
-var level = efl.getLogDomainLevel(domainname);
+var level = efl.getLogDomainLevel(domain);
 </code>
 
 Gets the domain level given its name. If the domain was not yet registered through ''efl.registerLogDomain'' but is pending after a previous ''efl.setLogDomainLevel'' call or the environment variable ''EINA_LOG_LEVELS'', the respective value is returned. If nothing else was found, the default level from ''efl.getLogLevel'' is returned.
@@ -95,7 +95,7 @@ Gets the domain level given its name. If the domain was not yet registered throu
 Syntax
 
 <code javascript>
-var level = efl.getLogDomainRegisteredLevel(domainname);
+var level = efl.getLogDomainRegisteredLevel(domain);
 </code>
 
 Gets the level for the given domain. Works much faster than ''efl.getLogDomainLevel'' but relies on the domain being previously registered with ''efl.registerLogDomain''.
@@ -228,7 +228,7 @@ function callback(){...}
 efl.setLogPrintCb(callback);
 </code>
 
-Sets the callback that will be called whenever a log command that would be executed, i.e., above or equal to the current log level. It receives as arguments the domain, output color, level, filename, function and line number of the call, and finally the message. It allows further customization of the output.
+Sets the callback that will be called whenever a log command would be executed, i.e., above or equal to the current log level, is called. It receives as arguments the domain, output color, level, filename, function and line number of the call, and finally the message. It allows further customization of the output.
 
 <note important>
 If not set, EFL defaults the output to the standard error output, like this:
@@ -236,4 +236,23 @@ If not set, EFL defaults the output to the standard error output, like this:
 ''CRI<30206>: /home/user/dev/myapp/main.js:254 () MessageFrom logPrint''
 </note>
 
+Example usage
+
+<code javascript>
+function mycallback(domain, color, level, filename function, line, message) {
+    // Save log to file, print, etc.
+}
+
+efl.setLogPrintCb(callback);
+efl.logCritical("Kaboom"); // Calls mycallback if efl.LOG_LEVEL_CRITICAL is a triggering level.
+</code>
+
 === unregisterLogDomain(...) ===
+
+Syntax
+
+<code javascript>
+efl.unregisterDomain(domain);
+</code>
+
+Forgets about a logging domain registered from ''efl.registerLogDomain''.
