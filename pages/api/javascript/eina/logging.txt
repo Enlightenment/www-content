@@ -54,7 +54,7 @@ The logging system uses the [[http://misc.flogisoft.com/bash/tip_colors_and_form
 
 ==== Environment Variables ====
 
-A number of environment variables.
+A number of environment variables affect the behavior of the log module. (WIP)
 
 ==== Functions ====
 
@@ -66,6 +66,14 @@ Syntax
 var willBeLogged = efl.checkLogLevel(level);
 </code>
 
+Parameters
+
+   * level - An integer (usually one of the level constants) representing the target log level.
+
+Return value
+
+   * boolean - True if the level is an active log level.
+
 Checks whether the given log level will be logged or ignored. The ''level'' argument must be one of the given log level constants (see above).
 
 === getLogAbortOnCritical() ===
@@ -75,6 +83,10 @@ Syntax
 <code javascript>
 var willAbortOnCritical = efl.getLogAbortOnCritical();
 </code>
+
+Return value
+
+   * boolean - True if will abort on critical.
 
 Returns ''true'' if events with level equal or smaller to ''efl.getLogAbortOnCriticalLevel()'' should abort the program.
 
@@ -86,7 +98,11 @@ Syntax
 var abortLevel = efl.getLogAbortOnCriticalLevel();
 </code>
 
-Returns the largest level that will trigger the program termination upon happening. Events most severe than the value returned also trigger termination.
+Return type
+
+   * integer - The least severe level that will trigger termination.
+
+Returns the least severe (smaller numerically) level that will trigger the program termination upon happening. Events most severe than the value returned also trigger termination.
 
 === getLogColorDisable() ===
 
@@ -95,6 +111,10 @@ Syntax
 <code javascript>
 var colorDisabled = efl.getLogColorDisable();
 </code>
+
+Return type
+
+   * boolean - True if color logging is disabled.
 
 Determines whether colors are disabled in the log messages.
 
@@ -106,6 +126,14 @@ Syntax
 var level = efl.getLogDomainLevel(domain);
 </code>
 
+Parameters
+
+   * domain - A string with the name of the target level.
+
+Return type
+
+   * integer - The level associated to the given domain.
+
 Gets the domain level given its name. If the domain was not yet registered through ''efl.registerLogDomain'' but is pending after a previous ''efl.setLogDomainLevel'' call or the environment variable ''EINA_LOG_LEVELS'', the respective value is returned. If nothing else was found, the default level from ''efl.getLogLevel'' is returned.
 
 === getLogDomainRegisteredLevel(name) ===
@@ -115,6 +143,14 @@ Syntax
 <code javascript>
 var level = efl.getLogDomainRegisteredLevel(domain);
 </code>
+
+Parameters
+
+   * domain - A string with the name of the target level.
+
+Return type
+
+   * integer - The level associated to the given domain.
 
 Gets the level for the given domain. Works much faster than ''efl.getLogDomainLevel'' but relies on the domain being previously registered with ''efl.registerLogDomain''.
 
@@ -126,6 +162,10 @@ Syntax
 var isFileDisabled = efl.getLogFileDisabled();
 </code>
 
+Return type
+
+   * boolean - True if the filename in the log is disabled.
+
 Returns whether the originating file name is disabled from log messages.
 
 === getLogFunctionDisable() ===
@@ -135,6 +175,10 @@ Syntax
 <code javascript>
 var isFunctionDisabled = efl.getLogFunctionDisabled();
 </code>
+
+Return type
+
+   * boolean - True if the function name is disabled in logging messages.
 
 Returns whether the originating function name is disabled from log messages.
 
@@ -146,6 +190,10 @@ Syntax
 var default_level = efl.getLogLevel();
 </code>
 
+Return type
+
+   * integer - The default level of the logging system. Usually one of the ''efl.LOG_LEVEL*'' constants.
+
 Returns the default log level. Messages above this level will be ignored by ''efl.logPrint''.
 
 === logCritical(message) ===
@@ -156,6 +204,10 @@ Syntax
 efl.logCritical(message);
 </code>
 
+Parameters
+
+   * message - The string to be logged.
+
 Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_CRITICAL'' to the global domain.
 
 === logDebug(message) ===
@@ -165,6 +217,10 @@ Syntax
 <code javascript>
 efl.logDebug(message);
 </code>
+
+Parameters
+
+   * message - The string to be logged.
 
 Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_DBG'' to the global domain.
 
