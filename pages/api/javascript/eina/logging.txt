@@ -1,0 +1,121 @@
+===== Javascript binding API - Eina Logging =====
+
+The Eina framework provides a comprehensive system to manage logging events in your application. For example, it can group message in domains, assign different levels to the messages. There's also the possibility of intercepting the log messages, allowing further processing.
+
+The main workhorse is ''efl.log_print''. It will call the function defined in ''efl.log_print_cb_set'', defaulting to a function that will print to the stderr. You can pass many options to ''log_print'' to control the output.
+
+Log domains are used to group messages, like messages from different modules, different features, etc. You can filter domains by means of log levels through ''efl.log_domain_level_set''. By default, the only domain available is ''efl.LOG_DOMAIN_GLOBAL''.
+
+Levels customize the amount of actual output that will be produced and can be used to abort the execution if a given level message appears.
+
+==== Constants ====
+
+=== Levels ===
+
+The log levels are ranked according to their usual severity. Critical errors can be configured to abort the application while debug messages are usually required only in development or triaging. In descending order of priority:
+
+   * ''efl.LOG_LEVEL_CRITICAL''
+   * ''efl.LOG_LEVEL_ERR''
+   * ''efl.LOG_LEVEL_WARN''
+   * ''efl.LOG_LEVEL_INFO''
+   * ''efl.LOG_LEVEL_DBG''
+
+=== State ===
+
+The states are used in ''efl.logTiming'' to indicate transitions in phases for a given domain.
+
+   * ''efl.LOG_STATE_START''
+   * ''efl.LOG_STATE_STOP''
+
+=== Domain ===
+
+By default, Eina offers a global domain to be used by the application.
+
+   * ''efl.LOG_DOMAIN_GLOBAL''
+
+==== Functions ====
+
+=== checkLogLevel(...) ===
+
+=== getLogAbortOnCritical(...) ===
+
+=== getLogAbortOnCriticalLevel(...) ===
+
+=== getLogColorDisable(...) ===
+
+=== getLogDomainLevel(...) ===
+
+=== getLogDomainRegisteredLevel(...) ===
+
+=== getLogFileDisable(...) ===
+
+=== getLogFunctionDisable(...) ===
+
+=== getLogLevel(...) ===
+
+=== logCritical(message) ===
+
+=== logDebug(message) ===
+
+=== logError(message) ===
+
+=== logInfo(message) ===
+
+=== logPrint(domain, level, message) ===
+
+Syntax
+
+<code javascript>
+efl.logPrint(domain, level, message)
+</code>
+
+Prints ''message'' related ''domain'' with severity ''level''.
+
+Example usage:
+
+<code javascript>
+
+</code>
+
+=== logTiming(...) ===
+
+=== logWarning(message) ===
+
+Lorem ipsum...
+
+=== registerLogDomain(...) ===
+
+=== setLogAbortOnCritical(...) ===
+
+=== setLogAbortOnCriticalLevel(...) ===
+
+=== setLogColorDisable(...) ===
+
+=== setLogDomainLevel(...) ===
+
+=== setLogDomainRegisteredLevel(...) ===
+
+=== setLogFileDisable(...) ===
+
+=== setLogFunctionDisable(...) ===
+
+=== setLogLevel(...) ===
+
+=== setLogPrintCb(callback) ===
+
+Syntax
+
+<code javascript>
+function callback(){...}
+efl.setLogPrintCb(callback);
+</code>
+
+Sets the callback that will be called whenever a log command that would be executed, i.e., above or equal to the current log level. It receives as arguments the domain, output color, level, filename, function and line number of the call, and finally the message. It allows further customization of the output.
+
+<note important>
+If not set, EFL defaults the output to the standard error output, like this:
+
+''CRI<30206>: /home/user/dev/myapp/main.js:254 () MessageFrom logPrint''
+</note>
+
+=== unregisterLogDomain(...) ===
