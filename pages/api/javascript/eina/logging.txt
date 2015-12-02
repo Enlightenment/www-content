@@ -35,6 +35,9 @@ By default, Eina offers a global domain to be used by the application.
 
    * ''efl.LOG_DOMAIN_GLOBAL''
 
+==== Environment Variables ====
+
+
 ==== Functions ====
 
 === checkLogLevel(level) ===
@@ -77,23 +80,95 @@ var colorDisabled = efl.getLogColorDisable();
 
 Determines whether colors are disabled in the log messages.
 
-=== getLogDomainLevel(...) ===
+=== getLogDomainLevel(domainname) ===
 
-=== getLogDomainRegisteredLevel(...) ===
+Syntax
 
-=== getLogFileDisable(...) ===
+<code javascript>
+var level = efl.getLogDomainLevel(domainname);
+</code>
 
-=== getLogFunctionDisable(...) ===
+Gets the domain level given its name. If the domain was not yet registered through ''efl.registerLogDomain'' but is pending after a previous ''efl.setLogDomainLevel'' call or the environment variable ''EINA_LOG_LEVELS'', the respective value is returned. If nothing else was found, the default level from ''efl.getLogLevel'' is returned.
 
-=== getLogLevel(...) ===
+=== getLogDomainRegisteredLevel(name) ===
+
+Syntax
+
+<code javascript>
+var level = efl.getLogDomainRegisteredLevel(domainname);
+</code>
+
+Gets the level for the given domain. Works much faster than ''efl.getLogDomainLevel'' but relies on the domain being previously registered with ''efl.registerLogDomain''.
+
+=== getLogFileDisable() ===
+
+Syntax
+
+<code javascript>
+var isFileDisabled = efl.getLogFileDisabled();
+</code>
+
+Returns whether the originating file name is disabled from log messages.
+
+=== getLogFunctionDisable() ===
+
+Syntax
+
+<code javascript>
+var isFunctionDisabled = efl.getLogFunctionDisabled();
+</code>
+
+Returns whether the originating function name is disabled from log messages.
+
+=== getLogLevel() ===
+
+Syntax
+
+<code javascript>
+var default_level = efl.getLogLevel();
+</code>
+
+Returns the default log level. Messages above this level will be ignored by ''efl.logPrint''.
 
 === logCritical(message) ===
 
+Syntax
+
+<code javascript>
+efl.logCritical(message);
+</code>
+
+Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_CRITICAL'' to the global domain.
+
 === logDebug(message) ===
+
+Syntax
+
+<code javascript>
+efl.logDebug(message);
+</code>
+
+Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_DBG'' to the global domain.
 
 === logError(message) ===
 
+Syntax
+
+<code javascript>
+efl.logError(message);
+</code>
+
+Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_ERR'' to the global domain.
+
 === logInfo(message) ===
+
+Syntax
+
+<code javascript>
+efl.logInfo(message);
+</code>
+
+Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_INFO'' to the global domain.
 
 === logPrint(domain, level, message) ===
 
@@ -103,19 +178,28 @@ Syntax
 efl.logPrint(domain, level, message)
 </code>
 
-Prints ''message'' related ''domain'' with severity ''level''.
+Prints the string ''message'' related ''domain'' with severity ''level''. If ''level'' is of a lower severity (higher numerical value) than the value from ''efl.getLogLevel'', the call is ignored.
+
+For the global domain, you can use the helper functions ''efl.logCritical'', ''efl.logInfo'' and related.
 
 Example usage:
 
 <code javascript>
-
+efl.logPrint(efl.LOG_DOMAIN_GLOBAL, efl.LOG_LEVEL_WARN, "Warning. Exclamation point. Warning.");
+efl.logPrint(mydomain, efl.LOG_LEVEL_INFO, "Information. We want information.");
 </code>
 
 === logTiming(...) ===
 
 === logWarning(message) ===
 
-Lorem ipsum...
+Syntax
+
+<code javascript>
+efl.logWarning(message);
+</code>
+
+Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_WARN'' to the global domain.
 
 === registerLogDomain(...) ===
 
