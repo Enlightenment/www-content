@@ -325,6 +325,12 @@ Syntax
 var domainId = efl.registerLogDomain(domainname, color);
 </code>
 
+Parameters
+
+   * domainname - A string with the name of the new domain
+   * color - A string with a color description according to [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|VT]] specs. Usually one of the ''efl.COLOR_*'' constants.
+
+
 Registers a new domain with name ''name'' and color ''color''. The returned id will be used to reference the domain on the other log functions. If a negative number is returned, a log event occurred.
 
 Example usage
@@ -333,21 +339,7 @@ Example usage
 var myid = efl.registerLogDomain("mydomain", efl.COLOR_CYAN);
 </code>
 
-=== setLogAbortOnCritical(...) ===
-
-Syntax
-
-<code javascript>
-efl.setLogAbortOnCritical(boolvar);
-</code>
-
-Sets whether the program should terminate upon a logging event with a level at least of the same severity of ''efl.getLogAbortOnCriticalLevel''.
-
-<note important>
-Upon initializaton, it takes the value from the environment variable ''EINA_LOG_ABORT''.
-</note>
-
-=== setLogAbortOnCriticalLevel(boolvar) ===
+=== setLogAbortOnCritical(boolvar) ===
 
 Syntax
 
@@ -357,7 +349,25 @@ efl.setLogAbortOnCritical(boolvar);
 
 Parameters
 
- - 
+   * boolvar - Flag indicating if the program should terminate if a message of the configured level occurs.
+
+Sets whether the program should terminate upon a logging event with a level at least of the same severity of ''efl.getLogAbortOnCriticalLevel''.
+
+<note important>
+Upon initializaton, it takes the value from the environment variable ''EINA_LOG_ABORT''.
+</note>
+
+=== setLogAbortOnCriticalLevel(level) ===
+
+Syntax
+
+<code javascript>
+efl.setLogAbortOnCritical(level);
+</code>
+
+Parameters
+
+   * level - An integer with the target level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
 Sets the minimal message level the program should check if it should abort. Messages less severe than ''level'' are ignored for this check.
 
@@ -373,6 +383,10 @@ Syntax
 efl.setLogColorDisable(boolvar);
 </code>
 
+Parameters
+
+   * boolvar - Flag indicating if the color should be disabled.
+
 Sets whether the colored logging should be disabled or not.
 
 === setLogDomainLevel(domainname, level) ===
@@ -382,6 +396,11 @@ Syntax
 <code javascript>
 efl.setLogDomainLevel(name, level);
 </code>
+
+Parameters
+
+   * name - The name of the target domain.
+   * level - An integer with the target level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
 Sets the trigger level for a given domain with name ''name''. It works like setting the environment variable ''EINA_LOG_LEVELS=<name>:<level>''.
 
@@ -395,6 +414,11 @@ Syntax
 efl.setLogDomainRegisteredLevel(name, level);
 </code>
 
+Parameters
+
+   * name - The name of a previously registered domain.
+   * level - An integer with the target level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
+
 Sets the trigger level for a given domain with name ''name''. It's a much faster version of ''efl.setLogDomainLevel'', requiring a previously registered domain.
 
 === setLogFileDisable(bool) ===
@@ -405,7 +429,11 @@ Syntax
 efl.setLogFileDisable(boolvar);
 </code>
 
-Sets whether the file name logging should be disabled or not.
+Parameters
+
+   * boolvar - Flag indicating if the filename should be disabled.
+
+Sets whether the filename logging should be disabled or not.
 
 === setLogFunctionDisable(enable) ===
 
@@ -414,6 +442,10 @@ Syntax
 <code javascript>
 efl.setLogFunctionDisable(boolvar);
 </code>
+
+Parameters
+
+   * boolvar - Flag indicating if the function name should be disabled.
 
 Sets whether the function name logging should be disabled or not.
 
@@ -424,6 +456,10 @@ Syntax
 <code javascript>
 efl.setLogLevel(level);
 </code>
+
+Parameters
+
+   * level - An integer with the target level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
 Sets the default level for log events. Messages less severe (higher numerical value) that ''level'' will be ignored.
 
@@ -439,6 +475,10 @@ Syntax
 function callback(){...}
 efl.setLogPrintCb(callback);
 </code>
+
+Parameters
+
+   * callback - A function receiving the following arguments, in order: The domain name (string), the color (string), the level (integer), the file name (string), the function (string), the line number (integer) and the log message (string).
 
 Sets the callback that will be called whenever a log command would be executed, i.e., above or equal to the current log level, is called. It receives as arguments the domain, output color, level, filename, function and line number of the call, and finally the message. It allows further customization of the output.
 
@@ -459,12 +499,16 @@ efl.setLogPrintCb(callback);
 efl.logCritical("Kaboom"); // Calls mycallback if efl.LOG_LEVEL_CRITICAL is a triggering level.
 </code>
 
-=== unregisterLogDomain(...) ===
+=== unregisterLogDomain(domainId) ===
 
 Syntax
 
 <code javascript>
 efl.unregisterDomain(domain);
 </code>
+
+Parameters
+
+   * domainid - The id of the domain to be deleted.
 
 Forgets about a logging domain registered from ''efl.registerLogDomain''.
