@@ -21,6 +21,14 @@ new efl.List(typename);
 new efl.Array(typename);
 </code>
 
+Parameters
+
+   * typename - A string with the type of the contained items for this container.
+
+Return type
+
+   * Array/List - A newly created container, empty.
+
 The constructor functions receive the name of the type that will be stored on the container. The following types are supported using the respective type name:
 
    * Integers - "int"
@@ -40,6 +48,14 @@ Syntax
 var new_container = objA.concat(objC);
 </code>
 
+Parameters
+
+   * container - A container of the same type of the callee container, including the contained type.
+
+Return type
+
+   * Array/List - A container of the same type of the callee.
+
 Concatenates two containers returning the result as a new container object.
 
 <note important>
@@ -57,6 +73,14 @@ Syntax
 <code javascript>
 var myvar = obj[index];
 </code>
+
+Parameters
+
+   * index - An integer with the 0-based index desired.
+
+Return type
+
+   * T or ''undefined'' - When calling on a container wrapping items of type T. ''undefined'' if no object on that index.
 
 Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
 
@@ -79,6 +103,14 @@ Syntax
 var index = obj.indexOf(target);
 </code>
 
+Parameters
+
+   * target - An object/item to search for.
+
+Return type
+
+   * integer - The index of the item in the container. -1 if not found.
+
 Searches for ''target'' in the container and returns the index if found. If not found, return -1.
 
 Example usage:
@@ -97,6 +129,14 @@ Syntax
 var index = obj.lastIndexOf(target);
 </code>
 
+Parameters
+
+   * target - An object/item to search for.
+
+Return type
+
+   * integer - The last index of the item in the container. -1 if not found.
+
 Searches backwards for ''target'', returning its index if found, or -1 otherwise.
 
 Example code:
@@ -114,6 +154,10 @@ Syntax
 <code javascript>
 obj.length
 </code>
+
+Return type
+
+   * integer - The number of elements on this container.
 
 Returns the number of elements on this container.
 
@@ -135,6 +179,10 @@ Syntax
 var value = obj.pop();
 </code>
 
+Return type
+
+   * T or ''undefined'' - For containers wrapping items of type T. ''undefined'' if it was an empty space or the container was empty.
+
 Behaves like Javascript ''Array.pop()'', removing the last element of the list and returning it.
 
 Example code:
@@ -154,6 +202,14 @@ Syntax
 <code javascript>
 var size = obj.push(item)
 </code>
+
+Parameters
+
+   * item - An object/item to append to the container.
+
+Return type
+
+   * integer - The size of the container after pushing.
 
 Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
 
@@ -184,6 +240,15 @@ Syntax
 obj[index] = value;
 var v = (obj[index] = value);
 </code>
+
+Parameters
+
+   * index - An integer with the target slot on the container.
+   * value - An object/item to be set to the target position.
+
+Return type
+
+   * object - The same object that was assigned (''value'').
 
 Works like Javascript indexed setter method. It sets the value at the given index to the given value, //generally// not changing the container size (see note below). On success, the operation returns the value recently set.
 
@@ -218,7 +283,16 @@ var y = obj.slice(startIndex);
 var z = obj.slice(startIndex, endIndex);
 </code>
 
-The slice method retrieves portions of the container. The first argument is the index to start the slice operation (default is 0, beginning of the list) and the second argument indicates the index where the extraction should stop, not including it (defaults to the container size).
+Parameters
+
+   * begin - An integer with the index of the start of the slice.
+   * end - An integer with the index of the end of the slice.
+
+Return type
+
+   * container - A container of the same type of the callee.
+
+The slice method retrieves portions of the container. The first argument is the index to start the slice operation (default is 0, beginning of the list) and the second argument indicates the index where the extraction should stop, not including it (defaults to the container size). In interval notation, it returns ''[begin, end)''.
 
 It also performs a shallow copy like concat().
 
@@ -237,5 +311,9 @@ Syntax
 <code javascript>
 obj.toString();
 </code>
+
+Return type
+
+   * string - A comma-separated list of the items in this container.
 
 Generates a comma-separated string with the representation of the items in this container.
