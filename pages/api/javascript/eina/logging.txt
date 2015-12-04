@@ -6,13 +6,11 @@ The Eina framework provides a comprehensive system to manage logging events in y
 
 The main workhorse is ''efl.log_print''. It will call the function defined in ''efl.log_print_cb_set'', defaulting to a function that will print to the stderr. You can pass many options to ''log_print'' to control the output.
 
-Levels customize the amount of actual output that will be produced and can be used to abort the execution if a given level message appears.
-
 ==== Constants ====
 
 === Levels ===
 
-The log levels are ranked according to their usual severity. For example, critical errors can be configured to abort the application while debug messages are usually required only in development or triaging bugs. In descending order of severity:
+The log levels are ranked according to their usual severity. For example, critical errors can be configured to abort the application while debug messages are usually required only in development or when triaging bugs. In descending order of severity:
 
    * ''efl.LOG_LEVEL_CRITICAL''
    * ''efl.LOG_LEVEL_ERR''
@@ -39,7 +37,7 @@ By default, Eina offers a global domain to be used by the application.
 
 === Colors ===
 
-The logging system uses the [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|terminal colors format]] to specify the color of the message. Currently, the following string constants are exported as shortcuts:
+The logging system uses the [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|terminal colors format]] to specify a color for a given domain. With the default callback, only the domain name is shown with the given color. Currently, the following string constants are exported as shortcuts:
 
    * ''efl.COLOR_LIGHTRED''
    * ''efl.COLOR_RED''
@@ -64,7 +62,7 @@ A number of environment variables affect the behavior of the log module. These a
    * ''EINA_LOG_FILE_DISABLE'' - If true, filename in the messages is disabled. See ''efl.setLogFileDisable''.
    * ''EINA_LOG_FUNCTION_DISABLE'' - If true, function name in the messages is disabled. See ''efl.setLogFunctionDisable''.
    * ''EINA_LOG_LEVEL'' - The least severe level that will trigger log events to be shown. Can be overriden in ''efl.setLogLevel''.
-   * ''EINA_LOG_LEVELS'' - Works like ''EINA_LOG_LEVEL'', but on a per-domain basis. Can be overriden for each domain in ''efl.setLogDomainLevel'' and ''efl.setLogDomainRegisteredLevel''.
+   * ''EINA_LOG_LEVELS'' - Works like ''EINA_LOG_LEVEL'', but on a per-domain basis. It take values as ''<domain>:<level>''. Can be overriden for each domain in ''efl.setLogDomainLevel'' and ''efl.setLogDomainRegisteredLevel''.
 
 ==== Functions ====
 
@@ -78,13 +76,13 @@ var willBeLogged = efl.checkLogLevel(level);
 
 Parameters
 
-   * level - An integer (usually one of the level constants) representing the target log level.
+   * level - An integer representing the target log level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
 Return value
 
-   * boolean - True if the level is an active log level.
+   * boolean - True if the level is triggering log level.
 
-Checks whether the given log level will be logged or ignored. The ''level'' argument must be one of the given log level constants (see above).
+Checks whether the given log level will be logged or ignored.
 
 === getLogAbortOnCritical() ===
 
@@ -96,7 +94,7 @@ var willAbortOnCritical = efl.getLogAbortOnCritical();
 
 Return value
 
-   * boolean - True if will abort on critical.
+   * boolean - True if will abort upon triggering a critical level.
 
 Returns ''true'' if events with level equal or smaller to ''efl.getLogAbortOnCriticalLevel()'' should abort the program.
 
@@ -110,9 +108,9 @@ var abortLevel = efl.getLogAbortOnCriticalLevel();
 
 Return type
 
-   * integer - The least severe level that will trigger termination.
+   * integer - The least severe level that will trigger termination. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
-Returns the least severe (smaller numerically) level that will trigger the program termination upon happening. Events most severe than the value returned also trigger termination.
+Returns the least severe (largest numerically) level that will trigger the program termination upon happening. Events most severe than the value returned also trigger termination.
 
 === getLogColorDisable() ===
 
@@ -133,12 +131,12 @@ Determines whether colors are disabled in the log messages.
 Syntax
 
 <code javascript>
-var level = efl.getLogDomainLevel(domain);
+var level = efl.getLogDomainLevel(domainname);
 </code>
 
 Parameters
 
-   * domain - A string with the name of the target level.
+   * domainname - A string with the name of the target domain.
 
 Return type
 
@@ -156,7 +154,7 @@ var level = efl.getLogDomainRegisteredLevel(domain);
 
 Parameters
 
-   * domain - A string with the name of the target level.
+   * domain - A string with the name of the target domain.
 
 Return type
 
@@ -204,7 +202,7 @@ Return type
 
    * integer - The default level of the logging system. Usually one of the ''efl.LOG_LEVEL*'' constants.
 
-Returns the default log level. Messages above this level will be ignored by ''efl.logPrint''.
+Returns the default log level. Messages less severe than this level will be ignored by ''efl.logPrint''.
 
 === logCritical(message) ===
 
@@ -244,7 +242,7 @@ efl.logError(message);
 
 Parameters
 
-   * message - The String to be logged.
+   * message - The string to be logged.
 
 Helper wrapper around ''efl.logPrint'' that prints a message with ''efl.LOG_LEVEL_ERR'' to the global domain.
 
@@ -313,7 +311,7 @@ efl.logWarning(message);
 
 Parameters
 
-   * message - String to be print.
+   * message - The string to be logged.
 
 Helper wrapper around ''efl.logPrint'' what prints a message with ''efl.LOG_LEVEL_WARN'' to the global domain.
 
@@ -329,7 +327,6 @@ Parameters
 
    * domainname - A string with the name of the new domain
    * color - A string with a color description according to [[http://misc.flogisoft.com/bash/tip_colors_and_formatting|VT]] specs. Usually one of the ''efl.COLOR_*'' constants.
-
 
 Registers a new domain with name ''name'' and color ''color''. The returned id will be used to reference the domain on the other log functions. If a negative number is returned, a log event occurred.
 
@@ -461,7 +458,7 @@ Parameters
 
    * level - An integer with the target level. Usually one of the ''efl.LOG_LEVEL_*'' constants.
 
-Sets the default level for log events. Messages less severe (higher numerical value) that ''level'' will be ignored.
+Sets the default level for log events. Messages less severe (higher numerical value) than ''level'' will be ignored.
 
 <note important>
 Upon initialization, the default level is set to the value from the environment variable ''EINA_LOG_LEVEL''.
