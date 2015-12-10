@@ -165,7 +165,7 @@ twit.get('statuses/user_timeline', {screen_name: user_acount, count:10},
   
 </code>
 
-Make a new file stream with ''fs.createWriteStream''and download image to file using ''request'' module to register a ''_img_load'' callback when download has finished
+Make a new file stream with ''fs.createWriteStream'', download the image to file using ''request'' module and register the ''_img_load'' function to called when image download has finished
 <code javascript>
     file = fs.createWriteStream('/tmp/twitter_pic.jpg');
     file.on('finish', _img_load);
@@ -174,23 +174,20 @@ Make a new file stream with ''fs.createWriteStream''and download image to file u
     }
 </code>
 
+
+For each tweet we create a new Elm.Layout with theme defined in ''twitter_example_01.edj'', using layout method ''setfile'', ''setText'' is used to define a new text to Edje elements in theme. To have a formatted text we used Elm.Entry and added this widget into theme using ''setContent'' layout method
+<code javascript>
         for(i=0; i < tweets.length; i++){
             var layout = new elm.Elm.Layout(win);
             layout.setFile("twitter_example_01.edj", "tweet");
 
-            var user_name = tweets[i].user.name;
-            var screen_name = tweets[i].user.screen_name;
-            var user_icon_url = tweets[i].user.profile_image_url;
-            var text = tweets[i].text;
-
             layout.setText("user_name", screen_name);
             layout.setText("screen_name", " - @"+screen_name);
+
             var entry = new elm.Elm.Entry(win);
             entry.setText("elm.text", text);
             console.log(text);
             layout.contentSet("tweet_text", entry);
 
-            layout.setSizeHintMin(127, 96);
-            layout.setSizeHintWeight(1.0, 1.0);
-            layout.setSizeHintAlign(-1.0, -1.0);
-
+            item = list.itemAppend("", layout, null, null, null);
+</code>
