@@ -72,18 +72,20 @@ Import Elementary module
 Elm = require('elm').Elm;
 </code>
 
-Create a new Windown with autohide
+Create a new Window with autohide (the window is hide automatic when close is pressed):
 <code javascript>
 win = new Elm.WinStandard(null);
 win.setTitle("Hello, World!");
 win.setAutohide(true);
 </code>
 
+Create a new Button (passed window has parent) and set new label text to button:
 <code javascript>
 btn = new elm.Elm.Button(win);
 btn.setText(null, "Good-Bye, World!");
 </code>
 
+Set button basic size and positions:
 <code javascript>
 btn.setSize(120, 30);
 btn.setPosition(60, 15);
@@ -91,10 +93,12 @@ btn.setSizeHintWeight(1.0, 1.0);
 btn.setSizeHintAlign(1.0, 1.0);
 </code>
 
+The method ''on'' is used to register callback on events, in this case we need catch the ''clicked'' event, we register a function (second argument) to print a log message when button ''btn'' is clicked
 <code javascript>
 btn.on('clicked', function () { console.log('clicked'); } );
 </code>
 
+To finish is needy show all elements, for that use ''setVisible(true)''
 <code javascript>
 btn.setVisible(true);
 win.setSize(240, 60);
