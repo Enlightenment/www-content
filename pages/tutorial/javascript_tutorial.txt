@@ -176,18 +176,21 @@ Make a new file stream with ''fs.createWriteStream'', download the image to file
 
 For each tweet we make a new Elm.Layout and set a theme using ''setfile'', ''setText'' is used to define a new text to Edje elements in theme. To have a formatted text we used Elm.Entry to main tweet text and added this widget into theme using ''setContent'' layout method
 <code javascript>
-        for(i=0; i < tweets.length; i++){
-            var layout = new elm.Elm.Layout(win);
-            layout.setFile("twitter_example_01.edj", "tweet");
+    for(i=0; i < tweets.length; i++){
+        var layout = new elm.Elm.Layout(win);
+        layout.setFile("twitter_example_01.edj", "tweet");
+        layout.setText("user_name", screen_name);
+        layout.setText("screen_name", " - @"+screen_name);
 
-            layout.setText("user_name", screen_name);
-            layout.setText("screen_name", " - @"+screen_name);
+        var entry = new elm.Elm.Entry(win);
+        entry.setText("elm.text", text);
+        console.log(text);
+        layout.contentSet("tweet_text", entry);
+</code>
 
-            var entry = new elm.Elm.Entry(win);
-            entry.setText("elm.text", text);
-            console.log(text);
-            layout.contentSet("tweet_text", entry);
-
-            item = list.itemAppend("", layout, null, null, null);
-        }
+Add a layout widget to Elm.List and call ''list.go()'' start to display the list properly.
+<code javascript>
+        item = list.itemAppend("", layout, null, null, null);
+    }
+list.go();
 </code>
