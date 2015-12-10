@@ -107,12 +107,16 @@ win.setVisible(true);
 
 ====Twitter Example====
 
+<note tip>
+You find this example in ''elementary_source/src/examples/twitter_example_01.js''
+</note>
+
 This is a more complex example, with edje theme and some external requirements. We need install ''request'' and ''twitter'' module, for this use the ''npm'' (node.js package manager) it downloads and installs all necessary to use this modules.
 <code bash>
 npm install request
 npm install twitter
 </code>
-<note tip>npm is installed by default with Node.js</note>
+<note tip>''npm'' is installed by default with Node.js</note>
 
 Import all modules and initialize necessary variables to connect in twitter API
 <code javascript>
@@ -153,4 +157,42 @@ list.setSizeHintAlign(-1.0, -1.0);
 box.packEnd(list);
 list.setVisible(true);
 </code>
+
+Get twitter user timeline asynchronous, using callback 
+<code javascript>
+twit.get('statuses/user_timeline', {screen_name: user_acount, count:10},
+  function(error, tweets, response) {
+  
+</code>
+
+Make a new file stream with ''fs.createWriteStream''and download image to file using ''request'' module
+registe a ''_img_load'' callback in down
+load finish 
+<code javascript>
+    file = fs.createWriteStream('/tmp/twitter_pic.jpg');
+    file.on('finish', _img_load);
+    if (tweets.length > 0) {
+         request(tweets[0].user.profile_image_url).pipe(file);
+    }
+</code>
+
+        for(i=0; i < tweets.length; i++){
+            var layout = new elm.Elm.Layout(win);
+            layout.setFile("twitter_example_01.edj", "tweet");
+
+            var user_name = tweets[i].user.name;
+            var screen_name = tweets[i].user.screen_name;
+            var user_icon_url = tweets[i].user.profile_image_url;
+            var text = tweets[i].text;
+
+            layout.setText("user_name", screen_name);
+            layout.setText("screen_name", " - @"+screen_name);
+            var entry = new elm.Elm.Entry(win);
+            entry.setText("elm.text", text);
+            console.log(text);
+            layout.contentSet("tweet_text", entry);
+
+            layout.setSizeHintMin(127, 96);
+            layout.setSizeHintWeight(1.0, 1.0);
+            layout.setSizeHintAlign(-1.0, -1.0);
 
