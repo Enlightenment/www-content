@@ -4,41 +4,55 @@
 
 **DRAFT**
 
-==== Constants ====
+The Timer module provides flexible timer functionality.
 
 ==== Functions ====
 
-=== add(args) ===
+=== add(time, callback) ===
 
 Syntax
 
 <code javascript>
-    code
+function mycallback() { ... };
+var timerObj = efl.Ecore.Timer.add(time, mycallback);
 </code>
 
 Parameters
 
-   * parameters
+   * time - A number with the time, in seconds, with the interval between consecutive activation of the timer.
+   * callback - A function taking no arguments to be called when the timer is triggered. It must return either ''efl.Ecore.Mainloop.RENEW'' (or 1) or ''efl.Ecore.Mainloop.Cancel'' (or 0). If it returns the former, it will be called again on the next tick (according to ''time''). If it returns the latter, it will be deleted automatically, making any references to the timer invalid.
 
 Return value
 
-   * return
+   * object - An object wrapping the newly created timer.
+   * null - If it was not possible to add the timer.
 
-=== addLoop(args) ===
+Adds a new timer that will call ''callback'' after ''time'' seconds.
+
+=== addLoop(time, callback) ===
 
 Syntax
 
 <code javascript>
-    code
+function mycallback() { ... };
+var timerObj = efl.Ecore.Timer.addLoop(time, mycallback);
 </code>
 
 Parameters
 
-   * parameters
+   * time - A number with the time, in seconds, with the interval between consecutive activation of the timer.
+   * callback - A function taking no arguments to be called when the timer is triggered. It must return either ''efl.Ecore.Mainloop.RENEW'' (or 1) or ''efl.Ecore.Mainloop.Cancel'' (or 0). If it returns the former, it will be called again on the next tick (according to ''time''). If it returns the latter, it will be deleted automatically, making any references to the timer invalid.
 
 Return value
 
-   * return
+   * object - An object wrapping the newly created timer.
+   * null - If it was not possible to add the timer.
+
+Works like ''efl.Ecore.Timer.add'', but the reference "now" time is the time that the main loop ceased waiting for timeouts and/or events to come in or for signals or any other interrupt source. Use this UNLESS you absolutely must get the current actual timepoint.
+
+=== timerObj.del() ===
+
+
 
 === dump(args) ===
 
