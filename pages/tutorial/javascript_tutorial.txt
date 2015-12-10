@@ -114,3 +114,43 @@ npm install twitter
 </code>
 <note tip>npm is installed by default with Node.js</note>
 
+Import all modules and initialize necessary variables to connect in twitter API
+<code javascript>
+elm = require('elm');
+util = require('util');
+fs = require('fs');
+request = require('request'); //need "npm install request"
+Twitter = require('twitter'); //need "npm install twitter"
+
+var twit = new Twitter({
+  consumer_key: 'ZbSM93w5Sp2cyZ2SG0XuCvoHV',
+  consumer_secret: 'g8N7EEQLpdKPnAsS9hWuQV29FYjBkhH62jhZzXyYymDw87DKye',
+  access_token_key: '222611263-pPhKKjYh59uuNLP0b86sP7aAtLhdecjVQaEsCDCv',
+  access_token_secret: 'l7ccNKXTVv6cymfSD1gQH61tmfixkdna2QmOjPtpVxSHD'
+});
+
+user_acount = 'EnlightenmentKo'
+icon_array = new Array();
+</code>
+
+Create a new Window (has previous example):
+<code javascript>
+win = new elm.Elm.WinStandard(null);
+win.setTitle("Twitter App");
+win.setAutohide(true);
+</code>
+
+Create and show a //box// and //list// elementary widget containers 
+<code javascript>
+box = new elm.Elm.Box(win);
+box.setSizeHintWeight(1.0, 1.0);
+win.resizeObjectAdd(box);
+box.setVisible(true);
+
+list = new elm.Elm.List(win);
+list.setSizeHintWeight(1.0, 1.0);
+list.setSizeHintAlign(-1.0, -1.0);
+box.packEnd(list);
+list.setVisible(true);
+</code>
+
