@@ -17,9 +17,46 @@ You will need additional dependencies to Javascript Bindings:
 
 === Compilation ===
 
-For nodejs add ''//––with-js=nodejs//'' in configure flags to generate node files
+== Efl ==
+To configure efl sources with bindings to use in nodejs add ''//––with-js=nodejs//'' in configure flags to generate node files
 
 <code bash>
-./configure --with-js=nodejs
+./configure --with-js=nodejs #in efl source path
+</code>
 
+and compile normaly
+
+<code bash>
+make
+make install
+</code>
+
+== Elementary ==
+
+In Elementary all you need is run ''./autotools'' and compile/install
+
+<code bash>
+./autotools #in elementary source path
+make
+make install
+</code>
+
+=== Node.Js ===
+
+After all compiled and installed is time to use the modules in node.js. 
+
+The default node.js files installed by efl/elm stay in prefix /lib path (if you don't define a prefix path is ''/usr/local/lib'')
+
+Node.js need know where find efl/elm node modules, to that export NODE_PATH with the file path to modules.
+
+<code bash>
+export NODE_PATH=/usr/local/lib #if needy replace with your prefix
+</code>
+
+Now you is ready to use new modules in node.js, use ''require'' to import de modules
+
+<code javascript>
+~$ node
+> require efl
+> require elm
 </code>
