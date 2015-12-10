@@ -61,3 +61,42 @@ Now you are ready to use the modules in node.js, use ''require'' to import modul
 > elm = require("elm")
 </code>
 
+===Button Example===
+
+<note>
+You find this example in ''elementary_source/src/examples/button_example_00.js''
+</note>
+
+Import Elementary module
+<code javascript>
+Elm = require('elm').Elm;
+</code>
+
+Create a new Windown with autohide
+<code javascript>
+win = new Elm.WinStandard(null);
+win.setTitle("Hello, World!");
+win.setAutohide(true);
+</code>
+
+<code javascript>
+btn = new elm.Elm.Button(win);
+btn.setText(null, "Good-Bye, World!");
+</code>
+
+<code javascript>
+btn.setSize(120, 30);
+btn.setPosition(60, 15);
+btn.setSizeHintWeight(1.0, 1.0);
+btn.setSizeHintAlign(1.0, 1.0);
+</code>
+
+<code javascript>
+btn.on('clicked', function () { console.log('clicked'); } );
+</code>
+
+<code javascript>
+btn.setVisible(true);
+win.setSize(240, 60);
+win.setVisible(true);
+</code>
