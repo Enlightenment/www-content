@@ -652,82 +652,84 @@ This function delete dir and all its contents. If dir is a link only the link is
 Syntax
 
 <code javascript>
+var status = efl.Ecore.File.shutdown();
 </code>
-
-Parameters
-
-   * parameter
 
 Return type
 
-   * return type
+   * number - 0 when the library is completely shut down, 1 or greater otherwise.
 
-Lorem ipsum...
+This function shuts down the Ecore_File library. It returns 0 when it has been called the same number of times than ''efl.Ecore.File.init()''. In that case it shuts down all the services it uses.
 
-=== size() ===
+=== size(file) ===
 
 Syntax
 
 <code javascript>
+var size = efl.Ecore.File.size(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * number - Return the size of the file in bytes, or 0 on failure.
 
-Lorem ipsum...
+This function returns the size of file in bytes. On failure, it returns 0.
 
-=== stripExtension() ===
+=== stripExtension(path) ===
 
 Syntax
 
 <code javascript>
+var stripped_path = efl.Ecore.File.strip_ext(path)
 </code>
 
 Parameters
 
-   * parameter
+   * path - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * string - A newly allocated string with the extension stripped out or NULL on errors.
 
-Lorem ipsum...
+This function removes the extension from path and returns the result as a newly allocated string. If path is NULL, or on failure, the function returns NULL.
 
-=== symlink() ===
+=== symlink(src, dest) ===
 
 Syntax
 
 <code javascript>
+var linked = efl.Ecore.File.symlink(src, dest)
 </code>
 
 Parameters
 
-   * parameter
+   * src - The name of the file to link.
+   * dest - The name of link.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function create the symbolic link dest of src. This function does not work on Windows. It returns ''true'' on success, ''false'' otherwise.
 
-=== unlink() ===
+=== unlink(file)
 
 Syntax
 
 <code javascript>
+efl.Ecore.File.unlink(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file to delete.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function deletes file. It returns ''true'' on success, ''false'' otherwise.
