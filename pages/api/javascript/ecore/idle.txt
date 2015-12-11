@@ -42,7 +42,7 @@ Return value
 Add an idler handle to the event loop, returning a handle on success and NULL otherwise. The function ''callback'' will be called repeatedly while no other events are ready to be processed, as long as it returns 1 (or ''efl.Ecore.Mainloop.CALLBACK_RENEW''). A return of 0 (or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'') deletes the idler.
 
 <note tip>
-Idlers are useful for progressively proccessing data without blocking.
+Idlers are useful for progressively processing data without blocking.
 </note>
 
 === addEnterer(args) ===
@@ -56,11 +56,17 @@ var idler = efl.Ecore.Idle.addEnterer(mycallback);
 
 Parameters
 
-   * parameters
+   * callback - A function receiving no arguments to be called when the idler is activated.
 
 Return value
 
-   * return
+   * object - An object wrapping the newly created idler.
+
+Add an idle enterer handler.
+
+<note important>
+The function func will be called every time the main loop is **entering idle state**, as long as it returns 1 (or ''efl.Ecore.Mainloop.CALLBACK_RENEW''). A return of 0 (or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'') deletes the idle enterer.
+</note>
 
 === addEntererBefore(args) ===
 
@@ -73,11 +79,17 @@ var idler = efl.Ecore.Idle.addEntererBefore(mycallback);
 
 Parameters
 
-   * parameters
+   * callback - A function receiving no arguments to be called when the idler is activated.
 
 Return value
 
-   * return
+   * object - An object wrapping the newly created idler.
+
+Add an idle enterer handler at the start of the list so it gets called earlier than others.
+
+<note important>
+The function func will be called every time the main loop is **entering idle state**, as long as it returns 1 (or ''efl.Ecore.Mainloop.CALLBACK_RENEW''). A return of 0 (or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'') deletes the idle enterer.
+</note>
 
 === addExiter(args) ===
 
@@ -90,8 +102,24 @@ var idler = efl.Ecore.Idle.addExiter(mycallback);
 
 Parameters
 
-   * parameters
+   * callback - A function receiving no arguments to be called when the idler is activated.
 
 Return value
 
-   * return
+   * object - An object wrapping the newly created idler.
+
+Add an idle exiter handler.
+
+<note important>
+The function func will be called every time the main loop is **exiting idle state**, as long as it returns 1 (or ''efl.Ecore.Mainloop.CALLBACK_RENEW''). A return of 0 (or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'') deletes the idle exiter.
+</note>
+
+=== idlerObj.del() ===
+
+Syntax
+
+<code javascript>
+    idlerObj.del();
+</code>
+
+Deletes an idler from the list of active idlers.
