@@ -26,7 +26,7 @@ Internationalization (also called i18n) is done by using strings in a specific
 language in the code (typically English) and then translating them to the
 target language.
 
-Not using resource identifiers but actual strings make it much more convenient
+Not using resource identifiers but actual strings makes it much more convenient
 and readable. A typical code to create a button that will be translated is:
 
 <code c>
@@ -96,8 +96,8 @@ There are also ''get()'' counterparts to the ''set()'' functions above.
 
 === Translating texts directly ===
 
-The approach described in the previous section is not applicable all of the
-time. For instance, it won't work if you are populating a genlist, if you need
+The approach described in the previous section is not always applicable.
+For instance, it won't work if you are populating a genlist, if you need
 plurals in the translation or if you want to do something else with the
 translation than putting it in elementary widgets.
 
@@ -108,8 +108,8 @@ gettext from ''<libintl.h>'' :
 char * gettext(const char * msgid);
 </code>
 
-This function takes as input a string (that will be copied to an msgid field
-in the .po files) and returns the translation (the
+The input of this function is a string (that will be copied to an msgid
+field in the .po files) and returns the translation (the
 corresponding msgstr field).
 
 In order to use gettext, you have to set the local before:
@@ -119,8 +119,8 @@ setlocale(LC_ALL,"");
 </code>
 
 ''LC_ALL'' is a catch-all Locale Category (LC).  Setting it will alter all LC
-categories as ''LC_MESSSAGES'' and ''LC_TYPES'' which are other categories for
-translation: ''LC_MESSSAGES'' is for message translations and ''LC_TYPES''
+categories such as ''LC_MESSSAGES'' and ''LC_TYPES'' which are other categories
+for translation: ''LC_MESSSAGES'' is for message translations and ''LC_TYPES''
 indicates the character set supported.
 
 By setting the locale to ''""'', you are implicitly assigning the locale to
@@ -276,7 +276,7 @@ A typical call to xgettext looks like:
  xgettext --directory=src --output-dir=res/po --keyword=_ --keyword=N_ --keyword=elm_object_translatable_text_set:2 --keyword=elm_object_item_translatable_text_set:2 --add-comments= --from-code=utf-8 --foreign-user
 </code>
 
-This will extract all strings that are used inside the "_()" function (usaual
+This will extract all strings that are used inside the "_()" function (usual
 optional short-hand for gettext()), use UTF-8 as the encoding and add the
 comments right before the strings to the output files.
 
