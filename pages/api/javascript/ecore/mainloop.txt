@@ -4,91 +4,78 @@
 
 **DRAFT**
 
+This page discusses functions that are acting on Ecore's main loop itself or on events and infrastructure directly linked to it.
+
+Most programs only need to start and end the main loop, the rest of the function discussed here are meant to be used in special situations, and with great care.
+
 ==== Constants ====
 
-   * ''efl.Ecore.Mainloop.CALLBACK_CANCEL''
-   * ''efl.Ecore.Mainloop.CALLBACK_DONE''
-   * ''efl.Ecore.Mainloop.CALLBACK_PASS_ON''
-   * ''efl.Ecore.Mainloop.CALLBACK_RENEW''
+=== Callback control ===
+
+These constants are used through ecore to control the lifetime of callbacks. They are usually returned by the callback to indicate if the callback should be kept for future activations, if it should be cancelled, etc.
+
+   * ''efl.Ecore.Mainloop.CALLBACK_CANCEL'' - Remove the callback from the active list.
+   * ''efl.Ecore.Mainloop.CALLBACK_DONE'' - Stop event handling.
+   * ''efl.Ecore.Mainloop.CALLBACK_PASS_ON'' - Pass the event to the next handler.
+   * ''efl.Ecore.Mainloop.CALLBACK_RENEW'' - Keep the callback active for future activation.
 
 ==== Functions ====
 
-=== begin(args) ===
+=== begin() ===
 
 Syntax
 
 <code javascript>
-    code
+efl.Ecore.Mainloop.begin();
 </code>
 
-Parameters
+Runs the application main loop.
 
-   * parameters
-
-Return value
-
-   * return
-
-=== getAnimatorTicked(args) ===
+=== getAnimatorTicked() ===
 
 Syntax
 
 <code javascript>
-    code
+var animatorTicked = efl.Ecore.Mainloop.getAnimatorTicked()
 </code>
-
-Parameters
-
-   * parameters
 
 Return value
 
-   * return
+   * boolean - ''true'' if an animator has been called, ''false'' otherwise.
 
-=== getNested(args) ===
+Returns if an animator has ticked off during this loop iteration
+
+=== getNested() ===
 
 Syntax
 
 <code javascript>
-    code
+var isRunning = efl.Ecore.Mainloop.getNested()
 </code>
-
-Parameters
-
-   * parameters
 
 Return value
 
-   * return
+   * number - an integer specifying if the ecore_main_loop is running, 0 if not running, > 0 if running
 
-=== iterate(args) ===
+Returns if the ecore_main_loop is running
+
+
+=== iterate() ===
 
 Syntax
 
 <code javascript>
-    code
+efl.Ecore.Mainloop.iterate()
 </code>
 
-Parameters
+Runs a single iteration of the main loop to process everything on the queue.
 
-   * parameters
-
-Return value
-
-   * return
-
-=== quit(args) ===
+=== quit() ===
 
 Syntax
 
 <code javascript>
-    code
+efl.Ecore.Mainloop.quit()
 </code>
 
-Parameters
-
-   * parameters
-
-Return value
-
-   * return
+Quits the main loop once all the events currently on the queue have been processed.
