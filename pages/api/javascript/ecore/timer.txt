@@ -52,52 +52,60 @@ Works like ''efl.Ecore.Timer.add'', but the reference "now" time is the time tha
 
 === timerObj.del() ===
 
+Syntax
 
+<code javascript>
+timerObj.del();
+</code>
 
-=== dump(args) ===
+Deletes the callee timer object from the list of active timers.
+
+=== dump() ===
 
 Syntax
 
 <code javascript>
-    code
+var log = efl.Ecore.Timer.dump();
 </code>
-
-Parameters
-
-   * parameters
 
 Return value
 
-   * return
+   * string - The human-readable log.
 
-=== getPrecision(args) ===
+This function returns a human-readable text-based log for Ecore Timer events.
+
+=== getPrecision() ===
 
 Syntax
 
 <code javascript>
-    code
+var precision = efl.Ecore.Timer.getPrecision();
 </code>
-
-Parameters
-
-   * parameters
 
 Return value
 
-   * return
+   * number - The current precision for all timers.
 
-=== setPrecision(args) ===
+Retrieves the current precision used by timer infrastructure.
+
+=== setPrecision(precision) ===
 
 Syntax
 
 <code javascript>
-    code
+    efl.Ecore.Timer.setPrecision(precision);
 </code>
 
 Parameters
 
-   * parameters
+   * precision - A number with the allowed introduced timeout delay, in seconds.
 
-Return value
+This sets the precision for **all** timers. The precision determines how much of a difference from the requested interval is acceptable. One common reason to use this function is to **increase** the allowed timeout and thus, **decrease** the precision of the timers, this is because less precise the timers result in the system waking up less often and thus consuming fewer resources.
 
-   * return
+Be aware that kernel may delay delivery even further, these delays are always possible due other tasks having higher priorities or other scheduler policies.
+
+Example: We have 2 timers, one that expires in a 2.0s and another that expires in 2.1s, if precision is 0.1s, then the Ecore will request for the next expire to happen in 2.1s and not 2.0s and another one of 0.1 as it would before.
+
+<note important>
+Ecore is smart enough to see if there are timers in the precision range, if it does not, in our example if no second timer in (T + precision) existed, then it would use the minimum timeout.
+</note>
