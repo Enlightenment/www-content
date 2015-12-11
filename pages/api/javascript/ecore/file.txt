@@ -4,7 +4,7 @@
 
 **DRAFT**
 
-The File module provides a large number of functions to work with files, directories, and downloads.
+The File module provides a large number of functions to work with files, directories and downloads.
 
 ==== Constants ====
 
@@ -61,7 +61,7 @@ Return type
    * object - An object wrapping the new monitor.
    * null - If it was not possible to create the monitor.
 
-This function monitors path. If the path is ''null'', or is an empty string, or none of the notify methods (Inotify, Windows notification or polling) is available, or if the path does not exist the function returns ''null''. Otherwise, it returns a newly allocated ''Monitor'' object and the monitoring begins. When one of the ''efl.Ecore.File.EVENT_*'' events are notified, the callback is called. Call ''del()'' on the monitor object to stop the monitoring.
+This function monitors path. If path is ''null'', or is an empty string, or none of the notify methods (Inotify, Windows notification or polling) is available, or if the path does not exist the function returns ''null''. Otherwise, it returns a newly allocated ''Monitor'' object and the monitoring begins. When one of the ''efl.Ecore.File.EVENT_*'' events is notified, the callback is called. Call ''del()'' on the monitor object to stop the monitoring.
 
 === availableDownloadProtocol(protocol) ===
 
@@ -144,6 +144,7 @@ efl.Ecore.File.cp(src, dst)
 </code>
 
 Parameters
+
    * src - The name of the source file.
    * dst - The name of the destination file.
 
@@ -167,6 +168,7 @@ efl.Ecore.File.download(url, dst, completion_cb, progress_cb, headers);
 </code>
 
 Parameters
+
    * url - The complete url to download.
    * dst - The local file to save the downloaded to.
    * completion_cb - A callback called on download complete.
@@ -188,442 +190,462 @@ This function returns ''true'' if the download starts, ''false'' otherwise.
 Syntax
 
 <code javascript>
+var tmpDir = efl.Ecore.File.environmentTmp();
 </code>
-
-Parameters
-
-   * parameter
 
 Return type
 
-   * return type
+   * string -A temporary string to the content refered by TMPDIR on this system.
 
-Lorem ipsum...
+Return the content of the environment refered as TMPDIR on this system.
 
-=== escapeName() ===
+<note important>
+The result of this call is highly system dependent and you better use it instead of the naive getenv("TMPDIR").
+</note>
+
+=== escapeName(filename) ===
 
 Syntax
 
 <code javascript>
+var name = efl.Ecore.File.escapeName(filename)
 </code>
 
 Parameters
 
-   * parameter
+   * filename - The file name.
 
-Return type
+Return value
 
-   * return type
+   * string - The file name with special characters escaped.
 
-Lorem ipsum...
+This function adds the escape sequence ('\') to the given file name and returns the result as a newly allocated string. If the length of the returned string is longer than ''PATH_MAX'', or on failure, NULL is returned.
 
-=== exists() ===
+=== exists(file) ===
 
 Syntax
 
 <code javascript>
+var exists = efl.Ecore.File.exists(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' if the file exists, ''false'' otherwise.
 
-Lorem ipsum...
+This function returns ''true'' if file exists on local filesystem, ''false'' otherwise.
 
-=== existsPathDir() ===
+=== existsPathDir(in_dir) ===
 
 Syntax
 
 <code javascript>
+var exists = efl.Ecore.File.path_dir_exists(in_dir)
 </code>
 
 Parameters
 
-   * parameter
+   * in_dir - The name of the directory to search in PATH.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' if the directory exist in PATH, ''false'' otherwise.
 
-Lorem ipsum...
+This function checks if in_dir is in the environment variable PATH. If in_dir is NULL, or if PATH is empty, or in_dir is not in PATH, the function returns ''false'', otherwise it returns ''true''.
 
-=== getAppExe() ===
+=== getAppExe(app) ===
 
 Syntax
 
 <code javascript>
+var exe = efl.Ecore.File.getAppExe(app)
 </code>
 
 Parameters
 
-   * parameter
+   * app - The application command, with parameters.
 
-Return type
+Return value
 
-   * return type
+   * string - The executable from app as a newly allocated string. Arguments are removed and escape characters are handled. If app is NULL, or on failure, the function returns NULL.
 
-Lorem ipsum...
+The executable from app as a newly allocated string. Arguments are removed and escape characters are handled. If app is NULL, or on failure, the function returns NULL. When not needed anymore, the returned value must be freed.
 
-=== getDir() ===
+=== getDir(file) ===
 
 Syntax
 
 <code javascript>
+var dir = efl.Ecore.File.getDir(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * string - The directory name.
 
-Lorem ipsum...
+This function returns the directory where file resides as anewly allocated string. If file is NULL or on error, this function returns NULL.
 
-=== getFile() ===
+=== getFile(path) ===
 
 Syntax
 
 <code javascript>
+var filename = efl.Ecore.File.getFile(path)
 </code>
 
 Parameters
 
-   * parameter
+   * path - The complete path.
 
-Return type
+Return value
 
-   * return type
+   * string - The file name.
 
-Lorem ipsum...
+Get the filename from a given path.
 
 === init() ===
 
 Syntax
 
 <code javascript>
+var status = efl.Ecore.File.init()
 </code>
-
-Parameters
-
-   * parameter
 
 Return type
 
-   * return type
+   * number - 1 or greater on success, 0 on error.
 
-Lorem ipsum...
+This function sets up Ecore_File and the services it will use (monitoring, downloading, PATH related feature). It returns 0 on failure, otherwise it returns the number of times it has already been called.
 
-=== installedApp() ===
+=== installedApp(exe) ===
 
 Syntax
 
 <code javascript>
+var isInstalled = efl.Ecore.File.installedApp(exe);
 </code>
 
 Parameters
 
-   * parameter
+   * exe - The name of the application
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' if the exe is in PATH and is executable, ''false'' otherwise.
 
-Lorem ipsum...
+This function checks if ''exe'' exists in PATH and is executable. If exe is NULL or is not executable, the function returns ''false'', otherwise it returns ''true''.
 
-=== isDir() ===
+=== isDir(file) ===
 
 Syntax
 
 <code javascript>
+var isDir = efl.Ecore.File.isDir(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' if the file exists and is a directory, ''false'' otherwise.
 
-Lorem ipsum...
+This function returns ''true'' if file exists exists and is a directory on local filesystem, ''false'' otherwise.
 
-=== isEmptyDir() ===
+=== isEmptyDir(dir) ===
 
 Syntax
 
 <code javascript>
+var isEmptyDir = efl.Ecore.File.isEmptyDir(dir);
 </code>
 
 Parameters
 
-   * parameter
+   * dir - The name of the directory to check.
 
-Return type
+Return value
 
-   * return type
+   * number - 1 if directory is empty, 0 if it has at least one file or -1 in case of errors.
 
-Lorem ipsum...
+This functions checks if dir is empty. The '.' and '..' files will be ignored. If dir is empty, 1 is returned, if it contains at least one file, 0 is returned. On failure, -1 is returned.
 
 === listApp() ===
 
 Syntax
 
 <code javascript>
+var apps = efl.Ecore.File.listApp(void);
 </code>
 
-Parameters
+Return value
 
-   * parameter
+   * array of strings - An array containing all the executable files in the system.
 
-Return type
+This function returns a list of allocated strings of all the executable files. If no files are found, the function returns NULL.
 
-   * return type
-
-Lorem ipsum...
-
-=== ls() ===
+=== ls(dir) ===
 
 Syntax
 
 <code javascript>
+var entries = efl.Ecore.File.ls(dir)
 </code>
 
 Parameters
 
-   * parameter
+   * dir - The name of the directory to list
 
-Return type
+Return value
 
-   * return type
+   * array of strings - Return a array containing all the files in the directory; on failure it returns NULL.
 
-Lorem ipsum...
+This function returns a list of allocated strings of all the files and directories contained in dir. The list will be sorted with the native strcoll as compare function. That means that you may want to set the current locale for the category LC_COLLATE with setlocale(). For more information see the manual pages of strcoll and setlocale. The list will not contain the directory entries for '.' and '..'. On failure, NULL is returned.
 
-=== mkdir() ===
+=== mkdir(dir) ===
 
 Syntax
 
 <code javascript>
+var created = efl.Ecore.File.mkdir(dir)
 </code>
 
 Parameters
 
-   * parameter
+   * dir - The name of the directory to create
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on successful creation, ''false'' otherwise.
 
-Lorem ipsum...
+This function creates the directory dir, with the mode ''S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH'' on UNIX (mode is unused on Windows). On success, it returns ''true'', ''false'' otherwise.
 
-=== mkdirs() ===
+=== mkdirs(dirs) ===
 
 Syntax
 
 <code javascript>
+var numCreated = efl.Ecore.File.mkdirs(dirs)
 </code>
 
 Parameters
 
-   * parameter
+   * dirs - The list of directories.
 
-Return type
+Return value
 
-   * return type
+   * number - The number of successful directories created, -1 if dirs is NULL.
 
-Lorem ipsum...
+This function creates all the directories that are in the null terminated array dirs. The function loops over the directories and call ''efl.Ecore.File.mkdir()''. This function returns -1 if dirs is NULL, otherwise if returns the number of suceesfully created directories.
 
-=== mkpath() ===
+=== mkpath(path) ===
 
 Syntax
 
 <code javascript>
+var created  = efl.Ecore.File.mkpath(path)
 </code>
 
 Parameters
 
-   * parameter
+   * path - The path to create
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function creates path and all the subdirectories it contains. The separator is '/' or '\'. If path exists, this function returns ''true'' immediately. It returns ''true'' on success, ''false'' otherwise.
 
-=== mkpaths() ===
+=== mkpaths(paths) ===
 
 Syntax
 
 <code javascript>
+var numCreated = efl.Ecore.File.mkpaths(paths)
 </code>
 
 Parameters
 
-   * parameter
+   * paths - list of paths.
 
-Return type
+Return value
 
-   * return type
+   * number - number of successful paths created, -1 if paths is NULL.
 
-Lorem ipsum...
+This function creates all the directories that are in the null terminated array paths. The function loops over the directories and call ecore_file_mkpath(), hence on Windows, '\' must be replaced by '/' before calling that function. This function returns -1 if paths is NULL. Otherwise if returns the number of suceesfully created directories.
 
-=== mkstemp() ===
+=== mkstemp(template) ===
 
 Syntax
 
 <code javascript>
+var path = efl.Ecore.file.mkstemp(template)
 </code>
 
 Parameters
 
-   * parameter
+   * template - The template for the path, ending with ''XXXXXX''.
 
 Return type
 
-   * return type
+   * string - The path of the new temporary file.
 
-Lorem ipsum...
+Creates a temporary file with filename based on ''template''.
 
-=== mksubdirs() ===
+=== mksubdirs(base, subdirs) ===
 
 Syntax
 
 <code javascript>
+var numCreated = efl.Ecore.File.mksubdirs(base, subdirs)
 </code>
 
 Parameters
 
-   * parameter
+   * base - The base directory to act on.
+   * subdirs - The list of directories.
 
-Return type
+Return value
 
-   * return type
+   * number - number of successful directories created, -1 on failure.
 
-Lorem ipsum...
+This function creates all the directories that are in the array subdirs in the base directory. If base does not exist, it will be created. The function loops over the directories and call ''efl.Ecore.File.mkdir()''. The whole path of the directories must exist. So if base/a/b/c wants to be created, subdirs must contain "a", "a/b" and "a/b/c", in that order. This function returns -1 if subdirs or base are NULL, or if base is empty ("\0"). It returns 0 is base is not a directory or invalid, or if it can't be created. Otherwise if returns the number of suceesfully created directories.
 
 === modTime() ===
 
 Syntax
 
 <code javascript>
+var time = efl.Ecore.File.modTime(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file.
 
-Return type
+Return value
 
-   * return type
+   * number - Return the time of the last data modification, or 0 on failure.
 
-Lorem ipsum...
+This function returns the time of the last modification of file. On failure, it returns 0.
 
-=== mv() ===
+=== mv(src, dst) ===
 
 Syntax
 
 <code javascript>
+var moved = efl.Ecore.File.mv(src, dst)
 </code>
 
 Parameters
 
-   * parameter
+   * src - The name of the source file.
+   * dst - The name of the destination file.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function moves src to dst. It returns ''true'' on success, ''false'' otherwise.
 
-=== readlink() ===
+=== readlink(lnk) ===
 
 Syntax
 
 <code javascript>
+var path = efl.Ecore.File.readlink(lnk)
 </code>
 
 Parameters
 
-   * parameter
+   * lnk - The name of the link.
 
-Return type
+Return value
 
-   * return type
+   * string - The path pointed by link or NULL.
 
-Lorem ipsum...
+This function returns the path pointed by link as a newly allocated string. This function does not work on Windows. On failure, the function returns NULL.
 
-=== realpath() ===
+=== realPath(file) ===
 
 Syntax
 
 <code javascript>
+var path = efl.Ecore.File.realPath(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The file path.
 
-Return type
+Return value
 
-   * return type
+   * string - The canonicalized absolute pathname or an empty string on failure.
 
-Lorem ipsum...
+This function returns the absolute path name of file as a newly allocated string. If file is NULL, or on error, this function returns an empty string. Otherwise, it returns the absolute path name.
 
-=== remove() ===
+=== remove(file) ===
 
 Syntax
 
 <code javascript>
+var removed = efl.Ecore.File.remove(file)
 </code>
 
 Parameters
 
-   * parameter
+   * file - The name of the file or directory to delete.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function removes file. It returns ''true'' on success, ''false'' otherwise.
 
-=== rmdir() ===
+=== rmdir(dir) ===
 
 Syntax
 
 <code javascript>
+var removed = efl.Ecore.File.rmdir(dir)
 </code>
 
 Parameters
 
-   * parameter
+   * dir - The name of the directory to delete.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function deletes dir. It returns ''true'' on success, ''false'' otherwise.
 
-=== rmRecursive() ===
+=== rmRecursive(dir) ===
 
 Syntax
 
 <code javascript>
+var removed = efl.Ecore.File.rmRecursive(dir)
 </code>
 
 Parameters
 
-   * parameter
+   * dir - The name of the directory to delete.
 
-Return type
+Return value
 
-   * return type
+   * boolean - ''true'' on success, ''false'' otherwise.
 
-Lorem ipsum...
+This function delete dir and all its contents. If dir is a link only the link is removed. It returns ''true'' on success, ''false'' otherwise.
 
 === shutdown() ===
 
