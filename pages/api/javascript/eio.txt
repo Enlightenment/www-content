@@ -99,7 +99,7 @@ This function will change the owner of a path, setting it to the user and group 
 Syntax
 
 <code javascript>
-function filter_cb() {...};
+function filter_cb(operation, info) {...};
 function progress_cb(operation, info) {...};
 function done_cb(operation) {...};
 function error_cb(operation, error) {...};
@@ -169,13 +169,36 @@ The ''info'' argument to ''progress_cb'' is an object with the following keys:
 Syntax
 
 <code javascript>
-efl.Eio.init();
+var code = efl.Eio.init();
 </code>
+
+Return type
+
+   * integer - The number of times Eio was initialized (aka the number of current users).
 
 Initializes the Eio subsystem.
 
+=== lsFile(dir, filter_cb, main_cb, done_cb, error_cb) ===
 
-lsFile
+Syntax
+
+<code javascript>
+function filter_cb(operation, info) {...};
+function main_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.lsFile(dir, filter_cb, main_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Path of the directory to be listed.
+   * filter_cb - Possible to deny the given file/dir from appearing in ''main_cb''.
+   * progress_cb - Callback called for each file that was not filtered.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong or the operation was canceled.
+
+This function is responsible for listing the content of a directory without blocking your application. It's equivalent to the "ls" shell command. Every file will be passed to the filter_cb, so it's your job to decide if you want to pass the file to the main_cb or not. Return ''true'' to pass it to the ''main_cb'' or ''false'' to ignore it. It runs the native ''eina_file_ls()'' on a separate thread.
 
 === mkdirFile(path, mode, done_cb, error_cb) ===
 
@@ -205,7 +228,7 @@ Creates a new directory using the mode provided.
 Syntax
 
 <code javascript>
-function filter_cb() {...};
+function filter_cb(operation, info) {...};
 function progress_cb(operation, info) {...};
 function done_cb(operation) {...};
 function error_cb(operation, error) {...};
@@ -274,15 +297,38 @@ The ''info'' argument to ''progress_cb'' is an object with the following keys:
    * ''source'' - Source of I/O operation.
    * ''dest'' - Destination of I/O operation.
 
-openFile
+=== openFile(path, open_cb, error_cb) ===
+
+<code javascript>
+function open_cb(operation, file) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.openFile(path, open_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - The path to be open.
+   * shared - If it's a shared memory file.
+   * open_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+Asynchronously open a file. The ''open_cb'' callback is called when the file is open and will receive the operation handle and the file handle respectively, the latter being an Eina File.
 
 === shutdown() ===
 
 Syntax
 
 <code javascript>
-efl.Eio.shutdown();
+var code = efl.Eio.shutdown();
 </code>
+
+Return type
+
+   * integer - The number of pending users of Eio (aka the number of pending ''init()'' calls without a matching ''shutdown()'').
 
 Shuts down the Eio subsystem.
 
@@ -313,7 +359,7 @@ This function will erase a file.
 Syntax
 
 <code javascript>
-function filter_cb() {...};
+function filter_cb(operation, info) {...};
 function progress_cb(operation, info) {...};
 function done_cb(operation) {...};
 function error_cb(operation, error) {...};
@@ -342,14 +388,43 @@ The ''filter_cb'' is called for each member of the directory and receives as arg
    * ''path'' - The path for the entry.
 
 
-==== Eio File methods ====
+==== Eio File Operation methods ====
 
-cancel
-check
+=== cancel() ===
+
+Syntax
+
+<code javascript>
+var destroyed = fileObj.cancel();
+</code>
+
+Return value
+
+   * boolean - ''true'' if it was destroyed, ''false'' if it was delayed.
+
+=== check() ===
+
+Syntax
+
+<code javascript>
+var canceled = fileObj.check();
+</code>
+
+Return value
+
+   * boolean - ''true'' if it was canceled or there was an error, ''false'' if otherwise.
 
 ==== Eina File methods ====
 
-close
+=== close() ===
+
+Syntax
+
+<code javascript>
+einaFileObj.close();
+</code>
+
+Closes an file that was open through ''efl.Eio.openFile()''.
 
 ==== Eio Monitor methods ====
 
