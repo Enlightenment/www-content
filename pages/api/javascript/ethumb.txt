@@ -1,0 +1,241 @@
+====== Javascript binding API - Ethumb - Thumbnail images ======
+
+[[api:javascript|Back to the JS EFL page]]
+
+The Ethumb library allows the creation of thumbnail images of files.
+
+==== Functions ====
+
+=== initClient() ===
+
+Syntax
+
+<code javascript>
+efl.Ethumb.initClient();
+</code>
+
+Initializes the Ethumb client library.
+
+=== connectClient(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback(client, success) { ... };
+efl.Ethumb.connectClient(mycallback);
+</code>
+
+Parameters
+
+   * callback - The function to call to report connection success or failure. Do not call any other Ethumb client methods method until this function returns. This function will not be called if the user explicitly calls the ''disconnect()'' method.
+
+Return value
+
+   * return - client instance or NULL if failed. If ''callback'' is missing it returns NULL. If it fail for other conditions, NULL is also returned and ''callback'' is called with success=''false''. The client instance is not ready to be used until ''callback'' is called.
+
+Connects to Ethumb server and return the client instance.
+
+This is the "constructor" of Ethumb Clients, where everything starts.
+
+If server was down, it is tried to start it using DBus activation, then the connection is retried.
+
+This call is asynchronous and will not block, instead it will be in "not connected" state until ''callback'' is called with either success or failure. On failure, then no methods should be called. On success you're now able to setup and then ask generation of thumbnails.
+
+Usually you should listen for server death/disconenction with the ''setOnServerDieCallback()'' method.
+
+=== shutdownClient() ===
+
+Syntax
+
+<code javascript>
+efl.Ethumb.shutdownClient();
+</code>
+
+Shuts down the Ethumb client library.
+
+==== Ethumb Client methods ====
+
+=== cancelAllGenerate() ===
+
+Syntax
+
+<code javascript>
+clientObj.cancelAllGenerate()
+</code>
+
+Ask server to cancel generation of all thumbnails.
+
+=== cancelGenerate(id, callback) ===
+
+Syntax
+
+<code javascript>
+function callback(success) {...};
+clientObj.cancelGenerate(id, callback);
+</code>
+
+Parameters
+
+   * id - valid id returned by ''generate()'';
+   * callback - Function to report cancellation results.
+
+Ask server to cancel generation of a thumbnail.
+
+=== disconnect() ===
+
+Syntax
+
+<code javascript>
+clientObj.disconnect();
+</code>
+
+Disconnect the client, releasing all client resources.
+
+This is the destructor of Ethumb Client, after it's disconnected the client handle is now gone and should not be used.
+
+=== existsThumb(callback) ===
+
+Syntax
+
+<code javascript>
+function callback(client, existsInfo, exists) {...};
+clientObj.existsThumb(callback);
+</code>
+
+Parameters
+
+   * callback - The function to call with the answer. It receives the client, an Exists instance and a boolean with the result from the query.
+
+Return value
+
+   * object - An Ethumb Exists instance.
+
+Checks whenever file already exists (locally!)
+
+This will check locally (not calling server) if thumbnail already exists or not, also calculating the thumbnail path. Path must be configured with ''setFile()'' before using it and the last set file will be used!
+
+=== freeFile() ===
+
+Syntax
+
+<code javascript>
+clientObj.freeFile();
+</code>
+
+Reset previously set file to NULL.
+
+=== generate(callback) ===
+
+Syntax
+
+<code javascript>
+function callback(client, id, file, key, thumb_path, thumb_key, success) {...};
+var id = clientObj.generate(callback);
+</code>
+
+Parameters
+
+   * callback - The function to be called to report the job.
+
+Return value
+
+   * integer - The id of the started generation job.
+
+Ask server to generate a thumbnail.
+
+This process is asynchronous and will report back from main loop using ''callback''. One can cancel this request by calling ''cancelGenerate()'' or ''cancelAllGenerate()'', but not that request might be processed by server already and no generated files will be removed if that is the case.
+
+This will not check if file already exists, this should be done by explicitly calling ''existsThumb()'' That is, this function will override any existing thumbnail.
+
+=== getFile() ===
+
+Syntax
+
+<code javascript>
+var info = clientObj.getFile();
+</code>
+
+Return value
+
+   * object - An object with keys ''path'' and ''key''.
+
+Gets the info from ''setFile()'' method.
+
+=== getThumbAsync(callback) ===
+
+Syntax
+
+<code javascript>
+function callback(client, path, key) {...};
+clientObj.getThumbAsync(callback);
+</code>
+
+Parameters
+
+   * callback - The function to be called.
+
+Return value
+
+   * object - An Ethumb Client Async.
+
+=== setFile(path, key) ===
+
+Syntax
+
+<code javascript>
+var ok = clientObj.setFile(path, key);
+</code>
+
+Parameters
+
+   * path - The filesystem path to use.
+   * key - The extra argument/key inside path to read image from. This is only used for formats that allow multiple resources in one file, like EET or Edje (group name).
+
+Return value
+
+   * boolean - ''true'' on success, ''false'' on failure.
+
+Set source file to be thumbnailed.
+
+Calling this function has the side effect of resetting values auto-generated with ''existsThumb()'' method.
+
+=== setOnServerDieCallback(callback) ===
+
+Syntax
+
+<code javascript>
+function callback(client) { ... }
+clientObj.setOnServerDieCallback(callback);
+</code>
+
+Parameters
+
+   * callback - function to call back when the server dies.
+
+Sets the callback to report server died.
+
+When the server dies there is nothing you can do, just release resources with ''disconnect()'' and probably try to connect again.
+
+Usually, you should set this callback and handle this case, it does happen!
+
+==== Ethumb Client Exists methods ====
+
+=== cancel() ===
+
+Syntax
+
+<code javascript>
+existsObj.cancel();
+</code>
+
+Cancel an ongoing exists request.
+
+=== check() ===
+
+Syntax
+
+<code javascript>
+existsObj.check();
+</code>
+
+Check if an exists request was cancelled.
