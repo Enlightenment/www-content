@@ -1,0 +1,361 @@
+====== Javascript binding API - Eio - File and directory management  ======
+
+[[api:javascript|Back to the JS EFL page]]
+
+The Eio module provides functions to work with file and directories, allowing a finer control over them with monitors and callbacks during the operations, while Ecore provides simple wrappers over the console commands.
+
+==== Constants ====
+
+=== File operations ===
+
+These constants represent the operations that can be done on files and directories.
+
+   * ''efl.Eio.FILE_COPY'' - I/O operation is about a specific file copy.
+   * ''efl.Eio.FILE_MOVE'' - I/O operation is about a specific file move.
+   * ''efl.Eio.DIR_COPY'' - I/O operation is about a specific directory copy.
+   * ''efl.Eio.DIR_MOVE'' - I/O operation is about a specific directory move.
+   * ''efl.Eio.UNLINK'' - I/O operation is about destroying a path: source will point to base path to be destroyed, and dest will point to to ath destroyed by this I/O.
+   * ''efl.Eio.FILE_GETPWNAM'' - I/O operation is trying to get uid from user name.
+   * ''efl.Eio.FILE_GETGRNAM'' - I/O operation is trying to get gid from user name.
+
+=== Monitoring constants ===
+
+   * ''efl.Eio.MONITOR_FILE_CREATED'' - New file created in a watched directory.
+   * ''efl.Eio.MONITOR_FILE_DELETED'' - Watched file or file in watched directory was deleted.
+   * ''efl.Eio.MONITOR_FILE_MODIFIED'' - File modified in a watched directory.
+   * ''efl.Eio.MONITOR_FILE_CLOSED'' - File closed in a watched directory.
+   * ''efl.Eio.MONITOR_DIRECTORY_CREATED'' - New directory created in a watched directory.
+   * ''efl.Eio.MONITOR_DIRECTORY_DELETED'' - A directory has been deleted: this can be either a watched directory or one of its subdirectories.
+   * ''efl.Eio.MONITOR_DIRECTORY_MODIFIED'' - A directory has been modified in a watched directory. 
+   * ''efl.Eio.MONITOR_DIRECTORY_CLOSED'' - A directory has been closed in a watched directory.
+   * ''efl.Eio.MONITOR_SELF_RENAME'' - The monitored path has been renamed, an error could happen just after if the renamed path doesn't exist.
+   * ''efl.Eio.MONITOR_SELF_DELETED'' - The monitored path has been removed.
+   * ''efl.Eio.MONITOR_ERROR'' - During operation the monitor failed and will no longer work.
+
+==== Functions ====
+
+addMonitor
+addEventMonitorDirectoryClosedHandler
+addEventMonitorDirectoryCreatedHandler
+addEventMonitorDirectoryDeletedHandler
+addEventMonitorDirectoryModifiedHandler
+addEventMonitorErrorHandler
+addEventMonitorFileClosedHandler
+addEventMonitorFileCreatedHandler
+addEventMonitorFileDeletedHandler
+addEventMonitorFileModifiedHandler
+addEventMonitorSelfDeleteHandler
+addEventMonitorSelfRenameHandler
+
+=== chmodFile(path, mode, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.chmodFile(path, mode, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - The directory path to change mode.
+   * mode - The permission to set, follow ''(mode & ~umask & 0777)''.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+Set a new permission of a path changing it to the mode passed as argument. It's equivalent to the chmod command.
+
+=== chownFile(path, user, group, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.chownFile(path, user, group, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - The directory path to change owner.
+   * user - The new user to set (can be NULL).
+   * group - The new group to set (can be NULL).
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+This function will change the owner of a path, setting it to the user and group passed as argument. It's equivalent to the chown shell command.
+
+=== copyDir(source, dest, filter_cb, progress_cb, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function filter_cb() {...};
+function progress_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.copyDir(source, dest, filter_cb, progress_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Should be the name of the directory to move the data from.
+   * dest - Should be the name of the directory to move the data to.
+   * filter_cb - Possible to deny the move of some files/directories.
+   * progress_cb - Callback called to know the progress of the move.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+Move a directory and its content asynchronously.
+
+This function will copy a directory and all its content from source to dest. It will try to use splice if possible, if not it will fallback to mmap/write. It will try to preserve access rights, but not user/group identity. Every file will be passed to the filter_cb, so it's your job to decide if you want to pass the file to the main_cb or not. Return ''true'' to pass it to the main_cb or ''false'' to ignore it.
+
+The ''progress_cb'' receives the same arguments as its ''efl.Eio.moveFile()'' counterpart.
+
+The ''filter_cb'' is called for each member of the directory and receives as argument the Eio File operation handle and the directory entry information, the latter as an object with the following keys:
+
+   * ''type'' - The type of the entry (file, etc).
+   * ''path'' - The path for the entry.
+
+=== copyFile(source, dest, progress_cb, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function progress_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.copyFile(source, dest, progress_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Should be the name of the file to copy the data from.
+   * dest - Should be the name of the file to copy the data to.
+   * progress_cb - Callback called to know the progress of the copy.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+This function will copy a file from source to dest. It will try to use splice if possible, if not it will fallback to mmap/write. It will try to preserve access rights, but not user/group identification.
+
+The ''info'' argument to ''progress_cb'' is an object with the following keys:
+
+   * ''op'' - The operation being worked on.
+   * ''current'' - Current step in the I/O operation.
+   * ''max'' - Number of total steps to complete.
+   * ''percent'' - Percent done.
+   * ''source'' - Source of I/O operation.
+   * ''dest'' - Destination of I/O operation.
+
+=== init() ===
+
+Syntax
+
+<code javascript>
+efl.Eio.init();
+</code>
+
+Initializes the Eio subsystem.
+
+
+lsFile
+
+=== mkdirFile(path, mode, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.mkdirFile(path, mode, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - The directory path to create.
+   * mode - The permission to set, follow ''(mode & ~umask & 0777)''.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+Creates a new directory using the mode provided.
+
+=== moveDir(source, dest, filter_cb, progress_cb, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function filter_cb() {...};
+function progress_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.moveDir(source, dest, filter_cb, progress_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Should be the name of the directory to move the data from.
+   * dest - Should be the name of the directory to move the data to.
+   * filter_cb - Possible to deny the move of some files/directories.
+   * progress_cb - Callback called to know the progress of the move.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+Move a directory and its content asynchronously.
+
+This function will move a directory and all its content from source to dest. It will try first to rename the directory, if not it will try to use splice if possible, if not it will fallback to mmap/write. It will try to preserve access rights, but not user/group identity. Every file will be passed to the filter_cb, so it's your job to decide if you want to pass the file to the main_cb or not. Return ''true'' to pass it to the main_cb or ''false'' to ignore it.
+
+The ''progress_cb'' receives the same arguments as its ''efl.Eio.moveFile()'' counterpart.
+
+The ''filter_cb'' is called for each member of the directory and receives as argument the Eio File operation handle and the directory entry information, the latter as an object with the following keys:
+
+   * ''type'' - The type of the entry (file, etc).
+   * ''path'' - The path for the entry.
+
+<note important>
+If a rename occurs, the filter callback will not be called.
+</note>
+
+=== moveFile(source, dest, progress_cb, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function progress_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.moveFile(source, dest, progress_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Should be the name of the file to move the data from.
+   * dest - Should be the name of the file to move the data to.
+   * progress_cb - Callback called to know the progress of the move.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+This function will move a file from source to dest. It will try to use splice if possible, if not it will fallback to mmap/write. It will try to preserve access rights, but not user/group identification.
+
+The ''info'' argument to ''progress_cb'' is an object with the following keys:
+
+   * ''op'' - The operation being worked on.
+   * ''current'' - Current step in the I/O operation.
+   * ''max'' - Number of total steps to complete.
+   * ''percent'' - Percent done.
+   * ''source'' - Source of I/O operation.
+   * ''dest'' - Destination of I/O operation.
+
+openFile
+
+=== shutdown() ===
+
+Syntax
+
+<code javascript>
+efl.Eio.shutdown();
+</code>
+
+Shuts down the Eio subsystem.
+
+=== unlinkFile(path, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.unlinkFile(path, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - The directory path to unlink.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+This function will erase a file.
+
+=== unlinkDir(path, filter_cb, progress_cb, done_cb, error_cb) ===
+
+Syntax
+
+<code javascript>
+function filter_cb() {...};
+function progress_cb(operation, info) {...};
+function done_cb(operation) {...};
+function error_cb(operation, error) {...};
+var operation = efl.Eio.unlinkDir(path, dest, filter_cb, progress_cb, done_cb, error_cb);
+</code>
+
+Parameters
+
+   * path - Should be the name of the directory to destroy.
+   * filter_cb - Possible to deny the destruction of some files/directories.
+   * progress_cb - Callback called to know the progress of the move.
+   * done_cb - Callback called when the operation is completed.
+   * error_cb - Callback called from if something goes wrong.
+
+Return value
+
+   * object - A reference to the I/O operation as an Eio File object.
+
+This function will remove a directory and all its content. Every file will be passed to the filter_cb, so it's your job to decide if you want to pass the file to the main_cb or not. Return ''true'' to pass it to the main_cb or ''false'' to ignore it.
+
+The ''progress_cb'' receives the same arguments as its ''efl.Eio.moveFile()'' counterpart.
+
+The ''filter_cb'' is called for each member of the directory and receives as argument the Eio File operation handle and the directory entry information, the latter as an object with the following keys:
+
+   * ''type'' - The type of the entry (file, etc).
+   * ''path'' - The path for the entry.
+
+
+==== Eio File methods ====
+
+cancel
+check
+
+==== Eina File methods ====
+
+close
+
+==== Eio Monitor methods ====
+
+del
+getPath
+
+==== Event Handler methods ====
+
+del
