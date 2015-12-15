@@ -34,18 +34,25 @@ These constants represent the operations that can be done on files and directori
 
 ==== Functions ====
 
-addMonitor
-addEventMonitorDirectoryClosedHandler
-addEventMonitorDirectoryCreatedHandler
-addEventMonitorDirectoryDeletedHandler
-addEventMonitorDirectoryModifiedHandler
-addEventMonitorErrorHandler
-addEventMonitorFileClosedHandler
-addEventMonitorFileCreatedHandler
-addEventMonitorFileDeletedHandler
-addEventMonitorFileModifiedHandler
-addEventMonitorSelfDeleteHandler
-addEventMonitorSelfRenameHandler
+=== addMonitor(path) ===
+
+Syntax
+
+<code javascript>
+var monitor = efl.Eio.monitorAdd(path);
+</code>
+
+Parameters
+
+   * path - file/directory to monitor.
+
+Return value
+
+   * object - An Eio Monitor instance.
+
+This function will add the given path to its internal list of files to monitor. It utilizes the inotify mechanism introduced in kernel 2.6.13 for passive monitoring.
+
+These functions use the best available method to monitor changes on a specified directory or file. They send ecore events when changes occur, and they maintain internal refcounts to reduce resource consumption on duplicate monitor targets.
 
 === chmodFile(path, mode, done_cb, error_cb) ===
 
@@ -388,6 +395,39 @@ The ''filter_cb'' is called for each member of the directory and receives as arg
    * ''path'' - The path for the entry.
 
 
+==== Helper handler functions ====
+
+These functions provide syntatic sugar to create event handlers for monitored items. Each function creates a handler watching the respective monitor event, i.e. ''addEventMonitorFileClosedHandler'' will watch for ''efl.EIO.MONITOR_FILE_CLOSED'' events. They are related to ''efl.Ecore.Event.addHandler()''.
+
+Syntax
+
+<code javascript>
+function callback(eventType) {...};
+var handler = efl.Eio.addEventMonitor...Handler();
+</code>
+
+Parameters
+
+   * callback - The callback to be called when the event occurs.
+
+Return value
+
+   * object - An instance of a handler.
+
+Here are the functions
+
+   * ''efl.Eio.addEventMonitorDirectoryClosedHandler''
+   * ''efl.Eio.addEventMonitorDirectoryCreatedHandler''
+   * ''efl.Eio.addEventMonitorDirectoryDeletedHandler''
+   * ''efl.Eio.addEventMonitorDirectoryModifiedHandler''
+   * ''efl.Eio.addEventMonitorErrorHandler''
+   * ''efl.Eio.addEventMonitorFileClosedHandler''
+   * ''efl.Eio.addEventMonitorFileCreatedHandler''
+   * ''efl.Eio.addEventMonitorFileDeletedHandler''
+   * ''efl.Eio.addEventMonitorFileModifiedHandler''
+   * ''efl.Eio.addEventMonitorSelfDeleteHandler''
+   * ''efl.Eio.addEventMonitorSelfRenameHandler''
+
 ==== Eio File Operation methods ====
 
 === cancel() ===
@@ -424,13 +464,40 @@ Syntax
 einaFileObj.close();
 </code>
 
-Closes an file that was open through ''efl.Eio.openFile()''.
+Closes a file that was open through ''efl.Eio.openFile()''.
 
 ==== Eio Monitor methods ====
 
-del
-getPath
+=== del() ===
+
+Syntax
+
+<code javascript>
+monitorObj.del();
+</code>
+
+Deletes a path from the watched list.
+
+=== getPath() ===
+
+Syntax
+
+<code javascript>
+var path = monitorObj.getPath();
+</code>
+
+Return value
+
+   * string - The path being watched by the monitor.
 
 ==== Event Handler methods ====
 
-del
+=== del() ===
+
+Syntax
+
+<code javascript>
+handlerObj.del();
+</code>
+
+Deletes the given event handler.
