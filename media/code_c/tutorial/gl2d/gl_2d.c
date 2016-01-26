@@ -240,6 +240,9 @@ init_shaders(GLData *gld)
    Evas_GL_API *gl = gld->glapi;
 
    GLbyte vertex_shader[] =
+       "#ifdef GL_ES\n"
+       "precision mediump float;\n"
+       "#endif\n"
        "attribute vec4 a_position;\n"
        "attribute vec4 a_color;\n"
        "uniform mat4 u_mvp_mat;\n"
@@ -250,6 +253,9 @@ init_shaders(GLData *gld)
        "   v_color = a_color;\n"
        "}";
    GLbyte fragment_shader[] =
+       "#ifdef GL_ES\n"
+       "precision highp float;\n"
+       "#endif\n"
        "varying vec4 v_color;\n"
        "void main()\n"
        "{\n"
