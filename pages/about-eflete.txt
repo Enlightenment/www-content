@@ -6,14 +6,14 @@
 {{ :icon-eflete.png?nolink|}}
 
 {{:eflete-main.png?&200 |}}
-== What is Eflete? ==
+=== What is Eflete? ===
 
 Efl Edje Theme Editor is a rich graphical tool, that provide UI for edc markup.
 It is aimed to simplify creation and editing widgets styles. No one, for sure, want to learn EDC syntax. Eflete was
 designed with mind, that target users are not just programmers but also designers. Besides styles Eflete is also able
 to create and edit custom layouts. This is useful feature for developers which creates applications layouts.
 
-== Eflete projects ==
+=== Eflete projects ===
 {{:eflete-projects.png?&200 |}}
 There are a lot of already existed projects, which are use edc collections for theming or layouting. Or binaries, that
 compiled by edje_cc tool. For both cases Eflete has import wizards to help in converting existing files into projects,
@@ -23,23 +23,23 @@ required by Elementary library. User is free to modify those styles.
 It is possible to open existing project by File Selection tool. List of recently opened projects provides fast one-
 mouse-click selection interface.
 
-NOTE: Eflete creates a specific file for each opened edj or edc-file. More precisely - for new project or imported file
+<note>Eflete creates a specific file for each opened edj or edc-file. More precisely - for new project or imported file
 Eflete creates a folder with project name, than copy imported file and create specific file. This file has a .pro
-extension and Eflete used it for manipulations.
-
+extension and Eflete used it for manipulations.</note>
 
 Editor operates with binary edj files, but for developers, source code is the must have thing. Of course Eflete support
 exporting of the currently editing project into the *.edc files. Also it can be standalone group inside project. The
-export features could be found in main menu by path: File > Export as edc > Group (or Project). It is also
+export features could be found in main menu by path: File -> Export as edc -> Group (or Project). It is also
 possible to export resources, that is used inside project (or group). There is a shell script can be found inside
 folder, where data was exported to. It builds edc source code back to the binary file.
 
-== Resource management ==
+=== Resource management ===
+{{ :eflete-images.png?&200|}}
 Usually themes and layouts use a lot of images. Sometimes sounds, tones, fonts and other resources. Theme Editor include
 few manage tools, that provide natural way to add, delete or edit existed resources. It is also gives fast access to
 resource preview with additional info. Images, sounds, colorclasses and textblock style manager tools are represented as
 a pinned tabs.
-{{ :eflete-images.png?&200|}}
+
 Images and sounds could be added into project by using file selection dialog (it is possible to add a few files at the
 same time by holding Shift button and selecting necessary files in a dialog).  Images preview and info block (file
 name, format, resolution, etc.) will be displayed on selection. Also list of styles which are used in selected images
@@ -53,14 +53,15 @@ handle manually. Another useful feature - changeable color of background preview
 colors preview at the bottom of manager view. Second text resource manager responsible for manipulation with
 colorclasses values. It has mostly the same controls as in TextblockStyle manager.
 
-== Navigations ==
+=== Navigations ===
 {{:eflete-groups.png?&200 |}}
+{{ :eflete-parts.png?&200|}}
 All navigation controls are represented by a tree-view lists. There are two main areas: groups and parts/programs lists.
 The list of groups are placed on the left side of Eflete and holds all groups from loaded project. Items sorted
 alphabetically. On the top of navigation bar placed two icons, that provides ability to add new group into project or
 delete currently existing. In case of adding new group, simple dialog wizard will be shown. It will set name for  new
 group and chose source group if it is required to create copy or alias.
-{{ :eflete-parts.png?&200|}}
+
 Groups list structure is based on splitting group name by tokens, that separated one from another by '\' character. What
 kind of benefit from this way?  For example take the default Elementary theme. This theme contain a lot of groups with
 styles for elementary widgets and styles for the E20 environment. By splitting root tokens from widget styles (for
@@ -71,21 +72,21 @@ inside the groups navigation bar. There are two branches, that are visually sepa
 project.
 For comfortable visual navigation tree leafs has "document" icon and nodes are represented by a "folder" icon.
 
-
-{{ :eflete-navigation.png?&200|}}
 If it is all so good with groups organization, then what about parts and programs inside groups? Eflete provides
 navigation bar for primitives, that are stored inside groups. The primitives are Parts and Programs. They are placed on
 the right side of main work area as two root nodes. Controls, that placed at the top of navigation bar, makes possible
-to add new primitives or change order of parts inside group. Press ADD button to see listed  names of primitive types
+to add new primitives or change order of parts inside group.
+{{:eflete-navigation.png?&200 |}}
+Press ADD button to see listed  names of primitive types
 (part, state, item and program). Depending on selected context, some of entities might be disabled. For example: to add
 new state for existing part - select part name in list. Than, special wizard will guide you thru adding new primitives
 with necessary attributes, according to type of selected primitive.
 By selecting primitive item in list - attributes properties will be updated. By double-click on state name, user is able
 to switch Parts state. New state will be updated workspace view.
 
-NOTE: to explore tree - double-click on node or press on "right arrow" icon.
+<note tip>to explore tree - double-click on node or press on "right arrow" icon.</note>
 
-== Workspace ==
+=== Workspace ===
 
 Finally the main work area. Workspace is placed in the middle of Eflete window. It enables visual representation of
 group being edited. Many groups can be opened at the same time. The tab bar, placed above the workspace area, is used
@@ -97,7 +98,7 @@ it to change size via mouse. Another way is to usage spinners, they are placed o
 There are 3 possible behaviors, that can be demonstrated by workspace component: normal, code and demo. Lets describe
 them one by one.
 {{:eflete-normal-mode.png?&200 |}}
-Normal mode.
+==Normal mode==
 This mode is used to manipulate with group primitives on the development stage. All parts are represented on the
 workspace, including containers and spacers. Each of the non-visible primitives types has their own pattern and
 color. This makes possible to understand markup of group and dependencies between primitives. Text parts are
@@ -106,8 +107,8 @@ Ability to select primitives directly on workspace presented here, of course sti
 the part navigation panel. Selected part covered by the resizing control element, that change maximum size of
 primitive.
 
-{{:eflete-demo-mode.png?&200 |}}
-Demo mode.
+{{ :eflete-demo-mode.png?&200|}}
+==Demo mode==
 In comparing with a Normal mode where happens all implementation process, the Demo mode is the best way to see
 result. Objects that displayed in this mode will looks same as in runtime application.
 It is possible to type text into texts part or to set container parts content. Predefined widgets (button, check,
@@ -119,21 +120,21 @@ programs inside group are created they will be good to check reaction of the obj
 signals, that are possible to emit is exclude programs that depends from mouse events, because it is easier to click
 (or mouse in/out, double click and etc) on real object.
 
-IMPORTANT: Most of all Elementary widgets will be loaded as fully functional widgets. It means that behavior of the
+<note important>Most of all Elementary widgets will be loaded as fully functional widgets. It means that behavior of the
 loaded widget is depends on Elementary source code. Group will be loaded as usual layout in cases when this group is
 not a Elementary widget style or still unsupported widget. List of supported widgets for a demo mode will be shared
-later.
+later.</note>
 
 {{ :eflete-code-mode.png?&200|}}
-Code mode.
+==Code mode==
 It is mostly same as a Normal mode, except that it will display memo with Edc source code of currently editing
-group. Same code can be received by exporting current group into Edc project (File > Export as edc > Group).
+group. Same code can be received by exporting current group into Edc project (File -> Export as edc -> Group).
 Source code view supporting syntax highlighting and refreshing code accordingly to changes in the editing group.
 
-NOTE: Right now this mode is only for viewing code. As one of the big features planned to support Enventor library
-as a backend for edit group edc code directly. It should support most of features from Enventor.
+<note>Right now this mode is only for viewing code. As one of the big features planned to support Enventor library
+as a backend for edit group edc code directly. It should support most of features from Enventor.</note>
 
-==History==
+===History===
 {{:eflete-history.png?&200 |}}
 Because Eflete is a editor tool, it means that managing changes is a necessary. For each group separated change
 history is stored. To discover changes list, open tab "History" in the right part of main screen. Of course hotkeys
