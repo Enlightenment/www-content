@@ -8,110 +8,113 @@
   * stop: 2099-01-01
   * text: 
 This bugfix release improves on the 0.20.5 release and resolves a number of issues.
+
 **Note:** Wayland >= 1.10 is now required.
 
-= Changes =
+== Changes ==
 Carsten @raster Haitzler (2):
-      e - efm: fix op registry listener add and dont use eina_error
-      e xkbswitch: don't free layouts that are just pointed to in instances
+> e - efm: fix op registry listener add and dont use eina_error
+> e xkbswitch: don't free layouts that are just pointed to in instances
 
 Chris @devilhorns Michael (6):
-      update mailmap addresses
-      update mailmap addresses
-      add prototype functions for missing wl_data_offer interface
-      add prototype function for missing wl_seat interface
-      add prototype functions for missing wl_data_source interface
-      don't have to hook the ecore_evas resize callback here as that should     be handled by elm now
+> update mailmap addresses
+> update mailmap addresses
+> add prototype functions for missing wl_data_offer interface
+> add prototype function for missing wl_seat interface
+> add prototype functions for missing wl_data_source interface
+> don't have to hook the ecore_evas resize callback here as that should     be handled by elm now
 
 Derek @ManMower Foreman (20):
-      Ensure wayland clients haven't been deleted when processing callbacks
-      Remove wayland frame callbacks from subsurface cache on destruction
-      Fix xdg-shell destructors
-      Protect the wayland frame callback list from corruption
-      Use eina_list_merge instead of eina_list_move for wayland lists
-      Move pixmap free to client free from client destroy
-      Bump wayland version requirement
-      Remove wayland focus timer in delete callback
-      Add a NULL check in native_surface_init under wayland
-      Render deleted objects as long as they still have a pixmap
-      Track whether objects are on the post_updates list or not
-      Take an extra reference on wayland clients
-      Don't allow deleted wayland clients to set the cursor
-      Track whether a render is in progress or not
-      Rework wayland buffer handling
-      Remove wayland buffer reference
-      Re-enable window close animations for wayland
-      Stop copying all wayland buffers
-      Don't use e_pixmap_image_data_argb_convert for wayland images
-      Remove argb_convert for wayland buffers
+> Ensure wayland clients haven't been deleted when processing callbacks
+> Remove wayland frame callbacks from subsurface cache on destruction
+> Fix xdg-shell destructors
+> Protect the wayland frame callback list from corruption
+> Use eina_list_merge instead of eina_list_move for wayland lists
+> Move pixmap free to client free from client destroy
+> Bump wayland version requirement
+> Remove wayland focus timer in delete callback
+> Add a NULL check in native_surface_init under wayland
+> Render deleted objects as long as they still have a pixmap
+> Track whether objects are on the post_updates list or not
+> Take an extra reference on wayland clients
+> Don't allow deleted wayland clients to set the cursor
+> Track whether a render is in progress or not
+> Rework wayland buffer handling
+> Remove wayland buffer reference
+> Re-enable window close animations for wayland
+> Stop copying all wayland buffers
+> Don't use e_pixmap_image_data_argb_convert for wayland images
+> Remove argb_convert for wayland buffers
 
 Mike @zmike Blumenkrantz (42):
-      clamp minimum shelf size to 20px in shelf config
-      do not perform special case position adjustment for re_manage clients
-      do not clamp comp object input regions to 0,0
-      improve enforcement of shelf autohide-related window adjustment
-      reshuffle x11 comp init to cleanup on failure cases
-      pre-remove pixmap from x11 clients during del hook
-      enable comp object image data refresh if a dirty call is made with no damages
-      redo wayland pixmap ids to use monotonic decreasing ints with no collisions
-      remove some unused variables
-      make bgpreview create vdesk config dialog on mouse up instead of mouse down
-      do not decrement e_comp->new_clients for non-new clients during _e_client_eval
-      update winlist ui when using directional window selection
-      force changed when adding or removing keyboard layouts in config
-      disable emotion_shutdown during shutdown procedure
-      use strbufs instead of strcat in fwin navbars
-      do not set XCURSOR_PATH variable if re-setting existing value
-      remove security hole in e_start_main
-      remove DISPLAY usage from E_IPC_SOCKET value
-      remove multihead env var setting in e_exec
-      strcpy -> strncpy in evry files plugin
-      use strbuf instead of strcat in keybinding string synthesis
-      use strbuf instead of strcat in edgebinding string synthesis
-      use dblequal for double comparisons in edgebindings config
-      replace static buffer usage with binbuf in e_fm_ipc
-      prevent potential null deref during pager (plain) window drag
-      remove unused value in config profile saving
-      remove useless client_add handler in e_ipc
-      use uint instead of int for eina_list_count() return in cpufreq (trivial)
-      simplify static grab case statements
-      remove ipc command allowing arbitrary command execution by the compositor
-      simplify ipc socket creation
-      remove impossible null check in color dialog
-      do not add render updates during damage of deleted clients
-      don't directly use image data when creating a comp object mirror
-      Revert "send mouse out+in on desk flip end"
-      reject x11 client mouse-in events on comp object based on frame geometry
-      reverse ordering for x11 client mouse in NotifyVirtual and NotifyInferior details
-      only use x11 mouse out event if client has received mouse in previously
-      apply x11 mouse in event for clients using a job
-      apply x11 focus/unfocus using jobs
-      block re-unsetting of native surface for comp objects
-      always run client res changes in e_comp_canvas_update()
+> clamp minimum shelf size to 20px in shelf config
+> do not perform special case position adjustment for re_manage clients
+> do not clamp comp object input regions to 0,0
+> improve enforcement of shelf autohide-related window adjustment
+> reshuffle x11 comp init to cleanup on failure cases
+> pre-remove pixmap from x11 clients during del hook
+> enable comp object image data refresh if a dirty call is made with no damages
+> redo wayland pixmap ids to use monotonic decreasing ints with no collisions
+> remove some unused variables
+> make bgpreview create vdesk config dialog on mouse up instead of mouse down
+> do not decrement e_comp->new_clients for non-new clients during _e_client_eval
+> update winlist ui when using directional window selection
+> force changed when adding or removing keyboard layouts in config
+> disable emotion_shutdown during shutdown procedure
+> use strbufs instead of strcat in fwin navbars
+> do not set XCURSOR_PATH variable if re-setting existing value
+> remove security hole in e_start_main
+> remove DISPLAY usage from E_IPC_SOCKET value
+> remove multihead env var setting in e_exec
+> strcpy -> strncpy in evry files plugin
+> use strbuf instead of strcat in keybinding string synthesis
+> use strbuf instead of strcat in edgebinding string synthesis
+> use dblequal for double comparisons in edgebindings config
+> replace static buffer usage with binbuf in e_fm_ipc
+> prevent potential null deref during pager (plain) window drag
+> remove unused value in config profile saving
+> remove useless client_add handler in e_ipc
+> use uint instead of int for eina_list_count() return in cpufreq (trivial)
+> simplify static grab case statements
+> remove ipc command allowing arbitrary command execution by the compositor
+> simplify ipc socket creation
+> remove impossible null check in color dialog
+> do not add render updates during damage of deleted clients
+> don't directly use image data when creating a comp object mirror
+> Revert "send mouse out+in on desk flip end"
+> reject x11 client mouse-in events on comp object based on frame geometry
+> reverse ordering for x11 client mouse in NotifyVirtual and NotifyInferior details
+> only use x11 mouse out event if client has received mouse in previously
+> apply x11 mouse in event for clients using a job
+> apply x11 focus/unfocus using jobs
+> block re-unsetting of native surface for comp objects
+> always run client res changes in e_comp_canvas_update()
 
-=Tickets Addressed=
-* https://phab.enlightenment.org/T3152
-* https://phab.enlightenment.org/T3208
-* https://phab.enlightenment.org/T3210
+== Tickets Addressed ==
 
+  * https://phab.enlightenment.org/T3152
+  * https://phab.enlightenment.org/T3208
+  * https://phab.enlightenment.org/T3210
 
 As always, stay tuned to the latest infrequent E updates on the [[ http://e.zmike.ninja|release blog]].
 
+== Download ==
 
-=Download=
-| ** LINK ** | ** SHA256 **|
+^ ** LINK ** ^ ** SHA256 ** ^
 | [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.20.6.tar.gz | Enlightenment DR 0.20.6 GZIP]]|`b4404e15b4388c968d03179171ab82b41a856e473c2adda94ca726050e430a98` |
 | [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.20.6.tar.xz | Enlightenment DR 0.20.6 XZ]]|`f21fbace15b8ea0e47c7aeb16a3f4d1e8a41cb85bc0035491091518b0ca55085` |
+
 **Enlightenment:** for when you might otherwise find yourself being //too// productive.
 
-=Building and Dependencies=
+== Building and Dependencies ==
 
 If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
 
-# [[https://git.enlightenment.org/core/efl.git/tree/README|efl]]
-# [[https://git.enlightenment.org/core/elementary.git/tree/README|elementary]]
-# [[https://git.enlightenment.org/core/emotion_generic_players.git/tree/README|emotion_generic_players]]
-# [[https://git.enlightenment.org/core/evas_generic_loaders.git/tree/README|evas_generic_loaders]]
+  * [[https://git.enlightenment.org/core/efl.git/tree/README|efl]]
+  * [[https://git.enlightenment.org/core/elementary.git/tree/README|elementary]]
+  * [[https://git.enlightenment.org/core/emotion_generic_players.git/tree/README|emotion_generic_players]]
+  * [[https://git.enlightenment.org/core/evas_generic_loaders.git/tree/README|evas_generic_loaders]]
+
 **Note:** E20 depends on EFL **v1.15.2** or newer for X11 compositing and 1.17 for Wayland support.
 
 Below are links to the project pages for each of the dependencies:
