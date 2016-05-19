@@ -6,7 +6,7 @@ If you are coming here for Enlightenment (the desktop manager) on Mac OS X... so
 
 The Enlightenment Foundation's projects mostly targets Linux platforms, therefore not everything work on Mac OS X works the first time. This is due to:
   * the specificities of the Operating System (kernel+userland);
-  * the fact there are a very few Enlightened OS X users :'(
+  * the fact there are a very few Enlightened OS X users :-\
 
 This document explains how to install the EFL which are key projects to install anything else made by the Enlightenment Foundation.
 
@@ -66,6 +66,21 @@ You need to add ''autopoint'' to your ''$PATH'' if you want to use gettext. Writ
 export PATH="$(brew --prefix gettext)/bin:$PATH"
 </code>
 
+===== Modifying your linker flags =====
+
+<note>
+This step is **required** if you wish to build Mac OS X App Bundles (i.e. ''.app''). Otherwise, you can safely ignore this section.
+</note>
+
+''osx-packager'' is a python package initially developed at Open Wide to
+generate App Bundles and/or DMG files for easy distribution.
+It is available at [[https://git.enlightenment.org/devs/jayji/osx-packager.git]].
+
+To make it work, you **MUST** provide custom linker flags:
+
+<code bash>
+export LDFLAGS="-Wl,-headerpad_max_install_names ${LDFLAGS}"
+</code>
 
 ===== Configuring, Building and Installing EFL =====
 
@@ -79,7 +94,8 @@ make -j $(nproc) # Compile
 sudo make -j $(nproc) install # Install
 </code>
 
-======= Additional Resources ======
+
+======= Additional Resources =======
 
   * Enlightenment Developer Days 2016 Slides (EFL & Mac OS X slides): https://phab.enlightenment.org/F36470.
   * Internal Wiki Page. Contains “legacy” information: https://phab.enlightenment.org/w/osx/.
