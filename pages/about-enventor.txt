@@ -13,23 +13,24 @@ When your application requires realtime changeable layouts like animative ones, 
 
 === About Enventor ===
 
-{{:enventor-about.png?&200 |}}
-
 Basically, Enventor view is divided into 2 sections, live view and text view. The live view is the left pane of Enventor window and it previews images corresponding to the part objects of the EDC source code. The text view is the right pane of Enventor window and it contains the EDC source code. Thanks to its realtime updation mechanism, Enventor updates the preview on realtime while you are modifying the source code that helps you to see the result on the spot. Other than that, Enventor provides quite nice fancy functions for you. Before using Enventor, familiarize yourself with the following:
 
   * Enventor Layout
-  * Using Text View
-  * Using Live View
-  * Using EDC Navigator
+  * Text View
+  * Live View
+  * EDC Navigator
+  * File Browser
+  * File Tab
   * Interactive Feedback
   * Tool Functions
   * Configuration Setting
+  * Help
 
 ==Enventor Layout==
 
-The following figure illustrates each layout section of Enventor.
+{{ :enventor-layout.png?&350|}}
 
-{{ :enventor-layout.png?&400|}}
+The following figure illustrates each layout section of Enventor.
 
   * Red: Toolbar
   * Cyan: File browser
@@ -40,9 +41,9 @@ The following figure illustrates each layout section of Enventor.
   * White: File tab
   * Yellow: Status bar
 
-==Using Text View==
+==Text View==
 
-Enventor text view mainly supports text editing. You can write and modify EDC source code in this view. Once part sections are written in the text view and the modified EDC source code is saved, preview images corresponding to the part objects of the EDC source code are displayed in the live view. Basically, this text editor applys syntax color and auto indentation for EDC with its one standard rule. If you open an edc file which doesn't matched with Enventor indentation rule, Enventor applies its indentation automatically for your convenient. If you don't like it, then you can toggle off that function in Preference Setting (Setting -> Preference -> Auto Indentation)
+Enventor text view mainly supports text editing. You can write and modify EDC source code in this view. Once part sections are written in the text view and the modified EDC source code is saved, preview images corresponding to the part objects of the EDC source code are displayed in the live view. Basically, this text editor applys syntax color and auto indentation for EDC with its one standard rule. If you open an edc file which doesn't matched with Enventor indentation rule, Enventor applies its indentation automatically for your convenient. If you don't like it, then you can toggle off that function in Preference Setting (Setting -> Preference -> Auto Indentation).
 
 Furthermore, Text view supports the following fancy features:
 
@@ -56,13 +57,11 @@ When you enter a part of a reserved keyword, a contextual pop-up comes up with a
 
 You can also use auto-complete as context help. Press "Ctrl+Space" key combination to show a list of available keywords in the current cursor position context.
 
-{{ :enventor-candidate.png?&150|}}
+{{ :enventor-candidate.png?&300|}}
 
   * Candidate list
 
 The EDC script provides a variety of pre-defined keywords including part object types and program action types. To edit the keywords easier, text view supports a candidate list function for the keywords. When you double-click a keyword in the text view, the available candidate keyword list based on the context pops up. If you select one of the candidate keywords, the double-clicked keyword is changed to the selected one.
-
-{{ :enventor-slider.png?&150|}}
 
 The candidate list function also helps you to know the available range of the numeric values based on the context. The numeric candidate function shows the range of the available number. While you are dragging the slider, Enventor updates the preview instantly.
 
@@ -72,32 +71,55 @@ The candidate list function also helps you to know the available range of the nu
 
 To change color values, use the color selector tool. Each time when the "color" keyword is double-clicked, it displays the color selector.
 
-{{ :enventor-reference.png?&150|}}
+  * Zooming text
 
-* Reference popup
+Zooming in/out text view area changes the font size relative to the zoom factor. This action can be done by "Ctrl+Mouse Wheel Up/Down" or changed font size inside Text Editor Setting (Settings -> Text Editor -> Font Size).
 
-Reference popup is a kind of like a manual for the edc keyword that current cursor positioned on. It shows description of edc keywords for the beginners who don't familiar with the edc programming script language by understanding them its syntax. To pop up the reference, Press "F5" key after positioned the editor cursor on any edc keywords.
+==EDC Navigator==
 
-{{ :enventor-text-zoom.png?&150|}}
+{{:enventor-navigator.png?&200 |}}
 
-* Zooming text
+For easy navigation inside EDC block, Enventor provides tree-style visual tool, EDC Navigator. You can expand/contract tree items in it and understand the structure of your EDC layout at a glance.
 
-Zooming in/out text view area changes the font size relative to the zoom factor. This action can be done by "Ctrl+Mouse Wheel Up/Down" or changed font size inside Text Editor Setting. (Settings -> Text Editor -> Font Size)
+There are sets of blocks supported in the EDC Navigator.
+
+  * Group
+  * Part
+  * State
+  * Program
+
+To navigate the source code via EDC Navigator, Click an item in the list. The editor cursor in the text view changes its position to the name of selected item. In case of program items in the tree, they provide play/stop buttons to trigger/stop the program in the Enventor. This helps you to check the programs by seeing results directly in the tool.
+
+This tool can be enabled or disabled by "F10" hotkey.
 
 ==Interactive Feedback==
 
 Enventor has the following ways of providing interactive feedback information while you edit EDC source code.
 
-{{:enventor-highlight.png?&200 |}}
+{{ :enventor-highlight.png?&200|}}
 
-* Highlighting a part object
+  * Highlighting a part object
 
 To easily identify the part object that you modify, Enventor provides a function for highlighting the preview image corresponding to a part object. Click a part section in the EDC source code and the preview image corresponding to the part object in the view gets highlighted. Oppositely, clicking a part object of the preview image in the live view that moves the editor cursor to the corresponding edc line in the text view.
 
 {{:enventor-preview.png?&150 |}}
 
-* Image Preview
+  * Image Preview
 
-To easily check the image file you use, Text view provides a function for previewing image files. Write the image keyword and an image file name in the EDC source code and click the image keyword. The preview image pop-up of the clicked image file opens. If other image files are written in the previous or next line of the previewed image file, you can go to the preview image with "Up"/"Down" arrow keys or "Mouse Wheel".
+To easily check the image file you use, Text view provides a function for previewing image files. Write the image keyword and an image file name in the EDC source code and click the image keyword. The preview image pop-up of the clicked image file opens. If other image files are written in the previous or next line of the previewed image file, you can go to the preview image with "Up/Down" arrow keys or "Mouse Wheel".
 
+{{ :enventor-errors.png?&250|}}
 
+  * Detecting Errors
+
+To quickly notify about an EDC grammar error, Enventor compiles EDC source code in background and detects errors whenever EDC source code is saved. The detected errors are printed in the console view as well as the error code is highlighted with a underline in the text view. When it detects the errors, console view is activated automatically whereas it's deactivated if the errors were gone. This behavior is only enabled if the "Auto Hiding Console" mode were enabled which you can toggle on/off in the Preference Setting (Setting -> Preference -> Auto Hiding Console). You can change the size of the console view by dragging the pane divider between the text view and the console view. Moreover, you can toggle the console view visibility with the Hotkeys "Alt+Up" or "Alt+Down".
+
+{{:enventor-reference.png?&150|}}
+
+  * Reference popup
+
+Reference popup is a kind of like a manual for the edc keyword that current cursor positioned on. It shows description of edc keywords for the beginners who don't familiar with the edc programming script language by understanding them its syntax. To pop up the reference, Press "F5" key after positioned the editor cursor on any edc keywords.
+
+  * Highlighting the pair of braces.
+
+In case the cursor stays near the brace, the brace pair is highlighted. This makes visual recognition of the EDC block more natural.
