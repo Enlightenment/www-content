@@ -17,16 +17,15 @@ Basically, Enventor view is divided into 2 sections, live view and text view. Th
 
   * Enventor Layout
   * Text View
-  * Live View
   * EDC Navigator
+  * Interactive Feedback
+  * Live Edit
   * File Browser
   * File Tab
-  * Interactive Feedback
   * Tool Functions
   * Configuration Setting
-  * Help
 
-==Enventor Layout==
+===Enventor Layout===
 
 {{ :enventor-layout.png?&350|}}
 
@@ -41,7 +40,7 @@ The following figure illustrates each layout section of Enventor.
   * White: File tab
   * Yellow: Status bar
 
-==Text View==
+===Text View===
 
 Enventor text view mainly supports text editing. You can write and modify EDC source code in this view. Once part sections are written in the text view and the modified EDC source code is saved, preview images corresponding to the part objects of the EDC source code are displayed in the live view. Basically, this text editor applys syntax color and auto indentation for EDC with its one standard rule. If you open an edc file which doesn't matched with Enventor indentation rule, Enventor applies its indentation automatically for your convenient. If you don't like it, then you can toggle off that function in Preference Setting (Setting -> Preference -> Auto Indentation).
 
@@ -49,7 +48,8 @@ Furthermore, Text view supports the following fancy features:
 
 {{ :enventor-autocomplete.png?&150|}}
 
-  * Auto-complete
+
+==Auto-complete==
 
 To help you write EDC source code, Text view supports auto-complete function which lists the reserved keywords in a contextual pop-up.
 
@@ -57,27 +57,31 @@ When you enter a part of a reserved keyword, a contextual pop-up comes up with a
 
 You can also use auto-complete as context help. Press "Ctrl+Space" key combination to show a list of available keywords in the current cursor position context.
 
-{{ :enventor-candidate.png?&300|}}
 
-  * Candidate list
+{{:enventor-candidate.png?&300 |}}
+
+==Candidate list==
 
 The EDC script provides a variety of pre-defined keywords including part object types and program action types. To edit the keywords easier, text view supports a candidate list function for the keywords. When you double-click a keyword in the text view, the available candidate keyword list based on the context pops up. If you select one of the candidate keywords, the double-clicked keyword is changed to the selected one.
 
 The candidate list function also helps you to know the available range of the numeric values based on the context. The numeric candidate function shows the range of the available number. While you are dragging the slider, Enventor updates the preview instantly.
 
+
 {{ :enventor-colorselector.png?&150|}}
 
-  * Color selector
+==Color selector==
 
 To change color values, use the color selector tool. Each time when the "color" keyword is double-clicked, it displays the color selector.
 
-  * Zooming text
+
+==Zooming text==
 
 Zooming in/out text view area changes the font size relative to the zoom factor. This action can be done by "Ctrl+Mouse Wheel Up/Down" or changed font size inside Text Editor Setting (Settings -> Text Editor -> Font Size).
 
-==EDC Navigator==
 
-{{:enventor-navigator.png?&200 |}}
+===EDC Navigator===
+
+{{:enventor-navigator.png?&300 |}}
 
 For easy navigation inside EDC block, Enventor provides tree-style visual tool, EDC Navigator. You can expand/contract tree items in it and understand the structure of your EDC layout at a glance.
 
@@ -88,38 +92,92 @@ There are sets of blocks supported in the EDC Navigator.
   * State
   * Program
 
-To navigate the source code via EDC Navigator, Click an item in the list. The editor cursor in the text view changes its position to the name of selected item. In case of program items in the tree, they provide play/stop buttons to trigger/stop the program in the Enventor. This helps you to check the programs by seeing results directly in the tool.
+To navigate the source code through EDC Navigator, Click an item in the list. The editor cursor in the text view changes its position to the name of selected item. In case of program items in the tree, they provide play/stop buttons to trigger/stop the program in the Enventor. This helps you to check the programs by seeing results directly in the tool.
 
 This tool can be enabled or disabled by "F10" hotkey.
 
-==Interactive Feedback==
+
+===Interactive Feedback===
 
 Enventor has the following ways of providing interactive feedback information while you edit EDC source code.
 
-{{ :enventor-highlight.png?&200|}}
 
-  * Highlighting a part object
+{{ :enventor-highlight.png?&250|}}
+
+==Highlighting a part object==
 
 To easily identify the part object that you modify, Enventor provides a function for highlighting the preview image corresponding to a part object. Click a part section in the EDC source code and the preview image corresponding to the part object in the view gets highlighted. Oppositely, clicking a part object of the preview image in the live view that moves the editor cursor to the corresponding edc line in the text view.
 
-{{:enventor-preview.png?&150 |}}
 
-  * Image Preview
+{{:enventor-errors.png?&250 |}}
 
-To easily check the image file you use, Text view provides a function for previewing image files. Write the image keyword and an image file name in the EDC source code and click the image keyword. The preview image pop-up of the clicked image file opens. If other image files are written in the previous or next line of the previewed image file, you can go to the preview image with "Up/Down" arrow keys or "Mouse Wheel".
-
-{{ :enventor-errors.png?&250|}}
-
-  * Detecting Errors
+==Detecting Errors==
 
 To quickly notify about an EDC grammar error, Enventor compiles EDC source code in background and detects errors whenever EDC source code is saved. The detected errors are printed in the console view as well as the error code is highlighted with a underline in the text view. When it detects the errors, console view is activated automatically whereas it's deactivated if the errors were gone. This behavior is only enabled if the "Auto Hiding Console" mode were enabled which you can toggle on/off in the Preference Setting (Setting -> Preference -> Auto Hiding Console). You can change the size of the console view by dragging the pane divider between the text view and the console view. Moreover, you can toggle the console view visibility with the Hotkeys "Alt+Up" or "Alt+Down".
 
-{{:enventor-reference.png?&150|}}
 
-  * Reference popup
+{{ :enventor-preview.png?&150|}}
+
+==Image Preview==
+
+To easily check the image file you use, Text view provides a function for previewing image files. Write the image keyword and an image file name in the EDC source code and click the image keyword. The preview image pop-up of the clicked image file opens. If other image files are written in the previous or next line of the previewed image file, you can go to the preview image with "Up/Down" arrow keys or "Mouse Wheel".
+
+
+{{:enventor-reference.png?&150 |}}
+
+==Reference popup==
 
 Reference popup is a kind of like a manual for the edc keyword that current cursor positioned on. It shows description of edc keywords for the beginners who don't familiar with the edc programming script language by understanding them its syntax. To pop up the reference, Press "F5" key after positioned the editor cursor on any edc keywords.
 
-  * Highlighting the pair of braces.
+
+==Highlighting the pair of braces==
 
 In case the cursor stays near the brace, the brace pair is highlighted. This makes visual recognition of the EDC block more natural.
+
+
+===Live Edit===
+
+{{:enventor-liveedit1.png?&250 |}}
+
+Enventor also provides an another method called Live Edit function to add part objects easier. Click one of part object buttons in the tools to activate Live Edit function. After that, you can add a part object using the Live Edit contextual pop-up and chagne the position and size of the part object by dragging. Once you confirmed the new part, the code snippet with regards the new part will be inserted in the text editor. While the Live Edit function is activated, the text view is disabled.
+
+{{ :enventor-liveedit2.png?&150|}}
+
+==Adding a new part object==
+
+The tools contains 6 frequently-used part type buttons (Rect, Text, Image, Swallow, Textblock and Spacer). Click one required part type button. The corresponding part object will be appeared in the live view.
+
+
+{{ :enventor-liveedit3.png?&150|}}
+
+==Setting position and size==
+
+The position and size of the part object based on pixels are displayed in the center of the part object preview image. The relative position of the part object is displayed on the left top box and on the right bottom box.
+
+The position and size of the part object can be changed by dragging each control points. These control points are placed in each edge of part object. If you want to move the part object only, you can drag the object itself. If you want to move the object position by 1 pixel, Use arrow keys "Up/Down/Left/Right".
+
+
+{{ :enventor-liveedit4.png?&150|}}
+
+==Auto-Aligning==
+
+In default, Live Edit provides auto aligning function which helps you place a control point, which you are dragging, near other parts. If the auto-aligning is activated, it highlights a control line with red color if it's attached to an other part. Thanks to this function, you will be able to construct a layout quick and easily. By some needs, If you don't want this auto aligning function, you could disable this instantly by pressing a hotkey, "Ctrl" while you are dragging a control point.
+
+
+{{ :enventor-liveedit5.png?&150|}}
+
+==Fixed Size==
+
+Each part in a layout can be constructed with relative or fixed size. A part with the relative size will expand or contract its size to keep up other parts position and size or a layout size. On the other hand, if the part is constructed with the fixed size, it's size won't be changed regardless of the other parts or the layout size. When Live Edit mode is activated, you can find a fixed size tool in the bottom of the live view. You can check the fixed size for width and height if you really mean this new part's width and height is fixed. If you need more information about scalability concept in EDC, Please see [[https://www.enlightenment.org/program_guide/scalability/scalability_using_edge|Scalability Using Edje]]
+
+
+{{ :enventor-liveedit6.png?&150|}}
+
+==Relative Positioning==
+
+The other way to the fixed size, you can set a new part's position and size relative to other parts. Drag a control point to the edge of other existing parts. Once you mouse up the button, a contextual pop-up pops up. This popup displays a list of the candidate parts that you can choose one as the relative to the x coordinate and y coordinate to this new part.
+
+
+==Confirmation/Cancellation==
+
+After confirmed the new part, Pressing "Enter" or double-click mouse button to insert the part object in your layout. Live Edit mode will be finished and text view will be enabled again. Anytime if you'd like to cancel the new part in the Live Edit mode, press "Esc" or "Backspace" key.
