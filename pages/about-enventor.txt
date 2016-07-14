@@ -5,13 +5,13 @@
 
 {{:icon-enventor.png?nolink |}}
 
+===What is Enventor?===
+
 Enventor, which is also known as EDC (Edje Data Collections) Editor, is a EDC script editor tool that supports text edit function and preview function for the EDC source code.
 
 {{ :enventor-main.png?&300|}}
 
 When your application requires realtime changeable layouts like animative ones, then you could write those layout design using EDC script, compile it to EDJ format file then import it into your application using a UI layout. But not only for that, you can write any kinds of design layouts from simple to complex ones if you use EDC script with Enventor. Enventor helps you write EDC script code eaiser and finish your work faster. If you are not familiar with EDC programming, then please visit to next, [[https://www.enlightenment.org/program_guide/edje_pg|Edje Programming Guide]] for more information.
-
-=== About Enventor ===
 
 Basically, Enventor view is divided into 2 sections, live view and text view. The live view is the left pane of Enventor window and it previews images corresponding to the part objects of the EDC source code. The text view is the right pane of Enventor window and it contains the EDC source code. Thanks to its realtime updation mechanism, Enventor updates the preview on realtime while you are modifying the source code that helps you to see the result on the spot. Other than that, Enventor provides quite nice fancy functions for you. Before using Enventor, familiarize yourself with the following:
 
@@ -20,10 +20,11 @@ Basically, Enventor view is divided into 2 sections, live view and text view. Th
   * EDC Navigator
   * Interactive Feedback
   * Live Edit
+  * Workspace
   * Tool Functions
   * Status View
   * Configuration Setting
-  * Commandline Usage
+  * Command Line Usage
 
 ===GUI Layout===
 
@@ -76,7 +77,7 @@ To change color values, use the color selector tool. Each time when the "color" 
 
 ==Zooming text==
 
-Zooming in/out text view area changes the font size relative to the zoom factor. This action can be done by "Ctrl+Mouse Wheel Up/Down" or changed font size inside Text Editor Setting (Settings -> Text Editor -> Font Size).
+Zooming in/out text view area changes the font size relative to the zoom factor. This action can be done by "Ctrl+Mouse Wheel Up/Down" while you placed the mouse cursor in the text area or changed font size inside Text Editor Setting (Settings -> Text Editor -> Font Size).
 
 
 ===EDC Navigator===
@@ -141,7 +142,7 @@ In case the cursor stays near the brace, the brace pair is highlighted. This mak
 
 Enventor also provides an another method called Live Edit function to add part objects easier. Click one of part object buttons in the tools to activate Live Edit function. After that, you can add a part object using the Live Edit contextual pop-up and chagne the position and size of the part object by dragging. Once you confirmed the new part, the code snippet with regards the new part will be inserted in the text editor. While the Live Edit function is activated, the text view is disabled.
 
-{{ :enventor-liveedit2.png?&150|}}
+{{:enventor-liveedit2.png?&150 |}}
 
 ==Adding a new part object==
 
@@ -185,27 +186,53 @@ After confirmed the new part, Pressing "Enter" or double-click mouse button to i
 
 Enventor provides useful tool functions. The following table shows the tool buttons at the top of the Enventor window and their functions. If you want to toggle the tools itself, use a hotkey "F7".
 
-^Button                                            ^ Function                                                                              ^Hotkey  ^
-|{{:enventor-tool-ph.png?&20 |}} Part Highlighting |Show a highlight effect on the selected part in the live view                          |Ctrl+H  |
-|Dummy Parts                                       |Display virtual images for the swallow and spacer parts                                |Ctrl+U  |
-|Wireframes                                        |Display wireframes to identify the parts boundaries                                    |Ctrl+W  |
-|Mirror Mode                                       |Invert the layout horizontally and review the designed layout in RTL, LTR settings.    |Ctrl+M  |
-|Add a Rect                                        |Add a Rect part to the live view.                                                      |        |
-|Add a Text                                        |Add a Text part to the live view.                                                      |        |
-|Add a Image                                       |Add a Image part to the live view.                                                     |        |
-|Add a Swallow                                     |Add a Swallow part to the live view.                                                   |        |
-|Add a Textblock                                   |Add a Textblock part to the live view.                                                 |        |
-|Add a Spacer                                      |Add a Spacer part to the live view.                                                    |        |
-|Save the file                                     |Save the current script to a file.                                                     |Ctrl+S  |
-|Undo text                                         |Undo text changes.                                                                     |Ctrl+Z  |
-|Redo text                                         |Redo text changes.                                                                     |Ctrl+R  |
-|Find/Replace                                      |Find or replace text.                                                                  |Ctrl+F  |
-|Go to line                                        |Open the go to window to move the cursor position.                                     |Ctrl+L  |
-|Line number                                       |Display the script line numbers.                                                       |F5      |
-|Insert a code snippet                             |Insert the best code corresponding the current editor context.                         |Ctrl+T  |
-|Console box                                       |Display the console box which shows EDC build logs.                                    |Alt+Down|
-|File browser                                      |Display the file browser which shows a file list in current workspace.                 |F9      |
-|EDC navigator                                     |Display the EDC navigator which shows the current group heirarchy tree.                |F10     |
-|File tab                                          |Display the file tab in the bottom area.                                               |F11     |
-|Enventor menu                                     |Open the Enventor main menu.                                                           |Esc     |
+^Icon                                  ^ Function                                                                              ^Hotkey  ^
+|{{:enventor-tool-high.png?&15 |}}     |Show a highlight effect on the selected part in the live view                          |Ctrl+H  |
+|{{:enventor-tool-dummy.png?&15 |}}    |Display virtual images for the swallow and spacer parts                                |Ctrl+U  |
+|{{:enventor-tool-wire.png?&15 |}}     |Display wireframes to identify the parts boundaries                                    |Ctrl+W  |
+|{{:enventor-tool-mirror.png?&15 |}}   |Invert the layout horizontally and review the designed layout in RTL, LTR settings.    |Ctrl+M  |
+|{{:enventor-tool-rect.png?&15 |}}     |Add a Rect part to the live view.                                                      |        |
+|{{:enventor-tool-text.png?&15 |}}     |Add a Text part to the live view.                                                      |        |
+|{{:enventor-tool-image.png?&15 |}}    |Add a Image part to the live view.                                                     |        |
+|{{:enventor-tool-swallow.png?&15 |}}  |Add a Swallow part to the live view.                                                   |        |
+|{{:enventor-tool-textblock.png?&15 |}}|Add a Textblock part to the live view.                                                 |        |
+|{{:enventor-tool-spacer.png?&15 |}}   |Add a Spacer part to the live view.                                                    |        |
+|{{:enventor-tool-save.png?&15 |}}     |Save the current script to a file.                                                     |Ctrl+S  |
+|{{:enventor-tool-undo.png?&15 |}}     |Undo text changes.                                                                     |Ctrl+Z  |
+|{{:enventor-tool-redo.png?&15 |}}     |Redo text changes.                                                                     |Ctrl+R  |
+|{{:enventor-tool-find.png?&15 |}}     |Find or replace text.                                                                  |Ctrl+F  |
+|{{:enventor-tool-goto.png?&15 |}}     |Open the go to window to move the cursor position.                                     |Ctrl+L  |
+|{{:enventor-tool-line.png?&15 |}}     |Display the script line numbers.                                                       |F5      |
+|{{:enventor-tool-code.png?&15 |}}     |Insert the best code corresponding the current editor context.                         |Ctrl+T  |
+|{{:enventor-tool-console.png?&15 |}}  |Display the console box which shows EDC build logs.                                    |Alt+Down|
+|{{:enventor-tool-browser.png?&15 |}}  |Display the file browser which shows a file list in current workspace.                 |F9      |
+|{{:enventor-tool-navi.png?&15 |}}     |Display the EDC navigator which shows the current group heirarchy tree.                |F10     |
+|{{:enventor-tool-tab.png?&15 |}}      |Display the file tab in the bottom area.                                               |F11     |
+|{{:enventor-tool-menu.png?&15 |}}     |Open the Enventor main menu.                                                           |Esc     |
+
+
+===Status View===
+
+Enventor displays status view on the bottom area. This status view provides extra functions. At times, it displays useful informative messages for controls. Most of times, you could change live view zoom level and its size. Otherwise, you could check the current mouse position, a name of focused group and text editor cursor line position. Please check the followings for more details. If you want to toggle the status view itself, use a hotkey "F8".
+
+
+{{ :enventor-view_scale.png?&150|}}
+
+==Zooming View==
+
+To change the zoom value, you can use a zoom level controller (Slider). Zooming action can be done by "Ctrl+Mouse Wheel Up/Down" while you place the mouse cursor in the live view area also. The range of the zoom is from 0.1x to 5.0x.
+
+
+{{:enventor-view_size.png?&150 |}}
+
+==View Size==
+
+It's possible to change the live view size. Click the resize expand button to display the slider to manipulate it. Also, you can swap the width and height of the live view at once. This swap function can be used for simulating some situations such as mobile device portrait/landscape modes.
+
+
+===Command Line Usages===
+
+You could launch Enventor with commandline. Please see the following:
+
+  *Usage: enventor [input file] [output file] [-t] [-i image path] [-s sound path] [-f font path] [-d data path] [-w workspace]
 
