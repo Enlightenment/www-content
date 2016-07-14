@@ -5,7 +5,7 @@
 
 {{:icon-enventor.png?nolink |}}
 
-Enventor, which is also known as EDC (Edje Data Collections) Editor, is a useful EDC script editor tool that supports text edit function and preview function for the EDC source code.
+Enventor, which is also known as EDC (Edje Data Collections) Editor, is a EDC script editor tool that supports text edit function and preview function for the EDC source code.
 
 {{ :enventor-main.png?&300|}}
 
@@ -20,25 +20,25 @@ Basically, Enventor view is divided into 2 sections, live view and text view. Th
   * EDC Navigator
   * Interactive Feedback
   * Live Edit
-  * File Browser
-  * File Tab
   * Tool Functions
+  * Status View
   * Configuration Setting
+  * Commandline Usage
 
-===Enventor Layout===
+===GUI Layout===
 
 {{ :enventor-layout.png?&350|}}
 
 The following figure illustrates each layout section of Enventor.
 
-  * Red: Toolbar
+  * Red: Tools
   * Cyan: File browser
   * Green: Live view
   * Blue: Text view
   * Orange: EDC navigator
   * Purple: Console view
   * White: File tab
-  * Yellow: Status bar
+  * Yellow: Status
 
 ===Text View===
 
@@ -81,7 +81,7 @@ Zooming in/out text view area changes the font size relative to the zoom factor.
 
 ===EDC Navigator===
 
-{{:enventor-navigator.png?&300 |}}
+{{ :enventor-navigator.png?&300|}}
 
 For easy navigation inside EDC block, Enventor provides tree-style visual tool, EDC Navigator. You can expand/contract tree items in it and understand the structure of your EDC layout at a glance.
 
@@ -137,7 +137,7 @@ In case the cursor stays near the brace, the brace pair is highlighted. This mak
 
 ===Live Edit===
 
-{{:enventor-liveedit1.png?&250 |}}
+{{ :enventor-liveedit1.png?&250|}}
 
 Enventor also provides an another method called Live Edit function to add part objects easier. Click one of part object buttons in the tools to activate Live Edit function. After that, you can add a part object using the Live Edit contextual pop-up and chagne the position and size of the part object by dragging. Once you confirmed the new part, the code snippet with regards the new part will be inserted in the text editor. While the Live Edit function is activated, the text view is disabled.
 
@@ -148,8 +148,6 @@ Enventor also provides an another method called Live Edit function to add part o
 The tools contains 6 frequently-used part type buttons (Rect, Text, Image, Swallow, Textblock and Spacer). Click one required part type button. The corresponding part object will be appeared in the live view.
 
 
-{{ :enventor-liveedit3.png?&150|}}
-
 ==Setting position and size==
 
 The position and size of the part object based on pixels are displayed in the center of the part object preview image. The relative position of the part object is displayed on the left top box and on the right bottom box.
@@ -157,21 +155,21 @@ The position and size of the part object based on pixels are displayed in the ce
 The position and size of the part object can be changed by dragging each control points. These control points are placed in each edge of part object. If you want to move the part object only, you can drag the object itself. If you want to move the object position by 1 pixel, Use arrow keys "Up/Down/Left/Right".
 
 
-{{ :enventor-liveedit4.png?&150|}}
+{{ :enventor-liveedit3.png?&150|}}
 
 ==Auto-Aligning==
 
 In default, Live Edit provides auto aligning function which helps you place a control point, which you are dragging, near other parts. If the auto-aligning is activated, it highlights a control line with red color if it's attached to an other part. Thanks to this function, you will be able to construct a layout quick and easily. By some needs, If you don't want this auto aligning function, you could disable this instantly by pressing a hotkey, "Ctrl" while you are dragging a control point.
 
 
-{{ :enventor-liveedit5.png?&150|}}
+{{:enventor-liveedit4.png?&150 |}}
 
 ==Fixed Size==
 
 Each part in a layout can be constructed with relative or fixed size. A part with the relative size will expand or contract its size to keep up other parts position and size or a layout size. On the other hand, if the part is constructed with the fixed size, it's size won't be changed regardless of the other parts or the layout size. When Live Edit mode is activated, you can find a fixed size tool in the bottom of the live view. You can check the fixed size for width and height if you really mean this new part's width and height is fixed. If you need more information about scalability concept in EDC, Please see [[https://www.enlightenment.org/program_guide/scalability/scalability_using_edge|Scalability Using Edje]]
 
 
-{{ :enventor-liveedit6.png?&150|}}
+{{ :enventor-liveedit5.png?&150|}}
 
 ==Relative Positioning==
 
@@ -181,3 +179,33 @@ The other way to the fixed size, you can set a new part's position and size rela
 ==Confirmation/Cancellation==
 
 After confirmed the new part, Pressing "Enter" or double-click mouse button to insert the part object in your layout. Live Edit mode will be finished and text view will be enabled again. Anytime if you'd like to cancel the new part in the Live Edit mode, press "Esc" or "Backspace" key.
+
+
+===Tool Functions===
+
+Enventor provides useful tool functions. The following table shows the tool buttons at the top of the Enventor window and their functions. If you want to toggle the tools itself, use a hotkey "F7".
+
+^Button                                            ^ Function                                                                              ^Hotkey  ^
+|{{:enventor-tool-ph.png?&20 |}} Part Highlighting |Show a highlight effect on the selected part in the live view                          |Ctrl+H  |
+|Dummy Parts                                       |Display virtual images for the swallow and spacer parts                                |Ctrl+U  |
+|Wireframes                                        |Display wireframes to identify the parts boundaries                                    |Ctrl+W  |
+|Mirror Mode                                       |Invert the layout horizontally and review the designed layout in RTL, LTR settings.    |Ctrl+M  |
+|Add a Rect                                        |Add a Rect part to the live view.                                                      |        |
+|Add a Text                                        |Add a Text part to the live view.                                                      |        |
+|Add a Image                                       |Add a Image part to the live view.                                                     |        |
+|Add a Swallow                                     |Add a Swallow part to the live view.                                                   |        |
+|Add a Textblock                                   |Add a Textblock part to the live view.                                                 |        |
+|Add a Spacer                                      |Add a Spacer part to the live view.                                                    |        |
+|Save the file                                     |Save the current script to a file.                                                     |Ctrl+S  |
+|Undo text                                         |Undo text changes.                                                                     |Ctrl+Z  |
+|Redo text                                         |Redo text changes.                                                                     |Ctrl+R  |
+|Find/Replace                                      |Find or replace text.                                                                  |Ctrl+F  |
+|Go to line                                        |Open the go to window to move the cursor position.                                     |Ctrl+L  |
+|Line number                                       |Display the script line numbers.                                                       |F5      |
+|Insert a code snippet                             |Insert the best code corresponding the current editor context.                         |Ctrl+T  |
+|Console box                                       |Display the console box which shows EDC build logs.                                    |Alt+Down|
+|File browser                                      |Display the file browser which shows a file list in current workspace.                 |F9      |
+|EDC navigator                                     |Display the EDC navigator which shows the current group heirarchy tree.                |F10     |
+|File tab                                          |Display the file tab in the bottom area.                                               |F11     |
+|Enventor menu                                     |Open the Enventor main menu.                                                           |Esc     |
+
