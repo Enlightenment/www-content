@@ -363,16 +363,10 @@ void image_blur(Evas_Object *img)
          avg_color[1] /= blur_pixel_cnt;
          avg_color[2] /= blur_pixel_cnt;
 
-         for (xx = x; (xx < x + blur_size) && (xx < w); xx++)
-         {
-            for (yy = y; (yy < y + blur_size) && (yy < h); yy++)
-            {
-               int idx = (yy * w * 4) + (xx * 4);
-               img_src[idx + 0] = avg_color[0];
-               img_src[idx + 1] = avg_color[1];
-               img_src[idx + 2] = avg_color[2];
-            }
-         }
+         int idx = (y * w * 4) + (x * 4);
+         img_src[idx + 0] = avg_color[0];
+         img_src[idx + 1] = avg_color[1];
+         img_src[idx + 2] = avg_color[2];
       }
    }
    evas_object_image_data_update_add(img, 0, 0, w, h);
