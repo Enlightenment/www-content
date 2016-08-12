@@ -1,0 +1,58 @@
+~~Title: Getting Started on Themed and Edje~~
+
+==== EDC File Basics ====
+
+Let's start with a "Hello World" example. This is going to be in verbose mode to make it as easy as possible to break down before we start making it more compact. Start with a source "EDC" file like below:
+
+<code edc example.edc>
+collections {
+  group {
+    name: "example";
+    parts {
+      part {
+        name: "background";
+        type: RECT;
+        description {
+          state: "default" 0.0;
+          color: 64 64 64 255;
+        }
+      }
+      part {
+        name: "label";
+        type: TEXT;
+        description {
+          state: "default" 0.0;
+          color: 255 255 255 255;
+          text {
+            font: "Sans";
+            size: 10;
+            text: "Hello World";
+          }
+        }
+      }
+    }
+  }
+}
+</code>
+
+Compiling it is easy. The compiled EDJ file is portable. It can be used on any OS and any architecture. It's basically a structured archive of all of the source material packed into a single file that is compressed and usable "as-is" at runtime without installation or unpacking.
+
+<code bash>
+edje_cc example.edc
+</code>
+
+Now a quick way to see your result is with the ''edje_player'' tool that will load a specific group in a file or just use the first it finds. In our case here we have only a single group so it should load just this group within the collections and let us see it:
+
+<code bash>
+edje_player example.edj
+</code>
+
+You now should see something like this in a window:
+
+{{edje-hello.png?nolink}}
+
+The window will be resizable, so resize it to see what happens when your group is resized too.
+
+----
+
+~~DISCUSSIONS~~
