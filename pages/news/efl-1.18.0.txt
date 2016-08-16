@@ -1,0 +1,198 @@
+=== Enlightenment Foundation Libraries 1.18 Release ===
+  * //2016-08-16 - by Stefan Schmidt//
+
+After six months of development work we are proud to announce the release of
+version 1.18 of the Enlightenment Foundation Libraries. In these six months we got
+over 3300 commits from 105 authors. Around 2300 more compared to the last release
+(which took half the time, to be fair). Great job everyone! Some highlights are listed below.
+
+== Download ==
+
+| LINK | SHA256 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.18.0.tar.gz  | efl-1.18.0.tar.gz ]] |  a90255e97f6b768883276d3e04946798c31bc9bf57da12702ca7c3f4a401ec9f |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.18.0.tar.xz  | efl-1.18.0.tar.xz ]] | 06a0bbf5c28f96731b115b0adfa11374d07beb983ae4612ed25b34f4ab5cbf9e |
+
+----
+
+=== What's New ===
+
+Even if we had only six months a lot has happened during the 1.18 release cycle.
+We only cover some highlights here. For the full list please look at the NEWS file,
+if you are interested in the details. As usual we have been working on fixing bugs,
+optimising our code for speed and memory footprint and adding new features.
+
+== Library Merges ==
+The biggest item from a user perspective is the merge of all our remaining libraries into
+EFL. We started this effort with the 1.8 and now concluding it in the 1.18 release cycle
+a few years later.
+We merged the Elementary widget toolkit as well as our evas generic loaders and
+emotion generic players packages into the EFL source tree and will from 1.18 onwards
+provide one git tree and one set of tarball releases only. 
+
+== Interfaces Ground Work for a New API ==
+All the work going into Eo and Eolian have been the ground work for our new API. Based
+on the Eo object system and using abstracted eo files to generate C code and bindings
+with Eolian.
+The last big missing piece is defining the interfaces and API's in these eo files. A lot of work
+have been done in this regard during this release cycle. A lot interfaces and API's have
+been designed and common code shared between the current and upcoming API's.
+Its not fully ready yet so it is still hidden as EO or beta API.
+
+== Wayland, DRM and Input ==
+With Elput we introduced a new library for input handling based on libinput. Elput is
+mainly used by the Wayland backend right now. The Wayland drag & drop supported
+received cancel as well as multi-layer support and was updated to version 3 of the protocol.
+Ecore_Drm2 was introduced to overcome the shortcomings of ecore_drm and our internal
+code as well as Enlightenment have already been ported over.
+Furthermore we implemented an extension to support session recovery in Wayland that allows
+EFL applications to survive a compositor restart.
+
+== EO and Eolian ==
+Together with the work on EFL interfaces Eolian and Eo gained some new functionality.
+Eolian got a new typesystem API and added support for static and terminated arrays, a
+stringshare builtin and hot events.
+Eo had some more syntax changes but should hopefully be settled down now. We kept it
+in beta for this release only to allow for flexibility regarding our unfinished EFL interface work.
+
+== EFL ==
+EFL gained a virtual path subsystem to handle paths like ~/file.jpg
+or in the future also paths like https://blah.com/file.jpg to be looked up.
+
+== Bindings ==
+With efl-js we now have JavaScript eolian bindings available. These allows us to run
+with Node.JS, libv8 or libuv.
+
+== Elementary ==
+Elementary saw a lot of smaller fixes and improvements during this cycle. Real-time file name
+search in entries in the file selector,  animated and accelerated wheel in scroller and a
+colorclass editor.
+But we also added two new widgets. Elm code, which is very useful for code editing in IDEs
+like EDI, and the nstate widget which re-factors some existing code like the check widget.
+
+== FDO Icon Theme ==
+On the visual side a lot work has gone into providing a FreeDesktop.org complient icon theme.
+We had to fill some gaps on and updated existing icons as well. This should give a more
+pleasant visual experience on the desktop and in applications. 
+
+
+== Portability (Windows, MacOSX, OpenBSD)==
+To further improve our Windows support we added Windows specific copy & paste
+as well as cursor support during this release.
+The Cocoa backend for MacOSX received various fixes and was marked as stable to be used.
+We also improved our thread and semaphore usage for OpenBSD which fixed a few problems
+on these systems e.g. with edje_cc.
+
+== EWebkit ==
+Together with this release we are happy to announce that the EWebkit team is doing a
+[[ https://github.com/Gyuyoung/ewebkit/archive/ewebkit-1.18.zip | release]] with their work matching the efl 1.18.
+It contains various webkit core as well as EWebkit specific enhancements. See the
+[[ https://github.com/Gyuyoung/ewebkit/blob/ewebkit-1.18/NEWS | NEWS file]] for details and the [[ http://www.ewebkit.org | http://www.ewebkit.org ]] page for further instructions on
+building. We hope to keep future releases of EWebkit aligned with the EFL release schedule.
+
+== Edje ==
+
+We found a consistency bug with swallows where the *pass_events* property (which is the
+inverse of the *mouse_events* flag) was controlled by the theme correctly (explicitly) but
+*repeat_events* was only "ad-hoc" controlled, not as it should be. It was only set to TRUE
+*IF* the Edje file set it to TRUE, but was otherwise left alone. This inconsistency was not
+intended nor is it obvious behavior given the behavior of all other properties of a swallowed
+object that are now controlled FULLY by Edje (visibility, pass events, geometry, stacking, ...).
+So this has changed in 1.18 and now the *repeat_events* property is fully controlled by the
+Edje file (it's EDC source), with of course the default being FALSE.
+
+----
+
+=== Statistics ===
+
+(git log --since="Tue Feb 2 10:24:12 2016 +0100" --pretty=oneline v1.17.0..v1.18.0 | wc -l)
+Number of commits in 1.18: 3364
+Number of commits in 1.17: 1026
+
+(git shortlog --since="Tue Feb 2 10:24:12 2016 +0100" -ns v1.17.0..v1.18.0 | wc -l)
+Number of authors in 1.18: 105
+Number of authors in 1.17: 74
+
+The next one is not very useful for this release as it includes the files from the merges of
+the three other repos we did during this cycle.
+(git diff --stat v1.17.0..v1.18.0 | tail -1)  
+5072 files changed, 1149591 insertions(+), 87002 deletions(-) in 1.18
+930 files changed, 112975 insertions(+), 64377 deletions(-) in 1.17
+
+----
+
+===Building and Dependencies===
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please refer to the README for a full list of dependencies, explanations on configure flags and other relevant information. Default dependencies are:
+
+  * bullet
+  * libpng
+  * libjpeg
+  * gstreamer (1.x, 0.10 support optional. Ensure all codecs you want are installed.)
+  * zlib
+  * luajit (lua 5.1 or 5.2 support optional)
+  * libtiff
+  * openssl
+  * curl
+  * dbus
+  * libc
+  * fontconfig
+  * freetype2
+  * fribidi
+  * libpulse
+  * libsndfile
+  * libx11
+  * libxau
+  * libxcomposite
+  * libxdamage
+  * libxdmcp
+  * libxext
+  * libxfixes
+  * libxinerama
+  * libxrandr
+  * libxrender
+  * libxss
+  * libxtst
+  * libxcursor
+  * libxp
+  * libxi (2.2 or newer)
+  * libgl (opengl/glx or opengl-es2/egl)
+  * giflib
+  * util-linux (limbount + libblkid)
+  * systemd / libudev
+  * poppler / poppler-cpp
+  * libraw
+  * libspectre
+  * librsvg
+
+Recommended requirements (highly recommended):
+
+  * harfbuzz
+  * systemd
+  * libwebp
+  * liblz4
+  * vlc (libvlc)
+
+Enable these with configure options:
+
+   * --enable-xinput22 \
+   * --enable-systemd \
+   * --enable-image-loader-webp \
+   * --enable-harfbuzz \
+   * --enable-multisense \
+   * --enable-liblz4
+
+On linux to get framebuffer support you may want to also do:
+   * --enable-fb
+   * --disable-tslib
+
+If you want wayland support also add:
+   * --enable-wayland \
+   * --enable-elput \
+   * --enable-drm
+
+At runtime if you want thumbnailing for DOC/PPT/XLS etc. files also provide:
+libreoffice
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
