@@ -5,7 +5,7 @@
 
 ==== EFL ====
 
-EFL is a range of libraries that cover APIs to solve every day problems we, and others have encountered. You can see it having various API layers, with some intended for very low-level controls and access that no one but specialists (eg writing a window manager itself) will need, through to higher level "just writing a notepad" application. The lower you go, the less portable things can be. Here we will cover the EFL features and APIs used to make things portably and cleanly. We will cover these topics here:
+EFL is a range of libraries that cover APIs to solve every day problems we, and others have encountered. You can see it having various API layers, with some intended for very low-level controls and access that no one but specialists (e.g. those writing a window manager itself) will need, through to higher level "just writing a notepad" application. The lower you go, the less portable things can be. Here we will cover the EFL features and APIs used to make things portably and cleanly. We will cover these topics here:
 
   * Data structures (lists, hash tables, growable buffers/strings etc.)
   * Main loop event, I/O and timing core
@@ -93,11 +93,24 @@ elm_main(int argc, char **argv)
 }
 ELM_MAIN()
 </code>
+
 Compile it (and other examples on this page) with:
+
   cc example.c -o example `pkg-config --cflags --libs elementary`
 
+If ''pkg-config'' is complaining about not finding Elementary you may
+want to adjust your ''PKG_CONFIG_PATH'' environment variable to point
+to where the ''.pc'' files are installed. Perhaps like:
+
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+Please see this nice page
+[[http://people.freedesktop.org/~dbn/pkg-config-guide.html|about pkg-config]]
+Which should tell you what it is and how it works if you are having trouble.
+
 Expanding on this, let us make our first application with an actual
-visible window and a button inside to click to exit:
+visible window and a button inside to click to exit. This will be our
+proverbial "Hello world" application.
 
 <code c example.c>
 #include <Elementary.h>
