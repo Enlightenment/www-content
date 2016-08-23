@@ -66,6 +66,23 @@ You need to add ''autopoint'' to your ''$PATH'' if you want to use gettext. Writ
 export PATH="$(brew --prefix gettext)/bin:$PATH"
 </code>
 
+===== OpenSSL handling =====
+
+Since Mac OS X El Capitan, Apple does not distribute OpenSSL headers anymore.
+It is necessary to install OpenSLL manually through homebrew:
+
+<code bash>
+brew install openssl
+brew link openssl --force
+</code>
+
+and to add flags to your bashrc (or equivalent):
+
+<code bash>
+export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS"
+export LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"
+</code>
+
 ===== Modifying your linker flags =====
 
 <note>
