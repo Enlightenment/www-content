@@ -1,0 +1,438 @@
+===== Eflete - EFL Edje Theme Editor =====
+[[download|Download Eflete Here]]
+{{ :icon-eflete.png?nolink&64|Efl Edje Theme Editor}}
+
+{{:eflete-main.png?&200 | Eflete main window}}
+==== What is Eflete? ====
+Efl Edje Theme Editor is a rich graphical tool, that provide UI for edc markup. 
+It is aimed to simplify creation and editing widgets styles. No one, for sure, want to learn EDC syntax. Eflete was designed with mind, that target users are not just programmers but also designers. Besides styles Eflete is also able to create and edit custom layouts. This is useful feature for developers which creates applications layouts. 
+
+==== About Eflete ====
+{{ :eflete_main_about.png?&500 | Eflete main window structure}}
+
+Eflete contain few different blocks, which are interacting with each other, in purpose to show groups, parts, edj collections etc...
+The huge block in the middle (huge yellow rectangle) there is a workspace . That is block which is used to show group parts.
+Two block on the left (green and blue) are navigation blocks. Top one contain list of groups, bottom usually shows parts, programs, data and other things related to group (group usually consist of parts, programs, which works and sometimes manipulate with part, and some simple data).
+Pink block on the right is Property. It show properties of currently selected (in navigation bottom block) item, be it part, program or data.
+Violet bar contains tabs. There are two types of tabs available: home tab (it usually contains importing features, new theme, project info etc) and group tab. Each group tab has it's own workspace.
+Red bar on the very bottom of eflete is status bar, it contain bath to project file *.pro and shows if project was saved or modified.
+Orange bar on the very top is menu.
+
+====Launch Eflete==== 
+
+{{ :eflete-tab-home.png?inline&208|Home tab}}
+=== Home Tab ===
+
+At the very begining of eflete working, after it's launch, there are no opened projects yet, but there is a tab called home. This tab contain some basic functionality to import or create projects.
+Open project allows to open common Eflete project (file with extension .pro) that is already exist. 
+New project allows to create new project with predefined set of widget, it is possible to create empty project and fill it with layout or add default widgets like button, bubble or any other elementary widget to edit, modify and work on them.
+Import edj allows to import project from single edj file, which is usually the result of eflete work.
+There is also possibility to compile and import project from source code (which is edc files) by compiling them altogether (using Import edc tab of eflete ).
+Last tab "Project Info" contains only information about opened project, such as path to project, quantity of fonts, sounds and images (resources), some basic info (authors, licenses, versions etc).
+
+=== Imports ===
+
+There are a lot of already existed projects, which are use edc collections for theming or layouting. Or binaries, that compiled by edje_cc tool. For both cases Eflete has import wizards to help in converting existing files into projects, that supported by theme editor. As already described, there are tabs "Import edj-file" and "Import edc-file" for that.
+
+== edc ==
+{{ :eflete-tab-home-import-edc.png?inline&500 |Import edc project tab}}
+To import edc file there are some general important information like project name,  path to project (a place where folder with project name and all files will be created), path to edc-file and lots of others directories like paths to directories which contain images, sounds, data or fonts. Important to point that there could be many locations of those resources, so its possible to add as many as required. There are also additional information about project, such as licenses, authors, comment and file version. Those fields are not required to be filled, and that information going to be shown in "Project Info" tab.
+
+{{:eflete_dialog_import_edj.png?&300|Files replace dialog}}\\
+If there is exist a project with name that was typed, Eflete will ask if user is sure about Replacing and Overwriting old existed project with new one.
+
+==  edj == 
+{{ :eflete-tab-home-import-edj.png?inline&500 |Import edj project tab}}
+Importing edj file is quite simple. All information required is just project's name, path to project, path to edj-file and optional information such as authors, licenses, comment and file version. After selecting edj-file, which is going to be imported, there will be list of widgets and layouts available to import. That means that it is possible to import only few widgets from edj-file, not all at once.
+
+Importing edj also asks if he can replace already existed project when that case happen.
+
+== Open ==
+
+It is possible to open existing project by File Selection tool. List of recently opened projects provides fast one- mouse-click selection interface. Opening new project will close currently opened project.
+
+{{ :eflete_dialog_close_project.png?inline&500 | Close project dialog}}
+If currently opened project was somehow modified (any of it's groups were changed by user), before opening another one, eflete will ask user to save current changes. According to popup it is possible to save all changes or not, before opening new project. And of course it is possible to Cancel this case and get back to editing currently opened project.<note> Copy and alias are different entities. Copied group is independent group with all parameters copied from source group. Alias, on the other side, is just a link. Alias group has icon that looks like this {{:eflete-alias-link.png}} and opened alias group doesn't allow to work with parts/programs navigation and doesn't allow to work with parts on workspace. </note>
+Keep in mind that opened project will have some information about currently opened project in "Project info" tab.
+{{:eflete-tab-home-project-info.png?&300|Project Info tab}}\\
+
+== New ==
+
+For new projects it is possible to select predefined widget styles. All widgets in list contains a sets of groups, that required by Elementary library. User is free to modify those styles.
+{{ :eflete-tab-home-new-project.png?inline&500 | New project tab}}
+
+==== CLI ====
+
+There is possibility to work with eflete through command line. There is Command Line Interface available to work with instant start of eflete work.
+To see more about possible commands type **eflete -h**, it will show helping manual with all possible commands.
+There are plenty of options to work and manipulate with different file type and project types.
+
+For example, typing path to ***.pro** file it will open project as usual:iles replace dialog
+<code bash>$ eflete ~/efl_theme/efl_theme.pro </code>
+
+If argument is actually path to ***.edj** file, it will run edj imporintg process with project name that will be same as edj-file's name:
+<code bash>$ eflete ~/washing_machine_theme.edj </code>
+
+There are few options available to add before path to file:
+<code bash>$ eflete -h
+Options:<note> Copy and alias are different entities. Copied group is independent group with all parameters copied from source group. Alias, on the other side, is just a link. Alias group has icon that looks like this {{:eflete-alias-link.png}} and opened alias group doesn't allow to work with parts/programs navigation and doesn't allow to work with parts on workspace. </note>
+  --name=NAME             Name for new project
+                          Type: STR.
+  --path=PATH             Path to project directory
+                          Type: STR.
+  -i=DIR_NAME, --id=DIR_NAME
+                          Add image directory for edc compilation
+  -s=DIR_NAME, --sd=DIR_NAME
+                          Add sound directory for edc compilation
+  -f=DIR_NAME, --fd=DIR_NAME
+                          Add font directory for edc compilation
+  -d=DIR_NAME, --dd=DIR_NAME
+                          Add data directory for edc compilation
+  -w=WIDGET:STYLE[COPY_STYLE,..],.., --widget=WIDGET:STYLE[COPY_STYLE,..],..
+                          Add widget to new project or import edj-file. Add its
+                          styles if the style names are added. Copy its styles
+                          if the copy style names are added
+  -r, --reopen            reopen last project
+  -v, --version           show program version.
+  -c, --copyright         show copyright.
+  -l, --license           show license.
+  -h[=CATEGORY], --help[=CATEGORY]
+                          show this message.
+                          No categories available.
+</code>
+<note>
+<code bash>$ eflete --name=some_project</code> 
+Will start create a new project (empty or with widgets) 
+</note>
+
+There is one more important thing about importing edj files. By using **-w** option it is possible to specify which widgets will be copied from imported edj into new project.
+
+Specifying widget means that all styles of this widget will be copied from //some_theme.edj// into new project
+<code bash>$ eflete --name=car_theme -w=button ~/some_theme.edj</code>
+
+Some styles can be specified, seperated by coma, that means only those styles will be copied into new project. Examples:
+<code bash>$ eflete --name=car_theme -w=button:default ~/some_theme.edj</code>
+<code bash>$ eflete --name=car_theme -w=button:wheel,default ~/some_theme.edj </code>
+
+It is possible to make as many copies of certain style as possible. They will be complete copies, just with different names. That is really comfortable for making new styles derived from original now. In example below, that will make styles //dark_wheel// and //insane_devil// completely copied from //wheel// style.
+<code bash>$ eflete --name=car_theme -w=button:wheel[dark_wheel,insane_devil],default ~/some_theme.edj </code>
+
+<note>
+Keep in mind, if you dont specify path to edj file then **-w** will work with default template theme.
+</note>
+
+==== Managers ====
+Usually widget styles in one theme share a lot of common resources. These includes images, sounds, text styles and color classes. Eflete provides a set of resource manager that allows you to add new or view, edit, delete existing resources.
+\\ 
+\\ 
+\\ 
+{{ :eflete-image-manager.png?inline&300|Image manager window}}\\ 
+=== Images === 
+Image manager shows all images in project as a grid. Unused images are marked with exclamation mark {{:eflete-warning-unused.png}}. When you select an image you can see its preview and basic info (name, type, location, size compression type and rate). To add image into the project click on + button and select it in fileselector. You can add multiple images at once by holding shift button. To delete selected image press – button. Only unused images can be deleted because deleting other images will damage all styles where they are used.
+\\ 
+\\ 
+{{:eflete-sound-manager.png?inline&300 |Sound manager window}}\\  
+=== Sounds ===
+Sound manager very looks similar to image manager. It shows all sounds and tones in the project and allows to add and remove them. Instead of preview there is a simple sound player.
+\\ 
+\\ 
+\\ 
+{{ :eflete-textblock-style-manager.png?inline&300|Textblock style manager window}}\\ 
+=== Textblock styles === 
+Style manager shows all textblock styles in project. You can expand style to see all its tags. “DEFAULT” is a virtual tag that defines properties of text non enclosed in any tag. Tag’s attributes can be edited after selecting it. In the left side you can see how selected tag will affect text in textblock.
+\\ 
+\\ 
+\\ 
+{{:eflete-colorclass-manager.png?inline&300 |Colorclass manager window}}\\ 
+=== Colorclasses === 
+Color classes are designed to simplify color adjustment in your theme. Changing colors in color class manager will affect all parts in all styles that are using it. For most part types only first color matters. Only TEXT parts can use all 3 colors.
+<note>
+If you want some part to have slightly different color you can specify both color and color class. In this case their values will be multiplied.
+I.e. if you have “background” color class with green main color (255, 0, 0, 255) and part with this color class and half-transparent white color (255, 255, 255, 127) resulting part color will be (255, 0, 0, 127).
+</note>
+
+{{ :eflete-groups.png?inline&300|List of available groups}}
+==== Navigators ====
+All navigation controls are represented by a tree-view lists. There are two main areas: groups and parts/programs lists. While group navigation are mostly represent all groups inside of project and allow to manipulate with them (delete, copy, create and etc), parts/programs navigation has some behavior. Parts/programs list depends on currently loaded group (selected from group list), depends on what kind of group was opened and on a workspace mode (see Normal and Demo Modes of Workspace).
+
+=== Project ===
+The list of groups are placed on the left side of Eflete and holds all groups from loaded project. Items sorted alphabetically. On the top of navigation bar placed two icons, that provides ability to add new group into project or delete currently existing. In case of adding new group, simple dialog wizard will be shown. It will set name for new group and chose source group if it is required to create copy or alias.
+
+Groups list structure is based on splitting group name by tokens, that separated one from another by '\' character. What kind of benefit from this way?  For example take the default Elementary theme. This theme contain a lot of groups with styles for elementary widgets and styles for the E20 environment. By splitting root tokens from widget styles (for example: **elm**/check/base/default), all groups related to Elementary can be organized below "elm" entity. Next level of splitting will be widgets name (for example  elm/**check**/base/default). And finally leafs of this tree will be styles names (for example  elm/check/base/**default**). At the same time another root entity with name "e" will exist inside the groups navigation bar. There are two branches, that are visually separated, but still exists inside the same project.
+For comfortable visual navigation tree leafs has "document" icon and nodes are represented by a "folder" icon.
+<note> Copy and alias are different entities. Copied group is independent group with all parameters copied from source group. Alias, on the other side, is just a link. Alias group has icon that looks like this {{:eflete-alias-link.png}} and opened alias group doesn't allow to work with parts/programs navigation and doesn't allow to work with parts on workspace. </note>
+=== Group ===
+{{:eflete-parts.png?inline&155 |List of primitives}}
+If it is all so good with groups organization, then what about parts and programs inside groups? Eflete provides navigation bar for primitives, that are stored inside groups. The primitives are Parts, Programs and Data. They are placed on the right side of main work area as two root nodes. Controls, that placed at the top of navigation bar, makes possible to add new primitives or change order of parts inside group. Press ADD button to see listed names of primitive types (part, state, item, program or data item). {{ :eflete-group-content-add.png?inline&191|Add new primitives}}
+
+Depending on selected context, some of entities might be disabled. For example: to add new state for existing part - select part name in list. Then, special wizard will guide you through adding new primitives with necessary attributes, according to type of selected primitive.
+By selecting primitive item in list - attributes properties will be updated. By double-click on state name, user is able to switch Parts state. New state will be updated workspace view.
+
+There is an eye icon on the left side of part name. If group has too many parts, and it is too complicated to work with them on workspace, some of part can be hidden by clicking on the eye icon that looks like this:  {{:eflete-eye-icon.png?inline&16|Show/Hide primitive on workspace}}. Of course it is possible to show that part again by clicking on empty check again, that will appear eye icon again and will show part on workspace again.
+
+To make it easier to find out what kind of type every part has, tree also contain an icon that represents part's type. Currently there are next parts available to find in list of parts, which are:
+| {{:eflete-icon-rectangle.png}} |  Rectangle  | {{:eflete-icon-text.png}} |  Text  |
+| {{:eflete-icon-image.png}}|  Image  | {{:eflete-icon-swallow.png}} |  Swallow  |
+| {{:eflete-icon-textblock.png}} |  Textblock  | {{:eflete-icon-group.png}} |  Group  |
+| {{:eflete-icon-box.png}} |  Box  | {{:eflete-icon-table.png}} |  Table  |
+| {{:eflete-icon-proxy.png}}  |  Proxy  | {{:eflete-icon-spacer.png}} |  Spacer  |
+
+Some of parts, instead of states, also can contain some items, for example Box and Table. That is different list, which is expandable and also shows number of items, already existing inside of that part. It is also available to add new items only when Box or Table is selected. For all other types of part it is impossible to add any items.
+
+<note>
+To explore tree - double-click on node or press on "right arrow" icon.
+</note>
+
+Another primitive available to be selected and worked on are Programs. Parts/Programs list allows only such modifying actions like add new or remove selected program. By clicking on a program name, properties updates to show all kind of parameters of selected program available to be modified.
+
+And finally, last primitive, called "Data Items", contain raw data information (data name and raw value) that is encased inside of current group. Sometimes data item information is really important (for example, genlist items contain data items important for setting text and content). It is possible to delete and add new item by using controls on top of navigation bar.
+
+==== Workspace ====
+
+{{ :eflete-workspace-main.png?&500 | Workspace general view}}
+Finally the main work area. Workspace is placed in the middle of Eflete window. It enables visual representation of group being edited. Many groups can be opened at the same time. The tab bar, placed above the workspace area, is used for switching between workspaces.
+Each workspace has its own background color and it's own history (for undo and redo). 
+There are 3 possible behaviors, that can be demonstrated by workspace component: normal, code and demo. They will be described later.
+
+=== Groupview ===
+
+Groupview is actually a scrollable view with background preset by using certain tools. It contain visual representation of group, showing it's parts and applied properties. All parts are staying within specific container that can be resized. All parts can be manipulated by mouse pointer. Parts can be selected, highlighted and then by using highlight it is possible to resize parts.
+
+<note>
+Clicking on part will select part and load part's properties, but clicking on already select part will swtich between it's current state and part (and will switch properties of them as well).
+</note>
+By clicking on a background with right mouse button, it appears context menu with fast items like undo, redo, show/hide rulers and certain scales (or both). Groupview also contain rulers to show relative and absolute sizes
+
+=== Tools (zoom, fit) ===
+There are plenty of different controls to manipulate with workspace. Zooming, background colors, container's size. Examples of each control will be shown to make it easier to find.
+
+There are 3 predefined colors of workspace background (black, white and "chess"). Click one of the color buttons, that placed at the bottom of workspace to change it.
+| {{:eflete-workspace-tools-bg.png}} |
+
+Size of previewed group can be changed by container border. It has a small rectangle in the right bottom corner - use it to change size via mouse. Another way is to usage spinners, they are placed on the same line as a color buttons. Also there is a certain button that will block all container size changing.
+Here is spinners for setting container's size. The button on the left blocks all size chagings, on an example picture below it is set to DoNotBlock state. In the middle between spinners there is a "chain". It is currently activated. That chain means that every size (width and height) will be changed simultaneously.
+| {{:eflete-workspace-tools-size.png}} |
+
+In this case button on the left blocks all changes. Also "chain" between spinners shows that if we change width, it won't change height and vice versa.
+| {{:eflete-workspace-tools-size-fixed.png.png}}  |
+
+There are also some controls to zoom in and out if group is too small or too big.. It is a slider that would zoom in or out related to current slider value and there is also zoom combobox with predefined most common value like 20%, 50%, 100%, 200% and 500% of zooming
+| {{:eflete-workspace-tools-zoom.png}} |
+
+There is a specific button that would fit groupview with currently opened group. It will make it smaller if group too big, bigger than size of groupview, and make it bigger if size of container is too small. Keep in mind that when fit is selected, it also blocks all size changings. To revert that, just click on fit again (unfit it).
+| {{:eflete-workspace-tools-fit.png}} |
+
+Two important controls for Undoing and Redoing all changes happened during group edition, but keep in mind that history of changes would be cleared on closing tab with edited group opened on workspace.
+| {{:eflete-workspace-tools-history.png}} |
+
+=== Highlight ===
+
+{{:eflete-workspace-highlight.png |}}
+For working with parts on a workspace, to set certain min, max or other attributes, it is simple to change sizes and aligns on a groupview directly. There are few highlights, on a groupview, available to show different things. By clicking on a part, there is highlight that has same size as clicked part and has some handlers in each corner. By dragging those handlers it is possible to change size of selected part. Keep in mind, that part will change size and position related to part's align. Also size of part can't be changed lower than it's min values. Also it can't be bigger than object area.{{ :eflete-workspace-highlight-object-area.png|}}
+
+Object area is an area between relative points which are set in properties for part. There are two relative points (starting and ending one) and part will be positioned between those two points. Relative points usually can be main opened group or any other part. Highlight that show object area is different one and looks like shaded rectangle. To show/hide object area on groupedit there is a menu item (**View** -> **Show object area**).
+
+When "show object area" is selected, part highlight will have another handler right in it's middle, by dragging that handler it is possible to change align of selected part.
+
+=== Modes ===
+There are 3 possible behaviors, that can be demonstrated by workspace component: normal, code and demo. Lets describe them one by one.
+
+== Normal ==
+{{ :eflete-workspace-normal-mode.png?&500 |Workspace normal mode}}
+{{:eflete-icon-normal.png?inline&16|}} **Normal mode.**
+This mode is used to manipulate with group primitives on the development stage. All parts are represented on the workspace, including containers and spacers. Each of the non-visible primitives types has their own pattern and color. This makes possible to understand markup of group and dependencies between primitives. Text parts are bordered, this shows area from left top to right bottom corners. Also for a texts sets part name as a content if there are no preset text in that part (it can be set in text block in property). 
+Ability to select primitives directly on workspace presented here, of course still possible to select parts inside the part navigation panel. Selected part covered by the resizing control element, called highlight, that change maximum size of primitive.
+
+== Demo ==
+{{ :eflete-workspace-demo-mode.png?&500 |Workspace demo mode}}
+{{:eflete-icon-demo.png?inline&16|}} **Demo mode.**
+In comparing with a Normal mode where happens all implementation process, the Demo mode is the best way to see result. Objects that displayed in this mode will looks same as in runtime application.
+It is possible to type text into texts part or to set container parts content. Predefined widgets (button, check, slider, enty, progress bar, etc) can be uses as content. Also it is can be a simple rectangle or an image, that stored in filesystem. It is possible to set different colors and minimum/maximum sizes for content. All this things requires adoption of demonstration view as closely as possible to real environment and context.
+Of course this is not all about Demo mode. One more useful feature - ability to emit signals into the object. When programs inside group are created they will be good to check reaction of the object on those signals. List of signals, that are possible to emit is exclude programs that depends from mouse events, because it is easier to click (or mouse in/out, double click and etc) on real object.
+<note important>
+Most of all Elementary widgets will be loaded as fully functional widgets. It means that behavior of the loaded widget is depends on Elementary source code. Group will be loaded as usual layout in cases when this group is not a Elementary widget style or still unsupported widget. List of supported widgets for a demo mode will be shared later.
+</note>
+
+== Code ==
+{{ :eflete-workspace-code-mode.png?&500 |Workspace demo mode}}
+{{:eflete-icon-code.png?inline&16|}} **Code mode.**
+It is mostly same as a Normal mode, except that it will display memo with Edc source code of currently editing group. Same code can be received by exporting current group into Edc project (**File** -> **Export as edc** -> **Group**).  Source code view supporting syntax highlighting and refreshing code accordingly to changes in the editing group. 
+
+NOTE: Right now this mode is only for viewing code. As one of the big features planned to support enventor library as a backend for edit group edc code directly. It should support most of features from enventor. 
+
+=== Rulers ===
+
+{{:eflete-workspace-rulers.png?inline&300 |Workspace rulers}}
+Rulers are parts of groupedit, which can be used for showing part's sizes and their relatives. Both vertical and horizontal rulers has indicator that shows current position of mouse and can be used to make some general measurements of part's size and position. Zooming groupview in or out also inflicts changes on rulers, showing zoomed sizes.
+Rulers can be hidden by using context menu (invoke it by clicking on background of groupview and select {nav Show rulers}, clicking on that menu item will show/hide rulers).
+There are two scales possible to show on rulers. These are\\ 
+| {{ :eflete-workspace-rulers-scales.png |Rulers scales}} |
+Absolute scale (gray text and dashes): rulers shows decent sizes in pixels of entire group shown and loaded into container.
+Relative scale (blue buble with value inside): rulers shows relatives of selected part (or entire group if part is not selected). This feature really comfortable together with show object area, showing all relatives of current object on a groupview.
+It is also possible to use and show both scales on rules.
+
+==== Properties (General description of blocks) ====
+{{ :eflete-properties-general.png?&121x220| Propery general view}}
+Certain block on the very right panel, containing certain controls with properties and parameters of current context (opened group, workspace mode, part/state/program selected etc), is used to modify it. It allowed to change, modify and see value of wide number of properties like min, relative, map, part name, content type (for demo) and so on. 
+All general stuff that is possible to be modified will be described block by block below. There are different properties for opened group, for demo mode, for selected items, data, program, state or part.
+Some user-friendly behavior like list filtering (hide other controls on certain values), popups, highlights and so on, available and will be described below as well.
+
+=== Property Controls ===
+| {{:eflete-properties-spinners.png?inline&220|}} |
+Property consist from different controls, generally having certain structure. It has group items. Tree that help to group certain blocks of values and attributes all together. For example, color block contain color_classes and general color inside, position block contain all controls to work with relatives (relative to, offsets, etc).
+
+Most of controls has description (title) text which will be highlighted with bold when it have non-default value. Every item can has one or two controls (like min or max on picture), usually those texts showing subparam and measure (px, for example).
+
+For attributes which may have different value within some range there are spinner control is used. Those attributes can be, for example, offsets (which can be up to 9999 pixels), borders, sizes etc. Some attributes may be negative and positive, some positive only. All of that depends on attribute characteristics described by efl
+
+| {{:eflete-properties-toggle.png?inline&220|}} |
+Some of attributes can be only in ON or OFF states (visible, smooth, map etc, fixed), so there is a check control used to show such params.
+
+| {{:eflete-properties-combobox.png?inline&220|}} |
+For those params which has different constant number of text based values there will be a combobox control. It is commonly used for such stuff like aspect preference, clip to, relative things etc. That control also widely used for those control which require to select one of those parts existing inside of opened group.
+
+| {{:eflete-properties-colorselector.png?inline&220|}} |
+Another control, that is also widely used inside of textblock style manager, is a button that shows color. By clicking on that button there wil be light popup shown over the eflete window. While choosing color it will immediatly apply this color to selected part.
+
+| {{:eflete-properties-entry.png?inline&220|}} |
+Entry is commonly used for setting up text attributes like name, text, fonts etc. Sometimes entry is modified, for example image path also has entry control with button. Clicking on it will show image selector in a same helper where colorselector usually in. There will be grid of all images added through image manager and already existing in project. By double clicking on a certain image it will set the image into entry.
+
+| {{:eflete-properties-tween.png?inline&220|}} |
+One last thing that might confuse is a Tween block. It's a variable set of images. Images can be added by clicking on button with plus on it and all selected images can be deleted by button with minus. While clicking on plus it will show helper with images as well but this time it is possible to select multiple images before clicking on Ok. All selected images will be added to tween.
+
+=== Non-default highlighting ===
+| {{:eflete-properties-non-default-highlight.png?inline&220|}} |
+Property is trained to highlight and show non-default values. It highlights certain values and controls description text by making it bolded, so by looking at entire set of so many parameters it will be possible and more easy to see what kind of params are changed and different from default, usual, values. Whenever non-default value will be changed back to its default values, description text of that control with non-default value will be unbolded and will have general text in it.
+
+=== Group block ===
+{{:eflete-properties-group.png?&300 |}}\\ 
+Group property shows itself only when group is loaded it's tab is activated, but nothing is selected yet. So it contains just few params like group name (which is unedited for now) and some general group's min and max sizes. More interesting it will become when part will be clicked and selected.
+\\ 
+\\ 
+\\ 
+
+=== Part block ===
+{{:eflete-properties-part.png?&300 |}}\\ 
+Part block usually same for most type of parts. There are some more params available for Text and Textblock and source for type of part called Group. Generally it contain some general part attributes like mouse pointer stuff (pointer mode, events repeating), scale and draggable attributes.
+
+=== State block ===
+State block is huge. It differs depends on selected state of a certain part type. Generally all type of parts contain four blocks, which are colors (selected color_class for this state or general color), size block (min, max, aspects etc), Position (relatives, offsets and align) and map (everything related to map, perspective, colors, rotations etc). 
+Some types may have specific blocks in their states. IMAGE will have Image block (tweens, image, borders etc) and Fill block. TEXT and TEXTBLOCK  have some text attributes inside of every state they have as well. Container parts (BOX and TABLE) has some attributes of their container (align, weight etc).
+\\ 
+\\ 
+\\ 
+
+=== Program block ===
+{{:eflete-properties-program.png?&300 |}}\\ 
+Program usually contain one important block, that contain some attributes like program's name, action type, signal, source, filters. Usually it also contain list of afters - programs which will be run together with selected program in a certain queue.
+
+Depends on program action type it can contain some more attributes, for example Action Params may has state name and value for STATE_SET program type, or it can be sample, channel and duration for SOUND_SAMPLE.
+
+For such programs like STATE_SET there is also block used for setting Targets (for example parts.. program STATE_SET would apply changes to those parts listed in Target block).
+\\ 
+\\ 
+\\ 
+
+=== Items block ===
+{{:eflete-properties-item.png?&300 |}}\\ 
+Item properties getting shown only when items of BOX or TABLE part were selected. They have quite simple attributes like source group to be loaded into item, some sizes and positions, paddings etc.\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+\\ 
+
+
+===  Group data block ===
+{{:eflete-properties-group-data.png?&300 |}}\\ 
+Data block is extremely simple. Its just pair of key and value.
+\\ 
+\\ 
+\\ 
+\\ 
+
+===  Demo block === 
+Demo block is more interested. It appears only when Workspace is in Demo Mode and navigation list of parts contain only signals, text/textblock and swallow parts. Depending on what kind of part/signal was selected, demo property will be different.
+
+For selected signals it contain only decent information about signal like who is emitter, what is the signal, type of program which will be called etc.
+
+Selected text and textblock parts shows simple property attributes like uneditable part name and content. By typing text into content, it will send this text to demo object, showing how loaded demo object will act when certain text getting into text-parts.
+
+Selected swallow shows much more attributes. By using swallow properties it is possible to set up different objects into selected swallow. It allows to see the resulting layout. It shows mostly how the end result would looks like when this designed widget or layout will be used inside of different programs or used as theme. 
+
+Demo property allow to set different kind of content. It could be rectangle (with control to set up it's color), image (there will be path to image, so it will be possible to load picture from system) and widget (predefined list of widgets to put into swallow, for example check, button, gengrid etc). It is also possible to set up certain style for selected widget. Style can be from inside this group.
+
+For any kind of content (widget, image or rectangle) it is possible to set up min and max which also will help to determine resulting behavior of loaded group.
+
+| Rectangle property | {{:eflete-properties-demo-rectangle.png}} |
+| Picture property | {{:eflete-properties-demo-picture.png}} |
+| Widget property | {{:eflete-properties-demo-widget.png}} |
+
+==== Exports ====
+
+After all work is done, and theme or set of layouts are complete, it is possible to export designed work as edj or edc. Theme (a set of groups that defines how buttons, checks, fileselectors etc would looks like) can be exported as edj, so it can be instantly added to program application which will use theme, or mobile phone or any other thing that require, usually, edj. While designers might not know edc syntax, it is possible to export as edc, to look resulted source code, modify it at user's own risk, recompile with edje_cc and use as edj. Both exports (edj and edc) allow to choose location, a folder where it will create all resulted, after export, files.
+
+===  edj === 
+
+When work is done it is possible to make edj (binary) file of resulted theme or set of layouts. There are two different ways of edj exporting: release and develop. They can be found in main menu: **File** -> **Export as edj** -> **Develop(Release)**.
+
+Generally it will create edj file of entire project that will be named like that has PROJECTNAME-TYPE.edj (for example new_project-develop.edj). Develop means that resulting file will contain ALL information and all resources which where added during work. All unused files and sounds, etc. Release version will have cleanup up version of edj file, which means that all unused files and sounds will be deleted.
+
+===  edc === 
+
+It is possible to export both groups and entire project as edc source file. Sometimes it happens that current project might be too big, containing all images, huge amount of groups and other files inside. If there is need in source code of only one group, it is possible to export opened group as edc. To export group's edc there is an item in main menu **File** -> **Export as edc** -> **Group**  For exporting entire project use  **File** -> **Export as edc** -> **Project** . After exporting it will generate folder with all resources and edc source files. If there are different widgets, they all will be separated into different edc files. There is a shell script can be found inside folder, where data was exported to. It builds edc source code back to the binary file.
+
+==== Hotkeys ====
+===Global===
+^ Shortcut      ^ Action      ^
+| **F1**    | show shortcuts list    | 
+| **F2**    | normal mode    |
+| **F3**    | code mode     |
+| **F4**    | demo mode |
+| **F7** | open image manager |
+| **F8** | open sound manager |
+| **F9** | open style manager |
+| **F10** | open colorclass manager |
+| **ctrl + q** | quit |
+
+===Workspace===
+^ Shortcut      ^ Action      ^
+| **ctrl + s**    | save    | 
+| **ctrl + z**    | undo    |
+| **ctrl + y**    | redo    |
+| **ctrl + n**    | add new group |
+| **q** | add new part |
+| **w** | add new state |
+| **e** | add new item |
+| **r** | add new program |
+| **t** | add new data item |
+| **del** | delete selected part/state/item/program/data item |
+| **s** | select next state of active part |
+| **z** | select prev part |
+| **x** | select next part |
+| **ESC** | unselect |
+| **o** | show/hide object area |
+| **ctrl + wheel_up**, **KP_ADD** | zoom in |
+| **ctrl + wheel_down**, **KP_SUB** | zoom out |
+| **KP_DIV** | set zoom to 100% |
+
+=== Tabs: ===
+^ Shortcut      ^ Action      ^
+| **ctrl + w**    | close tab | 
+| **ctrl + num**    | switch to tab 1-10  |
+| **tab**, **ctrl + pg_down**    | switch to next tab  |
+| **shift + tab**, **ctrl + pg_up**    |switch to prev tab |
+
+=== Popups: ===
+| **ESC** | cancel |
+| **ENTER** | OK |
+
+
+==== Video Demonstration ====
+{{youtube>GfKbWkIyUhg}}
