@@ -1,16 +1,15 @@
 ~~Title: Javascript Tutorial~~
 ==== Javascript Tutorial [DRAFT]====
 
-This Javascript tutorial describe the basics to compiles and run a Javascript example using Elementary in Node.Js
+This Javascript tutorial describes the basics to compiles and runs a Javascript example using EFL with Node.Js
 
 <note important>
 The Javascript bindings are currently in BETA state.
 </note>
 
-
 === Prerequisite ===
 
-Before you start you will want about how compile a EFL library
+Before you start you may want to read about how to compile an EFL library
 
     * Installed from source: [[docs/efl/start|Get started with EFL]].
 
@@ -23,25 +22,15 @@ You will need additional dependencies to Javascript Bindings:
 === Compilation ===
 
 == Efl ==
-To configure efl sources with bindings to use in nodejs add ''//––with-js=nodejs//'' in configure flags to generate node files
+To configure efl sources with bindings to use in nodejs add ''//––with-js=nodejs//'' to the configure flags to enable nodejs support.
 
 <code bash>
 ./configure --with-js=nodejs #in efl source path
 </code>
 
-and compile normally
+After that, you can compile normally with
 
 <code bash>
-make
-make install
-</code>
-
-== Elementary ==
-
-In Elementary all you need is run ''./autotools'' and compile/install
-
-<code bash>
-./autotools #in elementary source path
 make
 make install
 </code>
@@ -50,9 +39,10 @@ make install
 
 After everything is compiled and installed, it is time to use the modules in node.js. 
 
-The default node.js files installed by efl/elm stay in prefix /lib path (if you don't define a prefix path is ''/usr/local/lib'')
+# FIXME
+EFL installs its files by default in the <prefix>/lib path (if you don't define a prefix path is ''/usr/local/lib'')
 
-Node.js needs to know where find efl/elm node modules, to that export NODE_PATH with the file path to modules.
+Node.js needs to know where to find efl/elm node modules, to that export NODE_PATH with the file path to modules.
 
 <code bash>
 export NODE_PATH=/usr/local/lib #if necessary replace with your prefix path
