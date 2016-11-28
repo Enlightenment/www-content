@@ -39,44 +39,40 @@ make install
 
 After everything is compiled and installed, it is time to use the modules in node.js. 
 
-# FIXME
-EFL installs its files by default in the <prefix>/lib path (if you don't define a prefix path is ''/usr/local/lib'')
-
-Node.js needs to know where to find efl/elm node modules, to that export NODE_PATH with the file path to modules.
+EFL will install its nodejs modules under the ''<prefix>/lib'' path. The default prefix, if not explicitly defined, is ''/usr/local''. In order to nodejs discover these modules, add the previously cited folder to the NODE_PATH environment variable:
 
 <code bash>
-export NODE_PATH=/usr/local/lib #if necessary replace with your prefix path
+export NODE_PATH=/usr/local/lib:$NODE_PATH #if necessary replace with your prefix path
 </code>
 
-Now you are ready to use the modules in node.js, use ''require'' to import the modules
+To check if the path is correctly set, use ''require'' inside nodejs to import the module:
 
 <code javascript>
 ~$ node
 > efl = require("efl")
-> elm = require("elm")
 </code>
 
 ====Button Example====
 
 <note tip>
-You find this example in ''elementary_source/src/examples/button_example_00.js''
+You can find this example in ''efl_source/src/examples/elementary/button_example_00.js''
 </note>
 
-Import Elementary module
+Import Efl module
 <code javascript>
-elm = require('elm');
+efl = require('efl');
 </code>
 
-Create a new Window with //auto hide// (the window is automatically hidden when close is pressed):
+Create a new Window with //auto hide// (the window is automatically hidden when the close button is clicked):
 <code javascript>
-win = new elm.Elm.WinStandard(null);
-win.setTitle("Hello, World!");
+win = new efl.Efl.Ui.Win.Standard(null);
+win.setText("Hello, World!"); // Sets the title
 win.setAutohide(true);
 </code>
 
-Create a new Button (passed window has parent) and set new label text to button:
+Create a new Button (passing the newly created window as parent) and set new label text to button:
 <code javascript>
-btn = new elm.Elm.Button(win);
+btn = new efl.Elm.Button(win);
 btn.setText(null, "Good-Bye, World!");
 </code>
 
@@ -84,16 +80,16 @@ Set button basic size and positions:
 <code javascript>
 btn.setSize(120, 30);
 btn.setPosition(60, 15);
-btn.setSizeHintWeight(1.0, 1.0);
-btn.setSizeHintAlign(1.0, 1.0);
+btn.setHintWeight(1.0, 1.0);
+btn.setHintAlign(1.0, 1.0);
 </code>
 
-The method ''on'' is used to register callback on events, in this case we need catch the ''clicked'' event, we register a function (second argument) to print a log message when button ''btn'' is clicked
+The method ''on'' is used to register callback on events. In this case we need to catch the ''clicked'' event, so we register a function (second argument) to print a log message when the button ''btn'' is clicked:
 <code javascript>
 btn.on('clicked', function () { console.log('clicked'); } );
 </code>
 
-To finish, is necessary show all elements, for that use ''setVisible(true)''
+To finish, it is necessary to show all elements, using the ''setVisible(true)'' method:
 <code javascript>
 btn.setVisible(true);
 win.setSize(240, 60);
