@@ -1,7 +1,7 @@
 ~~Title: Javascript Tutorial~~
 ==== Javascript Tutorial [DRAFT]====
 
-This Javascript tutorial describes the basics to compiles and runs a Javascript example using EFL with Node.Js
+This Javascript tutorial describes the basic steps to compile and run a Javascript example using EFL with Node.Js
 
 <note important>
 The Javascript bindings are currently in BETA state.
@@ -9,7 +9,7 @@ The Javascript bindings are currently in BETA state.
 
 === Prerequisite ===
 
-Before you start you may want to read about how to compile an EFL library
+Before you start you may want to read about how to compile the EFL:
 
     * Installed from source: [[docs/efl/start|Get started with EFL]].
 
@@ -17,18 +17,18 @@ Before you start you may want to read about how to compile an EFL library
 
 You will need additional dependencies to Javascript Bindings:
 
-    * [[https://nodejs.org|node]] (4.2 or better)
+    * [[https://nodejs.org|node]] (4.2 or higher)
 
 === Compilation ===
 
 == Efl ==
-To configure efl sources with bindings to use in nodejs add ''//––with-js=nodejs//'' to the configure flags to enable nodejs support.
+To configure efl sources with nodejs bindings add ''//––with-js=nodejs//'' to the configure flags:
 
 <code bash>
 ./configure --with-js=nodejs #in efl source path
 </code>
 
-After that, you can compile normally with
+After that, you can compile normally with:
 
 <code bash>
 make
@@ -37,9 +37,7 @@ make install
 
 === Node.Js ===
 
-After everything is compiled and installed, it is time to use the modules in node.js. 
-
-EFL will install its nodejs modules under the ''<prefix>/lib'' path. The default prefix, if not explicitly defined, is ''/usr/local''. In order to nodejs discover these modules, add the previously cited folder to the NODE_PATH environment variable:
+EFL will install its nodejs modules - named ''efl.node'' - under the ''<prefix>/lib'' path. The default prefix, if not explicitly defined, is ''/usr/local''. In order to nodejs discover these modules, add the previously cited folder to the ''NODE_PATH'' environment variable:
 
 <code bash>
 export NODE_PATH=/usr/local/lib:$NODE_PATH #if necessary replace with your prefix path
@@ -95,6 +93,8 @@ btn.setVisible(true);
 win.setSize(240, 60);
 win.setVisible(true);
 </code>
+
+Once finished this setup, the ''efl.node'' module automatically integrates with the nodejs main loop without requiring you to call it explicitly.
 
 ====Twitter Example====
 
@@ -165,7 +165,14 @@ Make a new file stream with ''fs.createWriteStream'', download the image to file
     }
 </code>
 
-For each tweet we make a new Elm.Layout and set a theme using ''setfile'', ''setText'' is used to define a new text to Edje elements in theme. To have a formatted text we use Elm.Entry to main tweet text and add this widget into theme using ''setContent'' layout method
+For each tweet, we make a new ''Elm.Layout'' and set various components, or, in efl jargon, "parts", using the ''set*'' family of methods.
+
+First, we set a base theme using ''setFile''. The layout will load the given file and setup the internal layout structure, etc. This will allow us to refer the individual tweet's parts by name on the following methods.
+
+Once we have the theme loaded, we can use ''setText'' to set a new text to the related Edje parts in the theme, referring them on each call by using the name of the part as the first argument.
+
+To have a formatted text, we use an ''Elm.Entry'' to show the main tweet text and add this widget into theme using the ''setContent'' layout method. This allows us to inject full widgets into the layout, besides the basic stuff. Like ''setText'', ''setContent'' also receives the name of the target part as the first argument.
+
 <code javascript>
     for(i=0; i < tweets.length; i++){
         var layout = new elm.Elm.Layout(win);
@@ -179,7 +186,7 @@ For each tweet we make a new Elm.Layout and set a theme using ''setfile'', ''set
         layout.contentSet("tweet_text", entry);
 </code>
 
-Add a layout widget to Elm.List and call ''list.go()'' to start displaying the list properly.
+Finally, we add the layout widget to the ''Elm.List'' and call ''list.go()'' to start displaying the list properly.
 <code javascript>
         item = list.itemAppend("", layout, null, null, null);
     }
@@ -188,7 +195,7 @@ Add a layout widget to Elm.List and call ''list.go()'' to start displaying the l
 win.setVisible(true);
 </code>
 
-You will find this and more examples in directory ''src/examples'' in efl and elementary source code.
+You will find this and more examples in directory ''src/examples'' in efl source code.
 
 All you need to run is:
 <code bash>
