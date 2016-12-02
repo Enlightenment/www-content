@@ -1,5 +1,5 @@
 ~~Title: Javascript Tutorial~~
-==== Javascript Tutorial [DRAFT]====
+==== Javascript Tutorial ====
 
 This Javascript tutorial describes the basic steps to compile and run a Javascript example using EFL with Node.Js
 
@@ -53,7 +53,7 @@ To check if the path is correctly set, use ''require'' inside nodejs to import t
 ====Button Example====
 
 <note tip>
-You can find this example in ''efl_source/src/examples/elementary/button_example_00.js''
+You can find this example in ''<efl_source>/src/examples/elementary/button_example_00.js''
 </note>
 
 Import Efl module
@@ -99,105 +99,281 @@ Once finished this setup, the ''efl.node'' module automatically integrates with 
 ====Twitter Example====
 
 <note tip>
-You find complete twitter example in ''elementary_source/src/examples/twitter_example_01.js''
+You can find the complete twitter example in ''<efl_source>/src/examples/twitter_example_01.js''
 </note>
 
-This is a more complex example, with edje theme and some external requirements. We need install ''request'' and ''twitter'' module, for this use the ''npm'' (node.js package manager) it downloads and installs all necessary to use this modules.
+This is a more complex example, with edje theming and some external requirements. We need to install the ''request'' and ''twitter'' nodejs modules, using the ''npm'' (node.js package manager) to automatically download and install all necessary files:
 <code bash>
 npm install request
 npm install twitter
 </code>
 <note tip>''npm'' is installed by default with Node.js</note>
 
-Import all modules and initialize necessary variables to connect in twitter API
+Import all modules and initialize the necessary variables to connect to the twitter API
 <code javascript>
-elm = require('elm');
+efl = require('efl');
+
+// Standard node modules
 util = require('util');
 fs = require('fs');
-request = require('request'); //need "npm install request"
-Twitter = require('twitter'); //need "npm install twitter"
+path = require('path');
 
-var twit = new Twitter({
+// 3rd pardy modules, requiring install with npm
+request = require('request'); //need "npm install request"
+twitter = require('twitter'); //need "npm install twitter"
+
+// Twitter access keys
+var twit = new twitter({
   consumer_key: 'ZbSM93w5Sp2cyZ2SG0XuCvoHV',
   consumer_secret: 'g8N7EEQLpdKPnAsS9hWuQV29FYjBkhH62jhZzXyYymDw87DKye',
   access_token_key: '222611263-pPhKKjYh59uuNLP0b86sP7aAtLhdecjVQaEsCDCv',
   access_token_secret: 'l7ccNKXTVv6cymfSD1gQH61tmfixkdna2QmOjPtpVxSHD'
 });
 
-user_acount = 'EnlightenmentKo'
-icon_array = new Array();
+user_acount = 'EnlightenmentKo' // our target twitter account to be shown
 </code>
 
-Create a new Window (it has previous example):
+Create a new Window (as in the previous example):
 <code javascript>
-win = new elm.Elm.WinStandard(null);
-win.setTitle("Twitter App");
+win = new efl.Efl.Ui.Win.Standard(null);
+win.setText("Twitter App");
 win.setAutohide(true);
 </code>
 
-Create and show a //box// and //list// elementary widget containers 
+Create and show two //box// widget containers, one to be the top level box and another to work like a list, with the individual tweets.
+
 <code javascript>
-box = new elm.Elm.Box(win);
-box.setSizeHintWeight(1.0, 1.0);
-win.resizeObjectAdd(box);
+box = new efl.Efl.Ui.Box(win);
+box.setHintWeight(1.0, 1.0);
+win.setContent(box);
 box.setVisible(true);
 
-list = new elm.Elm.List(win);
-list.setSizeHintWeight(1.0, 1.0);
-list.setSizeHintAlign(-1.0, -1.0);
-box.packEnd(list);
-list.setVisible(true);
+tweet_box = new efl.Efl.Ui.Box(win);
+tweet_box.setHintWeight(1.0, 1.0);
+tweet_box.setHintAlign(-1.0, -1.0);
+tweet_box.setPackPadding(0.0, 30.0, true); // Give some space between the tweets
+box.packEnd(tweet_box);
 </code>
 
-Getting twitter user timeline asynchronous, using callback 
+The default box orientation is horizontal. In order to resemble the original timeline appearance, we need to make it horizontal. This is made in two steps, first we "cast" the box to an ''Efl.Orientation'' object and then we actually set the orientation.
+
+<note important>
+This explicit cast is currently required as ''Efl.Ui.Box'' inherits from both ''Elm.Widget'' and the interface ''Efl.Orientation''. These two classes/interfaces define a method called ''setOrientation''. In C you can specify which one you want by calling the respective function, e.g. ''elm_widget_orientation_set'' or ''efl_orientation_orientation_set''. In the Javascript bindings, the current approach is using these explicit casts.
+</note>
+
 <code javascript>
+tweet_box_orient = tweet_box.cast("Efl.Orientation");
+tweet_box_orient.setOrientation(efl.Efl.Orient.VERTICAL);
+</code>
+
+Now we are ready to ask the twitter module to get the timeline of the target user. The 'get' function will be passed a callback that will be called when the data is ready. Inside it we will start building the tweet list.
+
+Also we create an array to store the icon widgets to be filled when the icon finish downloading.
+
+<code javascript>
+icon_array = new Array(); // To store the icons
 twit.get('statuses/user_timeline', {screen_name: user_acount, count:10},
-  function(error, tweets, response) {
-  
+    function(error, tweets, response) {
+        if (error)
+            return;
+
+        // Begin building the tweets
 </code>
 
-Make a new file stream with ''fs.createWriteStream'', download the image to file using ''request'' module and register the ''_img_load'' function to called when image download has finished
-<code javascript>
-    file = fs.createWriteStream('/tmp/twitter_pic.jpg');
-    file.on('finish', _img_load);
-    if (tweets.length > 0) {
-         request(tweets[0].user.profile_image_url).pipe(file);
-    }
-</code>
-
-For each tweet, we make a new ''Elm.Layout'' and set various components, or, in efl jargon, "parts", using the ''set*'' family of methods.
+For each tweet, we make a new ''Elm.Layout'' and set various components, or, in efl jargon, "parts", using the ''set*'' family of methods. 
 
 First, we set a base theme using ''setFile''. The layout will load the given file and setup the internal layout structure, etc. This will allow us to refer the individual tweet's parts by name on the following methods.
 
+The edj file used was compiled from a source edc file. For more information, see the next section.
+
+<code javascript>
+    // continuing the previous callback
+    for(i=0; i < tweets.length; i++){
+
+        // extract the data we got from the twitter api
+        var user_name = tweets[i].user.name;
+        var screen_name = tweets[i].user.screen_name;
+        var text = tweets[i].text;
+
+        var layout = new efl.Elm.Layout(win);
+        // Use __dirname to get the file from the same folder of this .js
+        var filename = path.join(__dirname, "twitter_example_01.edj");
+        layout.setFile(filename, "tweet"); // Load the 'tweet' group from theme file
+</code>
+
 Once we have the theme loaded, we can use ''setText'' to set a new text to the related Edje parts in the theme, referring them on each call by using the name of the part as the first argument.
+
+<code javascript>
+        // Continuing the previous for loop
+        layout.setText("user_name", screen_name);
+        layout.setText("screen_name", " - @"+screen_name);
+</code>
 
 To have a formatted text, we use an ''Elm.Entry'' to show the main tweet text and add this widget into theme using the ''setContent'' layout method. This allows us to inject full widgets into the layout, besides the basic stuff. Like ''setText'', ''setContent'' also receives the name of the target part as the first argument.
 
 <code javascript>
-    for(i=0; i < tweets.length; i++){
-        var layout = new elm.Elm.Layout(win);
-        layout.setFile("twitter_example_01.edj", "tweet");
-        layout.setText("user_name", screen_name);
-        layout.setText("screen_name", " - @"+screen_name);
-
-        var entry = new elm.Elm.Entry(win);
+        // continuing the previous for loop
+        var entry = new efl.Elm.Entry(win);
         entry.setText("elm.text", text);
-        console.log(text);
-        layout.contentSet("tweet_text", entry);
+        entry.setEditable(false);
+
+        // We have to cast to the proper type, like in the previous box orientation
+        // case
+        part = layout.part("tweet_text").cast("Efl.Container");
+        part.setContent(entry);
+
+        // Some sizing details for better looking
+        layout.setHintMin(127, 96);
+        layout.setHintWeight(1.0, 1.0);
+        layout.setHintAlign(-1.0, -1.0);
 </code>
 
-Finally, we add the layout widget to the ''Elm.List'' and call ''list.go()'' to start displaying the list properly.
+Now, for the icon, we use an ''efl.Efl.Ui.Image''. It'll be set to display the downloaded icon. Like the entry above, it will be placed in a swallow part of the theme.
+
 <code javascript>
-        item = list.itemAppend("", layout, null, null, null);
+        // continuing the for loop
+        var icon = new efl.Efl.Ui.Image(win);
+        icon.fillInside = true;
+        icon_array.push(icon);
+        user_icon = layout.part("user_icon").cast("Efl.Container");
+        user_icon.setContent(icon);
+
+        // Pack the tweet into the box.
+        item = tweet_box.packEnd(layout);
+        layout.setVisible(true);
+    } // Finished the for loop
+</code>
+
+To show the tweet image, we need to download it. We can accomplish this creating a new file stream with ''fs.createWriteStream'' and download the image to this file stream using the ''request'' module. Once the download is finished, we iterate through the list of icons widgets and tell them to display the dowloaded file. We also tell the tweetbox and the window to show themselves.
+
+<code javascript>
+
+    if (tweets.length > 0) {
+        var icon_filename = '/tmp/twitter_pic.jpg';
+        var file = fs.createWriteStream(icon_filename);
+        file.on('finish', function() {
+            console.log("finished loading the icon file.");
+            for (i=0; i < icon_array.length; i++) {
+                icon_array[i].setFile(icon_filename, null);
+            }
+        });
+
+        request(tweets[0].user.profile_image_url).pipe(file);
     }
-    list.go();
-};
+
+    tweet_box.setVisible(true);
+
+});
+win.setSize(380, 400);
 win.setVisible(true);
 </code>
 
-You will find this and more examples in directory ''src/examples'' in efl source code.
+You will find these and more examples in directory ''src/examples'' in efl source code.
 
 All you need to run is:
 <code bash>
 node <example_file_name>
+</code>
+
+=== Twitter edje theme ===
+
+Theming the tweet in edj allows you to separate presentation details from the code. In a nutshell, you create themes in edje by creating "parts" inside groups, the basic elements of an edje theme. For example, you can create text parts to hold text and rectangles. For traditional widgets, you can create "swallow" parts that the application can use to show buttons, text entry, etc. For more information, check the EDJE tutorial FIXME here.
+
+For now, first create an edc - the EDJE source format - file with the following contents:
+
+<code edje>
+collections {
+    group {
+        name: "tweet";
+        parts
+        {
+            part {
+                name: "user_icon";
+                type: SWALLOW;
+                description {
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 2 2;
+                    }
+                    rel2 {
+                        relative: 0.0 0.0;
+                        offset: 50 50 ;
+                    }
+                }
+            }
+            part {
+                name: "user_name";
+                type: TEXT;
+                effect: SOFT_SHADOW;
+                description {
+                    color: 0 190 255 255;
+                    rel1 {
+                          relative: 1.0 0.0;
+                          to_x: "user_icon";
+                          offset: 7 4;
+                    }
+                    rel2 {
+                          relative: 1.0 0.0;
+                          to_x: "user_icon";
+                          offset: 120 30;
+                    }
+                    text {
+                        text: "User Name";
+                        size: 12;
+                        font: "sans:style=Bold";
+                        min: 1 1;
+                        ellipsis: -1;
+                        align: 0.0 0.0;
+                    }
+                }
+            }
+            part {
+                name: "screen_name";
+                type: TEXT;
+                description {
+                    rel1 {
+                        relative: 1.0 0.0;
+                        to: "user_name";
+                        offset: 15 4;
+                    }
+                    rel2 {
+                        relative: 1.0 1.0;
+                        to: "user_name";
+                        offset: 75 10;
+                    }
+                    text {
+                        text: "scname";
+                        size: 10;
+                        font: "sans";
+                        min: 1 1;
+                        ellipsis: -1;
+                        align: 0.0 0.0;
+                    }
+                }
+            }
+           part {
+                name: "tweet_text";
+                type: SWALLOW;
+                description {
+                            rel1 {
+                                 relative: 0.0 1.0;
+                                 to: "user_name";
+                                 offset: 0 0;
+                                 }
+                            rel2 {
+                                 relative: 0.0 1.0;
+                                 to: "user_name";
+                                 offset: 250 80;
+                                 }
+                }
+            }
+        }
+    }
+}
+</code>
+
+Then compile it to the .edj format that your app will load:
+
+<code bash>
+~$ edje_cc your_edc_file.edc # Will generate your_edc_file.edj
 </code>
