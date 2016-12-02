@@ -1,0 +1,80 @@
+<title>Efl.Gfx.Map</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_gfx_map [fillcolor = "deepskyblue4", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_gfx_map -> efl_interface
+    efl_gfx_map -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//**
+    * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Texture UV mapping for all objects (rotation, perspective, 3d, ...).%%
+
+%%Evas allows different transformations to be applied to all kinds of objects. These are applied by means of UV mapping.%%
+
+%%With UV mapping, one maps points in the source object to a 3D space positioning at target. This allows rotation, perspective, scale and lots of other effects, depending on the map that is used.%%
+
+%%Each map point may carry a multiplier color. If properly calculated, these can do shading effects on the object, producing 3D effects.%%
+
+%%At the moment of writing, maps can only have 4 points (no more, no less). Usually, it will be necessary to update the map points (start afresh with %%[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|Efl.Gfx.Map.map_populate]]%%) whenever the object geometry changes.%%
+
+<note>
+%%For now this mixin is only compatible with %%''Efl''%%.Canvas.Object and shouldn't be used anywhere else.%%
+</note>
+
+<note>
+%%There are a few differences with legacy %%''Evas_Map''%%: - A map is now a property of an object, rather than a separate entity. - %%[[:docs:efl:auto:mixin:efl:gfx:map:property:map_move_sync|Efl.Gfx.Map.map_move_sync]]%% is enabled by default - %%[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|Efl.Gfx.Map.map_populate]]%% will be called automatically if another map function is called while the object has no map info.%%
+</note>
+
+{{page>:docs:efl:user:mixin:efl:gfx:map:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_dup|map_dup]] | %%Duplicate the map information from another object.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_lightning_3d|map_lightning_3d]] | %%Perform lighting calculations on the given Map%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_perspective_3d|map_perspective_3d]] | %%Apply a perspective transform to the map%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate_manual|map_populate_manual]] | %%Populate source and destination map points to match given geometry.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|map_populate]] | %%Populate source and destination map points to match this object.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_quat_rotate|map_quat_rotate]] | %%Rotate the map in 3D using a unit quaternion.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate_3d|map_rotate_3d]] | %%Rotate the map around 3 axes in 3D%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate|map_rotate]] | %%Change the map to apply the given rotation.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:method:map_zoom|map_zoom]] | %%Change the map to apply the given zooming.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_alpha|map_alpha]] //(get, set)// | %%Alpha flag for map rendering.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_clockwise|map_clockwise]] //(get)// | %%Clockwise state of a map (read-only).%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_color|map_color]] //(get, set)// | %%Color of a vertex in the map.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_enable|map_enable]] //(get, set)// | %%Whether map transformation is enabled on this object.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_move_sync|map_move_sync]] //(get, set)// | %%Status of object move synchronization for map rendering.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_coord|map_point_coord]] //(get, set)// | %%Map point's coordinate.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_image_uv|map_point_image_uv]] //(get, set)// | %%Map point's U and V texture source point.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_z|map_point_z]] //(get)// | %%Value of Z coordinate of point %%''idx''%%.%% |
+| [[:docs:efl:auto:mixin:efl:gfx:map:property:map_smooth|map_smooth]] //(get, set)// | %%Smoothing state for map rendering.%% |
+
+===== Events =====
+
+This class does not define any events.

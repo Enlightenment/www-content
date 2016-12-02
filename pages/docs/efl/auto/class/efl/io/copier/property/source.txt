@@ -1,0 +1,59 @@
+<title>Efl.Io.Copier.source</title>
+===== Signature =====
+
+<code>
+@property Efl.Io.Copier.source {
+    get {
+        values {
+            source: Efl.Io.Reader;
+        }
+    }
+    set {
+        values {
+            source: Efl.Io.Reader;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Io_Reader *efl_io_copier_source_get(const Eo *obj);
+void efl_io_copier_source_set(Eo *obj, Efl_Io_Reader *source);
+</code>
+
+===== Values =====
+
+  * **source** - %%%%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% source%%
+===== Description =====
+
+%%Copier source object.%%
+
+%%The source object must implement the %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% interface and will provide data to the copier, thus it must be provided in order for the copier to work.%%
+
+%%The copier will monitor %%[[:docs:efl:auto:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% property and "can_read,changed" event. When it's %%''true''%%, then a chunk up to %%[[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%% is read using %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% into an intermediate storage buffer that can grow up to %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%.%%
+
+%%If there is a %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, the read data is written there and afterwards "data" and "line" events are dispatched. If no destination, it's accumulated in the internal storage and "data" and "line" events are dispatched immediately.%%
+
+%%If there is a %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set, then copier will use that in order to attempt to write a full line at a time, including the delimiter. Exceptions may be if the %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
+
+%%Once %%[[:docs:efl:auto:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% is %%''true''%% or "eos" event happen, then the read process is over. If there is no %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% set, then the process is over and "done" event is called. If there is a %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, then all data must be flushed to it, draining the internal intermediate storage, before "done" event is emitted.%%
+
+%%If the source object implements %%[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]]%% interface, then the %%[[:docs:efl:auto:class:efl:io:copier:property:progress|Efl.Io.Copier.progress]]%% will report the total size. If the destination object also implements %%[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]]%%, then it will be resized to match the source size, providing the hint that may enhance performance (like pre-allocating the total amount and avoid dynamic resize).%%
+
+%%If the source object implements %%[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]%% and it's not closed, it will be closed when the copier itself is. This may happen, for example, when the copier is deleted and %%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% is %%''true''%% (the default).%%
+
+%%Common source classes are %%[[:docs:efl:auto:class:efl:io:buffer|Efl.Io.Buffer]]%% (if fixed data exists in memory), %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%% (used to stream in-memory data) and %%[[:docs:efl:auto:class:efl:io:file|Efl.Io.File]]%% (data is present in the file system). Networking classes are also common source objects.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:io:copier:property:source:description&nodate&nolink&nouser}}
+
+==== Setter ====
+
+%%Constructor-only property to set where to read data from%%
+
+//Since 1.19//{{page>:docs:efl:user:class:efl:io:copier:property:source:getter_description&nodate&nolink&nouser}}
+
+

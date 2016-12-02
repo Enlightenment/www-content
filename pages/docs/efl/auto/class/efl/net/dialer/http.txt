@@ -1,0 +1,103 @@
+<title>Efl.Net.Dialer.Http</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_dialer_http [fillcolor = "black", label = "Efl.Net.Dialer.Http", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_dialer [fillcolor = "gray15", label = "Efl.Net.Dialer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_sizer [fillcolor = "gray15", label = "Efl.Io.Sizer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_dialer_http -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_net_dialer_http -> efl_net_dialer
+    efl_net_dialer -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+    efl_net_dialer_http -> efl_io_sizer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:dialer:http|Efl.Net.Dialer.Http]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+        * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+    * [[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]] //(mixin)//
+
+===== Description =====
+
+%%HTTP Dialer (Client).%%
+
+%%The effective URL in use, if %%[[:docs:efl:auto:class:efl:net:dialer:http:property:allow_redirects|Efl.Net.Dialer.Http.allow_redirects]]%% is %%''true''%% will be available as %%[[:docs:efl:auto:interface:efl:net:socket:property:address_remote|Efl.Net.Socket.address_remote]]%%. The %%[[:docs:efl:auto:interface:efl:net:socket:property:address_local|Efl.Net.Socket.address_local]]%% is an IP:PORT pair.%%
+
+%%The dialer can do bi-directional information exchange. It can also do a PUT and upload a file, or GET and download one. Anoter case is to do a POST with some form values, including a file, and retrieve its headers and response body. To make usage more streamlined, choose your primary interest with %%[[:docs:efl:auto:class:efl:net:dialer:http:property:primary_mode|Efl.Net.Dialer.Http.primary_mode]]%% then get some properties such as %%[[:docs:efl:auto:mixin:efl:io:sizer:property:size|Efl.Io.Sizer.size]]%% to report or use what matters to your use case.%%
+
+%%If %%[[:docs:efl:auto:class:efl:net:dialer:http:property:allow_redirects|Efl.Net.Dialer.Http.allow_redirects]]%% is %%''true''%%, multiple "connected" and "resolved" signals will be dispatched, one for each connection. Then %%[[:docs:efl:auto:class:efl:net:dialer:http:property:response_status|Efl.Net.Dialer.Http.response_status]]%% and %%[[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_get|Efl.Net.Dialer.Http.response_headers_get]]%% will keep changing. Using %%[[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_all_get|Efl.Net.Dialer.Http.response_headers_all_get]]%% one can see the whole history of headers and connections.%%
+
+%%To enable debugging use EINA_LOG_LEVELS=ecore_con:4 environment variable.%%
+
+%%If the proxy is NULL (default), then the system proxy will be used. On UNIX that's the environment variable %%''http_proxy''%% (or '%%''all_proxy''%%') is used if the given address doesn't match %%''no_proxy''%% patterns. To disable proxy use an empty string. If provided proxy must be one of the protocols:%%
+
+%%- http://username:password@proxyserver:port - http://username@proxyserver:port - http://proxyserver:port - http://proxyserver  (default port 1080) - socks5://username:password@proxyserver:port (SOCKSv5) - socks5h://username@proxyserver:port (let socks server to resolve domain) - socks5://proxyserver:port - socks5://proxyserver (default port 1080) - socks4a://proxyserver:port (SOCKSv4 and let socks server to resolve domain) - socks4://proxyserver:port (SOCKSv4)%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:dialer:http:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:date_parse|date_parse]] | %%Parse the given string as time in seconds since 1/1/1970.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:date_serialize|date_serialize]] | %%Serialize the given GMT time in seconds since 1/1/1970.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:request_header_add|request_header_add]] | %%Add a request header 'key: value'.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:request_headers_clear|request_headers_clear]] | %%Clear all request headers.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:request_headers_get|request_headers_get]] | %%Return an iterator to the key-value pairs for request headers%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_all_get|response_headers_all_get]] | %%Return an iterator to the key-value pairs for all response headers.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_clear|response_headers_clear]] | %%Save some memory by disposing the received headers%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_get|response_headers_get]] | %%Return an iterator to the key-value pairs for the last response headers.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:allow_redirects|allow_redirects]] //(get, set)// | %%Allow HTTP redirects to be followed.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:authentication|authentication]] //(get, set)// | %%HTTP authentication to use.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:cookie_jar|cookie_jar]] //(get, set)// | %%This property sets the filename where to read and write cookies.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:http_version|http_version]] //(get, set)// | %%The HTTP version to use.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:method|method]] //(get, set)// | %%The HTTP method to use.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:primary_mode|primary_mode]] //(get, set)// | %%Is this request primarily a download or upload?%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:progress_download|progress_download]] //(get)// | %%How many bytes were downloaded and how much was expected.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:progress_upload|progress_upload]] //(get)// | %%How many bytes were uploaded and how much was expected.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:request_content_length|request_content_length]] //(get, set)// | %%"Content-Length:" Header used for uploading/sending.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:response_content_length|response_content_length]] //(get, set)// | %%"Content-Length:" Header used for downloading/receiving.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:response_content_type|response_content_type]] //(get, set)// | %%"Content-Type:" Header used for downloading/receiving%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:response_status|response_status]] //(get)// | %%The HTTP response status of this request.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:ssl_certificate_authority|ssl_certificate_authority]] //(get, set)// | %%Overrides the CA (Certificate Authority) path or directory.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:ssl_certificate_revogation_list|ssl_certificate_revogation_list]] //(get, set)// | %%Defines a CRL (Certificate Revogation List) path to use.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:ssl_verify|ssl_verify]] //(get, set)// | %%If remote peer's SSL certificate should be verified.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:http:property:user_agent|user_agent]] //(get, set)// | %%The User-Agent to specify.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:http:event:headers_done|headers,done]] | %%Notifies all headers were parsed and are available.%% |

@@ -1,0 +1,41 @@
+<title>Elm.Index.item_insert_after</title>
+===== Signature =====
+
+<code>
+Elm.Index.item_insert_after {
+    params {
+        @in after: Elm.Widget.Item;
+        @in letter: string;
+        @in func: Evas_Smart_Cb @optional;
+        @in data: const(void_ptr) @optional;
+    }
+    return: Elm.Widget.Item;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Widget_Item *elm_obj_index_item_insert_after(Eo *obj, Elm_Widget_Item *after, const char *letter, Evas_Smart_Cb func, const void *data);
+</code>
+
+===== Parameters =====
+
+  * **after** //(in)// - %%The index item to insert after.%%
+  * **letter** //(in)// - %%Letter under which the item should be indexed%%
+  * **func** //(in)// - %%The function to call when the item is clicked.%%
+  * **data** //(in)// - %%The item data to set for the index's item%%
+
+===== Description =====
+
+%%Insert a new item into the index object after item %%''after''%%.%%
+
+%%Despite the most common usage of the %%''letter''%% argument is for single char strings, one could use arbitrary strings as index entries.%%
+
+%%%%''item''%% will be the pointer returned back on $"changed", "delay,changed" and $"selected" smart events.%%
+
+<note>
+%%If %%''relative''%% is %%''NULL''%% this function will behave as elm_index_item_append().%%
+</note>
+{{page>:docs:efl:user:class:elm:index:method:item_insert_after:description&nodate&nolink&nouser}}
+

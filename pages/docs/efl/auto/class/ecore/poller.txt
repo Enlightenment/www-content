@@ -1,0 +1,51 @@
+<title>Ecore.Poller</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    ecore_poller [fillcolor = "black", label = "Ecore.Poller", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    ecore_poller -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:ecore:poller|Ecore.Poller]] //(class)//**
+    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Ecore poller provides infrastructure for the creation of pollers.%%
+
+%%Pollers are, in essence, callbacks that share a single timer per type. Because not all pollers need to be called at the same frequency the user may specify the frequency in ticks(each expiration of the shared timer is called a tick, in ecore poller parlance) for each added poller. Ecore pollers should only be used when the poller doesn't have specific requirements on the exact times to poll.%%
+
+%%This architecture means that the main loop is only woken up once to handle all pollers of that type, this will save power as the CPU has more of a chance to go into a low power state the longer it is asleep for, so this should be used in situations where power usage is a concern.%%
+
+%%For now only 1 core poller type is supported: ECORE_POLLER_CORE, the default interval for ECORE_POLLER_CORE is 0.125(or 1/8th) second.%%
+
+{{page>:docs:efl:user:class:ecore:poller:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:ecore:poller:method:constructor|constructor]] | %%Constructor with parameters for Ecore Poller.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:ecore:poller:property:interval|interval]] //(get, set)// | %%Polling interval rate of the poller.%% |
+
+===== Events =====
+
+This class does not define any events.

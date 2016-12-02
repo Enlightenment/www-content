@@ -1,0 +1,91 @@
+<title>Efl.Net.Dialer.Websocket</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_dialer_websocket [fillcolor = "black", label = "Efl.Net.Dialer.Websocket", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_dialer [fillcolor = "gray15", label = "Efl.Net.Dialer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_dialer_websocket -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_net_dialer_websocket -> efl_net_dialer
+    efl_net_dialer -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:dialer:websocket|Efl.Net.Dialer.Websocket]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+        * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+===== Description =====
+
+%%WebSocket Dialer (Client).%%
+
+%%The WebSocket Protocol (https://tools.ietf.org/html/rfc6455) is a message-based protocol over HTTP, this allows it to leverage on authentication, cookies, proxies and SSL/TLS.%%
+
+%%It's worth to note that although it uses the HTTP dialer, it's not a subclass and thus not all HTTP features are exposed as the WebSocket has strict requirements that must be respected.%%
+
+%%If the proxy is NULL (default), then the system proxy will be used. On UNIX that's the environment variable %%''http_proxy''%% (or '%%''all_proxy''%%') is used if the given address doesn't match %%''no_proxy''%% patterns. To disable proxy use an empty string. If provided proxy must be one of the protocols:%%
+
+%%- http://username:password@proxyserver:port - http://username@proxyserver:port - http://proxyserver:port - http://proxyserver  (default port 1080) - socks5://username:password@proxyserver:port (SOCKSv5) - socks5h://username@proxyserver:port (let socks server to resolve domain) - socks5://proxyserver:port - socks5://proxyserver (default port 1080) - socks4a://proxyserver:port (SOCKSv4 and let socks server to resolve domain) - socks4://proxyserver:port (SOCKSv4)%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:dialer:websocket:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:binary_send|binary_send]] | %%Send a binary blob (opcode=0x2) to the server.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:close_request|close_request]] | %%Request (opcode=0x8) the server to terminate the connection.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:ping|ping]] | %%Send a PING (opcode=0x9) to the server.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_header_add|request_header_add]] | %%Add a HTTP request header 'key: value'.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_headers_clear|request_headers_clear]] | %%Clear all request headers.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_headers_get|request_headers_get]] | %%Return an iterator to the key-value pairs for request headers%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_protocol_add|request_protocol_add]] | %%Add a new WebSocket protocol to the request.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_protocols_clear|request_protocols_clear]] | %%Clear all request protocols%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:request_protocols_get|request_protocols_get]] | %%Return an iterator to the requested WebSocket protocols%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:response_protocols_get|response_protocols_get]] | %%Return an iterator to the server-replied (response) WebSocket protocols it supports%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:method:text_send|text_send]] | %%Send an UTF-8 TEXT (opcode=0x1) to the server.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:property:allow_redirects|allow_redirects]] //(get, set)// | %%Allow HTTP redirects to be followed.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:property:authentication|authentication]] //(get, set)// | %%HTTP authentication to use.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:property:cookie_jar|cookie_jar]] //(get, set)// | %%This property sets the filename where to read and write cookies.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:property:streaming_mode|streaming_mode]] //(get, set)// | %%Configure how to map streaming APIs to WebSocket.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:property:user_agent|user_agent]] //(get, set)// | %%The User-Agent to specify.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:event:closed_reason|closed,reason]] | %%Received a request to close the connection. It may be a reply/confirmation from a local request, see %%[[:docs:efl:auto:class:efl:net:dialer:websocket:method:close_request|Efl.Net.Dialer.Websocket.close_request]]%%, or some server-generated reason. After this point, no more messages are allowed to be sent and no more will be received. %%[[:docs:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% will be called.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:event:message_binary|message,binary]] | %%Received a binary message (opcode=0x2)%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:event:message_text|message,text]] | %%Received a text string message (opcode=0x1)%% |
+| [[:docs:efl:auto:class:efl:net:dialer:websocket:event:pong|pong]] | %%Received a pong (opcode=0xA) with optional message/reason%% |

@@ -1,0 +1,42 @@
+<title>Edje.Object.size_min_restricted_calc</title>
+===== Signature =====
+
+<code>
+Edje.Object.size_min_restricted_calc {
+    params {
+        @out minw: Evas.Coord;
+        @out minh: Evas.Coord;
+        @in restrictedw: Evas.Coord;
+        @in restrictedh: Evas.Coord;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void edje_obj_size_min_restricted_calc(Eo *obj, Evas_Coord *minw, Evas_Coord *minh, Evas_Coord restrictedw, Evas_Coord restrictedh);
+</code>
+
+===== Parameters =====
+
+  * **minw** //(out)// - %%Pointer to a variable where to store the minimum required width%%
+  * **minh** //(out)// - %%Pointer to a variable where to store the minimum required height%%
+  * **restrictedw** //(in)// - %%Do not allow object's calculated (minimum) width to be less than this value%%
+  * **restrictedh** //(in)// - %%Do not allow object's calculated (minimum) height to be less than this value%%
+
+===== Description =====
+
+%%Calculate the minimum required size for a given Edje object.%%
+
+%%This call will trigger an internal recalculation of all parts of the obj object, in order to return its minimum required dimensions for width and height. The user might choose to  impose those minimum sizes, making the resulting calculation to get to values equal or bigger than restrictedw and restrictedh, for width and height, respectively.%%
+
+<note>
+%%At the end of this call, obj  won't be automatically resized to new dimensions, but just return the calculated sizes. The caller is the one up to change its geometry or not.%%
+</note>
+
+<note warning>
+%%Be advised that invisible parts in obj  will be taken into account in this calculation.%%
+</note>
+{{page>:docs:efl:user:class:edje:object:method:size_min_restricted_calc:description&nodate&nolink&nouser}}
+

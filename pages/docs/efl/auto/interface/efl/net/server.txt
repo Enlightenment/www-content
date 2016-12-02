@@ -1,0 +1,56 @@
+<title>Efl.Net.Server</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_server [fillcolor = "dodgerblue4", label = "Efl.Net.Server", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]] //(interface)//**
+
+===== Description =====
+
+%%The basic server interface.%%
+
+%%It will start serving and accepting clients once %%[[:docs:efl:auto:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%% is called and the "serving" event is dispatched.%%
+
+%%When new clients are accepted, then "client,add" event is dispatched with a child object implementing %%[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%% interface. These implement the standard %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%%, %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% and %%[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]%% interfaces, thus can be used with utilities such as %%[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]]%%.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:interface:efl:net:server:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:server:method:client_announce|client_announce]] | %%Implementions should call this method to announce new clients.%% |
+| [[:docs:efl:auto:interface:efl:net:server:method:serve|serve]] | %%Starts serving requests.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:server:property:address|address]] //(get, set)// | %%The address the server is bound to.%% |
+| [[:docs:efl:auto:interface:efl:net:server:property:clients_count|clients_count]] //(get, set)// | %%Number of concurrent clients accepted by this server.%% |
+| [[:docs:efl:auto:interface:efl:net:server:property:clients_limit|clients_limit]] //(get, set)// | %%Number of maximum concurrent clients allowed by this server.%% |
+| [[:docs:efl:auto:interface:efl:net:server:property:serving|serving]] //(get, set)// | %%Returns whenever the server is ready to accept clients or not.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:server:event:client_add|client,add]] | %%A new client socket was created.%% |
+| [[:docs:efl:auto:interface:efl:net:server:event:client_rejected|client,rejected]] | %%Notifies a client was rejected due excess, see %%[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%% |
+| [[:docs:efl:auto:interface:efl:net:server:event:error|error]] | %%Some error happened and the server needs to be stopped.%% |
+| [[:docs:efl:auto:interface:efl:net:server:event:serving|serving]] | %%Notifies the server is ready to accept clients. See property %%[[:docs:efl:auto:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%% |

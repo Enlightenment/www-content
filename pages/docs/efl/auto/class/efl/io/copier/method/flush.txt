@@ -1,0 +1,39 @@
+<title>Efl.Io.Copier.flush</title>
+===== Signature =====
+
+<code>
+Efl.Io.Copier.flush {
+    params {
+        @in may_block: bool;
+        @in ignore_line_delimiter: bool;
+    }
+    return: bool (true);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_io_copier_flush(Eo *obj, Eina_Bool may_block, Eina_Bool ignore_line_delimiter);
+</code>
+
+===== Parameters =====
+
+  * **may_block** //(in)// - %%If %%''true''%%, then %%[[:docs:efl:auto:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% and %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%% are not checked and the call may block.%%
+  * **ignore_line_delimiter** //(in)// - %%Force flush ignoring line delimiters%%
+
+===== Description =====
+
+%%Forces reading from source and writing to destination.%%
+
+%%This executes a single read->write cycle, if more data could be read from source (ie: not EOS) or not all data was written to destination, then %%''false''%% is returned. Then to forcefully drain source and write all contents to destination, use in a loop until it returns %%''true''%%.%%
+
+%%The return value matches "done" event, that is, when %%''true''%% is returned, the "done" event is emitted.%%
+
+%%This function may also emit "progress" and "error" events.%%
+
+%%@note this function may block the main loop execution until operations complete! This is bad for usability, as user interface or other operations may freeze. A better approach is to operate asynchronously and wait for "done" event.%%
+
+//Since 1.19//
+{{page>:docs:efl:user:class:efl:io:copier:method:flush:description&nodate&nolink&nouser}}
+

@@ -1,0 +1,59 @@
+<title>Efl.Io.Copier.destination</title>
+===== Signature =====
+
+<code>
+@property Efl.Io.Copier.destination {
+    get {
+        values {
+            destination: Efl.Io.Writer;
+        }
+    }
+    set {
+        values {
+            destination: Efl.Io.Writer;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Io_Writer *efl_io_copier_destination_get(const Eo *obj);
+void efl_io_copier_destination_set(Eo *obj, Efl_Io_Writer *destination);
+</code>
+
+===== Values =====
+
+  * **destination** - %%%%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% destination%%
+===== Description =====
+
+%%Copier destination object.%%
+
+%%If set it must implement %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% interface and will receive read data once %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%% reports %%''true''%%, this is monitored using "can_write,changed" event.%%
+
+%%The copier will attempt to write all internal intermediate storage data at once, however the destination object may consume less. The actual data written is emitted in the "data" and "line" events.%%
+
+%%If there is a %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set, then copier will use that in order to attempt to write a full line at a time, including the delimiter. Exceptions may be if the %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
+
+%%If %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is flagged "eos" and all data was written to destination, then "done" event is emitted.%%
+
+%%If destination is not set (ie: NULL), then data is kept in a internal %%[[:docs:efl:auto:struct:eina:binbuf|Eina.Binbuf]]%%, that can be stolen with %%[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% once "data" or "line" events are emitted. It is allowed as a shortcut to easily drain readers and store all data in memory, not requiring an %%[[:docs:efl:auto:class:efl:io:buffer|Efl.Io.Buffer]]%% or %%[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]]%% to be used -- a source and a copier are enough.%%
+
+%%If both source and destination object implements %%[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]]%%, then destination will be resized to match the source size, providing the hint that may enhance performance (like pre-allocating the total amount and avoid dynamic resize).%%
+
+%%If the destination object implements %%[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]%% and it's not closed, it will be closed when the copier itself is. This may happen, for example, when the copier is deleted and %%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% is %%''true''%% (the default).%%
+
+%%Common destination classes are %%[[:docs:efl:auto:class:efl:io:buffer|Efl.Io.Buffer]]%% (better to wait for all data in memory), %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%% (to handle streaming protocols) and %%[[:docs:efl:auto:class:efl:io:file|Efl.Io.File]]%% (stores data to disk). Networking classes are also common destination objects.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:io:copier:property:destination:description&nodate&nolink&nouser}}
+
+==== Setter ====
+
+%%Constructor-only property to set where to write data to%%
+
+//Since 1.19//{{page>:docs:efl:user:class:efl:io:copier:property:destination:getter_description&nodate&nolink&nouser}}
+
+

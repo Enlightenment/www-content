@@ -1,0 +1,39 @@
+<title>Evas.Canvas3D.Scene.pick</title>
+===== Signature =====
+
+<code>
+Evas.Canvas3D.Scene.pick @const {
+    params {
+        @in x: Evas.Real;
+        @in y: Evas.Real;
+        @out node: Evas.Canvas3D.Node;
+        @out mesh: Evas.Canvas3D.Mesh;
+        @out s: Evas.Real;
+        @out t: Evas.Real;
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool evas_canvas3d_scene_pick(const Eo *obj, Evas_Real x, Evas_Real y, Evas_Canvas3D_Node **node, Evas_Canvas3D_Mesh **mesh, Evas_Real *s, Evas_Real *t);
+</code>
+
+===== Parameters =====
+
+  * **x** //(in)// - %%X coordinate of the picking position.%%
+  * **y** //(in)// - %%Y coordinate of the picking position.%%
+  * **node** //(out)// - %%Pointer to receive the node contains the picked mesh.%%
+  * **mesh** //(out)// - %%Pointer to receive the picked mesh.%%
+  * **s** //(out)// - %%Pointer to receive the texture "s" coordinate.%%
+  * **t** //(out)// - %%Pointer to receive the texture "t" coordinate.%%
+
+===== Description =====
+
+%%Get information on the most front visible mesh for the given position.%%
+
+%%(x, y) is the screen coordinate of the given scene. That is, left-top is (0, 0) and right-bottom is (w, h) where (w, h) is the size of the scene. The texture coordinate is useful when using proxy texture source.%%
+{{page>:docs:efl:user:class:evas:canvas3d:scene:method:pick:description&nodate&nolink&nouser}}
+

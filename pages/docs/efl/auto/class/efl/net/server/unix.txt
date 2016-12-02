@@ -1,0 +1,57 @@
+<title>Efl.Net.Server.Unix</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_server_unix [fillcolor = "black", label = "Efl.Net.Server.Unix", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_server_fd [fillcolor = "gray15", label = "Efl.Net.Server.Fd", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_fd [fillcolor = "gray15", label = "Efl.Loop.Fd", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_server [fillcolor = "gray15", label = "Efl.Net.Server", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+    efl_net_server_unix -> efl_net_server_fd
+    efl_net_server_fd -> efl_loop_fd
+    efl_loop_fd -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_net_server_fd -> efl_net_server
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:server:unix|Efl.Net.Server.Unix]] //(class)//**
+    * [[:docs:efl:auto:class:efl:net:server:fd|Efl.Net.Server.Fd]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]] //(class)//
+        * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]] //(interface)//
+
+===== Description =====
+
+%%An AF_UNIX server.%%
+
+%%The %%[[:docs:efl:auto:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%% method will call bind(2) directly, thus path will be accessed and created in that method. If the created socket must be subject to some special mode or user, change before executing that method, for example calling umask(2).%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:server:unix:description&nodate&nolink&nouser}}
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:server:unix:property:leading_directories_create|leading_directories_create]] //(get, set)// | %%If %%''true''%%, all parent directories will be created with given mode.%% |
+| [[:docs:efl:auto:class:efl:net:server:unix:property:unlink_before_bind|unlink_before_bind]] //(get, set)// | %%AF_UNIX paths may be stale due crashes, remove files and try again.%% |
+
+===== Events =====
+
+This class does not define any events.

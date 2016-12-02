@@ -1,0 +1,49 @@
+<title>Elm.Toolbar.item_prepend</title>
+===== Signature =====
+
+<code>
+Elm.Toolbar.item_prepend {
+    params {
+        @in icon: string @optional;
+        @in label: string;
+        @in func: Evas_Smart_Cb @optional;
+        @in data: const(void_ptr) @optional;
+    }
+    return: Elm.Widget.Item;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Widget_Item *elm_obj_toolbar_item_prepend(Eo *obj, const char *icon, const char *label, Evas_Smart_Cb func, const void *data);
+</code>
+
+===== Parameters =====
+
+  * **icon** //(in)// - %%A string with icon name or the absolute path of an image file.%%
+  * **label** //(in)// - %%The label of the item.%%
+  * **func** //(in)// - %%The function to call when the item is clicked.%%
+  * **data** //(in)// - %%The data to associate with the item for related callbacks.%%
+
+===== Description =====
+
+%%Prepend item to the toolbar.%%
+
+%%A new item will be created and prepended to the toolbar, i.e., will be set as first item.%%
+
+%%Items created with this method can be deleted with elm_object_item_del().%%
+
+%%Associated %%''data''%% can be properly freed when item is deleted if a callback function is set with elm_object_item_del_cb_set().%%
+
+%%If a function is passed as argument, it will be called every time this item is selected, i.e., the user clicks over an unselected item. If such function isn't needed, just passing %%''NULL''%% as %%''func''%% is enough. The same should be done for %%''data''%%.%%
+
+%%Toolbar will load icon image from fdo or current theme. This behavior can be set by elm_toolbar_icon_order_lookup_set() function. If an absolute path is provided it will load it direct from a file.%%
+
+<note>
+%%This function does not accept relative icon path.%%
+</note>
+
+%%See: elm_toolbar_item_icon_set()%%
+{{page>:docs:efl:user:class:elm:toolbar:method:item_prepend:description&nodate&nolink&nouser}}
+

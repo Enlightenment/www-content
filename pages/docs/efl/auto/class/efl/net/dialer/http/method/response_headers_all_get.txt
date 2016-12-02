@@ -1,0 +1,32 @@
+<title>Efl.Net.Dialer.Http.response_headers_all_get</title>
+===== Signature =====
+
+<code>
+Efl.Net.Dialer.Http.response_headers_all_get {
+    return: free(own(iterator<Efl.Net.Http.Header>), eina_iterator_free) @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Iterator *efl_net_dialer_http_response_headers_all_get(Eo *obj);
+</code>
+
+===== Description =====
+
+%%Return an iterator to the key-value pairs for all response headers.%%
+
+%%Since multiple requests can happen if %%[[:docs:efl:auto:class:efl:net:dialer:http:property:allow_redirects|Efl.Net.Dialer.Http.allow_redirects]]%% is true, then all headers will be accumulated. To know when new request is started, check for headers with keys being NULL, the value will be the "HTTP/VERSION RESPONSE" string received from the host, such as:%%
+
+%%- key=NULL, value="HTTP/1.1 302 Found" - key="Location", value="http://someredirect.com" - key=NULL, value="HTTP/1.1 200 Ok" - key="Content-Type", value="text/html"%%
+
+%%Which mean the original request had a redirect to http://someredirect.com.%%
+
+%%To receive an iterator to just the last request, use %%[[:docs:efl:auto:class:efl:net:dialer:http:method:response_headers_get|Efl.Net.Dialer.Http.response_headers_get]]%%%%
+
+%%This will be usable after "headers,done" event is dispatched.%%
+
+//Since 1.19//
+{{page>:docs:efl:user:class:efl:net:dialer:http:method:response_headers_all_get:description&nodate&nolink&nouser}}
+

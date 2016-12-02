@@ -1,0 +1,94 @@
+<title>Efl.Io.Copier</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_io_copier [fillcolor = "black", label = "Efl.Io.Copier", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_io_copier -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_io_copier -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+===== Description =====
+
+%%Copy from an %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% source to %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% destination.%%
+
+%%During usage it will keep reference to %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% objects, automatically relasing them on destructor.%%
+
+%%By default the read-write process is done based on fixed-size chunks (%%[[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%%), however if %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, the behavior changes to wait for such delimiter or a maximum buffer limit is reached (%%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%).%%
+
+%%While a %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is mandatory for the copier to operate properly, the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is optional: if it's not provided, all read data is stored in an internal buffer that can be retrieved using %%[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%%, usually called when one of "data", "line" or "done" events are emitted.%%
+
+%%Most important events:%%
+
+%%- The "data" event is general and notifies some data was written to %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported for data when it's read from %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+
+%%- The "line" event is only emitted when %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set and not empty. It's simiar to "data".%%
+
+%%- The "done" event is emitted if %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:docs:efl:auto:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data was read from %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+
+%%- The "error" event is reported if the %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:docs:efl:auto:class:efl:io:copier:property:inactivity_timeout|Efl.Io.Copier.inactivity_timeout]]%% is set.%%
+
+%%A copier is handful to simplify common I/O use cases, such as:%%
+
+%%- Read a file or download content to memory: provide only the source and wait for "done" event, calling %%[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% afterwards.%%
+
+%%- Download content to disk: provide a network socket as source and use %%[[:docs:efl:auto:class:efl:io:file|Efl.Io.File]]%% as destination, then wait for "done" event.%%
+
+%%- Link two I/O streams: provide both source and destination streams, such as %%[[:docs:efl:auto:class:efl:io:stdin|Efl.Io.Stdin]]%% and %%[[:docs:efl:auto:class:efl:io:stdout|Efl.Io.Stdout]]%%, or some network socket. As data is received from source it will be copied to destination in an endless (asynchronous) loop. You may monitor for "done" if the source may be closed.%%
+
+%%If %%[[:docs:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% is called, then it will be called on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% if they implement those interfaces.%%
+
+%%%%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_exec|Efl.Io.Closer.close_on_exec]]%% and %%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% are respected and applied to both source and destination. Both default to %%''true''%%.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:io:copier:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|binbuf_steal]] | %%Steals the internal binbuf and return it to caller.%% |
+| [[:docs:efl:auto:class:efl:io:copier:method:flush|flush]] | %%Forces reading from source and writing to destination.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|buffer_limit]] //(get, set)// | %%Copier buffer limit property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:destination|destination]] //(get, set)// | %%Copier destination object.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:done|done]] //(get, set)// | %%Reports if copier is done.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:inactivity_timeout|inactivity_timeout]] //(get, set)// | %%Terminate the copier with ETIMEDOUT if it becomes inactive for some time.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|line_delimiter]] //(get, set)// | %%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:progress|progress]] //(get)// | %%Progress for read and write.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|read_chunk_size]] //(get, set)// | %%Copier read chunk size property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:source|source]] //(get, set)// | %%Copier source object.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:copier:event:data|data]] | %%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%% |
+| [[:docs:efl:auto:class:efl:io:copier:event:done|done]] | %%All available data was copied from source to destination%% |
+| [[:docs:efl:auto:class:efl:io:copier:event:error|error]] | %%An error happened and the copy stopped%% |
+| [[:docs:efl:auto:class:efl:io:copier:event:line|line]] | %%If %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%% |
+| [[:docs:efl:auto:class:efl:io:copier:event:progress|progress]] | %%Total size changed or Data was read/written%% |

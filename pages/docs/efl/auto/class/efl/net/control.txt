@@ -1,0 +1,79 @@
+<title>Efl.Net.Control</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_control [fillcolor = "black", label = "Efl.Net.Control", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_net_control -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:control|Efl.Net.Control]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Control network connectivity.%%
+
+%%This class and its children objects are only useful to implement control of the network connectivity. If your application is only interested in requesting access to the network, use the @Efl.Net.Session instead.%%
+
+%%The network connectivity is defined on top of technologies that provide access points. A technology can be "ethernet", "wifi", "bluetooth" or something else. Ethernet will provide a single access point, while "wifi" will expose zero or more access points that can come and go.%%
+
+%%Users willing to use access points are expected to monitor "access_point,add" event to know when access points were added. To know when they were deleted, "access_point,del" or an %%[[:docs:efl:auto:class:efl:net:control:access_point|Efl.Net.Control.Access_Point]]%% "del" event. Finally "access_points,changed" is relative to additions, deletions and reordering of access point due changes in their priorities.%%
+
+%%The backend system is responsible to remember connection details such as passphrase, last connected access point and priority. The user is NOT supposed to do that.%%
+
+%%For ease of use, %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% tells if at least one access point is online (verified connectivity), local (connected but unverified) or offline.%%
+
+%%Due safety reasons all radio transmissions may be disabled with %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% property. This is usually called "airplane mode" in some platforms.%%
+
+%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% "online" (%%[[:docs:efl:auto:enum:efl:net:control:state|Efl.Net.Control.State.online]]%%) and iterators for %%[[:docs:efl:auto:class:efl:net:control:property:access_points|Efl.Net.Control.access_points]]%% and %%[[:docs:efl:auto:class:efl:net:control:property:technologies|Efl.Net.Control.technologies]]%% will be empty (they will be returned but won't contain any item).%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:control:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:control:method:agent_reply|agent_reply]] | %%If event "agent_request_input" was emitted, this will reply with the requested data%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:control:property:access_points|access_points]] //(get)// | %%The iterator of current access points.%% |
+| [[:docs:efl:auto:class:efl:net:control:property:agent_enabled|agent_enabled]] //(get, set)// | %%The agent is responsible for user interaction.%% |
+| [[:docs:efl:auto:class:efl:net:control:property:radios_offline|radios_offline]] //(get, set)// | %%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radios to be used.%% |
+| [[:docs:efl:auto:class:efl:net:control:property:state|state]] //(get)// | %%Summary of network connectivity.%% |
+| [[:docs:efl:auto:class:efl:net:control:property:technologies|technologies]] //(get)// | %%The iterator of current technologies.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:control:event:access_point_add|access_point,add]] | %%The given access point was added%% |
+| [[:docs:efl:auto:class:efl:net:control:event:access_point_del|access_point,del]] | %%The given access point will be deleted%% |
+| [[:docs:efl:auto:class:efl:net:control:event:access_points_changed|access_points,changed]] | %%Access points were added, deleted or reordered.%% |
+| [[:docs:efl:auto:class:efl:net:control:event:agent_browser_url|agent_browser_url]] | %%Requires the user to visit a web page%% |
+| [[:docs:efl:auto:class:efl:net:control:event:agent_error|agent_error]] | %%Requires the error to be reported to the user%% |
+| [[:docs:efl:auto:class:efl:net:control:event:agent_released|agent_released]] | %%Notifies we're not the agent anymore%% |
+| [[:docs:efl:auto:class:efl:net:control:event:agent_request_input|agent_request_input]] | %%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:docs:efl:auto:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%% |
+| [[:docs:efl:auto:class:efl:net:control:event:radios_offline_changed|radios_offline,changed]] | %%Property %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%% |
+| [[:docs:efl:auto:class:efl:net:control:event:state_changed|state,changed]] | %%Property %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%% |
+| [[:docs:efl:auto:class:efl:net:control:event:technology_add|technology,add]] | %%The given technology was added%% |
+| [[:docs:efl:auto:class:efl:net:control:event:technology_del|technology,del]] | %%The given technology will be deleted%% |

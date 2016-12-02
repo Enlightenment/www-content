@@ -1,0 +1,60 @@
+<title>Efl.Loop</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_loop [fillcolor = "black", label = "Efl.Loop", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_loop -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:loop|Efl.Loop]] //(class)//**
+    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%The Efl Main Loop%%
+
+%%Efl main loop provide a clean and tiny event loop library with many modules to do lots of convenient things for a programmer, to save time and effort. It's small and lean, designed to work from embedded systems all the way up to large and powerful multi-cpu workstations. The main loop has a number of primitives to be used with its main loop. It serializes all the primitives and allows for great responsiveness without the need for threads (or any other concurrency), but provide them if you need to.%%
+
+{{page>:docs:efl:user:class:efl:loop:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:method:begin|begin]] | %%Runs the application main loop.%% |
+| [[:docs:efl:auto:class:efl:loop:method:iterate_may_block|iterate_may_block]] | %%Runs a single iteration of the main loop to process everything on the queue with block/non-blocking status.%% |
+| [[:docs:efl:auto:class:efl:loop:method:iterate|iterate]] | %%Runs a single iteration of the main loop to process everything on the queue.%% |
+| [[:docs:efl:auto:class:efl:loop:method:job|job]] | %%Will execute that promise in the near future.%% |
+| [[:docs:efl:auto:class:efl:loop:method:quit|quit]] | %%Quits the main loop once all the events currently on the queue have been processed.%% |
+| [[:docs:efl:auto:class:efl:loop:method:register|register]] | %%Will register a manager of a specific class to be answered by eo.provider_find.%% |
+| [[:docs:efl:auto:class:efl:loop:method:timeout|timeout]] | %%Will trigger this promise when the specified timeout occur.%% |
+| [[:docs:efl:auto:class:efl:loop:method:unregister|unregister]] | %%Will unregister a manager of a specific class that was previously registered and answered by eo.provider_find.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:property:app_efl_version|app_efl_version]] //(get)// | %%Indicates the version of EFL with which this application was compiled.%% |
+| [[:docs:efl:auto:class:efl:loop:property:efl_version|efl_version]] //(get)// | %%Indicates the currently running version of EFL.%% |
+| [[:docs:efl:auto:class:efl:loop:property:main|main]] //(get)// | %%Points to the main loop instance of the application.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:event:arguments|arguments]] | %%Event happens when args are provided to the loop by args_add().%% |
+| [[:docs:efl:auto:class:efl:loop:event:idle_enter|idle,enter]] | %%Event occurs once the main loop enters the idle state.%% |
+| [[:docs:efl:auto:class:efl:loop:event:idle_exit|idle,exit]] | %%Event occurs once the main loop exits the idle state.%% |
+| [[:docs:efl:auto:class:efl:loop:event:idle|idle]] | %%Event occurs once the main loop is idler. Be carefull, this will spin your CPU high if you keep listening on this event.%% |

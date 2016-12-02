@@ -1,0 +1,35 @@
+<title>Efl.Network.lookup</title>
+===== Signature =====
+
+<code>
+Efl.Network.lookup @class {
+    params {
+        @in name: string @nonull;
+        @in done_cb: Ecore_Con_Dns_Cb;
+        @in data: const(void_ptr);
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_network_lookup(const Eo *obj, const char *name, Ecore_Con_Dns_Cb done_cb, const void *data);
+</code>
+
+===== Parameters =====
+
+  * **name** //(in)// - %%IP address or server name to translate.%%
+  * **done_cb** //(in)// - %%Callback to notify when done.%%
+  * **data** //(in)// - %%User data to be given to done_cb.%%
+
+===== Description =====
+
+%%Do an asynchronous DNS lookup.%%
+
+%%This function performs a DNS lookup on the hostname specified by name, then calls done_cb with the result and the data given as parameter. The result will be given to the done_cb as follows:%%
+
+%%canonname - the canonical name of the address, ip - the resolved ip address, addr - a pointer to the socket address, addrlen - the length of the socket address, in bytes, data - the data pointer given as parameter.%%
+{{page>:docs:efl:user:class:efl:network:method:lookup:description&nodate&nolink&nouser}}
+

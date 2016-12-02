@@ -1,0 +1,99 @@
+<title>Efl.Net.Socket.Udp</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_socket_udp [fillcolor = "black", label = "Efl.Net.Socket.Udp", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_socket_fd [fillcolor = "gray15", label = "Efl.Net.Socket.Fd", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_fd [fillcolor = "gray15", label = "Efl.Loop.Fd", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_reader_fd [fillcolor = "gray15", label = "Efl.Io.Reader.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer_fd [fillcolor = "gray15", label = "Efl.Io.Writer.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer_fd [fillcolor = "gray15", label = "Efl.Io.Closer.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_socket_udp -> efl_net_socket_fd
+    efl_net_socket_fd -> efl_loop_fd
+    efl_loop_fd -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_net_socket_fd -> efl_io_reader_fd
+    efl_io_reader_fd -> efl_io_reader
+    efl_net_socket_fd -> efl_io_writer_fd
+    efl_io_writer_fd -> efl_io_writer
+    efl_net_socket_fd -> efl_io_closer_fd
+    efl_io_closer_fd -> efl_io_closer
+    efl_net_socket_fd -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:socket:udp|Efl.Net.Socket.Udp]] //(class)//**
+    * [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]] //(class)//
+        * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:mixin:efl:io:reader:fd|Efl.Io.Reader.Fd]] //(mixin)//
+        * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+      * [[:docs:efl:auto:mixin:efl:io:writer:fd|Efl.Io.Writer.Fd]] //(mixin)//
+        * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+      * [[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]] //(mixin)//
+        * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+      * [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+        * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+        * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+===== Description =====
+
+%%A base UDP socket.%%
+
+%%This is the common class and takes an existing FD, usually created by an dialer.%%
+
+%%Since for the server 'clients' there is no accepted connection it will reuse the same file decriptor and to avoid it being closed, another class Efl.Net.Server.Udp.Client is used instead.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:socket:udp:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_groups_get|multicast_groups_get]] | %%Return the multicast groups this server has joined.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_join|multicast_join]] | %%Join a multicast group.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_leave|multicast_leave]] | %%Leave a multicast group.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:method:next_datagram_size_query|next_datagram_size_query]] | %%Query the next datagram size.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:bind|bind]] //(get, set)// | %%Force binding to a specific address.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:cork|cork]] //(get, set)// | %%Controls UDP's cork using UDP_CORK%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:dont_route|dont_route]] //(get, set)// | %%Avoid sent UDP packets being routed by a gateway, limiting them to the local network.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:multicast_loopback|multicast_loopback]] //(get, set)// | %%Controls whenever multicast will loopback packets locally.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:multicast_time_to_live|multicast_time_to_live]] //(get, set)// | %%Controls time to live in number of hops.%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:reuse_address|reuse_address]] //(get, set)// | %%Controls address reuse() using SO_REUSEADDR%% |
+| [[:docs:efl:auto:class:efl:net:socket:udp:property:reuse_port|reuse_port]] //(get, set)// | %%Controls port reuse() using SO_REUSEPORT (since Linux 3.9)%% |
+
+===== Events =====
+
+This class does not define any events.

@@ -1,0 +1,45 @@
+<title>Efl.Ui.Win.move_resize_start</title>
+===== Signature =====
+
+<code>
+Efl.Ui.Win.move_resize_start {
+    params {
+        @in mode: Efl.Ui.Win.Move_Resize_Mode;
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_ui_win_move_resize_start(Eo *obj, Efl_Ui_Win_Move_Resize_Mode mode);
+</code>
+
+===== Parameters =====
+
+  * **mode** //(in)// - %%The requested move or resize mode.%%
+
+===== Description =====
+
+%%Start moving or resizing the window.%%
+
+%%The user can request the display server to start moving or resizing the window by combining modes from %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode]]%%. This API can only be called if none of the following conditions is true:%%
+
+%%1. Called in the absence of a pointer down event, 2. Called more than once before a pointer up event, 3. Called when the window is already being resized or moved, 4. Called with an unsupported combination of modes.%%
+
+%%Right usage: 1. Pointer (mouse or touch) down event, 2. %%[[:docs:efl:auto:class:efl:ui:win:method:move_resize_start|Efl.Ui.Win.move_resize_start]]%% called only once with a supported mode, 3. Pointer (mouse or touch) up event.%%
+
+%%If a pointer up event occurs after calling the function, it automatically ends the window move and resize operation.%%
+
+%%Currently, only the following 9 combinations are allowed, and possibly more combinations may be added in the future: 1. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.move]]%% 2. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.top]]%% 3. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.bottom]]%% 4. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.left]]%% 5. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.right]]%% 6. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.top]]%% | %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.left]]%% 7. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.top]]%% | %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.right]]%% 8. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.bottom]]%% | %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.left]]%% 9. %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.bottom]]%% | %%[[:docs:efl:auto:enum:efl:ui:win:move_resize_mode|Efl.Ui.Win.Move_Resize_Mode.right]]%%%%
+
+%%In particular move and resize can not happen simultaneously.%%
+
+<note>
+%%the result of this API can only guarantee that the request has been forwarded to the server, but there is no guarantee that the request can be processed by the display server.%%
+</note>
+
+//Since 1.19//
+{{page>:docs:efl:user:class:efl:ui:win:method:move_resize_start:description&nodate&nolink&nouser}}
+

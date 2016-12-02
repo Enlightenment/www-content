@@ -1,0 +1,74 @@
+<title>Efl.Net.Socket.Simple</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_socket_simple [fillcolor = "black", label = "Efl.Net.Socket.Simple", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_buffered_stream [fillcolor = "gray15", label = "Efl.Io.Buffered_Stream", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_socket_simple -> efl_io_buffered_stream
+    efl_io_buffered_stream -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_io_buffered_stream -> efl_io_reader
+    efl_io_buffered_stream -> efl_io_writer
+    efl_io_buffered_stream -> efl_io_closer
+    efl_net_socket_simple -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:socket:simple|Efl.Net.Socket.Simple]] //(class)//**
+    * [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+      * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+    * [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+      * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+===== Description =====
+
+%%A wrapper socket offering an easy to use, buffered I/O.%%
+
+%%The simple socket encapsulates an actual %%[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%%, and uses it with an %%[[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]%%, which creates an input %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, an output %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%% and these are linked using a receiver and a sender %%[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]]%%.%%
+
+%%The idea is that unlike traditional %%[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%% that will attempt to write directly to socket and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual socket when it %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%).%%
+
+%%Reading is also much simpler since received data is kept in an %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%%, then discarded with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
+
+%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing, if complete then either %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%% and then %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
+
+%%The actual socket is set with the constructor method %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.set]]%% and can be retrieved with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.get]]%%, which should be used with care.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:socket:simple:description&nodate&nolink&nouser}}
+
+===== Events =====
+
+This class does not define any events.

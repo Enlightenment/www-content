@@ -1,0 +1,39 @@
+<title>Efl.Canvas.objects_at_xy_get</title>
+===== Signature =====
+
+<code>
+Efl.Canvas.objects_at_xy_get @const @virtual_pure {
+    params {
+        @in x: int;
+        @in y: int;
+        @in include_pass_events_objects: bool;
+        @in include_hidden_objects: bool;
+    }
+    return: free(own(iterator<Efl.Gfx>), eina_iterator_free) @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Iterator *efl_canvas_objects_at_xy_get(const Eo *obj, int x, int y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+
+===== Parameters =====
+
+  * **x** //(in)// - %%The horizontal coordinate of the position.%%
+  * **y** //(in)// - %%The vertical coordinate of the position.%%
+  * **include_pass_events_objects** //(in)// - %%Boolean flag to include or not objects which pass events in this calculation.%%
+  * **include_hidden_objects** //(in)// - %%Boolean flag to include or not hidden objects in this calculation.%%
+
+===== Description =====
+
+%%Retrieve a list of objects lying over a given position in a canvas.%%
+
+%%This function will traverse all the layers of the given canvas, from top to bottom, querying for objects with areas covering the given position. The user can remove from query objects which are hidden and/or which are set to pass events.%%
+
+<note warning>
+%%This function will skip objects parented by smart objects, acting only on the ones at the "top level", with regard to object parenting.%%
+</note>
+{{page>:docs:efl:user:interface:efl:canvas:method:objects_at_xy_get:description&nodate&nolink&nouser}}
+

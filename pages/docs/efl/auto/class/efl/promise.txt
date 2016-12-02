@@ -1,0 +1,53 @@
+<title>Efl.Promise</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_promise [fillcolor = "black", label = "Efl.Promise", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_promise -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:promise|Efl.Promise]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Efl promise class%%
+
+{{page>:docs:efl:user:class:efl:promise:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:promise:method:progress_set|progress_set]] | %%Update the progress and send it immediately to all connected Efl_Future.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:promise:property:failed|failed]] //(set)// | %%Define the failure state of this promise.%% |
+| [[:docs:efl:auto:class:efl:promise:property:future|future]] //(get)// | %%Request a new future linked to this promise.%% |
+| [[:docs:efl:auto:class:efl:promise:property:value|value]] //(set)// | %%The value expected by all connected future.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:promise:event:future_none|future,none]] | %%This event is triggered whenever there is no more future connected to the promise.%% |
+| [[:docs:efl:auto:class:efl:promise:event:future_progress_set|future,progress,set]] | %%This event is triggered whenever a future has a progress callback registered and the user does not hold any more reference on it.%% |
+| [[:docs:efl:auto:class:efl:promise:event:future_set|future,set]] | %%This event is triggered whenever a future is fully set to receive all events and that the user of it do not hold any more reference on it.%% |

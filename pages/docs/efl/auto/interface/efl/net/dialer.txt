@@ -1,0 +1,68 @@
+<title>Efl.Net.Dialer</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_dialer [fillcolor = "dodgerblue4", label = "Efl.Net.Dialer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_dialer -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]] //(interface)//**
+    * [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+      * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+===== Description =====
+
+%%Creates a client socket to reach a remote peer.%%
+
+%%The connection process starts when %%[[:docs:efl:auto:interface:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%% is executed, this allows implementations to request more complex setup that would require a live object handle that is not possible during construction.%%
+
+%%The socket should be considered connected and ready to use only when "connected" event is dispatched, by then %%[[:docs:efl:auto:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% and %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%% should change accordingly.%%
+
+%%Once the socket is closed, %%[[:docs:efl:auto:mixin:efl:io:closer:property:closed|Efl.Io.Closer.closed]]%% will be called and the "closed" event is dispatched.%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:interface:efl:net:dialer:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:dialer:method:dial|dial]] | %%Dials to the remote peer.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:dialer:property:address_dial|address_dial]] //(get, set)// | %%Return the address given to %%[[:docs:efl:auto:interface:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%%.%% |
+| [[:docs:efl:auto:interface:efl:net:dialer:property:connected|connected]] //(get, set)// | %%Returns whenever the socket is connected or not.%% |
+| [[:docs:efl:auto:interface:efl:net:dialer:property:proxy|proxy]] //(get, set)// | %%Controls/retrieve if the dialer should use a proxy.%% |
+| [[:docs:efl:auto:interface:efl:net:dialer:property:timeout_dial|timeout_dial]] //(get, set)// | %%The timeout in seconds to use for dialing/connecting.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:interface:efl:net:dialer:event:connected|connected]] | %%Notifies the socket is connected to the remote peer.%% |
+| [[:docs:efl:auto:interface:efl:net:dialer:event:error|error]] | %%Some error happened and the socket stopped working.%% |
+| [[:docs:efl:auto:interface:efl:net:dialer:event:resolved|resolved]] | %%Notifies %%[[:docs:efl:auto:interface:efl:net:dialer:property:address_dial|Efl.Net.Dialer.address_dial]]%% was resolved to %%[[:docs:efl:auto:interface:efl:net:socket:property:address_remote|Efl.Net.Socket.address_remote]]%%.%% |

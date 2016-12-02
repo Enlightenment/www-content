@@ -1,0 +1,51 @@
+<title>Elm.Calendar.Mark.Repeat.Type</title>
+===== Signature =====
+
+<code>
+enum Elm.Calendar.Mark.Repeat.Type {
+    unique: 0,
+    daily,
+    weekly,
+    monthly,
+    annually,
+    last_day_of_month,
+    reverse_daily
+}
+</code>
+
+===== C signature =====
+
+<code c>
+typedef enum {
+    ELM_CALENDAR_UNIQUE = 0,
+    ELM_CALENDAR_DAILY,
+    ELM_CALENDAR_WEEKLY,
+    ELM_CALENDAR_MONTHLY,
+    ELM_CALENDAR_ANNUALLY,
+    ELM_CALENDAR_LAST_DAY_OF_MONTH,
+    ELM_CALENDAR_REVERSE_DAILY
+} Elm_Calendar_Mark_Repeat_Type;
+</code>
+
+===== Description =====
+
+%%Event periodicity, used to define if a mark should be repeated beyond event's day.%%
+
+%%It's set when a mark is added. So, for a mark added to 13th May with periodicity set to WEEKLY, there will be marks every week after this date. Marks will be displayed at 13th, 20th, 27th, 3rd June ...%%
+
+%%Values don't work as bitmask, only one can be chosen. See also %%[[:docs:efl:auto:class:elm:calendar:method:mark_add|Elm.Calendar.mark_add]]%%.%%
+
+{{page>:docs:efl:user:enum:elm:calendar:mark:repeat:type:description&nodate&nolink&nouser}}
+
+===== Fields =====
+
+{{page>:docs:efl:user:enum:elm:calendar:mark:repeat:type:fields&nodate&nolink&nouser}}
+
+  * **unique** - %%Default value. Marks will be displayed only on event day.%%
+  * **daily** - %%Marks will be displayed every day after event day (inclusive).%%
+  * **weekly** - %%Marks will be displayed every week after event day (inclusive) - i.e. each seven days.%%
+  * **monthly** - %%Marks will be displayed every month day that coincides to event day. E.g.: if an event is set to 30th Jan, no marks will be displayed on Feb, but will be displayed on 30th Mar.%%
+  * **annually** - %%Marks will be displayed every year that coincides to event day (and month). E.g. an event added to 30th Jan 2012 will be repeated on 30th Jan 2013.%%
+  * **last_day_of_month** - %%Marks will be displayed every last day of month after event day (inclusive).%%
+  * **reverse_daily** - %%Marks will be displayed every day before event day.%%
+

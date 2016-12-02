@@ -1,0 +1,42 @@
+<title>Elm.Sys_Notify_Interface.send</title>
+===== Signature =====
+
+<code>
+Elm.Sys_Notify_Interface.send @const @virtual_pure {
+    params {
+        @in replaces_id: uint;
+        @in icon: string;
+        @in summary: string;
+        @in body: string @optional;
+        @in urgency: Elm.Sys_Notify.Urgency;
+        @in timeout: int;
+        @in cb: Elm_Sys_Notify_Send_Cb;
+        @in cb_data: const(void_ptr) @optional;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void elm_obj_sys_notify_interface_send(const Eo *obj, unsigned int replaces_id, const char *icon, const char *summary, const char *body, Elm_Sys_Notify_Urgency urgency, int timeout, Elm_Sys_Notify_Send_Cb cb, const void *cb_data);
+</code>
+
+===== Parameters =====
+
+  * **replaces_id** //(in)// - %%Notification ID that this notification replaces. The value 0 means a new notification.%%
+  * **icon** //(in)// - %%The optional program icon of the calling application%%
+  * **summary** //(in)// - %%The summary text briefly describing the notification%%
+  * **body** //(in)// - %%The optional detailed body text. Can be empty%%
+  * **urgency** //(in)// - %%The urgency level%%
+  * **timeout** //(in)// - %%Timeout display in milliseconds%%
+  * **cb** //(in)// - %%Callback used to retrieve the notification id returned by the Notification Server%%
+  * **cb_data** //(in)// - %%Optional context data%%
+
+===== Description =====
+
+%%Causes a notification to be forcefully closed and removed from the user's view. It can be used, for example, in the event that what the notification pertains to is no longer relevant, or to cancel a notification with no expiration time.%%
+
+//Since 1.8//
+{{page>:docs:efl:user:interface:elm:sys_notify_interface:method:send:description&nodate&nolink&nouser}}
+

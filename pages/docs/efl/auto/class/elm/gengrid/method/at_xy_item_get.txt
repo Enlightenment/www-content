@@ -1,0 +1,37 @@
+<title>Elm.Gengrid.at_xy_item_get</title>
+===== Signature =====
+
+<code>
+Elm.Gengrid.at_xy_item_get @const {
+    params {
+        @in x: Evas.Coord;
+        @in y: Evas.Coord;
+        @out xposret: int;
+        @out yposret: int;
+    }
+    return: Elm.Widget.Item;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Widget_Item *elm_obj_gengrid_at_xy_item_get(const Eo *obj, Evas_Coord x, Evas_Coord y, int *xposret, int *yposret);
+</code>
+
+===== Parameters =====
+
+  * **x** //(in)// - %%The input x coordinate.%%
+  * **y** //(in)// - %%The input y coordinate.%%
+  * **xposret** //(out)// - %%The position relative to the item returned here.%%
+  * **yposret** //(out)// - %%The position relative to the item returned here.%%
+
+===== Description =====
+
+%%Get the item that is at the x, y canvas coords.%%
+
+%%This returns the item at the given coordinates (which are canvas relative, not object-relative). If an item is at that coordinate, that item handle is returned, and if %%''xposret''%% is not %%''null''%%, the integer pointed to is set to a value of -1, 0 or 1, depending if the coordinate is on the left portion of that item (-1), on the middle section (0) or on the right part (1).%%
+
+%%If %%''yposret''%% is not %%''null''%%, the integer pointed to is set to a value of -1, 0 or 1, depending if the coordinate is on the upper portion of that item (-1), on the middle section (0) or on the lower part (1). If NULL is returned as an item (no item found there), then posret may indicate -1 or 1 based if the coordinate is above or below all items respectively in the gengrid.%%
+{{page>:docs:efl:user:class:elm:gengrid:method:at_xy_item_get:description&nodate&nolink&nouser}}
+

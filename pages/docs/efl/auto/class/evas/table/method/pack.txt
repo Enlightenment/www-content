@@ -1,0 +1,37 @@
+<title>Evas.Table.pack</title>
+===== Signature =====
+
+<code>
+Evas.Table.pack {
+    params {
+        @in child: Efl.Canvas.Object @nonull;
+        @in col: ushort;
+        @in row: ushort;
+        @in colspan: ushort;
+        @in rowspan: ushort;
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool evas_obj_table_pack(Eo *obj, Efl_Canvas_Object *child, unsigned short col, unsigned short row, unsigned short colspan, unsigned short rowspan);
+</code>
+
+===== Parameters =====
+
+  * **child** //(in)// - %%The child object to add.%%
+  * **col** //(in)// - %%Relative-horizontal position to place child.%%
+  * **row** //(in)// - %%Relative-vertical position to place child.%%
+  * **colspan** //(in)// - %%How many relative-horizontal position to use for this child.%%
+  * **rowspan** //(in)// - %%How many relative-vertical position to use for this child.%%
+
+===== Description =====
+
+%%Add a new child to a table object or set its current packing.%%
+
+%%Note that columns and rows only guarantee 16bit unsigned values at best. That means that col + colspan AND row + rowspan must fit inside 16bit unsigned values cleanly. You will be warned once values exceed 15bit storage, and attempting to use values not able to fit in 16bits will result in failure.%%
+{{page>:docs:efl:user:class:evas:table:method:pack:description&nodate&nolink&nouser}}
+

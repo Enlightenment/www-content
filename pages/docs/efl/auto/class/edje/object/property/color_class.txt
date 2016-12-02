@@ -1,0 +1,86 @@
+<title>Edje.Object.color_class</title>
+===== Signature =====
+
+<code>
+@property Edje.Object.color_class {
+    get {
+        keys {
+            color_class: string;
+            mode: Edje.Color_Class.Mode;
+        }
+        values {
+            r: int;
+            g: int;
+            b: int;
+            a: int;
+        }
+        return: bool;
+    }
+    set {
+        keys {
+            color_class: string;
+            mode: Edje.Color_Class.Mode;
+        }
+        values {
+            r: int;
+            g: int;
+            b: int;
+            a: int;
+        }
+        return: bool;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool edje_obj_color_class_get(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int *r, int *g, int *b, int *a);
+Eina_Bool edje_obj_color_class_set(Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int r, int g, int b, int a);
+</code>
+
+===== Keys =====
+
+  * **color_class** - %%The name of color class%%
+  * **mode** - %%Edje color class mode%%
+===== Values =====
+
+  * **r** - %%Object Red value%%
+  * **g** - %%Object Green value%%
+  * **b** - %%Object Blue value%%
+  * **a** - %%Object Alpha value%%
+===== Description =====
+
+
+
+{{page>:docs:efl:user:class:edje:object:property:color_class:description&nodate&nolink&nouser}}
+
+==== Getter ====
+
+%%Gets the object color class.%%
+
+%%This function gets the color values for an object level color class. If no explicit object color is set, then global values will be used.%%
+
+%%The first color is the object, the second is the text outline, and the third is the text shadow. (Note that the second two only apply to text parts).%%
+
+<note>
+%%unlike Evas, Edje colors are not pre-multiplied. That is, half-transparent white is 255 255 255 128.%%
+</note>
+
+{{page>:docs:efl:user:class:edje:object:property:color_class:getter_description&nodate&nolink&nouser}}
+
+==== Setter ====
+
+%%Sets the object color class.%%
+
+%%This function sets the color values for an object level color class. This will cause all edje parts in the specified object that have the specified color class to have their colors multiplied by these values.%%
+
+%%The first color is the object, the second is the text outline, and the third is the text shadow. (Note that the second two only apply to text parts).%%
+
+%%Setting color emits a signal "color_class,set" with source being the given color.%%
+
+<note>
+%%unlike Evas, Edje colors are not pre-multiplied. That is, half-transparent white is 255 255 255 128.%%
+</note>{{page>:docs:efl:user:class:edje:object:property:color_class:getter_description&nodate&nolink&nouser}}
+
+

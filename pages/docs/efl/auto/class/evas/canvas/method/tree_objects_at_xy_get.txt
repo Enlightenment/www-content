@@ -1,0 +1,33 @@
+<title>Evas.Canvas.tree_objects_at_xy_get</title>
+===== Signature =====
+
+<code>
+Evas.Canvas.tree_objects_at_xy_get {
+    params {
+        @in stop: Efl.Canvas.Object;
+        @in x: int;
+        @in y: int;
+    }
+    return: list<Efl.Canvas.Object> @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_List *evas_canvas_tree_objects_at_xy_get(Eo *obj, Efl_Canvas_Object *stop, int x, int y);
+</code>
+
+===== Parameters =====
+
+  * **stop** //(in)// - %%An Evas Object where to stop searching.%%
+  * **x** //(in)// - %%The horizontal coordinate of the position.%%
+  * **y** //(in)// - %%The vertical coordinate of the position.%%
+
+===== Description =====
+
+%%Retrieve a list of Evas objects lying over a given position in a canvas.%%
+
+%%This function will traverse all the layers of the given canvas, from top to bottom, querying for objects with areas covering the given position. It will enter the smart objects. It will not append to the list pass events as hidden objects. Call eina_list_free on the returned list after usage.%%
+{{page>:docs:efl:user:class:evas:canvas:method:tree_objects_at_xy_get:description&nodate&nolink&nouser}}
+

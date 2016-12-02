@@ -1,0 +1,75 @@
+<title>Efl.Io.Buffer</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_io_buffer [fillcolor = "black", label = "Efl.Io.Buffer", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_sizer [fillcolor = "gray15", label = "Efl.Io.Sizer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_positioner [fillcolor = "gray15", label = "Efl.Io.Positioner", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_io_buffer -> efl_object
+    efl_io_buffer -> efl_io_reader
+    efl_io_buffer -> efl_io_writer
+    efl_io_buffer -> efl_io_closer
+    efl_io_buffer -> efl_io_sizer
+    efl_io_buffer -> efl_io_positioner
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:io:buffer|Efl.Io.Buffer]] //(class)//**
+    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+    * [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+    * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+    * [[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]] //(mixin)//
+    * [[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]] //(mixin)//
+
+===== Description =====
+
+%%Generic In-memory buffer of data to be used as I/O.%%
+
+%%This class offers both input and output, which can be used at the same time since %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% use different offsets/position internally.%%
+
+%%One can get temporary direct access to internal buffer with %%[[:docs:efl:auto:class:efl:io:buffer:method:slice_get|Efl.Io.Buffer.slice_get]]%% or steal the buffer with %%[[:docs:efl:auto:class:efl:io:buffer:method:binbuf_steal|Efl.Io.Buffer.binbuf_steal]]%%.%%
+
+%%A fixed sized buffer can be implemented by setting %%[[:docs:efl:auto:class:efl:io:buffer:property:limit|Efl.Io.Buffer.limit]]%% followed by %%[[:docs:efl:auto:class:efl:io:buffer:method:preallocate|Efl.Io.Buffer.preallocate]]%%%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:io:buffer:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:buffer:method:binbuf_steal|binbuf_steal]] | %%Steals the internal buffer memory and returns it as a binbuf.%% |
+| [[:docs:efl:auto:class:efl:io:buffer:method:preallocate|preallocate]] | %%Immediately pre-allocate a buffer of at least a given size.%% |
+| [[:docs:efl:auto:class:efl:io:buffer:method:slice_get|slice_get]] | %%Get a temporary access to buffer's internal memory.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:buffer:property:limit|limit]] //(get, set)// | %%Limit how big the buffer can grow.%% |
+| [[:docs:efl:auto:class:efl:io:buffer:property:position_read|position_read]] //(get, set)// | %%The position used by %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%.%% |
+| [[:docs:efl:auto:class:efl:io:buffer:property:position_write|position_write]] //(get, set)// | %%The position used by %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%%.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:buffer:event:position_read_changed|position_read,changed]] | %%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_read|Efl.Io.Buffer.position_read]]%% changed%% |
+| [[:docs:efl:auto:class:efl:io:buffer:event:position_write_changed|position_write,changed]] | %%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_write|Efl.Io.Buffer.position_write]]%% changed%% |
+| [[:docs:efl:auto:class:efl:io:buffer:event:reallocated|reallocated]] | %%Notifies the internal buffer was reallocated, thus whatever was returned by %%[[:docs:efl:auto:class:efl:io:buffer:method:slice_get|Efl.Io.Buffer.slice_get]]%% becomes invalid%% |

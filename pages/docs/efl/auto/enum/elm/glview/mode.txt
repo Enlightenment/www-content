@@ -1,0 +1,86 @@
+<title>Elm.GLView.Mode</title>
+===== Signature =====
+
+<code>
+enum Elm.GLView.Mode {
+    none: 0,
+    alpha: 1 << 1,
+    depth: 1 << 2,
+    stencil: 1 << 3,
+    direct: 1 << 4,
+    client_side_rotation: 1 << 5,
+    depth_8: Elm.GLView.Mode.depth | (1 << 6),
+    depth_16: Elm.GLView.Mode.depth | (2 << 6),
+    depth_24: Elm.GLView.Mode.depth | (3 << 6),
+    depth_32: Elm.GLView.Mode.depth | (4 << 6),
+    stencil_1: Elm.GLView.Mode.stencil | (1 << 9),
+    stencil_2: Elm.GLView.Mode.stencil | (2 << 9),
+    stencil_4: Elm.GLView.Mode.stencil | (3 << 9),
+    stencil_8: Elm.GLView.Mode.stencil | (4 << 9),
+    stencil_16: Elm.GLView.Mode.stencil | (5 << 9),
+    multisample_low: 1 << 12,
+    multisample_med: 2 << 12,
+    multisample_high: 3 << 12
+}
+</code>
+
+===== C signature =====
+
+<code c>
+typedef enum {
+    ELM_GLVIEW_NONE = 0,
+    ELM_GLVIEW_ALPHA = 2 /* 1 << 1 */,
+    ELM_GLVIEW_DEPTH = 4 /* 1 << 2 */,
+    ELM_GLVIEW_STENCIL = 8 /* 1 << 3 */,
+    ELM_GLVIEW_DIRECT = 16 /* 1 << 4 */,
+    ELM_GLVIEW_CLIENT_SIDE_ROTATION = 32 /* 1 << 5 */,
+    ELM_GLVIEW_DEPTH_8 = 68 /* Elm.GLView.Mode.depth | (1 << 6) */,
+    ELM_GLVIEW_DEPTH_16 = 132 /* Elm.GLView.Mode.depth | (2 << 6) */,
+    ELM_GLVIEW_DEPTH_24 = 196 /* Elm.GLView.Mode.depth | (3 << 6) */,
+    ELM_GLVIEW_DEPTH_32 = 260 /* Elm.GLView.Mode.depth | (4 << 6) */,
+    ELM_GLVIEW_STENCIL_1 = 520 /* Elm.GLView.Mode.stencil | (1 << 9) */,
+    ELM_GLVIEW_STENCIL_2 = 1032 /* Elm.GLView.Mode.stencil | (2 << 9) */,
+    ELM_GLVIEW_STENCIL_4 = 1544 /* Elm.GLView.Mode.stencil | (3 << 9) */,
+    ELM_GLVIEW_STENCIL_8 = 2056 /* Elm.GLView.Mode.stencil | (4 << 9) */,
+    ELM_GLVIEW_STENCIL_16 = 2568 /* Elm.GLView.Mode.stencil | (5 << 9) */,
+    ELM_GLVIEW_MULTISAMPLE_LOW = 4096 /* 1 << 12 */,
+    ELM_GLVIEW_MULTISAMPLE_MED = 8192 /* 2 << 12 */,
+    ELM_GLVIEW_MULTISAMPLE_HIGH = 12288 /* 3 << 12 */
+} Elm_GLView_Mode;
+</code>
+
+===== Description =====
+
+%%Selects the target surface properties%%
+
+%%An OR combination of Elm_GLView_Mode values should be passed to elm_glview_mode_set when setting up a GL widget. These flags will specify the properties of the rendering target surface; in particular, the mode can request the surface to support alpha, depth and stencil buffers.%%
+
+%%ELM_GLVIEW_CLIENT_SIDE_ROTATION is a special value that indicates to EFL that the application will handle the view rotation when the device is rotated. This is needed only when the application requests direct rendering. Please refer to Evas_GL for more information about direct rendering.%%
+
+%%See %%[[:docs:efl:auto:class:elm:glview:property:mode|Elm.Glview.mode.set]]%% See elm_opengl_page%%
+
+{{page>:docs:efl:user:enum:elm:glview:mode:description&nodate&nolink&nouser}}
+
+===== Fields =====
+
+{{page>:docs:efl:user:enum:elm:glview:mode:fields&nodate&nolink&nouser}}
+
+  * **none** - %%Default mode%%
+  * **alpha** - %%Alpha channel enabled rendering mode%%
+  * **depth** - %%Depth buffer enabled rendering mode (24 bits by default)%%
+  * **stencil** - %%Stencil buffer enabled rendering mode (8 bits by default)%%
+  * **direct** - %%Request direct rendering, unless there must be a fallback%%
+  * **client_side_rotation** - %%Client will handle GL view rotation if direct rendering is enabled%%
+  * **depth_8** - %%Request min. 8 bits for the depth buffer%%
+  * **depth_16** - %%Request min. 16 bits for the depth buffer%%
+  * **depth_24** - %%Request min. 24 bits for the depth buffer (default)%%
+  * **depth_32** - %%Request min. 32 bits for the depth buffer%%
+  * **stencil_1** - %%Request min. 1 bits for the stencil buffer%%
+  * **stencil_2** - %%Request min. 2 bits for the stencil buffer%%
+  * **stencil_4** - %%Request min. 4 bits for the stencil buffer%%
+  * **stencil_8** - %%Request min. 8 bits for the stencil buffer (default)%%
+  * **stencil_16** - %%Request min. 16 bits for the stencil buffer%%
+  * **multisample_low** - %%MSAA with minimum number of samples%%
+  * **multisample_med** - %%MSAA with half the number of maximum samples%%
+  * **multisample_high** - %%MSAA with maximum number of samples%%
+

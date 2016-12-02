@@ -1,0 +1,43 @@
+<title>Evas.Table.homogeneous</title>
+===== Signature =====
+
+<code>
+@property Evas.Table.homogeneous {
+    get {
+        values {
+            homogeneous: Evas.Object_Table.Homogeneous_Mode;
+        }
+    }
+    set {
+        values {
+            homogeneous: Evas.Object_Table.Homogeneous_Mode;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Evas_Object_Table_Homogeneous_Mode evas_obj_table_homogeneous_get(const Eo *obj);
+void evas_obj_table_homogeneous_set(Eo *obj, Evas_Object_Table_Homogeneous_Mode homogeneous);
+</code>
+
+===== Values =====
+
+  * **homogeneous** - %%Table homogeneous mode%%
+===== Description =====
+
+%%Set how this table should layout children.%%
+
+%%Todo: consider aspect hint and respect it.%%
+
+%%%%[[:docs:efl:auto:enum:evas:object_table:homogeneous_mode|Evas.Object_Table.Homogeneous_Mode.none]]%% If table does not use homogeneous mode then columns and rows will be calculated based on hints of individual cells. This operation mode is more flexible, but more complex and heavy to calculate as well. Weight properties are handled as a boolean expand. Negative alignment will be considered as 0.5. This is the default.%%
+
+%%Todo: %%[[:docs:efl:auto:enum:evas:object_table:homogeneous_mode|Evas.Object_Table.Homogeneous_Mode.none]]%% should balance weight.%%
+
+%%%%[[:docs:efl:auto:enum:evas:object_table:homogeneous_mode|Evas.Object_Table.Homogeneous_Mode.table]]%% When homogeneous is relative to table the own table size is divided equally among children, filling the whole table area. That is, if table has %%''WIDTH''%% and %%''COLUMNS''%%, each cell will get _WIDTH / COLUMNS_ pixels. If children have minimum size that is larger than this amount (including padding), then it will overflow and be aligned respecting the alignment hint, possible overlapping sibling cells. Weight hint is used as a boolean, if greater than zero it will make the child expand in that axis, taking as much space as possible (bounded to maximum size hint). Negative alignment will be considered as 0.5.%%
+
+%%%%[[:docs:efl:auto:enum:evas:object_table:homogeneous_mode|Evas.Object_Table.Homogeneous_Mode.item]]%% When homogeneous is relative to item it means the greatest minimum cell size will be used. That is, if no element is set to expand, the table will have its contents to a minimum size, the bounding box of all these children will be aligned relatively to the table object using evas_object_table_align_get(). If the table area is too small to hold this minimum bounding box, then the objects will keep their size and the bounding box will overflow the box area, still respecting the alignment. Weight hint is used as a boolean, if greater than zero it will make that cell expand in that axis, toggling the *expand mode*, which makes the table behave much like %%[[:docs:efl:auto:enum:evas:object_table:homogeneous_mode|Evas.Object_Table.Homogeneous_Mode.table]]%%, except that the bounding box will overflow and items will not overlap siblings. If no minimum size is provided at all then the table will fallback to expand mode as well.%%{{page>:docs:efl:user:class:evas:table:property:homogeneous:description&nodate&nolink&nouser}}
+
+

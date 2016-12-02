@@ -1,0 +1,54 @@
+<title>Efl.Loop.Timer</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_loop_timer [fillcolor = "black", label = "Efl.Loop.Timer", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_loop_timer -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:loop:timer|Efl.Loop.Timer]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Timers are objects that will call a given callback at some point in the future and repeat that tick at a given interval.%%
+
+%%Timers require the ecore main loop to be running and functioning properly. They do not guarantee exact timing, but try to work on a "best effort" basis.%%
+
+{{page>:docs:efl:user:class:efl:loop:timer:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:timer:method:delay|delay]] | %%Add some delay for the next occurrence of a timer. This doesn't affect the interval of a timer.%% |
+| [[:docs:efl:auto:class:efl:loop:timer:method:loop_reset|loop_reset]] | %%This effectively reset a timer, but based on the time when this iteration of the main loop started.%% |
+| [[:docs:efl:auto:class:efl:loop:timer:method:reset|reset]] | %%Reset a timer to its full interval. This effectively makes the timer start ticking off from zero now.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:timer:property:interval|interval]] //(get, set)// | %%Interval the timer ticks on.%% |
+| [[:docs:efl:auto:class:efl:loop:timer:property:pending|pending]] //(get)// | %%Pending time regarding a timer.%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:loop:timer:event:tick|tick]] | %%Event triggered when the specified time as passed.%% |

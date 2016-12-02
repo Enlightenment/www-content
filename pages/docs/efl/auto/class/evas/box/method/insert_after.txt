@@ -1,0 +1,43 @@
+<title>Evas.Box.insert_after</title>
+===== Signature =====
+
+<code>
+Evas.Box.insert_after {
+    params {
+        @in child: Efl.Canvas.Object @nonull;
+        @in reference: const(Efl.Canvas.Object) @nonull;
+    }
+    return: ptr(Evas_Object_Box_Option);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Evas_Object_Box_Option *evas_obj_box_insert_after(Eo *obj, Efl_Canvas_Object *child, const Efl_Canvas_Object *reference);
+</code>
+
+===== Parameters =====
+
+  * **child** //(in)// - %%A child Evas object to be made a member of %%''o''%%.%%
+  * **reference** //(in)// - %%The child object to place this new one after.%%
+
+===== Description =====
+
+%%Insert a new child object after another existing one, in a given box object o.%%
+
+%%On success, the $"child,added" smart event will take place.%%
+
+<note>
+%%This function will fail if %%''reference''%% is not a member of %%''o''%%.%%
+</note>
+
+<note>
+%%The actual placing of the item relative to %%''o''%%'s area will depend on the layout set to it.%%
+</note>
+
+<note>
+%%This call will trigger the box's _Evas_Object_Box_Api.insert_after smart function.%%
+</note>
+{{page>:docs:efl:user:class:evas:box:method:insert_after:description&nodate&nolink&nouser}}
+

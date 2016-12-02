@@ -1,0 +1,45 @@
+<title>Efl.Net.Dialer.proxy</title>
+===== Signature =====
+
+<code>
+@property Efl.Net.Dialer.proxy @virtual_pure {
+    get {
+        values {
+            proxy_url: string;
+        }
+    }
+    set {
+        values {
+            proxy_url: string;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+const char *efl_net_dialer_proxy_get(const Eo *obj);
+void efl_net_dialer_proxy_set(Eo *obj, const char *proxy_url);
+</code>
+
+===== Values =====
+
+  * **proxy_url** - %%May be empty or NULL to unset%%
+===== Description =====
+
+%%Controls/retrieve if the dialer should use a proxy.%%
+
+%%The proxy is an URL in the form:%%
+
+%%- protocol://username:password@proxyserver:port%%
+
+%%Where protocol is defined per class, such as a TCP or UDP dialer will use 'socks4', 'socks4a', 'socks5' or 'socks5h'; while http and websocket will want those or 'http'.%%
+
+%%Whenever appropriate dialers may use system proxy if the proxy is NULL (the default). To forcefully disable proxy, use an empty string ("").%%
+
+%%- http://username:password@proxyserver:port - http://username@proxyserver:port - http://proxyserver:port - http://proxyserver  (default port) - socks5://username:password@proxyserver:port (SOCKSv5) - socks5h://username@proxyserver:port (let socks server to resolve domain) - socks5://proxyserver:port - socks5://proxyserver (default port 1080) - socks4a://proxyserver:port (SOCKSv4 and let socks server to resolve domain) - socks4://proxyserver:port (SOCKSv4)%%
+
+//Since 1.19//{{page>:docs:efl:user:interface:efl:net:dialer:property:proxy:description&nodate&nolink&nouser}}
+
+

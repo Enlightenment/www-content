@@ -1,0 +1,63 @@
+<title>Efl.Net.Session</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_session [fillcolor = "black", label = "Efl.Net.Session", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_net_session -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:session|Efl.Net.Session]] //(class)//**
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%Used by application to request network connectivity.%%
+
+%%This API is targeted at applications that need access to the network, specifying the allowed bearer technologies to connect to the internet, as well as if just local networking is enough or validated internet access is required.%%
+
+%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:docs:efl:auto:class:efl:net:session:property:state|Efl.Net.Session.state]]%% "online" (%%[[:docs:efl:auto:enum:efl:net:session:state|Efl.Net.Session.State.online]]%%) and other properties will be NULL, such as %%[[:docs:efl:auto:class:efl:net:session:property:name|Efl.Net.Session.name]]%%, %%[[:docs:efl:auto:class:efl:net:session:property:interface|Efl.Net.Session.interface]]%%, %%[[:docs:efl:auto:class:efl:net:session:property:ipv4|Efl.Net.Session.ipv4]]%% and %%[[:docs:efl:auto:class:efl:net:session:property:ipv6|Efl.Net.Session.ipv6]]%%; as well as %%[[:docs:efl:auto:class:efl:net:session:property:technology|Efl.Net.Session.technology]]%% is set to %%[[:docs:efl:auto:enum:efl:net:session:technology|Efl.Net.Session.Technology.unknown]]%%. Thus if there is need to detect for an actual backend, check if the state is online but those properties are NULL or technology is unknown.%%
+
+%%@note the %%[[:docs:efl:auto:class:efl:net:session:method:connect|Efl.Net.Session.connect]]%% method is subject to backend policy. For instance, ConnMan uses https://github.com/aldebaran/connman/blob/master/doc/session-policy-format.txt%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:session:description&nodate&nolink&nouser}}
+
+===== Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:session:method:connect|connect]] | %%Asks the session to be connected.%% |
+| [[:docs:efl:auto:class:efl:net:session:method:disconnect|disconnect]] | %%Indicates this session doesn't need a connection anymore.%% |
+
+===== Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:session:property:interface|interface]] //(get)// | %%The interface allows the application to assign the socket to a given device using SO_BINDTODEVICE%% |
+| [[:docs:efl:auto:class:efl:net:session:property:ipv4|ipv4]] //(get)// | %%IPv4 in use for this session.%% |
+| [[:docs:efl:auto:class:efl:net:session:property:ipv6|ipv6]] //(get)// | %%IPv6 in use for this session.%% |
+| [[:docs:efl:auto:class:efl:net:session:property:name|name]] //(get)// | %%The user-friendly access point name.%% |
+| [[:docs:efl:auto:class:efl:net:session:property:state|state]] //(get)// | %%If the session connectivity is offline, local or online.%% |
+| [[:docs:efl:auto:class:efl:net:session:property:technology|technology]] //(get)// | %%The access point technology that backs this session%% |
+
+===== Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:session:event:changed|changed]] | %%Called when some properties were changed.%% |

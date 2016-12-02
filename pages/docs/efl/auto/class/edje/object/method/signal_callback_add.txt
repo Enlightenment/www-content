@@ -1,0 +1,46 @@
+<title>Edje.Object.signal_callback_add</title>
+===== Signature =====
+
+<code>
+Edje.Object.signal_callback_add {
+    params {
+        @in emission: string;
+        @in source: string;
+        @in func: Edje.Signal_Cb;
+        @in data: void_ptr;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void edje_obj_signal_callback_add(Eo *obj, const char *emission, const char *source, Edje_Signal_Cb func, void *data);
+</code>
+
+===== Parameters =====
+
+  * **emission** //(in)// - %%The signal's "emission" string%%
+  * **source** //(in)// - %%The signal's "source" string%%
+  * **func** //(in)// - %%The callback function to be executed when the signal is emitted.%%
+  * **data** //(in)// - %%A pointer to data to pass in to func.%%
+
+===== Description =====
+
+%%Add a callback for an arriving Edje signal, emitted by a given Edje object.%%
+
+%%Edje signals are one of the communication interfaces between code and a given Edje object's theme. With signals, one can communicate two string values at a time, which are: - "emission" value: the name of the signal, in general - "source" value: a name for the signal's context, in general%%
+
+%%Though there are those common uses for the two strings, one is free to use them however they like.%%
+
+%%Signal callback registration is powerful, in the way that  blobs may be used to match multiple signals at once. All the "*?[\" set of %%''fnmatch''%%() operators can be used, both for emission and source.%%
+
+%%Edje has  internal signals it will emit, automatically, on various actions taking place on group parts. For example, the mouse cursor being moved, pressed, released, etc., over a given part's area, all generate individual signals.%%
+
+%%By using something like edje_object_signal_callback_add(obj, "mouse,down,*", "button.*", signal_cb, NULL); being @ref "button.*" the pattern for the names of parts implementing buttons on an interface, you'd be registering for notifications on events of mouse buttons being pressed down on either of those parts (those events all have the @"mouse,down," common prefix on their names, with a suffix giving the button number). The actual emission and source strings of an event will be passed in as the  emission and  source parameters of the callback function (e.g. "mouse,down,2" and @"button.close"), for each of those events.%%
+
+<note>
+%%See @ref edcref "the syntax" for EDC files See also %%[[:docs:efl:auto:class:edje:object:method:signal_emit|Edje.Object.signal_emit]]%%() on how to emits Edje signals from code to a an object @ref edje_object_signal_callback_del_full()%%
+</note>
+{{page>:docs:efl:user:class:edje:object:method:signal_callback_add:description&nodate&nolink&nouser}}
+
