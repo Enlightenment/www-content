@@ -1,0 +1,60 @@
+=== Enlightenment DR 0.21.5 Release ===
+  * //2016-12-09 - by Simon Lees//
+
+This is another bugfix and stability release for the Enlightenment 21 Release series. There are notable fixes for long standing ibar regressions in this release.
+
+== Tickets Addressed ==
+  * https://phab.enlightenment.org/T4509
+  * https://phab.enlightenment.org/T4524
+  * https://phab.enlightenment.org/T4647
+  * https://phab.enlightenment.org/T4733
+  * https://phab.enlightenment.org/T4830
+
+
+== Changes ==
+Carsten Haitzler (1):
+  * e_util_defer_object_del - ensure order of deferred deletions are right
+
+Christopher Michael (1):
+  * remove unused variables in e_comp_wl
+
+Derek Foreman (5):
+  * Fix keyboard tracking when leaving an xdg shell window
+  * Fix crash when exiting an xdg shell application
+  * More aggressively prune keyboard focus list
+  * Stop sending key up/down events on focus change under wayland
+  * test dmabuf pixmaps properly
+
+Mike Blumenkrantz (10):
+  * handle xdg-shell maximize/unmaximize calls correctly
+  * stack subsurfaces above their parents upon creation
+  * use more accurate determination for applying xdg-shell (un)maximize operations
+  * do not pop pointer types on client hide events if the client is pass_events
+  * set wl pointer surfaces to E_LAYER_CLIENT_PRIO during setup
+  * attempt to re-set wl surface pointer when popping back to "default" pointer type
+  * fix internal wl windows to exit when border X is clicked
+  * use better check for getting wl surface alpha from cursor pixmaps
+  * revert all sizing commits to ibar/ibox for the past year
+  * maintain "empty" object's size hints when ibar/ibox resizes
+
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.5.tar.gz | Enlightenment DR 0.21.5 GZIP]]| ''03dc3fc3b7f835cafba0f69c89944ec809ddc50e79a26774dd88ff5c1c38e80d'' |
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.5.tar.xz | Enlightenment DR 0.21.5 XZ]]  | ''f0745a660f70851c4ada9866b2a525185bfc5cd1685aa86e4cdb68f2c1c154bb'' |
+
+//More often then not.//
+
+== Building and Dependencies ==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README  *   *   *    | EFL]]
+
+**Note:** E21 depends on EFL **v1.17** or newer for X11 compositing although  v1.18 is recommended and v1.18 is required for Wayland support.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
+
+
