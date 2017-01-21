@@ -5,6 +5,8 @@ Enlightenment and EFL Debian official packages are outdated. In this part, the i
 
 The following part provides a script and shows how to install Enlightenment and Terminology with their dependencies on Debian. The script below can be easily adapted for Elementary.
 
+Please note that procedure will provide a very minimal system. On a fresh minimal debian system, the whole system size is 2.4G disk used, but it will do nothing except... enlightenment !
+
 Start by creating a new directory to work in:
 
 <code bash>
@@ -95,11 +97,9 @@ sudo ldconfig
 # Delete all downloaded files and compile traces
 rm -rf e*
 
-# Create the menu entry of Enlightenment for gdm, kdm or liqhtdm
-sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions/
 </code>
 
-This script clones the repositories, builds and installs the EFL libraries, then builds and installs Terminology. Finally, it creates the link to launch enlightenment in the display manager.
+This script clones the repositories, builds and installs the EFL libraries, then builds and installs Terminology.
 
 Set the script executable:
 
@@ -108,6 +108,12 @@ chmod ug+x build_enlight.sh
 </code>
 
 Then, execute the script to compile and install enlightenment. 
+
+It is not mandatory, but if you want to use a display manager such as gdm, kdm or liqhtdm :
+<code bash>
+sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions/
+</code>
+
 == Run ==
 A minimum run-time environment requires :
 <code bash>
@@ -119,10 +125,12 @@ exec enlightenment_start
 </code>
 then running startx.
 
-These run-time requirements may be provided - or not - by a session manger. In this case, you can reboot and choose Enlightenment as a window manager.
+These run-time requirements may be provided - or not - by a display manger. In this case, you can reboot and choose Enlightenment as a window manager.
 
+== Test ==
+This procedure has been tested in January 2017 on debian 8.7.1.
 
-== Lubuntu ==
+==== Lubuntu ====
 If you're running Lubuntu, you may need to add another repo (as root):
 
 <code bash>
