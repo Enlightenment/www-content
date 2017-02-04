@@ -1,7 +1,15 @@
 ~~Title: Debian~~
-==== Debian ====
+===== Debian =====
 
-Enlightenment and EFL Debian official packages are outdated. In this part, the installation for Debian is done from sources like in the [[/docs-efl-start|Get EFL installed]] tutorial.
+Enlightenment and EFL Debian official packages are outdated.
+
+Two ways are possible : install from the sources, or install from the debian experimental repository. 
+
+To start Enlightenment, see the run-time requirements below.
+
+==== Install from the sources ====
+
+In this part, the installation for Debian is done from sources like in the [[/docs-efl-start|Get EFL installed]] tutorial.
 
 The following part provides a script and shows how to install Enlightenment and Terminology with their dependencies on Debian. The script below can be easily adapted for Elementary.
 
@@ -114,7 +122,25 @@ It is not mandatory, but if you want to use a display manager such as gdm, kdm o
 sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions/
 </code>
 
-== Run ==
+==== From debian experimental repository ====
+
+Edit /etc/apt/sources.list to add an entry :
+<code>
+deb http://httpredir.debian.org/debian experimental main
+</code>
+Then install enlightenment with :
+<code>
+apt-get update
+apt-get -t experimental install enlightenment
+</code>
+And terminology :
+<code>
+apt-get -t experimental install terminology
+</code>
+
+For upgrade see [[https://wiki.debian.org/DebianExperimental|debian experimental]].
+
+==== Run-time requirements ====
 A minimum run-time environment requires :
 <code bash>
 apt install dbus-x11 xinit xorg
@@ -123,9 +149,14 @@ and creating ./xinitrc :
 <code>
 exec enlightenment_start
 </code>
-then running startx.
+It may be necessary to make it executable.
+
+Then run on an X terminal: 
+<code>
+startx
+</code>
 
 These run-time requirements may be provided - or not - by a display manger. In this case, you can reboot and choose Enlightenment as a window manager.
 
 == Test ==
-This procedure has been tested in January 2017 on debian 8.7.1.
+This procedure has been tested in Februaey 2017 on jessie 8.7.1 and on stretch.
