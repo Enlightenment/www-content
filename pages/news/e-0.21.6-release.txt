@@ -1,0 +1,70 @@
+=== Enlightenment DR 0.21.6 Release ===
+  * //2017-02-16 - by Simon Lees//
+
+This is another bugfix and stability release for the Enlightenment 21 Release series.
+
+== Tickets Addressed ==
+* https://phab.enlightenment.org/T2452
+* https://phab.enlightenment.org/T2579
+* https://phab.enlightenment.org/T5077
+
+
+== Changes ==
+Andreas Metzler (1):
+  * 10_typo_restore_LDFLAGS.diff: Fix typo in configure.ac (upstream), causing empty LDFLAGS.
+
+Carsten Haitzler (8):
+  * tasks - calculate min width properly given a known height of a gadget
+  * efm - warning - change invalid #if toe #ifdef as this is right
+  * efm - fix ifs to be ifdef as they should be
+  * e bindings - fix warnings about possible use of undefined var
+  * appmenu - make appmenu work with click+release and not hide on focus out
+  * ibar - fix seg with ibar icon task menus are up while desktop files change
+  * e - wl mode - stop consuming 100 percent cpu
+  * e dialog - fix unreszable dialogs to not be 1x1
+
+Christopher Michael (2):
+  * Use proper coordinate adjustment
+  * re-enable getting and setting output rotations in wl_drm
+
+Derek Foreman (3):
+  * Fix wayland frame callback times
+  * Use a monotonic clock for frame callback times
+  * Stop sending wayland motion events when the mouse is grabbed
+
+Mike Blumenkrantz (11):
+  * null out animator pointers in efx stop() operations
+  * correctly set E_POINTER_RESIZE_BR mode for client keyboard resizing
+  * plug iterator leak in e_comp_object_render()
+  * remove extra SLEEP prints during startup on non-release builds
+  * free configs for demo gadgets on object free
+  * do not perform frame coord adjustments for re_manage wayland clients
+  * use persistent clipping for comp object input rects
+  * ensure that gadget internal del callbacks are handled before other callbacks
+  * handle pixmap_refresh() failure cases more accurately under wayland
+  * reset demo gadget id before deleting gadget object during drop operation
+  * add conditional updates for latest efl apis
+
+Stephen 'Okra' Houston (2):
+  * Make gadget editor popup scrollable:
+  * Wireless gadget - place the ctxpopup after the size hints are set, not before
+      
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.6.tar.gz | Enlightenment DR 0.21.6 GZIP]]| ''63df61b30decf2efa5d60449ab8c79aebc2396ddac20b4d4ce942f6442a1debc'' |
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.6.tar.xz | Enlightenment DR 0.21.6 XZ]]  | ''ed0714b54d692cbcec412bdb169e5360355347ce775d27d6ae0cee25111b563d'' |
+
+//Like a Jet Fighter only different.//
+
+== Building and Dependencies ==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README  *   *   *    | EFL]]
+
+**Note:** E21 depends on EFL **v1.17** or newer for X11 compositing although  v1.18 is recommended and v1.18 is required for Wayland support.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
