@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
 
     evas_grid -> efl_canvas_group_clipped
     efl_canvas_group_clipped -> efl_canvas_group
@@ -36,6 +38,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
 }
 </graphviz>
 
@@ -55,6 +59,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
@@ -77,9 +83,14 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:evas:grid:property:children|children]] //(get)// | %%Get the list of children for the grid.%% |
-| [[:docs:efl:auto:class:evas:grid:property:mirrored|mirrored]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:grid:property:size|size]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:evas:grid:property:children|children]] //**(get)**// | %%Get the list of children for the grid.%% |
+| [[:docs:efl:auto:class:evas:grid:property:mirrored|mirrored]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:grid:property:size|size]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:grid:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
 
 ===== Events =====
 

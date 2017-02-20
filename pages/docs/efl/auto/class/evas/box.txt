@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
 
     evas_box -> efl_canvas_group_clipped
     efl_canvas_group_clipped -> efl_canvas_group
@@ -36,6 +38,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
 }
 </graphviz>
 
@@ -55,6 +59,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
@@ -104,9 +110,23 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:evas:box:property:align|align]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:box:property:layout|layout]] //(set)// | %%Set a new layouting function to a given box object%% |
-| [[:docs:efl:auto:class:evas:box:property:padding|padding]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:property:align|align]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:property:layout|layout]] //**(set)**// | %%Set a new layouting function to a given box object%% |
+| [[:docs:efl:auto:class:evas:box:property:padding|padding]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:box:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:box:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:box:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

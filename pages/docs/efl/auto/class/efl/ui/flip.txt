@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -45,6 +47,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -73,6 +77,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
@@ -103,8 +109,36 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:ui:flip:property:front_visible|front_visible]] //(get)// | %%Get flip front visibility state.%% |
-| [[:docs:efl:auto:class:efl:ui:flip:property:interaction|interaction]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:property:front_visible|front_visible]] //**(get)**// | %%Get flip front visibility state.%% |
+| [[:docs:efl:auto:class:efl:ui:flip:property:interaction|interaction]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:ui:flip:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:content_count|content_count]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:content_iterate|content_iterate]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:content_remove|content_remove]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:focus_direction|focus_direction]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_after|pack_after]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_at|pack_at]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_before|pack_before]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_begin|pack_begin]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_content_get|pack_content_get]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_end|pack_end]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_index_get|pack_index_get]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack_unpack_at|pack_unpack_at]] //[from [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:pack|pack]] //[from [[:docs:efl:auto:interface:efl:pack|Efl.Pack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:part|part]] //[from [[:docs:efl:auto:interface:efl:part|Efl.Part]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:sub_object_add|sub_object_add]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:sub_object_del|sub_object_del]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:flip:method:unpack|unpack]] //[from [[:docs:efl:auto:interface:efl:pack|Efl.Pack]]]// | No description supplied. |
 
 ===== Events =====
 

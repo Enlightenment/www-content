@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -39,6 +41,8 @@ digraph hierarchy {
     efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
@@ -59,6 +63,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -76,6 +82,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_photocam -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
     elm_photocam -> efl_file
@@ -102,6 +110,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -118,6 +128,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
@@ -140,14 +152,34 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:photocam:property:gesture_enabled|gesture_enabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:photocam:property:image_orient|image_orient]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:photocam:property:image_region|image_region]] //(get)// | %%Get the region of the image that is currently shown%% |
-| [[:docs:efl:auto:class:elm:photocam:property:image_size|image_size]] //(get)// | %%Get the current image pixel width and height%% |
-| [[:docs:efl:auto:class:elm:photocam:property:internal_image|internal_image]] //(get)// | %%Get the internal low-res image used for photocam%% |
-| [[:docs:efl:auto:class:elm:photocam:property:paused|paused]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:photocam:property:zoom_mode|zoom_mode]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:photocam:property:zoom|zoom]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:gesture_enabled|gesture_enabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:image_orient|image_orient]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:image_region|image_region]] //**(get)**// | %%Get the region of the image that is currently shown%% |
+| [[:docs:efl:auto:class:elm:photocam:property:image_size|image_size]] //**(get)**// | %%Get the current image pixel width and height%% |
+| [[:docs:efl:auto:class:elm:photocam:property:internal_image|internal_image]] //**(get)**// | %%Get the internal low-res image used for photocam%% |
+| [[:docs:efl:auto:class:elm:photocam:property:paused|paused]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:zoom_mode|zoom_mode]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:zoom|zoom]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:photocam:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:region_bring_in|region_bring_in]] //[from [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:photocam:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:file|file]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:photocam:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

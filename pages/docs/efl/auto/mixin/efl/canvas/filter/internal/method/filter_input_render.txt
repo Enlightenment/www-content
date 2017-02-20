@@ -2,14 +2,17 @@
 ===== Signature =====
 
 <code>
-Efl.Canvas.Filter.Internal.filter_input_render @protected @virtual_pure {
+filter_input_render @protected @pure_virtual {
     params {
         @in filter: void_ptr;
         @in drawctx: void_ptr;
+        @in data: void_ptr;
         @in l: int;
         @in r: int;
         @in t: int;
         @in b: int;
+        @in x: int;
+        @in y: int;
         @in do_async: bool;
     }
     return: bool;
@@ -19,21 +22,31 @@ Efl.Canvas.Filter.Internal.filter_input_render @protected @virtual_pure {
 ===== C signature =====
 
 <code c>
-Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *drawctx, int l, int r, int t, int b, Eina_Bool do_async);
+Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
 </code>
 
 ===== Parameters =====
 
-  * **filter** //(in)// - %%Evas_Filter_Context%%
-  * **drawctx** //(in)// - %%Draw context%%
+  * **filter** //(in)// - %%Current filter context%%
+  * **drawctx** //(in)// - %%Draw context (for evas engine)%%
+  * **data** //(in)// - %%Arbitrary private data%%
   * **l** //(in)// - %%Left%%
   * **r** //(in)// - %%Right%%
   * **t** //(in)// - %%Top%%
   * **b** //(in)// - %%Bottom%%
+  * **x** //(in)// - %%X offset%%
+  * **y** //(in)// - %%Y offset%%
   * **do_async** //(in)// - %%%%''true''%% when the operation should be done asynchronous, %%''false''%% otherwise%%
 
 ===== Description =====
 
-%%Called by Efl.Canvas.Filter.Internal when the parent class must render the input. ;%%
+%%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%
 {{page>:docs:efl:user:mixin:efl:canvas:filter:internal:method:filter_input_render:description&nodate&nolink&nouser}}
+
+===== Implemented by =====
+
+  * **Efl.Canvas.Filter.Internal.filter_input_render**
+  * [[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_input_render|Efl.Canvas.Image.Internal.filter_input_render]]
+  * [[:docs:efl:auto:class:evas:text:method:filter_input_render|Evas.Text.filter_input_render]]
+  * [[:docs:efl:auto:class:efl:canvas:text:method:filter_input_render|Efl.Canvas.Text.filter_input_render]]
 

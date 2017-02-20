@@ -21,6 +21,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_gfx_fill [fillcolor = "gray15", label = "Efl.Gfx.Fill", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_view [fillcolor = "gray15", label = "Efl.Gfx.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
@@ -34,6 +36,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     evas_vg -> efl_gfx_fill
     evas_vg -> efl_gfx_view
 }
@@ -54,6 +58,8 @@ digraph hierarchy {
       * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]] //(interface)//
     * [[:docs:efl:auto:interface:efl:gfx:view|Efl.Gfx.View]] //(interface)//
 
@@ -66,7 +72,20 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:evas:vg:property:root_node|root_node]] //(get)// | %%Get the root node of the evas_object_vg.%% |
+| [[:docs:efl:auto:class:evas:vg:property:root_node|root_node]] //**(get)**// | %%Get the root node of the evas_object_vg.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:vg:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:vg:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:vg:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:vg:property:fill|fill]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:vg:property:view_size|view_size]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:view|Efl.Gfx.View]]]// | No description supplied. |
 
 ===== Events =====
 

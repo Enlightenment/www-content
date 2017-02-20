@@ -21,7 +21,12 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_text [fillcolor = "gray15", label = "Efl.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_canvas_filter_internal [fillcolor = "gray15", label = "Efl.Canvas.Filter.Internal", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_gfx_filter [fillcolor = "gray15", label = "Efl.Gfx.Filter", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
 
     efl_canvas_text -> efl_canvas_object
     efl_canvas_object -> efl_object
@@ -33,7 +38,12 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     efl_canvas_text -> efl_text
+    efl_canvas_text -> efl_canvas_filter_internal
+    efl_canvas_filter_internal -> efl_gfx_filter
+    efl_canvas_filter_internal -> efl_object
 }
 </graphviz>
 
@@ -52,7 +62,12 @@ digraph hierarchy {
       * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:text|Efl.Text]] //(interface)//
+    * [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]] //(mixin)//
+      * [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]] //(interface)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
 
@@ -80,17 +95,37 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:canvas:text:property:annotation|annotation]] //(get, set)// | %%A new format for %%''annotation''%%.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]] //(get, set)// | %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:cursor|cursor]] //(get)// | %%The object's main cursor.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:is_empty|is_empty]] //(get)// | %%Whether the object is empty (no text) or not%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:legacy_newline|legacy_newline]] //(get, set)// | %%When %%''true''%%, newline character will behave as a paragraph separator.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:size_formatted|size_formatted]] //(get)// | %%The formatted width and height.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:size_native|size_native]] //(get)// | %%The native width and height.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:style_insets|style_insets]] //(get)// | %%Gets the left, right, top and bottom insets of the text.%% |
-| [[:docs:efl:auto:class:efl:canvas:text:property:style|style]] //(get, set)// | %%The text style of the object.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:annotation|annotation]] //**(get, set)**// | %%A new format for %%''annotation''%%.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]] //**(get, set)**// | %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:cursor|cursor]] //**(get)**// | %%The object's main cursor.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:is_empty|is_empty]] //**(get)**// | %%Whether the object is empty (no text) or not%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:legacy_newline|legacy_newline]] //**(get, set)**// | %%When %%''true''%%, newline character will behave as a paragraph separator.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:size_formatted|size_formatted]] //**(get)**// | %%The formatted width and height.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:size_native|size_native]] //**(get)**// | %%The native width and height.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:style_insets|style_insets]] //**(get)**// | %%Gets the left, right, top and bottom insets of the text.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:property:style|style]] //**(get, set)**// | %%The text style of the object.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:text:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:method:filter_dirty|filter_dirty]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:method:filter_input_render|filter_input_render]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:method:filter_state_prepare|filter_state_prepare]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:text:property:filter_data|filter_data]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:property:filter_program|filter_program]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:property:filter_source|filter_source]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:property:paragraph_direction|paragraph_direction]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:text:property:text|text]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:text|Efl.Text]]]// | No description supplied. |
 
 ===== Events =====
 
 ^ Event name ^ Brief description ^
 | [[:docs:efl:auto:class:efl:canvas:text:event:changed|changed]] | %%Called when the content (text or annotations) changed.%% |
+| [[:docs:efl:auto:class:efl:canvas:text:event:style_insets_changed|style_insets,changed]] | %%Called when the property %%[[:docs:efl:auto:class:efl:canvas:text:property:style_insets|Efl.Canvas.Text.style_insets]]%% changed.%% |

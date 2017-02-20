@@ -1,0 +1,49 @@
+<title>Efl.Io.Stdin.read</title>
+//Overridden from [[:docs:efl:auto:mixin:efl:io:reader:fd:method:read|Efl.Io.Reader.read]].//===== Signature =====
+
+<code>
+read @pure_virtual {
+    params {
+        @inout rw_slice: Eina.Rw_Slice @nonull;
+    }
+    return: Eina.Error;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+
+===== Parameters =====
+
+  * **rw_slice** //(inout)// - %%Provides a pre-allocated memory to be filled up to rw_slice.len. It will be populated and the length will be set to the actually used amount of bytes, which can be smaller than the request.%%
+
+===== Description =====
+
+%%Reads data into a pre-allocated buffer.%%
+
+%%This operation will be executed immediately and may or may not block the caller thread for some time. The details of blocking behavior is to be defined by the implementation and may be subject to other parameters such as non-blocking flags, maximum timeout or even retry attempts.%%
+
+%%You can understand this method as read(2) libc function.%%
+
+//Since 1.19//
+{{page>:docs:efl:user:class:efl:io:stdin:method:read:description&nodate&nolink&nouser}}
+
+===== Implemented by =====
+
+  * [[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]
+  * [[:docs:efl:auto:mixin:efl:io:reader:fd:method:read|Efl.Io.Reader.Fd.read]]
+  * [[:docs:efl:auto:class:efl:net:socket:fd:method:read|Efl.Net.Socket.Fd.read]]
+  * [[:docs:efl:auto:class:efl:net:socket:udp:method:read|Efl.Net.Socket.Udp.read]]
+  * [[:docs:efl:auto:class:efl:io:file:method:read|Efl.Io.File.read]]
+  * **Efl.Io.Stdin.read**
+  * [[:docs:efl:auto:class:efl:net:server:udp:client:method:read|Efl.Net.Server.Udp.Client.read]]
+  * [[:docs:efl:auto:class:efl:net:dialer:websocket:method:read|Efl.Net.Dialer.Websocket.read]]
+  * [[:docs:efl:auto:class:efl:net:dialer:http:method:read|Efl.Net.Dialer.Http.read]]
+  * [[:docs:efl:auto:class:efl:net:socket:ssl:method:read|Efl.Net.Socket.Ssl.read]]
+  * [[:docs:efl:auto:class:efl:io:buffered_stream:method:read|Efl.Io.Buffered_Stream.read]]
+  * [[:docs:efl:auto:class:efl:io:buffer:method:read|Efl.Io.Buffer.read]]
+  * [[:docs:efl:auto:class:efl:io:queue:method:read|Efl.Io.Queue.read]]
+

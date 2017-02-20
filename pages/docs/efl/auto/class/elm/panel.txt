@@ -24,6 +24,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -32,6 +34,9 @@ digraph hierarchy {
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_scrollable [fillcolor = "gray15", label = "Elm.Interface_Scrollable", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_ui_scrollable [fillcolor = "gray15", label = "Efl.Ui.Scrollable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_canvas_group [fillcolor = "gray15", label = "Efl.Canvas.Group", color = "gray15", fontcolor = "white", style = "filled"]
@@ -44,6 +49,8 @@ digraph hierarchy {
     efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
@@ -61,6 +68,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -69,6 +78,9 @@ digraph hierarchy {
     elm_layout -> efl_container
     efl_container -> efl_gfx
     elm_layout -> efl_file
+    elm_layout -> efl_ui_view
+    elm_layout -> efl_ui_model_connect
+    elm_layout -> efl_ui_model_factory_connect
     elm_panel -> elm_interface_scrollable
     elm_interface_scrollable -> efl_ui_scrollable
     elm_interface_scrollable -> efl_canvas_group
@@ -82,6 +94,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_panel -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
 }
@@ -105,6 +119,8 @@ digraph hierarchy {
             * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
               * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
               * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+            * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+              * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -113,6 +129,9 @@ digraph hierarchy {
       * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
         * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
       * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:ui:scrollable|Efl.Ui.Scrollable]] //(interface)//
       * [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]] //(class)//
@@ -125,6 +144,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
@@ -143,10 +164,34 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:panel:property:hidden|hidden]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:panel:property:orient|orient]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:panel:property:scrollable_content_size|scrollable_content_size]] //(set)// | %%Set the size of the scrollable panel.%% |
-| [[:docs:efl:auto:class:elm:panel:property:scrollable|scrollable]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:hidden|hidden]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:orient|orient]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:scrollable_content_size|scrollable_content_size]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:scrollable|scrollable]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:panel:method:access|access]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:disable|disable]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:on_focus_region|on_focus_region]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:part|part]] //[from [[:docs:efl:auto:interface:efl:part|Efl.Part]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:sizing_eval|sizing_eval]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:panel:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:panel:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

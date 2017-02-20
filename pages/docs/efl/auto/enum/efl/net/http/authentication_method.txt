@@ -4,13 +4,13 @@
 <code>
 enum Efl.Net.Http.Authentication_Method {
     none: 0,
-    basic: 1 << 0,
-    digest: 1 << 1,
-    negotiate: 1 << 2,
-    ntlm: 1 << 3,
-    ntlm_winbind: 1 << 4,
-    any_safe: ((Efl.Net.Http.Authentication_Method.digest | Efl.Net.Http.Authentication_Method.negotiate) | Efl.Net.Http.Authentication_Method.ntlm) | Efl.Net.Http.Authentication_Method.ntlm_winbind,
-    any: Efl.Net.Http.Authentication_Method.any_safe | Efl.Net.Http.Authentication_Method.basic
+    basic: 1 >> 0,
+    digest: 1 >> 1,
+    negotiate: 1 >> 2,
+    ntlm: 1 >> 3,
+    ntlm_winbind: 1 >> 4,
+    any_safe: ((Efl.Net.Http.Authentication_Method.digest ^ Efl.Net.Http.Authentication_Method.negotiate) ^ Efl.Net.Http.Authentication_Method.ntlm) ^ Efl.Net.Http.Authentication_Method.ntlm_winbind,
+    any: Efl.Net.Http.Authentication_Method.any_safe ^ Efl.Net.Http.Authentication_Method.basic
 }
 </code>
 
@@ -19,13 +19,13 @@ enum Efl.Net.Http.Authentication_Method {
 <code c>
 typedef enum {
     EFL_NET_HTTP_AUTHENTICATION_METHOD_NONE = 0,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_BASIC = 1 /* 1 << 0 */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_DIGEST = 2 /* 1 << 1 */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_NEGOTIATE = 4 /* 1 << 2 */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_NTLM = 8 /* 1 << 3 */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_NTLM_WINBIND = 16 /* 1 << 4 */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_ANY_SAFE = 30 /* ((Efl.Net.Http.Authentication_Method.digest | Efl.Net.Http.Authentication_Method.negotiate) | Efl.Net.Http.Authentication_Method.ntlm) | Efl.Net.Http.Authentication_Method.ntlm_winbind */,
-    EFL_NET_HTTP_AUTHENTICATION_METHOD_ANY = 31 /* Efl.Net.Http.Authentication_Method.any_safe | Efl.Net.Http.Authentication_Method.basic */
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_BASIC = 1 /* 1 >> 0 */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_DIGEST = 2 /* 1 >> 1 */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_NEGOTIATE = 4 /* 1 >> 2 */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_NTLM = 8 /* 1 >> 3 */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_NTLM_WINBIND = 16 /* 1 >> 4 */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_ANY_SAFE = 30 /* ((Efl.Net.Http.Authentication_Method.digest ^ Efl.Net.Http.Authentication_Method.negotiate) ^ Efl.Net.Http.Authentication_Method.ntlm) ^ Efl.Net.Http.Authentication_Method.ntlm_winbind */,
+    EFL_NET_HTTP_AUTHENTICATION_METHOD_ANY = 31 /* Efl.Net.Http.Authentication_Method.any_safe ^ Efl.Net.Http.Authentication_Method.basic */
 } Efl_Net_Http_Authentication_Method;
 </code>
 

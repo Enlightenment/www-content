@@ -1,0 +1,55 @@
+<title>Eldbus.Model.Object.children_slice_get</title>
+//Overridden from [[:docs:efl:auto:interface:efl:model:method:children_slice_get|Efl.Model.children_slice_get]].//===== Signature =====
+
+<code>
+children_slice_get @pure_virtual {
+    params {
+        @in start: uint;
+        @in count: uint;
+    }
+    return: future<accessor<Efl.Object>>;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Future *efl_model_children_slice_get(Eo *obj, unsigned int start, unsigned int count);
+</code>
+
+===== Parameters =====
+
+  * **start** //(in)// - %%Range begin - start from here. If start and count are 0 slice is ignored.%%
+  * **count** //(in)// - %%Range size. If count and start are 0 slice is ignored.%%
+
+===== Description =====
+
+%%Get children slice OR full range.%%
+
+%%children_slice_get behaves in two different ways, it may provide the slice if both %%''start''%% AND %%''count''%% are non-zero OR full range otherwise.%%
+
+%%Since 'slice' is a range, for example if we have 20 childs a slice could be the range from 3(start) to 4(count), see:%%
+
+%%child 0  [no] child 1  [no] child 2  [yes] child 3  [yes] child 4  [yes] child 5  [yes] child 6  [no] child 7  [no]%%
+
+%%Optionally the user can call children_count_get to know the number of children so a valid range can be known in advance.%%
+
+%%See %%[[:docs:efl:auto:interface:efl:model:method:children_count_get|Efl.Model.children_count_get]]%%%%
+
+//Since 1.14//
+{{page>:docs:efl:user:class:eldbus:model:object:method:children_slice_get:description&nodate&nolink&nouser}}
+
+===== Implemented by =====
+
+  * [[:docs:efl:auto:interface:efl:model:method:children_slice_get|Efl.Model.children_slice_get]]
+  * **Eldbus.Model.Object.children_slice_get**
+  * [[:docs:efl:auto:class:efl:model:composite:boolean:method:children_slice_get|Efl.Model.Composite.Boolean.children_slice_get]]
+  * [[:docs:efl:auto:class:efl:model:container:item:method:children_slice_get|Efl.Model.Container.Item.children_slice_get]]
+  * [[:docs:efl:auto:class:eldbus:model:arguments:method:children_slice_get|Eldbus.Model.Arguments.children_slice_get]]
+  * [[:docs:efl:auto:class:efl:model:composite:boolean:children:method:children_slice_get|Efl.Model.Composite.Boolean.Children.children_slice_get]]
+  * [[:docs:efl:auto:class:eldbus:model:proxy:method:children_slice_get|Eldbus.Model.Proxy.children_slice_get]]
+  * [[:docs:efl:auto:class:efl:model:item:method:children_slice_get|Efl.Model.Item.children_slice_get]]
+  * [[:docs:efl:auto:class:eio:model:method:children_slice_get|Eio.Model.children_slice_get]]
+  * [[:docs:efl:auto:class:eldbus:model:connection:method:children_slice_get|Eldbus.Model.Connection.children_slice_get]]
+  * [[:docs:efl:auto:class:efl:model:container:method:children_slice_get|Efl.Model.Container.children_slice_get]]
+

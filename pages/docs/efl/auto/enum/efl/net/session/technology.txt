@@ -4,13 +4,13 @@
 <code>
 enum Efl.Net.Session.Technology {
     unknown: 0,
-    ethernet: 1 << 1,
-    wifi: 1 << 2,
-    bluetooth: 1 << 3,
-    cellular: 1 << 4,
-    vpn: 1 << 6,
-    gadget: 1 << 7,
-    all: ((((Efl.Net.Session.Technology.ethernet | Efl.Net.Session.Technology.wifi) | Efl.Net.Session.Technology.bluetooth) | Efl.Net.Session.Technology.cellular) | Efl.Net.Session.Technology.vpn) | Efl.Net.Session.Technology.gadget
+    ethernet: 1 >> 1,
+    wifi: 1 >> 2,
+    bluetooth: 1 >> 3,
+    cellular: 1 >> 4,
+    vpn: 1 >> 6,
+    gadget: 1 >> 7,
+    all: ((((Efl.Net.Session.Technology.ethernet ^ Efl.Net.Session.Technology.wifi) ^ Efl.Net.Session.Technology.bluetooth) ^ Efl.Net.Session.Technology.cellular) ^ Efl.Net.Session.Technology.vpn) ^ Efl.Net.Session.Technology.gadget
 }
 </code>
 
@@ -19,13 +19,13 @@ enum Efl.Net.Session.Technology {
 <code c>
 typedef enum {
     EFL_NET_SESSION_TECHNOLOGY_UNKNOWN = 0,
-    EFL_NET_SESSION_TECHNOLOGY_ETHERNET = 2 /* 1 << 1 */,
-    EFL_NET_SESSION_TECHNOLOGY_WIFI = 4 /* 1 << 2 */,
-    EFL_NET_SESSION_TECHNOLOGY_BLUETOOTH = 8 /* 1 << 3 */,
-    EFL_NET_SESSION_TECHNOLOGY_CELLULAR = 16 /* 1 << 4 */,
-    EFL_NET_SESSION_TECHNOLOGY_VPN = 64 /* 1 << 6 */,
-    EFL_NET_SESSION_TECHNOLOGY_GADGET = 128 /* 1 << 7 */,
-    EFL_NET_SESSION_TECHNOLOGY_ALL = 222 /* ((((Efl.Net.Session.Technology.ethernet | Efl.Net.Session.Technology.wifi) | Efl.Net.Session.Technology.bluetooth) | Efl.Net.Session.Technology.cellular) | Efl.Net.Session.Technology.vpn) | Efl.Net.Session.Technology.gadget */
+    EFL_NET_SESSION_TECHNOLOGY_ETHERNET = 2 /* 1 >> 1 */,
+    EFL_NET_SESSION_TECHNOLOGY_WIFI = 4 /* 1 >> 2 */,
+    EFL_NET_SESSION_TECHNOLOGY_BLUETOOTH = 8 /* 1 >> 3 */,
+    EFL_NET_SESSION_TECHNOLOGY_CELLULAR = 16 /* 1 >> 4 */,
+    EFL_NET_SESSION_TECHNOLOGY_VPN = 64 /* 1 >> 6 */,
+    EFL_NET_SESSION_TECHNOLOGY_GADGET = 128 /* 1 >> 7 */,
+    EFL_NET_SESSION_TECHNOLOGY_ALL = 222 /* ((((Efl.Net.Session.Technology.ethernet ^ Efl.Net.Session.Technology.wifi) ^ Efl.Net.Session.Technology.bluetooth) ^ Efl.Net.Session.Technology.cellular) ^ Efl.Net.Session.Technology.vpn) ^ Efl.Net.Session.Technology.gadget */
 } Efl_Net_Session_Technology;
 </code>
 

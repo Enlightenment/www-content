@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -39,6 +41,8 @@ digraph hierarchy {
     efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
@@ -58,6 +62,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -75,6 +81,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_diskselector -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
     elm_diskselector -> efl_ui_clickable
@@ -100,6 +108,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -116,6 +126,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
@@ -138,13 +150,37 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:diskselector:property:display_item_num|display_item_num]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:diskselector:property:first_item|first_item]] //(get)// | %%Get the first item of the diskselector.%% |
-| [[:docs:efl:auto:class:elm:diskselector:property:items|items]] //(get)// | %%Get a list of all the diskselector items.%% |
-| [[:docs:efl:auto:class:elm:diskselector:property:last_item|last_item]] //(get)// | %%Get the last item of the diskselector.%% |
-| [[:docs:efl:auto:class:elm:diskselector:property:round_enabled|round_enabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:diskselector:property:selected_item|selected_item]] //(get)// | %%Get the selected item.%% |
-| [[:docs:efl:auto:class:elm:diskselector:property:side_text_max_length|side_text_max_length]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:display_item_num|display_item_num]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:first_item|first_item]] //**(get)**// | %%Get the first item of the diskselector.%% |
+| [[:docs:efl:auto:class:elm:diskselector:property:items|items]] //**(get)**// | %%Get a list of all the diskselector items.%% |
+| [[:docs:efl:auto:class:elm:diskselector:property:last_item|last_item]] //**(get)**// | %%Get the last item of the diskselector.%% |
+| [[:docs:efl:auto:class:elm:diskselector:property:round_enabled|round_enabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:selected_item|selected_item]] //**(get)**// | %%Get the selected item.%% |
+| [[:docs:efl:auto:class:elm:diskselector:property:side_text_max_length|side_text_max_length]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:diskselector:method:access|access]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:sub_object_del|sub_object_del]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:translate|translate]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:diskselector:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:policy|policy]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:diskselector:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

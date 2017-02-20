@@ -15,11 +15,15 @@ digraph hierarchy {
     efl_canvas [fillcolor = "gray15", label = "Efl.Canvas", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_animator [fillcolor = "gray15", label = "Efl.Animator", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_input_interface [fillcolor = "gray15", label = "Efl.Input.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
 
     evas_canvas -> efl_object
     evas_canvas -> efl_canvas
     evas_canvas -> efl_animator
     evas_canvas -> efl_input_interface
+    evas_canvas -> efl_loop_user
+    efl_loop_user -> efl_object
 }
 </graphviz>
 
@@ -32,6 +36,8 @@ digraph hierarchy {
     * [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]] //(interface)//
     * [[:docs:efl:auto:interface:efl:animator|Efl.Animator]] //(interface)//
     * [[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]] //(interface)//
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
 
@@ -101,34 +107,47 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:evas:canvas:property:changed|changed]] //(get)// | %%Get the changed marker for the canvas.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:data_attach|data_attach]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:default_device|default_device]] //(get)// | %%Return the default device of a given type. @note Currently Evas only creates a seat, mouse and keyboard.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:engine_info|engine_info]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:event_default_flags|event_default_flags]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:event_down_count|event_down_count]] //(get)// | %%Get the number of mouse or multi presses currently active.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:focus_state|focus_state]] //(get)// | %%Get the focus state for the default seat.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:focused_objects|focused_objects]] //(get)// | %%Return an iterator of focused objects.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:focus|focus]] //(get)// | %%Retrieve the object focused by the default seat.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:font_cache|font_cache]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:font_hinting|font_hinting]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:image_cache|image_cache]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:evas:canvas:property:image_max_size|image_max_size]] //(get)// | %%Get the maximum image size evas can possibly handle.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:key_lock|key_lock]] //(get)// | %%Returns a handle to the list of lock keys registered in the canvas %%''e''%%.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:key_modifier|key_modifier]] //(get)// | %%Returns a handle to the list of modifier keys registered in the canvas %%''e''%%.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:object_bottom|object_bottom]] //(get)// | %%Get the lowest (stacked) Evas object on the canvas %%''e''%%.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:object_top|object_top]] //(get)// | %%Get the highest (stacked) Evas object on the canvas %%''e''%%.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_button_down_mask_by_device|pointer_button_down_mask_by_device]] //(get)// | %%Returns a bitmask with the mouse buttons currently pressed, set to 1.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_button_down_mask|pointer_button_down_mask]] //(get)// | %%Returns a bitmask with the default mouse buttons currently pressed, set to 1.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy_by_device|pointer_canvas_xy_by_device]] //(get)// | %%This function returns the current known default pointer coordinates.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy|pointer_canvas_xy]] //(get)// | %%This function returns the current known default pointer coordinates%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_inside_by_device|pointer_inside_by_device]] //(get)// | %%Returns whether the mouse pointer is logically inside the canvas.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_inside|pointer_inside]] //(get)// | %%Returns whether the default mouse pointer is logically inside the canvas.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_output_xy_by_device|pointer_output_xy_by_device]] //(get)// | %%This function returns the current known pointer coordinates.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:pointer_output_xy|pointer_output_xy]] //(get)// | %%This function returns the current known default pointer coordinates.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:seat_focus_state|seat_focus_state]] //(get)// | %%Get the focus state by a given seat.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:seat_focus|seat_focus]] //(get)// | %%Return the focused object by a given seat.%% |
-| [[:docs:efl:auto:class:evas:canvas:property:smart_objects_calculate_count|smart_objects_calculate_count]] //(get)// | %%This gets the internal counter that counts the number of smart calculations.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:changed|changed]] //**(get)**// | %%Get the changed marker for the canvas.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:data_attach|data_attach]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:default_device|default_device]] //**(get)**// | %%Return the default device of a given type. @note Currently Evas only creates a seat, mouse and keyboard.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:engine_info|engine_info]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:event_default_flags|event_default_flags]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:event_down_count|event_down_count]] //**(get)**// | %%Get the number of mouse or multi presses currently active.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:focus_state|focus_state]] //**(get)**// | %%Get the focus state for the default seat.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:focus|focus]] //**(get)**// | %%Retrieve the object focused by the default seat.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:font_cache|font_cache]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:font_hinting|font_hinting]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:image_cache|image_cache]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:property:image_max_size|image_max_size]] //**(get)**// | %%Get the maximum image size evas can possibly handle.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:key_lock|key_lock]] //**(get)**// | %%Returns a handle to the list of lock keys registered in the canvas %%''e''%%.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:key_modifier|key_modifier]] //**(get)**// | %%Returns a handle to the list of modifier keys registered in the canvas %%''e''%%.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:object_bottom|object_bottom]] //**(get)**// | %%Get the lowest (stacked) Evas object on the canvas %%''e''%%.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:object_top|object_top]] //**(get)**// | %%Get the highest (stacked) Evas object on the canvas %%''e''%%.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_button_down_mask_by_device|pointer_button_down_mask_by_device]] //**(get)**// | %%Returns a bitmask with the mouse buttons currently pressed, set to 1.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_button_down_mask|pointer_button_down_mask]] //**(get)**// | %%Returns a bitmask with the default mouse buttons currently pressed, set to 1.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy_by_device|pointer_canvas_xy_by_device]] //**(get)**// | %%This function returns the current known default pointer coordinates.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy|pointer_canvas_xy]] //**(get)**// | %%This function returns the current known default pointer coordinates%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_inside_by_device|pointer_inside_by_device]] //**(get)**// | %%Returns whether the mouse pointer is logically inside the canvas.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_inside|pointer_inside]] //**(get)**// | %%Returns whether the default mouse pointer is logically inside the canvas.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_output_xy_by_device|pointer_output_xy_by_device]] //**(get)**// | %%This function returns the current known pointer coordinates.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:pointer_output_xy|pointer_output_xy]] //**(get)**// | %%This function returns the current known default pointer coordinates.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:seat_focus_state|seat_focus_state]] //**(get)**// | %%Get the focus state by a given seat.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:seat_focus|seat_focus]] //**(get)**// | %%Return the focused object by a given seat.%% |
+| [[:docs:efl:auto:class:evas:canvas:property:smart_objects_calculate_count|smart_objects_calculate_count]] //**(get)**// | %%This gets the internal counter that counts the number of smart calculations.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:canvas:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:method:event_freeze|event_freeze]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:method:event_thaw|event_thaw]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:evas:canvas:method:provider_find|provider_find]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:evas:canvas:property:loop|loop]] //**(get)**// //[from [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]// | No description supplied. |
 
 ===== Events =====
 

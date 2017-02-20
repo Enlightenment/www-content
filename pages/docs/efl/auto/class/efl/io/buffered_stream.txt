@@ -44,9 +44,9 @@ digraph hierarchy {
 
 %%The idea is that unlike traditional %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% that will attempt to write directly and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual output when it %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%). When finished writing data, the %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% and then wait for "write,finished" event to know when all data was sent.%%
 
-%%Reading is also much simpler since incoming data is kept in an %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%%, then discarded with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
+%%Reading is also much simpler since incoming data is kept in an %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, then discarded with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
 
-%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing and wait, if complete then either %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%% and then %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
+%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing and wait, if complete then either %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
 
 %%The actual I/O is set with the constructor method %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.set]]%% and can be retrieved with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.get]]%%, which should be used with care -- calling %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on it may produce unexpected results.%%
 
@@ -61,28 +61,47 @@ digraph hierarchy {
 | [[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|discard]] | %%Discard the given number of bytes.%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:method:eos_mark|eos_mark]] | %%Mark this end-of-stream, signals nothing else will be written.%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:method:flush|flush]] | %%Forces writing all pending data to destination.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|slice_get]] | %%Get a temporary access to input queue's internal read memory.%% |
 
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:inactivity_timeout|inactivity_timeout]] //(get, set)// | %%Error as ETIMEDOUT if it becomes inactive for some time.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|inner_io]] //(get, set)// | %%The inner I/O this wrapper operates on.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:line_delimiter|line_delimiter]] //(get, set)// | %%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_input|max_queue_size_input]] //(get, set)// | %%Limit how big the input queue can grow, in bytes.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_output|max_queue_size_output]] //(get, set)// | %%Limit how big the output queue can grow, in bytes.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|pending_read]] //(get)// | %%How many bytes are pending (available) for read%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_write|pending_write]] //(get)// | %%How many bytes are pending write to %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%%%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:progress|progress]] //(get)// | %%How many bytes were written and read.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:property:read_chunk_size|read_chunk_size]] //(get, set)// | %%Read chunk size property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|inner_io]] //**(get, set)**// | %%The inner I/O this wrapper operates on.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:line_delimiter|line_delimiter]] //**(get, set)**// | %%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_input|max_queue_size_input]] //**(get, set)**// | %%Limit how big the input queue can grow, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_output|max_queue_size_output]] //**(get, set)**// | %%Limit how big the output queue can grow, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|pending_read]] //**(get)**// | %%How many bytes are pending (available) for read%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_write|pending_write]] //**(get)**// | %%How many bytes are pending write to %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%%%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:progress|progress]] //**(get)**// | %%How many bytes were written and read.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:read_chunk_size|read_chunk_size]] //**(get, set)**// | %%Read chunk size property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|slice]] //**(get)**// | %%Get a temporary access to input queue's internal read memory.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:timeout_inactivity|timeout_inactivity]] //**(get, set)**// | %%Error as ETIMEDOUT if it becomes inactive for some time.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:buffered_stream:method:close|close]] //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:method:read|read]] //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:method:write|write]] //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:can_read|can_read]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:can_write|can_write]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:close_on_destructor|close_on_destructor]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:close_on_exec|close_on_exec]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:closed|closed]] //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:property:eos|eos]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]// | No description supplied. |
 
 ===== Events =====
 
 ^ Event name ^ Brief description ^
 | [[:docs:efl:auto:class:efl:io:buffered_stream:event:error|error]] | %%An error happened and the I/O stopped%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:event:finished|finished]] | %%Both read and write are finished.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:event:line|line]] | %%If %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%%, don't assume that!%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:event:line|line]] | %%If %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, don't assume that!%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:event:progress|progress]] | %%Property %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:progress|Efl.Io.Buffered_Stream.progress]]%% changed%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:event:read_finished|read,finished]] | %%Same as %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% "eos", for consistency.%% |
-| [[:docs:efl:auto:class:efl:io:buffered_stream:event:slice_changed|slice,changed]] | %%The read-slice returned by %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%% may have changed.%% |
+| [[:docs:efl:auto:class:efl:io:buffered_stream:event:slice_changed|slice,changed]] | %%The read-slice returned by %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% may have changed.%% |
 | [[:docs:efl:auto:class:efl:io:buffered_stream:event:write_finished|write,finished]] | %%%%[[:docs:efl:auto:class:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% was called and all available data was sent to destination%% |

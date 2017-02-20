@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -55,6 +57,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -94,6 +98,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -130,41 +136,89 @@ digraph hierarchy {
 | [[:docs:efl:auto:class:efl:ui:win:method:move_resize_start|move_resize_start]] | %%Start moving or resizing the window.%% |
 | [[:docs:efl:auto:class:efl:ui:win:method:raise|raise]] | %%Raise a window object.%% |
 | [[:docs:efl:auto:class:efl:ui:win:method:socket_listen|socket_listen]] | %%Create a socket to provide the service for Plug widget.%% |
-| [[:docs:efl:auto:class:efl:ui:win:method:teamwork_uri_hide|teamwork_uri_hide]] | %%Notify the compositor that a uri should be hidden%% |
-| [[:docs:efl:auto:class:efl:ui:win:method:teamwork_uri_open|teamwork_uri_open]] | %%Notify the compositor that a uri should be opened%% |
-| [[:docs:efl:auto:class:efl:ui:win:method:teamwork_uri_preload|teamwork_uri_preload]] | %%Notify the compositor that a uri should be preloaded%% |
-| [[:docs:efl:auto:class:efl:ui:win:method:teamwork_uri_show|teamwork_uri_show]] | %%Notify the compositor that a uri should be displayed%% |
+| [[:docs:efl:auto:class:efl:ui:win:method:stack_pop_to|stack_pop_to]] | %%Pop (delete) all windows in the stack above this window.%% |
 
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:ui:win:property:accel_preference|accel_preference]] //(get, set)// | %%The hardware acceleration preference for this window.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:alpha|alpha]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:autodel|autodel]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:autohide|autohide]] //(get, set)// | %%Window's autohide state.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:available_profiles|available_profiles]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:borderless|borderless]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_animate|focus_highlight_animate]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_enabled|focus_highlight_enabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_style|focus_highlight_style]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:focus|focus]] //(get)// | %%Get whether a window has focus.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:fullscreen|fullscreen]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:icon_object|icon_object]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:iconified|iconified]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:indicator_enabled|indicator_enabled]] //(get, set)// | %%In some environments, like phones, you may have an indicator that shows battery status, reception, time etc. This is the indicator.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:indicator_type|indicator_type]] //(get, set)// | %%The indicator type of the window.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:keyboard_mode|keyboard_mode]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:maximized|maximized]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:modal|modal]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:name|name]] //(get, set)// | %%The window name.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:noblank|noblank]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:prop_focus_skip|prop_focus_skip]] //(set)// | %%Set the window to be skipped by keyboard focus.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:role|role]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:screen_constrain|screen_constrain]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:sticky|sticky]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:type|type]] //(get, set)// | %%The type of the window.%% |
-| [[:docs:efl:auto:class:efl:ui:win:property:urgent|urgent]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:win:property:wm_available_rotations|wm_available_rotations]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:accel_preference|accel_preference]] //**(get, set)**// | %%The hardware acceleration preference for this window.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:alpha|alpha]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:autodel|autodel]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:autohide|autohide]] //**(get, set)**// | %%Window's autohide state.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:available_profiles|available_profiles]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:borderless|borderless]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_animate|focus_highlight_animate]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_enabled|focus_highlight_enabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:focus_highlight_style|focus_highlight_style]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:focus|focus]] //**(get)**// | %%Get whether a window has focus.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:fullscreen|fullscreen]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:icon_object|icon_object]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:iconified|iconified]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:indicator_enabled|indicator_enabled]] //**(get, set)**// | %%In some environments, like phones, you may have an indicator that shows battery status, reception, time etc. This is the indicator.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:indicator_type|indicator_type]] //**(get, set)**// | %%The indicator type of the window.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:keyboard_mode|keyboard_mode]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:maximized|maximized]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:modal|modal]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:name|name]] //**(get, set)**// | %%The window name.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:noblank|noblank]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:prop_focus_skip|prop_focus_skip]] //**(set)**// | %%Set the window to be skipped by keyboard focus.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:role|role]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:screen_constrain|screen_constrain]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:stack_base|stack_base]] //**(get, set)**// | %%The stack base state of this window%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:stack_id|stack_id]] //**(get)**// | %%Get the stack ID string of the window as an opaque string.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:stack_master_id|stack_master_id]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:sticky|sticky]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:type|type]] //**(get, set)**// | %%The type of the window.%% |
+| [[:docs:efl:auto:class:efl:ui:win:property:urgent|urgent]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:wm_available_rotations|wm_available_rotations]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:ui:win:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:content_unset|content_unset]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:focus_direction|focus_direction]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:object_top_at_xy_get|object_top_at_xy_get]] //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:object_top_in_rectangle_get|object_top_in_rectangle_get]] //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:objects_at_xy_get|objects_at_xy_get]] //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:objects_in_rectangle_get|objects_in_rectangle_get]] //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:part|part]] //[from [[:docs:efl:auto:interface:efl:part|Efl.Part]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:pointer_iterate|pointer_iterate]] //[from [[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:smart_objects_calculate|smart_objects_calculate]] //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:ui:win:property:content|content]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:hint_aspect|hint_aspect]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:hint_base|hint_base]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:hint_max|hint_max]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:hint_step|hint_step]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:image_max_size|image_max_size]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:lock_enabled|lock_enabled]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:input:state|Efl.Input.State]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:modifier_enabled|modifier_enabled]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:input:state|Efl.Input.State]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:name|name]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:parent|parent]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:pointer_inside|pointer_inside]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:pointer_xy|pointer_xy]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:screen_dpi|screen_dpi]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:screen|Efl.Screen]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:screen_rotation|screen_rotation]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:screen|Efl.Screen]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:screen_size|screen_size]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:screen|Efl.Screen]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:state_set|state_set]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:text|text]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:text|Efl.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:win:property:visible|visible]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -31,6 +33,9 @@ digraph hierarchy {
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
     elm_layout -> elm_widget
     elm_widget -> efl_canvas_group
@@ -44,6 +49,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -52,6 +59,9 @@ digraph hierarchy {
     elm_layout -> efl_container
     efl_container -> efl_gfx
     elm_layout -> efl_file
+    elm_layout -> efl_ui_view
+    elm_layout -> efl_ui_model_connect
+    elm_layout -> efl_ui_model_factory_connect
 }
 </graphviz>
 
@@ -72,6 +82,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -80,6 +92,9 @@ digraph hierarchy {
     * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
       * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
     * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
+    * [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]] //(interface)//
+    * [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+    * [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
 
 ===== Description =====
 
@@ -111,12 +126,46 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:layout:property:content_aliases|content_aliases]] //(get)// | %%Content aliases property%% |
-| [[:docs:efl:auto:class:elm:layout:property:edje_object_can_access|edje_object_can_access]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:layout:property:edje|edje]] //(get)// | %%Get the edje layout%% |
-| [[:docs:efl:auto:class:elm:layout:property:text_aliases|text_aliases]] //(get)// | %%Text aliases property%% |
-| [[:docs:efl:auto:class:elm:layout:property:text|text]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:layout:property:theme|theme]] //(set)// | %%Set the edje group from the elementary theme that will be used as layout.%% |
+| [[:docs:efl:auto:class:elm:layout:property:content_aliases|content_aliases]] //**(get)**// | %%Content aliases property%% |
+| [[:docs:efl:auto:class:elm:layout:property:edje_object_can_access|edje_object_can_access]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:edje|edje]] //**(get)**// | %%Get the edje layout%% |
+| [[:docs:efl:auto:class:elm:layout:property:text_aliases|text_aliases]] //**(get)**// | %%Text aliases property%% |
+| [[:docs:efl:auto:class:elm:layout:property:text|text]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:theme|theme]] //**(set)**// | %%Set the edje group from the elementary theme that will be used as layout.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:layout:method:connect|connect]] //[from [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:connect|connect]] //[from [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:content_count|content_count]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:content_iterate|content_iterate]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:content_remove|content_remove]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:content_unset|content_unset]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:disable|disable]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:focus_direction|focus_direction]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:part|part]] //[from [[:docs:efl:auto:interface:efl:part|Efl.Part]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:sub_object_add|sub_object_add]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:sub_object_del|sub_object_del]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:layout:property:content_part_name|content_part_name]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:content|content]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:file|file]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:mmap|mmap]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:layout:property:model|model]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]]]// | No description supplied. |
 
 ===== Events =====
 

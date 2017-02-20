@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -41,6 +43,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     edje_object -> efl_file
     edje_object -> efl_container
     efl_container -> efl_gfx
@@ -65,6 +69,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
     * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
@@ -131,70 +137,97 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:edje:object:property:animation|animation]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:base_scale|base_scale]] //(get)// | %%Get a given Edje object's base_scale factor.%% |
-| [[:docs:efl:auto:class:edje:object:property:color_class_description|color_class_description]] //(get)// | %%Gets the description of an object color class.%% |
-| [[:docs:efl:auto:class:edje:object:property:color_class|color_class]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:data|data]] //(get)// | %%Retrive an EDC data field's value from a given Edje object's group.%% |
-| [[:docs:efl:auto:class:edje:object:property:global_color_class|global_color_class]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:item_provider|item_provider]] //(set)// | %%Set the function that provides item objects for named items in an edje entry text%% |
-| [[:docs:efl:auto:class:edje:object:property:language|language]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:load_error|load_error]] //(get)// | %%Gets the (last) file loading error for a given Edje object%% |
-| [[:docs:efl:auto:class:edje:object:property:message_handler|message_handler]] //(set)// | %%Set an Edje message handler function for a given Edje object.%% |
-| [[:docs:efl:auto:class:edje:object:property:mirrored|mirrored]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_drag_dir|part_drag_dir]] //(get)// | %%Determine dragable directions.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_drag_page|part_drag_page]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_drag_size|part_drag_size]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_drag_step|part_drag_step]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_drag_value|part_drag_value]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_external_content|part_external_content]] //(get)// | %%Get an object contained in an part of type EXTERNAL%% |
-| [[:docs:efl:auto:class:edje:object:property:part_external_object|part_external_object]] //(get)// | %%Get the object created by this external part.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_external_param_type|part_external_param_type]] //(get)// | %%Facility to query the type of the given parameter of the given part.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_external_param|part_external_param]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_geometry|part_geometry]] //(get)// | %%Retrieve the geometry of a given Edje part, in a given Edje object's group definition, relative to the object's area.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_object|part_object]] //(get)// | %%Get a handle to the Evas object implementing a given Edje part, in an Edje object.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_state|part_state]] //(get)// | %%Returns the state of the Edje part.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_anchor_geometry|part_text_anchor_geometry]] //(get)// | %%Return a list of Evas_Textblock_Rectangle anchor rectangles.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_anchor_list|part_text_anchor_list]] //(get)// | %%Return a list of char anchor names.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_autocapital_type|part_text_autocapital_type]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_begin|part_text_cursor_begin]] //(set)// | %%Moves the cursor to the beginning of the text part @ref evas_textblock_cursor_paragraph_first%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_content|part_text_cursor_content]] //(get)// | %%Returns the content (char) at the cursor position. @ref evas_textblock_cursor_content_get%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_coord|part_text_cursor_coord]] //(set)// | %%Position the given cursor to a X,Y position.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_end|part_text_cursor_end]] //(set)// | %%Moves the cursor to the end of the text part. @ref evas_textblock_cursor_paragraph_last%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_geometry|part_text_cursor_geometry]] //(get)// | %%Returns the cursor geometry of the part relative to the edje object.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_is_format|part_text_cursor_is_format]] //(get)// | %%Returns whether the cursor points to a format. @ref evas_textblock_cursor_is_format%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_is_visible_format|part_text_cursor_is_visible_format]] //(get)// | %%Return %%''true''%% if the cursor points to a visible format For example \\t, \\n, item and etc. @ref evas_textblock_cursor_format_is_visible_get%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_line_begin|part_text_cursor_line_begin]] //(set)// | %%Move the cursor to the beginning of the line. @ref evas_textblock_cursor_line_char_first%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_line_end|part_text_cursor_line_end]] //(set)// | %%Move the cursor to the end of the line. @ref evas_textblock_cursor_line_char_last%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_pos|part_text_cursor_pos]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_escaped|part_text_escaped]] //(set)// | %%Sets the text for an object part, but converts HTML escapes to UTF8%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_imf_context|part_text_imf_context]] //(get)// | %%Get the input method context in entry.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_hint|part_text_input_hint]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_enabled|part_text_input_panel_enabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_imdata|part_text_input_panel_imdata]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_language|part_text_input_panel_language]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_layout_variation|part_text_input_panel_layout_variation]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_layout|part_text_input_panel_layout]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_return_key_disabled|part_text_input_panel_return_key_disabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_return_key_type|part_text_input_panel_return_key_type]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_show_on_demand|part_text_input_panel_show_on_demand]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_item_geometry|part_text_item_geometry]] //(get)// | %%Return item geometry.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_item_list|part_text_item_list]] //(get)// | %%Return a list of char item names.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_prediction_allow|part_text_prediction_allow]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text_select_allow|part_text_select_allow]] //(set)// | %%Enables selection if the entry is an EXPLICIT selection mode type.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_selection|part_text_selection]] //(get)// | %%Return the selection text of the object part.%% |
-| [[:docs:efl:auto:class:edje:object:property:part_text_unescaped|part_text_unescaped]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:part_text|part_text]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:perspective|perspective]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:play|play]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:scale|scale]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:size_class|size_class]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:size_max|size_max]] //(get)// | %%Get the maximum size specified -- as an EDC property -- for a given Edje object%% |
-| [[:docs:efl:auto:class:edje:object:property:size_min|size_min]] //(get)// | %%Get the minimum size specified -- as an EDC property -- for a given Edje object%% |
-| [[:docs:efl:auto:class:edje:object:property:text_change_cb|text_change_cb]] //(set)// | %%Set the object text callback.%% |
-| [[:docs:efl:auto:class:edje:object:property:text_class|text_class]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:transition_duration_factor|transition_duration_factor]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:edje:object:property:update_hints|update_hints]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:animation|animation]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:base_scale|base_scale]] //**(get)**// | %%Get a given Edje object's base_scale factor.%% |
+| [[:docs:efl:auto:class:edje:object:property:color_class_description|color_class_description]] //**(get)**// | %%Gets the description of an object color class.%% |
+| [[:docs:efl:auto:class:edje:object:property:color_class|color_class]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:data|data]] //**(get)**// | %%Retrive an EDC data field's value from a given Edje object's group.%% |
+| [[:docs:efl:auto:class:edje:object:property:global_color_class|global_color_class]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:item_provider|item_provider]] //**(set)**// | %%Set the function that provides item objects for named items in an edje entry text%% |
+| [[:docs:efl:auto:class:edje:object:property:language|language]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:load_error|load_error]] //**(get)**// | %%Gets the (last) file loading error for a given Edje object%% |
+| [[:docs:efl:auto:class:edje:object:property:message_handler|message_handler]] //**(set)**// | %%Set an Edje message handler function for a given Edje object.%% |
+| [[:docs:efl:auto:class:edje:object:property:mirrored|mirrored]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_drag_dir|part_drag_dir]] //**(get)**// | %%Determine dragable directions.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_drag_page|part_drag_page]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_drag_size|part_drag_size]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_drag_step|part_drag_step]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_drag_value|part_drag_value]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_external_content|part_external_content]] //**(get)**// | %%Get an object contained in an part of type EXTERNAL%% |
+| [[:docs:efl:auto:class:edje:object:property:part_external_object|part_external_object]] //**(get)**// | %%Get the object created by this external part.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_external_param_type|part_external_param_type]] //**(get)**// | %%Facility to query the type of the given parameter of the given part.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_external_param|part_external_param]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_geometry|part_geometry]] //**(get)**// | %%Retrieve the geometry of a given Edje part, in a given Edje object's group definition, relative to the object's area.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_object|part_object]] //**(get)**// | %%Get a handle to the Evas object implementing a given Edje part, in an Edje object.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_state|part_state]] //**(get)**// | %%Returns the state of the Edje part.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_anchor_geometry|part_text_anchor_geometry]] //**(get)**// | %%Return a list of Evas_Textblock_Rectangle anchor rectangles.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_anchor_list|part_text_anchor_list]] //**(get)**// | %%Return a list of char anchor names.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_autocapital_type|part_text_autocapital_type]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_begin|part_text_cursor_begin]] //**(set)**// | %%Moves the cursor to the beginning of the text part @ref evas_textblock_cursor_paragraph_first%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_content|part_text_cursor_content]] //**(get)**// | %%Returns the content (char) at the cursor position. @ref evas_textblock_cursor_content_get%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_coord|part_text_cursor_coord]] //**(set)**// | %%Position the given cursor to a X,Y position.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_end|part_text_cursor_end]] //**(set)**// | %%Moves the cursor to the end of the text part. @ref evas_textblock_cursor_paragraph_last%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_geometry|part_text_cursor_geometry]] //**(get)**// | %%Returns the cursor geometry of the part relative to the edje object.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_is_format|part_text_cursor_is_format]] //**(get)**// | %%Returns whether the cursor points to a format. @ref evas_textblock_cursor_is_format%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_is_visible_format|part_text_cursor_is_visible_format]] //**(get)**// | %%Return %%''true''%% if the cursor points to a visible format For example \t, \n, item and etc. @ref evas_textblock_cursor_format_is_visible_get%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_line_begin|part_text_cursor_line_begin]] //**(set)**// | %%Move the cursor to the beginning of the line. @ref evas_textblock_cursor_line_char_first%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_line_end|part_text_cursor_line_end]] //**(set)**// | %%Move the cursor to the end of the line. @ref evas_textblock_cursor_line_char_last%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_cursor_pos|part_text_cursor_pos]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_escaped|part_text_escaped]] //**(set)**// | %%Sets the text for an object part, but converts HTML escapes to UTF8%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_imf_context|part_text_imf_context]] //**(get)**// | %%Get the input method context in entry.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_hint|part_text_input_hint]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_enabled|part_text_input_panel_enabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_imdata|part_text_input_panel_imdata]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_language|part_text_input_panel_language]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_layout_variation|part_text_input_panel_layout_variation]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_layout|part_text_input_panel_layout]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_return_key_disabled|part_text_input_panel_return_key_disabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_return_key_type|part_text_input_panel_return_key_type]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_input_panel_show_on_demand|part_text_input_panel_show_on_demand]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_item_geometry|part_text_item_geometry]] //**(get)**// | %%Return item geometry.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_item_list|part_text_item_list]] //**(get)**// | %%Return a list of char item names.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_prediction_allow|part_text_prediction_allow]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text_select_allow|part_text_select_allow]] //**(set)**// | %%Enables selection if the entry is an EXPLICIT selection mode type.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_selection|part_text_selection]] //**(get)**// | %%Return the selection text of the object part.%% |
+| [[:docs:efl:auto:class:edje:object:property:part_text_unescaped|part_text_unescaped]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:part_text|part_text]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:perspective|perspective]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:play|play]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:scale|scale]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:seat_name|seat_name]] //**(get)**// | %%Get the name given to a set by Edje.%% |
+| [[:docs:efl:auto:class:edje:object:property:seat|seat]] //**(get)**// | %%Return the seat device given its Edje's name.%% |
+| [[:docs:efl:auto:class:edje:object:property:size_class|size_class]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:size_max|size_max]] //**(get)**// | %%Get the maximum size specified -- as an EDC property -- for a given Edje object%% |
+| [[:docs:efl:auto:class:edje:object:property:size_min|size_min]] //**(get)**// | %%Get the minimum size specified -- as an EDC property -- for a given Edje object%% |
+| [[:docs:efl:auto:class:edje:object:property:text_change_cb|text_change_cb]] //**(set)**// | %%Set the object text callback.%% |
+| [[:docs:efl:auto:class:edje:object:property:text_class|text_class]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:transition_duration_factor|transition_duration_factor]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:update_hints|update_hints]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:edje:object:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:content_remove|content_remove]] //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:part|part]] //[from [[:docs:efl:auto:interface:efl:part|Efl.Part]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:method:update|update]] //[from [[:docs:efl:auto:interface:efl:observer|Efl.Observer]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:edje:object:property:content_part_name|content_part_name]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:file|file]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:mmap|mmap]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:no_render|no_render]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:paragraph_direction|paragraph_direction]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:edje:object:property:visible|visible]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

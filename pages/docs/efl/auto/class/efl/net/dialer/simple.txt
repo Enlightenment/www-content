@@ -77,9 +77,9 @@ digraph hierarchy {
 
 %%The idea is that unlike traditional %%[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%% that will attempt to write directly to socket and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual socket when it %%[[:docs:efl:auto:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%).%%
 
-%%Reading is also much simpler since received data is kept in an %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%%, then discarded with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
+%%Reading is also much simpler since received data is kept in an %%[[:docs:efl:auto:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, then discarded with %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
 
-%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing, if complete then either %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:slice_get|Efl.Io.Buffered_Stream.slice_get]]%% and then %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
+%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing, if complete then either %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:docs:efl:auto:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
 
 %%The actual dialer is created using the class given as the constructor property %%[[:docs:efl:auto:class:efl:net:dialer:simple:property:inner_class|Efl.Net.Dialer.Simple.inner_class]]%% and can be retrieved with %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%%, which should be used with care, like extra configuration before %%[[:docs:efl:auto:interface:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%% is called.%%
 
@@ -92,7 +92,28 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:net:dialer:simple:property:inner_class|inner_class]] //(get, set)// | %%The class used to create %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%% if none was provided.%% |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:inner_class|inner_class]] //**(get, set)**// | %%The class used to create %%[[:docs:efl:auto:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%% if none was provided.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:simple:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:method:dial|dial]] //[from [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:address_dial|address_dial]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:connected|connected]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:inner_io|inner_io]] //**(set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:line_delimiter|line_delimiter]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:max_queue_size_input|max_queue_size_input]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:max_queue_size_output|max_queue_size_output]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:proxy|proxy]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:read_chunk_size|read_chunk_size]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:timeout_dial|timeout_dial]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:net:dialer|Efl.Net.Dialer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:net:dialer:simple:property:timeout_inactivity|timeout_inactivity]] //**(get, set)**// //[from [[:docs:efl:auto:class:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// | No description supplied. |
 
 ===== Events =====
 

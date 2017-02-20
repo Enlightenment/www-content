@@ -24,6 +24,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -32,6 +34,9 @@ digraph hierarchy {
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_ui_clickable [fillcolor = "gray15", label = "Efl.Ui.Clickable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -49,6 +54,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -57,6 +64,9 @@ digraph hierarchy {
     elm_layout -> efl_container
     efl_container -> efl_gfx
     elm_layout -> efl_file
+    elm_layout -> efl_ui_view
+    elm_layout -> efl_ui_model_connect
+    elm_layout -> efl_ui_model_factory_connect
     elm_colorselector -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
     elm_colorselector -> efl_ui_clickable
@@ -81,6 +91,8 @@ digraph hierarchy {
             * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
               * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
               * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+            * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+              * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -89,6 +101,9 @@ digraph hierarchy {
       * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
         * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
       * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
     * [[:docs:efl:auto:interface:efl:ui:clickable|Efl.Ui.Clickable]] //(interface)//
@@ -108,11 +123,31 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:colorselector:property:color|color]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:colorselector:property:mode|mode]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:colorselector:property:palette_items|palette_items]] //(get)// | %%Get list of palette items.%% |
-| [[:docs:efl:auto:class:elm:colorselector:property:palette_name|palette_name]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:colorselector:property:palette_selected_item|palette_selected_item]] //(get)// | %%Get the selected item in colorselector palette.%% |
+| [[:docs:efl:auto:class:elm:colorselector:property:color|color]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:property:mode|mode]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:property:palette_items|palette_items]] //**(get)**// | %%Get list of palette items.%% |
+| [[:docs:efl:auto:class:elm:colorselector:property:palette_name|palette_name]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:property:palette_selected_item|palette_selected_item]] //**(get)**// | %%Get the selected item in colorselector palette.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:colorselector:method:access|access]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:focus_highlight_geometry_get|focus_highlight_geometry_get]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:sizing_eval|sizing_eval]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:colorselector:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:colorselector:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
 
 ===== Events =====
 

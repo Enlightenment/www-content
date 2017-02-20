@@ -1,0 +1,54 @@
+<title>Efl.Canvas.Scene3d.buffer_map</title>
+//Overridden from [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_map|Efl.Gfx.Buffer.buffer_map]].//===== Signature =====
+
+<code>
+buffer_map @pure_virtual {
+    params {
+        @out slice: Eina.Rw_Slice;
+        @in mode: Efl.Gfx.Buffer.Access_Mode;
+        @in x: int @optional;
+        @in y: int @optional;
+        @in w: int @optional;
+        @in h: int @optional;
+        @in cspace: Efl.Gfx.Colorspace @optional;
+        @in plane: int @optional;
+        @out stride: int @optional;
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_gfx_buffer_map(Eo *obj, Eina_Rw_Slice *slice, Efl_Gfx_Buffer_Access_Mode mode, int x, int y, int w, int h, Efl_Gfx_Colorspace cspace, int plane, int *stride);
+</code>
+
+===== Parameters =====
+
+  * **slice** //(out)// - %%Pointer to the top-left pixel data.%%
+  * **mode** //(in)// - %%Specifies whether to map for read-only, write-only or read-write access (OR combination of flags).%%
+  * **x** //(in)// - %%X position of the top-left pixel to map, defaults to 0.%%
+  * **y** //(in)// - %%Y position of the top-left pixel to map, defaults to 0.%%
+  * **w** //(in)// - %%If 0, defaults to the buffer width.%%
+  * **h** //(in)// - %%If 0, defaults to the buffer height.%%
+  * **cspace** //(in)// - %%Requested colorspace. If different from the internal cspace, map should try to convert the data into a new buffer. argb8888 by default.%%
+  * **plane** //(in)// - %%Plane ID. 0 by default. Useful for planar formats only.%%
+  * **stride** //(out)// - %%Returns the length in bytes of a mapped line%%
+
+===== Description =====
+
+%%Map a region of this buffer for read or write access by the CPU.%%
+
+%%Fetches data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%
+
+%%Note that if the buffer has %%[[:docs:efl:auto:interface:efl:gfx:buffer:property:buffer_borders|Efl.Gfx.Buffer.buffer_borders]]%%, then %%''x''%% and %%''y''%% may be negative.%%
+{{page>:docs:efl:user:class:efl:canvas:scene3d:method:buffer_map:description&nodate&nolink&nouser}}
+
+===== Implemented by =====
+
+  * [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_map|Efl.Gfx.Buffer.buffer_map]]
+  * [[:docs:efl:auto:class:efl:canvas:image:method:buffer_map|Efl.Canvas.Image.buffer_map]]
+  * **Efl.Canvas.Scene3d.buffer_map**
+  * [[:docs:efl:auto:class:efl:canvas:proxy:method:buffer_map|Efl.Canvas.Proxy.buffer_map]]
+

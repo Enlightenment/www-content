@@ -22,6 +22,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_player [fillcolor = "gray15", label = "Efl.Player", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_image [fillcolor = "gray15", label = "Efl.Image", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -38,6 +40,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     efl_canvas_video -> efl_file
     efl_canvas_video -> efl_player
     efl_canvas_video -> efl_image
@@ -61,6 +65,8 @@ digraph hierarchy {
         * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+        * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
     * [[:docs:efl:auto:interface:efl:player|Efl.Player]] //(interface)//
     * [[:docs:efl:auto:interface:efl:image|Efl.Image]] //(interface)//
@@ -75,8 +81,35 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:canvas:video:property:engine|engine]] //(set)// | %%Initializes an emotion object with the specified module.%% |
-| [[:docs:efl:auto:class:efl:canvas:video:property:option|option]] //(set)// | %%Set the specified option for the current module.%% |
+| [[:docs:efl:auto:class:efl:canvas:video:property:engine|engine]] //**(set)**// | %%Initializes an emotion object with the specified module.%% |
+| [[:docs:efl:auto:class:efl:canvas:video:property:option|option]] //**(set)**// | %%Set the specified option for the current module.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:video:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:video:property:clip|clip]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:color|color]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:file|file]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:length|length]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:load_size|load_size]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:image:load|Efl.Image.Load]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:mute|mute]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:play|play]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:position|position]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:progress|progress]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:ratio|ratio]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:seekable|seekable]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:smooth_scale|smooth_scale]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:visible|visible]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:video:property:volume|volume]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:player|Efl.Player]]]// | No description supplied. |
 
 ===== Events =====
 

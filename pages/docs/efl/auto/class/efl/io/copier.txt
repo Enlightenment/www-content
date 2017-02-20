@@ -48,7 +48,7 @@ digraph hierarchy {
 
 %%- The "done" event is emitted if %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:docs:efl:auto:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data was read from %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
 
-%%- The "error" event is reported if the %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:docs:efl:auto:class:efl:io:copier:property:inactivity_timeout|Efl.Io.Copier.inactivity_timeout]]%% is set.%%
+%%- The "error" event is reported if the %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:docs:efl:auto:class:efl:io:copier:property:timeout_inactivity|Efl.Io.Copier.timeout_inactivity]]%% is set.%%
 
 %%A copier is handful to simplify common I/O use cases, such as:%%
 
@@ -75,15 +75,30 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|buffer_limit]] //(get, set)// | %%Copier buffer limit property, in bytes.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:destination|destination]] //(get, set)// | %%Copier destination object.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:done|done]] //(get, set)// | %%Reports if copier is done.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:inactivity_timeout|inactivity_timeout]] //(get, set)// | %%Terminate the copier with ETIMEDOUT if it becomes inactive for some time.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|line_delimiter]] //(get, set)// | %%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:pending_size|pending_size]] //(get)// | %%Returns the size of the pending buffer.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:progress|progress]] //(get)// | %%Progress for read and write.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|read_chunk_size]] //(get, set)// | %%Copier read chunk size property, in bytes.%% |
-| [[:docs:efl:auto:class:efl:io:copier:property:source|source]] //(get, set)// | %%Copier source object.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|buffer_limit]] //**(get, set)**// | %%Copier buffer limit property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:destination|destination]] //**(get, set)**// | %%Copier destination object.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:done|done]] //**(get, set)**// | %%Reports if copier is done.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|line_delimiter]] //**(get, set)**// | %%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:pending_size|pending_size]] //**(get)**// | %%Returns the size of the pending buffer.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:progress|progress]] //**(get)**// | %%Progress for read and write.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|read_chunk_size]] //**(get, set)**// | %%Copier read chunk size property, in bytes.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:source|source]] //**(get, set)**// | %%Copier source object.%% |
+| [[:docs:efl:auto:class:efl:io:copier:property:timeout_inactivity|timeout_inactivity]] //**(get, set)**// | %%Terminate the copier with ETIMEDOUT if it becomes inactive for some time.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:copier:method:close|close]] //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:copier:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:copier:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:copier:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:io:copier:property:close_on_destructor|close_on_destructor]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:copier:property:close_on_exec|close_on_exec]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:io:copier:property:closed|closed]] //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
 
 ===== Events =====
 

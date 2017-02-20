@@ -2,7 +2,7 @@
 ===== Signature =====
 
 <code>
-Evas.Canvas.render_updates {
+render_updates {
     return: free(own(list<ptr(Eina.Rectangle)>), evas_render_updates_free) @warn_unused;
 }
 </code>
@@ -19,12 +19,14 @@ Eina_List *evas_canvas_render_updates(Eo *obj);
 
 %%This function forces an immediate renderization update of the given canvas %%''e''%%.%%
 
-<note>
 %%This is a very low level function, which most of Evas' users wouldn't care about. One would use it, for example, to grab an Evas' canvas update regions and paint them back, using the canvas' pixmap, on a displaying system working below Evas.%%
 </note>
 
-<note>
 %%Evas is a stateful canvas. If no operations changing its state took place since the last rendering action, you won't see no changes and this call will be a no-op.%%
 </note>
 {{page>:docs:efl:user:class:evas:canvas:method:render_updates:description&nodate&nolink&nouser}}
+
+===== Implemented by =====
+
+  * **Evas.Canvas.render_updates**
 

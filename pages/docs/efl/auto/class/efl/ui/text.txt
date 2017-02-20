@@ -24,6 +24,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -32,6 +34,9 @@ digraph hierarchy {
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_scrollable [fillcolor = "gray15", label = "Elm.Interface_Scrollable", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_ui_scrollable [fillcolor = "gray15", label = "Efl.Ui.Scrollable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_canvas_group [fillcolor = "gray15", label = "Efl.Canvas.Group", color = "gray15", fontcolor = "white", style = "filled"]
@@ -44,6 +49,8 @@ digraph hierarchy {
     efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_ui_clickable [fillcolor = "gray15", label = "Efl.Ui.Clickable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_text [fillcolor = "gray15", label = "Elm.Interface.Atspi.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -66,6 +73,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -74,6 +83,9 @@ digraph hierarchy {
     elm_layout -> efl_container
     efl_container -> efl_gfx
     elm_layout -> efl_file
+    elm_layout -> efl_ui_view
+    elm_layout -> efl_ui_model_connect
+    elm_layout -> efl_ui_model_factory_connect
     efl_ui_text -> elm_interface_scrollable
     elm_interface_scrollable -> efl_ui_scrollable
     elm_interface_scrollable -> efl_canvas_group
@@ -87,6 +99,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     efl_ui_text -> efl_ui_clickable
     efl_ui_text -> elm_interface_atspi_text
     efl_ui_text -> elm_interface_atspi_text_editable
@@ -115,6 +129,8 @@ digraph hierarchy {
             * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
               * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
               * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+            * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+              * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -123,6 +139,9 @@ digraph hierarchy {
       * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
         * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
       * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:ui:scrollable|Efl.Ui.Scrollable]] //(interface)//
       * [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]] //(class)//
@@ -135,6 +154,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:ui:clickable|Efl.Ui.Clickable]] //(interface)//
     * [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]] //(interface)//
@@ -157,7 +178,6 @@ digraph hierarchy {
 | [[:docs:efl:auto:class:efl:ui:text:method:context_menu_item_add|context_menu_item_add]] | %%This adds an item to the entry's contextual menu.%% |
 | [[:docs:efl:auto:class:efl:ui:text:method:cursor_new|cursor_new]] | %%Creates and returns a new cursor for the text.%% |
 | [[:docs:efl:auto:class:efl:ui:text:method:cursor_selection_end|cursor_selection_end]] | %%This ends a selection within the entry as though the user had just released the mouse button while making a selection.%% |
-| [[:docs:efl:auto:class:efl:ui:text:method:imf_context_reset|imf_context_reset]] | %%Reset the input method context of the entry if needed.%% |
 | [[:docs:efl:auto:class:efl:ui:text:method:input_panel_hide|input_panel_hide]] | %%Hide the input panel (virtual keyboard).%% |
 | [[:docs:efl:auto:class:efl:ui:text:method:input_panel_imdata_get|input_panel_imdata_get]] | %%Get the specific data of the current input panel.%% |
 | [[:docs:efl:auto:class:efl:ui:text:method:input_panel_imdata_set|input_panel_imdata_set]] | %%Set the input panel-specific data to deliver to the input panel.%% |
@@ -172,23 +192,81 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:ui:text:property:autocapital_type|autocapital_type]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:cnp_mode|cnp_mode]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:context_menu_disabled|context_menu_disabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:imf_context|imf_context]] //(get)// | %%Returns the input method context of the entry.%% |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_hint|input_hint]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_enabled|input_panel_enabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_language|input_panel_language]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_layout_variation|input_panel_layout_variation]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_layout|input_panel_layout]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_autoenabled|input_panel_return_key_autoenabled]] //(set)// | %%Set whether the return key on the input panel is disabled automatically when entry has no text.%% |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_disabled|input_panel_return_key_disabled]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_type|input_panel_return_key_type]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_show_on_demand|input_panel_show_on_demand]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:password|password]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:prediction_allow|prediction_allow]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:scrollable|scrollable]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:ui:text:property:selection_handler_disabled|selection_handler_disabled]] //(get, set)// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:autocapital_type|autocapital_type]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:cnp_mode|cnp_mode]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:context_menu_disabled|context_menu_disabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_hint|input_hint]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_enabled|input_panel_enabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_language|input_panel_language]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_layout_variation|input_panel_layout_variation]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_layout|input_panel_layout]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_autoenabled|input_panel_return_key_autoenabled]] //**(set)**// | %%Set whether the return key on the input panel is disabled automatically when entry has no text.%% |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_disabled|input_panel_return_key_disabled]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_return_key_type|input_panel_return_key_type]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:input_panel_show_on_demand|input_panel_show_on_demand]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:password|password]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:prediction_allow|prediction_allow]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:scrollable|scrollable]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:selection_handler_disabled|selection_handler_disabled]] //**(get, set)**// | No description supplied. |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:ui:text:method:activate|activate]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:copy|copy]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:cut|cut]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:delete|delete]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:disable|disable]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:insert|insert]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:on_focus_region|on_focus_region]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:paste|paste]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:selection_add|selection_add]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:selection_remove|selection_remove]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:signal_callback_add|signal_callback_add]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:signal_callback_del|signal_callback_del]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:signal_emit|signal_emit]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:sizing_eval|sizing_eval]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:sub_object_del|sub_object_del]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:method:theme_enable|theme_enable]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:ui:text:property:attributes|attributes]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:attribute|attribute]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:bounce_allow|bounce_allow]] //**(set)**// //[from [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:bounded_ranges|bounded_ranges]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:caret_offset|caret_offset]] //**(get, set)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:character_count|character_count]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:character_extents|character_extents]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:character|character]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:content_aliases|content_aliases]] //**(get)**// //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:content|content]] //**(set)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text:editable|Elm.Interface.Atspi.Text.Editable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:default_attributes|default_attributes]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:editable|editable]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:ui:text:interactive|Efl.Ui.Text.Interactive]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:file|file]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:name|name]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:offset_at_point|offset_at_point]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:policy|policy]] //**(set)**// //[from [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:range_extents|range_extents]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:selections_count|selections_count]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:selection|selection]] //**(get, set)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:state_set|state_set]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:string|string]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:text|text]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:text|Elm.Interface.Atspi.Text]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:text|text]] //**(get, set)**// //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:ui:text:property:visible|visible]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

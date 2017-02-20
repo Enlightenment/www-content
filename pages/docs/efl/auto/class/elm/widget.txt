@@ -22,6 +22,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -38,6 +40,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -61,6 +65,8 @@ digraph hierarchy {
         * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+        * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
       * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -80,10 +86,6 @@ digraph hierarchy {
 | [[:docs:efl:auto:class:elm:widget:method:cursor_add|cursor_add]] | %%Add cursor%% |
 | [[:docs:efl:auto:class:elm:widget:method:cursor_del|cursor_del]] | %%Delete cursor%% |
 | [[:docs:efl:auto:class:elm:widget:method:disable|disable]] | %%'Virtual' function on the widget being disabled.%% |
-| [[:docs:efl:auto:class:elm:widget:method:event_callback_add|event_callback_add]] | %%Add event callback%% |
-| [[:docs:efl:auto:class:elm:widget:method:event_callback_del|event_callback_del]] | %%Delete event callback handler%% |
-| [[:docs:efl:auto:class:elm:widget:method:event_propagate|event_propagate]] | %%Propagate event%% |
-| [[:docs:efl:auto:class:elm:widget:method:event|event]] | %%'Virtual' function handling input events on the widget.%% |
 | [[:docs:efl:auto:class:elm:widget:method:focus_custom_chain_append|focus_custom_chain_append]] | %%Append object to custom focus chain.%% |
 | [[:docs:efl:auto:class:elm:widget:method:focus_custom_chain_prepend|focus_custom_chain_prepend]] | %%Prepend object to custom focus chain.%% |
 | [[:docs:efl:auto:class:elm:widget:method:focus_custom_chain_unset|focus_custom_chain_unset]] | %%Unset a custom focus chain on a given Elementary widget.%% |
@@ -132,59 +134,93 @@ digraph hierarchy {
 | [[:docs:efl:auto:class:elm:widget:method:tooltip_del|tooltip_del]] | %%Delet widget tooltip%% |
 | [[:docs:efl:auto:class:elm:widget:method:translatable_part_text_get|translatable_part_text_get]] | %%Get translatable part text%% |
 | [[:docs:efl:auto:class:elm:widget:method:translate|translate]] | %%'Virtual' function handling language changes on Elementary.%% |
+| [[:docs:efl:auto:class:elm:widget:method:widget_event_callback_add|widget_event_callback_add]] | %%Add event callback%% |
+| [[:docs:efl:auto:class:elm:widget:method:widget_event_callback_del|widget_event_callback_del]] | %%Delete event callback handler%% |
+| [[:docs:efl:auto:class:elm:widget:method:widget_event_propagate|widget_event_propagate]] | %%Propagate event%% |
+| [[:docs:efl:auto:class:elm:widget:method:widget_event|widget_event]] | %%'Virtual' function handling input events on the widget.%% |
 
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:widget:property:access_highlight_in_theme|access_highlight_in_theme]] //(get, set)// | %%Accessibility highlight in theme%% |
-| [[:docs:efl:auto:class:elm:widget:property:access_info|access_info]] //(get, set)// | %%Accessibility information%% |
-| [[:docs:efl:auto:class:elm:widget:property:can_focus_child_list|can_focus_child_list]] //(get)// | %%Can focus children list%% |
-| [[:docs:efl:auto:class:elm:widget:property:can_focus|can_focus]] //(get, set)// | %%The ability for an Elementary object to be focused.%% |
-| [[:docs:efl:auto:class:elm:widget:property:child_can_focus|child_can_focus]] //(get)// | %%Child can focus property%% |
-| [[:docs:efl:auto:class:elm:widget:property:disabled|disabled]] //(get, set)// | %%Enabled / disabled property%% |
-| [[:docs:efl:auto:class:elm:widget:property:display_mode|display_mode]] //(set)// | %%Display mode property%% |
-| [[:docs:efl:auto:class:elm:widget:property:domain_part_text_translatable|domain_part_text_translatable]] //(set)// | %%Translate domain text part property%% |
-| [[:docs:efl:auto:class:elm:widget:property:domain_translatable_part_text|domain_translatable_part_text]] //(set)// | %%Domain translatable text part property%% |
-| [[:docs:efl:auto:class:elm:widget:property:drag_child_locked_x|drag_child_locked_x]] //(get)// | %%Drag child locked X axis%% |
-| [[:docs:efl:auto:class:elm:widget:property:drag_child_locked_y|drag_child_locked_y]] //(get)// | %%Drag child locked Y axis property%% |
-| [[:docs:efl:auto:class:elm:widget:property:drag_lock_x|drag_lock_x]] //(get, set)// | %%Drag lock on X axis%% |
-| [[:docs:efl:auto:class:elm:widget:property:drag_lock_y|drag_lock_y]] //(get, set)// | %%Lock the Y axis from being dragged%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_custom_chain|focus_custom_chain]] //(get, set)// | %%A custom chain of objects to pass focus.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_highlight_style|focus_highlight_style]] //(get, set)// | %%Control the widget focus highlight style.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]] //(get, set)// | %%Control the widget's focus_move_policy mode setting.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_move_policy|focus_move_policy]] //(get, set)// | %%The widget's focus move policy.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_order|focus_order]] //(get)// | %%Focus order property%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_region_show_mode|focus_region_show_mode]] //(get, set)// | %%Control the focus_region_show mode.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus_region|focus_region]] //(get)// | %%Focus region property%% |
-| [[:docs:efl:auto:class:elm:widget:property:focused_item|focused_item]] //(get)// | %%Get the focused widget item.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focused_object|focused_object]] //(get)// | %%Current focused object in object tree.%% |
-| [[:docs:efl:auto:class:elm:widget:property:focus|focus]] //(get, set)// | %%Focus property%% |
-| [[:docs:efl:auto:class:elm:widget:property:highlight_ignore|highlight_ignore]] //(get, set)// | %%Highlight ignore%% |
-| [[:docs:efl:auto:class:elm:widget:property:highlight_in_theme|highlight_in_theme]] //(get, set)// | %%Highlight in theme property%% |
-| [[:docs:efl:auto:class:elm:widget:property:highlight|highlight]] //(get)// | %%Highlight property%% |
-| [[:docs:efl:auto:class:elm:widget:property:hover_object|hover_object]] //(set)// | %%Hover object property%% |
-| [[:docs:efl:auto:class:elm:widget:property:item_loop_enabled|item_loop_enabled]] //(get, set)// | %%Control item loop feature.%% |
-| [[:docs:efl:auto:class:elm:widget:property:mirrored_automatic|mirrored_automatic]] //(get, set)// | %%Control the widget's mirrored mode setting.%% |
-| [[:docs:efl:auto:class:elm:widget:property:mirrored|mirrored]] //(get, set)// | %%Control the widget's mirrored mode.%% |
-| [[:docs:efl:auto:class:elm:widget:property:on_show_region_hook|on_show_region_hook]] //(set)// | %%Region hook on show property%% |
-| [[:docs:efl:auto:class:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]] //(get, set)// | %%Orientation mode disabled or enabled%% |
-| [[:docs:efl:auto:class:elm:widget:property:orientation|orientation]] //(set)// | %%Widget orientation%% |
-| [[:docs:efl:auto:class:elm:widget:property:parent2|parent2]] //(get, set)// | %%Second parent property%% |
-| [[:docs:efl:auto:class:elm:widget:property:parent_highlight|parent_highlight]] //(set)// | %%Parent highlight property%% |
-| [[:docs:efl:auto:class:elm:widget:property:parent_widget|parent_widget]] //(get)// | %%Parent widget property%% |
-| [[:docs:efl:auto:class:elm:widget:property:parents_bounce|parents_bounce]] //(get)// | %%Parents bounce property%% |
-| [[:docs:efl:auto:class:elm:widget:property:part_text|part_text]] //(get, set)// | %%Part text property%% |
-| [[:docs:efl:auto:class:elm:widget:property:resize_object|resize_object]] //(set)// | %%Resize object property%% |
-| [[:docs:efl:auto:class:elm:widget:property:scale|scale]] //(get, set)// | %%Scale factor%% |
-| [[:docs:efl:auto:class:elm:widget:property:scroll_freeze|scroll_freeze]] //(get)// | %%Scroll freeze property%% |
-| [[:docs:efl:auto:class:elm:widget:property:scroll_hold|scroll_hold]] //(get)// | %%Scroll hold property%% |
-| [[:docs:efl:auto:class:elm:widget:property:scrollable_children|scrollable_children]] //(get)// | %%Function to operate on a given widget's scrollable children when necessary.%% |
-| [[:docs:efl:auto:class:elm:widget:property:style|style]] //(get, set)// | %%Theme style%% |
-| [[:docs:efl:auto:class:elm:widget:property:theme_object|theme_object]] //(set)// | %%Theme object property%% |
-| [[:docs:efl:auto:class:elm:widget:property:theme|theme]] //(get, set)// | %%Widget theme%% |
-| [[:docs:efl:auto:class:elm:widget:property:top|top]] //(get)// | %%Top widget property%% |
-| [[:docs:efl:auto:class:elm:widget:property:tree_unfocusable|tree_unfocusable]] //(get, set)// | %%Make the elementary object and its children to be unfocusable (or focusable). If the tree is set as unfocusable, newest focused object which is not in this tree will get focus. This API can be helpful for an object to be deleted. When an object will be deleted soon, it and its children may not want to get focus (by focus reverting or by other focus controls). Then, just use this API before deleting.%% |
-| [[:docs:efl:auto:class:elm:widget:property:widget_parent|widget_parent]] //(get, set)// | %%The internal widget parent%% |
+| [[:docs:efl:auto:class:elm:widget:property:access_highlight_in_theme|access_highlight_in_theme]] //**(get, set)**// | %%Accessibility highlight in theme%% |
+| [[:docs:efl:auto:class:elm:widget:property:access_info|access_info]] //**(get, set)**// | %%Accessibility information%% |
+| [[:docs:efl:auto:class:elm:widget:property:can_focus_child_list|can_focus_child_list]] //**(get)**// | %%Can focus children list%% |
+| [[:docs:efl:auto:class:elm:widget:property:can_focus|can_focus]] //**(get, set)**// | %%The ability for an Elementary object to be focused.%% |
+| [[:docs:efl:auto:class:elm:widget:property:child_can_focus|child_can_focus]] //**(get)**// | %%Child can focus property%% |
+| [[:docs:efl:auto:class:elm:widget:property:disabled|disabled]] //**(get, set)**// | %%Enabled / disabled property%% |
+| [[:docs:efl:auto:class:elm:widget:property:display_mode|display_mode]] //**(set)**// | %%Display mode property%% |
+| [[:docs:efl:auto:class:elm:widget:property:domain_part_text_translatable|domain_part_text_translatable]] //**(set)**// | %%Translate domain text part property%% |
+| [[:docs:efl:auto:class:elm:widget:property:domain_translatable_part_text|domain_translatable_part_text]] //**(set)**// | %%Domain translatable text part property%% |
+| [[:docs:efl:auto:class:elm:widget:property:drag_child_locked_x|drag_child_locked_x]] //**(get)**// | %%Drag child locked X axis%% |
+| [[:docs:efl:auto:class:elm:widget:property:drag_child_locked_y|drag_child_locked_y]] //**(get)**// | %%Drag child locked Y axis property%% |
+| [[:docs:efl:auto:class:elm:widget:property:drag_lock_x|drag_lock_x]] //**(get, set)**// | %%Drag lock on X axis%% |
+| [[:docs:efl:auto:class:elm:widget:property:drag_lock_y|drag_lock_y]] //**(get, set)**// | %%Lock the Y axis from being dragged%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_custom_chain|focus_custom_chain]] //**(get, set)**// | %%A custom chain of objects to pass focus.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_highlight_style|focus_highlight_style]] //**(get, set)**// | %%Control the widget focus highlight style.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]] //**(get, set)**// | %%Control the widget's focus_move_policy mode setting.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_move_policy|focus_move_policy]] //**(get, set)**// | %%The widget's focus move policy.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_order|focus_order]] //**(get)**// | %%Focus order property%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_region_show_mode|focus_region_show_mode]] //**(get, set)**// | %%Control the focus_region_show mode.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus_region|focus_region]] //**(get)**// | %%Focus region property%% |
+| [[:docs:efl:auto:class:elm:widget:property:focused_item|focused_item]] //**(get)**// | %%Get the focused widget item.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focused_object|focused_object]] //**(get)**// | %%Current focused object in object tree.%% |
+| [[:docs:efl:auto:class:elm:widget:property:focus|focus]] //**(get, set)**// | %%Focus property%% |
+| [[:docs:efl:auto:class:elm:widget:property:highlight_ignore|highlight_ignore]] //**(get, set)**// | %%Highlight ignore%% |
+| [[:docs:efl:auto:class:elm:widget:property:highlight_in_theme|highlight_in_theme]] //**(get, set)**// | %%Highlight in theme property%% |
+| [[:docs:efl:auto:class:elm:widget:property:highlight|highlight]] //**(get)**// | %%Highlight property%% |
+| [[:docs:efl:auto:class:elm:widget:property:hover_object|hover_object]] //**(set)**// | %%Hover object property%% |
+| [[:docs:efl:auto:class:elm:widget:property:item_loop_enabled|item_loop_enabled]] //**(get, set)**// | %%Control item loop feature.%% |
+| [[:docs:efl:auto:class:elm:widget:property:mirrored_automatic|mirrored_automatic]] //**(get, set)**// | %%Control the widget's mirrored mode setting.%% |
+| [[:docs:efl:auto:class:elm:widget:property:mirrored|mirrored]] //**(get, set)**// | %%Control the widget's mirrored mode.%% |
+| [[:docs:efl:auto:class:elm:widget:property:on_show_region_hook|on_show_region_hook]] //**(set)**// | %%Region hook on show property%% |
+| [[:docs:efl:auto:class:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]] //**(get, set)**// | %%Orientation mode disabled or enabled%% |
+| [[:docs:efl:auto:class:elm:widget:property:orientation|orientation]] //**(set)**// | %%Widget orientation%% |
+| [[:docs:efl:auto:class:elm:widget:property:parent2|parent2]] //**(get, set)**// | %%Second parent property%% |
+| [[:docs:efl:auto:class:elm:widget:property:parent_highlight|parent_highlight]] //**(set)**// | %%Parent highlight property%% |
+| [[:docs:efl:auto:class:elm:widget:property:parent_widget|parent_widget]] //**(get)**// | %%Parent widget property%% |
+| [[:docs:efl:auto:class:elm:widget:property:parents_bounce|parents_bounce]] //**(get)**// | %%Parents bounce property%% |
+| [[:docs:efl:auto:class:elm:widget:property:part_text|part_text]] //**(get, set)**// | %%Part text property%% |
+| [[:docs:efl:auto:class:elm:widget:property:resize_object|resize_object]] //**(set)**// | %%Resize object property%% |
+| [[:docs:efl:auto:class:elm:widget:property:scale|scale]] //**(get, set)**// | %%Scale factor%% |
+| [[:docs:efl:auto:class:elm:widget:property:scroll_freeze|scroll_freeze]] //**(get)**// | %%Scroll freeze property%% |
+| [[:docs:efl:auto:class:elm:widget:property:scroll_hold|scroll_hold]] //**(get)**// | %%Scroll hold property%% |
+| [[:docs:efl:auto:class:elm:widget:property:scrollable_children|scrollable_children]] //**(get)**// | %%Function to operate on a given widget's scrollable children when necessary.%% |
+| [[:docs:efl:auto:class:elm:widget:property:style|style]] //**(get, set)**// | %%Theme style%% |
+| [[:docs:efl:auto:class:elm:widget:property:theme_object|theme_object]] //**(set)**// | %%Theme object property%% |
+| [[:docs:efl:auto:class:elm:widget:property:theme|theme]] //**(get, set)**// | %%Widget theme%% |
+| [[:docs:efl:auto:class:elm:widget:property:top|top]] //**(get)**// | %%Top widget property%% |
+| [[:docs:efl:auto:class:elm:widget:property:tree_unfocusable|tree_unfocusable]] //**(get, set)**// | %%Make the elementary object and its children to be unfocusable (or focusable). If the tree is set as unfocusable, newest focused object which is not in this tree will get focus. This API can be helpful for an object to be deleted. When an object will be deleted soon, it and its children may not want to get focus (by focus reverting or by other focus controls). Then, just use this API before deleting.%% |
+| [[:docs:efl:auto:class:elm:widget:property:widget_parent|widget_parent]] //**(get, set)**// | %%The internal widget parent%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:widget:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:focus_grab|focus_grab]] //[from [[:docs:efl:auto:mixin:elm:interface:atspi_component|Elm.Interface.Atspi_Component]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:group_member_del|group_member_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:method:provider_find|provider_find]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:widget:property:attributes|attributes]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:children|children]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:clip|clip]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:color|color]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:is_frame_object|is_frame_object]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:name|name]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:no_render|no_render]] //**(set)**// //[from [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:parent|parent]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:state_set|state_set]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:widget:property:visible|visible]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -39,6 +41,8 @@ digraph hierarchy {
     efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_orientation [fillcolor = "gray15", label = "Efl.Orientation", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
@@ -60,6 +64,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -77,6 +83,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_toolbar -> efl_orientation
     elm_toolbar -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
@@ -104,6 +112,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -120,6 +130,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:orientation|Efl.Orientation]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
@@ -148,14 +160,54 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:toolbar:property:align|align]] //(get, set)// | %%Control the alignment of the items.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:homogeneous|homogeneous]] //(get, set)// | %%Control homogeneous mode.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:icon_size|icon_size]] //(get, set)// | %%Control the icon size, in pixels, to be used by toolbar items.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:menu_parent|menu_parent]] //(get, set)// | %%Control the parent object of the toolbar items' menus.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:more_item|more_item]] //(get)// | %%Get the more item which is auto-generated by toolbar.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:select_mode|select_mode]] //(get, set)// | %%Control the toolbar select mode.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:shrink_mode|shrink_mode]] //(get, set)// | %%Control the item displaying mode of a given toolbar widget %%''obj''%%.%% |
-| [[:docs:efl:auto:class:elm:toolbar:property:standard_priority|standard_priority]] //(get, set)// | %%Set the standard priority of visible items in a toolbar%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:align|align]] //**(get, set)**// | %%Control the alignment of the items.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:homogeneous|homogeneous]] //**(get, set)**// | %%Control homogeneous mode.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:icon_size|icon_size]] //**(get, set)**// | %%Control the icon size, in pixels, to be used by toolbar items.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:menu_parent|menu_parent]] //**(get, set)**// | %%Control the parent object of the toolbar items' menus.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:more_item|more_item]] //**(get)**// | %%Get the more item which is auto-generated by toolbar.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:select_mode|select_mode]] //**(get, set)**// | %%Control the toolbar select mode.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:shrink_mode|shrink_mode]] //**(get, set)**// | %%Control the item displaying mode of a given toolbar widget %%''obj''%%.%% |
+| [[:docs:efl:auto:class:elm:toolbar:property:standard_priority|standard_priority]] //**(get, set)**// | %%Set the standard priority of visible items in a toolbar%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:toolbar:method:access|access]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:all_children_select|all_children_select]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:child_deselect|child_deselect]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:child_select|child_select]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:clear|clear]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:focus_highlight_geometry_get|focus_highlight_geometry_get]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:group_member_add|group_member_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:is_child_selected|is_child_selected]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:selected_child_deselect|selected_child_deselect]] //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:translate|translate]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:toolbar:property:children|children]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:first_item|first_item]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:ui:menu|Efl.Ui.Menu]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:focused_item|focused_item]] //**(get)**// //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:items|items]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:ui:menu|Efl.Ui.Menu]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:last_item|last_item]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:ui:menu|Efl.Ui.Menu]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:orientation|orientation]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:orientation|Efl.Orientation]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:position|position]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:selected_children_count|selected_children_count]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:selected_child|selected_child]] //**(get)**// //[from [[:docs:efl:auto:interface:elm:interface:atspi:selection|Elm.Interface.Atspi.Selection]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:selected_item|selected_item]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:ui:menu|Efl.Ui.Menu]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:size|size]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:toolbar:property:state_set|state_set]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]]]// | No description supplied. |
 
 ===== Events =====
 

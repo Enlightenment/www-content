@@ -23,6 +23,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -40,6 +42,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -64,6 +68,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+          * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+            * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -85,11 +91,19 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:gesture_layer:property:cb|cb]] //(set)// | %%Set the gesture state change callback.%% |
-| [[:docs:efl:auto:class:elm:gesture_layer:property:hold_events|hold_events]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:gesture_layer:property:rotate_step|rotate_step]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:gesture_layer:property:tap_finger_size|tap_finger_size]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:elm:gesture_layer:property:zoom_step|zoom_step]] //(get, set)// | %%Control step value for zoom action.%% |
+| [[:docs:efl:auto:class:elm:gesture_layer:property:cb|cb]] //**(set)**// | %%Set the gesture state change callback.%% |
+| [[:docs:efl:auto:class:elm:gesture_layer:property:hold_events|hold_events]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:gesture_layer:property:rotate_step|rotate_step]] //**(get, set)**// | %%This function returns step-value for rotate action.%% |
+| [[:docs:efl:auto:class:elm:gesture_layer:property:tap_finger_size|tap_finger_size]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:elm:gesture_layer:property:zoom_step|zoom_step]] //**(get, set)**// | %%Control step value for zoom action.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:gesture_layer:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:gesture_layer:method:disable|disable]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:gesture_layer:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:gesture_layer:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
 
 ===== Events =====
 

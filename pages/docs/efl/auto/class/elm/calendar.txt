@@ -24,6 +24,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_accessible [fillcolor = "gray15", label = "Elm.Interface.Atspi_Accessible", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -32,6 +34,9 @@ digraph hierarchy {
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
 
@@ -48,6 +53,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     elm_widget -> elm_interface_atspi_accessible
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
@@ -56,6 +63,9 @@ digraph hierarchy {
     elm_layout -> efl_container
     efl_container -> efl_gfx
     elm_layout -> efl_file
+    elm_layout -> efl_ui_view
+    elm_layout -> efl_ui_model_connect
+    elm_layout -> efl_ui_model_factory_connect
     elm_calendar -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
 }
@@ -79,6 +89,8 @@ digraph hierarchy {
             * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
               * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
               * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+            * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+              * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -87,6 +99,9 @@ digraph hierarchy {
       * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
         * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
       * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:view|Efl.Ui.View]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
 
@@ -112,15 +127,36 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:elm:calendar:property:date_max|date_max]] //(get, set)// | %%Maximum date on calendar.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:date_min|date_min]] //(get, set)// | %%Minimum date on calendar.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:first_day_of_week|first_day_of_week]] //(get, set)// | %%The first day of week to use on calendar widgets'.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:format_function|format_function]] //(set)// | %%Set a function to format the string that will be used to display month and year;%% |
-| [[:docs:efl:auto:class:elm:calendar:property:interval|interval]] //(get, set)// | %%The interval on time updates for an user mouse button hold on calendar widgets' month/year selection.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:marks|marks]] //(get)// | %%Get a list of all the calendar marks.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:select_mode|select_mode]] //(get, set)// | %%Select day mode to use.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:selectable|selectable]] //(get, set)// | %%Define which fields of a tm struct will be taken into account, when Elm.Calendar.selected_time.set is invoked.%% |
-| [[:docs:efl:auto:class:elm:calendar:property:weekdays_names|weekdays_names]] //(get, set)// | %%Weekdays names to be displayed by the calendar.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:date_max|date_max]] //**(get, set)**// | %%Maximum date on calendar.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:date_min|date_min]] //**(get, set)**// | %%Minimum date on calendar.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:first_day_of_week|first_day_of_week]] //**(get, set)**// | %%The first day of week to use on calendar widgets'.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:format_function|format_function]] //**(set)**// | %%Set a function to format the string that will be used to display month and year;%% |
+| [[:docs:efl:auto:class:elm:calendar:property:interval|interval]] //**(get, set)**// | %%The interval on time updates for an user mouse button hold on calendar widgets' month/year selection.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:marks|marks]] //**(get)**// | %%Get a list of all the calendar marks.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:select_mode|select_mode]] //**(get, set)**// | %%Select day mode to use.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:selectable|selectable]] //**(get, set)**// | %%Define which fields of a tm struct will be taken into account, when Elm.Calendar.selected_time.set is invoked.%% |
+| [[:docs:efl:auto:class:elm:calendar:property:weekdays_names|weekdays_names]] //**(get, set)**// | %%Weekdays names to be displayed by the calendar.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:calendar:method:access|access]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:focus_direction_manager_is|focus_direction_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:focus_next_manager_is|focus_next_manager_is]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:focus_next|focus_next]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:group_add|group_add]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:group_calculate|group_calculate]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:group_del|group_del]] //[from [[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:on_focus|on_focus]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:sizing_eval|sizing_eval]] //[from [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:theme_apply|theme_apply]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+| [[:docs:efl:auto:class:elm:calendar:method:widget_event|widget_event]] //[from [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:elm:calendar:property:elm_actions|elm_actions]] //**(get)**// //[from [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// | No description supplied. |
 
 ===== Events =====
 

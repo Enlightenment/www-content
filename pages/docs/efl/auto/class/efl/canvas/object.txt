@@ -20,6 +20,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
 
     efl_canvas_object -> efl_object
     efl_canvas_object -> efl_gfx
@@ -30,6 +32,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
 }
 </graphviz>
 
@@ -46,6 +50,8 @@ digraph hierarchy {
     * [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
     * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
       * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
@@ -68,27 +74,67 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:canvas:object:property:anti_alias|anti_alias]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:clipees|clipees]] //(get)// | %%Return a list of objects currently clipped by %%''obj''%%.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:clip|clip]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:freeze_events|freeze_events]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:is_frame_object|is_frame_object]] //(get, set)// | %%If %%''true''%% the object belongs to the window border decorations.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:key_focus|key_focus]] //(get, set)// | %%Indicates that this object is the keyboard event receiver on its canvas.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:no_render|no_render]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:paragraph_direction|paragraph_direction]] //(get, set)// | %%This handles text paragraph direction of the given object. Even if the given object is not textblock or text, its smart child objects can inherit the paragraph direction from the given object. The default paragraph direction is %%''inherit''%%.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:pass_events|pass_events]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_device_in|pointer_device_in]] //(get)// | %%Read-only value indicating whether a pointer is in the object.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_in|pointer_in]] //(get)// | %%Read-only value indicating whether the main pointer is in the object.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]] //(get, set)// | %%Low-level pointer behaviour by device. See %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|pointer_mode]] //(get, set)// | %%Low-level pointer behaviour.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:precise_is_inside|precise_is_inside]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:propagate_events|propagate_events]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:render_op|render_op]] //(get, set)// | %%Render mode to be used for compositing the Evas object.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:render_parent|render_parent]] //(get)// | %%Gets the parent smart object of a given Evas object, if it has one.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:repeat_events|repeat_events]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:scale|scale]] //(get, set)// | No description supplied. |
-| [[:docs:efl:auto:class:efl:canvas:object:property:seat_focus|seat_focus]] //(get)// | %%Check if this object is focused.%% |
-| [[:docs:efl:auto:class:efl:canvas:object:property:type|type]] //(set)// | %%Sets the legacy type name of this Evas object.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:anti_alias|anti_alias]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:clipees|clipees]] //**(get)**// | %%Return a list of objects currently clipped by %%''obj''%%.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:clip|clip]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:freeze_events|freeze_events]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:is_frame_object|is_frame_object]] //**(get, set)**// | %%If %%''true''%% the object belongs to the window border decorations.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:key_focus|key_focus]] //**(get, set)**// | %%Indicates that this object is the keyboard event receiver on its canvas.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:no_render|no_render]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:paragraph_direction|paragraph_direction]] //**(get, set)**// | %%This handles text paragraph direction of the given object. Even if the given object is not textblock or text, its smart child objects can inherit the paragraph direction from the given object. The default paragraph direction is %%''inherit''%%.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:pass_events|pass_events]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_device_in|pointer_device_in]] //**(get)**// | %%Read-only value indicating whether a pointer is in the object.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_in|pointer_in]] //**(get)**// | %%Read-only value indicating whether the main pointer is in the object.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]] //**(get, set)**// | %%Low-level pointer behaviour by device. See %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|pointer_mode]] //**(get, set)**// | %%Low-level pointer behaviour.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:precise_is_inside|precise_is_inside]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:propagate_events|propagate_events]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:render_op|render_op]] //**(get, set)**// | %%Render mode to be used for compositing the Evas object.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:render_parent|render_parent]] //**(get)**// | %%Gets the parent smart object of a given Evas object, if it has one.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:repeat_events|repeat_events]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:scale|scale]] //**(get, set)**// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:seat_focus|seat_focus]] //**(get)**// | %%Check if this object is focused.%% |
+| [[:docs:efl:auto:class:efl:canvas:object:property:type|type]] //**(set)**// | %%Sets the legacy type name of this Evas object.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:object:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:event_callback_call|event_callback_call]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:event_callback_legacy_call|event_callback_legacy_call]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:lower|lower]] //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:provider_find|provider_find]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:raise|raise]] //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:stack_above|stack_above]] //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:method:stack_below|stack_below]] //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:object:property:above|above]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:below|below]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:color_part|color_part]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:color|color]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:geometry|geometry]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_align|hint_align]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_aspect|hint_aspect]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_combined_min|hint_combined_min]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_display_mode|hint_display_mode]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_margin|hint_margin]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_max|hint_max]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_min|hint_min]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_request|hint_request]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:hint_weight|hint_weight]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:layer|layer]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:stack|Efl.Gfx.Stack]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:loop|loop]] //**(get)**// //[from [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:map_enable|map_enable]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:position|position]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:seat_event_filter|seat_event_filter]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:size|size]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:object:property:visible|visible]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]]]// | No description supplied. |
 
 ===== Events =====
 

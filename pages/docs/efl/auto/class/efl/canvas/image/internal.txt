@@ -21,6 +21,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_canvas_filter_internal [fillcolor = "gray15", label = "Efl.Canvas.Filter.Internal", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_gfx_filter [fillcolor = "gray15", label = "Efl.Gfx.Filter", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -42,6 +44,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     efl_canvas_image_internal -> efl_canvas_filter_internal
     efl_canvas_filter_internal -> efl_gfx_filter
     efl_canvas_filter_internal -> efl_object
@@ -70,6 +74,8 @@ digraph hierarchy {
       * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]] //(interface)//
       * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -86,6 +92,39 @@ digraph hierarchy {
 %%Efl canvas internal image class%%
 
 {{page>:docs:efl:user:class:efl:canvas:image:internal:description&nodate&nolink&nouser}}
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:buffer_update_add|buffer_update_add]] //[from [[:docs:efl:auto:interface:efl:gfx:buffer|Efl.Gfx.Buffer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:dbg_info_get|dbg_info_get]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_dirty|filter_dirty]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_input_alpha|filter_input_alpha]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_input_render|filter_input_render]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_state_prepare|filter_state_prepare]] //[from [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:finalize|finalize]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:method:save|save]] //[from [[:docs:efl:auto:interface:efl:file|Efl.File]]]// | No description supplied. |
+
+===== Overridden Properties =====
+
+^ Property name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:alpha|alpha]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:buffer|Efl.Gfx.Buffer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:border_center_fill|border_center_fill]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:border_scale|border_scale]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:border|border]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:colorspace|colorspace]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:buffer|Efl.Gfx.Buffer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:content_hint|content_hint]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:fill_auto|fill_auto]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:fill|fill]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:filter_program|filter_program]] //**(set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:flip|flip]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:flipable|Efl.Flipable]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:orientation|orientation]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:orientation|Efl.Orientation]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:ratio|ratio]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:scale_hint|scale_hint]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:smooth_scale|smooth_scale]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:image|Efl.Image]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:image:internal:property:view_size|view_size]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:view|Efl.Gfx.View]]]// | No description supplied. |
 
 ===== Events =====
 

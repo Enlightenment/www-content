@@ -1,10 +1,26 @@
 <title>Elm.Entry.selection</title>
-===== Signature =====
+//Overridden from [[:docs:efl:auto:interface:elm:interface:atspi:text:property:selection|Elm.Interface.Atspi.Text.selection]].//===== Signature =====
 
 <code>
-@property Elm.Entry.selection {
+@property selection @protected @pure_virtual {
     get {
-        return: string;
+        keys {
+            selection_number: int;
+        }
+        values {
+            start_offset: int;
+            end_offset: int;
+        }
+    }
+    set {
+        keys {
+            selection_number: int;
+        }
+        values {
+            start_offset: int;
+            end_offset: int;
+        }
+        return: bool;
     }
 }
 </code>
@@ -12,15 +28,25 @@
 ===== C signature =====
 
 <code c>
-const char *elm_obj_entry_selection_get(const Eo *obj);
+void elm_interface_atspi_text_selection_get(const Eo *obj, int selection_number, int *start_offset, int *end_offset);
+Eina_Bool elm_interface_atspi_text_selection_set(Eo *obj, int selection_number, int start_offset, int end_offset);
 </code>
 
+===== Keys =====
+
+  * **selection_number** - %%Selection number for identification%%
+===== Values =====
+
+  * **start_offset** - %%Selection start offset%%
+  * **end_offset** - %%Selection end offset%%
 ===== Description =====
 
-%%Get any selected text within the entry.%%
+%%Selection property%%{{page>:docs:efl:user:class:elm:entry:property:selection:description&nodate&nolink&nouser}}
 
-%%If there's any selected text in the entry, this function returns it as a string in markup format. %%''null''%% is returned if no selection exists or if an error occurred.%%
 
-%%The returned value points to an internal string and should not be freed or modified in any way. If the %%''entry''%% object is deleted or its contents are changed, the returned pointer should be considered invalid.%%
-{{page>:docs:efl:user:class:elm:entry:property:selection:description&nodate&nolink&nouser}}
+===== Implemented by =====
+
+  * [[:docs:efl:auto:interface:elm:interface:atspi:text:property:selection|Elm.Interface.Atspi.Text.selection]]
+  * [[:docs:efl:auto:class:efl:ui:text:property:selection|Efl.Ui.Text.selection]]
+  * **Elm.Entry.selection**
 

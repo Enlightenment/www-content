@@ -22,6 +22,8 @@ digraph hierarchy {
     efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_canvas_filter_internal [fillcolor = "gray15", label = "Efl.Canvas.Filter.Internal", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_gfx_filter [fillcolor = "gray15", label = "Efl.Gfx.Filter", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
@@ -45,6 +47,8 @@ digraph hierarchy {
     efl_canvas_object -> efl_gfx_map
     efl_gfx_map -> efl_interface
     efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
     efl_canvas_image_internal -> efl_canvas_filter_internal
     efl_canvas_filter_internal -> efl_gfx_filter
     efl_canvas_filter_internal -> efl_object
@@ -75,6 +79,8 @@ digraph hierarchy {
         * [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+        * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
       * [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]] //(mixin)//
         * [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]] //(interface)//
         * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
@@ -98,9 +104,15 @@ digraph hierarchy {
 ===== Properties =====
 
 ^ Property name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:canvas:proxy:property:source_clip|source_clip]] //(get, set)// | %%Clip this proxy object with the source object's clipper.%% |
-| [[:docs:efl:auto:class:efl:canvas:proxy:property:source_events|source_events]] //(get, set)// | %%Defines whether the events on this object are repeated to the source.%% |
-| [[:docs:efl:auto:class:efl:canvas:proxy:property:source|source]] //(get, set)// | %%The source object for this proxy.%% |
+| [[:docs:efl:auto:class:efl:canvas:proxy:property:source_clip|source_clip]] //**(get, set)**// | %%Clip this proxy object with the source object's clipper.%% |
+| [[:docs:efl:auto:class:efl:canvas:proxy:property:source_events|source_events]] //**(get, set)**// | %%Defines whether the events on this object are repeated to the source.%% |
+| [[:docs:efl:auto:class:efl:canvas:proxy:property:source|source]] //**(get, set)**// | %%The source object for this proxy.%% |
+
+===== Overridden Methods =====
+
+^ Method name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:canvas:proxy:method:buffer_map|buffer_map]] //[from [[:docs:efl:auto:interface:efl:gfx:buffer|Efl.Gfx.Buffer]]]// | No description supplied. |
+| [[:docs:efl:auto:class:efl:canvas:proxy:method:buffer_unmap|buffer_unmap]] //[from [[:docs:efl:auto:interface:efl:gfx:buffer|Efl.Gfx.Buffer]]]// | No description supplied. |
 
 ===== Events =====
 
