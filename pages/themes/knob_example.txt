@@ -108,3 +108,147 @@ Here each state is associated with one image (position) of the knob.
 				}
 			}
 </code>
+The following ''part'' is needed so we can set the value of the knob from the C source via elm_slider_value_set.
+<code>
+		        part{
+				//The real slider for elm_slider
+				name: "elm.dragable.slider";
+				scale: 1;
+				dragable.x: 1 1 0;
+				dragable.y: 1 1 0;
+				type: RECT;
+				description{
+					state: "default" 0.0;
+					visible: 0;
+				}
+				dragable{
+					x: 1 1 0;
+					y: 1 1 0;
+				}
+		        }
+</code>
+This ''part'' named "dragger" is the actually draggable part of the slider.
+It's invisible but will measure how much the knob has been turned (or dragged).
+<code>
+			part{ 
+				name: "dragger";
+				type: RECT;
+				description{
+					state: "default" 0.0;
+				       	rel1.to: "knob";
+				       	rel2.to: "knob";
+					color: 0 0 0 0;
+				}
+				description{
+					state: "hoki" 0.0;
+				       	rel1.to: "knob";
+				       	rel2.to: "knob";
+					color: 0 0 0 0;
+				}
+				dragable{
+					x: 0 0 0;
+					y: 1 1 0;
+				}
+			}
+		}
+</code>
+Now the ''parts'' block is finished and we continue with the ''programs'' block which contains small scripts which control the behaviour of our knob. The programs are called when a certain signal
+from a certain source is received. Signals can be emitted from inside this edje
+or from outside (C source).
+<code>
+     		programs{
+</code>
+The script part of the ''program'' named "on_drag_move" runs when the
+signal "drag" from source "dragger" (the part defined above) is received.
+<code>
+		     	program{
+				name: "on_drag_move";
+				signal: "drag";
+				source: "dragger";
+				script{
+					new Float:p1;
+					new Float:p2;
+
+                                        //The drag value is subtracted from the last knob position
+                                        //because a drag upwards yields negative values.
+
+					get_drag(PART:"dragger", p1, p2);
+					set_float(knob_pos, get_float(knob_last) - p2);
+				
+					new px, py, pw, ph;
+					get_geometry(PART:"knob", px, py, pw, ph);
+					if(get_float(knob_pos) > ph) set_float(knob_pos, ph);
+					if(get_float(knob_pos) < 0) set_float(knob_pos, 0);
+				
+					update_knob_state(get_float(knob_pos));
+					new Float:sl_val = get_float(knob_pos)/ph;
+
+					set_int(signal_from_dragger, 1);
+					set_drag(PART:"elm.dragable.slider", sl_val , sl_val);
+				}
+			}
+</code>
+The variable "signal_from_dragger" is used as a guard to distinguish if calls of set_drag for "elm.dragable.slider" are made from within the edje theme (then it is 1), ore from outside, e.g. C source, (then it is 0).
+
+Next are some more programs
+<code>
+			program{
+				name: "on_drag_stop";
+				signal: "drag,stop";
+				source: "dragger";
+				script{
+					set_float(knob_last, get_float(knob_pos)); 
+					reset_dragger();
+				}
+			}
+			program{
+				name: "on_wheel";
+				signal: "mouse,wheel*";
+				source: "dragger";
+				//after: "on_slider_set";
+   			}
+			program{
+				signal: "elm,state,enabled"; 
+				source: "elm";
+					script {
+						set_int(signal_from_dragger, 0);
+					}
+			}
+</code>
+The following ''program'' is called when set_drag for elm.dragable.slider is called.
+<code>
+			program{
+
+				signal: "drag,set";
+				source: "elm.dragable.slider";
+				script {
+</code>
+If we were called because the part "dragger" was dragged, "signal_from_dragger" is 1 and nothing else
+will happen here except that "signal_from_dragger" will be set to 0.
+<code>
+					if(get_int(signal_from_dragger) == 0){
+						new Float:p1;
+						new Float:p2;
+						get_drag(PART:"elm.dragable.slider", p1, p2);
+				
+						new px, py, pw, ph;
+						get_geometry(PART:"knob", px, py, pw, ph);
+						set_float(knob_pos, ph*p1);
+				
+						if(get_float(knob_pos) > ph) set_float(knob_pos, ph);
+						if(get_float(knob_pos) < 0) set_float(knob_pos, 0);
+				
+						set_float(knob_last, get_float(knob_pos)); 
+				
+						update_knob_state(get_float(knob_pos));
+				
+						new Float:sl_val = get_float(knob_pos)/ph;
+						set_drag(PART:"elm.dragable.slider", sl_val , sl_val);
+				
+					}else{
+						set_int(signal_from_dragger, 0);
+					}
+				}
+			}
+		}
+</code>
