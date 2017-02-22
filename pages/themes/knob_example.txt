@@ -6,4 +6,105 @@ Here is an example for an edje theme which makes an Elementary slider widget loo
 
 It will look like this {{:themes:edje-knob.png?nolink}} and works by displaying one of 60 images, depending on how much you drag the knob (up and down). Each of the images corresponds to a different rotation of the knob.
 
-The edc file for this theme will be described below.
+The important parts of the edc file for this theme will be described below.
+In the ''group'' block we define the name we will later use to load the theme from within a C program.
+<code>
+collections{
+	group{
+		name: "elm/slider/horizontal/knob";
+		alias: "elm/slider/horizontal/default";
+		min: 64 64;
+</code>
+Next we list the ''images'' we will be using
+<code>
+		images{
+			image: "0000.png" COMP;
+			image: "0001.png" COMP;
+			image: "0002.png" COMP
+
+                        //Similar for 0003.png to 0059.png.
+ 
+			image: "0060.png" COMP;
+			image: "knobbg.png" COMP;
+		}
+</code>
+The ''script'' block contains global variables and functions. The function ''update_knob_state'' is used to load new images when the knob is turned. The variables are used to store the state of the knob.
+<code>
+                script{ 
+		     	public knob_pos;
+		     	public knob_ref;
+		     	public knob_last;
+		     	public knob_move;
+		     	public signal_from_dragger;
+
+
+		     	public update_knob_state(Float:frac){
+
+                        new px, py, pw, ph;
+                        get_geometry(PART:"knob", px, py, pw, ph);
+			new Float:step = ph/60;
+				if(frac > ph)     { set_state(PART:"knob", "60", 0.0); return;} 
+				if(frac <= 0)     { set_state(PART:"knob", "default", 0.0); return;}
+				if(frac < step)   { set_state(PART:"knob", "1", 0.0); return;}
+				if(frac < 2*step) { set_state(PART:"knob", "2", 0.0); return;}
+
+                                //Similar "if" statments for frac < 3*step to 59*step.
+ 
+				if(frac < 60*step) { set_state(PART:"knob", "60", 0.0); return;}
+
+		     	}
+
+		     	public reset_dragger(){
+		     	        set_drag(PART:"dragger", 0.0, 0.0);
+		     	        set_int(signal_from_dragger, 0);
+		     	}
+     		}
+</code>
+The ''parts'' block contains the functional parts of the knob.
+These are mostly geometric objects that may be moveable and/or visible.
+They may also emit signals which will be important in the ''programs'' block below.
+<code>
+    		parts{
+		     	part{
+				name: "knobbase";
+				scale: 1;
+				description{
+					state: "default" 0.0;
+					min: 64 64;
+				     	image.normal: "knobbg.png";
+				}
+		     	}
+</code>
+Each part has a one or more descriptions, which represent states of the part. 
+Here each state is associated with one image (position) of the knob.
+<code>
+			part{
+				name: "knob";
+				mouse_events: 0;
+				scale: 1;
+				description{
+					state: "default" 0.0;
+					min: 64 64;
+					rel.to: "knobbase";
+					image.normal: "0000.png";
+				}
+				description{ 
+					state: "1" 0.0;
+					inherit: "default" 0.0;
+					image.normal: "0001.png";
+				}
+				description{ 
+					state: "2" 0.0;
+					inherit: "default" 0.0;
+					image.normal: "0002.png";
+				}
+
+                                //Descriptions for states "3" to "59" similar.
+ 
+				description { 
+					state: "60" 0.0;
+					inherit: "default" 0.0;
+					image.normal: "0060.png";
+				}
+			}
+</code>
