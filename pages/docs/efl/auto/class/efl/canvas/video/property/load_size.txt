@@ -1,5 +1,5 @@
 <title>Efl.Canvas.Video.load_size</title>
-//Overridden from [[:docs:efl:auto:interface:efl:image:load:property:load_size|Efl.Image.Load.load_size]].//===== Signature =====
+//Overridden from [[:docs:efl:auto:interface:efl:image:load:property:load_size|Efl.Image.Load.load_size]] **(get)**.//===== Signature =====
 
 <code>
 @property load_size @pure_virtual {
@@ -22,6 +22,7 @@
 
 <code c>
 void efl_image_load_size_get(const Eo *obj, int *w, int *h);
+void efl_image_load_size_set(Eo *obj, int w, int h);
 </code>
 
 ===== Values =====
@@ -30,8 +31,26 @@ void efl_image_load_size_get(const Eo *obj, int *w, int *h);
   * **h** - %%Height of the image's load size.%%
 ===== Description =====
 
-%%Returns the requested load size.%%
+%%The load size of an image.%%
+
+%%The image will be loaded into memory as if it was the specified size instead of its original size. This can save a lot of memory, and is important for scalable types like svg.%%
+
+%%By default, the load size is not specified, so it is 0x0.%%
+
 {{page>:docs:efl:user:class:efl:canvas:video:property:load_size:description&nodate&nolink&nouser}}
+
+==== Getter ====
+
+%%Returns the requested load size.%%
+
+{{page>:docs:efl:user:class:efl:canvas:video:property:load_size:getter_description&nodate&nolink&nouser}}
+
+==== Setter ====
+
+%%Requests the canvas to load the image at the given size.%%
+
+%%EFL will try to load the image at the requested size, but does not guarantee an exact match between the request and the loaded image dimensions.%%{{page>:docs:efl:user:class:efl:canvas:video:property:load_size:getter_description&nodate&nolink&nouser}}
+
 
 ===== Implemented by =====
 

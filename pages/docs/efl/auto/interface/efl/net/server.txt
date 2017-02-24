@@ -33,19 +33,54 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:interface:efl:net:server:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:interface:efl:net:server:method:client_announce|client_announce]] | %%Implementions should call this method to announce new clients.%% |
-| [[:docs:efl:auto:interface:efl:net:server:method:serve|serve]] | %%Starts serving requests.%% |
+**[[:docs:efl:auto:interface:efl:net:server:method:client_announce|client_announce]]**
+<code c>
+Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
+</code>
 
-===== Properties =====
+%%Implementions should call this method to announce new clients.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:net:server:method:serve|serve]]**
+<code c>
+Eina_Error efl_net_server_serve(Eo *obj, const char *address);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:interface:efl:net:server:property:address|address]] //**(get, set)**// | %%The address the server is bound to.%% |
-| [[:docs:efl:auto:interface:efl:net:server:property:clients_count|clients_count]] //**(get, set)**// | %%Number of concurrent clients accepted by this server.%% |
-| [[:docs:efl:auto:interface:efl:net:server:property:clients_limit|clients_limit]] //**(get, set)**// | %%Number of maximum concurrent clients allowed by this server.%% |
-| [[:docs:efl:auto:interface:efl:net:server:property:serving|serving]] //**(get, set)**// | %%Returns whenever the server is ready to accept clients or not.%% |
+%%Starts serving requests.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:net:server:property:address|address]]** //**(get, set)**//
+<code c>
+const char *efl_net_server_address_get(const Eo *obj);
+void efl_net_server_address_set(Eo *obj, const char *address);
+</code>
+
+%%The address the server is bound to.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**//
+<code c>
+unsigned int efl_net_server_clients_count_get(const Eo *obj);
+void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
+</code>
+
+%%Number of concurrent clients accepted by this server.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//
+<code c>
+void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
+void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
+</code>
+
+%%Number of maximum concurrent clients allowed by this server.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:net:server:property:serving|serving]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_net_server_serving_get(const Eo *obj);
+void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
+</code>
+
+%%Returns whenever the server is ready to accept clients or not.%%\\ 
+\\ 
 
 ===== Events =====
 

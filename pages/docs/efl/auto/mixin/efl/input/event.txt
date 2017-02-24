@@ -32,23 +32,74 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:mixin:efl:input:event:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:input:event:method:dup|dup]] | %%Creates a copy of this event.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:method:instance_get|instance_get]] | %%Get an instance of this input event%% |
-| [[:docs:efl:auto:mixin:efl:input:event:method:reset|reset]] | %%Resets the internal data to 0 or default values.%% |
+**[[:docs:efl:auto:mixin:efl:input:event:method:dup|dup]]**
+<code c>
+Efl_Input_Event *efl_input_dup(Eo *obj);
+</code>
 
-===== Properties =====
+%%Creates a copy of this event.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:method:instance_get|instance_get]]**
+<code c>
+Efl_Input_Event *efl_input_instance_get(const Eo *obj, Efl_Object *owner, void **priv);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:input:event:property:device|device]] //**(get, set)**// | %%Input device that originated this event.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:property:event_flags|event_flags]] //**(get, set)**// | %%Extra flags for this event, may be changed by the user.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:property:fake|fake]] //**(get)**// | %%%%''true''%% if the event was fake, not triggered by real hardware.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:property:processed|processed]] //**(get, set)**// | %%%%''true''%% if %%[[:docs:efl:auto:mixin:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event is on hold.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:property:scrolling|scrolling]] //**(get, set)**// | %%%%''true''%% if %%[[:docs:efl:auto:mixin:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event happened while scrolling.%% |
-| [[:docs:efl:auto:mixin:efl:input:event:property:timestamp|timestamp]] //**(get, set)**// | %%The time at which an event was generated.%% |
+%%Get an instance of this input event%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:method:reset|reset]]**
+<code c>
+void efl_input_reset(Eo *obj);
+</code>
 
-===== Events =====
+%%Resets the internal data to 0 or default values.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:device|device]]** //**(get, set)**//
+<code c>
+Efl_Input_Device *efl_input_device_get(const Eo *obj);
+void efl_input_device_set(Eo *obj, Efl_Input_Device *dev);
+</code>
 
-This class does not define any events.
+%%Input device that originated this event.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:event_flags|event_flags]]** //**(get, set)**//
+<code c>
+Efl_Input_Flags efl_input_event_flags_get(const Eo *obj);
+void efl_input_event_flags_set(Eo *obj, Efl_Input_Flags flags);
+</code>
+
+%%Extra flags for this event, may be changed by the user.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:fake|fake]]** //**(get)**//
+<code c>
+Eina_Bool efl_input_fake_get(const Eo *obj);
+</code>
+
+%%%%''true''%% if the event was fake, not triggered by real hardware.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:processed|processed]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_input_processed_get(const Eo *obj);
+void efl_input_processed_set(Eo *obj, Eina_Bool val);
+</code>
+
+%%%%''true''%% if %%[[:docs:efl:auto:mixin:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event is on hold.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:scrolling|scrolling]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_input_scrolling_get(const Eo *obj);
+void efl_input_scrolling_set(Eo *obj, Eina_Bool val);
+</code>
+
+%%%%''true''%% if %%[[:docs:efl:auto:mixin:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event happened while scrolling.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:input:event:property:timestamp|timestamp]]** //**(get, set)**//
+<code c>
+double efl_input_timestamp_get(const Eo *obj);
+void efl_input_timestamp_set(Eo *obj, double ms);
+</code>
+
+%%The time at which an event was generated.%%\\ 
+\\ 
+

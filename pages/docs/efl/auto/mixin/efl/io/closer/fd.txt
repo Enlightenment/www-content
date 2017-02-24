@@ -32,23 +32,51 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:mixin:efl:io:closer:fd:description&nodate&nolink&nouser}}
 
-===== Properties =====
+===== Members =====
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:io:closer:fd:property:closer_fd|closer_fd]] //**(get, set)**// | %%Closer file descriptor%% |
+**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**//
+<code c>
+int efl_io_closer_fd_get(const Eo *obj);
+void efl_io_closer_fd_set(Eo *obj, int fd);
+</code>
 
-===== Overridden Methods =====
+%%Closer file descriptor%%\\ 
+\\ 
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:io:closer:fd:method:close|close]] //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+===== Overrides =====
 
-===== Overridden Properties =====
+**[[:docs:efl:auto:mixin:efl:io:closer:fd:method:close|close]]** //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|close_on_exec]] //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:io:closer:fd:property:closed|closed]] //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]// | No description supplied. |
+%%Closes the Input/Output object.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
 
-===== Events =====
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
 
-This class does not define any events.
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:closed|closed]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
+
+===== Inherited Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |

@@ -29,22 +29,71 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:mixin:ector:buffer:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:ector:buffer:method:map|map]] | %%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%% |
-| [[:docs:efl:auto:mixin:ector:buffer:method:pixels_set|pixels_set]] | %%Set the source pixels for this buffer, or allocate a new memory region%% |
-| [[:docs:efl:auto:mixin:ector:buffer:method:span_free|span_free]] | %%Must be called as soon as possible after span_get%% |
-| [[:docs:efl:auto:mixin:ector:buffer:method:span_get|span_get]] | %%Get a single horizontal span of length w starting from (x,y)%% |
-| [[:docs:efl:auto:mixin:ector:buffer:method:unmap|unmap]] | %%Unmap a region of this buffer, and upload data to the GPU (if needed).%% |
+**[[:docs:efl:auto:mixin:ector:buffer:method:map|map]]**
+<code c>
+void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
+</code>
 
-===== Properties =====
+%%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:method:pixels_set|pixels_set]]**
+<code c>
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:ector:buffer:property:border|border]] //**(get)**// | %%Duplicated pixel borders of this buffer, used for GL scaling%% |
-| [[:docs:efl:auto:mixin:ector:buffer:property:cspace|cspace]] //**(get)**// | %%The colorspace of the pixel buffer.%% |
-| [[:docs:efl:auto:mixin:ector:buffer:property:flags|flags]] //**(get)**// | %%The capabilities of this buffer%% |
-| [[:docs:efl:auto:mixin:ector:buffer:property:size|size]] //**(get)**// | %%The (rectangular) size of the pixel buffer.%% |
+%%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:method:span_free|span_free]]**
+<code c>
+void ector_buffer_span_free(Eo *obj, uint8_t *data);
+</code>
+
+%%Must be called as soon as possible after span_get%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:method:span_get|span_get]]**
+<code c>
+uint8_t *ector_buffer_span_get(Eo *obj, int x, int y, unsigned int w, Efl_Gfx_Colorspace cspace, unsigned int *length);
+</code>
+
+%%Get a single horizontal span of length w starting from (x,y)%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:method:unmap|unmap]]**
+<code c>
+void ector_buffer_unmap(Eo *obj, void *data, unsigned int length);
+</code>
+
+%%Unmap a region of this buffer, and upload data to the GPU (if needed).%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:property:border|border]]** //**(get)**//
+<code c>
+void ector_buffer_border_get(const Eo *obj, int *l, int *r, int *t, int *b);
+</code>
+
+%%Duplicated pixel borders of this buffer, used for GL scaling%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:property:cspace|cspace]]** //**(get)**//
+<code c>
+Efl_Gfx_Colorspace ector_buffer_cspace_get(const Eo *obj);
+</code>
+
+%%The colorspace of the pixel buffer.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:property:flags|flags]]** //**(get)**//
+<code c>
+Ector_Buffer_Flag ector_buffer_flags_get(const Eo *obj);
+</code>
+
+%%The capabilities of this buffer%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:ector:buffer:property:size|size]]** //**(get)**//
+<code c>
+void ector_buffer_size_get(const Eo *obj, int *w, int *h);
+</code>
+
+%%The (rectangular) size of the pixel buffer.%%\\ 
+\\ 
 
 ===== Events =====
 

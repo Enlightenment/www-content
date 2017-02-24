@@ -1,5 +1,5 @@
 <title>Efl.Loop_User.parent</title>
-//Overridden from [[:docs:efl:auto:class:efl:object:property:parent|Efl.Object.parent]].//===== Signature =====
+//Overridden from [[:docs:efl:auto:class:efl:object:property:parent|Efl.Object.parent]] **(set)**.//===== Signature =====
 
 <code>
 @property parent {
@@ -19,14 +19,23 @@
 ===== C signature =====
 
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
 ===== Values =====
 
   * **parent** - %%The new parent%%
+===== Description =====
 
-{{page>:docs:efl:user:class:efl:loop_user:property:parent:description&nodate&nolink&nouser}}
+%%The parent of an object.%%
+
+%%Parents keep references to their children so in order to delete objects that have parents you need to set parent to NULL or use efl_del() that does that for you (and also unrefs the object).%%
+
+%%The Eo parent is conceptually user set. That means that a parent should not be changed behind the scenes in a surprising manner.%%
+
+%%For example: if you have a widget that has a box internally, and when you swallow into that widget the object you swallow ends up in the box, the parent should be the widget, and not the box.%%{{page>:docs:efl:user:class:efl:loop_user:property:parent:description&nodate&nolink&nouser}}
+
 
 ===== Implemented by =====
 

@@ -27,25 +27,85 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:interface:efl:gfx:buffer:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_copy_set|buffer_copy_set]] | %%Set the pixels for this buffer by copying them, or allocate a new memory region.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_managed_get|buffer_managed_get]] | %%Get a direct pointer to the internal pixel data, if available.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_managed_set|buffer_managed_set]] | %%Set the pixels for this buffer, managed externally by the client.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_map|buffer_map]] | %%Map a region of this buffer for read or write access by the CPU.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_unmap|buffer_unmap]] | %%Unmap a region of this buffer, and update the internal data if needed.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_update_add|buffer_update_add]] | %%Mark a sub-region of the given image object to be redrawn.%% |
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_copy_set|buffer_copy_set]]**
+<code c>
+Eina_Bool efl_gfx_buffer_copy_set(Eo *obj, const Eina_Slice *slice, int width, int height, int stride, Efl_Gfx_Colorspace cspace, int plane);
+</code>
 
-===== Properties =====
+%%Set the pixels for this buffer by copying them, or allocate a new memory region.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_managed_get|buffer_managed_get]]**
+<code c>
+Eina_Bool efl_gfx_buffer_managed_get(Eo *obj, Eina_Slice *slice, int plane);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:interface:efl:gfx:buffer:property:alpha|alpha]] //**(get, set)**// | %%Indicates whether the alpha channel should be used.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:property:buffer_borders|buffer_borders]] //**(get)**// | %%Duplicated pixel borders inside this buffer.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:property:buffer_size|buffer_size]] //**(get, set)**// | %%Rectangular size of the pixel buffer as allocated in memory.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:property:colorspace|colorspace]] //**(get)**// | %%The colorspace defines how pixels are encoded in the image in memory.%% |
-| [[:docs:efl:auto:interface:efl:gfx:buffer:property:stride|stride]] //**(get)**// | %%Length in bytes of one row of pixels in memory.%% |
+%%Get a direct pointer to the internal pixel data, if available.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_managed_set|buffer_managed_set]]**
+<code c>
+Eina_Bool efl_gfx_buffer_managed_set(Eo *obj, const Eina_Slice *slice, int width, int height, int stride, Efl_Gfx_Colorspace cspace, int plane);
+</code>
 
-===== Events =====
+%%Set the pixels for this buffer, managed externally by the client.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_map|buffer_map]]**
+<code c>
+Eina_Bool efl_gfx_buffer_map(Eo *obj, Eina_Rw_Slice *slice, Efl_Gfx_Buffer_Access_Mode mode, int x, int y, int w, int h, Efl_Gfx_Colorspace cspace, int plane, int *stride);
+</code>
 
-This class does not define any events.
+%%Map a region of this buffer for read or write access by the CPU.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_unmap|buffer_unmap]]**
+<code c>
+Eina_Bool efl_gfx_buffer_unmap(Eo *obj, const Eina_Rw_Slice *slice);
+</code>
+
+%%Unmap a region of this buffer, and update the internal data if needed.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:method:buffer_update_add|buffer_update_add]]**
+<code c>
+void efl_gfx_buffer_update_add(Eo *obj, int x, int y, int w, int h);
+</code>
+
+%%Mark a sub-region of the given image object to be redrawn.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:property:alpha|alpha]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_gfx_buffer_alpha_get(const Eo *obj);
+void efl_gfx_buffer_alpha_set(Eo *obj, Eina_Bool alpha);
+</code>
+
+%%Indicates whether the alpha channel should be used.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:property:buffer_borders|buffer_borders]]** //**(get)**//
+<code c>
+void efl_gfx_buffer_borders_get(const Eo *obj, unsigned int *l, unsigned int *r, unsigned int *t, unsigned int *b);
+</code>
+
+%%Duplicated pixel borders inside this buffer.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:property:buffer_size|buffer_size]]** //**(get, set)**//
+<code c>
+void efl_gfx_buffer_size_get(const Eo *obj, int *w, int *h);
+void efl_gfx_buffer_size_set(Eo *obj, int w, int h);
+</code>
+
+%%Rectangular size of the pixel buffer as allocated in memory.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:property:colorspace|colorspace]]** //**(get)**//
+<code c>
+Efl_Gfx_Colorspace efl_gfx_buffer_colorspace_get(const Eo *obj);
+</code>
+
+%%The colorspace defines how pixels are encoded in the image in memory.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:efl:gfx:buffer:property:stride|stride]]** //**(get)**//
+<code c>
+int efl_gfx_buffer_stride_get(const Eo *obj);
+</code>
+
+%%Length in bytes of one row of pixels in memory.%%\\ 
+\\ 
+

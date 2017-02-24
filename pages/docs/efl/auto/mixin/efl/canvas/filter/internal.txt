@@ -33,36 +33,371 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:mixin:efl:canvas:filter:internal:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_dirty|filter_dirty]] | %%Called when the filter changes must trigger a redraw of the object.%% |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]] | %%Called by Efl.Canvas.Filter.Internal to determine whether the input is alpha or rgba.%% |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_render|filter_input_render]] | %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%% |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_state_prepare|filter_state_prepare]] | %%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%% |
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_dirty|filter_dirty]]**
+<code c>
+void evas_filter_dirty(Eo *obj);
+</code>
 
-===== Properties =====
+%%Called when the filter changes must trigger a redraw of the object.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]]**
+<code c>
+Eina_Bool evas_filter_input_alpha(Eo *obj);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_changed|filter_changed]] //**(set)**// | %%Marks this filter as changed.%% |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]] //**(set)**// | %%Marks this filter as invalid.%% |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]] //**(get)**// | %%Retrieve cached output buffer, if any.%% |
+%%Called by Efl.Canvas.Filter.Internal to determine whether the input is alpha or rgba.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_render|filter_input_render]]**
+<code c>
+Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
+</code>
 
-===== Overridden Methods =====
+%%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_state_prepare|filter_state_prepare]]**
+<code c>
+void evas_filter_state_prepare(Eo *obj, Efl_Canvas_Filter_State *state, void *data);
+</code>
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:constructor|constructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:destructor|destructor]] //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]// | No description supplied. |
+%%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**//
+<code c>
+void evas_filter_changed_set(Eo *obj, Eina_Bool val);
+</code>
 
-===== Overridden Properties =====
+%%Marks this filter as changed.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**//
+<code c>
+void evas_filter_invalid_set(Eo *obj, Eina_Bool val);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_data|filter_data]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_padding|filter_padding]] //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_program|filter_program]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_source|filter_source]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
-| [[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_state|filter_state]] //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]// | No description supplied. |
+%%Marks this filter as invalid.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**//
+<code c>
+void *evas_filter_output_buffer_get(const Eo *obj);
+</code>
 
-===== Events =====
+%%Retrieve cached output buffer, if any.%%\\ 
+\\ 
 
-This class does not define any events.
+===== Overrides =====
+
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_data|filter_data]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_data_get(const Eo *obj, const char *name, const char **value, Eina_Bool *execute);
+void efl_gfx_filter_data_set(Eo *obj, const char *name, const char *value, Eina_Bool execute);
+</code>
+
+%%Extra data used by the filter program.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_padding_get(const Eo *obj, int *l, int *r, int *t, int *b);
+</code>
+
+%%Required padding to apply this filter without cropping.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_program|filter_program]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_program_get(const Eo *obj, const char **code, const char **name);
+void efl_gfx_filter_program_set(Eo *obj, const char *code, const char *name);
+</code>
+
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_source|filter_source]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+Efl_Gfx *efl_gfx_filter_source_get(const Eo *obj, const char *name);
+void efl_gfx_filter_source_set(Eo *obj, const char *name, Efl_Gfx *source);
+</code>
+
+%%Bind an object to use as a mask or texture in a filter program.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_state_get(const Eo *obj, const char **cur_state, double *cur_val, const char **next_state, double *next_val, double *pos);
+void efl_gfx_filter_state_set(Eo *obj, const char *cur_state, double cur_val, const char *next_state, double next_val, double pos);
+</code>
+
+%%Set the current state of the filter.%%\\ 
+\\ 
+
+===== Others =====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+<code c>
+Eina_Iterator *efl_children_iterator_new(Eo *obj);
+</code>
+
+%%Get an iterator on all childrens%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
+<code c>
+Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Make an object a composite object of another.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
+<code c>
+Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Detach a composite object from another object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
+<code c>
+Eina_Bool efl_composite_part_is(Eo *obj);
+</code>
+
+%%Check if an object is part of a composite object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:dbg_info_get|dbg_info_get]]**
+<code c>
+void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
+</code>
+
+%%Get debug information from the object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
+<code c>
+void efl_del(const Eo *obj);
+</code>
+
+%%Unrefs the object and reparents it to NULL.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
+<code c>
+Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
+</code>
+
+%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
+<code c>
+Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
+</code>
+
+%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_call|event_callback_call]]**
+<code c>
+Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
+</code>
+
+%%Call the callbacks for an event of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
+<code c>
+Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
+</code>
+
+%%Delete a callback with a specific data associated to it for an event.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+<code c>
+void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Add an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+<code c>
+void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Remove an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_legacy_call|event_callback_legacy_call]]**
+<code c>
+Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
+</code>
+
+%%Call the callbacks for an event of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
+<code c>
+Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
+</code>
+
+%%Add a callback for an event with a specific priority.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+<code c>
+void efl_event_callback_stop(Eo *obj);
+</code>
+
+%%Stop the current callback call.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+<code c>
+void efl_event_global_freeze(const Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+<code c>
+void efl_event_global_thaw(const Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:finalize|finalize]]**
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
+<code c>
+Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
+</code>
+
+%%Track a future life cycle and cancel it if the object die%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
+<code c>
+Efl_Object *efl_name_find(Eo *obj, const char *search);
+</code>
+
+%%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:provider_find|provider_find]]**
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+
+%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
+<code c>
+void efl_wref_add(Eo *obj, Efl_Object **wref);
+</code>
+
+%%Add a new weak reference to obj.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
+<code c>
+void efl_wref_del(Eo *obj, Efl_Object **wref);
+</code>
+
+%%Delete the weak reference passed.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
+<code c>
+const char *efl_comment_get(const Eo *obj);
+void efl_comment_set(Eo *obj, const char *comment);
+</code>
+
+%%A human readable comment for the object%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_global_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
+<code c>
+Eina_Bool efl_finalized_get(const Eo *obj);
+</code>
+
+%%True if the object is already finalized, false otherwise.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
+<code c>
+void *efl_key_data_get(const Eo *obj, const char *key);
+void efl_key_data_set(Eo *obj, const char *key, const void *data);
+</code>
+
+%%Generic data with string key on an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
+void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
+</code>
+
+%%Generic object reference with string key to object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
+<code c>
+Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
+void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
+</code>
+
+%%Value on with string key on the object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
+void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
+</code>
+
+%%Generic weak object reference with string key to object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
+<code c>
+const char *efl_name_get(const Eo *obj);
+void efl_name_set(Eo *obj, const char *name);
+</code>
+
+%%The name of the object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:parent|parent]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
+\\ 
+
+===== Inherited Events =====
+
+^ Event name ^ Brief description ^
+| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
+| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
+| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |

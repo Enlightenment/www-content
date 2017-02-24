@@ -27,29 +27,122 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:interface:elm:interface:atspi:text:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:method:selection_add|selection_add]] | %%Add selection%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:method:selection_remove|selection_remove]] | %%Remove selection%% |
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:method:selection_add|selection_add]]**
+<code c>
+Eina_Bool elm_interface_atspi_text_selection_add(Eo *obj, int start_offset, int end_offset);
+</code>
 
-===== Properties =====
+%%Add selection%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:method:selection_remove|selection_remove]]**
+<code c>
+Eina_Bool elm_interface_atspi_text_selection_remove(Eo *obj, int selection_number);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:attributes|attributes]] //**(get)**// | %%Gets list of all text attributes.%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:attribute|attribute]] //**(get)**// | %%Indicate if a text attribute with a given name is set%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:bounded_ranges|bounded_ranges]] //**(get)**// | %%Bounded ranges%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:caret_offset|caret_offset]] //**(get, set)**// | %%Caret offset property%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:character_count|character_count]] //**(get)**// | %%Character count%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:character_extents|character_extents]] //**(get)**// | %%Character extents%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:character|character]] //**(get)**// | %%Gets single character present in accessible widget's text at given offset.%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:default_attributes|default_attributes]] //**(get)**// | %%Default attributes%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:offset_at_point|offset_at_point]] //**(get)**// | %%Offset at given point%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:range_extents|range_extents]] //**(get)**// | %%Range extents%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:selections_count|selections_count]] //**(get)**// | %%Selection count property%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:selection|selection]] //**(get, set)**// | %%Selection property%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:string|string]] //**(get)**// | %%Gets string, start and end offset in text according to given initial offset and granularity.%% |
-| [[:docs:efl:auto:interface:elm:interface:atspi:text:property:text|text]] //**(get)**// | %%Gets text of accessible widget.%% |
+%%Remove selection%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:attributes|attributes]]** //**(get)**//
+<code c>
+Eina_List *elm_interface_atspi_text_attributes_get(const Eo *obj, int *start_offset, int *end_offset);
+</code>
+
+%%Gets list of all text attributes.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:attribute|attribute]]** //**(get)**//
+<code c>
+Eina_Bool elm_interface_atspi_text_attribute_get(const Eo *obj, const char *name, int *start_offset, int *end_offset, char **value);
+</code>
+
+%%Indicate if a text attribute with a given name is set%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:bounded_ranges|bounded_ranges]]** //**(get)**//
+<code c>
+Eina_List *elm_interface_atspi_text_bounded_ranges_get(const Eo *obj, Eina_Bool screen_coords, Eina_Rectangle rect, Elm_Atspi_Text_Clip_Type xclip, Elm_Atspi_Text_Clip_Type yclip);
+</code>
+
+%%Bounded ranges%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:caret_offset|caret_offset]]** //**(get, set)**//
+<code c>
+int elm_interface_atspi_text_caret_offset_get(const Eo *obj);
+Eina_Bool elm_interface_atspi_text_caret_offset_set(Eo *obj, int offset);
+</code>
+
+%%Caret offset property%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:character_count|character_count]]** //**(get)**//
+<code c>
+int elm_interface_atspi_text_character_count_get(const Eo *obj);
+</code>
+
+%%Character count%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:character_extents|character_extents]]** //**(get)**//
+<code c>
+Eina_Bool elm_interface_atspi_text_character_extents_get(const Eo *obj, int offset, Eina_Bool screen_coords, Eina_Rectangle *rect);
+</code>
+
+%%Character extents%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:character|character]]** //**(get)**//
+<code c>
+Eina_Unicode elm_interface_atspi_text_character_get(const Eo *obj, int offset);
+</code>
+
+%%Gets single character present in accessible widget's text at given offset.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:default_attributes|default_attributes]]** //**(get)**//
+<code c>
+Eina_List *elm_interface_atspi_text_default_attributes_get(const Eo *obj);
+</code>
+
+%%Default attributes%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:offset_at_point|offset_at_point]]** //**(get)**//
+<code c>
+int elm_interface_atspi_text_offset_at_point_get(const Eo *obj, Eina_Bool screen_coords, int x, int y);
+</code>
+
+%%Offset at given point%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:range_extents|range_extents]]** //**(get)**//
+<code c>
+Eina_Bool elm_interface_atspi_text_range_extents_get(const Eo *obj, Eina_Bool screen_coords, int start_offset, int end_offset, Eina_Rectangle *rect);
+</code>
+
+%%Range extents%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:selections_count|selections_count]]** //**(get)**//
+<code c>
+int elm_interface_atspi_text_selections_count_get(const Eo *obj);
+</code>
+
+%%Selection count property%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:selection|selection]]** //**(get, set)**//
+<code c>
+void elm_interface_atspi_text_selection_get(const Eo *obj, int selection_number, int *start_offset, int *end_offset);
+Eina_Bool elm_interface_atspi_text_selection_set(Eo *obj, int selection_number, int start_offset, int end_offset);
+</code>
+
+%%Selection property%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:string|string]]** //**(get)**//
+<code c>
+char *elm_interface_atspi_text_string_get(const Eo *obj, Elm_Atspi_Text_Granularity granularity, int *start_offset, int *end_offset);
+</code>
+
+%%Gets string, start and end offset in text according to given initial offset and granularity.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:elm:interface:atspi:text:property:text|text]]** //**(get)**//
+<code c>
+char *elm_interface_atspi_text_get(const Eo *obj, int start_offset, int end_offset);
+</code>
+
+%%Gets text of accessible widget.%%\\ 
+\\ 
 
 ===== Events =====
 

@@ -27,35 +27,154 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:mixin:efl:gfx:path:description&nodate&nolink&nouser}}
 
-===== Methods =====
+===== Members =====
 
-^ Method name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_arc_to|append_arc_to]] | %%Append an arc that connects from the current point int the point list to the given point (x,y). The arc is defined by the given radius in  x-direction (rx) and radius in y direction (ry).%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_arc|append_arc]] | %%Append an arc that enclosed in the given rectangle (x, y, w, h). The angle is defined in counter clock wise , use -ve angle for clockwise arc.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_circle|append_circle]] | %%Append a circle with given center and radius.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_close|append_close]] | %%Closes the current subpath by drawing a line to the beginning of the subpath, automatically starting a new path. The current point of the new path is (0, 0).%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_cubic_to|append_cubic_to]] | %%Adds a cubic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x0, ctrl_y0), and (ctrl_x1, ctrl_y1). After the path is drawn, the current position is updated to be at the end point of the path.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_line_to|append_line_to]] | %%Adds a straight line from the current position to the given end point. After the line is drawn, the current position is updated to be at the end point of the line.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_move_to|append_move_to]] | %%Moves the current point to the given point,  implicitly starting a new subpath and closing the previous one.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]] | %%Adds a quadratic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x, ctrl_y). After the path is drawn, the current position is updated to be at the end point of the path.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_rect|append_rect]] | %%Append the given rectangle with rounded corner to the path.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_scubic_to|append_scubic_to]] | %%Same as efl_gfx_path_append_cubic_to() api only difference is that it uses the current control point to draw the bezier.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]] | %%Same as efl_gfx_path_append_quadratic_to() api only difference is that it uses the current control point to draw the bezier.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:append_svg_path|append_svg_path]] | %%Append SVG path data%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:bounds_get|bounds_get]] | %%Compute and return the bounding box of the currently set path%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:dup|dup]] | %%Copy the shape data from the object specified.%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:equal_commands|equal_commands]] | %%Equal commands in object%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:interpolate|interpolate]] | %%Interpolate object%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:method:reset|reset]] | %%Reset the shape data of the shape object.%% |
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_arc_to|append_arc_to]]**
+<code c>
+void efl_gfx_path_append_arc_to(Eo *obj, double x, double y, double rx, double ry, double angle, Eina_Bool large_arc, Eina_Bool sweep);
+</code>
 
-===== Properties =====
+%%Append an arc that connects from the current point int the point list to the given point (x,y). The arc is defined by the given radius in  x-direction (rx) and radius in y direction (ry).%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_arc|append_arc]]**
+<code c>
+void efl_gfx_path_append_arc(Eo *obj, double x, double y, double w, double h, double start_angle, double sweep_length);
+</code>
 
-^ Property name ^ Brief description ^
-| [[:docs:efl:auto:mixin:efl:gfx:path:property:current_ctrl|current_ctrl]] //**(get)**// | %%Current control point coordinates%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:property:current|current]] //**(get)**// | %%Current point coordinates%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:property:length|length]] //**(get)**// | %%Path length property%% |
-| [[:docs:efl:auto:mixin:efl:gfx:path:property:path|path]] //**(get, set)**// | %%Set the list of commands and points to be used to create the content of shape.%% |
+%%Append an arc that enclosed in the given rectangle (x, y, w, h). The angle is defined in counter clock wise , use -ve angle for clockwise arc.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_circle|append_circle]]**
+<code c>
+void efl_gfx_path_append_circle(Eo *obj, double x, double y, double radius);
+</code>
 
-===== Events =====
+%%Append a circle with given center and radius.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_close|append_close]]**
+<code c>
+void efl_gfx_path_append_close(Eo *obj);
+</code>
 
-This class does not define any events.
+%%Closes the current subpath by drawing a line to the beginning of the subpath, automatically starting a new path. The current point of the new path is (0, 0).%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_cubic_to|append_cubic_to]]**
+<code c>
+void efl_gfx_path_append_cubic_to(Eo *obj, double ctrl_x0, double ctrl_y0, double ctrl_x1, double ctrl_y1, double x, double y);
+</code>
+
+%%Adds a cubic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x0, ctrl_y0), and (ctrl_x1, ctrl_y1). After the path is drawn, the current position is updated to be at the end point of the path.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_line_to|append_line_to]]**
+<code c>
+void efl_gfx_path_append_line_to(Eo *obj, double x, double y);
+</code>
+
+%%Adds a straight line from the current position to the given end point. After the line is drawn, the current position is updated to be at the end point of the line.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_move_to|append_move_to]]**
+<code c>
+void efl_gfx_path_append_move_to(Eo *obj, double x, double y);
+</code>
+
+%%Moves the current point to the given point,  implicitly starting a new subpath and closing the previous one.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]]**
+<code c>
+void efl_gfx_path_append_quadratic_to(Eo *obj, double x, double y, double ctrl_x, double ctrl_y);
+</code>
+
+%%Adds a quadratic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x, ctrl_y). After the path is drawn, the current position is updated to be at the end point of the path.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_rect|append_rect]]**
+<code c>
+void efl_gfx_path_append_rect(Eo *obj, double x, double y, double w, double h, double rx, double ry);
+</code>
+
+%%Append the given rectangle with rounded corner to the path.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_scubic_to|append_scubic_to]]**
+<code c>
+void efl_gfx_path_append_scubic_to(Eo *obj, double x, double y, double ctrl_x, double ctrl_y);
+</code>
+
+%%Same as efl_gfx_path_append_cubic_to() api only difference is that it uses the current control point to draw the bezier.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]]**
+<code c>
+void efl_gfx_path_append_squadratic_to(Eo *obj, double x, double y);
+</code>
+
+%%Same as efl_gfx_path_append_quadratic_to() api only difference is that it uses the current control point to draw the bezier.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:append_svg_path|append_svg_path]]**
+<code c>
+void efl_gfx_path_append_svg_path(Eo *obj, const char *svg_path_data);
+</code>
+
+%%Append SVG path data%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:bounds_get|bounds_get]]**
+<code c>
+void efl_gfx_path_bounds_get(Eo *obj, Eina_Rectangle *r);
+</code>
+
+%%Compute and return the bounding box of the currently set path%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:dup|dup]]**
+<code c>
+void efl_gfx_path_dup(Eo *obj, const Efl_Object *dup_from);
+</code>
+
+%%Copy the shape data from the object specified.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:equal_commands|equal_commands]]**
+<code c>
+Eina_Bool efl_gfx_path_equal_commands(Eo *obj, const Efl_Object *with);
+</code>
+
+%%Equal commands in object%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:interpolate|interpolate]]**
+<code c>
+Eina_Bool efl_gfx_path_interpolate(Eo *obj, const Efl_Object *from, const Efl_Object *to, double pos_map);
+</code>
+
+%%Interpolate object%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:method:reset|reset]]**
+<code c>
+void efl_gfx_path_reset(Eo *obj);
+</code>
+
+%%Reset the shape data of the shape object.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//
+<code c>
+void efl_gfx_path_current_ctrl_get(const Eo *obj, double *x, double *y);
+</code>
+
+%%Current control point coordinates%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:property:current|current]]** //**(get)**//
+<code c>
+void efl_gfx_path_current_get(const Eo *obj, double *x, double *y);
+</code>
+
+%%Current point coordinates%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:property:length|length]]** //**(get)**//
+<code c>
+void efl_gfx_path_length_get(const Eo *obj, unsigned int *commands, unsigned int *points);
+</code>
+
+%%Path length property%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:efl:gfx:path:property:path|path]]** //**(get, set)**//
+<code c>
+void efl_gfx_path_get(const Eo *obj, const Efl_Gfx_Path_Command_Type **op, const double **points);
+void efl_gfx_path_set(Eo *obj, const Efl_Gfx_Path_Command_Type *op, const double *points);
+</code>
+
+%%Set the list of commands and points to be used to create the content of shape.%%\\ 
+\\ 
+

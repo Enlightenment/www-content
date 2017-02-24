@@ -1,5 +1,5 @@
 <title>Efl.Io.File.close_on_exec</title>
-//Overridden from [[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|Efl.Io.Closer.close_on_exec]].//===== Signature =====
+//Overridden from [[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|Efl.Io.Closer.close_on_exec]] **(set)**.//===== Signature =====
 
 <code>
 @property close_on_exec @pure_virtual {
@@ -20,6 +20,7 @@
 ===== C signature =====
 
 <code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
 Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
 </code>
 
@@ -28,10 +29,20 @@ Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
   * **close_on_exec** - %%%%''true''%% if close on exec(), %%''false''%% otherwise%%
 ===== Description =====
 
-%%If %%''true''%%, will close on exec() call.%%
+%%If true will automatically close resources on exec() calls.%%
+
+%%When using file descriptors this should set FD_CLOEXEC so they are not inherited by the processes (children or self) doing exec().%%
 
 //Since 1.19//
+
 {{page>:docs:efl:user:class:efl:io:file:property:close_on_exec:description&nodate&nolink&nouser}}
+
+==== Setter ====
+
+%%If %%''true''%%, will close on exec() call.%%
+
+//Since 1.19//{{page>:docs:efl:user:class:efl:io:file:property:close_on_exec:getter_description&nodate&nolink&nouser}}
+
 
 ===== Implemented by =====
 
