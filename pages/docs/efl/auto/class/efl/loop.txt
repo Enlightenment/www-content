@@ -112,32 +112,29 @@ Efl_Loop *efl_loop_main_get(const Eo *obj);
 %%Points to the main loop instance of the application.%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:efl:loop:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:method:constructor|constructor]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_constructor(Eo *obj);
 </code>
 
 %%Call the object's constructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:loop:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:loop:method:provider_find|provider_find]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:method:provider_find|provider_find]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
 \\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -386,14 +383,54 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:loop:event:arguments|arguments]] | %%Event happens when args are provided to the loop by args_add().%% |
-| [[:docs:efl:auto:class:efl:loop:event:idle_enter|idle,enter]] | %%Event occurs once the main loop enters the idle state.%% |
-| [[:docs:efl:auto:class:efl:loop:event:idle_exit|idle,exit]] | %%Event occurs once the main loop exits the idle state.%% |
-| [[:docs:efl:auto:class:efl:loop:event:idle|idle]] | %%Event occurs once the main loop is idler. Be carefull, this will spin your CPU high if you keep listening on this event.%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:loop:event:arguments|arguments]]**
+<code c>
+EFL_LOOP_EVENT_ARGUMENTS(Efl_Loop_Arguments)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Event happens when args are provided to the loop by args_add().%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:loop:event:idle_enter|idle,enter]]**
+<code c>
+EFL_LOOP_EVENT_IDLE_ENTER(void, @restart)
+</code>
+
+%%Event occurs once the main loop enters the idle state.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:loop:event:idle_exit|idle,exit]]**
+<code c>
+EFL_LOOP_EVENT_IDLE_EXIT(void, @restart)
+</code>
+
+%%Event occurs once the main loop exits the idle state.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:loop:event:idle|idle]]**
+<code c>
+EFL_LOOP_EVENT_IDLE(void, @restart)
+</code>
+
+%%Event occurs once the main loop is idler. Be carefull, this will spin your CPU high if you keep listening on this event.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

@@ -77,40 +77,33 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:class:efl:net:socket:udp:method:init|init]]**
-<code c>
-void efl_net_socket_udp_init(Eo *obj, Efl_Net_Ip_Address *remote_address);
-</code>
-
-%%Initialize the socket to communicate with given IP address%%\\ 
-\\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_groups_get|multicast_groups_get]]**
 <code c>
 Eina_Iterator *efl_net_socket_udp_multicast_groups_get(Eo *obj);
 </code>
 
-%%Return the multicast groups this server has joined.%%\\ 
+%%Returns the multicast groups this server has joined.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_join|multicast_join]]**
 <code c>
 Eina_Error efl_net_socket_udp_multicast_join(Eo *obj, const char *address);
 </code>
 
-%%Join a multicast group.%%\\ 
+%%Joins a multicast group.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:method:multicast_leave|multicast_leave]]**
 <code c>
 Eina_Error efl_net_socket_udp_multicast_leave(Eo *obj, const char *address);
 </code>
 
-%%Leave a multicast group.%%\\ 
+%%Leaves a multicast group.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:method:next_datagram_size_query|next_datagram_size_query]]**
 <code c>
 size_t efl_net_socket_udp_next_datagram_size_query(Eo *obj);
 </code>
 
-%%Query the next datagram size.%%\\ 
+%%Queries the next datagram size.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:property:bind|bind]]** //**(get, set)**//
 <code c>
@@ -118,7 +111,7 @@ const char *efl_net_socket_udp_bind_get(const Eo *obj);
 Eina_Error efl_net_socket_udp_bind_set(Eo *obj, const char *address);
 </code>
 
-%%Force binding to a specific address.%%\\ 
+%%Forces binding to a specific address.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:property:cork|cork]]** //**(get, set)**//
 <code c>
@@ -134,7 +127,7 @@ Eina_Bool efl_net_socket_udp_dont_route_get(const Eo *obj);
 Eina_Bool efl_net_socket_udp_dont_route_set(Eo *obj, Eina_Bool dont_route);
 </code>
 
-%%Avoid sent UDP packets being routed by a gateway, limiting them to the local network.%%\\ 
+%%Avoids sent UDP packets being routed by a gateway, limiting them to the local network.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:socket:udp:property:multicast_loopback|multicast_loopback]]** //**(get, set)**//
 <code c>
@@ -168,46 +161,15 @@ Eina_Bool efl_net_socket_udp_reuse_port_set(Eo *obj, Eina_Bool reuse_port);
 
 %%Controls port reuse() using SO_REUSEPORT (since Linux 3.9)%%\\ 
 \\ 
-
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:net:socket:udp:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+**[[:docs:efl:auto:class:efl:net:socket:udp:method:init|init]]** ''protected''
 <code c>
-Efl_Object *efl_constructor(Eo *obj);
+void efl_net_socket_udp_init(Eo *obj, Efl_Net_Ip_Address *remote_address);
 </code>
 
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:udp:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:udp:method:read|read]]** //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
-</code>
-
-%%Reads data into a pre-allocated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:udp:method:write|write]]** //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
-</code>
-
-%%Writes data from a pre-populated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:udp:property:fd|fd]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]]]//
-<code c>
-void efl_loop_fd_set(Eo *obj, int fd);
-</code>
-
-%%Define which file descriptor to watch. If it is a file, use file_fd variant.%%\\ 
+%%Initializes the socket to communicate with given IP address%%\\ 
 \\ 
 
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**//
 <code c>
@@ -217,12 +179,13 @@ void efl_loop_fd_file_set(Eo *obj, int fd);
 
 %%Define which file descriptor to watch when watching a file.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:loop:fd:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:net:socket:udp:property:fd|fd]]** //**(get, set)**// //[Overridden here]//
 <code c>
-void efl_parent_set(Eo *obj, Efl_Object *parent);
+int efl_loop_fd_get(const Eo *obj);
+void efl_loop_fd_set(Eo *obj, int fd);
 </code>
 
-%%The parent of an object.%%\\ 
+%%Define which file descriptor to watch. If it is a file, use file_fd variant.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -231,71 +194,42 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:method:close|close]]** //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Error efl_io_closer_close(Eo *obj);
-</code>
-
-%%Closes the Input/Output object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:address_local|address_local]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]]//
-<code c>
-const char *efl_net_socket_address_local_get(const Eo *obj);
-void efl_net_socket_address_local_set(Eo *obj, const char *address);
-</code>
-
-%%The local address, similar to getsockname().%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:address_remote|address_remote]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]]//
-<code c>
-const char *efl_net_socket_address_remote_get(const Eo *obj);
-void efl_net_socket_address_remote_set(Eo *obj, const char *address);
-</code>
-
-%%The remote address, similar to getpeername().%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:can_read|can_read]]** //**(set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:can_write|can_write]]** //**(set)**// //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:closed|closed]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_closed_get(const Eo *obj);
-</code>
-
-%%If true will notify object was closed.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:eos|eos]]** //**(set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
-</code>
-
-%%If %%''true''%% will notify end of stream.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:family|family]]** //**(get, set)**//
+[[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:family|family]]** //**(get, set)**// ''protected set''
 <code c>
 int efl_net_socket_fd_family_get(const Eo *obj);
 void efl_net_socket_fd_family_set(Eo *obj, int family);
 </code>
 
 %%The address family (AF_*) family of this socket.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:fd:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]]]//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:fd:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:udp:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:udp:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -534,23 +468,61 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:can_read|can_read]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
 <code c>
-Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
-void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
+void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
 </code>
 
-%%If true will automatically close() on object destructor.%%\\ 
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:eos|eos]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
 <code c>
-Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
-Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+Eina_Bool efl_io_reader_eos_get(const Eo *obj);
+void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
 </code>
 
-%%If true will automatically close resources on exec() calls.%%\\ 
+%%If %%''true''%% will notify end of stream.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**//
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:udp:method:read|read]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+
+%%Reads data into a pre-allocated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:can_write|can_write]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:net:socket:udp:method:write|write]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+
+%%Writes data from a pre-populated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:address_local|address_local]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
+<code c>
+const char *efl_net_socket_address_local_get(const Eo *obj);
+void efl_net_socket_address_local_set(Eo *obj, const char *address);
+</code>
+
+%%The local address, similar to getsockname().%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:address_remote|address_remote]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
+<code c>
+const char *efl_net_socket_address_remote_get(const Eo *obj);
+void efl_net_socket_address_remote_set(Eo *obj, const char *address);
+</code>
+
+%%The remote address, similar to getpeername().%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**// ''protected set''
 <code c>
 int efl_io_closer_fd_get(const Eo *obj);
 void efl_io_closer_fd_set(Eo *obj, int fd);
@@ -558,7 +530,38 @@ void efl_io_closer_fd_set(Eo *obj, int fd);
 
 %%Closer file descriptor%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:reader:fd|Efl.Io.Reader.Fd]].**[[:docs:efl:auto:mixin:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**//
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:fd:method:close|close]]** //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+
+%%Closes the Input/Output object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:fd:property:closed|closed]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:mixin:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:reader:fd|Efl.Io.Reader.Fd]].**[[:docs:efl:auto:mixin:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''
 <code c>
 int efl_io_reader_fd_get(const Eo *obj);
 void efl_io_reader_fd_set(Eo *obj, int fd);
@@ -566,7 +569,7 @@ void efl_io_reader_fd_set(Eo *obj, int fd);
 
 %%Reader file descriptor%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:writer:fd|Efl.Io.Writer.Fd]].**[[:docs:efl:auto:mixin:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**//
+[[:docs:efl:auto:mixin:efl:io:writer:fd|Efl.Io.Writer.Fd]].**[[:docs:efl:auto:mixin:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''
 <code c>
 int efl_io_writer_fd_get(const Eo *obj);
 void efl_io_writer_fd_set(Eo *obj, int fd);
@@ -575,20 +578,103 @@ void efl_io_writer_fd_set(Eo *obj, int fd);
 %%Writer file descriptor%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:loop:fd:event:error|Efl.Loop.Fd.error]] | %%Called when a error occurred on the file descriptor%% |
-| [[:docs:efl:auto:class:efl:loop:fd:event:read|Efl.Loop.Fd.read]] | %%Called when a read happened on the file descriptor%% |
-| [[:docs:efl:auto:class:efl:loop:fd:event:write|Efl.Loop.Fd.write]] | %%Called when a write happened on the file descriptor%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|Efl.Io.Reader.can_read,changed]] | %%Notifies can_read property changed.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|Efl.Io.Reader.can_read,changed]] | %%Notifies can_read property changed.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:eos|Efl.Io.Reader.eos]] | %%Notifies end of stream, when property is marked as true.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:eos|Efl.Io.Reader.eos]] | %%Notifies end of stream, when property is marked as true.%% |
-| [[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|Efl.Io.Writer.can_write,changed]] | %%Notifies can_write property changed.%% |
-| [[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|Efl.Io.Writer.can_write,changed]] | %%Notifies can_write property changed.%% |
-| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |
-| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |
+[[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:loop:fd:event:error|error]]**
+<code c>
+EFL_LOOP_FD_EVENT_ERROR(void)
+</code>
+
+%%Called when a error occurred on the file descriptor%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:loop:fd:event:read|read]]**
+<code c>
+EFL_LOOP_FD_EVENT_READ(void)
+</code>
+
+%%Called when a read happened on the file descriptor%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:loop:fd|Efl.Loop.Fd]].**[[:docs:efl:auto:class:efl:loop:fd:event:write|write]]**
+<code c>
+EFL_LOOP_FD_EVENT_WRITE(void)
+</code>
+
+%%Called when a write happened on the file descriptor%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|can_read,changed]]**
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+%%Notifies can_read property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|can_read,changed]]**
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+%%Notifies can_read property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:eos|eos]]**
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+%%Notifies end of stream, when property is marked as true.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:eos|eos]]**
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+%%Notifies end of stream, when property is marked as true.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|can_write,changed]]**
+<code c>
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+%%Notifies can_write property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|can_write,changed]]**
+<code c>
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+%%Notifies can_write property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 

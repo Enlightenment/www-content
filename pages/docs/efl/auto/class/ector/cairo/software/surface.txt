@@ -47,39 +47,8 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:class:ector:cairo:software:surface:description&nodate&nolink&nouser}}
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:ector:cairo:software:surface:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ector:cairo:software:surface:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ector:cairo:software:surface:method:pixels_set|pixels_set]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
-</code>
-
-%%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
-\\ 
-
-===== Others =====
-
-[[:docs:efl:auto:class:ector:cairo:surface|Ector.Cairo.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:method:renderer_factory_new|renderer_factory_new]]** //[from [[:docs:efl:auto:mixin:ector:surface|Ector.Surface]]]//
-<code c>
-Efl_Object *ector_surface_renderer_factory_new(Eo *obj, const Efl_Class *type);
-</code>
-
-%%Create a new renderer factory for the given type%%\\ 
-\\ 
 [[:docs:efl:auto:class:ector:cairo:surface|Ector.Cairo.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:method:symbol_get|symbol_get]]**
 <code c>
 void *ector_cairo_surface_symbol_get(Eo *obj, const char *name);
@@ -95,12 +64,19 @@ void ector_cairo_surface_context_set(Eo *obj, cairo_t *ctx);
 
 %%Cairo context%%\\ 
 \\ 
-[[:docs:efl:auto:class:ector:cairo:surface|Ector.Cairo.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:property:reference_point|reference_point]]** //**(set)**// //[from [[:docs:efl:auto:mixin:ector:surface|Ector.Surface]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:cairo:software:surface:method:constructor|constructor]]** //[Overridden here]//
 <code c>
-void ector_surface_reference_point_set(Eo *obj, int x, int y);
+Efl_Object *efl_constructor(Eo *obj);
 </code>
 
-%%This define where is (0,0) in pixels coordinate inside the surface%%\\ 
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:cairo:software:surface:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -354,6 +330,13 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:class:ector:cairo:software:surface:method:pixels_set|pixels_set]]** //[Overridden here]//
+<code c>
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
+</code>
+
+%%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
+\\ 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:map|map]]**
 <code c>
 void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
@@ -410,7 +393,21 @@ void ector_buffer_size_get(const Eo *obj, int *w, int *h);
 
 %%The (rectangular) size of the pixel buffer.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:ector:software:buffer:base|Ector.Software.Buffer.Base]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_clear|pixels_clear]]**
+[[:docs:efl:auto:mixin:ector:surface|Ector.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:method:renderer_factory_new|renderer_factory_new]]** //[Overridden in [[:docs:efl:auto:class:ector:cairo:surface|Ector.Cairo.Surface]]]//
+<code c>
+Efl_Object *ector_surface_renderer_factory_new(Eo *obj, const Efl_Class *type);
+</code>
+
+%%Create a new renderer factory for the given type%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:surface|Ector.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:property:reference_point|reference_point]]** //**(set)**// //[Overridden in [[:docs:efl:auto:class:ector:cairo:surface|Ector.Cairo.Surface]]]//
+<code c>
+void ector_surface_reference_point_set(Eo *obj, int x, int y);
+</code>
+
+%%This define where is (0,0) in pixels coordinate inside the surface%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:software:buffer:base|Ector.Software.Buffer.Base]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_clear|pixels_clear]]** ''protected''
 <code c>
 void ector_software_buffer_pixels_clear(Eo *obj);
 </code>
@@ -418,11 +415,40 @@ void ector_software_buffer_pixels_clear(Eo *obj);
 %%Clear internal pixel buffer%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:mixin:ector:buffer:event:detached|Ector.Buffer.detached]] | %%Emitted whenever the previously attached pixels are detached during pixels_set%% |
-| [[:docs:efl:auto:mixin:ector:buffer:event:detached|Ector.Buffer.detached]] | %%Emitted whenever the previously attached pixels are detached during pixels_set%% |
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 

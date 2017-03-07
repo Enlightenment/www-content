@@ -46,32 +46,22 @@ void ecore_obj_exe_command_set(Eo *obj, const char *exe_cmd, Ecore_Exe_Flags fla
 %%Control the command that's executed. FIXME: May need a split/rename.%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:ecore:exe:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:exe:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:ecore:exe:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:exe:method:finalize|finalize]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_finalize(Eo *obj);
 </code>
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:ecore:exe:property:suspend|suspend]]** //**(set)**// //[from [[:docs:efl:auto:interface:efl:control|Efl.Control]]]//
-<code c>
-void efl_control_suspend_set(Eo *obj, Eina_Bool suspend);
-</code>
-
-%%Controls whether the object is suspended or not.%%\\ 
-\\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -324,6 +314,14 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:control|Efl.Control]].**[[:docs:efl:auto:class:ecore:exe:property:suspend|suspend]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_control_suspend_get(const Eo *obj);
+void efl_control_suspend_set(Eo *obj, Eina_Bool suspend);
+</code>
+
+%%Controls whether the object is suspended or not.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:control|Efl.Control]].**[[:docs:efl:auto:interface:efl:control:property:priority|priority]]** //**(get, set)**//
 <code c>
 int efl_control_priority_get(const Eo *obj);
@@ -335,12 +333,40 @@ void efl_control_priority_set(Eo *obj, int priority);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:ecore:exe:event:data_error|data,error]] | %%Error received event from the child process%% |
-| [[:docs:efl:auto:class:ecore:exe:event:data_get|data,get]] | %%Data received event from the child process%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:ecore:exe:event:data_error|data,error]]**
+<code c>
+ECORE_EXE_EVENT_DATA_ERROR(Ecore_Exe_Event_Data)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Error received event from the child process%%\\ 
+\\ 
+**[[:docs:efl:auto:class:ecore:exe:event:data_get|data,get]]**
+<code c>
+ECORE_EXE_EVENT_DATA_GET(Ecore_Exe_Event_Data)
+</code>
+
+%%Data received event from the child process%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

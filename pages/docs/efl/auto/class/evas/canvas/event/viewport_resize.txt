@@ -5,10 +5,31 @@
 viewport,resize @beta;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EVAS_CANVAS_EVENT_VIEWPORT_RESIZE;
+EVAS_CANVAS_EVENT_VIEWPORT_RESIZE(void, @beta)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_evas_canvas_event_viewport_resize(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EVAS_CANVAS_EVENT_VIEWPORT_RESIZE, on_evas_canvas_event_viewport_resize, d);
+}
+
 </code>
 
 ===== Description =====

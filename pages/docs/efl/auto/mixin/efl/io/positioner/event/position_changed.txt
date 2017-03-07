@@ -5,10 +5,31 @@
 position,changed;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_IO_POSITIONER_EVENT_POSITION_CHANGED;
+EFL_IO_POSITIONER_EVENT_POSITION_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_positioner_event_position_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_POSITIONER_EVENT_POSITION_CHANGED, on_efl_io_positioner_event_position_changed, d);
+}
+
 </code>
 
 ===== Description =====

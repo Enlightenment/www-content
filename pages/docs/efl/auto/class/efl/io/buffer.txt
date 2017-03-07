@@ -115,121 +115,22 @@ Eina_Slice efl_io_buffer_slice_get(const Eo *obj);
 %%Get a temporary access to buffer's internal memory.%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:efl:io:buffer:method:close|close]]** //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Error efl_io_closer_close(Eo *obj);
-</code>
-
-%%Closes the Input/Output object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:buffer:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:buffer:method:finalize|finalize]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_finalize(Eo *obj);
 </code>
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:read|read]]** //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
-</code>
-
-%%Reads data into a pre-allocated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:resize|resize]]** //[from [[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]]]//
-<code c>
-Eina_Error efl_io_sizer_resize(Eo *obj, uint64_t size);
-</code>
-
-%%Resize object%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:seek|seek]]** //[from [[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]]]//
-<code c>
-Eina_Error efl_io_positioner_seek(Eo *obj, int64_t offset, Efl_Io_Positioner_Whence whence);
-</code>
-
-%%Seek in data%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:method:write|write]]** //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
-</code>
-
-%%Writes data from a pre-populated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:can_read|can_read]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
-void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:can_write|can_write]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
-void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
-void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
-</code>
-
-%%If true will automatically close() on object destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
-Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
-</code>
-
-%%If true will automatically close resources on exec() calls.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:closed|closed]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_closed_get(const Eo *obj);
-</code>
-
-%%If true will notify object was closed.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:eos|eos]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Bool efl_io_reader_eos_get(const Eo *obj);
-void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
-</code>
-
-%%If %%''true''%% will notify end of stream.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:position|position]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]]]//
-<code c>
-uint64_t efl_io_positioner_position_get(const Eo *obj);
-</code>
-
-%%Position property%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:buffer:property:size|size]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]]]//
-<code c>
-uint64_t efl_io_sizer_size_get(const Eo *obj);
-</code>
-
-%%Size property%%\\ 
-\\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -482,22 +383,191 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:io:buffer:method:read|read]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+
+%%Reads data into a pre-allocated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:io:buffer:property:can_read|can_read]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
+void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
+</code>
+
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:io:buffer:property:eos|eos]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_eos_get(const Eo *obj);
+void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
+</code>
+
+%%If %%''true''%% will notify end of stream.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:io:buffer:method:write|write]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+
+%%Writes data from a pre-populated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:io:buffer:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:buffer:method:close|close]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+
+%%Closes the Input/Output object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:buffer:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:buffer:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:buffer:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:docs:efl:auto:class:efl:io:buffer:method:seek|seek]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_positioner_seek(Eo *obj, int64_t offset, Efl_Io_Positioner_Whence whence);
+</code>
+
+%%Seek in data%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:docs:efl:auto:class:efl:io:buffer:property:position|position]]** //**(get, set)**// //[Overridden here]//
+<code c>
+uint64_t efl_io_positioner_position_get(const Eo *obj);
+Eina_Bool efl_io_positioner_position_set(Eo *obj, uint64_t position);
+</code>
+
+%%Position property%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:docs:efl:auto:class:efl:io:buffer:method:resize|resize]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_sizer_resize(Eo *obj, uint64_t size);
+</code>
+
+%%Resize object%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:docs:efl:auto:class:efl:io:buffer:property:size|size]]** //**(get, set)**// //[Overridden here]//
+<code c>
+uint64_t efl_io_sizer_size_get(const Eo *obj);
+Eina_Bool efl_io_sizer_size_set(Eo *obj, uint64_t size);
+</code>
+
+%%Size property%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:io:buffer:event:position_read_changed|position_read,changed]] | %%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_read|Efl.Io.Buffer.position_read]]%% changed%% |
-| [[:docs:efl:auto:class:efl:io:buffer:event:position_write_changed|position_write,changed]] | %%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_write|Efl.Io.Buffer.position_write]]%% changed%% |
-| [[:docs:efl:auto:class:efl:io:buffer:event:reallocated|reallocated]] | %%Notifies the internal buffer was reallocated, thus whatever was returned by %%[[:docs:efl:auto:class:efl:io:buffer:property:slice|Efl.Io.Buffer.slice]]%% becomes invalid%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:io:buffer:event:position_read_changed|position_read,changed]]**
+<code c>
+EFL_IO_BUFFER_EVENT_POSITION_READ_CHANGED(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|Efl.Io.Reader.can_read,changed]] | %%Notifies can_read property changed.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:eos|Efl.Io.Reader.eos]] | %%Notifies end of stream, when property is marked as true.%% |
-| [[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|Efl.Io.Writer.can_write,changed]] | %%Notifies can_write property changed.%% |
-| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |
-| [[:docs:efl:auto:mixin:efl:io:positioner:event:position_changed|Efl.Io.Positioner.position,changed]] | %%Notifies position changed%% |
-| [[:docs:efl:auto:mixin:efl:io:sizer:event:size_changed|Efl.Io.Sizer.size,changed]] | %%Notifies size changed%% |
+%%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_read|Efl.Io.Buffer.position_read]]%% changed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:buffer:event:position_write_changed|position_write,changed]]**
+<code c>
+EFL_IO_BUFFER_EVENT_POSITION_WRITE_CHANGED(void)
+</code>
+
+%%Notifies %%[[:docs:efl:auto:class:efl:io:buffer:property:position_write|Efl.Io.Buffer.position_write]]%% changed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:buffer:event:reallocated|reallocated]]**
+<code c>
+EFL_IO_BUFFER_EVENT_REALLOCATED(void)
+</code>
+
+%%Notifies the internal buffer was reallocated, thus whatever was returned by %%[[:docs:efl:auto:class:efl:io:buffer:property:slice|Efl.Io.Buffer.slice]]%% becomes invalid%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|can_read,changed]]**
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+%%Notifies can_read property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:eos|eos]]**
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+%%Notifies end of stream, when property is marked as true.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|can_write,changed]]**
+<code c>
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+%%Notifies can_write property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:docs:efl:auto:mixin:efl:io:positioner:event:position_changed|position,changed]]**
+<code c>
+EFL_IO_POSITIONER_EVENT_POSITION_CHANGED(void)
+</code>
+
+%%Notifies position changed%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:docs:efl:auto:mixin:efl:io:sizer:event:size_changed|size,changed]]**
+<code c>
+EFL_IO_SIZER_EVENT_SIZE_CHANGED(void)
+</code>
+
+%%Notifies size changed%%\\ 
+\\ 

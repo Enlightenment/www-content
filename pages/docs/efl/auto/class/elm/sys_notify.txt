@@ -50,45 +50,7 @@ Eina_Bool elm_obj_sys_notify_servers_set(Eo *obj, Elm_Sys_Notify_Server servers)
 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:elm:sys_notify:method:close|close]]** //[from [[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]]]//
-<code c>
-void elm_obj_sys_notify_interface_close(const Eo *obj, unsigned int id);
-</code>
-
-%%Causes a notification to be forcefully closed and removed from the user's view. It can be used, for example, in the event that what the notification  pertains to is no longer relevant, or to cancel a notification with no expiration time.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:sys_notify:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:sys_notify:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:sys_notify:method:send|send]]** //[from [[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]]]//
-<code c>
-void elm_obj_sys_notify_interface_send(const Eo *obj, unsigned int replaces_id, const char *icon, const char *summary, const char *body, Elm_Sys_Notify_Urgency urgency, int timeout, Elm_Sys_Notify_Send_Cb cb, const void *cb_data);
-</code>
-
-%%Causes a notification to be forcefully closed and removed from the user's view. It can be used, for example, in the event that what the notification pertains to is no longer relevant, or to cancel a notification with no expiration time.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:sys_notify:method:simple_send|simple_send]]** //[from [[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]]]//
-<code c>
-void elm_obj_sys_notify_interface_simple_send(const Eo *obj, const char *icon, const char *summary, const char *body);
-</code>
-
-%%Create a new notification just with Icon, Body and Summary. It is a helper that wraps the send method%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -342,10 +304,62 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:sys_notify:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
 
-===== Inherited Events =====
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:sys_notify:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]].**[[:docs:efl:auto:class:elm:sys_notify:method:close|close]]** //[Overridden here]//
+<code c>
+void elm_obj_sys_notify_interface_close(const Eo *obj, unsigned int id);
+</code>
+
+%%Causes a notification to be forcefully closed and removed from the user's view. It can be used, for example, in the event that what the notification  pertains to is no longer relevant, or to cancel a notification with no expiration time.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]].**[[:docs:efl:auto:class:elm:sys_notify:method:send|send]]** //[Overridden here]//
+<code c>
+void elm_obj_sys_notify_interface_send(const Eo *obj, unsigned int replaces_id, const char *icon, const char *summary, const char *body, Elm_Sys_Notify_Urgency urgency, int timeout, Elm_Sys_Notify_Send_Cb cb, const void *cb_data);
+</code>
+
+%%Causes a notification to be forcefully closed and removed from the user's view. It can be used, for example, in the event that what the notification pertains to is no longer relevant, or to cancel a notification with no expiration time.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:elm:sys_notify_interface|Elm.Sys_Notify_Interface]].**[[:docs:efl:auto:class:elm:sys_notify:method:simple_send|simple_send]]** //[Overridden here]//
+<code c>
+void elm_obj_sys_notify_interface_simple_send(const Eo *obj, const char *icon, const char *summary, const char *body);
+</code>
+
+%%Create a new notification just with Icon, Body and Summary. It is a helper that wraps the send method%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

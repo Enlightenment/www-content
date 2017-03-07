@@ -5,10 +5,31 @@
 page,saved;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_PREFS_EVENT_PAGE_SAVED;
+ELM_PREFS_EVENT_PAGE_SAVED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_prefs_event_page_saved(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_PREFS_EVENT_PAGE_SAVED, on_elm_prefs_event_page_saved, d);
+}
+
 </code>
 
 ===== Description =====

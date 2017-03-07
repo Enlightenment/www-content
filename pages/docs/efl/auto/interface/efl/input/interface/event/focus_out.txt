@@ -5,10 +5,31 @@
 focus,out: Efl.Input.Focus;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Input_Focus *EFL_EVENT_FOCUS_OUT;
+EFL_EVENT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_focus_out(void *data, const Efl_Event *event)
+{
+    Efl_Input_Focus *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_FOCUS_OUT, on_efl_event_focus_out, d);
+}
+
 </code>
 
 ===== Description =====

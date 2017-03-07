@@ -54,31 +54,7 @@ void efl_loop_fd_set(Eo *obj, int fd);
 %%Define which file descriptor to watch. If it is a file, use file_fd variant.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:loop:fd:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:fd:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:fd:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_parent_set(Eo *obj, Efl_Object *parent);
-</code>
-
-%%The parent of an object.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -86,6 +62,28 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 </code>
 
 %%The loop to which this object belongs to.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:fd:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:fd:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:fd:property:parent|parent]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -334,13 +332,47 @@ void efl_name_set(Eo *obj, const char *name);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:loop:fd:event:error|error]] | %%Called when a error occurred on the file descriptor%% |
-| [[:docs:efl:auto:class:efl:loop:fd:event:read|read]] | %%Called when a read happened on the file descriptor%% |
-| [[:docs:efl:auto:class:efl:loop:fd:event:write|write]] | %%Called when a write happened on the file descriptor%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:loop:fd:event:error|error]]**
+<code c>
+EFL_LOOP_FD_EVENT_ERROR(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Called when a error occurred on the file descriptor%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:loop:fd:event:read|read]]**
+<code c>
+EFL_LOOP_FD_EVENT_READ(void)
+</code>
+
+%%Called when a read happened on the file descriptor%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:loop:fd:event:write|write]]**
+<code c>
+EFL_LOOP_FD_EVENT_WRITE(void)
+</code>
+
+%%Called when a write happened on the file descriptor%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

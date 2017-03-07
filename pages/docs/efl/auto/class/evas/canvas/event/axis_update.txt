@@ -5,10 +5,31 @@
 axis,update @beta;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EVAS_CANVAS_EVENT_AXIS_UPDATE;
+EVAS_CANVAS_EVENT_AXIS_UPDATE(void, @beta)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_evas_canvas_event_axis_update(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EVAS_CANVAS_EVENT_AXIS_UPDATE, on_evas_canvas_event_axis_update, d);
+}
+
 </code>
 
 ===== Description =====

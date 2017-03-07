@@ -5,10 +5,31 @@
 technology,add: Efl.Net.Control.Technology;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Net_Control_Technology *EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD;
+EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD(Efl_Net_Control_Technology *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_control_event_technology_add(void *data, const Efl_Event *event)
+{
+    Efl_Net_Control_Technology *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD, on_efl_net_control_event_technology_add, d);
+}
+
 </code>
 
 ===== Description =====

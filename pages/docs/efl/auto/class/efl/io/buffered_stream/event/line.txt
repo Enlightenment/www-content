@@ -5,10 +5,31 @@
 line: ptr(const(Eina.Slice));
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-const Eina_Slice *EFL_IO_BUFFERED_STREAM_EVENT_LINE;
+EFL_IO_BUFFERED_STREAM_EVENT_LINE(const Eina_Slice *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_buffered_stream_event_line(void *data, const Efl_Event *event)
+{
+    const Eina_Slice *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_BUFFERED_STREAM_EVENT_LINE, on_efl_io_buffered_stream_event_line, d);
+}
+
 </code>
 
 ===== Description =====

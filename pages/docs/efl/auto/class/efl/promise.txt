@@ -71,24 +71,7 @@ void efl_promise_value_set(Eo *obj, void *v, Eina_Free_Cb free_cb);
 %%The value expected by all connected future.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:promise:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:promise:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -97,8 +80,9 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
@@ -348,16 +332,64 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:promise:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:promise:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:promise:event:future_none|future,none]] | %%This event is triggered whenever there is no more future connected to the promise.%% |
-| [[:docs:efl:auto:class:efl:promise:event:future_progress_set|future,progress,set]] | %%This event is triggered whenever a future has a progress callback registered and the user does not hold any more reference on it.%% |
-| [[:docs:efl:auto:class:efl:promise:event:future_set|future,set]] | %%This event is triggered whenever a future is fully set to receive all events and that the user of it do not hold any more reference on it.%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:promise:event:future_none|future,none]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_NONE(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%This event is triggered whenever there is no more future connected to the promise.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:promise:event:future_progress_set|future,progress,set]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_PROGRESS_SET(Efl_Future *)
+</code>
+
+%%This event is triggered whenever a future has a progress callback registered and the user does not hold any more reference on it.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:promise:event:future_set|future,set]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_SET(Efl_Future *)
+</code>
+
+%%This event is triggered whenever a future is fully set to receive all events and that the user of it do not hold any more reference on it.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

@@ -35,38 +35,7 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:class:efl:vpath:file:core:description&nodate&nolink&nouser}}
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:vpath:file:core:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:vpath:file:core:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:vpath:file:core:method:do|do]]** //[from [[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]]]//
-<code c>
-Eina_Bool efl_vpath_file_do(Eo *obj);
-</code>
-
-%%Actually begin the resolving here - emit event now or do later%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:vpath:file:core:method:wait|wait]]** //[from [[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]]]//
-<code c>
-void efl_vpath_file_wait(Eo *obj);
-</code>
-
-%%If not fetched yet, wait until it is and call result cb%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -320,6 +289,34 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:vpath:file:core:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:vpath:file:core:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]].**[[:docs:efl:auto:class:efl:vpath:file:core:method:do|do]]** //[Overridden here]//
+<code c>
+Eina_Bool efl_vpath_file_do(Eo *obj);
+</code>
+
+%%Actually begin the resolving here - emit event now or do later%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]].**[[:docs:efl:auto:class:efl:vpath:file:core:method:wait|wait]]** //[Overridden here]//
+<code c>
+void efl_vpath_file_wait(Eo *obj);
+</code>
+
+%%If not fetched yet, wait until it is and call result cb%%\\ 
+\\ 
 [[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]].**[[:docs:efl:auto:class:efl:vpath:file:property:keep|keep]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_vpath_file_keep_get(const Eo *obj);
@@ -345,11 +342,40 @@ void efl_vpath_file_result_set(Eo *obj, const char *path);
 %%The resulting real local file path to open/read%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:class:efl:vpath:file:event:failed|Efl.Vpath.File.failed]] | %%File fetch or mapping failed%% |
-| [[:docs:efl:auto:class:efl:vpath:file:event:fetched|Efl.Vpath.File.fetched]] | %%File successfully mapped/fetched%% |
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]].**[[:docs:efl:auto:class:efl:vpath:file:event:failed|failed]]**
+<code c>
+EFL_VPATH_FILE_EVENT_FAILED(void)
+</code>
+
+%%File fetch or mapping failed%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:vpath:file|Efl.Vpath.File]].**[[:docs:efl:auto:class:efl:vpath:file:event:fetched|fetched]]**
+<code c>
+EFL_VPATH_FILE_EVENT_FETCHED(void)
+</code>
+
+%%File successfully mapped/fetched%%\\ 
+\\ 

@@ -5,10 +5,31 @@
 access,text,inserted;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_INTERFACE_ATSPI_TEXT_EVENT_ACCESS_TEXT_INSERTED;
+ELM_INTERFACE_ATSPI_TEXT_EVENT_ACCESS_TEXT_INSERTED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_interface_atspi_text_event_access_text_inserted(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_INTERFACE_ATSPI_TEXT_EVENT_ACCESS_TEXT_INSERTED, on_elm_interface_atspi_text_event_access_text_inserted, d);
+}
+
 </code>
 
 ===== Description =====

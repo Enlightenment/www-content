@@ -5,10 +5,31 @@
 animate,done;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_UI_FLIP_EVENT_ANIMATE_DONE;
+EFL_UI_FLIP_EVENT_ANIMATE_DONE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_ui_flip_event_animate_done(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_UI_FLIP_EVENT_ANIMATE_DONE, on_efl_ui_flip_event_animate_done, d);
+}
+
 </code>
 
 ===== Description =====

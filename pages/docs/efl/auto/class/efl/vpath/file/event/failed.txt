@@ -5,10 +5,31 @@
 failed;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_VPATH_FILE_EVENT_FAILED;
+EFL_VPATH_FILE_EVENT_FAILED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_vpath_file_event_failed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_VPATH_FILE_EVENT_FAILED, on_efl_vpath_file_event_failed, d);
+}
+
 </code>
 
 ===== Description =====

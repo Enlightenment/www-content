@@ -5,10 +5,31 @@
 closed;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_IO_CLOSER_EVENT_CLOSED;
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_closer_event_closed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_CLOSER_EVENT_CLOSED, on_efl_io_closer_event_closed, d);
+}
+
 </code>
 
 ===== Description =====

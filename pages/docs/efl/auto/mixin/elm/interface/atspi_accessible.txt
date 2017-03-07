@@ -35,27 +35,6 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_emit|event_emit]]**
-<code c>
-void elm_interface_atspi_accessible_event_emit(const Eo *obj, Elm_Interface_Atspi_Accessible *accessible, const Efl_Event_Description *event, void *event_info);
-</code>
-
-%%Emit event%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_handler_add|event_handler_add]]**
-<code c>
-Elm_Atspi_Event_Handler *elm_interface_atspi_accessible_event_handler_add(const Eo *obj, Efl_Event_Cb cb, void *data);
-</code>
-
-%%Register accessibility event listener%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_handler_del|event_handler_del]]**
-<code c>
-void elm_interface_atspi_accessible_event_handler_del(const Eo *obj, Elm_Atspi_Event_Handler *handler);
-</code>
-
-%%Deregister accessibility event listener%%\\ 
-\\ 
 **[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:relationship_append|relationship_append]]**
 <code c>
 Eina_Bool elm_interface_atspi_accessible_relationship_append(Eo *obj, Elm_Atspi_Relation_Type type, const Elm_Interface_Atspi_Accessible *relation_object);
@@ -77,20 +56,6 @@ void elm_interface_atspi_accessible_relationships_clear(Eo *obj);
 
 %%Removes all relationships in accessible object.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:attributes|attributes]]** //**(get)**//
-<code c>
-Eina_List *elm_interface_atspi_accessible_attributes_get(const Eo *obj);
-</code>
-
-%%Gets key-value pairs indentifying widget extra attributes. Must be free by a user.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:children|children]]** //**(get)**//
-<code c>
-Eina_List *elm_interface_atspi_accessible_children_get(const Eo *obj);
-</code>
-
-%%Gets widget's accessible children.%%\\ 
-\\ 
 **[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:description|description]]** //**(get, set)**//
 <code c>
 const char *elm_interface_atspi_accessible_description_get(const Eo *obj);
@@ -98,20 +63,6 @@ void elm_interface_atspi_accessible_description_set(Eo *obj, const char *descrip
 </code>
 
 %%Widget contextual information.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:index_in_parent|index_in_parent]]** //**(get)**//
-<code c>
-int elm_interface_atspi_accessible_index_in_parent_get(const Eo *obj);
-</code>
-
-%%Gets index of the child in parent's children list.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:localized_role_name|localized_role_name]]** //**(get)**//
-<code c>
-const char *elm_interface_atspi_accessible_localized_role_name_get(const Eo *obj);
-</code>
-
-%%Gets an localized string describing AT-SPI widget role name.%%\\ 
 \\ 
 **[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:name|name]]** //**(get, set)**//
 <code c>
@@ -129,20 +80,6 @@ void elm_interface_atspi_accessible_parent_set(Eo *obj, Elm_Interface_Atspi_Acce
 
 %%Widget accessible parent.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:relation_set|relation_set]]** //**(get)**//
-<code c>
-Elm_Atspi_Relation_Set elm_interface_atspi_accessible_relation_set_get(const Eo *obj);
-</code>
-
-%%Gets an string describing AT-SPI widget role name. Lists and elements Should be free by a user.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role_name|role_name]]** //**(get)**//
-<code c>
-const char *elm_interface_atspi_accessible_role_name_get(const Eo *obj);
-</code>
-
-%%Gets human-readable string indentifying widget accessibility role.%%\\ 
-\\ 
 **[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role|role]]** //**(get, set)**//
 <code c>
 Elm_Atspi_Role elm_interface_atspi_accessible_role_get(const Eo *obj);
@@ -157,13 +94,6 @@ Efl_Object *elm_interface_atspi_accessible_root_get(const Eo *obj);
 </code>
 
 %%Get root object of accessible object hierarchy%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:state_set|state_set]]** //**(get)**//
-<code c>
-Elm_Atspi_State_Set elm_interface_atspi_accessible_state_set_get(const Eo *obj);
-</code>
-
-%%Gets set describing widget accessible states.%%\\ 
 \\ 
 **[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:translation_domain|translation_domain]]** //**(get, set)**//
 <code c>
@@ -181,18 +111,78 @@ void elm_interface_atspi_accessible_type_set(Eo *obj, Elm_Atspi_Type type);
 
 %%Type of accessibility object%%\\ 
 \\ 
-
-===== Overrides =====
-
-**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_emit|event_emit]]** ''protected''
 <code c>
-void efl_destructor(Eo *obj);
+void elm_interface_atspi_accessible_event_emit(const Eo *obj, Elm_Interface_Atspi_Accessible *accessible, const Efl_Event_Description *event, void *event_info);
 </code>
 
-%%Call the object's destructor.%%\\ 
+%%Emit event%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_handler_add|event_handler_add]]** ''protected''
+<code c>
+Elm_Atspi_Event_Handler *elm_interface_atspi_accessible_event_handler_add(const Eo *obj, Efl_Event_Cb cb, void *data);
+</code>
+
+%%Register accessibility event listener%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_handler_del|event_handler_del]]** ''protected''
+<code c>
+void elm_interface_atspi_accessible_event_handler_del(const Eo *obj, Elm_Atspi_Event_Handler *handler);
+</code>
+
+%%Deregister accessibility event listener%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:attributes|attributes]]** //**(get)**// ''protected''
+<code c>
+Eina_List *elm_interface_atspi_accessible_attributes_get(const Eo *obj);
+</code>
+
+%%Gets key-value pairs indentifying widget extra attributes. Must be free by a user.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:children|children]]** //**(get)**// ''protected''
+<code c>
+Eina_List *elm_interface_atspi_accessible_children_get(const Eo *obj);
+</code>
+
+%%Gets widget's accessible children.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''
+<code c>
+int elm_interface_atspi_accessible_index_in_parent_get(const Eo *obj);
+</code>
+
+%%Gets index of the child in parent's children list.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected''
+<code c>
+const char *elm_interface_atspi_accessible_localized_role_name_get(const Eo *obj);
+</code>
+
+%%Gets an localized string describing AT-SPI widget role name.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:relation_set|relation_set]]** //**(get)**// ''protected''
+<code c>
+Elm_Atspi_Relation_Set elm_interface_atspi_accessible_relation_set_get(const Eo *obj);
+</code>
+
+%%Gets an string describing AT-SPI widget role name. Lists and elements Should be free by a user.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role_name|role_name]]** //**(get)**// ''protected''
+<code c>
+const char *elm_interface_atspi_accessible_role_name_get(const Eo *obj);
+</code>
+
+%%Gets human-readable string indentifying widget accessibility role.%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:state_set|state_set]]** //**(get)**// ''protected''
+<code c>
+Elm_Atspi_State_Set elm_interface_atspi_accessible_state_set_get(const Eo *obj);
+</code>
+
+%%Gets set describing widget accessible states.%%\\ 
 \\ 
 
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -453,21 +443,92 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:active_descendant_changed|active,descendant,changed]] | %%Called when active state of descendant has changed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:added|added]] | %%Called when item was added%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:bounds_changed|bounds,changed]] | %%Called when bounds have changed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:children_changed|children,changed]] | %%Called when children have changed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:property_changed|property,changed]] | %%Called when roperty has changed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:removed|removed]] | %%Called when item was removed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:state_changed|state,changed]] | %%Called when tate has changed%% |
-| [[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:visible_data_changed|visible,data,changed]] | %%Called when visibility has changed%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:active_descendant_changed|active,descendant,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_ACTIVE_DESCENDANT_CHANGED(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Called when active state of descendant has changed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:added|added]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_ADDED(void)
+</code>
+
+%%Called when item was added%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:bounds_changed|bounds,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_BOUNDS_CHANGED(Elm_Atspi_Event_Geometry_Changed_Data)
+</code>
+
+%%Called when bounds have changed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:children_changed|children,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_CHILDREN_CHANGED(Elm_Atspi_Event_Children_Changed_Data)
+</code>
+
+%%Called when children have changed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:property_changed|property,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_PROPERTY_CHANGED(const char *)
+</code>
+
+%%Called when roperty has changed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:removed|removed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_REMOVED(void)
+</code>
+
+%%Called when item was removed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:state_changed|state,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_STATE_CHANGED(Elm_Atspi_Event_State_Changed_Data)
+</code>
+
+%%Called when tate has changed%%\\ 
+\\ 
+**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:visible_data_changed|visible,data,changed]]**
+<code c>
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_VISIBLE_DATA_CHANGED(void)
+</code>
+
+%%Called when visibility has changed%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

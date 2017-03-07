@@ -5,10 +5,31 @@
 animator,tick: Efl.Event.Animator_Tick;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Event_Animator_Tick EFL_EVENT_ANIMATOR_TICK;
+EFL_EVENT_ANIMATOR_TICK(Efl_Event_Animator_Tick)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_animator_tick(void *data, const Efl_Event *event)
+{
+    Efl_Event_Animator_Tick info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_ANIMATOR_TICK, on_efl_event_animator_tick, d);
+}
+
 </code>
 
 ===== Description =====

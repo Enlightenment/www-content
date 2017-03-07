@@ -5,10 +5,31 @@
 slider,drag,start;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_SLIDER_EVENT_SLIDER_DRAG_START;
+ELM_SLIDER_EVENT_SLIDER_DRAG_START(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_slider_event_slider_drag_start(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_SLIDER_EVENT_SLIDER_DRAG_START, on_elm_slider_event_slider_drag_start, d);
+}
+
 </code>
 
 ===== Description =====

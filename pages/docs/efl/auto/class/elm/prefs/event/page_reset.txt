@@ -5,10 +5,31 @@
 page,reset;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_PREFS_EVENT_PAGE_RESET;
+ELM_PREFS_EVENT_PAGE_RESET(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_prefs_event_page_reset(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_PREFS_EVENT_PAGE_RESET, on_elm_prefs_event_page_reset, d);
+}
+
 </code>
 
 ===== Description =====

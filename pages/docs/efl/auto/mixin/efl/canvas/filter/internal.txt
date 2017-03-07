@@ -35,49 +35,49 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_dirty|filter_dirty]]**
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_dirty|filter_dirty]]** ''protected''
 <code c>
 void evas_filter_dirty(Eo *obj);
 </code>
 
 %%Called when the filter changes must trigger a redraw of the object.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]]**
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]]** ''protected''
 <code c>
 Eina_Bool evas_filter_input_alpha(Eo *obj);
 </code>
 
 %%Called by Efl.Canvas.Filter.Internal to determine whether the input is alpha or rgba.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_render|filter_input_render]]**
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_input_render|filter_input_render]]** ''protected''
 <code c>
 Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
 </code>
 
 %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_state_prepare|filter_state_prepare]]**
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:filter_state_prepare|filter_state_prepare]]** ''protected''
 <code c>
 void evas_filter_state_prepare(Eo *obj, Efl_Canvas_Filter_State *state, void *data);
 </code>
 
 %%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**//
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**// ''protected''
 <code c>
 void evas_filter_changed_set(Eo *obj, Eina_Bool val);
 </code>
 
 %%Marks this filter as changed.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**//
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**// ''protected''
 <code c>
 void evas_filter_invalid_set(Eo *obj, Eina_Bool val);
 </code>
 
 %%Marks this filter as invalid.%%\\ 
 \\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**//
+**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**// ''protected''
 <code c>
 void *evas_filter_output_buffer_get(const Eo *obj);
 </code>
@@ -85,62 +85,7 @@ void *evas_filter_output_buffer_get(const Eo *obj);
 %%Retrieve cached output buffer, if any.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_data|filter_data]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
-<code c>
-void efl_gfx_filter_data_get(const Eo *obj, const char *name, const char **value, Eina_Bool *execute);
-void efl_gfx_filter_data_set(Eo *obj, const char *name, const char *value, Eina_Bool execute);
-</code>
-
-%%Extra data used by the filter program.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
-<code c>
-void efl_gfx_filter_padding_get(const Eo *obj, int *l, int *r, int *t, int *b);
-</code>
-
-%%Required padding to apply this filter without cropping.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_program|filter_program]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
-<code c>
-void efl_gfx_filter_program_get(const Eo *obj, const char **code, const char **name);
-void efl_gfx_filter_program_set(Eo *obj, const char *code, const char *name);
-</code>
-
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_source|filter_source]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
-<code c>
-Efl_Gfx *efl_gfx_filter_source_get(const Eo *obj, const char *name);
-void efl_gfx_filter_source_set(Eo *obj, const char *name, Efl_Gfx *source);
-</code>
-
-%%Bind an object to use as a mask or texture in a filter program.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]]]//
-<code c>
-void efl_gfx_filter_state_get(const Eo *obj, const char **cur_state, double *cur_val, const char **next_state, double *next_val, double *pos);
-void efl_gfx_filter_state_set(Eo *obj, const char *cur_state, double cur_val, const char *next_state, double next_val, double pos);
-</code>
-
-%%Set the current state of the filter.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -394,10 +339,79 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
 
-===== Inherited Events =====
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_data|filter_data]]** //**(get, set)**// //[Overridden here]//
+<code c>
+void efl_gfx_filter_data_get(const Eo *obj, const char *name, const char **value, Eina_Bool *execute);
+void efl_gfx_filter_data_set(Eo *obj, const char *name, const char *value, Eina_Bool execute);
+</code>
+
+%%Extra data used by the filter program.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**// //[Overridden here]//
+<code c>
+void efl_gfx_filter_padding_get(const Eo *obj, int *l, int *r, int *t, int *b);
+</code>
+
+%%Required padding to apply this filter without cropping.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_program|filter_program]]** //**(get, set)**// //[Overridden here]//
+<code c>
+void efl_gfx_filter_program_get(const Eo *obj, const char **code, const char **name);
+void efl_gfx_filter_program_set(Eo *obj, const char *code, const char *name);
+</code>
+
+\\ 
+[[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_source|filter_source]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Efl_Gfx *efl_gfx_filter_source_get(const Eo *obj, const char *name);
+void efl_gfx_filter_source_set(Eo *obj, const char *name, Efl_Gfx *source);
+</code>
+
+%%Bind an object to use as a mask or texture in a filter program.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx:filter|Efl.Gfx.Filter]].**[[:docs:efl:auto:mixin:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**// //[Overridden here]//
+<code c>
+void efl_gfx_filter_state_get(const Eo *obj, const char **cur_state, double *cur_val, const char **next_state, double *next_val, double *pos);
+void efl_gfx_filter_state_set(Eo *obj, const char *cur_state, double cur_val, const char *next_state, double next_val, double pos);
+</code>
+
+%%Set the current state of the filter.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

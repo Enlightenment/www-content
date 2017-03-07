@@ -5,10 +5,31 @@
 properties,changed: Efl.Model.Property_Event;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Model_Property_Event EFL_MODEL_EVENT_PROPERTIES_CHANGED;
+EFL_MODEL_EVENT_PROPERTIES_CHANGED(Efl_Model_Property_Event)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_model_event_properties_changed(void *data, const Efl_Event *event)
+{
+    Efl_Model_Property_Event info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_MODEL_EVENT_PROPERTIES_CHANGED, on_efl_model_event_properties_changed, d);
+}
+
 </code>
 
 ===== Description =====

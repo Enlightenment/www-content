@@ -5,10 +5,31 @@
 selected,invalid;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_FILESELECTOR_EVENT_SELECTED_INVALID;
+ELM_FILESELECTOR_EVENT_SELECTED_INVALID(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_fileselector_event_selected_invalid(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_FILESELECTOR_EVENT_SELECTED_INVALID, on_elm_fileselector_event_selected_invalid, d);
+}
+
 </code>
 
 ===== Description =====

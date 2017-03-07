@@ -5,10 +5,31 @@
 client,add @hot: Efl.Net.Socket;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Net_Socket *EFL_NET_SERVER_EVENT_CLIENT_ADD;
+EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_server_event_client_add(void *data, const Efl_Event *event)
+{
+    Efl_Net_Socket *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_SERVER_EVENT_CLIENT_ADD, on_efl_net_server_event_client_add, d);
+}
+
 </code>
 
 ===== Description =====

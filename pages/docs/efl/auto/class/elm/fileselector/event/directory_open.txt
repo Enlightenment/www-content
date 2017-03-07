@@ -5,10 +5,31 @@
 directory,open;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_FILESELECTOR_EVENT_DIRECTORY_OPEN;
+ELM_FILESELECTOR_EVENT_DIRECTORY_OPEN(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_fileselector_event_directory_open(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_FILESELECTOR_EVENT_DIRECTORY_OPEN, on_elm_fileselector_event_directory_open, d);
+}
+
 </code>
 
 ===== Description =====

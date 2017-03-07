@@ -5,10 +5,31 @@
 property,changed: string;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-const char *ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_PROPERTY_CHANGED;
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_PROPERTY_CHANGED(const char *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_interface_atspi_accessible_event_property_changed(void *data, const Efl_Event *event)
+{
+    const char *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_PROPERTY_CHANGED, on_elm_interface_atspi_accessible_event_property_changed, d);
+}
+
 </code>
 
 ===== Description =====

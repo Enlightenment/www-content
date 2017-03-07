@@ -5,10 +5,31 @@
 file,created: Eio.Sentry.Event;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Eio_Sentry_Event EIO_SENTRY_EVENT_FILE_CREATED;
+EIO_SENTRY_EVENT_FILE_CREATED(Eio_Sentry_Event)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_eio_sentry_event_file_created(void *data, const Efl_Event *event)
+{
+    Eio_Sentry_Event info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EIO_SENTRY_EVENT_FILE_CREATED, on_eio_sentry_event_file_created, d);
+}
+
 </code>
 
 ===== Description =====

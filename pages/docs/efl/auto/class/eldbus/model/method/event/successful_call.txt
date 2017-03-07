@@ -5,10 +5,31 @@
 successful,call;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELDBUS_MODEL_METHOD_EVENT_SUCCESSFUL_CALL;
+ELDBUS_MODEL_METHOD_EVENT_SUCCESSFUL_CALL(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_eldbus_model_method_event_successful_call(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELDBUS_MODEL_METHOD_EVENT_SUCCESSFUL_CALL, on_eldbus_model_method_event_successful_call, d);
+}
+
 </code>
 
 ===== Description =====

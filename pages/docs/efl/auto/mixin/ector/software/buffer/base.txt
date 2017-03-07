@@ -32,7 +32,7 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_clear|pixels_clear]]**
+**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_clear|pixels_clear]]** ''protected''
 <code c>
 void ector_software_buffer_pixels_clear(Eo *obj);
 </code>
@@ -40,52 +40,7 @@ void ector_software_buffer_pixels_clear(Eo *obj);
 %%Clear internal pixel buffer%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:map|map]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
-</code>
-
-%%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_set|pixels_set]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
-</code>
-
-%%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:span_free|span_free]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-void ector_buffer_span_free(Eo *obj, uint8_t *data);
-</code>
-
-%%Must be called as soon as possible after span_get%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:span_get|span_get]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-uint8_t *ector_buffer_span_get(Eo *obj, int x, int y, unsigned int w, Efl_Gfx_Colorspace cspace, unsigned int *length);
-</code>
-
-%%Get a single horizontal span of length w starting from (x,y)%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:unmap|unmap]]** //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-void ector_buffer_unmap(Eo *obj, void *data, unsigned int length);
-</code>
-
-%%Unmap a region of this buffer, and upload data to the GPU (if needed).%%\\ 
-\\ 
-**[[:docs:efl:auto:mixin:ector:software:buffer:base:property:flags|flags]]** //**(get)**// //[from [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]]]//
-<code c>
-Ector_Buffer_Flag ector_buffer_flags_get(const Eo *obj);
-</code>
-
-%%The capabilities of this buffer%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:property:border|border]]** //**(get)**//
 <code c>
@@ -108,8 +63,55 @@ void ector_buffer_size_get(const Eo *obj, int *w, int *h);
 
 %%The (rectangular) size of the pixel buffer.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:map|map]]** //[Overridden here]//
+<code c>
+void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
+</code>
 
-===== Inherited Events =====
+%%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:pixels_set|pixels_set]]** //[Overridden here]//
+<code c>
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:mixin:ector:buffer:event:detached|Ector.Buffer.detached]] | %%Emitted whenever the previously attached pixels are detached during pixels_set%% |
+%%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:span_free|span_free]]** //[Overridden here]//
+<code c>
+void ector_buffer_span_free(Eo *obj, uint8_t *data);
+</code>
+
+%%Must be called as soon as possible after span_get%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:span_get|span_get]]** //[Overridden here]//
+<code c>
+uint8_t *ector_buffer_span_get(Eo *obj, int x, int y, unsigned int w, Efl_Gfx_Colorspace cspace, unsigned int *length);
+</code>
+
+%%Get a single horizontal span of length w starting from (x,y)%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:method:unmap|unmap]]** //[Overridden here]//
+<code c>
+void ector_buffer_unmap(Eo *obj, void *data, unsigned int length);
+</code>
+
+%%Unmap a region of this buffer, and upload data to the GPU (if needed).%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:software:buffer:base:property:flags|flags]]** //**(get)**// //[Overridden here]//
+<code c>
+Ector_Buffer_Flag ector_buffer_flags_get(const Eo *obj);
+</code>
+
+%%The capabilities of this buffer%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 

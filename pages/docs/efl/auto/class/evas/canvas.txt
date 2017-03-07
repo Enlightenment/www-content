@@ -622,53 +622,15 @@ int evas_canvas_smart_objects_calculate_count_get(const Eo *obj);
 %%This gets the internal counter that counts the number of smart calculations.%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:evas:canvas:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:event_freeze|event_freeze]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_event_freeze(Eo *obj);
-</code>
-
-%%Freeze events of object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:event_thaw|event_thaw]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_event_thaw(Eo *obj);
-</code>
-
-%%Thaw events of object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:provider_find|provider_find]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
-</code>
-
-%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:property:loop|loop]]** //**(get)**// //[from [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
+[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:evas:canvas:property:loop|loop]]** //**(get)**// //[Overridden here]//
 <code c>
 Efl_Loop *efl_loop_get(const Eo *obj);
 </code>
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -900,6 +862,41 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:evas:canvas:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:evas:canvas:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:evas:canvas:method:event_freeze|event_freeze]]** //[Overridden here]//
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:evas:canvas:method:event_thaw|event_thaw]]** //[Overridden here]//
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:evas:canvas:method:provider_find|provider_find]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+
+%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:method:object_top_at_xy_get|object_top_at_xy_get]]**
 <code c>
 Efl_Gfx *efl_canvas_object_top_at_xy_get(const Eo *obj, int x, int y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
@@ -973,43 +970,257 @@ void efl_input_seat_event_filter_set(Eo *obj, Efl_Input_Device *seat, Eina_Bool 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:evas:canvas:event:axis_update|axis,update]] | %%Called on axis update%% |
-| [[:docs:efl:auto:class:evas:canvas:event:render_flush_post|render,flush,post]] | %%Called on render flush post phase%% |
-| [[:docs:efl:auto:class:evas:canvas:event:render_flush_pre|render,flush,pre]] | %%Called on render flush pre phase%% |
-| [[:docs:efl:auto:class:evas:canvas:event:viewport_resize|viewport,resize]] | %%Called on viewport resize%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:evas:canvas:event:axis_update|axis,update]]**
+<code c>
+EVAS_CANVAS_EVENT_AXIS_UPDATE(void, @beta)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:animator:event:animator_tick|Efl.Animator.animator,tick]] | %%Animator tick synchronized with screen vsync if possible.%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:device_added|Efl.Canvas.device,added]] | %%Called when input device was added%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:device_changed|Efl.Canvas.device,changed]] | %%Called when input device changed%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:device_removed|Efl.Canvas.device,removed]] | %%Called when input device was removed%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:focus_in|Efl.Canvas.focus,in]] | %%Called when canvas got focus%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:focus_out|Efl.Canvas.focus,out]] | %%Called when canvas lost focus%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:object_focus_in|Efl.Canvas.object,focus,in]] | %%Called when object got focus%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:object_focus_out|Efl.Canvas.object,focus,out]] | %%Called when object lost focus%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:render_post|Efl.Canvas.render,post]] | %%Called when post render happens%% |
-| [[:docs:efl:auto:interface:efl:canvas:event:render_pre|Efl.Canvas.render,pre]] | %%Called when pre render happens%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:finger_down|Efl.Input.Interface.finger,down]] | %%Finger pressed (finger id is known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:finger_move|Efl.Input.Interface.finger,move]] | %%Finger moved (current and previous positions are known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:finger_up|Efl.Input.Interface.finger,up]] | %%Finger released (finger id is known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:focus_in|Efl.Input.Interface.focus,in]] | %%A focus in event.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:focus_out|Efl.Input.Interface.focus,out]] | %%A focus out event.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:hold|Efl.Input.Interface.hold]] | %%All input events are on hold or resumed.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:key_down|Efl.Input.Interface.key,down]] | %%Keyboard key press.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:key_up|Efl.Input.Interface.key,up]] | %%Keyboard key release.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_axis|Efl.Input.Interface.pointer,axis]] | %%Pen or other axis event update.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_cancel|Efl.Input.Interface.pointer,cancel]] | %%Main pointer button press was cancelled (button id is known). This can happen in rare cases when the window manager passes the focus to a more urgent window, for instance. You probably don't need to listen to this event, as it will be accompanied by an up event.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_down|Efl.Input.Interface.pointer,down]] | %%Main pointer button pressed (button id is known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_in|Efl.Input.Interface.pointer,in]] | %%Pointer entered a window or a widget.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_move|Efl.Input.Interface.pointer,move]] | %%Main pointer move (current and previous positions are known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_out|Efl.Input.Interface.pointer,out]] | %%Pointer left a window or a widget.%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_up|Efl.Input.Interface.pointer,up]] | %%Main pointer button released (button id is known).%% |
-| [[:docs:efl:auto:interface:efl:input:interface:event:pointer_wheel|Efl.Input.Interface.pointer,wheel]] | %%Mouse wheel event.%% |
+%%Called on axis update%%\\ 
+\\ 
+**[[:docs:efl:auto:class:evas:canvas:event:render_flush_post|render,flush,post]]**
+<code c>
+EVAS_CANVAS_EVENT_RENDER_FLUSH_POST(void, @beta)
+</code>
+
+%%Called on render flush post phase%%\\ 
+\\ 
+**[[:docs:efl:auto:class:evas:canvas:event:render_flush_pre|render,flush,pre]]**
+<code c>
+EVAS_CANVAS_EVENT_RENDER_FLUSH_PRE(void, @beta)
+</code>
+
+%%Called on render flush pre phase%%\\ 
+\\ 
+**[[:docs:efl:auto:class:evas:canvas:event:viewport_resize|viewport,resize]]**
+<code c>
+EVAS_CANVAS_EVENT_VIEWPORT_RESIZE(void, @beta)
+</code>
+
+%%Called on viewport resize%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:animator|Efl.Animator]].**[[:docs:efl:auto:interface:efl:animator:event:animator_tick|animator,tick]]**
+<code c>
+EFL_EVENT_ANIMATOR_TICK(Efl_Event_Animator_Tick)
+</code>
+
+%%Animator tick synchronized with screen vsync if possible.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:device_added|device,added]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_ADDED(Efl_Input_Device *)
+</code>
+
+%%Called when input device was added%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:device_changed|device,changed]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_CHANGED(Efl_Input_Device *)
+</code>
+
+%%Called when input device changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:device_removed|device,removed]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_REMOVED(Efl_Input_Device *)
+</code>
+
+%%Called when input device was removed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:focus_in|focus,in]]**
+<code c>
+EFL_CANVAS_EVENT_FOCUS_IN(Efl_Input_Focus *)
+</code>
+
+%%Called when canvas got focus%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:focus_out|focus,out]]**
+<code c>
+EFL_CANVAS_EVENT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+%%Called when canvas lost focus%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:object_focus_in|object,focus,in]]**
+<code c>
+EFL_CANVAS_EVENT_OBJECT_FOCUS_IN(Efl_Input_Focus *)
+</code>
+
+%%Called when object got focus%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:object_focus_out|object,focus,out]]**
+<code c>
+EFL_CANVAS_EVENT_OBJECT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+%%Called when object lost focus%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:render_post|render,post]]**
+<code c>
+EFL_CANVAS_EVENT_RENDER_POST(void)
+</code>
+
+%%Called when post render happens%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:canvas|Efl.Canvas]].**[[:docs:efl:auto:interface:efl:canvas:event:render_pre|render,pre]]**
+<code c>
+EFL_CANVAS_EVENT_RENDER_PRE(void)
+</code>
+
+%%Called when pre render happens%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:finger_down|finger,down]]**
+<code c>
+EFL_EVENT_FINGER_DOWN(Efl_Input_Pointer *)
+</code>
+
+%%Finger pressed (finger id is known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:finger_move|finger,move]]**
+<code c>
+EFL_EVENT_FINGER_MOVE(Efl_Input_Pointer *)
+</code>
+
+%%Finger moved (current and previous positions are known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:finger_up|finger,up]]**
+<code c>
+EFL_EVENT_FINGER_UP(Efl_Input_Pointer *)
+</code>
+
+%%Finger released (finger id is known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:focus_in|focus,in]]**
+<code c>
+EFL_EVENT_FOCUS_IN(Efl_Input_Focus *)
+</code>
+
+%%A focus in event.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:focus_out|focus,out]]**
+<code c>
+EFL_EVENT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+%%A focus out event.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:hold|hold]]**
+<code c>
+EFL_EVENT_HOLD(Efl_Input_Hold *)
+</code>
+
+%%All input events are on hold or resumed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:key_down|key,down]]**
+<code c>
+EFL_EVENT_KEY_DOWN(Efl_Input_Key *)
+</code>
+
+%%Keyboard key press.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:key_up|key,up]]**
+<code c>
+EFL_EVENT_KEY_UP(Efl_Input_Key *)
+</code>
+
+%%Keyboard key release.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_axis|pointer,axis]]**
+<code c>
+EFL_EVENT_POINTER_AXIS(Efl_Input_Pointer *)
+</code>
+
+%%Pen or other axis event update.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_cancel|pointer,cancel]]**
+<code c>
+EFL_EVENT_POINTER_CANCEL(Efl_Input_Pointer *)
+</code>
+
+%%Main pointer button press was cancelled (button id is known). This can happen in rare cases when the window manager passes the focus to a more urgent window, for instance. You probably don't need to listen to this event, as it will be accompanied by an up event.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_down|pointer,down]]**
+<code c>
+EFL_EVENT_POINTER_DOWN(Efl_Input_Pointer *)
+</code>
+
+%%Main pointer button pressed (button id is known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_in|pointer,in]]**
+<code c>
+EFL_EVENT_POINTER_IN(Efl_Input_Pointer *)
+</code>
+
+%%Pointer entered a window or a widget.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_move|pointer,move]]**
+<code c>
+EFL_EVENT_POINTER_MOVE(Efl_Input_Pointer *)
+</code>
+
+%%Main pointer move (current and previous positions are known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_out|pointer,out]]**
+<code c>
+EFL_EVENT_POINTER_OUT(Efl_Input_Pointer *)
+</code>
+
+%%Pointer left a window or a widget.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_up|pointer,up]]**
+<code c>
+EFL_EVENT_POINTER_UP(Efl_Input_Pointer *)
+</code>
+
+%%Main pointer button released (button id is known).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:input:interface|Efl.Input.Interface]].**[[:docs:efl:auto:interface:efl:input:interface:event:pointer_wheel|pointer,wheel]]**
+<code c>
+EFL_EVENT_POINTER_WHEEL(Efl_Input_Pointer *)
+</code>
+
+%%Mouse wheel event.%%\\ 
+\\ 

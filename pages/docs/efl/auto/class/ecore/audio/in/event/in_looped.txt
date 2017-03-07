@@ -5,10 +5,31 @@
 in,looped;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ECORE_AUDIO_IN_EVENT_IN_LOOPED;
+ECORE_AUDIO_IN_EVENT_IN_LOOPED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_ecore_audio_in_event_in_looped(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ECORE_AUDIO_IN_EVENT_IN_LOOPED, on_ecore_audio_in_event_in_looped, d);
+}
+
 </code>
 
 ===== Description =====

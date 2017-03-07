@@ -5,10 +5,31 @@
 can_write,changed;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED;
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_writer_event_can_write_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, on_efl_io_writer_event_can_write_changed, d);
+}
+
 </code>
 
 ===== Description =====

@@ -5,10 +5,31 @@
 image,resized;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_PLUG_EVENT_IMAGE_RESIZED;
+ELM_PLUG_EVENT_IMAGE_RESIZED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_plug_event_image_resized(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_PLUG_EVENT_IMAGE_RESIZED, on_elm_plug_event_image_resized, d);
+}
+
 </code>
 
 ===== Description =====

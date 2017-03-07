@@ -5,10 +5,31 @@
 index,update;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_GENGRID_EVENT_INDEX_UPDATE;
+ELM_GENGRID_EVENT_INDEX_UPDATE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_gengrid_event_index_update(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_GENGRID_EVENT_INDEX_UPDATE, on_elm_gengrid_event_index_update, d);
+}
+
 </code>
 
 ===== Description =====

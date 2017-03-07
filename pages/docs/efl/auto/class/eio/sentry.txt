@@ -47,24 +47,7 @@ void eio_sentry_del(Eo *obj, const char *path);
 %%Removes the given path from the monitored list.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:eio:sentry:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:eio:sentry:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -318,24 +301,120 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:eio:sentry:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:eio:sentry:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:eio:sentry:event:directory_closed|directory,closed]] | %%Called when a directory was closed%% |
-| [[:docs:efl:auto:class:eio:sentry:event:directory_created|directory,created]] | %%Called when a directory was created%% |
-| [[:docs:efl:auto:class:eio:sentry:event:directory_deleted|directory,deleted]] | %%Called when a directory was deleted%% |
-| [[:docs:efl:auto:class:eio:sentry:event:directory_modified|directory,modified]] | %%called when a directory was modified%% |
-| [[:docs:efl:auto:class:eio:sentry:event:error|error]] | %%Called in case of an error%% |
-| [[:docs:efl:auto:class:eio:sentry:event:file_closed|file,closed]] | %%Called when a file was closed%% |
-| [[:docs:efl:auto:class:eio:sentry:event:file_created|file,created]] | %%Called when a file was created%% |
-| [[:docs:efl:auto:class:eio:sentry:event:file_deleted|file,deleted]] | %%Called when a file was deleted%% |
-| [[:docs:efl:auto:class:eio:sentry:event:file_modified|file,modified]] | %%Called when a file was modified%% |
-| [[:docs:efl:auto:class:eio:sentry:event:self_deleted|self,deleted]] | %%Called when the object was deleted%% |
-| [[:docs:efl:auto:class:eio:sentry:event:self_rename|self,rename]] | %%Called when the object was renamed%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:eio:sentry:event:directory_closed|directory,closed]]**
+<code c>
+EIO_SENTRY_EVENT_DIRECTORY_CLOSED(Eio_Sentry_Event)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Called when a directory was closed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:directory_created|directory,created]]**
+<code c>
+EIO_SENTRY_EVENT_DIRECTORY_CREATED(Eio_Sentry_Event)
+</code>
+
+%%Called when a directory was created%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:directory_deleted|directory,deleted]]**
+<code c>
+EIO_SENTRY_EVENT_DIRECTORY_DELETED(Eio_Sentry_Event)
+</code>
+
+%%Called when a directory was deleted%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:directory_modified|directory,modified]]**
+<code c>
+EIO_SENTRY_EVENT_DIRECTORY_MODIFIED(Eio_Sentry_Event)
+</code>
+
+%%called when a directory was modified%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:error|error]]**
+<code c>
+EIO_SENTRY_EVENT_ERROR(Eio_Sentry_Event)
+</code>
+
+%%Called in case of an error%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:file_closed|file,closed]]**
+<code c>
+EIO_SENTRY_EVENT_FILE_CLOSED(Eio_Sentry_Event)
+</code>
+
+%%Called when a file was closed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:file_created|file,created]]**
+<code c>
+EIO_SENTRY_EVENT_FILE_CREATED(Eio_Sentry_Event)
+</code>
+
+%%Called when a file was created%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:file_deleted|file,deleted]]**
+<code c>
+EIO_SENTRY_EVENT_FILE_DELETED(Eio_Sentry_Event)
+</code>
+
+%%Called when a file was deleted%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:file_modified|file,modified]]**
+<code c>
+EIO_SENTRY_EVENT_FILE_MODIFIED(Eio_Sentry_Event)
+</code>
+
+%%Called when a file was modified%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:self_deleted|self,deleted]]**
+<code c>
+EIO_SENTRY_EVENT_SELF_DELETED(Eio_Sentry_Event)
+</code>
+
+%%Called when the object was deleted%%\\ 
+\\ 
+**[[:docs:efl:auto:class:eio:sentry:event:self_rename|self,rename]]**
+<code c>
+EIO_SENTRY_EVENT_SELF_RENAME(Eio_Sentry_Event)
+</code>
+
+%%Called when the object was renamed%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

@@ -33,24 +33,7 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:class:ecore:con:eet:client:obj:description&nodate&nolink&nouser}}
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:ecore:con:eet:client:obj:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ecore:con:eet:client:obj:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:ecore:con:eet:base|Ecore.Con.Eet.Base]].**[[:docs:efl:auto:class:ecore:con:eet:base:method:data_callback_del|data_callback_del]]**
 <code c>
@@ -58,13 +41,6 @@ void ecore_con_eet_base_data_callback_del(Eo *obj, const char *name);
 </code>
 
 %%Function to delete the %%[[:docs:efl:auto:class:ecore:con:eet:base:property:data_callback|Ecore.Con.Eet.Base.data_callback]]%%.%%\\ 
-\\ 
-[[:docs:efl:auto:class:ecore:con:eet:base|Ecore.Con.Eet.Base]].**[[:docs:efl:auto:class:ecore:con:eet:base:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:ecore:con:eet:base|Ecore.Con.Eet.Base]].**[[:docs:efl:auto:class:ecore:con:eet:base:method:raw_data_callback_del|raw_data_callback_del]]**
 <code c>
@@ -115,6 +91,27 @@ void ecore_con_eet_base_server_set(Eo *obj, Ecore_Con_Server *data);
 </code>
 
 %%The server object to which we send and receive.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:con:eet:base:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:ecore:con:eet:base|Ecore.Con.Eet.Base]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:con:eet:client:obj:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:con:eet:client:obj:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -362,9 +359,26 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 %%The parent of an object.%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

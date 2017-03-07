@@ -5,10 +5,31 @@
 show;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_GFX_EVENT_SHOW;
+EFL_GFX_EVENT_SHOW(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_gfx_event_show(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_GFX_EVENT_SHOW, on_efl_gfx_event_show, d);
+}
+
 </code>
 
 ===== Description =====

@@ -5,10 +5,31 @@
 ref,change;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_CANVAS_VIDEO_EVENT_REF_CHANGE;
+EFL_CANVAS_VIDEO_EVENT_REF_CHANGE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_canvas_video_event_ref_change(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_CANVAS_VIDEO_EVENT_REF_CHANGE, on_efl_canvas_video_event_ref_change, d);
+}
+
 </code>
 
 ===== Description =====

@@ -36,32 +36,7 @@ digraph hierarchy {
 
 {{page>:docs:efl:user:class:elm:flip:internal:part:description&nodate&nolink&nouser}}
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:elm:flip:internal:part:method:content_unset|content_unset]]** //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]//
-<code c>
-Efl_Gfx *efl_content_unset(Eo *obj);
-</code>
-
-%%Unswallow the object in the current container and return it.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:flip:internal:part:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:elm:flip:internal:part:property:content|content]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:container|Efl.Container]]]//
-<code c>
-Efl_Gfx *efl_content_get(const Eo *obj);
-Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
-</code>
-
-%%Swallowed sub-object contained in this object.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -322,6 +297,28 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:flip:internal:part:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:class:elm:flip:internal:part:method:content_unset|content_unset]]** //[Overridden here]//
+<code c>
+Efl_Gfx *efl_content_unset(Eo *obj);
+</code>
+
+%%Unswallow the object in the current container and return it.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:class:elm:flip:internal:part:property:content|content]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Efl_Gfx *efl_content_get(const Eo *obj);
+Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
+</code>
+
+%%Swallowed sub-object contained in this object.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:method:content_count|content_count]]**
 <code c>
 int efl_content_count(Eo *obj);
@@ -396,15 +393,68 @@ void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:container:event:content_added|Efl.Container.content,added]] | %%Sent after a new item was added.%% |
-| [[:docs:efl:auto:interface:efl:container:event:content_removed|Efl.Container.content,removed]] | %%Sent after an item was removed, before unref.%% |
-| [[:docs:efl:auto:interface:efl:gfx:event:hide|Efl.Gfx.hide]] | %%Object just became invisible.%% |
-| [[:docs:efl:auto:interface:efl:gfx:event:move|Efl.Gfx.move]] | %%Object was moved, its position during the event is the new one.%% |
-| [[:docs:efl:auto:interface:efl:gfx:event:resize|Efl.Gfx.resize]] | %%Object was resized, its size during the event is the new one.%% |
-| [[:docs:efl:auto:interface:efl:gfx:event:show|Efl.Gfx.show]] | %%Object just became visible.%% |
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:event:content_added|content,added]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_ADDED(Efl_Gfx *)
+</code>
+
+%%Sent after a new item was added.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:event:content_removed|content,removed]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
+</code>
+
+%%Sent after an item was removed, before unref.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
+<code c>
+EFL_GFX_EVENT_HIDE(void)
+</code>
+
+%%Object just became invisible.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:move|move]]**
+<code c>
+EFL_GFX_EVENT_MOVE(void)
+</code>
+
+%%Object was moved, its position during the event is the new one.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:resize|resize]]**
+<code c>
+EFL_GFX_EVENT_RESIZE(void)
+</code>
+
+%%Object was resized, its size during the event is the new one.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:show|show]]**
+<code c>
+EFL_GFX_EVENT_SHOW(void)
+</code>
+
+%%Object just became visible.%%\\ 
+\\ 

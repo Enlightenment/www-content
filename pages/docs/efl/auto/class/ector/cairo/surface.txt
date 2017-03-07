@@ -56,39 +56,22 @@ void ector_cairo_surface_context_set(Eo *obj, cairo_t *ctx);
 %%Cairo context%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:ector:cairo:surface:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:cairo:surface:method:constructor|constructor]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_constructor(Eo *obj);
 </code>
 
 %%Call the object's constructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:ector:cairo:surface:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:cairo:surface:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:ector:cairo:surface:method:renderer_factory_new|renderer_factory_new]]** //[from [[:docs:efl:auto:mixin:ector:surface|Ector.Surface]]]//
-<code c>
-Efl_Object *ector_surface_renderer_factory_new(Eo *obj, const Efl_Class *type);
-</code>
-
-%%Create a new renderer factory for the given type%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ector:cairo:surface:property:reference_point|reference_point]]** //**(set)**// //[from [[:docs:efl:auto:mixin:ector:surface|Ector.Surface]]]//
-<code c>
-void ector_surface_reference_point_set(Eo *obj, int x, int y);
-</code>
-
-%%This define where is (0,0) in pixels coordinate inside the surface%%\\ 
-\\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -404,11 +387,48 @@ void ector_buffer_size_get(const Eo *obj, int *w, int *h);
 
 %%The (rectangular) size of the pixel buffer.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:ector:surface|Ector.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:method:renderer_factory_new|renderer_factory_new]]** //[Overridden here]//
+<code c>
+Efl_Object *ector_surface_renderer_factory_new(Eo *obj, const Efl_Class *type);
+</code>
 
-===== Inherited Events =====
+%%Create a new renderer factory for the given type%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:surface|Ector.Surface]].**[[:docs:efl:auto:class:ector:cairo:surface:property:reference_point|reference_point]]** //**(set)**// //[Overridden here]//
+<code c>
+void ector_surface_reference_point_set(Eo *obj, int x, int y);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:mixin:ector:buffer:event:detached|Ector.Buffer.detached]] | %%Emitted whenever the previously attached pixels are detached during pixels_set%% |
+%%This define where is (0,0) in pixels coordinate inside the surface%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 

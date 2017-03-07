@@ -74,59 +74,7 @@ double efl_loop_timer_pending_get(const Eo *obj);
 %%Pending time regarding a timer.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:loop:timer:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:method:event_freeze|event_freeze]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_event_freeze(Eo *obj);
-</code>
-
-%%Freeze events of object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:method:event_thaw|event_thaw]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_event_thaw(Eo *obj);
-</code>
-
-%%Thaw events of object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:property:event_freeze_count|event_freeze_count]]** //**(get)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-int efl_event_freeze_count_get(const Eo *obj);
-</code>
-
-%%Return freeze events of object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:loop:timer:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_parent_set(Eo *obj, Efl_Object *parent);
-</code>
-
-%%The parent of an object.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -134,6 +82,56 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 </code>
 
 %%The loop to which this object belongs to.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:method:event_freeze|event_freeze]]** //[Overridden here]//
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:method:event_thaw|event_thaw]]** //[Overridden here]//
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:property:event_freeze_count|event_freeze_count]]** //**(get)**// //[Overridden here]//
+<code c>
+int efl_event_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop:timer:property:parent|parent]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -354,11 +352,33 @@ void efl_name_set(Eo *obj, const char *name);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:loop:timer:event:tick|tick]] | %%Event triggered when the specified time as passed.%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:loop:timer:event:tick|tick]]**
+<code c>
+EFL_LOOP_TIMER_EVENT_TICK(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Event triggered when the specified time as passed.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

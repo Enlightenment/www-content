@@ -35,20 +35,6 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:class:efl:config:global:method:profile_derived_add|profile_derived_add]]**
-<code c>
-void efl_config_profile_derived_add(Eo *obj, const char *profile, const char *options);
-</code>
-
-%%Add a new profile of the given name to be derived from the current profile.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:config:global:method:profile_derived_del|profile_derived_del]]**
-<code c>
-void efl_config_profile_derived_del(Eo *obj, const char *profile);
-</code>
-
-%%Deletes a profile that is derived from the current one.%%\\ 
-\\ 
 **[[:docs:efl:auto:class:efl:config:global:method:profile_dir_get|profile_dir_get]]**
 <code c>
 Eina_Stringshare *efl_config_profile_dir_get(Eo *obj, const char *profile, Eina_Bool is_user);
@@ -70,13 +56,6 @@ Eina_Iterator *efl_config_profile_iterate(Eo *obj, Eina_Bool hidden);
 
 %%Returns the list of available profiles.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:config:global:method:save|save]]**
-<code c>
-Eina_Bool efl_config_save(Eo *obj, const char *profile);
-</code>
-
-%%Saves Elementary configuration to disk.%%\\ 
-\\ 
 **[[:docs:efl:auto:class:efl:config:global:property:profile|profile]]** //**(get, set)**//
 <code c>
 const char *efl_config_profile_get(const Eo *obj);
@@ -85,32 +64,29 @@ void efl_config_profile_set(Eo *obj, const char *profile);
 
 %%The profile for the running application.%%\\ 
 \\ 
-
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:config:global:method:config_get|config_get]]** //[from [[:docs:efl:auto:interface:efl:config|Efl.Config]]]//
+**[[:docs:efl:auto:class:efl:config:global:method:profile_derived_add|profile_derived_add]]** ''protected''
 <code c>
-Eina_Value *efl_config_get(const Eo *obj, const char *name);
+void efl_config_profile_derived_add(Eo *obj, const char *profile, const char *options);
 </code>
 
-%%Get configuration%%\\ 
+%%Add a new profile of the given name to be derived from the current profile.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:config:global:method:config_list_get|config_list_get]]** //[from [[:docs:efl:auto:interface:efl:config|Efl.Config]]]//
+**[[:docs:efl:auto:class:efl:config:global:method:profile_derived_del|profile_derived_del]]** ''protected''
 <code c>
-Eina_Iterator *efl_config_list_get(const Eo *obj, const char *name);
+void efl_config_profile_derived_del(Eo *obj, const char *profile);
 </code>
 
-%%Returns a list of generic values under a given key.%%\\ 
+%%Deletes a profile that is derived from the current one.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:config:global:method:config_set|config_set]]** //[from [[:docs:efl:auto:interface:efl:config|Efl.Config]]]//
+**[[:docs:efl:auto:class:efl:config:global:method:save|save]]** ''protected''
 <code c>
-Eina_Bool efl_config_set(Eo *obj, const char *name, const Eina_Value *val);
+Eina_Bool efl_config_save(Eo *obj, const char *profile);
 </code>
 
-%%Set configuration%%\\ 
+%%Saves Elementary configuration to disk.%%\\ 
 \\ 
 
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -378,10 +354,48 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:config|Efl.Config]].**[[:docs:efl:auto:class:efl:config:global:method:config_get|config_get]]** //[Overridden here]//
+<code c>
+Eina_Value *efl_config_get(const Eo *obj, const char *name);
+</code>
 
-===== Inherited Events =====
+%%Get configuration%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:config|Efl.Config]].**[[:docs:efl:auto:class:efl:config:global:method:config_list_get|config_list_get]]** //[Overridden here]//
+<code c>
+Eina_Iterator *efl_config_list_get(const Eo *obj, const char *name);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Returns a list of generic values under a given key.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:config|Efl.Config]].**[[:docs:efl:auto:class:efl:config:global:method:config_set|config_set]]** //[Overridden here]//
+<code c>
+Eina_Bool efl_config_set(Eo *obj, const char *name, const Eina_Value *val);
+</code>
+
+%%Set configuration%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

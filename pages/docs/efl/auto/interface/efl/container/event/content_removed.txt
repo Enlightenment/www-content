@@ -5,10 +5,31 @@
 content,removed: Efl.Gfx;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Gfx *EFL_CONTAINER_EVENT_CONTENT_REMOVED;
+EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_container_event_content_removed(void *data, const Efl_Event *event)
+{
+    Efl_Gfx *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_CONTAINER_EVENT_CONTENT_REMOVED, on_efl_container_event_content_removed, d);
+}
+
 </code>
 
 ===== Description =====

@@ -46,21 +46,21 @@ digraph hierarchy {
 Efl_Future *efl_net_control_access_point_connect(Eo *obj);
 </code>
 
-%%Connect to this access point.%%\\ 
+%%Connects to this access point.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:control:access_point:method:disconnect|disconnect]]**
 <code c>
 void efl_net_control_access_point_disconnect(Eo *obj);
 </code>
 
-%%Disconnect from this access point.%%\\ 
+%%Disconnects from this access point.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:control:access_point:method:forget|forget]]**
 <code c>
 void efl_net_control_access_point_forget(Eo *obj);
 </code>
 
-%%Disconnect and forget about this access point.%%\\ 
+%%Disconnects and forgets about this access point.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:control:access_point:property:auto_connect|auto_connect]]** //**(get, set)**//
 <code c>
@@ -76,7 +76,7 @@ Eina_Iterator *efl_net_control_access_point_configuration_domains_get(const Eo *
 void efl_net_control_access_point_configuration_domains_set(Eo *obj, Eina_Iterator *domains);
 </code>
 
-%%Search domains configured by user for this access point.%%\\ 
+%%Searches domains configured by user for this access point.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:control:access_point:property:configuration_ipv4|configuration_ipv4]]** //**(get, set)**//
 <code c>
@@ -123,7 +123,7 @@ void efl_net_control_access_point_configuration_time_servers_set(Eo *obj, Eina_I
 Eina_Iterator *efl_net_control_access_point_domains_get(const Eo *obj);
 </code>
 
-%%Search domains in use for this access point.%%\\ 
+%%Searches domains in use for this access point.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:efl:net:control:access_point:property:error|error]]** //**(get)**//
 <code c>
@@ -232,17 +232,7 @@ Eina_Iterator *efl_net_control_access_point_time_servers_get(const Eo *obj);
 %%NTP (Time Server) in use for this access point.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:net:control:access_point:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -251,12 +241,20 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
 %%The parent of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:access_point:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -512,11 +510,33 @@ void efl_name_set(Eo *obj, const char *name);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:net:control:access_point:event:changed|changed]] | %%Called when some properties were changed.%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:net:control:access_point:event:changed|changed]]**
+<code c>
+EFL_NET_CONTROL_ACCESS_POINT_EVENT_CHANGED(void)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%Called when some properties were changed.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

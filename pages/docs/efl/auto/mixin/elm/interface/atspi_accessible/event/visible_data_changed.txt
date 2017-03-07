@@ -5,10 +5,31 @@
 visible,data,changed;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_VISIBLE_DATA_CHANGED;
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_VISIBLE_DATA_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_interface_atspi_accessible_event_visible_data_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_VISIBLE_DATA_CHANGED, on_elm_interface_atspi_accessible_event_visible_data_changed, d);
+}
+
 </code>
 
 ===== Description =====

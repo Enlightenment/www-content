@@ -5,10 +5,31 @@
 window,created;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_INTERFACE_ATSPI_WINDOW_EVENT_WINDOW_CREATED;
+ELM_INTERFACE_ATSPI_WINDOW_EVENT_WINDOW_CREATED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_interface_atspi_window_event_window_created(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_INTERFACE_ATSPI_WINDOW_EVENT_WINDOW_CREATED, on_elm_interface_atspi_window_event_window_created, d);
+}
+
 </code>
 
 ===== Description =====

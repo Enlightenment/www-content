@@ -5,10 +5,31 @@
 connected;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void EFL_NET_DIALER_EVENT_CONNECTED;
+EFL_NET_DIALER_EVENT_CONNECTED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_dialer_event_connected(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_DIALER_EVENT_CONNECTED, on_efl_net_dialer_event_connected, d);
+}
+
 </code>
 
 ===== Description =====

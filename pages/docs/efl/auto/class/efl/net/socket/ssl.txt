@@ -58,13 +58,6 @@ void efl_net_socket_ssl_adopt(Eo *obj, Efl_Net_Socket *efl_net_socket, Efl_Net_S
 
 %%Adopt an Efl.Net.Dialer or regular Efl.Net.Socket that will be used for the actual communication.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:adopted|adopted]]** //**(get)**//
-<code c>
-Eina_Bool efl_net_socket_ssl_adopted_get(const Eo *obj, Efl_Net_Socket **efl_net_socket, Efl_Net_Ssl_Context **ctx);
-</code>
-
-%%Return the adopted object, if any. Be careful!%%\\ 
-\\ 
 **[[:docs:efl:auto:class:efl:net:socket:ssl:property:hostname_override|hostname_override]]** //**(get, set)**//
 <code c>
 const char *efl_net_socket_ssl_hostname_override_get(const Eo *obj);
@@ -89,114 +82,15 @@ void efl_net_socket_ssl_verify_mode_set(Eo *obj, Efl_Net_Ssl_Verify_Mode verify_
 
 %%How to verify the remote peer.%%\\ 
 \\ 
-
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:close|close]]** //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
+**[[:docs:efl:auto:class:efl:net:socket:ssl:property:adopted|adopted]]** //**(get)**// ''protected''
 <code c>
-Eina_Error efl_io_closer_close(Eo *obj);
+Eina_Bool efl_net_socket_ssl_adopted_get(const Eo *obj, Efl_Net_Socket **efl_net_socket, Efl_Net_Ssl_Context **ctx);
 </code>
 
-%%Closes the Input/Output object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:read|read]]** //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
-</code>
-
-%%Reads data into a pre-allocated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:method:write|write]]** //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
-</code>
-
-%%Writes data from a pre-populated buffer.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:address_local|address_local]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]]//
-<code c>
-const char *efl_net_socket_address_local_get(const Eo *obj);
-</code>
-
-%%The local address, similar to getsockname().%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:address_remote|address_remote]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]]//
-<code c>
-const char *efl_net_socket_address_remote_get(const Eo *obj);
-</code>
-
-%%The remote address, similar to getpeername().%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:can_read|can_read]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
-void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:can_write|can_write]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]]//
-<code c>
-Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
-void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
-</code>
-
-%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
-void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
-</code>
-
-%%If true will automatically close() on object destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
-Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
-</code>
-
-%%If true will automatically close resources on exec() calls.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:closed|closed]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_closed_get(const Eo *obj);
-</code>
-
-%%If true will notify object was closed.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:socket:ssl:property:eos|eos]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]]//
-<code c>
-Eina_Bool efl_io_reader_eos_get(const Eo *obj);
-void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
-</code>
-
-%%If %%''true''%% will notify end of stream.%%\\ 
+%%Return the adopted object, if any. Be careful!%%\\ 
 \\ 
 
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -205,12 +99,34 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
 %%The parent of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -449,19 +365,156 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:read|read]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+
+%%Reads data into a pre-allocated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:can_read|can_read]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
+void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
+</code>
+
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:eos|eos]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_eos_get(const Eo *obj);
+void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
+</code>
+
+%%If %%''true''%% will notify end of stream.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:write|write]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+
+%%Writes data from a pre-populated buffer.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+
+%%If %%''true''%% will notify %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:address_local|address_local]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+const char *efl_net_socket_address_local_get(const Eo *obj);
+void efl_net_socket_address_local_set(Eo *obj, const char *address);
+</code>
+
+%%The local address, similar to getsockname().%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:address_remote|address_remote]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+const char *efl_net_socket_address_remote_get(const Eo *obj);
+void efl_net_socket_address_remote_set(Eo *obj, const char *address);
+</code>
+
+%%The remote address, similar to getpeername().%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:method:close|close]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+
+%%Closes the Input/Output object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:net:socket:ssl:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:net:socket:ssl:event:ssl_error|ssl,error]] | %%An error such as %%[[:docs:efl:auto:var:efl:net:socket:ssl:error:handshake|Efl.Net.Socket.Ssl.Error.HANDSHAKE]]%%%% |
-| [[:docs:efl:auto:class:efl:net:socket:ssl:event:ssl_ready|ssl,ready]] | %%Notifies the SSL handshake was done and the socket is now able to communicate%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:net:socket:ssl:event:ssl_error|ssl,error]]**
+<code c>
+EFL_NET_SOCKET_SSL_EVENT_SSL_ERROR(Eina_Error)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|Efl.Io.Reader.can_read,changed]] | %%Notifies can_read property changed.%% |
-| [[:docs:efl:auto:interface:efl:io:reader:event:eos|Efl.Io.Reader.eos]] | %%Notifies end of stream, when property is marked as true.%% |
-| [[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|Efl.Io.Writer.can_write,changed]] | %%Notifies can_write property changed.%% |
-| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |
+%%An error such as %%[[:docs:efl:auto:var:efl:net:socket:ssl:error:handshake|Efl.Net.Socket.Ssl.Error.HANDSHAKE]]%%%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:socket:ssl:event:ssl_ready|ssl,ready]]**
+<code c>
+EFL_NET_SOCKET_SSL_EVENT_SSL_READY(void)
+</code>
+
+%%Notifies the SSL handshake was done and the socket is now able to communicate%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:can_read_changed|can_read,changed]]**
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+%%Notifies can_read property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]].**[[:docs:efl:auto:interface:efl:io:reader:event:eos|eos]]**
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+%%Notifies end of stream, when property is marked as true.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]].**[[:docs:efl:auto:interface:efl:io:writer:event:can_write_changed|can_write,changed]]**
+<code c>
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+%%Notifies can_write property changed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 

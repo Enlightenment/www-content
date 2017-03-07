@@ -5,10 +5,31 @@
 play,clicked;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_PLAYER_EVENT_PLAY_CLICKED;
+ELM_PLAYER_EVENT_PLAY_CLICKED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_player_event_play_clicked(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_PLAYER_EVENT_PLAY_CLICKED, on_elm_player_event_play_clicked, d);
+}
+
 </code>
 
 ===== Description =====

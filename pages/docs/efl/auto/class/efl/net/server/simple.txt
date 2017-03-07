@@ -59,67 +59,7 @@ void efl_net_server_simple_inner_server_set(Eo *obj, Efl_Object *server);
 %%The inner %%[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]%% this wrapper operates on.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:net:server:simple:method:client_announce|client_announce]]** //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
-</code>
-
-%%Implementions should call this method to announce new clients.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:method:serve|serve]]** //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-Eina_Error efl_net_server_serve(Eo *obj, const char *address);
-</code>
-
-%%Starts serving requests.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:property:address|address]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-const char *efl_net_server_address_get(const Eo *obj);
-</code>
-
-%%The address the server is bound to.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:property:clients_count|clients_count]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-unsigned int efl_net_server_clients_count_get(const Eo *obj);
-</code>
-
-%%Number of concurrent clients accepted by this server.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:property:clients_limit|clients_limit]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
-void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
-</code>
-
-%%Number of maximum concurrent clients allowed by this server.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:server:simple:property:serving|serving]]** //**(get)**// //[from [[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]]]//
-<code c>
-Eina_Bool efl_net_server_serving_get(const Eo *obj);
-</code>
-
-%%Returns whenever the server is ready to accept clients or not.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -128,12 +68,27 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
 %%The parent of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:server:simple:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:server:simple:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -379,14 +334,101 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:method:serve|serve]]** //[Overridden here]//
+<code c>
+Eina_Error efl_net_server_serve(Eo *obj, const char *address);
+</code>
 
-===== Inherited Events =====
+%%Starts serving requests.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:property:address|address]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+const char *efl_net_server_address_get(const Eo *obj);
+void efl_net_server_address_set(Eo *obj, const char *address);
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:interface:efl:net:server:event:client_add|Efl.Net.Server.client,add]] | %%A new client socket was created.%% |
-| [[:docs:efl:auto:interface:efl:net:server:event:client_rejected|Efl.Net.Server.client,rejected]] | %%Notifies a client was rejected due excess, see %%[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%% |
-| [[:docs:efl:auto:interface:efl:net:server:event:error|Efl.Net.Server.error]] | %%Some error happened and the server needs to be stopped.%% |
-| [[:docs:efl:auto:interface:efl:net:server:event:serving|Efl.Net.Server.serving]] | %%Notifies the server is ready to accept clients. See property %%[[:docs:efl:auto:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%% |
+%%The address the server is bound to.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:property:clients_count|clients_count]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+unsigned int efl_net_server_clients_count_get(const Eo *obj);
+void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
+</code>
+
+%%Number of concurrent clients accepted by this server.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:property:clients_limit|clients_limit]]** //**(get, set)**// //[Overridden here]//
+<code c>
+void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
+void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
+</code>
+
+%%Number of maximum concurrent clients allowed by this server.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:property:serving|serving]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_net_server_serving_get(const Eo *obj);
+void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
+</code>
+
+%%Returns whenever the server is ready to accept clients or not.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:class:efl:net:server:simple:method:client_announce|client_announce]]** //[Overridden here]// ''protected''
+<code c>
+Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
+</code>
+
+%%Implementions should call this method to announce new clients.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:interface:efl:net:server:event:client_add|client,add]]**
+<code c>
+EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
+</code>
+
+%%A new client socket was created.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:interface:efl:net:server:event:client_rejected|client,rejected]]**
+<code c>
+EFL_NET_SERVER_EVENT_CLIENT_REJECTED(const char *)
+</code>
+
+%%Notifies a client was rejected due excess, see %%[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:interface:efl:net:server:event:error|error]]**
+<code c>
+EFL_NET_SERVER_EVENT_ERROR(Eina_Error)
+</code>
+
+%%Some error happened and the server needs to be stopped.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]].**[[:docs:efl:auto:interface:efl:net:server:event:serving|serving]]**
+<code c>
+EFL_NET_SERVER_EVENT_SERVING(void)
+</code>
+
+%%Notifies the server is ready to accept clients. See property %%[[:docs:efl:auto:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%\\ 
+\\ 

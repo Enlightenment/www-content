@@ -98,7 +98,7 @@ void efl_io_copier_destination_set(Eo *obj, Efl_Io_Writer *destination);
 
 %%Copier destination object.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:done|done]]** //**(get, set)**//
+**[[:docs:efl:auto:class:efl:io:copier:property:done|done]]** //**(get, set)**// ''protected set''
 <code c>
 Eina_Bool efl_io_copier_done_get(const Eo *obj);
 void efl_io_copier_done_set(Eo *obj, Eina_Bool done);
@@ -153,61 +153,7 @@ void efl_io_copier_timeout_inactivity_set(Eo *obj, double seconds);
 %%Terminate the copier with ETIMEDOUT if it becomes inactive for some time.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:io:copier:method:close|close]]** //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Error efl_io_closer_close(Eo *obj);
-</code>
-
-%%Closes the Input/Output object.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
-void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
-</code>
-
-%%If true will automatically close() on object destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
-Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
-</code>
-
-%%If true will automatically close resources on exec() calls.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:closed|closed]]** //**(get)**// //[from [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]]//
-<code c>
-Eina_Bool efl_io_closer_closed_get(const Eo *obj);
-</code>
-
-%%If true will notify object was closed.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -216,8 +162,30 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:constructor|constructor]]** //[Overridden here]//
 <code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
@@ -460,19 +428,102 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:method:close|close]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+
+%%Closes the Input/Output object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:io:copier:event:data|data]] | %%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%% |
-| [[:docs:efl:auto:class:efl:io:copier:event:done|done]] | %%All available data was copied from source to destination%% |
-| [[:docs:efl:auto:class:efl:io:copier:event:error|error]] | %%An error happened and the copy stopped%% |
-| [[:docs:efl:auto:class:efl:io:copier:event:line|line]] | %%If %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%% |
-| [[:docs:efl:auto:class:efl:io:copier:event:progress|progress]] | %%Total size changed or Data was read/written%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:io:copier:event:data|data]]**
+<code c>
+EFL_IO_COPIER_EVENT_DATA(const Eina_Slice *)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:mixin:efl:io:closer:event:closed|Efl.Io.Closer.closed]] | %%Notifies closed, when property is marked as true%% |
+%%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:copier:event:done|done]]**
+<code c>
+EFL_IO_COPIER_EVENT_DONE(void)
+</code>
+
+%%All available data was copied from source to destination%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:copier:event:error|error]]**
+<code c>
+EFL_IO_COPIER_EVENT_ERROR(Eina_Error)
+</code>
+
+%%An error happened and the copy stopped%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:copier:event:line|line]]**
+<code c>
+EFL_IO_COPIER_EVENT_LINE(const Eina_Slice *)
+</code>
+
+%%If %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:io:copier:event:progress|progress]]**
+<code c>
+EFL_IO_COPIER_EVENT_PROGRESS(void)
+</code>
+
+%%Total size changed or Data was read/written%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 

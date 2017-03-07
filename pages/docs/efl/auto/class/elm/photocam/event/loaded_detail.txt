@@ -5,10 +5,31 @@
 loaded,detail;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_PHOTOCAM_EVENT_LOADED_DETAIL;
+ELM_PHOTOCAM_EVENT_LOADED_DETAIL(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_photocam_event_loaded_detail(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_PHOTOCAM_EVENT_LOADED_DETAIL, on_elm_photocam_event_loaded_detail, d);
+}
+
 </code>
 
 ===== Description =====

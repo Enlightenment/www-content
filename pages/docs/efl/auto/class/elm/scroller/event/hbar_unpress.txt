@@ -5,10 +5,31 @@
 hbar,unpress;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_SCROLLER_EVENT_HBAR_UNPRESS;
+ELM_SCROLLER_EVENT_HBAR_UNPRESS(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_scroller_event_hbar_unpress(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_SCROLLER_EVENT_HBAR_UNPRESS, on_elm_scroller_event_hbar_unpress, d);
+}
+
 </code>
 
 ===== Description =====

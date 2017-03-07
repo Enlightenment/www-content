@@ -32,13 +32,6 @@ digraph hierarchy {
 
 ===== Members =====
 
-**[[:docs:efl:auto:mixin:ector:gl:buffer:base:method:attach|attach]]**
-<code c>
-void ector_gl_buffer_base_attach(Eo *obj, int texid, int fboid, Efl_Gfx_Colorspace cspace, int imw, int imh, int tx, int ty, int tw, int th, int l, int r, int t, int b);
-</code>
-
-%%Attach to an existing texture (or FBO). Used from child classes.%%\\ 
-\\ 
 **[[:docs:efl:auto:mixin:ector:gl:buffer:base:property:fbo|fbo]]** //**(get)**//
 <code c>
 int ector_gl_buffer_base_fbo_get(const Eo *obj);
@@ -67,8 +60,15 @@ Eina_Bool ector_gl_buffer_base_whole_get(const Eo *obj);
 
 %%If %%''true''%%, the image is covering the entire GL texture, ie. it's not part of an atlas.%%\\ 
 \\ 
+**[[:docs:efl:auto:mixin:ector:gl:buffer:base:method:attach|attach]]** ''protected''
+<code c>
+void ector_gl_buffer_base_attach(Eo *obj, int texid, int fboid, Efl_Gfx_Colorspace cspace, int imw, int imh, int tx, int ty, int tw, int th, int l, int r, int t, int b);
+</code>
 
-===== Others =====
+%%Attach to an existing texture (or FBO). Used from child classes.%%\\ 
+\\ 
+
+==== Inherited ====
 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:map|map]]**
 <code c>
@@ -134,7 +134,12 @@ void ector_buffer_size_get(const Eo *obj, int *w, int *h);
 %%The (rectangular) size of the pixel buffer.%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:mixin:ector:buffer:event:detached|Ector.Buffer.detached]] | %%Emitted whenever the previously attached pixels are detached during pixels_set%% |
+[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 

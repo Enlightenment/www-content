@@ -5,10 +5,31 @@
 closed,reason: Efl.Net.Dialer.Websocket.Closed_Reason;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Efl_Net_Dialer_Websocket_Closed_Reason EFL_NET_DIALER_WEBSOCKET_EVENT_CLOSED_REASON;
+EFL_NET_DIALER_WEBSOCKET_EVENT_CLOSED_REASON(Efl_Net_Dialer_Websocket_Closed_Reason)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_dialer_websocket_event_closed_reason(void *data, const Efl_Event *event)
+{
+    Efl_Net_Dialer_Websocket_Closed_Reason info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_DIALER_WEBSOCKET_EVENT_CLOSED_REASON, on_efl_net_dialer_websocket_event_closed_reason, d);
+}
+
 </code>
 
 ===== Description =====

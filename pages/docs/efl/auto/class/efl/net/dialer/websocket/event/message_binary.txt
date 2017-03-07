@@ -5,10 +5,31 @@
 message,binary: ptr(const(Eina.Slice));
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-const Eina_Slice *EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY;
+EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY(const Eina_Slice *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_dialer_websocket_event_message_binary(void *data, const Efl_Event *event)
+{
+    const Eina_Slice *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY, on_efl_net_dialer_websocket_event_message_binary, d);
+}
+
 </code>
 
 ===== Description =====

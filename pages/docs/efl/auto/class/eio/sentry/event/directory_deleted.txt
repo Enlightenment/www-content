@@ -5,10 +5,31 @@
 directory,deleted: Eio.Sentry.Event;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Eio_Sentry_Event EIO_SENTRY_EVENT_DIRECTORY_DELETED;
+EIO_SENTRY_EVENT_DIRECTORY_DELETED(Eio_Sentry_Event)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_eio_sentry_event_directory_deleted(void *data, const Efl_Event *event)
+{
+    Eio_Sentry_Event info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EIO_SENTRY_EVENT_DIRECTORY_DELETED, on_eio_sentry_event_directory_deleted, d);
+}
+
 </code>
 
 ===== Description =====

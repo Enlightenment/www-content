@@ -62,39 +62,15 @@ void ector_renderer_software_buffer_set(Eo *obj, Ector_Buffer *buf);
 %%Buffer property%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:fill|fill]]** //[from [[:docs:efl:auto:class:ector:renderer:software|Ector.Renderer.Software]]]//
+[[:docs:efl:auto:class:ector:renderer:software|Ector.Renderer.Software]].**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:fill|fill]]** //[Overridden here]//
 <code c>
 Eina_Bool ector_renderer_software_fill(Eo *obj);
 </code>
 
 %%Renderer fill operation%%\\ 
 \\ 
-**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:prepare|prepare]]** //[from [[:docs:efl:auto:class:ector:renderer|Ector.Renderer]]]//
-<code c>
-Eina_Bool ector_renderer_prepare(Eo *obj);
-</code>
-
-%%Prepare for rendering%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ector:renderer:software:buffer:property:crc|crc]]** //**(get)**// //[from [[:docs:efl:auto:class:ector:renderer|Ector.Renderer]]]//
-<code c>
-unsigned int ector_renderer_crc_get(const Eo *obj);
-</code>
-
-%%Cyclic redundancy check%%\\ 
-\\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:ector:renderer|Ector.Renderer]].**[[:docs:efl:auto:class:ector:renderer:method:bounds_get|bounds_get]]**
 <code c>
 void ector_renderer_bounds_get(Eo *obj, Eina_Rectangle *r);
@@ -115,13 +91,6 @@ Eina_Bool ector_renderer_draw(Eo *obj, Efl_Gfx_Render_Op op, Eina_Array *clips, 
 </code>
 
 %%Actual draw operation%%\\ 
-\\ 
-[[:docs:efl:auto:class:ector:renderer|Ector.Renderer]].**[[:docs:efl:auto:class:ector:renderer:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:ector:renderer|Ector.Renderer]].**[[:docs:efl:auto:class:ector:renderer:property:color|color]]** //**(get, set)**//
 <code c>
@@ -178,6 +147,34 @@ void ector_renderer_visibility_set(Eo *obj, Eina_Bool v);
 </code>
 
 %%The given Ector renderer visible or invisible.%%\\ 
+\\ 
+[[:docs:efl:auto:class:ector:renderer|Ector.Renderer]].**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:prepare|prepare]]** //[Overridden here]//
+<code c>
+Eina_Bool ector_renderer_prepare(Eo *obj);
+</code>
+
+%%Prepare for rendering%%\\ 
+\\ 
+[[:docs:efl:auto:class:ector:renderer|Ector.Renderer]].**[[:docs:efl:auto:class:ector:renderer:software:buffer:property:crc|crc]]** //**(get)**// //[Overridden here]//
+<code c>
+unsigned int ector_renderer_crc_get(const Eo *obj);
+</code>
+
+%%Cyclic redundancy check%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:renderer:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:ector:renderer|Ector.Renderer]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ector:renderer:software:buffer:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -439,14 +436,7 @@ void efl_gfx_fill_auto_set(Eo *obj, Eina_Bool filled);
 
 %%Binds the object's %%[[:docs:efl:auto:interface:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]]%% property to its actual geometry.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:ector:renderer:buffer|Ector.Renderer.Buffer]].**[[:docs:efl:auto:mixin:ector:renderer:buffer:property:buffer|buffer]]** //**(get, set)**//
-<code c>
-Ector_Buffer *ector_renderer_buffer_get(const Eo *obj);
-void ector_renderer_buffer_set(Eo *obj, Ector_Buffer *buf);
-</code>
-
-\\ 
-[[:docs:efl:auto:mixin:ector:renderer:buffer|Ector.Renderer.Buffer]].**[[:docs:efl:auto:mixin:ector:renderer:buffer:property:fill|fill]]** //**(get, set)**// //[from [[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]]]//
+[[:docs:efl:auto:interface:efl:gfx:fill|Efl.Gfx.Fill]].**[[:docs:efl:auto:mixin:ector:renderer:buffer:property:fill|fill]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:mixin:ector:renderer:buffer|Ector.Renderer.Buffer]]]//
 <code c>
 void efl_gfx_fill_get(const Eo *obj, int *x, int *y, int *w, int *h);
 void efl_gfx_fill_set(Eo *obj, int x, int y, int w, int h);
@@ -454,13 +444,55 @@ void efl_gfx_fill_set(Eo *obj, int x, int y, int w, int h);
 
 %%Specifies how to tile an image to fill its rectangle geometry.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:ector:renderer:buffer|Ector.Renderer.Buffer]].**[[:docs:efl:auto:mixin:ector:renderer:buffer:property:buffer|buffer]]** //**(get, set)**//
+<code c>
+Ector_Buffer *ector_renderer_buffer_get(const Eo *obj);
+void ector_renderer_buffer_set(Eo *obj, Ector_Buffer *buf);
+</code>
 
-===== Inherited Events =====
+\\ 
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

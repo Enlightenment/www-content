@@ -5,10 +5,31 @@
 windows,close,request;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-void ELM_WEB_EVENT_WINDOWS_CLOSE_REQUEST;
+ELM_WEB_EVENT_WINDOWS_CLOSE_REQUEST(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_web_event_windows_close_request(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_WEB_EVENT_WINDOWS_CLOSE_REQUEST, on_elm_web_event_windows_close_request, d);
+}
+
 </code>
 
 ===== Description =====

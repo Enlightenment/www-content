@@ -5,10 +5,31 @@
 children,changed: Elm.Atspi.Event.Children_Changed.Data;
 </code>
 
-===== C signature =====
+===== C information =====
 
 <code c>
-Elm_Atspi_Event_Children_Changed_Data ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_CHILDREN_CHANGED;
+ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_CHILDREN_CHANGED(Elm_Atspi_Event_Children_Changed_Data)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_interface_atspi_accessible_event_children_changed(void *data, const Efl_Event *event)
+{
+    Elm_Atspi_Event_Children_Changed_Data info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_INTERFACE_ATSPI_ACCESSIBLE_EVENT_CHILDREN_CHANGED, on_elm_interface_atspi_accessible_event_children_changed, d);
+}
+
 </code>
 
 ===== Description =====

@@ -40,14 +40,14 @@ digraph hierarchy {
 Eina_Bool ecore_audio_obj_out_input_attach(Eo *obj, Ecore_Audio_In *input);
 </code>
 
-%%Attach an input to an output%%\\ 
+%%Attaches an input to an output%%\\ 
 \\ 
 **[[:docs:efl:auto:class:ecore:audio:out:method:input_detach|input_detach]]**
 <code c>
 Eina_Bool ecore_audio_obj_out_input_detach(Eo *obj, Ecore_Audio_In *input);
 </code>
 
-%%Detach an input from an output%%\\ 
+%%Detaches an input from an output%%\\ 
 \\ 
 **[[:docs:efl:auto:class:ecore:audio:out:method:inputs_get|inputs_get]]**
 <code c>
@@ -57,32 +57,15 @@ Eina_List *ecore_audio_obj_out_inputs_get(Eo *obj);
 %%Returns the list of all attached inputs%%\\ 
 \\ 
 
-===== Overrides =====
+==== Inherited ====
 
-**[[:docs:efl:auto:class:ecore:audio:out:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ecore:audio:out:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:ecore:audio:out:method:vio_set|vio_set]]** //[from [[:docs:efl:auto:class:ecore:audio|Ecore.Audio]]]//
+[[:docs:efl:auto:class:ecore:audio|Ecore.Audio]].**[[:docs:efl:auto:class:ecore:audio:out:method:vio_set|vio_set]]** //[Overridden here]//
 <code c>
 void ecore_audio_obj_vio_set(Eo *obj, Ecore_Audio_Vio *vio, void *data, efl_key_data_free_func free_func);
 </code>
 
-%%Set the virtual IO functions%%\\ 
+%%Sets the virtual IO functions%%\\ 
 \\ 
-
-===== Others =====
-
 [[:docs:efl:auto:class:ecore:audio|Ecore.Audio]].**[[:docs:efl:auto:class:ecore:audio:property:format|format]]** //**(get, set)**//
 <code c>
 Ecore_Audio_Format ecore_audio_obj_format_get(const Eo *obj);
@@ -122,6 +105,20 @@ void ecore_audio_obj_volume_set(Eo *obj, double volume);
 </code>
 
 %%Volume of the object%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:audio:out:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:ecore:audio:out:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -376,9 +373,26 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 %%The parent of an object.%%\\ 
 \\ 
 
-===== Inherited Events =====
+==== Inherited ====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

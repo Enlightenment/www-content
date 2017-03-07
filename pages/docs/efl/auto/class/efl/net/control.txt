@@ -96,31 +96,7 @@ Eina_Iterator *efl_net_control_technologies_get(const Eo *obj);
 %%The iterator of current technologies.%%\\ 
 \\ 
 
-===== Overrides =====
-
-**[[:docs:efl:auto:class:efl:net:control:method:constructor|constructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_constructor(Eo *obj);
-</code>
-
-%%Call the object's constructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:control:method:destructor|destructor]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-void efl_destructor(Eo *obj);
-</code>
-
-%%Call the object's destructor.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:efl:net:control:method:finalize|finalize]]** //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-
-===== Others =====
+==== Inherited ====
 
 [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
@@ -129,12 +105,34 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(set)**// //[from [[:docs:efl:auto:class:efl:object|Efl.Object]]]//
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
+Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
 </code>
 
 %%The parent of an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:constructor|constructor]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
@@ -376,21 +374,103 @@ void efl_name_set(Eo *obj, const char *name);
 
 ===== Events =====
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:net:control:event:access_point_add|access_point,add]] | %%The given access point was added%% |
-| [[:docs:efl:auto:class:efl:net:control:event:access_point_del|access_point,del]] | %%The given access point will be deleted%% |
-| [[:docs:efl:auto:class:efl:net:control:event:access_points_changed|access_points,changed]] | %%Access points were added, deleted or reordered.%% |
-| [[:docs:efl:auto:class:efl:net:control:event:agent_browser_url|agent_browser_url]] | %%Requires the user to visit a web page%% |
-| [[:docs:efl:auto:class:efl:net:control:event:agent_error|agent_error]] | %%Requires the error to be reported to the user%% |
-| [[:docs:efl:auto:class:efl:net:control:event:agent_released|agent_released]] | %%Notifies we're not the agent anymore%% |
-| [[:docs:efl:auto:class:efl:net:control:event:agent_request_input|agent_request_input]] | %%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:docs:efl:auto:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%% |
-| [[:docs:efl:auto:class:efl:net:control:event:radios_offline_changed|radios_offline,changed]] | %%Property %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%% |
-| [[:docs:efl:auto:class:efl:net:control:event:state_changed|state,changed]] | %%Property %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%% |
-| [[:docs:efl:auto:class:efl:net:control:event:technology_add|technology,add]] | %%The given technology was added%% |
-| [[:docs:efl:auto:class:efl:net:control:event:technology_del|technology,del]] | %%The given technology will be deleted%% |
-===== Inherited Events =====
+**[[:docs:efl:auto:class:efl:net:control:event:access_point_add|access_point,add]]**
+<code c>
+EFL_NET_CONTROL_EVENT_ACCESS_POINT_ADD(Efl_Net_Control_Access_Point *)
+</code>
 
-^ Event name ^ Brief description ^
-| [[:docs:efl:auto:class:efl:object:event:callback_add|Efl.Object.callback,add]] | %%A callback was added.%% |
-| [[:docs:efl:auto:class:efl:object:event:callback_del|Efl.Object.callback,del]] | %%A callback was deleted.%% |
-| [[:docs:efl:auto:class:efl:object:event:del|Efl.Object.del]] | %%Object is being deleted.%% |
+%%The given access point was added%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:access_point_del|access_point,del]]**
+<code c>
+EFL_NET_CONTROL_EVENT_ACCESS_POINT_DEL(Efl_Net_Control_Access_Point *)
+</code>
+
+%%The given access point will be deleted%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:access_points_changed|access_points,changed]]**
+<code c>
+EFL_NET_CONTROL_EVENT_ACCESS_POINTS_CHANGED(void)
+</code>
+
+%%Access points were added, deleted or reordered.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:agent_browser_url|agent_browser_url]]**
+<code c>
+EFL_NET_CONTROL_EVENT_AGENT_BROWSER_URL(Efl_Net_Control_Agent_Browser_Url)
+</code>
+
+%%Requires the user to visit a web page%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:agent_error|agent_error]]**
+<code c>
+EFL_NET_CONTROL_EVENT_AGENT_ERROR(Efl_Net_Control_Agent_Error)
+</code>
+
+%%Requires the error to be reported to the user%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:agent_released|agent_released]]**
+<code c>
+EFL_NET_CONTROL_EVENT_AGENT_RELEASED(void)
+</code>
+
+%%Notifies we're not the agent anymore%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:agent_request_input|agent_request_input]]**
+<code c>
+EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT(Efl_Net_Control_Agent_Request_Input)
+</code>
+
+%%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:docs:efl:auto:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:radios_offline_changed|radios_offline,changed]]**
+<code c>
+EFL_NET_CONTROL_EVENT_RADIOS_OFFLINE_CHANGED(void)
+</code>
+
+%%Property %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:state_changed|state,changed]]**
+<code c>
+EFL_NET_CONTROL_EVENT_STATE_CHANGED(void)
+</code>
+
+%%Property %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:technology_add|technology,add]]**
+<code c>
+EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD(Efl_Net_Control_Technology *)
+</code>
+
+%%The given technology was added%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:control:event:technology_del|technology,del]]**
+<code c>
+EFL_NET_CONTROL_EVENT_TECHNOLOGY_DEL(Efl_Net_Control_Technology *)
+</code>
+
+%%The given technology will be deleted%%\\ 
+\\ 
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
