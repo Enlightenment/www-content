@@ -1,0 +1,145 @@
+=== Enlightenment Foundation Libraries 1.19 Release ===
+  * //2017-04-12 - by Stefan Schmidt//
+
+After eight months of development work we are proud to announce the release of
+version 1.19 of the Enlightenment Foundation Libraries. In these eight months we got
+over 3400 commits from 98 authors. Great job everyone! Some highlights are listed below.
+
+== Download ==
+
+| LINK | SHA256 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.19.0.tar.gz  | efl-1.19.0.tar.gz ]] | 8b672a2f5751aed6c910e7d48e8594f16fc5b7f69b1158f03354e8bce2fafe6f  |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.19.0.tar.xz  | efl-1.19.0.tar.xz ]] | a4e0341081778007db414f8cd4e3b77b9d5398870292cab67e6b40cc1445eadf |
+
+----
+
+== What's New ==
+
+We only cover some highlights here. For the full list please look at the NEWS file,
+if you are interested in the details. As usual we have been working on fixing bugs,
+optimising our code for speed and memory footprint and adding new features.
+
+== XCB support removed ==
+After many years of having XCB support in ecore_x and the evas engine without a
+real user base we decided to drop it from this release onwards. 
+
+== Multiseat support ==
+This release saw the first work on multiseat support in evas and edje.
+
+== Evas Image Loaders ==
+In the evas image loader BMP got support for region set and PNG for region load.
+The PNG saver was extended with support for GRY8/AGRY88 as well and our
+async image loading now allows loading the header of an image file async, too.
+
+== Wayland, DRM and Input ==
+Our libinput support in elput does now supports new libinput features like
+tap-and-drag, drag-log and dwt on touch pads and more. The XDG shell v6
+support was added and ecore-drm does now support retrieving the screen
+dpi and its rotation and setting gamma of a given output.
+
+== Eolian ==
+Eolian support for documentation in EO files has been extended by a large
+margin, including a documentation tokenizer and maybe other things to
+generate our documentation from the EO files. 
+
+----
+
+= Statistics =
+
+(git log --pretty=oneline v1.18.0..v1.19.0 | wc -l)
+Number of commits in 1.19: 3475
+Number of commits in 1.18: 3364
+
+(git shortlog -ns v1.18.0..v1.19.0 | wc -l)
+Number of authors in 1.19: 98
+Number of authors in 1.18: 105
+
+(git diff --stat v1.18.0..v1.19.0 | tail -1)
+2491 files changed, 207951 insertions(+), 151443 deletions(-) in 1.19
+5072 files changed, 1149591 insertions(+), 87002 deletions(-) in 1.18
+
+----
+
+===Building and Dependencies===
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please refer to the README for a full list of dependencies, explanations on configure flags and other relevant information. Default dependencies are:
+
+  * bullet
+  * libpng
+  * libjpeg
+  * gstreamer (1.x, 0.10 support optional. Ensure all codecs you want are installed.)
+  * zlib
+  * luajit (lua 5.1 or 5.2 support optional)
+  * libtiff
+  * openssl
+  * curl
+  * dbus
+  * libc
+  * fontconfig
+  * freetype2
+  * fribidi
+  * libpulse
+  * libsndfile
+  * libx11
+  * libxau
+  * libxcomposite
+  * libxdamage
+  * libxdmcp
+  * libxext
+  * libxfixes
+  * libxinerama
+  * libxrandr
+  * libxrender
+  * libxss
+  * libxtst
+  * libxcursor
+  * libxp
+  * libxi (2.2 or newer)
+  * libgl (opengl/glx or opengl-es2/egl)
+  * giflib
+  * util-linux (limbount + libblkid)
+  * systemd / libudev
+  * poppler / poppler-cpp
+  * libraw
+  * libspectre
+  * librsvg
+
+Recommended requirements (highly recommended):
+
+  * harfbuzz
+  * systemd
+  * libwebp
+  * liblz4
+  * vlc (libvlc)
+
+Enable these with configure options:
+
+<file>
+--enable-xinput22 \
+--enable-systemd \
+--enable-image-loader-webp \
+--enable-harfbuzz \
+--enable-multisense \
+--enable-liblz4
+</file>
+
+On linux to get framebuffer support you may want to also do:
+
+<file>
+--enable-fb
+--disable-tslib
+</file>
+
+If you want wayland support also add:
+
+<file>
+--enable-wayland \
+--enable-elput \
+--enable-drm
+</file>
+
+At runtime if you want thumbnailing for DOC/PPT/XLS etc. files also provide:
+libreoffice
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
