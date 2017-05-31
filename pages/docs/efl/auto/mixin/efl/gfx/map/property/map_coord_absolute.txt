@@ -1,0 +1,62 @@
+<title>Efl.Gfx.Map.map_coord_absolute</title>
+===== Signature =====
+
+<code>
+@property map_coord_absolute {
+    get {
+        keys {
+            idx: int;
+        }
+        values {
+            x: double;
+            y: double;
+            z: double;
+        }
+    }
+    set {
+        keys {
+            idx: int;
+        }
+        values {
+            x: double;
+            y: double;
+            z: double;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_gfx_map_coord_absolute_get(const Eo *obj, int idx, double *x, double *y, double *z);
+void efl_gfx_map_coord_absolute_set(Eo *obj, int idx, double x, double y, double z);
+</code>
+
+===== Keys =====
+
+  * **idx** - %%ID of the point, from 0 to 3 (included).%%
+===== Values =====
+
+  * **x** - %%Point X coordinate in absolute pixel coordinates.%%
+  * **y** - %%Point Y coordinate in absolute pixel coordinates.%%
+  * **z** - %%Point Z coordinate hint (pre-perspective transform).%%
+===== Description =====
+
+%%A point's absolute coordinate on the canvas.%%
+
+%%This sets/gets the fixed point's coordinate in the map. Note that points describe the outline of a quadrangle and are ordered either clockwise or counter-clockwise. It is suggested to keep your quadrangles concave and non-complex, though these polygon modes may work, they may not render a desired set of output. The quadrangle will use points 0 and 1 , 1 and 2, 2 and 3, and 3 and 0 to describe the edges of the quadrangle.%%
+
+%%The X and Y and Z coordinates are in canvas units. Z is optional and may or may not be honored in drawing. Z is a hint and does not affect the X and Y rendered coordinates. It may be used for calculating fills with perspective correct rendering.%%
+
+%%Remember all coordinates are canvas global ones like with move and resize in the canvas.%%
+
+%%This property can be read to get the 4 points positions on the canvas, or set to manually place them.%%
+
+//Since 1.20//{{page>:docs:efl:user:mixin:efl:gfx:map:property:map_coord_absolute:description&nodate&nolink&nouser}}
+
+
+===== Implemented by =====
+
+  * **Efl.Gfx.Map.map_coord_absolute**
+

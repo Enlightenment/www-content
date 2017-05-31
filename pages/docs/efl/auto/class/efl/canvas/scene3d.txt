@@ -121,14 +121,14 @@ Eina_Bool efl_canvas_object_clipees_has(const Eo *obj);
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_grab|key_grab]]**
 <code c>
-Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers, Eina_Bool exclusive);
+Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, Eina_Bool exclusive);
 </code>
 
 %%Requests %%''keyname''%% key events be directed to %%''obj''%%.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_ungrab|key_ungrab]]**
 <code c>
-void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers);
+void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers);
 </code>
 
 %%Removes the grab on %%''keyname''%% key events by %%''obj''%%.%%\\ 
@@ -237,7 +237,7 @@ Eina_Bool efl_canvas_object_pointer_in_get(const Eo *obj);
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_by_device_get(const Eo *obj, Efl_Input_Device *dev);
-void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour by device. See %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%%\\ 
@@ -245,7 +245,7 @@ void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_get(const Eo *obj);
-void efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour.%%\\ 
@@ -307,13 +307,6 @@ Efl_Object *efl_constructor(Eo *obj);
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:image:internal:method:dbg_info_get|dbg_info_get]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]//
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:image:internal:method:destructor|destructor]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]//
 <code c>
 void efl_destructor(Eo *obj);
@@ -327,20 +320,6 @@ Efl_Object *efl_finalize(Eo *obj);
 </code>
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_call|event_callback_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_legacy_call|event_callback_legacy_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:provider_find|provider_find]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
 <code c>
@@ -384,27 +363,6 @@ void efl_del(const Eo *obj);
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
@@ -418,13 +376,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -461,33 +412,12 @@ void efl_event_thaw(Eo *obj);
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
 </code>
 
 %%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -517,38 +447,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
@@ -956,6 +854,13 @@ void efl_image_content_hint_set(Eo *obj, Efl_Image_Content_Hint hint);
 </code>
 
 \\ 
+[[:docs:efl:auto:interface:efl:image|Efl.Image]].**[[:docs:efl:auto:class:efl:canvas:image:internal:property:image_size|image_size]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]//
+<code c>
+void efl_image_size_get(const Eo *obj, int *w, int *h);
+</code>
+
+%%This represents the size of the original image in pixels.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:image|Efl.Image]].**[[:docs:efl:auto:class:efl:canvas:image:internal:property:ratio|ratio]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]//
 <code c>
 double efl_image_ratio_get(const Eo *obj);
@@ -1014,76 +919,110 @@ void efl_orientation_set(Eo *obj, Efl_Orient dir);
 
 %%Control the orientation of a given widget%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:class:efl:canvas:object:property:map_enable|map_enable]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_enable_get(const Eo *obj);
-void efl_gfx_map_enable_set(Eo *obj, Eina_Bool enabled);
+void efl_gfx_map_lightning_3d_absolute(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Whether map transformation is enabled on this object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_dup|map_dup]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d|lightning_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_dup(Eo *obj, const Efl_Gfx_Map *other);
+void efl_gfx_map_lightning_3d(Eo *obj, const Efl_Gfx *pivot, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Duplicate the map information from another object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_lightning_3d|map_lightning_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_has|map_has]]**
 <code c>
-Eina_Bool efl_gfx_map_lightning_3d(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
+Eina_Bool efl_gfx_map_has(Eo *obj);
 </code>
 
-%%Perform lighting calculations on the given Map%%\\ 
+%%Read-only property indicating whether an object is mapped.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_perspective_3d|map_perspective_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_reset|map_reset]]**
 <code c>
-Eina_Bool efl_gfx_map_perspective_3d(Eo *obj, double px, double py, double z0, double foc);
+void efl_gfx_map_reset(Eo *obj);
+</code>
+
+%%Resets the map transformation to its default state.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
+<code c>
+void efl_gfx_map_perspective_3d_absolute(Eo *obj, double px, double py, double z0, double foc);
 </code>
 
 %%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate_manual|map_populate_manual]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d|perspective_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_populate_manual(Eo *obj, double x, double y, double w, double h, double z);
+void efl_gfx_map_perspective_3d(Eo *obj, const Efl_Gfx *pivot, double px, double py, double z0, double foc);
 </code>
 
-%%Populate source and destination map points to match given geometry.%%\\ 
+%%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|map_populate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_populate(Eo *obj, double z);
+void efl_gfx_map_rotate_3d_absolute(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
 </code>
 
-%%Populate source and destination map points to match this object.%%\\ 
+%%Rotate the object around 3 axes in 3D, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_quat_rotate|map_quat_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d|rotate_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_quat_rotate(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
+void efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Rotate the map in 3D using a unit quaternion.%%\\ 
+%%Rotate the object around 3 axes in 3D.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate_3d|map_rotate_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
+void efl_gfx_map_rotate_absolute(Eo *obj, double degrees, double cx, double cy);
 </code>
 
-%%Rotate the map around 3 axes in 3D%%\\ 
+%%Apply a rotation to the object, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate|map_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate(Eo *obj, double degrees, double cx, double cy);
+void efl_gfx_map_rotate_quat_absolute(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given rotation.%%\\ 
+%%Rotate the object in 3D using a unit quaternion, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_zoom|map_zoom]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat|rotate_quat]]**
 <code c>
-Eina_Bool efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+void efl_gfx_map_rotate_quat(Eo *obj, double qx, double qy, double qz, double qw, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given zooming.%%\\ 
+%%Rotate the object in 3D using a unit quaternion.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate|rotate]]**
+<code c>
+void efl_gfx_map_rotate(Eo *obj, double degrees, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a rotation to the object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:translate|translate]]**
+<code c>
+void efl_gfx_map_translate(Eo *obj, double dx, double dy, double dz);
+</code>
+
+%%Apply a translation to the object using map.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
+<code c>
+void efl_gfx_map_zoom_absolute(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object, using absolute coordinates.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom|zoom]]**
+<code c>
+void efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
 <code c>
@@ -1108,36 +1047,13 @@ void efl_gfx_map_color_set(Eo *obj, int idx, int r, int g, int b, int a);
 
 %%Color of a vertex in the map.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_move_sync|map_move_sync]]** //**(get, set)**//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
 <code c>
-Eina_Bool efl_gfx_map_move_sync_get(const Eo *obj);
-void efl_gfx_map_move_sync_set(Eo *obj, Eina_Bool enable);
+void efl_gfx_map_coord_absolute_get(const Eo *obj, int idx, double *x, double *y, double *z);
+void efl_gfx_map_coord_absolute_set(Eo *obj, int idx, double x, double y, double z);
 </code>
 
-%%Status of object move synchronization for map rendering.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_coord|map_point_coord]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_coord_get(const Eo *obj, int idx, double *x, double *y, double *z);
-void efl_gfx_map_point_coord_set(Eo *obj, int idx, double x, double y, double z);
-</code>
-
-%%Map point's coordinate.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_image_uv|map_point_image_uv]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_image_uv_get(const Eo *obj, int idx, double *u, double *v);
-void efl_gfx_map_point_image_uv_set(Eo *obj, int idx, double u, double v);
-</code>
-
-%%Map point's U and V texture source point.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_z|map_point_z]]** //**(get)**//
-<code c>
-double efl_gfx_map_point_z_get(const Eo *obj, int idx);
-</code>
-
-%%Value of Z coordinate of point %%''idx''%%.%%\\ 
+%%A point's absolute coordinate on the canvas.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
 <code c>
@@ -1147,12 +1063,13 @@ void efl_gfx_map_smooth_set(Eo *obj, Eina_Bool smooth);
 
 %%Smoothing state for map rendering.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:legacy_ctor|legacy_ctor]]** ''protected''
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
 <code c>
-void efl_canvas_object_legacy_ctor(Eo *obj);
+void efl_gfx_map_uv_get(const Eo *obj, int idx, double *u, double *v);
+void efl_gfx_map_uv_set(Eo *obj, int idx, double u, double v);
 </code>
 
-%%Internal function. Do not use.%%\\ 
+%%Map point's U and V texture source point.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
 <code c>
@@ -1160,13 +1077,6 @@ Efl_Canvas_Object *efl_canvas_object_render_parent_get(const Eo *obj);
 </code>
 
 %%Gets the parent smart object of a given Evas object, if it has one.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:type|type]]** //**(set)**// ''protected''
-<code c>
-void efl_canvas_object_type_set(Eo *obj, const char *type);
-</code>
-
-%%Sets the legacy type name of this Evas object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_dirty|filter_dirty]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]// ''protected''
 <code c>
@@ -1184,7 +1094,7 @@ Eina_Bool evas_filter_input_alpha(Eo *obj);
 \\ 
 [[:docs:efl:auto:mixin:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:docs:efl:auto:class:efl:canvas:image:internal:method:filter_input_render|filter_input_render]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:image:internal|Efl.Canvas.Image.Internal]]]// ''protected''
 <code c>
-Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
+Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *engine, void *output, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
 </code>
 
 %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%\\ 
@@ -1324,6 +1234,13 @@ EFL_GFX_EVENT_RESTACK(void)
 </code>
 
 %%Object stacking was changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
 <code c>

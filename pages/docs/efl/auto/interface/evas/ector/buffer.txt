@@ -23,18 +23,43 @@ digraph hierarchy {
 
 ===== Description =====
 
-%%Evas ector buffer interface%%
+%%Binding layer between ector buffers and evas images.%%
+
+%%Subclasses implement support for RGBA_Image for SW & GL, and Evas_GL_Image for GL.%%
+
+%%Internal class, not API stable.%%
+</note>
 
 {{page>:docs:efl:user:interface:evas:ector:buffer:description&nodate&nolink&nouser}}
 
 ===== Members =====
 
-**[[:docs:efl:auto:interface:evas:ector:buffer:property:engine_image|engine_image]]** //**(get, set)**//
+**[[:docs:efl:auto:interface:evas:ector:buffer:method:drawable_image_get|drawable_image_get]]**
 <code c>
-void evas_ector_buffer_engine_image_get(const Eo *obj, Evas_Canvas **evas, void **image);
-void evas_ector_buffer_engine_image_set(Eo *obj, Evas_Canvas *evas, void *image);
+void *evas_ector_buffer_drawable_image_get(Eo *obj);
 </code>
 
-%%Engine image property%%\\ 
+%%Fetch an engine image from this ector buffer as a drawable.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:evas:ector:buffer:method:engine_image_release|engine_image_release]]**
+<code c>
+Eina_Bool evas_ector_buffer_engine_image_release(Eo *obj, void *image);
+</code>
+
+%%Release an image from %%[[:docs:efl:auto:interface:evas:ector:buffer:method:drawable_image_get|Evas.Ector.Buffer.drawable_image_get]]%% or %%[[:docs:efl:auto:interface:evas:ector:buffer:method:render_image_get|Evas.Ector.Buffer.render_image_get]]%%.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:evas:ector:buffer:method:engine_image_set|engine_image_set]]**
+<code c>
+void evas_ector_buffer_engine_image_set(Eo *obj, void *engine, void *image);
+</code>
+
+%%Attach this ector buffer to an existing engine image.%%\\ 
+\\ 
+**[[:docs:efl:auto:interface:evas:ector:buffer:method:render_image_get|render_image_get]]**
+<code c>
+void *evas_ector_buffer_render_image_get(Eo *obj);
+</code>
+
+%%Fetch an engine image from this ector buffer as a render target.%%\\ 
 \\ 
 

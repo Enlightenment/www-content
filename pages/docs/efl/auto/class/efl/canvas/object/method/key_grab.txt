@@ -5,8 +5,8 @@
 key_grab {
     params {
         @in keyname: string @nonull;
-        @in modifiers: Evas.Modifier_Mask;
-        @in not_modifiers: Evas.Modifier_Mask;
+        @in modifiers: Efl.Input.Modifier;
+        @in not_modifiers: Efl.Input.Modifier;
         @in exclusive: bool;
     }
     return: bool @warn_unused;
@@ -16,14 +16,14 @@ key_grab {
 ===== C signature =====
 
 <code c>
-Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers, Eina_Bool exclusive);
+Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, Eina_Bool exclusive);
 </code>
 
 ===== Parameters =====
 
   * **keyname** //(in)// - %%The key to request events for.%%
-  * **modifiers** //(in)// - %%A mask of modifiers that must be present to trigger the event.%%
-  * **not_modifiers** //(in)// - %%A mask of modifiers that must not be present to trigger the event.%%
+  * **modifiers** //(in)// - %%A combinaison of modifier keys that must be present to trigger the event.%%
+  * **not_modifiers** //(in)// - %%A combinaison of modifier keys that must not be present to trigger the event.%%
   * **exclusive** //(in)// - %%Request that the %%''obj''%% is the only object receiving the %%''keyname''%% events.%%
 
 ===== Description =====

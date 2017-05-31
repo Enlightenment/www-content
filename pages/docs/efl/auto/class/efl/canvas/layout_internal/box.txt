@@ -11,16 +11,20 @@ digraph hierarchy {
     edge [color = "gray35"]
 
     efl_canvas_layout_internal_box [fillcolor = "black", label = "Efl.Canvas.Layout_Internal.Box", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_canvas_layout_internal [fillcolor = "gray15", label = "Efl.Canvas.Layout_Internal", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_canvas_layout_internal [fillcolor = "gray15", label = "Efl.Canvas.Layout_Internal", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_drag [fillcolor = "gray15", label = "Efl.Ui.Drag", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_pack_linear [fillcolor = "gray15", label = "Efl.Pack.Linear", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_pack [fillcolor = "gray15", label = "Efl.Pack", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_orientation [fillcolor = "gray15", label = "Efl.Orientation", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
-    efl_canvas_layout_internal_box -> efl_object
     efl_canvas_layout_internal_box -> efl_canvas_layout_internal
+    efl_canvas_layout_internal -> efl_object
+    efl_canvas_layout_internal -> efl_gfx
+    efl_canvas_layout_internal -> efl_ui_drag
     efl_canvas_layout_internal_box -> efl_pack_linear
     efl_pack_linear -> efl_pack
     efl_pack -> efl_container
@@ -34,8 +38,10 @@ digraph hierarchy {
 ===== Inheritance hierarchy =====
 
   * **[[:docs:efl:auto:class:efl:canvas:layout_internal:box|Efl.Canvas.Layout_Internal.Box]] //(class)//**
-    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
-    * [[:docs:efl:auto:interface:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]] //(interface)//
+    * [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]] //(class)//
+      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
+      * [[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]] //(interface)//
     * [[:docs:efl:auto:interface:efl:pack:linear|Efl.Pack.Linear]] //(interface)//
       * [[:docs:efl:auto:interface:efl:pack|Efl.Pack]] //(interface)//
         * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
@@ -52,7 +58,14 @@ digraph hierarchy {
 
 ==== Inherited ====
 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:box:method:finalize|finalize]]** //[Overridden here]//
+[[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:state|state]]** //**(get)**//
+<code c>
+void efl_canvas_layout_internal_state_get(const Eo *obj, const char **state, double *val);
+</code>
+
+%%The name and value of the current state of this part (read-only).%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
 <code c>
 Efl_Object *efl_finalize(Eo *obj);
 </code>
@@ -94,13 +107,6 @@ Efl_Object *efl_constructor(Eo *obj);
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:dbg_info_get|dbg_info_get]]**
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
 <code c>
 void efl_del(const Eo *obj);
@@ -115,34 +121,6 @@ void efl_destructor(Eo *obj);
 
 %%Call the object's destructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_call|event_callback_call]]**
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
@@ -156,20 +134,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_legacy_call|event_callback_legacy_call]]**
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -206,13 +170,6 @@ void efl_event_thaw(Eo *obj);
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
@@ -226,20 +183,6 @@ Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -269,38 +212,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
@@ -346,13 +257,6 @@ Efl_Gfx *efl_content_unset(Eo *obj);
 
 %%Unswallow the object in the current container and return it.%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:property:content_part_name|content_part_name]]** //**(get)**//
-<code c>
-const char *efl_content_part_name_get(const Eo *obj, Efl_Gfx *content);
-</code>
-
-%%The name of the part under which an object is swallowed.%%\\ 
-\\ 
 [[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:property:content|content]]** //**(get, set)**//
 <code c>
 Efl_Gfx *efl_content_get(const Eo *obj);
@@ -360,6 +264,14 @@ Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
 </code>
 
 %%Swallowed sub-object contained in this object.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+void efl_gfx_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
+void efl_gfx_geometry_set(Eo *obj, int x, int y, int w, int h);
+</code>
+
+%%Rectangular geometry that combines both position and size.%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:property:color_part|color_part]]** //**(get, set)**//
 <code c>
@@ -374,14 +286,6 @@ void efl_gfx_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
 void efl_gfx_color_set(Eo *obj, int r, int g, int b, int a);
 </code>
 
-\\ 
-[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:property:geometry|geometry]]** //**(get, set)**//
-<code c>
-void efl_gfx_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
-void efl_gfx_geometry_set(Eo *obj, int x, int y, int w, int h);
-</code>
-
-%%Rectangular geometry that combines both position and size.%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:property:position|position]]** //**(get, set)**//
 <code c>
@@ -514,12 +418,58 @@ void efl_pack_padding_set(Eo *obj, double pad_horiz, double pad_vert, Eina_Bool 
 
 %%Padding between items contained in this object.%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:box:property:real_part|real_part]]** //**(set)**// //[Overridden here]// ''protected''
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:method:drag_page_move|drag_page_move]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
 <code c>
-void _edje_real_part_set(Eo *obj, void *ed, void *rp, const char *part);
+Eina_Bool efl_ui_drag_page_move(Eo *obj, double dx, double dy);
 </code>
 
-%%Real part property%%\\ 
+%%Moves the dragable by %%''dx''%%,%%''dy''%% pages.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:method:drag_step_move|drag_step_move]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Eina_Bool efl_ui_drag_step_move(Eo *obj, double dx, double dy);
+</code>
+
+%%Moves the dragable by %%''dx''%%,%%''dy''%% steps.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:drag_dir|drag_dir]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Efl_Ui_Drag_Dir efl_ui_drag_dir_get(const Eo *obj);
+</code>
+
+%%Determines the dragable directions (read-only).%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:drag_page|drag_page]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Eina_Bool efl_ui_drag_page_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_page_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The page step increments.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:drag_size|drag_size]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Eina_Bool efl_ui_drag_size_get(const Eo *obj, double *dw, double *dh);
+Eina_Bool efl_ui_drag_size_set(Eo *obj, double dw, double dh);
+</code>
+
+%%The dragable object relative size.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:drag_step|drag_step]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Eina_Bool efl_ui_drag_step_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_step_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The drag step increment.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:docs:efl:auto:class:efl:canvas:layout_internal:property:drag_value|drag_value]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:layout_internal|Efl.Canvas.Layout_Internal]]]//
+<code c>
+Eina_Bool efl_ui_drag_value_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_value_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The dragable object relative location.%%\\ 
 \\ 
 
 ==== Inherited ====
@@ -559,6 +509,27 @@ EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
 
 %%Sent after an item was removed, before unref.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
+<code c>
+EFL_GFX_EVENT_HIDE(void)
+</code>
+
+%%Object just became invisible.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
 <code c>
 EFL_GFX_EVENT_HIDE(void)
@@ -573,12 +544,33 @@ EFL_GFX_EVENT_MOVE(void)
 
 %%Object was moved, its position during the event is the new one.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:move|move]]**
+<code c>
+EFL_GFX_EVENT_MOVE(void)
+</code>
+
+%%Object was moved, its position during the event is the new one.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:resize|resize]]**
 <code c>
 EFL_GFX_EVENT_RESIZE(void)
 </code>
 
 %%Object was resized, its size during the event is the new one.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:resize|resize]]**
+<code c>
+EFL_GFX_EVENT_RESIZE(void)
+</code>
+
+%%Object was resized, its size during the event is the new one.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:show|show]]**
+<code c>
+EFL_GFX_EVENT_SHOW(void)
+</code>
+
+%%Object just became visible.%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:show|show]]**
 <code c>

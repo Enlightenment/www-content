@@ -4,7 +4,9 @@
 <code>
 @property load_error {
     get {
-        return: Edje.Load_Error;
+        values {
+            error: Efl.Image.Load.Error (Efl.Image.Load.Error.generic);
+        }
     }
 }
 </code>
@@ -12,16 +14,17 @@
 ===== C signature =====
 
 <code c>
-Edje_Load_Error edje_obj_load_error_get(const Eo *obj);
+Efl_Image_Load_Error edje_obj_load_error_get(const Eo *obj);
 </code>
 
+===== Values =====
+
+  * **error** - %%The load error code.%%
 ===== Description =====
 
 %%Gets the (last) file loading error for a given Edje object%%
 
-%%This function is meant to be used after an Edje EDJ file loading, what takes place with the edje_object_file_set() function. If that function does not return %%''true''%%, one should check for the reason of failure with this one.%%
-
-%%@ref edje_load_error_str()%%
+%%This function is meant to be used after an Edje EDJ file loading, what takes place with the %%''file_set''%%() function. If that function does not return %%''true''%%, one should check for the reason of failure with this one.%%
 {{page>:docs:efl:user:class:edje:object:property:load_error:description&nodate&nolink&nouser}}
 
 ===== Implemented by =====

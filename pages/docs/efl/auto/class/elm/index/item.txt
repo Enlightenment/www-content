@@ -105,47 +105,12 @@ Eina_Bool efl_composite_part_is(Eo *obj);
 
 %%Check if an object is part of a composite object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:dbg_info_get|dbg_info_get]]**
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
 <code c>
 void efl_del(const Eo *obj);
 </code>
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_call|event_callback_call]]**
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
@@ -160,20 +125,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_legacy_call|event_callback_legacy_call]]**
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -217,13 +168,6 @@ Efl_Object *efl_finalize(Eo *obj);
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
@@ -237,20 +181,6 @@ Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -280,38 +210,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
@@ -569,7 +467,7 @@ Eina_Bool elm_wdg_item_disabled_get(const Eo *obj);
 void elm_wdg_item_disabled_set(Eo *obj, Eina_Bool disable);
 </code>
 
-%%Control the disabled state of an widget item.%%\\ 
+%%Control the disabled state of a widget item.%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget:item|Elm.Widget.Item]].**[[:docs:efl:auto:class:elm:widget:item:property:focus|focus]]** //**(get, set)**//
 <code c>
@@ -625,7 +523,7 @@ const char *elm_interface_atspi_accessible_name_get(const Eo *obj);
 void elm_interface_atspi_accessible_name_set(Eo *obj, const char *name);
 </code>
 
-%%String describing AT-SPI widget role name. Should be free by a user.%%\\ 
+%%Accessible name of the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:relationship_append|relationship_append]]**
 <code c>
@@ -654,7 +552,7 @@ const char *elm_interface_atspi_accessible_description_get(const Eo *obj);
 void elm_interface_atspi_accessible_description_set(Eo *obj, const char *description);
 </code>
 
-%%Widget contextual information.%%\\ 
+%%Contextual information about object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:parent|parent]]** //**(get, set)**//
 <code c>
@@ -662,7 +560,7 @@ Elm_Interface_Atspi_Accessible *elm_interface_atspi_accessible_parent_get(const 
 void elm_interface_atspi_accessible_parent_set(Eo *obj, Elm_Interface_Atspi_Accessible *parent);
 </code>
 
-%%Widget accessible parent.%%\\ 
+%%Object's accessible parent.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role|role]]** //**(get, set)**//
 <code c>
@@ -670,7 +568,7 @@ Elm_Atspi_Role elm_interface_atspi_accessible_role_get(const Eo *obj);
 void elm_interface_atspi_accessible_role_set(Eo *obj, Elm_Atspi_Role role);
 </code>
 
-%%The role of the widget in AT-SPI Accessibility domain.%%\\ 
+%%The role of the object in accessibility domain.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:root|root]]** //**(get)**//
 <code c>
@@ -685,7 +583,7 @@ const char *elm_interface_atspi_accessible_translation_domain_get(const Eo *obj)
 void elm_interface_atspi_accessible_translation_domain_set(Eo *obj, const char *domain);
 </code>
 
-%%Sets the translation domain of "name" and "description" properties.%%\\ 
+%%The translation domain of "name" and "description" properties.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:type|type]]** //**(get, set)**//
 <code c>
@@ -756,7 +654,7 @@ void elm_wdg_item_part_text_custom_set(Eo *obj, const char *part, const char *la
 Elm_Atspi_State_Set elm_interface_atspi_accessible_state_set_get(const Eo *obj);
 </code>
 
-%%Gets set describing widget accessible states.%%\\ 
+%%Gets set describing object accessible states.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_emit|event_emit]]** ''protected''
 <code c>
@@ -784,14 +682,14 @@ void elm_interface_atspi_accessible_event_handler_del(const Eo *obj, Elm_Atspi_E
 Eina_List *elm_interface_atspi_accessible_attributes_get(const Eo *obj);
 </code>
 
-%%Gets key-value pairs indentifying widget extra attributes. Must be free by a user.%%\\ 
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:children|children]]** //**(get)**// ''protected''
 <code c>
 Eina_List *elm_interface_atspi_accessible_children_get(const Eo *obj);
 </code>
 
-%%Gets widget's accessible children.%%\\ 
+%%Gets object's accessible children.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''
 <code c>
@@ -805,21 +703,21 @@ int elm_interface_atspi_accessible_index_in_parent_get(const Eo *obj);
 const char *elm_interface_atspi_accessible_localized_role_name_get(const Eo *obj);
 </code>
 
-%%Gets an localized string describing AT-SPI widget role name.%%\\ 
+%%Gets an localized string describing accessible object role name.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:relation_set|relation_set]]** //**(get)**// ''protected''
 <code c>
 Elm_Atspi_Relation_Set elm_interface_atspi_accessible_relation_set_get(const Eo *obj);
 </code>
 
-%%Gets an string describing AT-SPI widget role name. Lists and elements Should be free by a user.%%\\ 
+%%Gets an all relations between accessible object and other accessible objects.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role_name|role_name]]** //**(get)**// ''protected''
 <code c>
 const char *elm_interface_atspi_accessible_role_name_get(const Eo *obj);
 </code>
 
-%%Gets human-readable string indentifying widget accessibility role.%%\\ 
+%%Gets human-readable string indentifying object accessibility role.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]].**[[:docs:efl:auto:mixin:elm:interface:atspi_action:property:localized_name|localized_name]]** //**(get)**// ''protected''
 <code c>

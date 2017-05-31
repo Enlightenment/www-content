@@ -58,24 +58,10 @@ void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag m
 \\ 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:pixels_set|pixels_set]]**
 <code c>
-Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, Efl_Gfx_Colorspace cspace, Eina_Bool writable);
 </code>
 
 %%Set the source pixels for this buffer, or allocate a new memory region%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:span_free|span_free]]**
-<code c>
-void ector_buffer_span_free(Eo *obj, uint8_t *data);
-</code>
-
-%%Must be called as soon as possible after span_get%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:span_get|span_get]]**
-<code c>
-uint8_t *ector_buffer_span_get(Eo *obj, int x, int y, unsigned int w, Efl_Gfx_Colorspace cspace, unsigned int *length);
-</code>
-
-%%Get a single horizontal span of length w starting from (x,y)%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:method:unmap|unmap]]**
 <code c>
@@ -83,13 +69,6 @@ void ector_buffer_unmap(Eo *obj, void *data, unsigned int length);
 </code>
 
 %%Unmap a region of this buffer, and upload data to the GPU (if needed).%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:property:border|border]]** //**(get)**//
-<code c>
-void ector_buffer_border_get(const Eo *obj, int *l, int *r, int *t, int *b);
-</code>
-
-%%Duplicated pixel borders of this buffer, used for GL scaling%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:ector:buffer|Ector.Buffer]].**[[:docs:efl:auto:mixin:ector:buffer:property:cspace|cspace]]** //**(get)**//
 <code c>

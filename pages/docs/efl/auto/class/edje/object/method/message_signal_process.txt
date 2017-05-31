@@ -2,20 +2,30 @@
 ===== Signature =====
 
 <code>
-message_signal_process {}
+message_signal_process {
+    params {
+        @in recurse: bool @optional;
+    }
+}
 </code>
 
 ===== C signature =====
 
 <code c>
-void edje_obj_message_signal_process(Eo *obj);
+void edje_obj_message_signal_process(Eo *obj, Eina_Bool recurse);
 </code>
+
+===== Parameters =====
+
+  * **recurse** //(in)// - %%Whether to process messages on children objects.%%
 
 ===== Description =====
 
 %%Processes an object's message queue.%%
 
-%%This function goes through the object message queue processing the pending messages for  this specific Edje object. Normally they'd be processed only at idle time.%%
+%%This function goes through the object message queue processing the pending messages for this specific Edje object. Normally they'd be processed only at idle time.%%
+
+%%If %%''recurse''%% is %%''true''%%, this function will be called recursively on all subobjects.%%
 {{page>:docs:efl:user:class:edje:object:method:message_signal_process:description&nodate&nolink&nouser}}
 
 ===== Implemented by =====

@@ -30,6 +30,8 @@ digraph hierarchy {
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_component [fillcolor = "gray15", label = "Elm.Interface.Atspi_Component", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_user [fillcolor = "gray15", label = "Efl.Ui.Focus.User", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_object [fillcolor = "gray15", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_part [fillcolor = "gray15", label = "Efl.Part", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -51,6 +53,8 @@ digraph hierarchy {
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_ui_focus_manager [fillcolor = "gray15", label = "Efl.Ui.Focus.Manager", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_ui_clickable [fillcolor = "gray15", label = "Efl.Ui.Clickable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
@@ -76,6 +80,8 @@ digraph hierarchy {
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
     elm_widget -> elm_interface_atspi_component
+    elm_widget -> efl_ui_focus_user
+    elm_widget -> efl_ui_focus_object
     elm_layout -> efl_part
     elm_layout -> efl_container
     efl_container -> efl_gfx
@@ -98,6 +104,8 @@ digraph hierarchy {
     efl_gfx_map -> efl_object
     efl_canvas_object -> efl_loop_user
     efl_loop_user -> efl_object
+    elm_interface_scrollable -> efl_ui_focus_manager
+    efl_ui_focus_manager -> efl_object
     elm_gengrid -> efl_ui_clickable
     elm_gengrid -> elm_interface_atspi_widget_action
     elm_interface_atspi_widget_action -> elm_interface_atspi_action
@@ -129,6 +137,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_component|Elm.Interface.Atspi_Component]] //(mixin)//
+        * [[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]] //(interface)//
+        * [[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:part|Efl.Part]] //(interface)//
       * [[:docs:efl:auto:interface:efl:container|Efl.Container]] //(interface)//
         * [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]] //(interface)//
@@ -151,6 +161,8 @@ digraph hierarchy {
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
           * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
             * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+      * [[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] //(class)//
+        * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
     * [[:docs:efl:auto:interface:efl:ui:clickable|Efl.Ui.Clickable]] //(interface)//
     * [[:docs:efl:auto:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
       * [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]] //(mixin)//
@@ -166,7 +178,7 @@ digraph hierarchy {
 
 **[[:docs:efl:auto:class:elm:gengrid:method:at_xy_item_get|at_xy_item_get]]**
 <code c>
-Elm_Widget_Item *elm_obj_gengrid_at_xy_item_get(const Eo *obj, Evas_Coord x, Evas_Coord y, int *xposret, int *yposret);
+Elm_Widget_Item *elm_obj_gengrid_at_xy_item_get(const Eo *obj, int x, int y, int *xposret, int *yposret);
 </code>
 
 %%Get the item that is at the x, y canvas coords.%%\\ 
@@ -271,8 +283,8 @@ Elm_Widget_Item *elm_obj_gengrid_first_item_get(const Eo *obj);
 \\ 
 **[[:docs:efl:auto:class:elm:gengrid:property:group_item_size|group_item_size]]** //**(get, set)**//
 <code c>
-void elm_obj_gengrid_group_item_size_get(const Eo *obj, Evas_Coord *w, Evas_Coord *h);
-void elm_obj_gengrid_group_item_size_set(Eo *obj, Evas_Coord w, Evas_Coord h);
+void elm_obj_gengrid_group_item_size_get(const Eo *obj, int *w, int *h);
+void elm_obj_gengrid_group_item_size_set(Eo *obj, int w, int h);
 </code>
 
 \\ 
@@ -293,8 +305,8 @@ void elm_obj_gengrid_horizontal_set(Eo *obj, Eina_Bool horizontal);
 \\ 
 **[[:docs:efl:auto:class:elm:gengrid:property:item_size|item_size]]** //**(get, set)**//
 <code c>
-void elm_obj_gengrid_item_size_get(const Eo *obj, Evas_Coord *w, Evas_Coord *h);
-void elm_obj_gengrid_item_size_set(Eo *obj, Evas_Coord w, Evas_Coord h);
+void elm_obj_gengrid_item_size_get(const Eo *obj, int *w, int *h);
+void elm_obj_gengrid_item_size_set(Eo *obj, int w, int h);
 </code>
 
 \\ 
@@ -329,7 +341,7 @@ void elm_obj_gengrid_page_relative_set(Eo *obj, double h_pagerel, double v_pager
 \\ 
 **[[:docs:efl:auto:class:elm:gengrid:property:page_size|page_size]]** //**(set)**//
 <code c>
-void elm_obj_gengrid_page_size_set(Eo *obj, Evas_Coord h_pagesize, Evas_Coord v_pagesize);
+void elm_obj_gengrid_page_size_set(Eo *obj, int h_pagesize, int v_pagesize);
 </code>
 
 %%Set a given gengrid widget's scrolling page size.%%\\ 
@@ -446,14 +458,14 @@ Eina_Bool efl_canvas_object_clipees_has(const Eo *obj);
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_grab|key_grab]]**
 <code c>
-Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers, Eina_Bool exclusive);
+Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, Eina_Bool exclusive);
 </code>
 
 %%Requests %%''keyname''%% key events be directed to %%''obj''%%.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_ungrab|key_ungrab]]**
 <code c>
-void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers);
+void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers);
 </code>
 
 %%Removes the grab on %%''keyname''%% key events by %%''obj''%%.%%\\ 
@@ -532,7 +544,7 @@ Eina_Bool efl_canvas_object_pointer_in_get(const Eo *obj);
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_by_device_get(const Eo *obj, Efl_Input_Device *dev);
-void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour by device. See %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%%\\ 
@@ -540,7 +552,7 @@ void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_get(const Eo *obj);
-void efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour.%%\\ 
@@ -617,20 +629,6 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_call|event_callback_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_legacy_call|event_callback_legacy_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -666,27 +664,6 @@ void efl_del(const Eo *obj);
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
@@ -700,13 +677,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -743,40 +713,12 @@ void efl_event_thaw(Eo *obj);
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:finalize|finalize]]**
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
 </code>
 
 %%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -807,38 +749,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 
 %%True if the object is already finalized, false otherwise.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
 const char *efl_name_get(const Eo *obj);
@@ -862,13 +772,6 @@ Efl_Object *efl_constructor(Eo *obj);
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:layout:method:dbg_info_get|dbg_info_get]]** //[Overridden in [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]//
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:destructor|destructor]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
 void efl_destructor(Eo *obj);
@@ -876,12 +779,133 @@ void efl_destructor(Eo *obj);
 
 %%Call the object's destructor.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:provider_find|provider_find]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
 Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:fetch|fetch]]**
+<code c>
+Efl_Ui_Focus_Relations *efl_ui_focus_manager_fetch(Eo *obj, Efl_Ui_Focus_Object *child);
+</code>
+
+%%This will fetch the data from a registered node.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:focused|focused]]**
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_focused(Eo *obj);
+</code>
+
+%%Return the currently focused element of this manager.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:logical_end|logical_end]]**
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_logical_end(Eo *obj);
+</code>
+
+%%Return the last logical object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:move|move]]**
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_move(Eo *obj, Efl_Ui_Focus_Direction direction);
+</code>
+
+%%Move the focus into the given direction.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:register_logical|register_logical]]**
+<code c>
+Eina_Bool efl_ui_focus_manager_register_logical(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Object *parent, Efl_Ui_Focus_Manager *redirect);
+</code>
+
+%%Register a new item just for the logical parent.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:register|register]]**
+<code c>
+Eina_Bool efl_ui_focus_manager_register(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Object *parent, Efl_Ui_Focus_Manager *redirect);
+</code>
+
+%%Register a new item in the graph.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:request_move|request_move]]**
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_request_move(Eo *obj, Efl_Ui_Focus_Direction direction);
+</code>
+
+%%Returns the object which would be the next object to focus in the given direction.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:unregister|unregister]]**
+<code c>
+void efl_ui_focus_manager_unregister(Eo *obj, Efl_Ui_Focus_Object *child);
+</code>
+
+%%Unregister the given item from the focus graph.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:update_children|update_children]]**
+<code c>
+Eina_Bool efl_ui_focus_manager_update_children(Eo *obj, Efl_Ui_Focus_Object *parent, Eina_List *children);
+</code>
+
+%%Give the list of children a different order.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:update_order|update_order]]**
+<code c>
+void efl_ui_focus_manager_update_order(Eo *obj, Efl_Ui_Focus_Object *parent, Eina_List *children);
+</code>
+
+%%Give the given order to the parent's child.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:update_parent|update_parent]]**
+<code c>
+Eina_Bool efl_ui_focus_manager_update_parent(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Object *parent);
+</code>
+
+%%Set a new logical parent for the given child.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:method:update_redirect|update_redirect]]**
+<code c>
+Eina_Bool efl_ui_focus_manager_update_redirect(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Manager *redirect);
+</code>
+
+%%Set a new redirect object for the given child.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//
+<code c>
+Efl_Ui_Focus_Manager *efl_ui_focus_manager_redirect_get(const Eo *obj);
+void efl_ui_focus_manager_redirect_set(Eo *obj, Efl_Ui_Focus_Manager *redirect);
+</code>
+
+%%Add a another manager to serve the move requests.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:property:root|root]]** //**(get, set)**//
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_root_get(const Eo *obj);
+Eina_Bool efl_ui_focus_manager_root_set(Eo *obj, Efl_Ui_Focus_Object *root);
+</code>
+
+%%Root node for all logical subtrees.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:method:focus|focus]]** //[Overridden in [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]//
+<code c>
+void efl_ui_focus_manager_focus(Eo *obj, Efl_Ui_Focus_Object *focus);
+</code>
+
+%%Make the given object the currently focused object in this manager.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:border_elements|border_elements]]** //**(get)**// //[Overridden in [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]]]//
+<code c>
+Eina_Iterator *efl_ui_focus_manager_border_elements_get(const Eo *obj);
+</code>
+
+%%The list of elements which are at the border of the graph.%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:layout|Elm.Layout]].**[[:docs:efl:auto:class:elm:gengrid:method:sizing_eval|sizing_eval]]** //[Overridden here]//
 <code c>
@@ -1053,7 +1077,7 @@ Eina_Bool elm_obj_widget_focus_direction(Eo *obj, const Efl_Canvas_Object *base,
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:gengrid:method:focus_highlight_geometry_get|focus_highlight_geometry_get]]** //[Overridden here]//
 <code c>
-void elm_obj_widget_focus_highlight_geometry_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void elm_obj_widget_focus_highlight_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Get the focus highlight geometry of widget.%%\\ 
@@ -1074,7 +1098,7 @@ Eina_Bool elm_obj_widget_focus_next(Eo *obj, Elm_Focus_Direction dir, Efl_Canvas
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:gengrid:method:on_focus_region|on_focus_region]]** //[Overridden here]//
 <code c>
-Eina_Bool elm_obj_widget_on_focus_region(Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+Eina_Bool elm_obj_widget_on_focus_region(Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%'Virtual' function returning an inner area of a widget that should be brought into the visible area of a broader viewport, may this context arise.%%\\ 
@@ -1283,6 +1307,13 @@ void elm_obj_widget_focus_region_show(const Eo *obj);
 
 %%Show focus region%%\\ 
 \\ 
+[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:focus_register|focus_register]]**
+<code c>
+Eina_Bool elm_obj_widget_focus_register(Eo *obj, Efl_Ui_Focus_Manager *manager, Efl_Ui_Focus_Object *logical, Eina_Bool full);
+</code>
+
+%%Register focus with focus manager%%\\ 
+\\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:focus_restore|focus_restore]]**
 <code c>
 void elm_obj_widget_focus_restore(Eo *obj);
@@ -1362,14 +1393,14 @@ void elm_obj_widget_scroll_hold_push(Eo *obj);
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:show_region_get|show_region_get]]**
 <code c>
-void elm_obj_widget_show_region_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void elm_obj_widget_show_region_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Get show region%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:show_region_set|show_region_set]]**
 <code c>
-void elm_obj_widget_show_region_set(Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h, Eina_Bool forceshow);
+void elm_obj_widget_show_region_set(Eo *obj, int x, int y, int w, int h, Eina_Bool forceshow);
 </code>
 
 %%Set show region%%\\ 
@@ -1422,27 +1453,6 @@ Eina_Bool elm_obj_widget_translate(Eo *obj);
 </code>
 
 %%'Virtual' function handling language changes on Elementary.%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_callback_add|widget_event_callback_add]]**
-<code c>
-void elm_obj_widget_event_callback_add(Eo *obj, Elm_Event_Cb func, const void *data);
-</code>
-
-%%Add event callback%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_callback_del|widget_event_callback_del]]**
-<code c>
-void *elm_obj_widget_event_callback_del(Eo *obj, Elm_Event_Cb func, const void *data);
-</code>
-
-%%Delete event callback handler%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_propagate|widget_event_propagate]]**
-<code c>
-Eina_Bool elm_obj_widget_event_propagate(Eo *obj, Evas_Callback_Type type, void *event_info, Efl_Input_Flags *event_flags);
-</code>
-
-%%Propagate event%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:property:access_highlight_in_theme|access_highlight_in_theme]]** //**(get, set)**//
 <code c>
@@ -1590,7 +1600,7 @@ void elm_obj_widget_focus_region_show_mode_set(Eo *obj, Elm_Focus_Region_Show_Mo
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:property:focus_region|focus_region]]** //**(get)**//
 <code c>
-Eina_Bool elm_obj_widget_focus_region_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+Eina_Bool elm_obj_widget_focus_region_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Focus region property%%\\ 
@@ -1816,13 +1826,6 @@ Efl_Gfx *efl_content_unset(Eo *obj);
 </code>
 
 %%Unswallow the object in the current container and return it.%%\\ 
-\\ 
-[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:class:elm:layout:property:content_part_name|content_part_name]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]//
-<code c>
-const char *efl_content_part_name_get(const Eo *obj, Efl_Gfx *content);
-</code>
-
-%%The name of the part under which an object is swallowed.%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:class:elm:layout:property:content|content]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]//
 <code c>
@@ -2077,6 +2080,20 @@ Efl_Object *efl_part(const Eo *obj, const char *name);
 
 %%Get a proxy object referring to a part of an object.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:class:elm:widget:property:manager|manager]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Ui_Focus_Manager *efl_ui_focus_user_manager_get(const Eo *obj);
+</code>
+
+%%Describes which manager is used to register or should be used to register this user.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:class:elm:widget:property:parent|parent]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_user_parent_get(const Eo *obj);
+</code>
+
+%%Describes which logical parent is used by this object.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]].**[[:docs:efl:auto:class:elm:layout:method:connect|connect]]** //[Overridden in [[:docs:efl:auto:class:elm:layout|Elm.Layout]]]//
 <code c>
 void efl_ui_model_connect(Eo *obj, const char *name, const char *property);
@@ -2099,76 +2116,110 @@ void efl_ui_view_model_set(Eo *obj, Efl_Model *model);
 
 %%Model that is/will be%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:class:efl:canvas:object:property:map_enable|map_enable]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_enable_get(const Eo *obj);
-void efl_gfx_map_enable_set(Eo *obj, Eina_Bool enabled);
+void efl_gfx_map_lightning_3d_absolute(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Whether map transformation is enabled on this object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_dup|map_dup]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d|lightning_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_dup(Eo *obj, const Efl_Gfx_Map *other);
+void efl_gfx_map_lightning_3d(Eo *obj, const Efl_Gfx *pivot, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Duplicate the map information from another object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_lightning_3d|map_lightning_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_has|map_has]]**
 <code c>
-Eina_Bool efl_gfx_map_lightning_3d(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
+Eina_Bool efl_gfx_map_has(Eo *obj);
 </code>
 
-%%Perform lighting calculations on the given Map%%\\ 
+%%Read-only property indicating whether an object is mapped.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_perspective_3d|map_perspective_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_reset|map_reset]]**
 <code c>
-Eina_Bool efl_gfx_map_perspective_3d(Eo *obj, double px, double py, double z0, double foc);
+void efl_gfx_map_reset(Eo *obj);
+</code>
+
+%%Resets the map transformation to its default state.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
+<code c>
+void efl_gfx_map_perspective_3d_absolute(Eo *obj, double px, double py, double z0, double foc);
 </code>
 
 %%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate_manual|map_populate_manual]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d|perspective_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_populate_manual(Eo *obj, double x, double y, double w, double h, double z);
+void efl_gfx_map_perspective_3d(Eo *obj, const Efl_Gfx *pivot, double px, double py, double z0, double foc);
 </code>
 
-%%Populate source and destination map points to match given geometry.%%\\ 
+%%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|map_populate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_populate(Eo *obj, double z);
+void efl_gfx_map_rotate_3d_absolute(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
 </code>
 
-%%Populate source and destination map points to match this object.%%\\ 
+%%Rotate the object around 3 axes in 3D, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_quat_rotate|map_quat_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d|rotate_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_quat_rotate(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
+void efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Rotate the map in 3D using a unit quaternion.%%\\ 
+%%Rotate the object around 3 axes in 3D.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate_3d|map_rotate_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
+void efl_gfx_map_rotate_absolute(Eo *obj, double degrees, double cx, double cy);
 </code>
 
-%%Rotate the map around 3 axes in 3D%%\\ 
+%%Apply a rotation to the object, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate|map_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate(Eo *obj, double degrees, double cx, double cy);
+void efl_gfx_map_rotate_quat_absolute(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given rotation.%%\\ 
+%%Rotate the object in 3D using a unit quaternion, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_zoom|map_zoom]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat|rotate_quat]]**
 <code c>
-Eina_Bool efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+void efl_gfx_map_rotate_quat(Eo *obj, double qx, double qy, double qz, double qw, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given zooming.%%\\ 
+%%Rotate the object in 3D using a unit quaternion.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate|rotate]]**
+<code c>
+void efl_gfx_map_rotate(Eo *obj, double degrees, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a rotation to the object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:translate|translate]]**
+<code c>
+void efl_gfx_map_translate(Eo *obj, double dx, double dy, double dz);
+</code>
+
+%%Apply a translation to the object using map.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
+<code c>
+void efl_gfx_map_zoom_absolute(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object, using absolute coordinates.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom|zoom]]**
+<code c>
+void efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
 <code c>
@@ -2193,36 +2244,13 @@ void efl_gfx_map_color_set(Eo *obj, int idx, int r, int g, int b, int a);
 
 %%Color of a vertex in the map.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_move_sync|map_move_sync]]** //**(get, set)**//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
 <code c>
-Eina_Bool efl_gfx_map_move_sync_get(const Eo *obj);
-void efl_gfx_map_move_sync_set(Eo *obj, Eina_Bool enable);
+void efl_gfx_map_coord_absolute_get(const Eo *obj, int idx, double *x, double *y, double *z);
+void efl_gfx_map_coord_absolute_set(Eo *obj, int idx, double x, double y, double z);
 </code>
 
-%%Status of object move synchronization for map rendering.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_coord|map_point_coord]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_coord_get(const Eo *obj, int idx, double *x, double *y, double *z);
-void efl_gfx_map_point_coord_set(Eo *obj, int idx, double x, double y, double z);
-</code>
-
-%%Map point's coordinate.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_image_uv|map_point_image_uv]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_image_uv_get(const Eo *obj, int idx, double *u, double *v);
-void efl_gfx_map_point_image_uv_set(Eo *obj, int idx, double u, double v);
-</code>
-
-%%Map point's U and V texture source point.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_z|map_point_z]]** //**(get)**//
-<code c>
-double efl_gfx_map_point_z_get(const Eo *obj, int idx);
-</code>
-
-%%Value of Z coordinate of point %%''idx''%%.%%\\ 
+%%A point's absolute coordinate on the canvas.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
 <code c>
@@ -2232,13 +2260,36 @@ void efl_gfx_map_smooth_set(Eo *obj, Eina_Bool smooth);
 
 %%Smoothing state for map rendering.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
+<code c>
+void efl_gfx_map_uv_get(const Eo *obj, int idx, double *u, double *v);
+void efl_gfx_map_uv_set(Eo *obj, int idx, double u, double v);
+</code>
+
+%%Map point's U and V texture source point.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:class:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Eina_Rectangle efl_ui_focus_object_focus_geometry_get(const Eo *obj);
+</code>
+
+%%The geometry to use to calculate the relations to other objects.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:class:elm:widget:property:focus|focus]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
+void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
+</code>
+
+%%This gets called by the manager and should never be called by someone else.%%\\ 
+\\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:name|name]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
 const char *elm_interface_atspi_accessible_name_get(const Eo *obj);
 void elm_interface_atspi_accessible_name_set(Eo *obj, const char *name);
 </code>
 
-%%String describing AT-SPI widget role name. Should be free by a user.%%\\ 
+%%Accessible name of the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
@@ -2246,7 +2297,7 @@ Elm_Interface_Atspi_Accessible *elm_interface_atspi_accessible_parent_get(const 
 void elm_interface_atspi_accessible_parent_set(Eo *obj, Elm_Interface_Atspi_Accessible *parent);
 </code>
 
-%%Widget accessible parent.%%\\ 
+%%Object's accessible parent.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:relationship_append|relationship_append]]**
 <code c>
@@ -2275,7 +2326,7 @@ const char *elm_interface_atspi_accessible_description_get(const Eo *obj);
 void elm_interface_atspi_accessible_description_set(Eo *obj, const char *description);
 </code>
 
-%%Widget contextual information.%%\\ 
+%%Contextual information about object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role|role]]** //**(get, set)**//
 <code c>
@@ -2283,7 +2334,7 @@ Elm_Atspi_Role elm_interface_atspi_accessible_role_get(const Eo *obj);
 void elm_interface_atspi_accessible_role_set(Eo *obj, Elm_Atspi_Role role);
 </code>
 
-%%The role of the widget in AT-SPI Accessibility domain.%%\\ 
+%%The role of the object in accessibility domain.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:root|root]]** //**(get)**//
 <code c>
@@ -2298,7 +2349,7 @@ const char *elm_interface_atspi_accessible_translation_domain_get(const Eo *obj)
 void elm_interface_atspi_accessible_translation_domain_set(Eo *obj, const char *domain);
 </code>
 
-%%Sets the translation domain of "name" and "description" properties.%%\\ 
+%%The translation domain of "name" and "description" properties.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:type|type]]** //**(get, set)**//
 <code c>
@@ -2333,21 +2384,21 @@ void elm_interface_scrollable_content_min_limit(Eo *obj, Eina_Bool w, Eina_Bool 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:method:content_pos_get|content_pos_get]]**
 <code c>
-void elm_interface_scrollable_content_pos_get(Eo *obj, Evas_Coord *x, Evas_Coord *y);
+void elm_interface_scrollable_content_pos_get(Eo *obj, int *x, int *y);
 </code>
 
 %%Get content position%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:method:content_pos_set|content_pos_set]]**
 <code c>
-void elm_interface_scrollable_content_pos_set(Eo *obj, Evas_Coord x, Evas_Coord y, Eina_Bool sig);
+void elm_interface_scrollable_content_pos_set(Eo *obj, int x, int y, Eina_Bool sig);
 </code>
 
 %%Set the content position%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:method:content_region_show|content_region_show]]**
 <code c>
-void elm_interface_scrollable_content_region_show(Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+void elm_interface_scrollable_content_region_show(Eo *obj, int x, int y, int w, int h);
 </code>
 
 %%Show a specific virtual region within the scroller content object%%\\ 
@@ -2368,7 +2419,7 @@ void elm_interface_scrollable_page_show(Eo *obj, int pagenumber_h, int pagenumbe
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:method:region_bring_in|region_bring_in]]**
 <code c>
-void elm_interface_scrollable_region_bring_in(Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+void elm_interface_scrollable_region_bring_in(Eo *obj, int x, int y, int w, int h);
 </code>
 
 %%Show a specific virtual region within the scroller content object.%%\\ 
@@ -2404,22 +2455,22 @@ void elm_interface_scrollable_content_min_limit_cb_set(Eo *obj, Elm_Interface_Sc
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:content_region|content_region]]** //**(get, set)**//
 <code c>
-void elm_interface_scrollable_content_region_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
-void elm_interface_scrollable_content_region_set(Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+void elm_interface_scrollable_content_region_get(const Eo *obj, int *x, int *y, int *w, int *h);
+void elm_interface_scrollable_content_region_set(Eo *obj, int x, int y, int w, int h);
 </code>
 
 %%Currently visible content region%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:content_size|content_size]]** //**(get)**//
 <code c>
-void elm_interface_scrollable_content_size_get(const Eo *obj, Evas_Coord *w, Evas_Coord *h);
+void elm_interface_scrollable_content_size_get(const Eo *obj, int *w, int *h);
 </code>
 
 %%Get the size of the content object%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:content_viewport_geometry|content_viewport_geometry]]** //**(get)**//
 <code c>
-void elm_interface_scrollable_content_viewport_geometry_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void elm_interface_scrollable_content_viewport_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Content viewport geometry%%\\ 
@@ -2606,8 +2657,8 @@ void elm_interface_scrollable_page_scroll_limit_set(Eo *obj, int page_limit_h, i
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:page_size|page_size]]** //**(get, set)**//
 <code c>
-void elm_interface_scrollable_page_size_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y);
-void elm_interface_scrollable_page_size_set(Eo *obj, Evas_Coord x, Evas_Coord y);
+void elm_interface_scrollable_page_size_get(const Eo *obj, int *x, int *y);
+void elm_interface_scrollable_page_size_set(Eo *obj, int x, int y);
 </code>
 
 %%Scroll page size relative to viewport size.%%\\ 
@@ -2622,8 +2673,8 @@ void elm_interface_scrollable_page_snap_allow_set(Eo *obj, Eina_Bool horiz, Eina
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:paging|paging]]** //**(get, set)**//
 <code c>
-void elm_interface_scrollable_paging_get(const Eo *obj, double *pagerel_h, double *pagerel_v, Evas_Coord *pagesize_h, Evas_Coord *pagesize_v);
-void elm_interface_scrollable_paging_set(Eo *obj, double pagerel_h, double pagerel_v, Evas_Coord pagesize_h, Evas_Coord pagesize_v);
+void elm_interface_scrollable_paging_get(const Eo *obj, double *pagerel_h, double *pagerel_v, int *pagesize_h, int *pagesize_v);
+void elm_interface_scrollable_paging_set(Eo *obj, double pagerel_h, double pagerel_v, int pagesize_h, int pagesize_v);
 </code>
 
 %%Pagin property%%\\ 
@@ -2681,8 +2732,8 @@ void elm_interface_scrollable_single_direction_set(Eo *obj, Elm_Scroller_Single_
 \\ 
 [[:docs:efl:auto:mixin:elm:interface_scrollable|Elm.Interface_Scrollable]].**[[:docs:efl:auto:mixin:elm:interface_scrollable:property:step_size|step_size]]** //**(get, set)**//
 <code c>
-void elm_interface_scrollable_step_size_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y);
-void elm_interface_scrollable_step_size_set(Eo *obj, Evas_Coord x, Evas_Coord y);
+void elm_interface_scrollable_step_size_get(const Eo *obj, int *x, int *y);
+void elm_interface_scrollable_step_size_set(Eo *obj, int x, int y);
 </code>
 
 %%Step size%%\\ 
@@ -2716,40 +2767,12 @@ void elm_interface_scrollable_wheel_disabled_set(Eo *obj, Eina_Bool disabled);
 
 %%Control Wheel disable Enable or disable mouse wheel to be used to scroll the scroller content. heel is enabled by default.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]].**[[:docs:efl:auto:class:elm:gengrid:method:group_add|group_add]]** //[Overridden here]// ''protected''
-<code c>
-void efl_canvas_group_add(Eo *obj);
-</code>
-
-%%Internal constructor function.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]].**[[:docs:efl:auto:class:elm:gengrid:method:group_del|group_del]]** //[Overridden here]// ''protected''
-<code c>
-void efl_canvas_group_del(Eo *obj);
-</code>
-
-%%Internal destructor function.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:legacy_ctor|legacy_ctor]]** ''protected''
-<code c>
-void efl_canvas_object_legacy_ctor(Eo *obj);
-</code>
-
-%%Internal function. Do not use.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
 <code c>
 Efl_Canvas_Object *efl_canvas_object_render_parent_get(const Eo *obj);
 </code>
 
 %%Gets the parent smart object of a given Evas object, if it has one.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:type|type]]** //**(set)**// ''protected''
-<code c>
-void efl_canvas_object_type_set(Eo *obj, const char *type);
-</code>
-
-%%Sets the legacy type name of this Evas object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:layout|Elm.Layout]].**[[:docs:efl:auto:class:elm:layout:property:content_aliases|content_aliases]]** //**(get)**// ''protected''
 <code c>
@@ -2834,21 +2857,21 @@ Efl_Object *elm_interface_atspi_selection_selected_child_get(const Eo *obj, int 
 Eina_List *elm_interface_atspi_accessible_children_get(const Eo *obj);
 </code>
 
-%%Gets widget's accessible children.%%\\ 
+%%Gets object's accessible children.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:gengrid:property:state_set|state_set]]** //**(get)**// //[Overridden here]// ''protected''
 <code c>
 Elm_Atspi_State_Set elm_interface_atspi_accessible_state_set_get(const Eo *obj);
 </code>
 
-%%Gets set describing widget accessible states.%%\\ 
+%%Gets set describing object accessible states.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// ''protected''
 <code c>
 Eina_List *elm_interface_atspi_accessible_attributes_get(const Eo *obj);
 </code>
 
-%%Gets key-value pairs indentifying widget extra attributes. Must be free by a user.%%\\ 
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_emit|event_emit]]** ''protected''
 <code c>
@@ -2883,21 +2906,21 @@ int elm_interface_atspi_accessible_index_in_parent_get(const Eo *obj);
 const char *elm_interface_atspi_accessible_localized_role_name_get(const Eo *obj);
 </code>
 
-%%Gets an localized string describing AT-SPI widget role name.%%\\ 
+%%Gets an localized string describing accessible object role name.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:relation_set|relation_set]]** //**(get)**// ''protected''
 <code c>
 Elm_Atspi_Relation_Set elm_interface_atspi_accessible_relation_set_get(const Eo *obj);
 </code>
 
-%%Gets an string describing AT-SPI widget role name. Lists and elements Should be free by a user.%%\\ 
+%%Gets an all relations between accessible object and other accessible objects.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role_name|role_name]]** //**(get)**// ''protected''
 <code c>
 const char *elm_interface_atspi_accessible_role_name_get(const Eo *obj);
 </code>
 
-%%Gets human-readable string indentifying widget accessibility role.%%\\ 
+%%Gets human-readable string indentifying object accessibility role.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]].**[[:docs:efl:auto:mixin:elm:interface:atspi_action:property:localized_name|localized_name]]** //**(get)**// ''protected''
 <code c>
@@ -3181,6 +3204,20 @@ EFL_EVENT_CALLBACK_ADD(void, @hot)
 
 %%A callback was added.%%\\ 
 \\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
 <code c>
 EFL_EVENT_CALLBACK_DEL(void, @hot)
@@ -3278,6 +3315,41 @@ EFL_EVENT_DEL(void, @hot)
 </code>
 
 %%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_COORDS_DIRTY(void)
+</code>
+
+%%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:event:flush_pre|flush,pre]]**
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_FLUSH_PRE(void)
+</code>
+
+%%Emitted once the graph calculationg will be performed%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:event:focused|focused]]**
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_FOCUSED(Efl_Ui_Focus_Object *)
+</code>
+
+%%Emitted if the manager has focused an object%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:docs:efl:auto:class:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_REDIRECT_CHANGED(Efl_Ui_Focus_Manager *)
+</code>
+
+%%Emitted when the redirect object has changed, the old manager is passed as event info%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:layout|Elm.Layout]].**[[:docs:efl:auto:class:elm:layout:event:theme_changed|theme,changed]]**
 <code c>
@@ -3376,6 +3448,27 @@ EFL_GFX_EVENT_RESTACK(void)
 </code>
 
 %%Object stacking was changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
 <code c>
@@ -3741,6 +3834,20 @@ EFL_UI_EVENT_UNPRESSED(void)
 
 %%Called when the object is now longer pressed%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:interface:efl:ui:focus:user:event:logical_changed|logical,changed]]**
+<code c>
+EFL_UI_FOCUS_USER_EVENT_LOGICAL_CHANGED(Efl_Ui_Focus_Object *)
+</code>
+
+%%Emitted when a new logical parent should be used.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:interface:efl:ui:focus:user:event:manager_changed|manager,changed]]**
+<code c>
+EFL_UI_FOCUS_USER_EVENT_MANAGER_CHANGED(Efl_Ui_Focus_Manager *)
+</code>
+
+%%Emitted when a new manager is the parent for this object.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:ui:scrollable|Efl.Ui.Scrollable]].**[[:docs:efl:auto:interface:efl:ui:scrollable:event:scroll_anim_start|scroll,anim,start]]**
 <code c>
 EFL_UI_EVENT_SCROLL_ANIM_START(void)
@@ -3782,6 +3889,13 @@ ELM_INTERFACE_ATSPI_SELECTION_EVENT_SELECTION_CHANGED(void)
 </code>
 
 %%Called when selection has been changed.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:mixin:efl:ui:focus:object:event:focus_changed|focus,changed]]**
+<code c>
+EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED(Eina_Bool)
+</code>
+
+%%Emitted if the focus state has changed%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:active_descendant_changed|active,descendant,changed]]**
 <code c>

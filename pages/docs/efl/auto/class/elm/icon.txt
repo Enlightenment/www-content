@@ -30,6 +30,8 @@ digraph hierarchy {
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     elm_interface_atspi_component [fillcolor = "gray15", label = "Elm.Interface.Atspi_Component", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_user [fillcolor = "gray15", label = "Efl.Ui.Focus.User", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_object [fillcolor = "gray15", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_ui_clickable [fillcolor = "gray15", label = "Efl.Ui.Clickable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_ui_draggable [fillcolor = "gray15", label = "Efl.Ui.Draggable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -84,6 +86,8 @@ digraph hierarchy {
     elm_interface_atspi_accessible -> efl_interface
     elm_interface_atspi_accessible -> efl_object
     elm_widget -> elm_interface_atspi_component
+    elm_widget -> efl_ui_focus_user
+    elm_widget -> efl_ui_focus_object
     efl_ui_image -> efl_ui_clickable
     efl_ui_image -> efl_ui_draggable
     efl_ui_image -> efl_file
@@ -145,6 +149,8 @@ digraph hierarchy {
           * [[:docs:efl:auto:interface:efl:interface|Efl.Interface]] //(interface)//
           * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
         * [[:docs:efl:auto:mixin:elm:interface:atspi_component|Elm.Interface.Atspi_Component]] //(mixin)//
+        * [[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]] //(interface)//
+        * [[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
       * [[:docs:efl:auto:interface:efl:ui:clickable|Efl.Ui.Clickable]] //(interface)//
       * [[:docs:efl:auto:interface:efl:ui:draggable|Efl.Ui.Draggable]] //(interface)//
       * [[:docs:efl:auto:interface:efl:file|Efl.File]] //(interface)//
@@ -218,38 +224,24 @@ int edje_obj_freeze(Eo *obj);
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:message_send|message_send]]**
 <code c>
-void edje_obj_message_send(Eo *obj, Edje_Message_Type type, int id, void *msg);
+void edje_obj_message_send(Eo *obj, int id, const Eina_Value msg);
 </code>
 
 %%Sends an (Edje) message to a given Edje object%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:message_signal_process|message_signal_process]]**
 <code c>
-void edje_obj_message_signal_process(Eo *obj);
+void edje_obj_message_signal_process(Eo *obj, Eina_Bool recurse);
 </code>
 
 %%Processes an object's message queue.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:part_drag_page|part_drag_page]]**
-<code c>
-Eina_Bool edje_obj_part_drag_page(Eo *obj, const char *part, double dx, double dy);
-</code>
-
-%%Pages x,y steps.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:part_drag_step|part_drag_step]]**
-<code c>
-Eina_Bool edje_obj_part_drag_step(Eo *obj, const char *part, double dx, double dy);
-</code>
-
-%%Steps the dragable x,y steps.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:part_exists|part_exists]]**
 <code c>
 Eina_Bool edje_obj_part_exists(const Eo *obj, const char *part);
 </code>
 
-%%Checks if an Edje part exists in a given Edje object's group definition.%%\\ 
+%%Checks if a part exists in a given Edje object's group definition.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:part_text_append|part_text_append]]**
 <code c>
@@ -393,7 +385,7 @@ void edje_obj_part_text_user_insert(const Eo *obj, const char *part, const char 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:parts_extends_calc|parts_extends_calc]]**
 <code c>
-Eina_Bool edje_obj_parts_extends_calc(Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+Eina_Bool edje_obj_parts_extends_calc(Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Calculates the geometry of the region, relative to a given Edje object's area, occupied by all parts in the object.%%\\ 
@@ -428,7 +420,7 @@ void edje_obj_size_class_del(Eo *obj, const char *size_class);
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:method:size_min_restricted_calc|size_min_restricted_calc]]**
 <code c>
-void edje_obj_size_min_restricted_calc(Eo *obj, Evas_Coord *minw, Evas_Coord *minh, Evas_Coord restrictedw, Evas_Coord restrictedh);
+void edje_obj_size_min_restricted_calc(Eo *obj, int *minw, int *minh, int restrictedw, int restrictedh);
 </code>
 
 %%Calculates the minimum required size for a given Edje object.%%\\ 
@@ -495,6 +487,7 @@ Eina_Bool edje_obj_animation_get(const Eo *obj);
 void edje_obj_animation_set(Eo *obj, Eina_Bool on);
 </code>
 
+%%Whether this object is animating or not.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:base_scale|base_scale]]** //**(get)**//
 <code c>
@@ -547,17 +540,10 @@ void edje_obj_language_set(Eo *obj, const char *language);
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:load_error|load_error]]** //**(get)**//
 <code c>
-Edje_Load_Error edje_obj_load_error_get(const Eo *obj);
+Efl_Image_Load_Error edje_obj_load_error_get(const Eo *obj);
 </code>
 
 %%Gets the (last) file loading error for a given Edje object%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:message_handler|message_handler]]** //**(set)**//
-<code c>
-void edje_obj_message_handler_set(Eo *obj, Edje_Message_Handler_Cb func, void *data);
-</code>
-
-%%Sets an Edje message handler function for a given Edje object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:mirrored|mirrored]]** //**(get, set)**//
 <code c>
@@ -565,90 +551,6 @@ Eina_Bool edje_obj_mirrored_get(const Eo *obj);
 void edje_obj_mirrored_set(Eo *obj, Eina_Bool rtl);
 </code>
 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_drag_dir|part_drag_dir]]** //**(get)**//
-<code c>
-Edje_Drag_Dir edje_obj_part_drag_dir_get(const Eo *obj, const char *part);
-</code>
-
-%%Determines dragable directions.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_drag_page|part_drag_page]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_part_drag_page_get(const Eo *obj, const char *part, double *dx, double *dy);
-Eina_Bool edje_obj_part_drag_page_set(Eo *obj, const char *part, double dx, double dy);
-</code>
-
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_drag_size|part_drag_size]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_part_drag_size_get(const Eo *obj, const char *part, double *dw, double *dh);
-Eina_Bool edje_obj_part_drag_size_set(Eo *obj, const char *part, double dw, double dh);
-</code>
-
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_drag_step|part_drag_step]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_part_drag_step_get(const Eo *obj, const char *part, double *dx, double *dy);
-Eina_Bool edje_obj_part_drag_step_set(Eo *obj, const char *part, double dx, double dy);
-</code>
-
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_drag_value|part_drag_value]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_part_drag_value_get(const Eo *obj, const char *part, double *dx, double *dy);
-Eina_Bool edje_obj_part_drag_value_set(Eo *obj, const char *part, double dx, double dy);
-</code>
-
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_external_content|part_external_content]]** //**(get)**//
-<code c>
-Efl_Canvas_Object *edje_obj_part_external_content_get(const Eo *obj, const char *part, const char *content);
-</code>
-
-%%Gets an object contained in an part of type EXTERNAL%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_external_object|part_external_object]]** //**(get)**//
-<code c>
-Efl_Canvas_Object *edje_obj_part_external_object_get(const Eo *obj, const char *part);
-</code>
-
-%%Gets the object created by this external part.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_external_param_type|part_external_param_type]]** //**(get)**//
-<code c>
-Edje_External_Param_Type edje_obj_part_external_param_type_get(const Eo *obj, const char *part, const char *param);
-</code>
-
-%%Facility to query the type of the given parameter of the given part.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_external_param|part_external_param]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_part_external_param_get(const Eo *obj, const char *part, Edje_External_Param *param);
-Eina_Bool edje_obj_part_external_param_set(Eo *obj, const char *part, const Edje_External_Param *param);
-</code>
-
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_geometry|part_geometry]]** //**(get)**//
-<code c>
-Eina_Bool edje_obj_part_geometry_get(const Eo *obj, const char *part, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
-</code>
-
-%%Retrieves the geometry of a given Edje part, in a given Edje object's group definition, relative to the object's area.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_object|part_object]]** //**(get)**//
-<code c>
-const Efl_Canvas_Object *edje_obj_part_object_get(const Eo *obj, const char *part);
-</code>
-
-%%Gets a handle to the Evas object implementing a given Edje part, in an Edje object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_state|part_state]]** //**(get)**//
-<code c>
-const char *edje_obj_part_state_get(const Eo *obj, const char *part, double *val_ret);
-</code>
-
-%%Returns the state of the Edje part.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_text_anchor_geometry|part_text_anchor_geometry]]** //**(get)**//
 <code c>
@@ -687,7 +589,7 @@ char *edje_obj_part_text_cursor_content_get(const Eo *obj, const char *part, Edj
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_text_cursor_coord|part_text_cursor_coord]]** //**(set)**//
 <code c>
-Eina_Bool edje_obj_part_text_cursor_coord_set(Eo *obj, const char *part, Edje_Cursor cur, Evas_Coord x, Evas_Coord y);
+Eina_Bool edje_obj_part_text_cursor_coord_set(Eo *obj, const char *part, Edje_Cursor cur, int x, int y);
 </code>
 
 %%Position the given cursor to a X,Y position.%%\\ 
@@ -701,7 +603,7 @@ void edje_obj_part_text_cursor_end_set(Eo *obj, const char *part, Edje_Cursor cu
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_text_cursor_geometry|part_text_cursor_geometry]]** //**(get)**//
 <code c>
-void edje_obj_part_text_cursor_geometry_get(const Eo *obj, const char *part, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void edje_obj_part_text_cursor_geometry_get(const Eo *obj, const char *part, int *x, int *y, int *w, int *h);
 </code>
 
 %%Returns the cursor geometry of the part relative to the edje object.%%\\ 
@@ -820,7 +722,7 @@ void edje_obj_part_text_input_panel_show_on_demand_set(Eo *obj, const char *part
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:part_text_item_geometry|part_text_item_geometry]]** //**(get)**//
 <code c>
-Eina_Bool edje_obj_part_text_item_geometry_get(const Eo *obj, const char *part, const char *item, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch);
+Eina_Bool edje_obj_part_text_item_geometry_get(const Eo *obj, const char *part, const char *item, int *cx, int *cy, int *cw, int *ch);
 </code>
 
 %%Returns item geometry.%%\\ 
@@ -880,6 +782,7 @@ Eina_Bool edje_obj_play_get(const Eo *obj);
 void edje_obj_play_set(Eo *obj, Eina_Bool play);
 </code>
 
+%%Whether this object is playing or not.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:scale|scale]]** //**(get, set)**//
 <code c>
@@ -918,8 +821,8 @@ void edje_obj_text_change_cb_set(Eo *obj, Edje_Text_Change_Cb func, void *data);
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:edje:object:property:text_class|text_class]]** //**(get, set)**//
 <code c>
-Eina_Bool edje_obj_text_class_get(const Eo *obj, const char *text_class, const char **font, Evas_Font_Size *size);
-Eina_Bool edje_obj_text_class_set(Eo *obj, const char *text_class, const char *font, Evas_Font_Size size);
+Eina_Bool edje_obj_text_class_get(const Eo *obj, const char *text_class, const char **font, int *size);
+Eina_Bool edje_obj_text_class_set(Eo *obj, const char *text_class, const char *font, int size);
 </code>
 
 \\ 
@@ -953,21 +856,21 @@ void edje_obj_signal_emit(Eo *obj, const char *emission, const char *source);
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:efl:ui:image:method:size_min_calc|size_min_calc]]** //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
 <code c>
-void edje_obj_size_min_calc(Eo *obj, Evas_Coord *minw, Evas_Coord *minh);
+void edje_obj_size_min_calc(Eo *obj, int *minw, int *minh);
 </code>
 
 %%Calculates the minimum required size for a given Edje object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:efl:ui:image:property:size_max|size_max]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
 <code c>
-void edje_obj_size_max_get(const Eo *obj, Evas_Coord *maxw, Evas_Coord *maxh);
+void edje_obj_size_max_get(const Eo *obj, int *maxw, int *maxh);
 </code>
 
 %%Gets the maximum size specified -- as an EDC property -- for a given Edje object%%\\ 
 \\ 
 [[:docs:efl:auto:class:edje:object|Edje.Object]].**[[:docs:efl:auto:class:efl:ui:image:property:size_min|size_min]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
 <code c>
-void edje_obj_size_min_get(const Eo *obj, Evas_Coord *minw, Evas_Coord *minh);
+void edje_obj_size_min_get(const Eo *obj, int *minw, int *minh);
 </code>
 
 %%Gets the minimum size specified -- as an EDC property -- for a given Edje object%%\\ 
@@ -1032,14 +935,14 @@ Eina_Bool efl_canvas_object_clipees_has(const Eo *obj);
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_grab|key_grab]]**
 <code c>
-Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers, Eina_Bool exclusive);
+Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, Eina_Bool exclusive);
 </code>
 
 %%Requests %%''keyname''%% key events be directed to %%''obj''%%.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:key_ungrab|key_ungrab]]**
 <code c>
-void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Evas_Modifier_Mask modifiers, Evas_Modifier_Mask not_modifiers);
+void efl_canvas_object_key_ungrab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers);
 </code>
 
 %%Removes the grab on %%''keyname''%% key events by %%''obj''%%.%%\\ 
@@ -1118,7 +1021,7 @@ Eina_Bool efl_canvas_object_pointer_in_get(const Eo *obj);
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_by_device_get(const Eo *obj, Efl_Input_Device *dev);
-void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour by device. See %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%%\\ 
@@ -1126,7 +1029,7 @@ void efl_canvas_object_pointer_mode_by_device_set(Eo *obj, Efl_Input_Device *dev
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
 <code c>
 Efl_Input_Object_Pointer_Mode efl_canvas_object_pointer_mode_get(const Eo *obj);
-void efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
+Eina_Bool efl_canvas_object_pointer_mode_set(Eo *obj, Efl_Input_Object_Pointer_Mode pointer_mode);
 </code>
 
 %%Low-level pointer behaviour.%%\\ 
@@ -1203,20 +1106,6 @@ Efl_Loop *efl_loop_get(const Eo *obj);
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_call|event_callback_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:event_callback_legacy_call|event_callback_legacy_call]]** //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
@@ -1252,27 +1141,6 @@ void efl_del(const Eo *obj);
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
@@ -1286,13 +1154,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -1329,40 +1190,12 @@ void efl_event_thaw(Eo *obj);
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:finalize|finalize]]**
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-
-%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
 </code>
 
 %%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -1393,38 +1226,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 
 %%True if the object is already finalized, false otherwise.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
 const char *efl_name_get(const Eo *obj);
@@ -1448,19 +1249,19 @@ Efl_Object *efl_constructor(Eo *obj);
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:dbg_info_get|dbg_info_get]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:destructor|destructor]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:finalize|finalize]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:elm:widget:method:provider_find|provider_find]]** //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
@@ -1621,7 +1422,7 @@ void elm_obj_widget_focus_hide_handle(Eo *obj);
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:focus_highlight_geometry_get|focus_highlight_geometry_get]]**
 <code c>
-void elm_obj_widget_focus_highlight_geometry_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void elm_obj_widget_focus_highlight_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Get the focus highlight geometry of widget.%%\\ 
@@ -1710,6 +1511,13 @@ void elm_obj_widget_focus_region_show(const Eo *obj);
 
 %%Show focus region%%\\ 
 \\ 
+[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:focus_register|focus_register]]**
+<code c>
+Eina_Bool elm_obj_widget_focus_register(Eo *obj, Efl_Ui_Focus_Manager *manager, Efl_Ui_Focus_Object *logical, Eina_Bool full);
+</code>
+
+%%Register focus with focus manager%%\\ 
+\\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:focus_restore|focus_restore]]**
 <code c>
 void elm_obj_widget_focus_restore(Eo *obj);
@@ -1754,7 +1562,7 @@ Efl_Canvas_Object *elm_obj_widget_newest_focus_order_get(const Eo *obj, unsigned
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:on_focus_region|on_focus_region]]**
 <code c>
-Eina_Bool elm_obj_widget_on_focus_region(Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+Eina_Bool elm_obj_widget_on_focus_region(Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%'Virtual' function returning an inner area of a widget that should be brought into the visible area of a broader viewport, may this context arise.%%\\ 
@@ -1803,14 +1611,14 @@ void elm_obj_widget_scroll_hold_push(Eo *obj);
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:show_region_get|show_region_get]]**
 <code c>
-void elm_obj_widget_show_region_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void elm_obj_widget_show_region_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Get show region%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:show_region_set|show_region_set]]**
 <code c>
-void elm_obj_widget_show_region_set(Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h, Eina_Bool forceshow);
+void elm_obj_widget_show_region_set(Eo *obj, int x, int y, int w, int h, Eina_Bool forceshow);
 </code>
 
 %%Set show region%%\\ 
@@ -1877,27 +1685,6 @@ Eina_Bool elm_obj_widget_translate(Eo *obj);
 </code>
 
 %%'Virtual' function handling language changes on Elementary.%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_callback_add|widget_event_callback_add]]**
-<code c>
-void elm_obj_widget_event_callback_add(Eo *obj, Elm_Event_Cb func, const void *data);
-</code>
-
-%%Add event callback%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_callback_del|widget_event_callback_del]]**
-<code c>
-void *elm_obj_widget_event_callback_del(Eo *obj, Elm_Event_Cb func, const void *data);
-</code>
-
-%%Delete event callback handler%%\\ 
-\\ 
-[[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:method:widget_event_propagate|widget_event_propagate]]**
-<code c>
-Eina_Bool elm_obj_widget_event_propagate(Eo *obj, Evas_Callback_Type type, void *event_info, Efl_Input_Flags *event_flags);
-</code>
-
-%%Propagate event%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:property:access_highlight_in_theme|access_highlight_in_theme]]** //**(get, set)**//
 <code c>
@@ -2045,7 +1832,7 @@ void elm_obj_widget_focus_region_show_mode_set(Eo *obj, Elm_Focus_Region_Show_Mo
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:property:focus_region|focus_region]]** //**(get)**//
 <code c>
-Eina_Bool elm_obj_widget_focus_region_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+Eina_Bool elm_obj_widget_focus_region_get(const Eo *obj, int *x, int *y, int *w, int *h);
 </code>
 
 %%Focus region property%%\\ 
@@ -2265,13 +2052,6 @@ Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
 </code>
 
 %%Unswallow an object from this container.%%\\ 
-\\ 
-[[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:class:edje:object:property:content_part_name|content_part_name]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:edje:object|Edje.Object]]]//
-<code c>
-const char *efl_content_part_name_get(const Eo *obj, Efl_Gfx *content);
-</code>
-
-%%The name of the part under which an object is swallowed.%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:container|Efl.Container]].**[[:docs:efl:auto:interface:efl:container:method:content_count|content_count]]**
 <code c>
@@ -2602,6 +2382,13 @@ void efl_image_load_skip_header_set(Eo *obj, Eina_Bool skip);
 
 %%Initial load should skip header check and leave it all to data load%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:image|Efl.Image]].**[[:docs:efl:auto:class:efl:ui:image:property:image_size|image_size]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
+<code c>
+void efl_image_size_get(const Eo *obj, int *w, int *h);
+</code>
+
+%%This represents the size of the original image in pixels.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:image|Efl.Image]].**[[:docs:efl:auto:class:efl:ui:image:property:smooth_scale|smooth_scale]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
 <code c>
 Eina_Bool efl_image_smooth_scale_get(const Eo *obj);
@@ -2779,6 +2566,20 @@ void efl_ui_draggable_drag_target_set(Eo *obj, Eina_Bool set);
 
 %%Control whether the object's content is changed by drag and drop.%%\\ 
 \\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:class:elm:widget:property:manager|manager]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Ui_Focus_Manager *efl_ui_focus_user_manager_get(const Eo *obj);
+</code>
+
+%%Describes which manager is used to register or should be used to register this user.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:class:elm:widget:property:parent|parent]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_user_parent_get(const Eo *obj);
+</code>
+
+%%Describes which logical parent is used by this object.%%\\ 
+\\ 
 [[:docs:efl:auto:interface:efl:ui:model:connect|Efl.Ui.Model.Connect]].**[[:docs:efl:auto:class:efl:ui:image:method:connect|connect]]** //[Overridden in [[:docs:efl:auto:class:efl:ui:image|Efl.Ui.Image]]]//
 <code c>
 void efl_ui_model_connect(Eo *obj, const char *name, const char *property);
@@ -2794,76 +2595,110 @@ void efl_ui_view_model_set(Eo *obj, Efl_Model *model);
 
 %%Model that is/will be%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:class:efl:canvas:object:property:map_enable|map_enable]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]]]//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_enable_get(const Eo *obj);
-void efl_gfx_map_enable_set(Eo *obj, Eina_Bool enabled);
+void efl_gfx_map_lightning_3d_absolute(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Whether map transformation is enabled on this object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_dup|map_dup]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:lightning_3d|lightning_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_dup(Eo *obj, const Efl_Gfx_Map *other);
+void efl_gfx_map_lightning_3d(Eo *obj, const Efl_Gfx *pivot, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
 </code>
 
-%%Duplicate the map information from another object.%%\\ 
+%%Apply a lightning effect on the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_lightning_3d|map_lightning_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_has|map_has]]**
 <code c>
-Eina_Bool efl_gfx_map_lightning_3d(Eo *obj, double lx, double ly, double lz, int lr, int lg, int lb, int ar, int ag, int ab);
+Eina_Bool efl_gfx_map_has(Eo *obj);
 </code>
 
-%%Perform lighting calculations on the given Map%%\\ 
+%%Read-only property indicating whether an object is mapped.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_perspective_3d|map_perspective_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_reset|map_reset]]**
 <code c>
-Eina_Bool efl_gfx_map_perspective_3d(Eo *obj, double px, double py, double z0, double foc);
+void efl_gfx_map_reset(Eo *obj);
+</code>
+
+%%Resets the map transformation to its default state.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
+<code c>
+void efl_gfx_map_perspective_3d_absolute(Eo *obj, double px, double py, double z0, double foc);
 </code>
 
 %%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate_manual|map_populate_manual]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:perspective_3d|perspective_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_populate_manual(Eo *obj, double x, double y, double w, double h, double z);
+void efl_gfx_map_perspective_3d(Eo *obj, const Efl_Gfx *pivot, double px, double py, double z0, double foc);
 </code>
 
-%%Populate source and destination map points to match given geometry.%%\\ 
+%%Apply a perspective transform to the map%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_populate|map_populate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_populate(Eo *obj, double z);
+void efl_gfx_map_rotate_3d_absolute(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
 </code>
 
-%%Populate source and destination map points to match this object.%%\\ 
+%%Rotate the object around 3 axes in 3D, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_quat_rotate|map_quat_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_3d|rotate_3d]]**
 <code c>
-Eina_Bool efl_gfx_map_quat_rotate(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
+void efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Rotate the map in 3D using a unit quaternion.%%\\ 
+%%Rotate the object around 3 axes in 3D.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate_3d|map_rotate_3d]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate_3d(Eo *obj, double dx, double dy, double dz, double cx, double cy, double cz);
+void efl_gfx_map_rotate_absolute(Eo *obj, double degrees, double cx, double cy);
 </code>
 
-%%Rotate the map around 3 axes in 3D%%\\ 
+%%Apply a rotation to the object, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_rotate|map_rotate]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
 <code c>
-Eina_Bool efl_gfx_map_rotate(Eo *obj, double degrees, double cx, double cy);
+void efl_gfx_map_rotate_quat_absolute(Eo *obj, double qx, double qy, double qz, double qw, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given rotation.%%\\ 
+%%Rotate the object in 3D using a unit quaternion, using absolute coordinates.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:map_zoom|map_zoom]]**
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate_quat|rotate_quat]]**
 <code c>
-Eina_Bool efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+void efl_gfx_map_rotate_quat(Eo *obj, double qx, double qy, double qz, double qw, const Efl_Gfx *pivot, double cx, double cy, double cz);
 </code>
 
-%%Change the map to apply the given zooming.%%\\ 
+%%Rotate the object in 3D using a unit quaternion.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:rotate|rotate]]**
+<code c>
+void efl_gfx_map_rotate(Eo *obj, double degrees, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a rotation to the object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:translate|translate]]**
+<code c>
+void efl_gfx_map_translate(Eo *obj, double dx, double dy, double dz);
+</code>
+
+%%Apply a translation to the object using map.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
+<code c>
+void efl_gfx_map_zoom_absolute(Eo *obj, double zoomx, double zoomy, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object, using absolute coordinates.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:method:zoom|zoom]]**
+<code c>
+void efl_gfx_map_zoom(Eo *obj, double zoomx, double zoomy, const Efl_Gfx *pivot, double cx, double cy);
+</code>
+
+%%Apply a zoom to the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
 <code c>
@@ -2888,36 +2723,13 @@ void efl_gfx_map_color_set(Eo *obj, int idx, int r, int g, int b, int a);
 
 %%Color of a vertex in the map.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_move_sync|map_move_sync]]** //**(get, set)**//
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
 <code c>
-Eina_Bool efl_gfx_map_move_sync_get(const Eo *obj);
-void efl_gfx_map_move_sync_set(Eo *obj, Eina_Bool enable);
+void efl_gfx_map_coord_absolute_get(const Eo *obj, int idx, double *x, double *y, double *z);
+void efl_gfx_map_coord_absolute_set(Eo *obj, int idx, double x, double y, double z);
 </code>
 
-%%Status of object move synchronization for map rendering.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_coord|map_point_coord]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_coord_get(const Eo *obj, int idx, double *x, double *y, double *z);
-void efl_gfx_map_point_coord_set(Eo *obj, int idx, double x, double y, double z);
-</code>
-
-%%Map point's coordinate.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_image_uv|map_point_image_uv]]** //**(get, set)**//
-<code c>
-void efl_gfx_map_point_image_uv_get(const Eo *obj, int idx, double *u, double *v);
-void efl_gfx_map_point_image_uv_set(Eo *obj, int idx, double u, double v);
-</code>
-
-%%Map point's U and V texture source point.%%\\ 
-\\ 
-[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_point_z|map_point_z]]** //**(get)**//
-<code c>
-double efl_gfx_map_point_z_get(const Eo *obj, int idx);
-</code>
-
-%%Value of Z coordinate of point %%''idx''%%.%%\\ 
+%%A point's absolute coordinate on the canvas.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
 <code c>
@@ -2927,13 +2739,36 @@ void efl_gfx_map_smooth_set(Eo *obj, Eina_Bool smooth);
 
 %%Smoothing state for map rendering.%%\\ 
 \\ 
+[[:docs:efl:auto:mixin:efl:gfx:map|Efl.Gfx.Map]].**[[:docs:efl:auto:mixin:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
+<code c>
+void efl_gfx_map_uv_get(const Eo *obj, int idx, double *u, double *v);
+void efl_gfx_map_uv_set(Eo *obj, int idx, double u, double v);
+</code>
+
+%%Map point's U and V texture source point.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:class:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Eina_Rectangle efl_ui_focus_object_focus_geometry_get(const Eo *obj);
+</code>
+
+%%The geometry to use to calculate the relations to other objects.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:class:elm:widget:property:focus|focus]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
+<code c>
+Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
+void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
+</code>
+
+%%This gets called by the manager and should never be called by someone else.%%\\ 
+\\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:name|name]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
 const char *elm_interface_atspi_accessible_name_get(const Eo *obj);
 void elm_interface_atspi_accessible_name_set(Eo *obj, const char *name);
 </code>
 
-%%String describing AT-SPI widget role name. Should be free by a user.%%\\ 
+%%Accessible name of the object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]//
 <code c>
@@ -2941,7 +2776,7 @@ Elm_Interface_Atspi_Accessible *elm_interface_atspi_accessible_parent_get(const 
 void elm_interface_atspi_accessible_parent_set(Eo *obj, Elm_Interface_Atspi_Accessible *parent);
 </code>
 
-%%Widget accessible parent.%%\\ 
+%%Object's accessible parent.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:relationship_append|relationship_append]]**
 <code c>
@@ -2970,7 +2805,7 @@ const char *elm_interface_atspi_accessible_description_get(const Eo *obj);
 void elm_interface_atspi_accessible_description_set(Eo *obj, const char *description);
 </code>
 
-%%Widget contextual information.%%\\ 
+%%Contextual information about object.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role|role]]** //**(get, set)**//
 <code c>
@@ -2978,7 +2813,7 @@ Elm_Atspi_Role elm_interface_atspi_accessible_role_get(const Eo *obj);
 void elm_interface_atspi_accessible_role_set(Eo *obj, Elm_Atspi_Role role);
 </code>
 
-%%The role of the widget in AT-SPI Accessibility domain.%%\\ 
+%%The role of the object in accessibility domain.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:root|root]]** //**(get)**//
 <code c>
@@ -2993,7 +2828,7 @@ const char *elm_interface_atspi_accessible_translation_domain_get(const Eo *obj)
 void elm_interface_atspi_accessible_translation_domain_set(Eo *obj, const char *domain);
 </code>
 
-%%Sets the translation domain of "name" and "description" properties.%%\\ 
+%%The translation domain of "name" and "description" properties.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:type|type]]** //**(get, set)**//
 <code c>
@@ -3003,40 +2838,12 @@ void elm_interface_atspi_accessible_type_set(Eo *obj, Elm_Atspi_Type type);
 
 %%Type of accessibility object%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]].**[[:docs:efl:auto:class:elm:icon:method:group_add|group_add]]** //[Overridden here]// ''protected''
-<code c>
-void efl_canvas_group_add(Eo *obj);
-</code>
-
-%%Internal constructor function.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:group|Efl.Canvas.Group]].**[[:docs:efl:auto:class:elm:icon:method:group_del|group_del]]** //[Overridden here]// ''protected''
-<code c>
-void efl_canvas_group_del(Eo *obj);
-</code>
-
-%%Internal destructor function.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:method:legacy_ctor|legacy_ctor]]** ''protected''
-<code c>
-void efl_canvas_object_legacy_ctor(Eo *obj);
-</code>
-
-%%Internal function. Do not use.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
 <code c>
 Efl_Canvas_Object *efl_canvas_object_render_parent_get(const Eo *obj);
 </code>
 
 %%Gets the parent smart object of a given Evas object, if it has one.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:canvas:object|Efl.Canvas.Object]].**[[:docs:efl:auto:class:efl:canvas:object:property:type|type]]** //**(set)**// ''protected''
-<code c>
-void efl_canvas_object_type_set(Eo *obj, const char *type);
-</code>
-
-%%Sets the legacy type name of this Evas object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:elm:widget|Elm.Widget]].**[[:docs:efl:auto:class:elm:widget:property:widget_parent|widget_parent]]** //**(get, set)**// ''protected''
 <code c>
@@ -3051,21 +2858,21 @@ void elm_obj_widget_parent_set(Eo *obj, Efl_Canvas_Object *parent);
 Eina_List *elm_interface_atspi_accessible_attributes_get(const Eo *obj);
 </code>
 
-%%Gets key-value pairs indentifying widget extra attributes. Must be free by a user.%%\\ 
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:children|children]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// ''protected''
 <code c>
 Eina_List *elm_interface_atspi_accessible_children_get(const Eo *obj);
 </code>
 
-%%Gets widget's accessible children.%%\\ 
+%%Gets object's accessible children.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:class:elm:widget:property:state_set|state_set]]** //**(get)**// //[Overridden in [[:docs:efl:auto:class:elm:widget|Elm.Widget]]]// ''protected''
 <code c>
 Elm_Atspi_State_Set elm_interface_atspi_accessible_state_set_get(const Eo *obj);
 </code>
 
-%%Gets set describing widget accessible states.%%\\ 
+%%Gets set describing object accessible states.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:method:event_emit|event_emit]]** ''protected''
 <code c>
@@ -3100,21 +2907,21 @@ int elm_interface_atspi_accessible_index_in_parent_get(const Eo *obj);
 const char *elm_interface_atspi_accessible_localized_role_name_get(const Eo *obj);
 </code>
 
-%%Gets an localized string describing AT-SPI widget role name.%%\\ 
+%%Gets an localized string describing accessible object role name.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:relation_set|relation_set]]** //**(get)**// ''protected''
 <code c>
 Elm_Atspi_Relation_Set elm_interface_atspi_accessible_relation_set_get(const Eo *obj);
 </code>
 
-%%Gets an string describing AT-SPI widget role name. Lists and elements Should be free by a user.%%\\ 
+%%Gets an all relations between accessible object and other accessible objects.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:property:role_name|role_name]]** //**(get)**// ''protected''
 <code c>
 const char *elm_interface_atspi_accessible_role_name_get(const Eo *obj);
 </code>
 
-%%Gets human-readable string indentifying widget accessibility role.%%\\ 
+%%Gets human-readable string indentifying object accessibility role.%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_action|Elm.Interface.Atspi_Action]].**[[:docs:efl:auto:mixin:elm:interface:atspi_action:property:localized_name|localized_name]]** //**(get)**// ''protected''
 <code c>
@@ -3524,6 +3331,27 @@ EFL_GFX_EVENT_RESTACK(void)
 </code>
 
 %%Object stacking was changed.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
 \\ 
 [[:docs:efl:auto:interface:efl:gfx|Efl.Gfx]].**[[:docs:efl:auto:interface:efl:gfx:event:hide|hide]]**
 <code c>
@@ -3986,6 +3814,27 @@ EFL_UI_EVENT_DRAG(void)
 </code>
 
 %%Called when drag operation starts%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:interface:efl:ui:focus:user:event:logical_changed|logical,changed]]**
+<code c>
+EFL_UI_FOCUS_USER_EVENT_LOGICAL_CHANGED(Efl_Ui_Focus_Object *)
+</code>
+
+%%Emitted when a new logical parent should be used.%%\\ 
+\\ 
+[[:docs:efl:auto:interface:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:docs:efl:auto:interface:efl:ui:focus:user:event:manager_changed|manager,changed]]**
+<code c>
+EFL_UI_FOCUS_USER_EVENT_MANAGER_CHANGED(Efl_Ui_Focus_Manager *)
+</code>
+
+%%Emitted when a new manager is the parent for this object.%%\\ 
+\\ 
+[[:docs:efl:auto:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:docs:efl:auto:mixin:efl:ui:focus:object:event:focus_changed|focus,changed]]**
+<code c>
+EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED(Eina_Bool)
+</code>
+
+%%Emitted if the focus state has changed%%\\ 
 \\ 
 [[:docs:efl:auto:mixin:elm:interface:atspi_accessible|Elm.Interface.Atspi_Accessible]].**[[:docs:efl:auto:mixin:elm:interface:atspi_accessible:event:active_descendant_changed|active,descendant,changed]]**
 <code c>

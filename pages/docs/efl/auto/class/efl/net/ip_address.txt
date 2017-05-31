@@ -1,0 +1,381 @@
+<title>Efl.Net.Ip_Address</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_ip_address [fillcolor = "black", label = "Efl.Net.Ip_Address", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_net_ip_address -> efl_object
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:docs:efl:auto:class:efl:net:ip_address|Efl.Net.Ip_Address]] //(class)//**
+    * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+
+===== Description =====
+
+%%An Internet Protocol (IP) Address.%%
+
+%%This class is a set of helpers to translate to and from address strings used in Efl.Net. For IP they take the formats:%%
+
+%%- IPv4 complete: 127.0.0.1:1234 - IPv4 no port: 127.0.0.1 - IPv6 complete: [::1]:1234 - IPv6 no port: [::1] - IPv6 no braces (implies no port): ::1%%
+
+%%However in other libraries one may use the address numbers or even a 'struct sockaddr' handle and translating by yourself may be too much work. To convert to a string, just create an instance with %%[[:docs:efl:auto:class:efl:net:ip_address:method:create|Efl.Net.Ip_Address.create]]%% or %%[[:docs:efl:auto:class:efl:net:ip_address:method:create_sockaddr|Efl.Net.Ip_Address.create_sockaddr]]%% and then query %%[[:docs:efl:auto:class:efl:net:ip_address:property:string|Efl.Net.Ip_Address.string]]%%. To convert from numeric string to sockaddr, create an instance with %%[[:docs:efl:auto:class:efl:net:ip_address:method:parse|Efl.Net.Ip_Address.parse]]%% and then query %%[[:docs:efl:auto:class:efl:net:ip_address:property:sockaddr|Efl.Net.Ip_Address.sockaddr]]%%.%%
+
+%%To resolve a host and port name to numbers use %%[[:docs:efl:auto:class:efl:net:ip_address:method:resolve|Efl.Net.Ip_Address.resolve]]%%, this will asynchronously resolve and return the results in a promise.%%
+
+%%The result of %%[[:docs:efl:auto:class:efl:net:ip_address:property:string|Efl.Net.Ip_Address.string]]%% can be passed to %%[[:docs:efl:auto:interface:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%% and %%[[:docs:efl:auto:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%%%%
+
+//Since 1.19//
+
+{{page>:docs:efl:user:class:efl:net:ip_address:description&nodate&nolink&nouser}}
+
+===== Members =====
+
+**[[:docs:efl:auto:class:efl:net:ip_address:method:any_check|any_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_any_check(const Eo *obj);
+</code>
+
+%%Checks if "0.0.0.0" (IPv4) or "::" (IPv6)%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:create_sockaddr|create_sockaddr]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_create_sockaddr(const Eo *obj, const void *sockaddr);
+</code>
+
+%%Creates an object given sockaddr%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:create|create]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_create(const Eo *obj, uint16_t port, const Eina_Slice address);
+</code>
+
+%%Creates an object given family, port and address.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv4_class_a_check|ipv4_class_a_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_a_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-A%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv4_class_b_check|ipv4_class_b_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_b_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-B%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv4_class_c_check|ipv4_class_c_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_c_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-C%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv4_class_d_check|ipv4_class_d_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_d_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-D%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv6_local_link_check|ipv6_local_link_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_local_link_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is link-local.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv6_local_site_check|ipv6_local_site_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_local_site_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is site-local.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv6_v4compat_check|ipv6_v4compat_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_v4compat_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is compatible with IPv4.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:ipv6_v4mapped_check|ipv6_v4mapped_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_v4mapped_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is mapping an IPv4.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:loopback_check|loopback_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_loopback_check(const Eo *obj);
+</code>
+
+%%Checks if loopback "127.0.0.1" (IPv4) or "::1" (IPv6)%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:multicast_check|multicast_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_multicast_check(const Eo *obj);
+</code>
+
+%%Checks if multicast%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:parse|parse]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_parse(const Eo *obj, const char *numeric_address);
+</code>
+
+%%Parses a numeric address and return an object representing it.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:method:resolve|resolve]]**
+<code c>
+Efl_Future *efl_net_ip_address_resolve(const Eo *obj, const char *address, int family, int flags);
+</code>
+
+%%Asynchronously resolves host and port names.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:property:address|address]]** //**(get, set)**//
+<code c>
+Eina_Slice efl_net_ip_address_get(const Eo *obj);
+void efl_net_ip_address_set(Eo *obj, Eina_Slice address);
+</code>
+
+%%The bytes representing the address.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:property:family|family]]** //**(get, set)**//
+<code c>
+int efl_net_ip_address_family_get(const Eo *obj);
+void efl_net_ip_address_family_set(Eo *obj, int family);
+</code>
+
+%%The address family, one of AF_INET6 or AF_INET.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:property:port|port]]** //**(get, set)**//
+<code c>
+uint16_t efl_net_ip_address_port_get(const Eo *obj);
+void efl_net_ip_address_port_set(Eo *obj, uint16_t port);
+</code>
+
+%%The address port in Host/Native endianess.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:property:sockaddr|sockaddr]]** //**(get, set)**//
+<code c>
+const void *efl_net_ip_address_sockaddr_get(const Eo *obj);
+void efl_net_ip_address_sockaddr_set(Eo *obj, const void *sockaddr);
+</code>
+
+%%The <netinet/in.h>-compatible 'struct sockaddr'.%%\\ 
+\\ 
+**[[:docs:efl:auto:class:efl:net:ip_address:property:string|string]]** //**(get)**//
+<code c>
+const char *efl_net_ip_address_string_get(const Eo *obj);
+</code>
+
+%%Returns the numeric address formatted as a string.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:ip_address:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+<code c>
+Eina_Iterator *efl_children_iterator_new(Eo *obj);
+</code>
+
+%%Get an iterator on all childrens%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
+<code c>
+Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Make an object a composite object of another.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
+<code c>
+Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Detach a composite object from another object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
+<code c>
+Eina_Bool efl_composite_part_is(Eo *obj);
+</code>
+
+%%Check if an object is part of a composite object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:constructor|constructor]]**
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
+<code c>
+void efl_del(const Eo *obj);
+</code>
+
+%%Unrefs the object and reparents it to NULL.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:destructor|destructor]]**
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+<code c>
+void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Add an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+<code c>
+void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Remove an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+<code c>
+void efl_event_callback_stop(Eo *obj);
+</code>
+
+%%Stop the current callback call.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+<code c>
+void efl_event_global_freeze(const Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+<code c>
+void efl_event_global_thaw(const Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
+<code c>
+Efl_Object *efl_name_find(Eo *obj, const char *search);
+</code>
+
+%%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:provider_find|provider_find]]**
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+
+%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
+<code c>
+const char *efl_comment_get(const Eo *obj);
+void efl_comment_set(Eo *obj, const char *comment);
+</code>
+
+%%A human readable comment for the object%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_global_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
+<code c>
+Eina_Bool efl_finalized_get(const Eo *obj);
+</code>
+
+%%True if the object is already finalized, false otherwise.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
+<code c>
+const char *efl_name_get(const Eo *obj);
+void efl_name_set(Eo *obj, const char *name);
+</code>
+
+%%The name of the object.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:parent|parent]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 

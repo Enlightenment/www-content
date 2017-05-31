@@ -49,28 +49,28 @@ digraph hierarchy {
 
 **[[:docs:efl:auto:class:evas:canvas:method:coord_screen_x_to_world|coord_screen_x_to_world]]**
 <code c>
-Evas_Coord evas_canvas_coord_screen_x_to_world(const Eo *obj, int x);
+int evas_canvas_coord_screen_x_to_world(const Eo *obj, int x);
 </code>
 
 %%Convert/scale an output screen coordinate into canvas coordinates.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:coord_screen_y_to_world|coord_screen_y_to_world]]**
 <code c>
-Evas_Coord evas_canvas_coord_screen_y_to_world(const Eo *obj, int y);
+int evas_canvas_coord_screen_y_to_world(const Eo *obj, int y);
 </code>
 
 %%Convert/scale an output screen coordinate into canvas coordinates.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:coord_world_x_to_screen|coord_world_x_to_screen]]**
 <code c>
-int evas_canvas_coord_world_x_to_screen(const Eo *obj, Evas_Coord x);
+int evas_canvas_coord_world_x_to_screen(const Eo *obj, int x);
 </code>
 
 %%Convert/scale a canvas coordinate into output screen coordinates.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:coord_world_y_to_screen|coord_world_y_to_screen]]**
 <code c>
-int evas_canvas_coord_world_y_to_screen(const Eo *obj, Evas_Coord y);
+int evas_canvas_coord_world_y_to_screen(const Eo *obj, int y);
 </code>
 
 %%Convert/scale a canvas coordinate into output screen coordinates.%%\\ 
@@ -109,13 +109,6 @@ void evas_canvas_font_cache_flush(Eo *obj);
 </code>
 
 %%Force the given evas and associated engine to flush its font cache.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:font_hinting_can_hint|font_hinting_can_hint]]**
-<code c>
-Eina_Bool evas_canvas_font_hinting_can_hint(const Eo *obj, Evas_Font_Hinting_Flags hinting);
-</code>
-
-%%Checks if the font hinting is supported by the given evas.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:font_path_append|font_path_append]]**
 <code c>
@@ -201,13 +194,6 @@ void evas_canvas_key_modifier_del(Eo *obj, const char *keyname);
 
 %%Removes the %%''keyname''%% key from the current list of modifier keys on canvas %%''e''%%.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:evas:canvas:method:key_modifier_mask_get|key_modifier_mask_get]]**
-<code c>
-Evas_Modifier_Mask evas_canvas_key_modifier_mask_get(const Eo *obj, const char *keyname);
-</code>
-
-%%Creates a bit mask from the %%''keyname''%% modifier key. Values returned from different calls to it may be ORed together, naturally.%%\\ 
-\\ 
 **[[:docs:efl:auto:class:evas:canvas:method:key_modifier_off|key_modifier_off]]**
 <code c>
 void evas_canvas_key_modifier_off(Eo *obj, const char *keyname);
@@ -252,28 +238,28 @@ Efl_Canvas_Object *evas_canvas_object_name_find(const Eo *obj, const char *name)
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:object_top_at_xy_get|object_top_at_xy_get]]**
 <code c>
-Efl_Canvas_Object *evas_canvas_object_top_at_xy_get(const Eo *obj, Evas_Coord x, Evas_Coord y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+Efl_Canvas_Object *evas_canvas_object_top_at_xy_get(const Eo *obj, int x, int y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
 </code>
 
 %%Retrieve the Evas object stacked at the top of a given position in a canvas.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:object_top_in_rectangle_get|object_top_in_rectangle_get]]**
 <code c>
-Efl_Canvas_Object *evas_canvas_object_top_in_rectangle_get(const Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+Efl_Canvas_Object *evas_canvas_object_top_in_rectangle_get(const Eo *obj, int x, int y, int w, int h, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
 </code>
 
 %%Retrieve the Evas object stacked at the top of a given rectangular region in a canvas%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:objects_at_xy_get|objects_at_xy_get]]**
 <code c>
-Eina_List *evas_canvas_objects_at_xy_get(const Eo *obj, Evas_Coord x, Evas_Coord y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+Eina_List *evas_canvas_objects_at_xy_get(const Eo *obj, int x, int y, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
 </code>
 
 %%Retrieve a list of Evas objects lying over a given position in a canvas.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:method:objects_in_rectangle_get|objects_in_rectangle_get]]**
 <code c>
-Eina_List *evas_canvas_objects_in_rectangle_get(const Eo *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+Eina_List *evas_canvas_objects_in_rectangle_get(const Eo *obj, int x, int y, int w, int h, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
 </code>
 
 %%Get all objects in the given rectangle%%\\ 
@@ -397,27 +383,6 @@ void evas_canvas_sync(Eo *obj);
 
 %%Sync evas canvas%%\\ 
 \\ 
-**[[:docs:efl:auto:class:evas:canvas:method:touch_point_list_count|touch_point_list_count]]**
-<code c>
-unsigned int evas_canvas_touch_point_list_count(Eo *obj);
-</code>
-
-%%Get the number of touched point in the evas.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:touch_point_list_nth_id_get|touch_point_list_nth_id_get]]**
-<code c>
-int evas_canvas_touch_point_list_nth_id_get(Eo *obj, unsigned int n);
-</code>
-
-%%This function returns the %%''id''%% of nth touch point.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:method:touch_point_list_nth_state_get|touch_point_list_nth_state_get]]**
-<code c>
-Evas_Touch_Point_State evas_canvas_touch_point_list_nth_state_get(Eo *obj, unsigned int n);
-</code>
-
-%%This function returns the %%''state''%% of nth touch point.%%\\ 
-\\ 
 **[[:docs:efl:auto:class:evas:canvas:method:touch_point_list_nth_xy_get|touch_point_list_nth_xy_get]]**
 <code c>
 void evas_canvas_touch_point_list_nth_xy_get(Eo *obj, unsigned int n, double *x, double *y);
@@ -452,13 +417,6 @@ Efl_Input_Device *evas_canvas_default_device_get(const Eo *obj, Efl_Input_Device
 </code>
 
 %%Return the default device of a given type. @note Currently Evas only creates a seat, mouse and keyboard.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:property:engine_info|engine_info]]** //**(get, set)**//
-<code c>
-Evas_Engine_Info *evas_canvas_engine_info_get(const Eo *obj);
-Eina_Bool evas_canvas_engine_info_set(Eo *obj, Evas_Engine_Info *info);
-</code>
-
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:property:event_default_flags|event_default_flags]]** //**(get, set)**//
 <code c>
@@ -495,13 +453,6 @@ void evas_canvas_font_cache_set(Eo *obj, int size);
 </code>
 
 \\ 
-**[[:docs:efl:auto:class:evas:canvas:property:font_hinting|font_hinting]]** //**(get, set)**//
-<code c>
-Evas_Font_Hinting_Flags evas_canvas_font_hinting_get(const Eo *obj);
-void evas_canvas_font_hinting_set(Eo *obj, Evas_Font_Hinting_Flags hinting);
-</code>
-
-\\ 
 **[[:docs:efl:auto:class:evas:canvas:property:image_cache|image_cache]]** //**(get, set)**//
 <code c>
 int evas_canvas_image_cache_get(const Eo *obj);
@@ -515,20 +466,6 @@ Eina_Bool evas_canvas_image_max_size_get(const Eo *obj, int *maxw, int *maxh);
 </code>
 
 %%Get the maximum image size evas can possibly handle.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:property:key_lock|key_lock]]** //**(get)**//
-<code c>
-const Evas_Lock *evas_canvas_key_lock_get(const Eo *obj);
-</code>
-
-%%Returns a handle to the list of lock keys registered in the canvas %%''e''%%.%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:property:key_modifier|key_modifier]]** //**(get)**//
-<code c>
-const Evas_Modifier *evas_canvas_key_modifier_get(const Eo *obj);
-</code>
-
-%%Returns a handle to the list of modifier keys registered in the canvas %%''e''%%.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:property:object_bottom|object_bottom]]** //**(get)**//
 <code c>
@@ -560,14 +497,14 @@ unsigned int evas_canvas_pointer_button_down_mask_get(const Eo *obj);
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy_by_device|pointer_canvas_xy_by_device]]** //**(get)**//
 <code c>
-void evas_canvas_pointer_canvas_xy_by_device_get(const Eo *obj, Efl_Input_Device *dev, Evas_Coord *x, Evas_Coord *y);
+void evas_canvas_pointer_canvas_xy_by_device_get(const Eo *obj, Efl_Input_Device *dev, int *x, int *y);
 </code>
 
 %%This function returns the current known default pointer coordinates.%%\\ 
 \\ 
 **[[:docs:efl:auto:class:evas:canvas:property:pointer_canvas_xy|pointer_canvas_xy]]** //**(get)**//
 <code c>
-void evas_canvas_pointer_canvas_xy_get(const Eo *obj, Evas_Coord *x, Evas_Coord *y);
+void evas_canvas_pointer_canvas_xy_get(const Eo *obj, int *x, int *y);
 </code>
 
 %%This function returns the current known default pointer coordinates%%\\ 
@@ -659,47 +596,12 @@ Eina_Bool efl_composite_part_is(Eo *obj);
 
 %%Check if an object is part of a composite object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:dbg_info_get|dbg_info_get]]**
-<code c>
-void efl_dbg_info_get(Eo *obj, Efl_Dbg_Info *root_node);
-</code>
-
-%%Get debug information from the object.%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
 <code c>
 void efl_del(const Eo *obj);
 </code>
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_del|event_callback_array_del]]**
-<code c>
-Eina_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
-</code>
-
-%%Del a callback array with a specific data associated to it for an event. The callbacks from the array will never be emitted again after this call, even if a event emission is going on.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_array_priority_add|event_callback_array_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
-</code>
-
-%%Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE for an event with a specific priority. The array need to be sorted with @ref efl_callbacks_cmp if you are not using the @ref EFL_CALLBACKS_ARRAY_DEFINE macro.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_call|event_callback_call]]**
-<code c>
-Eina_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_del|event_callback_del]]**
-<code c>
-Eina_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
-</code>
-
-%%Delete a callback with a specific data associated to it for an event.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
@@ -714,20 +616,6 @@ void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_legacy_call|event_callback_legacy_call]]**
-<code c>
-Eina_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-</code>
-
-%%Call the callbacks for an event of an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_priority_add|event_callback_priority_add]]**
-<code c>
-Eina_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
-</code>
-
-%%Add a callback for an event with a specific priority.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
@@ -757,33 +645,12 @@ Efl_Object *efl_finalize(Eo *obj);
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:future_link|future_link]]**
-<code c>
-Eina_Bool efl_future_link(Eo *obj, Efl_Future *link);
-</code>
-
-%%Track a future life cycle and cancel it if the object die%%\\ 
-\\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
 Efl_Object *efl_name_find(Eo *obj, const char *search);
 </code>
 
 %%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_add|wref_add]]**
-<code c>
-void efl_wref_add(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Add a new weak reference to obj.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:wref_del|wref_del]]**
-<code c>
-void efl_wref_del(Eo *obj, Efl_Object **wref);
-</code>
-
-%%Delete the weak reference passed.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
@@ -813,38 +680,6 @@ Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_data|key_data]]** //**(get, set)**//
-<code c>
-void *efl_key_data_get(const Eo *obj, const char *key);
-void efl_key_data_set(Eo *obj, const char *key, const void *data);
-</code>
-
-%%Generic data with string key on an object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_ref|key_ref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
-void efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic object reference with string key to object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_value|key_value]]** //**(get, set)**//
-<code c>
-Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
-void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
-</code>
-
-%%Value on with string key on the object.%%\\ 
-\\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:key_wref|key_wref]]** //**(get, set)**//
-<code c>
-Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
-void efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
-</code>
-
-%%Generic weak object reference with string key to object.%%\\ 
 \\ 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
@@ -968,36 +803,6 @@ void efl_input_seat_event_filter_set(Eo *obj, Efl_Input_Device *seat, Eina_Bool 
 
 \\ 
 
-===== Events =====
-
-**[[:docs:efl:auto:class:evas:canvas:event:axis_update|axis,update]]**
-<code c>
-EVAS_CANVAS_EVENT_AXIS_UPDATE(void, @beta)
-</code>
-
-%%Called on axis update%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:event:render_flush_post|render,flush,post]]**
-<code c>
-EVAS_CANVAS_EVENT_RENDER_FLUSH_POST(void, @beta)
-</code>
-
-%%Called on render flush post phase%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:event:render_flush_pre|render,flush,pre]]**
-<code c>
-EVAS_CANVAS_EVENT_RENDER_FLUSH_PRE(void, @beta)
-</code>
-
-%%Called on render flush pre phase%%\\ 
-\\ 
-**[[:docs:efl:auto:class:evas:canvas:event:viewport_resize|viewport,resize]]**
-<code c>
-EVAS_CANVAS_EVENT_VIEWPORT_RESIZE(void, @beta)
-</code>
-
-%%Called on viewport resize%%\\ 
-\\ 
 ==== Inherited ====
 
 [[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**

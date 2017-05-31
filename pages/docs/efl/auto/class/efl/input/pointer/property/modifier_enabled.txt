@@ -5,7 +5,8 @@
 @property modifier_enabled @pure_virtual {
     get {
         keys {
-            name: string;
+            mod: Efl.Input.Modifier;
+            seat: const(Efl.Input.Device) @optional;
         }
         values {
             is_set: bool;
@@ -17,12 +18,13 @@
 ===== C signature =====
 
 <code c>
-Eina_Bool efl_input_modifier_enabled_get(const Eo *obj, const char *name);
+Eina_Bool efl_input_modifier_enabled_get(const Eo *obj, Efl_Input_Modifier mod, const Efl_Input_Device *seat);
 </code>
 
 ===== Keys =====
 
-  * **name** - %%Key name%%
+  * **mod** - %%The modifier key to test.%%
+  * **seat** - %%The seat device, may be %%''null''%%%%
 ===== Values =====
 
   * **is_set** - %%%%''true''%% if the key modifier is pressed.%%

@@ -7,13 +7,8 @@ pixels_set @pure_virtual {
         @in pixels: void_ptr;
         @in width: int;
         @in height: int;
-        @in stride: int;
         @in cspace: Efl.Gfx.Colorspace;
         @in writable: bool;
-        @in l: ubyte;
-        @in r: ubyte;
-        @in t: ubyte;
-        @in b: ubyte;
     }
     return: bool;
 }
@@ -22,7 +17,7 @@ pixels_set @pure_virtual {
 ===== C signature =====
 
 <code c>
-Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, int stride, Efl_Gfx_Colorspace cspace, Eina_Bool writable, unsigned char l, unsigned char r, unsigned char t, unsigned char b);
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, Efl_Gfx_Colorspace cspace, Eina_Bool writable);
 </code>
 
 ===== Parameters =====
@@ -30,13 +25,8 @@ Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, 
   * **pixels** //(in)// - %%If %%''null''%%, allocates an empty buffer%%
   * **width** //(in)// - %%Buffer width%%
   * **height** //(in)// - %%Buffer height%%
-  * **stride** //(in)// - %%Can be 0%%
   * **cspace** //(in)// - %%Buffer colorspace%%
   * **writable** //(in)// - %%Buffer is writable%%
-  * **l** //(in)// - %%Left border pixels, usually 0 or 1%%
-  * **r** //(in)// - %%Right border pixels, usually 0 or 1%%
-  * **t** //(in)// - %%Top border pixels, usually 0 or 1%%
-  * **b** //(in)// - %%Bottom border pixels, usually 0 or 1%%
 
 ===== Description =====
 
@@ -48,6 +38,6 @@ Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, 
 ===== Implemented by =====
 
   * [[:docs:efl:auto:mixin:ector:buffer:method:pixels_set|Ector.Buffer.pixels_set]]
-  * **Ector.Software.Buffer.Base.pixels_set**
   * [[:docs:efl:auto:class:ector:cairo:software:surface:method:pixels_set|Ector.Cairo.Software.Surface.pixels_set]]
+  * **Ector.Software.Buffer.Base.pixels_set**
 
