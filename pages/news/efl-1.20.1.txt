@@ -1,0 +1,144 @@
+=== Enlightenment Foundation Libraries 1.20.1 Release ===
+  * //2017-08-04 - by Stefan Schmidt//
+
+After eight months of development work we are proud to announce the release of
+version 1.20 of the Enlightenment Foundation Libraries. In these eight months we got
+over 1600 commits from 64 authors. Great job everyone! Some highlights are listed below.
+
+**NOTE:** The initial 1.20 tarballs had a problem when building for Wayland. The 1.20.1
+tarballs contain the extra patch to have this working again.
+
+== Download ==
+
+| LINK | SHA256 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.20.1.tar.gz  | efl-1.20.1.tar.gz ]] |  30f66732f00185014b8567b8e6dd913f99e10d334ee916a26f5b8ff14a9328c6 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.20.1.tar.xz  | efl-1.20.1.tar.xz ]] | f88866162b28bf0f46350d14837be705bddddba58e9a972635ee22f678ad3cb4 |
+
+----
+
+== What's New ==
+
+We only cover some highlights here. For the full list please look at the NEWS file,
+if you are interested in the details. As usual we have been working on fixing bugs,
+optimising our code for speed and memory footprint and adding new features.
+
+== Wayland, DRM and Input ==
+Our Wayland implementation and the infrastructure around it like DRM and input handling
+have seen many updates and improvements again in this cycle.
+Initial input tablet support, the ability for DRM to place native surfaces on hardware planes,
+dmabuf clients into hardware planes, atomic commit and atomic updates.
+We also have more solid support for rotations and buffer transforms now as well as having
+a multiseat wayland compositor in an evas smart object.
+
+== Ecore ==
+The ecore input method framework was extended with a few APIs to allow
+setting prediction hints, setting accepted mime types and getting the keyboard mode.
+
+== Eina ==
+A new eina debug layer is aimed to bring a way to debug EFL applications by
+providing a transport channel between a debug tool and the applications
+of a device.
+
+== Elementary ==
+Elementary has seen a huge focus rework and addition of a focus manager.
+
+----
+
+== Statistics ==
+
+(git log --pretty=oneline v1.19.0..v1.20.1 | wc -l)
+Number of commits in 1.20: 1665
+Number of commits in 1.19: 3475
+
+(git shortlog -ns v1.19.0..v1.20.1 | wc -l)
+Number of authors in 1.20: 64
+Number of authors in 1.19: 98
+
+(git diff --stat v1.19.0..v1.20.1 | tail -1)
+1298 files changed, 69378 insertions(+), 31364 deletions(-) in 1.20
+2491 files changed, 207951 insertions(+), 151443 deletions(-) in 1.19
+
+----
+
+==Building and Dependencies==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please refer to the README for a full list of dependencies, explanations on configure flags and other relevant information. Default dependencies are:
+
+  * bullet
+  * libpng
+  * libjpeg
+  * gstreamer (1.x, 0.10 support optional. Ensure all codecs you want are installed.)
+  * zlib
+  * luajit (lua 5.1 or 5.2 support optional)
+  * libtiff
+  * openssl
+  * curl
+  * dbus
+  * libc
+  * fontconfig
+  * freetype2
+  * fribidi
+  * libpulse
+  * libsndfile
+  * libx11
+  * libxau
+  * libxcomposite
+  * libxdamage
+  * libxdmcp
+  * libxext
+  * libxfixes
+  * libxinerama
+  * libxrandr
+  * libxrender
+  * libxss
+  * libxtst
+  * libxcursor
+  * libxp
+  * libxi (2.2 or newer)
+  * libgl (opengl/glx or opengl-es2/egl)
+  * giflib
+  * util-linux (limbount + libblkid)
+  * systemd / libudev
+  * poppler / poppler-cpp
+  * libraw
+  * libspectre
+  * librsvg
+
+Recommended requirements (highly recommended):
+
+  * harfbuzz
+  * libwebp
+  * libunwind (where available)
+
+Enable these with configure options:
+
+<file>
+--enable-xinput22 \
+--enable-systemd \
+--enable-image-loader-webp \
+--enable-harfbuzz \
+--enable-multisense \
+--enable-liblz4
+</file>
+
+On linux to get framebuffer support you may want to also do:
+
+<file>
+--enable-fb
+--disable-tslib
+</file>
+
+If you want wayland support also add:
+
+<file>
+--enable-wayland \
+--enable-elput \
+--enable-drm
+</file>
+ 
+At runtime if you want thumbnailing for DOC/PPT/XLS etc. files also provide:
+libreoffice
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
