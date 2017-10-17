@@ -3,7 +3,7 @@
 
 ==== Preface ====
 
-//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL on today's common architectures. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
+//This is not a theoretical C language specifications document. It is a practical primer for the vast majority of real life cases of C usage that are relevant to EFL on todays common architectures. It covers application executables and shared library concepts and is written from a Linux/UNIX perspective where you would have your code running with an OS doing memory mappings and probably protection for you. It really is fundamentally not much different on Android, iOS, OSX or even Windows.//
 
 //It won't cover esoteric details of "strange architectures". It pretty much covers C as a high level assembly language that is portable across a range of modern architectures.//
 
@@ -144,7 +144,7 @@ Variables will live within this memory, and normally the C compiler will deal wi
 int bob;
 </code>
 
-You can even tell the compiler to make sure it has an initial value. If you don't it's value may be random garbage that was there before in memory.
+You can even tell the compiler to make sure it has an initial value. If you don't, its value may be random garbage that was there before in memory.
 
 <code c>
 int bob = 42;
@@ -408,7 +408,7 @@ myfunc(void)
 }
 </code>
 
-Another very common use of the pre-processor is to compile only some pieces of code in specific circumstances. A common use-case is for portability (but you can also use this along with #includes, macros etc. to use the pre-processor as a code-generation tool to save a lot of re-typing of almost the same bits of code). On one platform you may have to have some pieces of code work in a specific way that differs from other platforms. This commonly happens with Windows vs Linux vs BSD etc. so you may end up with segments of code such as above, with platform-specific segments of code (individual lines, or maybe even whole large sections of files of 100's or 1000's of lines of code, or perhaps in header files with sometimes specific include files being included only on certain platforms).
+Another very common use of the pre-processor is to compile only some pieces of code in specific circumstances. A common use-case is for portability (but you can also use this along with #includes, macros etc. to use the pre-processor as a code-generation tool to save a lot of re-typing of almost the same bits of code). On one platform you may have to have some pieces of code work in a specific way that differs from other platforms. This commonly happens with Windows vs Linux vs BSD etc. so you may end up with segments of code such as above, with platform-specific segments of code (individual lines, or maybe even whole large sections of files of 100s or 1000s of lines of code, or perhaps in header files with sometimes specific include files being included only on certain platforms).
 
 You can use this also to compile your code with features enabled or not. You can define pre-processor values on the command line with ''-D'' with most compilers, such as ''-DMY_FEATURE=1'' for example which is the same as putting in the code ''#define MY_FEATURE 1''. You can then have your code be something like:
 
@@ -487,7 +487,7 @@ In memory from start to end it looks like:
 
 {{ memory.svg?nolink |Memory layout }}
 
-Note that members will add padding to align members to their natural alignment. This is necessary for correctness and speed reasons across all architectures. Everything is really just a series of bytes in memory. Memory is filled with 1000's or even millions of these bits of data, either one after the other, or spread out. You can jump from one to the other by just using a pointer. Pointers are simply byte numbers from the start of memory (which is 0). The data lives somewhere in memory, and a pointer just says what address it lives at. All data will consume some number of bytes at that address, and may inside contain more pointers pointing to other bits of memory too.
+Note that members will add padding to align members to their natural alignment. This is necessary for correctness and speed reasons across all architectures. Everything is really just a series of bytes in memory. Memory is filled with 1000s or even millions of these bits of data, either one after the other, or spread out. You can jump from one to the other by just using a pointer. Pointers are simply byte numbers from the start of memory (which is 0). The data lives somewhere in memory, and a pointer just says what address it lives at. All data will consume some number of bytes at that address, and may inside contain more pointers pointing to other bits of memory too.
 
 Generally you allocate memory with functions such as ''malloc()'', ''calloc()'', or ''realloc()''. Some libraries you use may do allocations for you. Be sure to read the manuals on them as well as these above. You would free memory you no longer need with ''free()''. All these functions just take a pointer value that .. points at the memory to free, reallocate, or they return a pointer to this place in memory where your new memory block has been arranged. There are some special functions like ''alloca()'' that you don't need to free, and instead allocate on the stack instead of the heap.
 
@@ -509,7 +509,7 @@ If you want to do something privileged, or hide data, it needs to cross a proces
 
 The benefit of a shared library is to avoid needing a re-compile to get improvements, save writing all the code the library shares with you, and to share the memory the code in the shared library would consume. As it is a //SHARED// library, the code from that library is loaded only once on the system. It may add to the virtual size of the process, but this space is shared across every process using that library, so the cost is paid just once.
 
-Generally a library exposes an API (a set of functions to call). It will provide header files you #include in your application (or library). You would link to the library and thus, at runtime, the "runtime linker" (ld.so often), will glue in the function symbols in your code to the library you link to. This also is done for global variables exposed by the library as well. This is all done at the start of process startup before the main() function is called. There is a cost to this, but it is generally worth paying for the benefits. Your code will then be able to call the functions from the library (or access it's data) as if the library were part of your own code.
+Generally a library exposes an API (a set of functions to call). It will provide header files you #include in your application (or library). You would link to the library and thus, at runtime, the "runtime linker" (ld.so often), will glue in the function symbols in your code to the library you link to. This also is done for global variables exposed by the library as well. This is all done at the start of process startup before the main() function is called. There is a cost to this, but it is generally worth paying for the benefits. Your code will then be able to call the functions from the library (or access its data) as if the library were part of your own code.
 
 You generally would compile your code to link to a library as follows, assuming the source for your application is ''hello.c'', the binary you wish to output is ''hello'' and the library you want to link to is ''eina'' (often the file on disk will be ''libeina.so'' for the development environment).
 
