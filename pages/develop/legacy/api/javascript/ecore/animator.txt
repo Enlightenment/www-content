@@ -1,0 +1,277 @@
+===== Javascript binding API - Ecore Animator =====
+
+[[api:javascript:ecore|Back to the JS Ecore page]]
+
+**DRAFT***
+
+Ecore animators are a helper to simplify creating animations.
+
+Creating an animation is as simple as saying for how long it should be run and having a callback that does the animation, something like this:
+
+<code javascript>
+var my_evas_object = ...
+function _do_animation(pos)
+{
+   ... move evas object ...
+   ... do some more animating ...
+}
+....
+efl.Ecore.Animator.addTimeline(2, _do_animation);
+</code>
+
+In the sample above we create an animation to move my_evas_object in 2 seconds.
+
+If your animation will run for an unspecified amount of time you can use ''efl.Ecore.Animator.add()'', which is like using ''efl.Ecore.Timer.add()'' with the interval being the framerate. Note that this has tangible benefits to creating a timer for each animation in terms of performance.
+
+==== Constants ====
+
+=== Position mapping ===
+
+These constants define the mapping of position to the time for the animation.
+
+   * ''efl.Ecore.Animator.POS_MAP_ACCELERATE'' - Start slow then speed up.
+   * ''efl.Ecore.Animator.POS_MAP_ACCELERATE_FACTOR'' - Start slow then speed up, v1 being a power factor, 0.0 being linear, 1.0 being normal accelerate, 2.0 being much more pronounced accelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.POS_MAP_BOUNCE'' - Start at 0.0 then "drop" like a ball bouncing to the ground at 1.0, and bounce v2 times, with decay factor of v1.
+   * ''efl.Ecore.Animator.POS_MAP_CUBIC_BEZIER'' - Follow the cubic-bezier curve calculated with the control points (x1, y1), (x2, y2)
+   * ''efl.Ecore.Animator.POS_MAP_DECELERATE'' - Start fast then slow down.
+   * ''efl.Ecore.Animator.POS_MAP_DECELERATE_FACTOR'' - Start fast then slow down, v1 being a power factor, 0.0 being linear, 1.0 being normal decelerate, 2.0 being much more pronounced decelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.POS_MAP_DIVISOR_INTERP'' - Start at gradient * v1, interpolated via power of v2 curve.
+   * ''efl.Ecore.Animator.POS_MAP_LINEAR'' - Linear 0.0 -> 1.0.
+   * ''efl.Ecore.Animator.POS_MAP_SINUSOIDAL'' - Start slow, speed up then slow down at end.
+   * ''efl.Ecore.Animator.POS_MAP_SINUSOIDAL_FACTOR'' - Start slow, speed up then slow down at end, v1 being a power factor, 0.0 being linear, 1.0 being normal sinusoidal, 2.0 being much more pronounced sinusoidal (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.POS_MAP_SPRING'' - Start at 0.0 then "wobble" like a spring rest position 1.0, and wobble v2 times, with decay factor of v1.
+
+=== Sources ===
+
+Defines the timing sources for animators.
+
+   * ''efl.Ecore.Animator.SOURCE_CUSTOM'' - The default system clock/timer based animator that ticks every "frametime" seconds.
+   * ''efl.Ecore.Animator.SOURCE_TIMER'' - A custom animator trigger that you need to call ''efl.Ecore.Animator.customTick()'' to make it tick.
+
+==== Functions ====
+
+=== add(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback() { ... };
+var animator = efl.Ecore.Animator.add(mycallback);
+</code>
+
+Parameters
+
+   * callback - The function to call when it ticks off.
+
+Return value
+
+   * object - A handle to the new animator object.
+
+This function adds an animator and returns its handle on success and NULL on failure. The function func will be called every N seconds where N is the frametime interval set by ''efl.Ecore.Animator.setFrametime()''.
+
+When the animator func is called, it must return a boolean value. If it returns ''true'' (or ''efl.Ecore.Mainloop.CALLBACK_RENEW''), it will be called again at the next tick, or if it returns ''false'' (or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'') it will be deleted automatically making any references/handles for it invalid.
+
+=== addTimeline(runtime, callback) ===
+
+Syntax
+
+<code javascript>
+var mycallback(pos) { ... };
+var handle = efl.Ecore.Animator.addTimeline(runtime, callback)
+</code>
+
+Parameters
+
+   * runtime - The time to run in seconds.
+   * callback - The callback to be called when it ticks off.
+
+Return value
+
+   * object - A handle to the new animator.
+
+This function is just like ''efl.Ecore.Animator.add()'' except the animator only runs for a limited time specified in seconds by runtime. Once the runtime the animator has elapsed (animator finished) it will automatically be deleted. The callback function func can return ''efl.Ecore.Mainloop.CALLBACK_RENEW'' to keep the animator running or ''efl.Ecore.Mainloop.CALLBACK_CANCEL'' to stop it and have it be deleted automatically at any time.
+
+The func will ALSO be passed a position parameter that will be in value from 0.0 to 1.0 to indicate where along the timeline (0.0 start, 1.0 end) the animator run is at. If the callback wishes not to have a linear transition it can "map" this value to one of several curves and mappings via ''efl.Ecore.Animator.posMap()''.
+
+<note important>
+The default frametime value is 1/30th of a second.
+</note>
+
+=== customTick() ===
+
+Syntax
+
+<code javascript>
+efl.Ecore.Animator.customTick()
+</code>
+
+When animator source is set to ''efl.Ecore.Animator.SOURCE_CUSTOM'', then calling this function triggers a run of all animators currently registered with Ecore as this indicates a "frame tick" happened. This will do nothing if the animator source(set by ''efl.Ecore.Animator.setSource()'') is not set to ''efl.Ecore.Animator.SOURCE_CUSTOM''.
+
+=== getFrametime() ===
+
+Syntax
+
+<code javascript>
+var frametime = efl.Ecore.Animator.getFrametime()
+</code>
+
+Return value
+
+   * number - The time in second in between animator ticks.
+
+This function retrieves the time in seconds between animator ticks.
+
+=== getSource() ===
+
+Syntax
+
+<code javascript>
+var sourceType = efl.Ecore.Animator.getSource()
+</code>
+
+Return value
+
+   * one of ''efl.Ecore.Animator.SOURCE_*'' constants - The current animator source.
+
+This gets the current animator source.
+
+=== posMap(pos, map, v1, v2) ===
+
+Syntax
+
+<code javascript>
+var mapped = efl.Ecore.Animator.posMap(pos, map, v1, v2);
+</code>
+
+Parameters
+
+   * pos - The input position to map.
+   * map - The mapping to use. One of the ''efl.Ecore.Animator.POS_MAP_*'' values.
+   * v1 - A parameter use by the mapping (pass 0.0 if not used).
+   * v2 - A parameter use by the mapping (pass 0.0 if not used).
+
+Return value
+
+   * number - The mapped value
+
+Takes an input position (0.0 to 1.0) and maps to a new position (normally between 0.0 and 1.0, but it may go above/below 0.0 or 1.0 to show that it has "overshot" the mark) using some interpolation (mapping) algorithm.
+
+This function useful to create non-linear animations. It offers a variety of possible animation curves to be used:
+
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_LINEAR'' - Linear, returns pos
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_ACCELERATE'' - Start slow then speed up
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DECELERATE'' - Start fast then slow down
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SINUSOIDAL'' - Start slow, speed up then slow down at end
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_ACCELERATE_FACTOR'' - Start slow then speed up, v1 being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_ACCELERATE, 2.0 being much more pronounced accelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DECELERATE_FACTOR'' - Start fast then slow down, v1 being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_DECELERATE, 2.0 being much more pronounced decelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SINUSOIDAL_FACTOR'' - Start slow, speed up then slow down at end, v1 being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_SINUSOIDAL, 2.0 being much more pronounced sinusoidal (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DIVISOR_INTERP'' - Start at gradient * v1, interpolated via power of v2 curve
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_BOUNCE'' - Start at 0.0 then "drop" like a ball bouncing to the ground at 1.0, and bounce v2 times, with decay factor of v1
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SPRING'' - Start at 0.0 then "wobble" like a spring rest position 1.0, and wobble v2 times, with decay factor of v1
+
+=== posMapN(pos, map, v) ===
+
+Syntax
+
+<code javascript>
+var mapped = efl.Ecore.Animator.pos_map_n(pos, map, v)
+</code>
+
+Parameters
+
+   * pos - The input position to map.
+   * map - The mapping to use.
+   * v - An array with the double parameters to be used by the mapping. null if not used.
+
+Return value
+
+   * number - The mapped value
+
+Takes an input position (0.0 to 1.0) and maps to a new position (normally between 0.0 and 1.0, but it may go above/below 0.0 or 1.0 to show that it has "overshot" the mark) using some interpolation (mapping) algorithm.
+
+This function useful to create non-linear animations. It offers a variety of possible animation curves to be used:
+
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_LINEAR'' - Linear, returns pos
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_ACCELERATE'' - Start slow then speed up
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DECELERATE'' - Start fast then slow down
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SINUSOIDAL'' - Start slow, speed up then slow down at end
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_ACCELERATE_FACTOR'' - Start slow then speed up, v[0] being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_ACCELERATE, 2.0 being much more pronounced accelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DECELERATE_FACTOR'' - Start fast then slow down, v[0] being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_DECELERATE, 2.0 being much more pronounced decelerate (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SINUSOIDAL_FACTOR'' - Start slow, speed up then slow down at end, v[0] being a power factor, 0.0 being linear, 1.0 being ECORE_POS_MAP_SINUSOIDAL, 2.0 being much more pronounced sinusoidal (squared), 3.0 being cubed, etc.
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_DIVISOR_INTERP'' - Start at gradient * v[0], interpolated via power of v2 curve
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_BOUNCE'' - Start at 0.0 then "drop" like a ball bouncing to the ground at 1.0, and bounce v2 times, with decay factor of v[0]
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_SPRING'' - Start at 0.0 then "wobble" like a spring rest position 1.0, and wobble v2 times, with decay factor of v[0]
+   * ''efl.Ecore.Animator.ECORE_POS_MAP_CUBIC_BEZIER'' - Use an interpolated cubic-bezier curve ajusted with parameters from v[0] to v[3].
+
+=== setCustomSourceTickBeginCallback(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback() {...};
+efl.Ecore.Animator.setCustomSourceTickBeginCallback(callback)
+</code>
+
+Parameters
+
+   * func - The function to call when ticking is to begin.
+
+The Ecore Animator infrastructure handles tracking if animators are needed or not and which ones need to be called and when, but when the tick source is custom, you have to provide a tick source by calling ''efl.Ecore.Animator.customTick()'' to indicate a frame tick happened. In order to allow the source of ticks to be dynamically enabled or disabled as needed, the func when set is called to enable the tick source to produce tick events that call ''efl.Ecore.Animator.customTick()''. If func is NULL then no function is called to begin custom ticking.
+
+<note warning>
+Do not use this function unless you know what you are doing.
+</note>
+
+=== setCustomSourceTickEndCallback(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback() {...};
+efl.Ecore.Animator.setCustomSourceTickEndCallback(callback)
+</code>
+
+Parameters
+
+   * func - The function to call when ticking is to end.
+
+This function is a matching pair to the function set by ''efl.Ecore.Animator.setCustomSourceTickBeginCallback()'' and is called when ticking is to stop. If func is NULL then no function will be called to stop ticking. For more information please see ''efl.Ecore.Animator.setCustomSourceTickBeginCallback()''.
+
+
+=== setFrametime(frametime) ===
+
+Syntax
+
+<code javascript>
+efl.Ecore.Animator.frametime_set( frametime)
+</code>
+
+Parameters
+
+   * frametime - The time in seconds in between animator ticks.
+
+=== setSource(source) ===
+
+Syntax
+
+<code javascript>
+efl.Ecore.Animator.source_set(source)
+</code>
+
+Parameters
+
+   * source - The source of animator ticks to use.
+
+This sets the source of animator ticks. When an animator is active the mainloop will "tick" over frame by frame calling all animators that are registered until none are. The mainloop will tick at a given rate based on the animator source. The default source is the system clock timer source - ''efl.Ecore.Animator.SOURCE_TIMER''. This source uses the system clock to tick over every N seconds (specified by ''efl.Ecore.Animator.setFrametime()'', with the default being 1/30th of a second unless set otherwise). You can set a custom tick source by setting the source to ''efl.Ecore.Animator.SOURCE_CUSTOM'' and then drive it yourself based on some input tick source (like another application via ipc, some vertical blanking interrupt, and etc.) using ''efl.Ecore.Animator.setCustomSourceTickBeginCallback()'' and ''efl.Ecore.Animator.setCustomSourceTickEndCallback()'' to set the functions that will be called to start and stop the ticking source, which when it gets a "tick" should call ''efl.Ecore.Animator.customTick()'' to make the "tick" over 1 frame.
+
+==== Methods ====
+
+=== animator.del() ===
+
+Syntax
+
+<code javascript>
+animatorObj.del()
+</code>
+
+Deletes an animator.
