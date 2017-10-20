@@ -1,0 +1,220 @@
+===== Javascript binding API - Ecore Events =====
+
+[[api:javascript:ecore|Back to the JS Ecore page]]
+
+**DRAFT**
+
+Ecore events provide two main features that are of use to those using ecore: creating events and being notified of events.
+
+Those two will usually be used in different contexts, creating events is mainly done by libraries wrapping some system functionality while being notified of events is mainly a necessity of applications.
+
+For a program to be notified of events it's interested in it needs to have a function to process the event and to register that function as the callback to the event, that's all.
+
+==== Constants ====
+
+=== Signal type ===
+
+   * ''efl.Ecore.Event.NONE'' - None event.
+   * ''efl.Ecore.Event.SIGNAL_USER'' - User signal event.
+   * ''efl.Ecore.Event.SIGNAL_HUP'' - Hup signal event.
+   * ''efl.Ecore.Event.SIGNAL_EXIT'' - Exit signal event.
+   * ''efl.Ecore.Event.SIGNAL_POWER'' - Power signal event.
+   * ''efl.Ecore.Event.SIGNAL_REALTIME'' - Realtime signal event.
+
+=== Hardware state ===
+
+   * ''efl.Ecore.Event.MEMORY_STATE'' - Memory state changed.
+   * ''efl.Ecore.Event.POWER_STATE'' - Power state changed.
+
+   * ''efl.Ecore.Event.MEMORY_STATE_NORMAL'' - Memory state normal.
+   * ''efl.Ecore.Event.MEMORY_STATE_LOW'' - Memory state low.
+
+   * ''efl.Ecore.Event.POWER_STATE_MAINS'' - Connected to power supply.
+   * ''efl.Ecore.Event.POWER_STATE_BATTERY'' - Running on battery power.
+   * ''efl.Ecore.Event.POWER_STATE_LOW'' - Low on battery power.
+
+=== Changes ===
+
+   * ''efl.Ecore.Event.LOCALE_CHANGED'' - System locale changed.
+   * ''efl.Ecore.Event.HOSTNAME_CHANGED'' - System hostname changed.
+   * ''efl.Ecore.Event.SYSTEM_TIMEDATE_CHANGED'' - System time and date changed.
+
+==== Functions ====
+
+=== add(type) ===
+
+Syntax
+
+<code javascript>
+var event = efl.Ecore.Event.add(type)
+</code>
+
+Parameters
+
+   * type - The event type to add to the end of the event queue.
+
+Return value
+
+   * object - An object wrapping the event.
+
+If it succeeds, an event of type type will be added to the queue for processing by event handlers added by ''efl.Ecore.Event.addHandler()''. You can call ''del()'' on the returned object to cancel the event.
+
+=== addFilter(func_start, func_filter, func_end) ===
+
+Syntax
+
+<code javascript>
+function func_start() {...};
+function func_filter(loop_data, eventType) {...};
+function func_end(loop_data) {...};
+efl.Ecore.Event.addFilter(func_start, func_filter, func_end)
+</code>
+
+Parameters
+
+   * func_start - Function to call just before filtering and return data.
+   * func_filter - Function to call on each event.
+   * func_end - Function to call after the queue has been filtered.
+
+Return value
+
+   * object - A filter handle on success, NULL otherwise.
+
+Adds a callback to filter events from the event queue. Filters are called on the queue just before Event handler processing to try and remove redundant events. Just as processing is about to start ''func_start'' is called, the return value of this functions is passed to ''func_filter'' as ''loop_data''. ''func_filter'' is also passed the event type. If this ''func_filter'' returns ''false'', the event is removed from the queue, if it returns ''true'', the event is kept. When processing is finished ''func_end'' is called and is passed the ''loop_data''(returned by ''func_start'') to clean up.
+
+=== addHandler(type, func) ===
+
+Syntax
+
+<code javascript>
+function mycallback(type) { ... };
+var handler = efl.Ecore.Event.addHandler(type, mycallback);
+</code>
+
+Parameters
+
+   * type - The type of the event this handler will get called for.
+   * func - The function to call when the event is found in the queue.
+
+Return value
+
+   * object - A new Event handler, or NULL on failure.
+
+Add an event handler to the list of handlers. This will, on success, return a handle to the event handler object that was created, that can be used later to remove the handler using the ''del()'' method on it. The type parameter is the integer of the event type that will trigger this callback to be called. The callback func is called when this event is processed and will be passed the event type.
+
+=== addSignalUserHandler(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback(type) { ... };
+var handler = efl.Ecore.Event.addSignalUserHandler(mycallback);
+</code>
+
+Parameters
+
+   * func - The function to call when the event is found in the queue.
+
+Return value
+
+   * object - A new Event handler, or NULL on failure.
+
+Adds an event handler for the ''efl.Ecore.Event.SIGNAL_USER'' event type.
+
+=== addSignalExitHandler(callback) ===
+
+Syntax
+
+<code javascript>
+function mycallback(type) { ... };
+var handler = efl.Ecore.Event.addSignalExitHandler(mycallback);
+</code>
+
+Parameters
+
+   * func - The function to call when the event is found in the queue.
+
+Return value
+
+   * object - A new Event handler, or NULL on failure.
+
+Adds an event handler for the ''efl.Ecore.Event.SIGNAL_EXIT'' event type.
+
+=== addSignalRealtimeHandler() ===
+
+Syntax
+
+<code javascript>
+function mycallback(type) { ... };
+var handler = efl.Ecore.Event.addSignalRealtimeHandler(mycallback);
+</code>
+
+Parameters
+
+   * func - The function to call when the event is found in the queue.
+
+Return value
+
+   * object - A new Event handler, or NULL on failure.
+
+Adds an event handler for the ''efl.Ecore.Event.SIGNAL_REALTIME'' event type.
+
+=== getCurrentType() ===
+
+Syntax
+
+<code javascript>
+var type = efl.Ecore.Event.getCurrentType()
+</code>
+
+Return value
+
+   * integer - The current event type being handled if inside a handler callback, ''efl.Ecore.Event.NONE'' otherwise.
+
+If the program is currently inside an Ecore event handler callback this will return the type of the current event being processed.
+
+=== newType() ===
+
+Syntax
+
+<code javascript>
+var eventType = efl.Ecore.Event.newType()
+</code>
+
+Return value
+
+   * integer - A new event type id.
+
+This function allocates a new event type id and returns it. Once an event type has been allocated it can never be de-allocated during the life of the program. There is no guarantee of the contents of this event ID, or how it is calculated, except that the ID will be unique to the current instance of the process.
+
+==== Methods ====
+
+=== eventObj.del() ===
+
+Syntax
+
+<code javascript>
+eventObj.del();
+</code>
+
+Deletes from the queue an event that was added through ''efl.Ecore.Event.add''.
+
+=== filterObj.del() ===
+
+Syntax
+
+<code javascript>
+filterObj.del();
+</code>
+
+Deletes from the queue an filter that was added through ''efl.Ecore.Event.addFilter''.
+
+=== handlerObj.del() ===
+
+Syntax
+
+<code javascript>
+handlerObj.del();
+</code>
+
+Deletes from the queue an handler that was added through ''efl.Ecore.Event.addHandler'' & friends.
