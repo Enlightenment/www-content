@@ -1,0 +1,113 @@
+~~Title: EFL on Mac OS X~~
+
+<note warning>
+If you are coming here for Enlightenment (the desktop manager) on Mac OS X... sorry but Enlightenment is not supported on Mac OS X... and it is not planned in a near future (but any help is very welcomed).
+</note>
+
+The Enlightenment Foundation's projects mostly targets Linux platforms, therefore not everything work on Mac OS X works the first time. This is due to:
+  * the specificities of the Operating System (kernel+userland);
+  * the fact there are a very few Enlightened OS X users :-\
+
+This document explains how to install the EFL which are key projects to install anything else made by the Enlightenment Foundation.
+
+
+====== Mac OS X Homebrew Packages (for EFL USERS) ======
+
+Homebrew is a package manager for Mac OS X. See at http://brew.sh how to install Homebrew if it isn't already installed.
+Then, just execute:
+
+<code bash>
+brew update        # To make sure you have the latest versions
+brew install efl   # To install EFL
+</code>
+
+And that's it! Enjoy your freshly distributed EFL :-).
+The distributed version of EFL is [[http://braumeister.org/formula/efl|1.20.4]].
+
+
+====== Manual Installation (for EFL DEVELOPERS) ======
+
+===== Setting up the environment =====
+
+You need to have the OS X CLT (Command-Line Tools) first, then install the EFL dependancies. The easiest way is by using a package manager. [[http://brew.sh|Homebrew]] is assumed to be the package manager.
+
+<note important>
+The CTL are not bundled with Xcode. Don't assume that they are installed if Xcode is installed.
+</note>
+
+To install the CTL, you should process as it follows:
+  * download the latest version of Xcode on the Mac App Store;
+  * run ''xcode-select --install'' in a terminal to install the CLT.
+
+
+If you want to have the very latest version of EFL, here is the procedure:
+  * install the dependancies;
+  * configure the source;
+  * compile the sources and install them.
+
+===== Dependancies with Homebrew =====
+
+<code bash>
+brew install autoconf automake libtool autoconf-archive gettext check pkg-config luajit jpeg freetype fribidi fontconfig giflib libtiff glib dbus libsndfile bullet libspectre libraw librsvg poppler gstreamer gst-plugins-good pulseaudio
+brew migrate dbus
+mkdir -p ~/Library/LaunchAgents
+ln -sfv /usr/local/opt/dbus/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/org.freedesktop.dbus-session.plist
+</code>
+
+You need to add ''autopoint'' to your ''$PATH'' if you want to use gettext. Write the line below in your ''$HOME/.profile'' or similar file.
+
+<code bash>
+export PATH="$(brew --prefix gettext)/bin:$PATH"
+</code>
+
+===== OpenSSL handling =====
+
+Since Mac OS X El Capitan, Apple does not distribute OpenSSL headers anymore.
+It is necessary to install OpenSLL manually through homebrew:
+
+<code bash>
+brew install openssl
+brew link openssl --force
+</code>
+
+and to add flags to your bashrc (or equivalent):
+
+<code bash>
+export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS"
+export LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"
+</code>
+
+===== Modifying your linker flags =====
+
+<note>
+This step is **required** if you wish to build Mac OS X App Bundles (i.e. ''.app''). Otherwise, you can safely ignore this section.
+</note>
+
+''osx-packager'' is a python package initially developed at Open Wide to
+generate App Bundles and/or DMG files for easy distribution.
+It is available at [[https://git.enlightenment.org/devs/jayji/osx-packager.git]].
+
+To make it work, you **MUST** provide custom linker flags:
+
+<code bash>
+export LDFLAGS="-Wl,-headerpad_max_install_names ${LDFLAGS}"
+</code>
+
+===== Configuring, Building and Installing EFL =====
+
+Installing dependancies on OS X is painful, but now you did it (congrats'), you can grab the sources from the git repository:
+
+<code bash>
+git clone https://git.enlightenment.org/core/efl.git # Get the sources
+cd efl # Go to repository you cloned
+./autogen.sh --disable-cxx-bindings
+make -j $(nproc) # Compile
+sudo make -j $(nproc) install # Install
+</code>
+
+
+======= Additional Resources =======
+
+  * Enlightenment Developer Days 2016 Slides (EFL & Mac OS X slides): https://phab.enlightenment.org/F36470.
+  * Internal Wiki Page. Contains “legacy” information: https://phab.enlightenment.org/w/osx/.
