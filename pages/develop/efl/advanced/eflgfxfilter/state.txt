@@ -1,0 +1,36 @@
+Go back to [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filters]].
+
+<note>Since EFL 1.15 (August 2015)</note>
+
+==== State ====
+
+In order to allow developers and designers to implement animations based on the [[:docs:efl:advanced:eflgfxfilters|filters]], the ''state'' table gives enough information to the filter to implement a transition from one Edje state to another.
+
+When used from Edje (ie. from EDC), the ''state'' table contains data about the current and next states of the part being filtered (''TEXT'' or ''IMAGE'').
+
+=== Syntax ===
+
+<code Lua>
+state = {
+   color = <interpolated color>,
+   scale = <object scale>,
+   pos   = <animation progress from 0 to 1,
+   cur = {
+      value = <constant state value defined in EDC>,
+      name  = <state name defined in EDC>
+   },
+   next = { 
+      -- WARNING: next can be nil (when not in a transition)
+      value = <constant state value defined in EDC>,
+      name  = <state name defined in EDC>
+   },
+   text = {
+      -- WARNING: "text" is only valid for TEXT objects
+      outline = <text outline color>,
+      shadow  = <text shadow color>,
+      glow    = <text glow color>,
+      glow2   = <text glow color #2>
+   }
+}
+</code>
+
