@@ -1,0 +1,171 @@
+~~Title: Submitting patches~~
+
+=== Setting up Arcanist (arc) ===
+
+To set up arcanist you will need php installed locally, as well as git, and then the arcanist and libphutil git trees:
+
+<code bash>
+sudo apt-get install php5-cli php5-curl php5-json git # remove arc
+mkdir ~/arcanist
+cd ~/arcanist
+git clone git://github.com/phacility/libphutil.git
+git clone git://github.com/phacility/arcanist.git
+</code>
+
+If you prefer to use HTTPS, replace the last two commands from above with:
+
+<code bash>
+git clone https://github.com/phacility/libphutil.git
+git clone https://github.com/phacility/arcanist.git
+</code>
+
+Ensure that //~/arcanist/arcanist/bin// is in your $PATH for your shell. Example:
+
+<code bash>
+export PATH="$HOME/arcanist/arcanist/bin:$PATH"
+</code>
+
+You will need to configure it to talk to Enlightenment's phabricator to be able to interact:
+
+<code bash>
+arc set-config default https://phab.enlightenment.org
+</code>
+
+Then go to any git tree you have checked out from us and do:
+
+<code bash>
+arc list
+</code>
+
+Follow the instructions to set up your conduit key.
+
+=== Review and patch submission ===
+
+There are 3 situations you will find yourself in.
+
+  * You are a developer with push access and you can push whatever you want without approval or review. Any other developer with push access can revert your changes or comment on them post commit.
+  * You are a developer with push access, but before you do, you'd like some peer review/comment, so you want to go through our review process.
+  * You do not have push access, but have something to submit and get review on, hoping it will be accepted once it is in a decent state.
+
+In the first case, just keep on using git as normal. The usual social norms will inform you if you are wrong via E-Mail, IRC or in person, and to adapt as needed.
+
+In the second and third cases you will want to do the following to get review:
+
+==== Prepare a patch ====
+
+Create a branch to begin doing your new work in:
+
+<code bash>
+git checkout -b work
+
+# EDIT files, git add etc. as needed.
+</code>
+
+Be aware that if you plan to push to your private branch devs/<user>/<branch>, you should do it prior to the following steps
+otherwise your push will be seen by phab as a close action of your revision.
+
+Submit a review request to Phabricator via Arcanist (arc being the cmdline tool):
+
+<code bash>
+arc diff
+</code>
+
+This will give you a URL for your patch request. You can give it to whoever you'd like to see your work and/or review it. Wait for review (Phabricator will send you mails and the web ui will show you the status of your patches etc.).
+
+==== Update an existing patch ====
+
+If your patch needs more revision (after a reviewer tells so), you can continue working with it and once you've done with your changes:
+
+<code bash>
+  arc diff --update D(id)
+</code>
+
+Where D(id) is for example D25 - your revision ID.
+
+If you want to change the git commit message, add --edit option:
+
+<code bash>
+arc diff --edit --update D(id)
+</code>
+
+If you want your patch to stay in sync with the upstream Git repo, you might want to rebase it on top of upstream and update the patch on Phabricator:
+
+<code bash>
+git fetch origin master:master
+git rebase master
+arc diff --update D(id) --base arc:upstream
+</code>
+
+Alternatively, if the above didn't work, you might have to checkout master, pull and rebase from origin, then go back to branch work and rebase on top of master.
+
+Using the --base argument will ensure that your patch stays in sync with upstream and Arcanist doesn't pollute the diff with changes that were introduced by other people.
+
+==== Submit a patch ====
+
+This applies to developers with push access.
+
+Once approved, YOU the submitter must do:
+Switch back to master (or whatever branch you were on):
+
+<code bash>
+  git checkout master
+</code>
+
+Apply the patch. The revision (e.g. D9) is the revision number/ID that phabricator gives you in its UI and emails:
+
+And then actually push the changes to master. If you are the owner of the patch (and have commit access) do:
+
+<code bash>
+arc patch D9
+arc land
+</code>
+
+If you are the reviewer and are going to commit the patch for the person submitting it, please do:
+
+<code bash>
+arc patch --nobranch D9
+git push
+arc close-revision D9
+</code>
+
+If you try and do this before the patch is approved, arc will complain. Note that the commit log you enter above when you do arc patch will be the git commit log, so please paste in the original patch log from the page.
+
+Please check that the authorship of the patch has been preserved in the operation. If not, please fix it before pushing (this seems to be a bug in phab or arc right now):
+
+<code bash>
+git show --pretty=fuller
+git commit --amend --author="name <email@e.org>"
+</code>
+
+=== Additional Information ===
+
+The [[http://www.phabricator.com/docs/phabricator/article/Arcanist_User_Guide.html|official Arcanist docs]]
+
+=== Adding your own CA to the CA Bundle ===
+
+If you are using self signed certificates, you might hit the following issue.
+
+<code bash>
+$ arc list                                                                                                             
+Exception
+[cURL/60] (https://phab.enlightenment.org/api/conduit.connect) <CURLE_SSL_CACERT> 
+There was an error verifying the SSL Certificate Authority while negotiating the SSL connection. 
+This usually indicates that you are using a self-signed certificate but have not added your CA to the CA bundle. 
+See instructions in "libphutil/resources/ssl/README".
+(Run with --trace for a full exception trace.)
+</code>
+
+To resolve this, you can do the following.
+
+<code bash>
+  sudo cp MYCERT.crt /usr/share/local/ca-certificates/<yourkey>.crt #(Make sure extension is crt)
+  sudo update-ca-certificates
+</code>
+
+or
+
+<code bash>
+  cp MYCERT.crt ~/arcanist/libphutil/resources/ssl/custom.pem
+  cd git_clone_repository
+  arc install-certificates
+</code>
