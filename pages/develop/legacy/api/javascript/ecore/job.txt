@@ -1,0 +1,47 @@
+===== Javascript binding API - Ecore Job =====
+
+[[api:javascript:ecore|Back to the JS Ecore page]]
+
+**DRAFT**
+
+The Job module allows queuing work to be done when the current event is dealt with.
+
+Jobs are processed by the main loop similarly to events. They also will be executed in the order in which they were added.
+
+A good use for them is when you don't want to execute an action immediately, but want to give the control back to the main loop so that it will call your job callback when jobs start being processed (and if there are other jobs added before yours, they will be processed first). This also gives the chance to other actions in your program to cancel the job before it is started.
+
+==== Functions and methods ====
+
+=== add(callback) ===
+
+Syntax
+
+<code javascript>
+    function mycallback() { ... };
+    var job = efl.Ecore.Job.add(mycallback);
+</code>
+
+Parameters
+
+   * callback - A function to be called when the job is handled.
+
+Return value
+
+   * object - An object wrapping the newly added job.
+   * null - If it was not possible to add the job to the queue.
+
+Adds a job to the event queue.
+
+<note important>
+Once the job has been executed, the job object is invalid.
+</note>
+
+=== job.del() ===
+
+Syntax
+
+<code javascript>
+jobObj.del();
+</code>
+
+Deletes a job that has not been handled yet.
