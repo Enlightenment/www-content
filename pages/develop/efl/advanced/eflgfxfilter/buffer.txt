@@ -1,0 +1,50 @@
+Go back to [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filter]].
+
+==== Buffer ====
+
+Apart from the predefined buffers ''input'' and ''output'', buffers can also be created using the ''buffer'' command, and their contents will either be transparency (all pixels are ''rgba(0,0,0,0)'') or they will reflect the contents of another [[Evas.Object]]. The latter case can be used to import external images and textures into a filter.
+
+All buffers have the same size unless they come from an external source, in which case their size is equal to the geometry of the [[Evas.Object]].
+
+Buffers are either Alpha surfaces (8 bit, values in the range 0-255) or full RGBA bitmaps (32 bits).
+
+Various buffers can be combined together with commands such as [[:docs:efl:advanced:eflgfxfilter:blend|blend]], [[:docs:efl:advanced:eflgfxfilter:blur|blur]], [[:docs:efl:advanced:eflgfxfilter:mask|mask]], etc...
+
+== Syntax ==
+
+<code Lua>
+buffer ({ type = 'rgba', src = nil })
+</code>
+
+== Parameters ==
+|''type'' |Can be either ''"alpha"'' or ''"rgba"'' |
+|''src'' |A source name, specified in [[Efl.Gfx.Filter.source.set]] or in EDC with ''filter.source: "srcname";'' |
+
+
+== Examples ==
+<code Lua>
+-- create a buffer (RGBA)
+name1 = buffer()
+-- create an Alpha buffer
+name2 = buffer("alpha")
+-- create an RGBA buffer
+name3 = buffer("rgba")
+name4 = buffer({ type = "rgba" })
+
+-- create a proxy buffer whose pixels come from an external object
+name5 = buffer({ src = "partname" })
+</code>
+
+''partname'' above is either:
+  * The argument to [[Efl.Gfx.Filter.source.set]];
+  * The binding name set in EDC with the syntax:
+<code EDC>
+  filter.source: "/edje/part/name" "partname";
+  filter.source: "partname";
+</code>
+
+== Temporary buffers ==
+
+Some commands might require the creation of internal buffers, which the script can not use directly, and that serve only as intermediate image processing surfaces.
+
+This means that the memory usage of a filter operation might be larger than just that of the ''input'' and ''output'' buffers.
