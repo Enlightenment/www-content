@@ -1,0 +1,51 @@
+====== Javascript binding API - Generic value storage ======
+
+[[api::javascript::eina|Back to the JS Eina page]]
+
+Eina provides a way to abstract the storage of generic values in an extensible and efficient way, aimed at simple data types.
+
+==== Constructors and methods ====
+
+=== Constructor ===
+
+Syntax
+
+<code javascript>
+var obj = new efl.value(value);
+</code>
+
+Parameters
+
+   * value - The value to be wrapped. Currently, numerical and string types are supported.
+
+Return type
+
+   * Value instance - The newly created wrapper.
+
+Creates a new value wrapper. It can be passed to the native functions and back.
+
+Example usage
+
+<code javascript>
+var myvalue = new efl.value(42);
+</code>
+
+=== get() ===
+
+Syntax
+
+<code javascript>
+var unwrapped = valueobj.get();
+</code>
+
+Unwraps a value and retrieve its contents.
+
+=== set(value) ===
+
+Syntax
+
+<code javascript>
+valueobj.set(somevalue);
+</code>
+
+Replaces the wrapped value with the given value. You can set any of the supported values, there's no restriction on the value being of the type set on at the time of instantiation.
