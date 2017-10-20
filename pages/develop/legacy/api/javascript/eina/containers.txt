@@ -1,0 +1,319 @@
+====== Javascript binding API - Eina Containers ======
+
+[[api::javascript::eina|Back to the JS Eina page]]
+
+Currently, two data types are available: Lists and Arrays. Both represent a sequence of items and aim to have a similar interface to the native [[https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array|Javascript Arrays]] for the most common operations like push/pop and indexed get/set.
+
+One important limitation is that when you create an Eina collection you must pass the type of object that will be stored. This is required to allow the binding do the correct conversion between Javascript types and C/C++ types due to the former's static nature.
+
+Besides the constructor function, they differ in the way the items are stored underneath. ''efl.List'' are doubly-linked lists, with relatively fast insert/delete operations while ''efl.Array'' objects are contiguous memory regions, with fast data access (compared to Lists) but allowing to insert or delete items only at the extremities of the container.
+
+<note important>
+Apart from the constructors, both containers have the exact same API.
+</note>
+
+==== Constructors ====
+
+Syntax
+
+<code javascript>
+new efl.List(typename);
+new efl.Array(typename);
+</code>
+
+Parameters
+
+   * typename - A string with the type of the contained items for this container.
+
+Return type
+
+   * Array/List - A newly created container, empty.
+
+The constructor functions receive the name of the type that will be stored on the container. The following types are supported using the respective type name:
+
+   * Integers - "int"
+   * Floating point numbers - "float"
+   * Boolean values - "bool"
+   * Strings of characters - "string"
+
+==== Containers methods and operations ====
+
+The methods and operations below are supported for both types of sequences.
+
+=== concat(container) ===
+
+Syntax
+
+<code javascript>
+var new_container = objA.concat(objC);
+</code>
+
+Parameters
+
+   * container - A container of the same type of the callee container, including the contained type.
+
+Return type
+
+   * Array/List - A container of the same type of the callee.
+
+Concatenates two containers returning the result as a new container object.
+
+<note important>
+It performs a shallow copy of the container. Object **references** are copied (i.e. changes in the object will appear in both containers) and basic types are copied.
+</note>
+
+<note warning>
+The concatenation operation will work only on the same type of containers (e.g. lists of ints with lists of ints). Wrong arguments will raise TypeError.
+</note>
+
+=== getter: container[index] ===
+
+Syntax
+
+<code javascript>
+var myvar = obj[index];
+</code>
+
+Parameters
+
+   * index - An integer with the 0-based index desired.
+
+Return type
+
+   * T or ''undefined'' - When calling on a container wrapping items of type T. ''undefined'' if no object on that index.
+
+Works like Javascript Array ''[]'' operators. The items are 0-indexed, with the first element at index 0 and the last element with index equal to the number of elements of the sequence minus 1.
+
+Usage example:
+
+<code javascript>
+mylist[42] // Gets the 42nd element
+mylist[0] // Gets the first element.
+</code>
+
+<note important>
+Trying to access an element with an index out of bounds will return ''undefined''.
+</note>
+
+=== indexOf(target) ===
+
+Syntax
+
+<code javascript>
+var index = obj.indexOf(target);
+</code>
+
+Parameters
+
+   * target - An object/item to search for.
+
+Return type
+
+   * integer - The index of the item in the container. -1 if not found.
+
+Searches for ''target'' in the container and returns the index if found. If not found, return -1.
+
+Example usage:
+
+<code javascript>
+// obj = [100, 42, 55, 42]
+var idx = obj.indexOf(42); // idx = 1
+var idx2 = obj.indexOf(1000); // idx2 = -1
+</code>
+
+=== lastIndexOf(target) ===
+
+Syntax
+
+<code javascript>
+var index = obj.lastIndexOf(target);
+</code>
+
+Parameters
+
+   * target - An object/item to search for.
+
+Return type
+
+   * integer - The last index of the item in the container. -1 if not found.
+
+Searches backwards for ''target'', returning its index if found, or -1 otherwise.
+
+Example code:
+
+<code javascript>
+// obj = [100, 42, 55, 42]
+var idx = obj.lastIndexOf(42) // idx = 3
+var idx2 = obj.lastIndexOf(0) // idx2 = -1
+</code>
+
+=== length property ===
+
+Syntax
+
+<code javascript>
+obj.length
+</code>
+
+Return type
+
+   * integer - The number of elements on this container.
+
+Returns the number of elements on this container.
+
+<note important>
+In pure Javascript Arrays, assigning a number smaller than the size of the container to the length property will delete elements from the container. This behavior is **not** present on eina Arrays or Lists. Trying to assign a number to length will have no effect.
+</note>
+
+Example usage:
+
+<code javascript>
+var last = obj[obj.length - 1]
+</code>
+
+=== pop() ===
+
+Syntax
+
+<code javascript>
+var value = obj.pop();
+</code>
+
+Return type
+
+   * T or ''undefined'' - For containers wrapping items of type T. ''undefined'' if it was an empty space or the container was empty.
+
+Behaves like Javascript ''Array.pop()'', removing the last element of the list and returning it.
+
+Example code:
+<code javascript>
+// obj is [1,2,3,4,5]
+var value = obj.pop(); // value now is 5 and obj is [1,2,3,4]
+</code>
+
+<note important>
+Trying to pop an item from an empty list will return undefined and leave the list empty.
+</note>
+
+=== push(value) ===
+
+Syntax
+
+<code javascript>
+var size = obj.push(item)
+</code>
+
+Parameters
+
+   * item - An object/item to append to the container.
+
+Return type
+
+   * integer - The size of the container after pushing.
+
+Works like the Javascript ''Array.push(item)'', appending the item to the end of the sequence. For lists, a new node is created at the end. For Arrays, the item is set to the end of the array, and it may grow as needed.
+
+The method returns the size of the container after adding the new element.
+
+Usage example:
+
+<code javascript>
+var mylist = new efl.List("int");
+mylist.push(3);
+var myarray = new efl.Array("string");
+var new_size = myarray.push("Foobar");
+</code>
+
+<note warning>
+Although Javascript is weak typed, the binding functions are rather strong typed, doing minimal type conversions, like int to floats. Trying to push an element of a different type from the one provided in the constructor will raise TypeError.
+<code javascript>
+var obj = new efl.List("float");
+obj.push("44"); // CRASH!!!!
+</code>
+</note>
+
+=== setter: container[index] = value ===
+
+Syntax
+
+<code javascript>
+obj[index] = value;
+var v = (obj[index] = value);
+</code>
+
+Parameters
+
+   * index - An integer with the target slot on the container.
+   * value - An object/item to be set to the target position.
+
+Return type
+
+   * object - The same object that was assigned (''value'').
+
+Works like Javascript indexed setter method. It sets the value at the given index to the given value, //generally// not changing the container size (see note below). On success, the operation returns the value recently set.
+
+<note important>
+Trying to set a value at an index equal or larger than the size of the container will extend the container up to that index and fill value up to the last one with ''undefined'', and setting the given value in the last position.
+<code javascript>
+var obj = new efl.List("int");
+obj[42] = 42; // Obj now has 42 undefined's leading up to 42 in the last position.
+</code>
+</note>
+
+Usage example:
+
+<code javascript>
+var obj = new efl.List("int");
+obj.push(3) // [3]
+obj.push(2) // [3,2]
+obj[0] = 42; // [42, 2]
+</code>
+
+<note warning>
+As with pushing elements, trying to push an element of a different type from the one given to the constructor will raise TypeError.
+</note>
+
+=== slice([begin,[end]]) ===
+
+Syntax
+
+<code javascript>
+var x = obj.slice();
+var y = obj.slice(startIndex);
+var z = obj.slice(startIndex, endIndex);
+</code>
+
+Parameters
+
+   * begin - An integer with the index of the start of the slice.
+   * end - An integer with the index of the end of the slice.
+
+Return type
+
+   * container - A container of the same type of the callee.
+
+The slice method retrieves portions of the container. The first argument is the index to start the slice operation (default is 0, beginning of the list) and the second argument indicates the index where the extraction should stop, not including it (defaults to the container size). In interval notation, it returns ''[begin, end)''.
+
+It also performs a shallow copy like concat().
+
+Example usage:
+
+<code javascript>
+var same = obj.slice() // All elements from obj are in the returned container.
+var other = obj.slice(1); // Everything but the first element.
+var another = obj.slice (4, 10); // From the fifth element to the tenth.
+</code>
+
+=== toString() ===
+
+Syntax
+
+<code javascript>
+obj.toString();
+</code>
+
+Return type
+
+   * string - A comma-separated list of the items in this container.
+
+Generates a comma-separated string with the representation of the items in this container.
