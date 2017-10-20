@@ -1,0 +1,33 @@
+Go back to [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filter]].
+
+==== Grow and shrink ====
+
+The ''grow'' function is used to apply [[https://en.wikipedia.org/wiki/Mathematical_morphology|morphology]] filters to a buffer.
+
+<note>At the moment, ''grow'' is implemented with a combinaison of ''blur'' and ''curve'' instead of a classical structuring element, which means that the growing and shrinking effects are not exactly the same as the mathematical dilation or erosion.</note>
+
+== Syntax ==
+<code Lua>
+grow ({ radius, smooth = true, src = input, dst = output })
+</code>
+
+== Parameters ==
+|''radius'' |The radius of the grow kernel. If a negative value is specified, the contents will shrink rather than grow. |
+|''smooth'' |If true, use a smooth transitions between black and white (smooth blur and smoother curve). |
+|''src'' |Source buffer to blur. |
+|''dst'' |Destination buffer for blending. This must be of same size and colorspace as ''src''. |
+
+== Examples ==
+<code Lua>
+a = buffer { 'rgba' }
+blend { dst = a }
+grow { 6, src = a }
+</code>
+{{:docs:efl:advanced:filter-grow.png|}}
+
+<code Lua>
+a = buffer { 'rgba' }
+blend { dst = a }
+grow { -4, src = a }
+</code>
+{{:docs:efl:advanced:filter-shrink.png|}}
