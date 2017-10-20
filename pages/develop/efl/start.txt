@@ -1,1 +1,297 @@
-none
+~~Title: EFL~~
+~~CODE-c~~
+
+{{page>index}}
+
+==== EFL ====
+
+EFL is a range of libraries that cover APIs to solve every day problems we, and others have encountered. You can see it having various API layers, with some intended for very low-level controls and access that no one but specialists (e.g. those writing a window manager itself) will need, through to higher level "just writing a notepad" application. The lower you go, the less portable things can be. Here we will cover the EFL features and APIs used to make things portably and cleanly. We will cover these topics here:
+
+  * Data structures (lists, hash tables, growable buffers/strings etc.)
+  * Main loop event, I/O and timing core
+  * Event queue and call handling
+  * Canvas scene graph and rendering
+  * UI object element layout, animation and theme abstraction
+  * Widgets/controls (buttons, sliders, scrollers etc.)
+  * Input method framework
+  * Data archive storage & retrieval
+  * Data structure (de)serialization
+  * Video & audio codec playback, control and display
+  * IPC and network connectivity (TCP, UDP, unix domain & abstract sockets, HTTP)
+  * File utilities
+  * Freedesktop.org standards (desktop files, menus, mime types, icons)
+  * Async I/O
+  * D-Bus IPC integration
+  * Location API
+  * Basic Audio playback, recording and mixing
+
+You will use a range of libraries to make use of the above, and so learning the naming of these is important to know where to look. They will be in Ecore, Evas, Edje, Elementary (Elm), Ecore_IMF, Eet, Emotion, Ecore_Con, Ecore_IPC, Eio, Eldbus, Elocation, Ecore_Audio, Ecore_File and Efreet. It is very useful to know the names of parts of EFL and what they are responsible for:
+
+^Component   ^Domain                       ^Description ^
+|Ecore       |Mainloop Input & Display     |Mainloop, low level display and input system, connections and IPC |
+|Ector       |Vector Graphics              |*INTERNAL* Vector rendering API used by Evas |
+|Edje        |Theme Graphics & Animation   |Layout and abstraction for graphical elements that lay out items to define a look and feel with animation and basic event response |
+|Eet         |Data Storage & Serialization |Data structure serialization and multi-key data storage in files with compression and encryption with fast random-access read |
+|Eeze        |Device UDev Wrapper          |A thin wrapper over UDev for finding devices on Linux |
+|Efl         |Core Shared                  |*INTERNAL* Core things shared between EFL libraries |
+|Efreet      |Standards                    |Handle desktop file, menus and icons from freedesktop.org |
+|Eina        |Core Data Types              |Core utilities for threading, data types (lists, hashes etc.) and more |
+|Eio         |Async I/O                    |Handle async File I/O |
+|Eldbus      |D-Bus & Event Glue           |Glue in D-Bus protocol handling as a client and server into EFL |
+|Elementary  |High Level & Widgets         |High level wrapper on EFL as well as a full widget set with buttons, boxes, scrollers, sliders etc. |
+|Elocation   |Location                     |Used for location and mapping services |
+|Elua        |Lua Execution                |*INTERNAL* Lua wrapper and convenience layer for running a Lua script engine |
+|Embryo      |Bytecode VM & Compiler       |A compiler and tiny VM execution library for the Small/Pawn language used by Edje for scripting |
+|Emile       |Compression & Encryption     |*INTERNAL* Compression and encryption utilities and abstractions |
+|Emotion     |Video & Audio Playback       |Wrapping Gstreamer, Xine and/or VLC to provide Video playback in Evas objects as well as audio playback controls |
+|Eo          |Object System                |Core object system for EFL with handling of classes, references, inheritance, safe object access and method execution etc. |
+|Eolian      |Object Code Generation       |Used with Eo to generate both C boilerplate src, and for generating bindings |
+|Ephysics    |Physics & Object Glue        |Glues the Bullet physics library to Evas objects and is used by Edje |
+|Escape      |PS3 LibC Filler              |*INTERNAL* Fills in missing LibC functionality for PS3 |
+|Ethumb      |Image Thumbnailer            |A library and service for async thumbnail generation and caching |
+|Evas        |Scene Graph & Rendering      |A complete scene graph and rendering abstraction as well as event router for UI and general graphics needs |
+|Evil        |Windows LibC Filler          |*INTERNAL* Fills in missing LibC functionality for Windows |
+
+We will make an assumption that you have a reasonable grasp of the C programming language here. Perhaps you might want to read the [[docs/c/start]] if you are new to C, or need a refresher.
+
+----
+
+=== Application Mainloop ===
+
+It is assumed every application has a [[mainloop]], and that EFL is
+in charge of that. If you are writing a library, then that assumption
+would be made ultimately of the application using that library as well.
+For the purposes of this introduction to EFL, we will talk about an
+application, how it starts, runs and shuts down.
+
+Every application is expected to have a life-cycle as follows. If you
+have a design that is significantly different then you will be
+struggling against EFL and what it is pushing you to use. This does
+not mean we do not support threads, we just push you into a specific
+design pattern.
+
+{{ :docs:efl:mainloop.svg?nolink |Application Mainloop}}
+
+An application would spend almost it's entire life inside the
+[[mainloop]] sleeping, processing events and then updating it's UI,
+until it decides to exit. All of this would take place inside the
+[[mainloop]] processing function elm_run() which will only return
+once the [[mainloop]] voluntarily exits if an elm_exit() function is
+called while it runs, which marks the loop to exit, next time it has a
+chance. Before and after this, will be initialization and shutdown of the
+application. Your most basic application that just does nothing but
+wait forever for events would be:
+
+<code c example.c>
+#include <Elementary.h>
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   elm_run();
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+Compile it (and other examples on this page) with:
+
+  cc example.c -o example `pkg-config --cflags --libs elementary`
+
+If ''pkg-config'' is complaining about not finding Elementary you may
+want to adjust your ''PKG_CONFIG_PATH'' environment variable to point
+to where the ''.pc'' files are installed. Perhaps like:
+
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+Please see this nice page
+[[http://people.freedesktop.org/~dbn/pkg-config-guide.html|about pkg-config]]
+Which should tell you what it is and how it works if you are having trouble.
+
+Expanding on this, let us make our first application with an actual
+visible window and a button inside to click to exit. This will be our
+proverbial "Hello world" application.
+
+<code c example.c>
+#include <Elementary.h>
+
+static void
+on_click(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *btn;
+
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+
+   win = elm_win_util_standard_add("Main", "Hello, World!");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   btn = elm_button_add(win);
+   elm_object_text_set(btn, "Goodbye Cruel World");
+   elm_win_resize_object_add(win, btn);
+   evas_object_smart_callback_add(btn, "clicked", on_click, win);
+   evas_object_show(btn);
+
+   evas_object_show(win);
+
+   elm_run();
+
+   return 0;
+}
+ELM_MAIN()
+</code>
+
+When the application runs, the ELM_MAIN() macro sets up a normal
+main() function, inits EFL for you and then calls elm_main() with
+the usual application argc & argv parameters you get in C. When
+elm_main() returns, it will pass the return value to the return
+value of main() for the application exit code. Before it does this,
+EFL will be cleanly shut down for you. You are encouraged to use this
+setup above to ensure this happens.
+
+<code c>
+elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+</code>
+
+The first thing we do is enable a policy where if our last window is
+deleted, the [[mainloop]] started by elm_run() is automatically
+quit when this last window is closed. This is really handy for
+applications with multiple windows that want to just go away when they
+are no longer presenting any UI.
+
+<code c>
+win = elm_win_util_standard_add("Main", "Hello, World!");
+</code>
+
+We now create a standard window with a standard background using a
+utility function. It has the **name** set to "Main". This is normally
+not a user-visible property of a window. It is used to identify that
+window separately from other windows the app may create. A dialog, a
+file selector window, a settings dialog etc. so name appropriately
+here. The window will display a title of "Hello, World!" in the
+titlebar (if such a thing exists on your platform). This title may be
+used in other places on a platform such as a window switcher, a
+taskbar or some other interface control element. The window will have a
+background already placed as the resize object of a window.
+
+<code c>
+elm_win_autodel_set(win, EINA_TRUE);
+</code>
+
+Next we enable **autodel** on the window. This means that if someone
+hits the close button, or otherwise uses some normal environment
+mechanism (keybinding, menu) to close the window, the window object is
+automatically deleted on the application side. If you do not do this,
+these mechanisms will not work and the window will stay around. It is
+expected that you would add a callback to handle the "delete,request"
+event on the window and then either delete it or do something like
+prompt the user if they are sure they wish to close the window
+(unsaved content?) etc.
+
+<code c>
+btn = elm_button_add(win);
+</code>
+
+Next we create a button (relative to the window). You must create all
+objects relative to some object inside a window or the window itself.
+All graphical objects belong to a window of some sort. This will not
+have set up the parent/child containering and control relationships
+yet. That comes later.
+
+<code c>
+elm_object_text_set(btn, "Goodbye Cruel World");
+elm_win_resize_object_add(win, btn);
+</code>
+
+We now set the label of the button to "Goodbye Cruel World", then add
+the button as a window resize object. If we did not set the label
+text, the button would be empty (and quite small by default). Windows
+have a special list of resize objects (can be more than one) stacked
+one on top of the other which resize when the window resizes. In turn
+they also affect the window sizing with their minimum and maximum
+sizes as well as sizing hints for weight and alignment (which we will
+come to later).
+
+<code c>
+static void
+on_click(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+</code>
+<code c>
+evas_object_smart_callback_add(btn, "clicked", on_click, win);
+</code>
+
+We now add a callback for the "clicked" smart event on the button.
+This will call the ''on_click'' function when a user clicks on the
+button. The [[mainloop]] drives event handling and thus calling of
+this callback. All event callbacks can pass in an arbitrary pointer to
+anything the like. This will be passed as the first data pointer to
+the callback above. In this case we will passing our window pointer as
+we want to delete the window when someone presses the button. Due to
+our policy settings, this will end up deleting the last window we have
+and automatically exiting the [[mainloop]], and then of course the
+application. The example works this way to show how it might be
+extended to open multiple windows and only have the window you click
+the button in be deleted, until all windows are gone and application
+cleanly exits.
+
+<code c>
+evas_object_show(btn);
+</code>
+
+Next we show the button. All graphical objects are hidden by default.
+This avoids unwanted events like mouse in, move and out events due to
+objects being created underneath the current pointer position. It
+makes things more efficient as you can show the object after you have
+finished defining its state.
+
+<code c>
+evas_object_show(win);
+</code>
+
+Now we show the window. It is best to show it last just before you
+jump into the [[mainloop]] to process everything. This means all
+window setup is invisible until it is finished.
+
+<code c>
+elm_run();
+</code>
+
+Finally we begin the [[mainloop]]. This function will not exit until
+the [[mainloop]] is done and exits (with an elm_exit() being
+called from inside some callback there). So at this point your
+application is handing full control over it's execution to EFL and the
+[[mainloop]] to deal with events and rendering of updates. From inside the mainloop function run by EFL, all your callbacks (functions you register to be called when events, state changes etc. etc. happen) will be called.
+
+----
+
+**NOTE**: If you don't want to use ELM_MAIN(), you can use
+elm_init() and elm_shutdown() manually yourself. You **MUST**
+call elm_init() before you call any EFL functions. It could fail
+too. Also never call any EFL functions after elm_shutdown().
+
+<code c example.c>
+#include <Elementary.h>
+
+int
+main(int argc, char **argv)
+{
+   if (!elm_init(argc, argv)) return -1;
+
+   elm_run();
+
+   elm_shutdown();
+   return 0;
+}
+</code>
+
+----
+
+~~DISCUSSIONS~~
