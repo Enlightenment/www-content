@@ -1,0 +1,46 @@
+Go back to [[:docs:efl:advanced:eflgfxfilters|Efl.Gfx.Filter]].
+
+==== Blur ====
+
+Applies a [[https://en.wikipedia.org/wiki/Gaussian_blur|gaussian blur]] or [[https://en.wikipedia.org/wiki/Box_blur|box blur]] filter to a buffer and blends it onto a destination buffer.
+
+Blurs can be used to create **drop shadows** and **glow** effects.
+
+== Syntax ==
+<code Lua>
+blur ({ rx = 3, ry = nil, type = 'default', ox = 0, oy = 0, color = 'white', src = input, dst = output, count = 3 })
+</code>
+
+== Parameters ==
+|''rx'' |X radius. Specifies the radius of the blurring kernel (X direction). |
+|''ry'' |Y radius. Specifies the radius of the blurring kernel (Y direction). If -1 is used, then ry = rx. |
+|''type'' |Blur type to apply. One of default, box or gaussian. See below for details about default. |
+|''ox'' |X offset. Moves the buffer to the right (ox > 0) or to the left (ox < 0) by N pixels. |
+|''oy'' |Y offset. Moves the buffer to the bottom (oy > 0) or to the top (oy < 0) by N pixels. |
+|''color'' |A color to use for alpha to RGBA conversion. See ''colors''. \\ If the input is an alpha buffer and the output is RGBA, this will draw the buffer in this color. |
+|''src'' |Source buffer to blur. |
+|''dst'' |Destination buffer for blending. |
+|''count'' |Number of times to repeat the blur. Only valid with box blur. Valid range is: 1 to 6 |
+
+== Notes ==
+
+The blur type ''default'' is recommended in **all situations** as it will select the smoothest and fastest operation possible depending on the kernel size. Instead of running a real gaussian blur (very slow), 2 or 3 box blurs may be chained to produce a similar effect at a much higher speed. The value count can be set to a value from 1 to 6 if blur type box has been specified.
+
+The speedups of box over gaussian are of orders of 4x to more than 20x faster.
+
+If ''src'' is an alpha buffer and ''dst'' is an RGBA buffer, then the ''color'' option should be set.
+
+''ox'' and ''oy'' can be used to move the blurry output by a few pixels, like a drop shadow.
+
+== Examples ==
+
+<code Lua blur.lua>
+blur { 15 }
+</code>
+{{:docs:efl:advanced:filter-blur.png|}}
+
+<code Lua dropshadow.lua>
+blur { 10, ox = 5, oy = 5, color = 'black' }
+blend {}
+</code>
+{{:docs:efl:advanced:filter-dropshadow.png|}}
