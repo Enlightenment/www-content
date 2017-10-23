@@ -4,8 +4,8 @@
 <code>
 pack_after @pure_virtual {
     params {
-        @in subobj: own(Efl.Gfx);
-        @in existing: const(Efl.Gfx);
+        @in subobj: free(Efl.Gfx, efl_del);
+        @in existing: free(const(Efl.Gfx), efl_del);
     }
     return: bool;
 }
@@ -19,19 +19,21 @@ Eina_Bool efl_pack_after(Eo *obj, Efl_Gfx *subobj, const Efl_Gfx *existing);
 
 ===== Parameters =====
 
-  * **subobj** //(in)// - %%Item to pack.%%
+  * **subobj** //(in)// - %%Item to pack after %%''existing''%%.%%
   * **existing** //(in)// - %%Item to refer to.%%
 
 ===== Description =====
 
 %%Append item after other sub object.%%
-{{page>:docs:efl:user:interface:efl:pack:linear:method:pack_after:description&nodate&nolink&nouser}}
+
+%%When this container is deleted, it will request deletion on the given %%''subobj''%%. Use %%[[:develop:efl:auto:interface:efl:pack:method:unpack|Efl.Pack.unpack]]%% to remove %%''subobj''%% from this container without deleting it.%%
+{{page>:develop:efl:user:interface:efl:pack:linear:method:pack_after:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
   * **Efl.Pack.Linear.pack_after**
-  * [[:docs:efl:auto:class:efl:ui:flip:method:pack_after|Efl.Ui.Flip.pack_after]]
-  * [[:docs:efl:auto:class:efl:canvas:layout_internal:box:method:pack_after|Efl.Canvas.Layout_Internal.Box.pack_after]]
-  * [[:docs:efl:auto:class:efl:ui:box:method:pack_after|Efl.Ui.Box.pack_after]]
-  * [[:docs:efl:auto:class:efl:ui:layout_internal:box:method:pack_after|Efl.Ui.Layout_Internal.Box.pack_after]]
+  * [[:develop:efl:auto:class:efl:ui:flip:method:pack_after|Efl.Ui.Flip.pack_after]]
+  * [[:develop:efl:auto:class:efl:canvas:layout:part_box:method:pack_after|Efl.Canvas.Layout.Part_Box.pack_after]]
+  * [[:develop:efl:auto:class:efl:ui:box:method:pack_after|Efl.Ui.Box.pack_after]]
+  * [[:develop:efl:auto:class:efl:ui:layout:part:box:method:pack_after|Efl.Ui.Layout.Part.Box.pack_after]]
 

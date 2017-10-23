@@ -1,0 +1,190 @@
+<title>Efl.Access.Text</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_access_text [fillcolor = "dodgerblue4", label = "Efl.Access.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:efl:auto:interface:efl:access:text|Efl.Access.Text]] //(interface)//**
+
+===== Description =====
+
+%%Elementary accessible text interface%%
+
+{{page>:develop:efl:user:interface:efl:access:text:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:efl:auto:interface:efl:access:text:method:selection_add|selection_add]]** ''protected''
+<code c>
+Eina_Bool efl_access_text_selection_add(Eo *obj, int start_offset, int end_offset);
+</code>
+
+%%Add selection%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:method:selection_remove|selection_remove]]** ''protected''
+<code c>
+Eina_Bool efl_access_text_selection_remove(Eo *obj, int selection_number);
+</code>
+
+%%Remove selection%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:attributes|attributes]]** //**(get)**// ''protected''
+<code c>
+Eina_List *efl_access_text_attributes_get(const Eo *obj, int *start_offset, int *end_offset);
+</code>
+
+%%Gets list of all text attributes.%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:attribute|attribute]]** //**(get)**// ''protected''
+<code c>
+Eina_Bool efl_access_text_attribute_get(const Eo *obj, const char *name, int *start_offset, int *end_offset, char **value);
+</code>
+
+%%Indicate if a text attribute with a given name is set%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:bounded_ranges|bounded_ranges]]** //**(get)**// ''protected''
+<code c>
+Eina_List *efl_access_text_bounded_ranges_get(const Eo *obj, Eina_Bool screen_coords, Eina_Rect rect, Efl_Access_Text_Clip_Type xclip, Efl_Access_Text_Clip_Type yclip);
+</code>
+
+%%Bounded ranges%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:caret_offset|caret_offset]]** //**(get, set)**// ''protected''
+<code c>
+int efl_access_text_caret_offset_get(const Eo *obj);
+Eina_Bool efl_access_text_caret_offset_set(Eo *obj, int offset);
+</code>
+
+%%Caret offset property%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:character_count|character_count]]** //**(get)**// ''protected''
+<code c>
+int efl_access_text_character_count_get(const Eo *obj);
+</code>
+
+%%Character count%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:character_extents|character_extents]]** //**(get)**// ''protected''
+<code c>
+Eina_Bool efl_access_text_character_extents_get(const Eo *obj, int offset, Eina_Bool screen_coords, Eina_Rect *rect);
+</code>
+
+%%Character extents%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:character|character]]** //**(get)**// ''protected''
+<code c>
+Eina_Unicode efl_access_text_character_get(const Eo *obj, int offset);
+</code>
+
+%%Gets single character present in accessible widget's text at given offset.%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:default_attributes|default_attributes]]** //**(get)**// ''protected''
+<code c>
+Eina_List *efl_access_text_default_attributes_get(const Eo *obj);
+</code>
+
+%%Default attributes%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:offset_at_point|offset_at_point]]** //**(get)**// ''protected''
+<code c>
+int efl_access_text_offset_at_point_get(const Eo *obj, Eina_Bool screen_coords, int x, int y);
+</code>
+
+%%Offset at given point%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:range_extents|range_extents]]** //**(get)**// ''protected''
+<code c>
+Eina_Bool efl_access_text_range_extents_get(const Eo *obj, Eina_Bool screen_coords, int start_offset, int end_offset, Eina_Rect *rect);
+</code>
+
+%%Range extents%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:selections_count|selections_count]]** //**(get)**// ''protected''
+<code c>
+int efl_access_text_selections_count_get(const Eo *obj);
+</code>
+
+%%Selection count property%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:selection|selection]]** //**(get, set)**// ''protected''
+<code c>
+void efl_access_text_selection_get(const Eo *obj, int selection_number, int *start_offset, int *end_offset);
+Eina_Bool efl_access_text_selection_set(Eo *obj, int selection_number, int start_offset, int end_offset);
+</code>
+
+%%Selection property%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:string|string]]** //**(get)**// ''protected''
+<code c>
+char *efl_access_text_string_get(const Eo *obj, Efl_Access_Text_Granularity granularity, int *start_offset, int *end_offset);
+</code>
+
+%%Gets string, start and end offset in text according to given initial offset and granularity.%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:property:text|text]]** //**(get)**// ''protected''
+<code c>
+char *efl_access_text_get(const Eo *obj, int start_offset, int end_offset);
+</code>
+
+%%Gets text of accessible widget.%%\\ 
+\\ 
+
+===== Events =====
+
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_attributes_changed|access,text,attributes,changed]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_ATTRIBUTES_CHANGED(void)
+</code>
+
+%%Text attributes have changed%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_bounds_changed|access,text,bounds,changed]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_BOUNDS_CHANGED(void)
+</code>
+
+%%Text bounds have changed%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_caret_moved|access,text,caret,moved]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_CARET_MOVED(void)
+</code>
+
+%%Caret moved%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_inserted|access,text,inserted]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_INSERTED(void)
+</code>
+
+%%Text was inserted%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_removed|access,text,removed]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_REMOVED(void)
+</code>
+
+%%Text was removed%%\\ 
+\\ 
+**[[:develop:efl:auto:interface:efl:access:text:event:access_text_selection_changed|access,text,selection,changed]]**
+<code c>
+EFL_ACCESS_TEXT_EVENT_ACCESS_TEXT_SELECTION_CHANGED(void)
+</code>
+
+%%Text selection has changed%%\\ 
+\\ 

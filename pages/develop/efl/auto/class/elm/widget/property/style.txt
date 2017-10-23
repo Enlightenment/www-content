@@ -5,14 +5,14 @@
 @property style {
     get {
         values {
-            style: string;
+            style: free(string, free);
         }
     }
-    set {
+    set @protected {
         values {
-            style: string;
+            style: free(string, free);
         }
-        return: Elm.Theme.Apply;
+        return: Efl.Ui.Theme.Apply (0);
     }
 }
 </code>
@@ -21,15 +21,31 @@
 
 <code c>
 const char *elm_obj_widget_style_get(const Eo *obj);
-Elm_Theme_Apply elm_obj_widget_style_set(Eo *obj, const char *style);
+Efl_Ui_Theme_Apply elm_obj_widget_style_set(Eo *obj, const char *style);
 </code>
 
 ===== Values =====
 
-  * **style** - %%Style name%%
+  * **style** - %%Name of the style to use. Refer to each widget's documentation for the available style names, or to the themes in use.%%
 ===== Description =====
 
-%%Theme style%%{{page>:docs:efl:user:class:elm:widget:property:style:description&nodate&nolink&nouser}}
+%%The widget style to use.%%
+
+%%Styles define different look and feel for widgets, and may provide different parts for layout-based widgets. Styles vary from widget to widget and may be defined by other themes by means of extensions and overlays.%%
+
+%%The style can only be set before %%[[:develop:efl:auto:class:efl:object:method:finalize|Efl.Object.finalize]]%%, which means at construction time of the object (inside %%''efl_add''%% in C).%%
+
+{{page>:develop:efl:user:class:elm:widget:property:style:description&nouser&nolink&nodate}}
+
+==== Getter ====
+
+%%Returns the current style of a widget.%%
+
+{{page>:develop:efl:user:class:elm:widget:property:style:getter_description&nouser&nolink&nodate}}
+
+==== Setter ====
+
+%%Can only be called during construction, before finalize.%%{{page>:develop:efl:user:class:elm:widget:property:style:getter_description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====

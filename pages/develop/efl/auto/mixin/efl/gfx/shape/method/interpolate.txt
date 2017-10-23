@@ -4,8 +4,8 @@
 <code>
 interpolate {
     params {
-        @in from: const(Efl.Object);
-        @in to: const(Efl.Object);
+        @in from: free(const(Efl.Object), efl_del);
+        @in to: free(const(Efl.Object), efl_del);
         @in pos_map: double;
     }
     return: bool;
@@ -20,14 +20,18 @@ Eina_Bool efl_gfx_shape_interpolate(Eo *obj, const Efl_Object *from, const Efl_O
 
 ===== Parameters =====
 
-  * **from** //(in)// - %%Source object%%
-  * **to** //(in)// - %%Destination object%%
-  * **pos_map** //(in)// - %%Position map%%
+  * **from** //(in)// - %%Source shape%%
+  * **to** //(in)// - %%Destination shape%%
+  * **pos_map** //(in)// - %%Position map in range 0.0 to 1.0%%
 
 ===== Description =====
 
-%%Interpolate object%%
-{{page>:docs:efl:user:mixin:efl:gfx:shape:method:interpolate:description&nodate&nolink&nouser}}
+%%Creates intermediary shape part-way between two shapes%%
+
+%%Sets the data properties of %%''obj''%% as the linear interpolation of the %%''from''%% and %%''to''%% objects by %%''pos_map''%%.  In addition to interpolating the path data, the two shapes' dash length, fill color, and stroke style are also interpolated.%%
+
+%%See also %%[[:develop:efl:auto:mixin:efl:gfx:path:method:interpolate|Efl.Gfx.Path.interpolate]]%%.%%
+{{page>:develop:efl:user:mixin:efl:gfx:shape:method:interpolate:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

@@ -1,0 +1,39 @@
+<title>Efl.Access: property,changed</title>
+===== Signature =====
+
+<code>
+property,changed: free(string, free);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_ACCESS_EVENT_PROPERTY_CHANGED(const char *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_access_event_property_changed(void *data, const Efl_Event *event)
+{
+    const char *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_ACCESS_EVENT_PROPERTY_CHANGED, on_efl_access_event_property_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when roperty has changed%%
+{{page>:develop:efl:user:mixin:efl:access:event:property_changed:description&nouser&nolink&nodate}}
+

@@ -3,9 +3,9 @@
 
 <code>
 struct Eldbus.Introspection.Method {
-    name: stringshare;
-    arguments: list<void_ptr>;
-    annotations: list<void_ptr>;
+    name: free(stringshare, eina_stringshare_del);
+    arguments: free(list<void_ptr>, eina_list_free);
+    annotations: free(list<void_ptr>, eina_list_free);
 }
 </code>
 
@@ -23,11 +23,11 @@ typedef struct _Eldbus_Introspection_Method {
 
 %%DBus Method%%
 
-{{page>:docs:efl:user:struct:eldbus:introspection:method:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:method:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:eldbus:introspection:method:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:method:fields&nouser&nolink&nodate}}
 
   * **name** - %%Method name%%
   * **arguments** - %%List with method arguments%%

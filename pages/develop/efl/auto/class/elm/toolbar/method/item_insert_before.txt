@@ -4,13 +4,13 @@
 <code>
 item_insert_before {
     params {
-        @in before: Elm.Widget.Item;
-        @in icon: string @optional;
-        @in label: string;
+        @in before: free(Elm.Widget.Item, efl_del);
+        @in icon: free(string, free) @optional;
+        @in label: free(string, free);
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -46,7 +46,7 @@ Elm_Widget_Item *elm_obj_toolbar_item_insert_before(Eo *obj, Elm_Widget_Item *be
 </note>
 
 %%See: elm_toolbar_item_icon_set()%%
-{{page>:docs:efl:user:class:elm:toolbar:method:item_insert_before:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:toolbar:method:item_insert_before:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

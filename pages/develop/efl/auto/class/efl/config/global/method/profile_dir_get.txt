@@ -4,10 +4,10 @@
 <code>
 profile_dir_get {
     params {
-        @in profile: string;
+        @in profile: free(string, free);
         @in is_user: bool;
     }
-    return: own(stringshare);
+    return: free(stringshare, eina_stringshare_del);
 }
 </code>
 
@@ -25,7 +25,7 @@ Eina_Stringshare *efl_config_profile_dir_get(Eo *obj, const char *profile, Eina_
 ===== Description =====
 
 %%Returns the directory where a profile is stored.%%
-{{page>:docs:efl:user:class:efl:config:global:method:profile_dir_get:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:config:global:method:profile_dir_get:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

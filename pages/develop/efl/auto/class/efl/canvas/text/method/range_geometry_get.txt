@@ -4,17 +4,17 @@
 <code>
 range_geometry_get {
     params {
-        @in cur1: const(Efl.Canvas.Text.Cursor);
-        @in cur2: const(Efl.Canvas.Text.Cursor);
+        @in cur1: ptr(const(Efl.Text.Cursor.Cursor));
+        @in cur2: ptr(const(Efl.Text.Cursor.Cursor));
     }
-    return: free(own(iterator<Eina.Rectangle>), eina_iterator_free);
+    return: free(iterator<free(Eina.Rect, eina_rectangle_free)>, eina_iterator_free);
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Eina_Iterator *efl_canvas_text_range_geometry_get(Eo *obj, const Efl_Canvas_Text_Cursor *cur1, const Efl_Canvas_Text_Cursor *cur2);
+Eina_Iterator *efl_canvas_text_range_geometry_get(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
 </code>
 
 ===== Parameters =====
@@ -29,7 +29,7 @@ Eina_Iterator *efl_canvas_text_range_geometry_get(Eo *obj, const Efl_Canvas_Text
 %%The geometry is represented as rectangles for each of the line segments in the given range [%%''cur1''%%, %%''cur2''%%].%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:canvas:text:method:range_geometry_get:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:canvas:text:method:range_geometry_get:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

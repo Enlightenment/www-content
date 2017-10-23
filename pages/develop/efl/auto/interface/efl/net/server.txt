@@ -19,30 +19,30 @@ digraph hierarchy {
 
 ===== Inheritance hierarchy =====
 
-  * **[[:docs:efl:auto:interface:efl:net:server|Efl.Net.Server]] //(interface)//**
+  * **[[:develop:efl:auto:interface:efl:net:server|Efl.Net.Server]] //(interface)//**
 
 ===== Description =====
 
 %%The basic server interface.%%
 
-%%It will start serving and accepting clients once %%[[:docs:efl:auto:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%% is called and the "serving" event is dispatched.%%
+%%It will start serving and accepting clients once %%[[:develop:efl:auto:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%% is called and the "serving" event is dispatched.%%
 
-%%When new clients are accepted, then "client,add" event is dispatched with a child object implementing %%[[:docs:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%% interface. These implement the standard %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%%, %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% and %%[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]%% interfaces, thus can be used with utilities such as %%[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]]%%.%%
+%%When new clients are accepted, then "client,add" event is dispatched with a child object implementing %%[[:develop:efl:auto:interface:efl:net:socket|Efl.Net.Socket]]%% interface. These implement the standard %%[[:develop:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%%, %%[[:develop:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% and %%[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]]%% interfaces, thus can be used with utilities such as %%[[:develop:efl:auto:class:efl:io:copier|Efl.Io.Copier]]%%.%%
 
 //Since 1.19//
 
-{{page>:docs:efl:user:interface:efl:net:server:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:interface:efl:net:server:description&nouser&nolink&nodate}}
 
 ===== Members =====
 
-**[[:docs:efl:auto:interface:efl:net:server:method:serve|serve]]**
+**[[:develop:efl:auto:interface:efl:net:server:method:serve|serve]]**
 <code c>
 Eina_Error efl_net_server_serve(Eo *obj, const char *address);
 </code>
 
 %%Starts serving requests.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:property:address|address]]** //**(get, set)**// ''protected set''
+**[[:develop:efl:auto:interface:efl:net:server:property:address|address]]** //**(get, set)**// ''protected set''
 <code c>
 const char *efl_net_server_address_get(const Eo *obj);
 void efl_net_server_address_set(Eo *obj, const char *address);
@@ -50,7 +50,7 @@ void efl_net_server_address_set(Eo *obj, const char *address);
 
 %%The address the server is bound to.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''
+**[[:develop:efl:auto:interface:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''
 <code c>
 unsigned int efl_net_server_clients_count_get(const Eo *obj);
 void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
@@ -58,7 +58,7 @@ void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
 
 %%Number of concurrent clients accepted by this server.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//
+**[[:develop:efl:auto:interface:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//
 <code c>
 void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
 void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
@@ -66,7 +66,7 @@ void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool rej
 
 %%Number of maximum concurrent clients allowed by this server.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:property:serving|serving]]** //**(get, set)**// ''protected set''
+**[[:develop:efl:auto:interface:efl:net:server:property:serving|serving]]** //**(get, set)**// ''protected set''
 <code c>
 Eina_Bool efl_net_server_serving_get(const Eo *obj);
 void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
@@ -74,7 +74,7 @@ void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
 
 %%Returns whenever the server is ready to accept clients or not.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:method:client_announce|client_announce]]** ''protected''
+**[[:develop:efl:auto:interface:efl:net:server:method:client_announce|client_announce]]** ''protected''
 <code c>
 Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 </code>
@@ -84,31 +84,31 @@ Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 
 ===== Events =====
 
-**[[:docs:efl:auto:interface:efl:net:server:event:client_add|client,add]]**
+**[[:develop:efl:auto:interface:efl:net:server:event:client_add|client,add]]**
 <code c>
 EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
 </code>
 
 %%A new client socket was created.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:event:client_rejected|client,rejected]]**
+**[[:develop:efl:auto:interface:efl:net:server:event:client_rejected|client,rejected]]**
 <code c>
 EFL_NET_SERVER_EVENT_CLIENT_REJECTED(const char *)
 </code>
 
-%%Notifies a client was rejected due excess, see %%[[:docs:efl:auto:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%\\ 
+%%Notifies a client was rejected due excess, see %%[[:develop:efl:auto:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:event:error|error]]**
+**[[:develop:efl:auto:interface:efl:net:server:event:error|error]]**
 <code c>
 EFL_NET_SERVER_EVENT_ERROR(Eina_Error)
 </code>
 
 %%Some error happened and the server needs to be stopped.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:net:server:event:serving|serving]]**
+**[[:develop:efl:auto:interface:efl:net:server:event:serving|serving]]**
 <code c>
 EFL_NET_SERVER_EVENT_SERVING(void)
 </code>
 
-%%Notifies the server is ready to accept clients. See property %%[[:docs:efl:auto:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%\\ 
+%%Notifies the server is ready to accept clients. See property %%[[:develop:efl:auto:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%\\ 
 \\ 

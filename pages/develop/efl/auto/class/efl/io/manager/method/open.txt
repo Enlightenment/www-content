@@ -4,17 +4,17 @@
 <code>
 open {
     params {
-        @in path: string;
+        @in path: free(string, free);
         @in shared: bool;
     }
-    return: future<Eina.File>;
+    return: ptr(Eina.Future);
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Efl_Future *efl_io_manager_open(Eo *obj, const char *path, Eina_Bool shared);
+Eina_Future *efl_io_manager_open(Eo *obj, const char *path, Eina_Bool shared);
 </code>
 
 ===== Parameters =====
@@ -27,7 +27,7 @@ Efl_Future *efl_io_manager_open(Eo *obj, const char *path, Eina_Bool shared);
 %%Opens a file.%%
 
 %%The fulfilled value in the promise will be the Eina.File*.%%
-{{page>:docs:efl:user:class:efl:io:manager:method:open:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:io:manager:method:open:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

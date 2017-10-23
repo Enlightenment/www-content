@@ -4,12 +4,12 @@
 <code>
 item_insert_before {
     params {
-        @in before: Elm.Widget.Item;
-        @in label: string;
+        @in before: free(Elm.Widget.Item, efl_del);
+        @in label: free(string, free);
         @in func: Evas_Smart_Cb @optional;
         @in data: void_ptr @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -30,8 +30,8 @@ Elm_Widget_Item *elm_obj_multibuttonentry_item_insert_before(Eo *obj, Elm_Widget
 
 %%Add a new item to the multibuttonentry before the indicated object reference.%%
 
-%%See %%[[:docs:efl:auto:class:elm:widget:item:method:del|Elm.Widget.Item.del]]%% to delete the item.%%
-{{page>:docs:efl:user:class:elm:multibuttonentry:method:item_insert_before:description&nodate&nolink&nouser}}
+%%See %%[[:develop:efl:auto:class:elm:widget:item:method:del|Elm.Widget.Item.del]]%% to delete the item.%%
+{{page>:develop:efl:user:class:elm:multibuttonentry:method:item_insert_before:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

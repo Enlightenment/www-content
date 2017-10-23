@@ -4,13 +4,13 @@
 <code>
 item_add {
     params {
-        @in label: string @optional;
-        @in icon_file: string @optional;
+        @in label: free(string, free) @optional;
+        @in icon_file: free(string, free) @optional;
         @in icon_type: Elm.Icon.Type;
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -33,7 +33,7 @@ Elm_Widget_Item *elm_obj_hoversel_item_add(Eo *obj, const char *label, const cha
 %%Add an item to the hoversel button%%
 
 %%This adds an item to the hoversel to show when it is clicked. Note: if you need to use an icon from an edje file then use Elm.Hoversel.Item.icon.set right after this function, and set icon_file to %%''null''%% here.%%
-{{page>:docs:efl:user:class:elm:hoversel:method:item_add:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:hoversel:method:item_add:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

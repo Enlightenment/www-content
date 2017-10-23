@@ -1,17 +1,17 @@
 <title>Elm.Entry.bounded_ranges</title>
-//Overridden from [[:docs:efl:auto:interface:elm:interface:atspi:text:property:bounded_ranges|Elm.Interface.Atspi.Text.bounded_ranges]] **(get)**.//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:access:text:property:bounded_ranges|Efl.Access.Text.bounded_ranges]] **(get)**.//===== Signature =====
 
 <code>
 @property bounded_ranges @pure_virtual {
     get @protected {
         keys {
             screen_coords: bool;
-            rect: Eina.Rectangle;
-            xclip: Elm.Atspi_Text.Clip_Type;
-            yclip: Elm.Atspi_Text.Clip_Type;
+            rect: free(Eina.Rect, eina_rectangle_free);
+            xclip: Efl.Access.Text.Clip_Type;
+            yclip: Efl.Access.Text.Clip_Type;
         }
         values {
-            ranges: own(list<ptr(own(Elm.Atspi_Text.Range))>);
+            ranges: free(list<ptr(Efl.Access.Text.Range)>, eina_list_free);
         }
     }
 }
@@ -20,24 +20,24 @@
 ===== C signature =====
 
 <code c>
-Eina_List *elm_interface_atspi_text_bounded_ranges_get(const Eo *obj, Eina_Bool screen_coords, Eina_Rectangle rect, Elm_Atspi_Text_Clip_Type xclip, Elm_Atspi_Text_Clip_Type yclip);
+Eina_List *efl_access_text_bounded_ranges_get(const Eo *obj, Eina_Bool screen_coords, Eina_Rect rect, Efl_Access_Text_Clip_Type xclip, Efl_Access_Text_Clip_Type yclip);
 </code>
 
 ===== Keys =====
 
   * **screen_coords** - %%If %%''true''%%, x and y values will be relative to screen origin, otherwise relative to canvas%%
   * **rect** - %%Bounding box%%
-  * **xclip** - %%AT-SPI xclip%%
-  * **yclip** - %%AT-SPI yclip%%
+  * **xclip** - %%xclip%%
+  * **yclip** - %%yclip%%
 ===== Values =====
 
   * **ranges** - %%List of ranges%%
 
-{{page>:docs:efl:user:class:elm:entry:property:bounded_ranges:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:entry:property:bounded_ranges:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:elm:interface:atspi:text:property:bounded_ranges|Elm.Interface.Atspi.Text.bounded_ranges]]
+  * [[:develop:efl:auto:interface:efl:access:text:property:bounded_ranges|Efl.Access.Text.bounded_ranges]]
   * **Elm.Entry.bounded_ranges**
-  * [[:docs:efl:auto:class:efl:ui:text:property:bounded_ranges|Efl.Ui.Text.bounded_ranges]]
+  * [[:develop:efl:auto:class:efl:ui:text:property:bounded_ranges|Efl.Ui.Text.bounded_ranges]]
 

@@ -25,64 +25,64 @@ digraph hierarchy {
 
 ===== Inheritance hierarchy =====
 
-  * **[[:docs:efl:auto:class:efl:io:copier|Efl.Io.Copier]] //(class)//**
-    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
-      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
-    * [[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+  * **[[:develop:efl:auto:class:efl:io:copier|Efl.Io.Copier]] //(class)//**
+    * [[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:develop:efl:auto:class:efl:object|Efl.Object]] //(class)//
+    * [[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
 
 ===== Description =====
 
-%%Copy from an %%[[:docs:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% source to %%[[:docs:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% destination.%%
+%%Copy from an %%[[:develop:efl:auto:interface:efl:io:reader|Efl.Io.Reader]]%% source to %%[[:develop:efl:auto:interface:efl:io:writer|Efl.Io.Writer]]%% destination.%%
 
-%%During usage it will keep reference to %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% objects, automatically relasing them on destructor.%%
+%%During usage it will keep reference to %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% objects, automatically relasing them on destructor.%%
 
-%%By default the read-write process is done based on fixed-size chunks (%%[[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%%), however if %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, the behavior changes to wait for such delimiter or a maximum buffer limit is reached (%%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%).%%
+%%By default the read-write process is done based on fixed-size chunks (%%[[:develop:efl:auto:class:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%%), however if %%[[:develop:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, the behavior changes to wait for such delimiter or a maximum buffer limit is reached (%%[[:develop:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%).%%
 
-%%While a %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is mandatory for the copier to operate properly, the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is optional: if it's not provided, all read data is stored in an internal buffer that can be retrieved using %%[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%%, usually called when one of "data", "line" or "done" events are emitted.%%
+%%While a %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is mandatory for the copier to operate properly, the %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is optional: if it's not provided, all read data is stored in an internal buffer that can be retrieved using %%[[:develop:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%%, usually called when one of "data", "line" or "done" events are emitted.%%
 
 %%Most important events:%%
 
-%%- The "data" event is general and notifies some data was written to %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported for data when it's read from %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+%%- The "data" event is general and notifies some data was written to %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported for data when it's read from %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
 
-%%- The "line" event is only emitted when %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set and not empty. It's simiar to "data".%%
+%%- The "line" event is only emitted when %%[[:develop:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set and not empty. It's simiar to "data".%%
 
-%%- The "done" event is emitted if %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:docs:efl:auto:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data was read from %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+%%- The "done" event is emitted if %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:develop:efl:auto:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data was read from %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
 
-%%- The "error" event is reported if the %%[[:docs:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:docs:efl:auto:class:efl:io:copier:property:timeout_inactivity|Efl.Io.Copier.timeout_inactivity]]%% is set.%%
+%%- The "error" event is reported if the %%[[:develop:efl:auto:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:develop:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:develop:efl:auto:class:efl:io:copier:property:timeout_inactivity|Efl.Io.Copier.timeout_inactivity]]%% is set.%%
 
 %%A copier is handful to simplify common I/O use cases, such as:%%
 
-%%- Read a file or download content to memory: provide only the source and wait for "done" event, calling %%[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% afterwards.%%
+%%- Read a file or download content to memory: provide only the source and wait for "done" event, calling %%[[:develop:efl:auto:class:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% afterwards.%%
 
-%%- Download content to disk: provide a network socket as source and use %%[[:docs:efl:auto:class:efl:io:file|Efl.Io.File]]%% as destination, then wait for "done" event.%%
+%%- Download content to disk: provide a network socket as source and use %%[[:develop:efl:auto:class:efl:io:file|Efl.Io.File]]%% as destination, then wait for "done" event.%%
 
-%%- Link two I/O streams: provide both source and destination streams, such as %%[[:docs:efl:auto:class:efl:io:stdin|Efl.Io.Stdin]]%% and %%[[:docs:efl:auto:class:efl:io:stdout|Efl.Io.Stdout]]%%, or some network socket. As data is received from source it will be copied to destination in an endless (asynchronous) loop. You may monitor for "done" if the source may be closed.%%
+%%- Link two I/O streams: provide both source and destination streams, such as %%[[:develop:efl:auto:class:efl:io:stdin|Efl.Io.Stdin]]%% and %%[[:develop:efl:auto:class:efl:io:stdout|Efl.Io.Stdout]]%%, or some network socket. As data is received from source it will be copied to destination in an endless (asynchronous) loop. You may monitor for "done" if the source may be closed.%%
 
-%%If %%[[:docs:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% is called, then it will be called on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% if they implement those interfaces.%%
+%%If %%[[:develop:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% is called, then it will be called on %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% if they implement those interfaces.%%
 
-%%%%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_exec|Efl.Io.Closer.close_on_exec]]%% and %%[[:docs:efl:auto:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% are respected and applied to both source and destination. Both default to %%''true''%%.%%
+%%%%[[:develop:efl:auto:mixin:efl:io:closer:property:close_on_exec|Efl.Io.Closer.close_on_exec]]%% and %%[[:develop:efl:auto:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% are respected and applied to both source and destination. Both default to %%''true''%%.%%
 
 //Since 1.19//
 
-{{page>:docs:efl:user:class:efl:io:copier:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:io:copier:description&nouser&nolink&nodate}}
 
 ===== Members =====
 
-**[[:docs:efl:auto:class:efl:io:copier:method:binbuf_steal|binbuf_steal]]**
+**[[:develop:efl:auto:class:efl:io:copier:method:binbuf_steal|binbuf_steal]]**
 <code c>
 Eina_Binbuf *efl_io_copier_binbuf_steal(Eo *obj);
 </code>
 
 %%Steals the internal binbuf and return it to caller.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:method:flush|flush]]**
+**[[:develop:efl:auto:class:efl:io:copier:method:flush|flush]]**
 <code c>
 Eina_Bool efl_io_copier_flush(Eo *obj, Eina_Bool may_block, Eina_Bool ignore_line_delimiter);
 </code>
 
 %%Forces reading from source and writing to destination.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|buffer_limit]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:buffer_limit|buffer_limit]]** //**(get, set)**//
 <code c>
 size_t efl_io_copier_buffer_limit_get(const Eo *obj);
 void efl_io_copier_buffer_limit_set(Eo *obj, size_t size);
@@ -90,7 +90,7 @@ void efl_io_copier_buffer_limit_set(Eo *obj, size_t size);
 
 %%Copier buffer limit property, in bytes.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:destination|destination]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:destination|destination]]** //**(get, set)**//
 <code c>
 Efl_Io_Writer *efl_io_copier_destination_get(const Eo *obj);
 void efl_io_copier_destination_set(Eo *obj, Efl_Io_Writer *destination);
@@ -98,7 +98,7 @@ void efl_io_copier_destination_set(Eo *obj, Efl_Io_Writer *destination);
 
 %%Copier destination object.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:done|done]]** //**(get, set)**// ''protected set''
+**[[:develop:efl:auto:class:efl:io:copier:property:done|done]]** //**(get, set)**// ''protected set''
 <code c>
 Eina_Bool efl_io_copier_done_get(const Eo *obj);
 void efl_io_copier_done_set(Eo *obj, Eina_Bool done);
@@ -106,29 +106,29 @@ void efl_io_copier_done_set(Eo *obj, Eina_Bool done);
 
 %%Reports if copier is done.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|line_delimiter]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:line_delimiter|line_delimiter]]** //**(get, set)**//
 <code c>
-Eina_Slice efl_io_copier_line_delimiter_get(const Eo *obj);
-void efl_io_copier_line_delimiter_set(Eo *obj, Eina_Slice slice);
+const Eina_Slice efl_io_copier_line_delimiter_get(const Eo *obj);
+void efl_io_copier_line_delimiter_set(Eo *obj, const Eina_Slice slice);
 </code>
 
-%%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:docs:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:docs:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:docs:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:docs:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%\\ 
+%%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:develop:efl:auto:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:develop:efl:auto:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:develop:efl:auto:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:develop:efl:auto:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:pending_size|pending_size]]** //**(get)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:pending_size|pending_size]]** //**(get)**//
 <code c>
 size_t efl_io_copier_pending_size_get(const Eo *obj);
 </code>
 
 %%Returns the size of the pending buffer.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:progress|progress]]** //**(get)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:progress|progress]]** //**(get)**//
 <code c>
 void efl_io_copier_progress_get(const Eo *obj, uint64_t *read, uint64_t *written, uint64_t *total);
 </code>
 
 %%Progress for read and write.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:read_chunk_size|read_chunk_size]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:read_chunk_size|read_chunk_size]]** //**(get, set)**//
 <code c>
 size_t efl_io_copier_read_chunk_size_get(const Eo *obj);
 void efl_io_copier_read_chunk_size_set(Eo *obj, size_t size);
@@ -136,7 +136,7 @@ void efl_io_copier_read_chunk_size_set(Eo *obj, size_t size);
 
 %%Copier read chunk size property, in bytes.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:source|source]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:source|source]]** //**(get, set)**//
 <code c>
 Efl_Io_Reader *efl_io_copier_source_get(const Eo *obj);
 void efl_io_copier_source_set(Eo *obj, Efl_Io_Reader *source);
@@ -144,46 +144,46 @@ void efl_io_copier_source_set(Eo *obj, Efl_Io_Reader *source);
 
 %%Copier source object.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:io:copier:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**//
 <code c>
 double efl_io_copier_timeout_inactivity_get(const Eo *obj);
 void efl_io_copier_timeout_inactivity_set(Eo *obj, double seconds);
 </code>
 
-%%Terminate the copier with ETIMEDOUT if it becomes inactive for some time.%%\\ 
+%%Terminates the copier with ETIMEDOUT if it becomes inactive for some time.%%\\ 
 \\ 
 
 ==== Inherited ====
 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
+[[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:develop:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
 Efl_Loop *efl_loop_get(const Eo *obj);
 </code>
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:constructor|constructor]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:io:copier:method:constructor|constructor]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_constructor(Eo *obj);
 </code>
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:destructor|destructor]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:io:copier:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:io:copier:method:finalize|finalize]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:io:copier:method:finalize|finalize]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_finalize(Eo *obj);
 </code>
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
 Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
@@ -191,105 +191,120 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
 </code>
 
 %%Get an iterator on all childrens%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
 <code c>
 Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
 </code>
 
 %%Make an object a composite object of another.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
 <code c>
 Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
 </code>
 
 %%Detach a composite object from another object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
 <code c>
 Eina_Bool efl_composite_part_is(Eo *obj);
 </code>
 
 %%Check if an object is part of a composite object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:debug_name_override|debug_name_override]]**
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+
+%%Build a read-only name for this object used for debugging.%%\\ 
+\\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:del|del]]**
 <code c>
 void efl_del(const Eo *obj);
 </code>
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
 </code>
 
 %%Add an event callback forwarder for an event and an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
 <code c>
 void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
 void efl_event_callback_stop(Eo *obj);
 </code>
 
 %%Stop the current callback call.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
 <code c>
 void efl_event_freeze(Eo *obj);
 </code>
 
 %%Freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
 <code c>
 void efl_event_global_freeze(const Eo *obj);
 </code>
 
 %%Freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
 <code c>
 void efl_event_global_thaw(const Eo *obj);
 </code>
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
 <code c>
 void efl_event_thaw(Eo *obj);
 </code>
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
-Efl_Object *efl_name_find(Eo *obj, const char *search);
+Efl_Object *efl_name_find(const Eo *obj, const char *search);
 </code>
 
-%%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
+%%Find a child object with the given name and return it.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:provider_find|provider_find]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:provider_find|provider_find]]**
 <code c>
 Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_allow_parent_unref_get(const Eo *obj);
+void efl_allow_parent_unref_set(Eo *obj, Eina_Bool allow);
+</code>
+
+%%Allow an object to be deleted by unref even if it has a parent.%%\\ 
+\\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
 const char *efl_comment_get(const Eo *obj);
 void efl_comment_set(Eo *obj, const char *comment);
@@ -297,28 +312,28 @@ void efl_comment_set(Eo *obj, const char *comment);
 
 %%A human readable comment for the object%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
 <code c>
 int efl_event_freeze_count_get(const Eo *obj);
 </code>
 
 %%Return freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
 <code c>
 int efl_event_global_freeze_count_get(const Eo *obj);
 </code>
 
 %%Return freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
 <code c>
 Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
 const char *efl_name_get(const Eo *obj);
 void efl_name_set(Eo *obj, const char *name);
@@ -326,14 +341,14 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:method:close|close]]** //[Overridden here]//
+[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:efl:auto:class:efl:io:copier:method:close|close]]** //[Overridden here]//
 <code c>
 Eina_Error efl_io_closer_close(Eo *obj);
 </code>
 
 %%Closes the Input/Output object.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:efl:auto:class:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
 <code c>
 Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
 void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
@@ -341,7 +356,7 @@ void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructo
 
 %%If true will automatically close() on object destructor.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:efl:auto:class:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
 <code c>
 Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
 Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
@@ -349,7 +364,7 @@ Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
 
 %%If true will automatically close resources on exec() calls.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:class:efl:io:copier:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:efl:auto:class:efl:io:copier:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
 <code c>
 Eina_Bool efl_io_closer_closed_get(const Eo *obj);
 Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
@@ -357,38 +372,45 @@ Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
 
 %%If true will notify object was closed.%%\\ 
 \\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:auto_unref|auto_unref]]** //**(set)**// ''protected''
+<code c>
+void efl_auto_unref_set(Eo *obj, Eina_Bool enable);
+</code>
+
+%%Mark an object to be automatically deleted after a function call.%%\\ 
+\\ 
 
 ===== Events =====
 
-**[[:docs:efl:auto:class:efl:io:copier:event:data|data]]**
+**[[:develop:efl:auto:class:efl:io:copier:event:data|data]]**
 <code c>
 EFL_IO_COPIER_EVENT_DATA(const Eina_Slice *)
 </code>
 
 %%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:event:done|done]]**
+**[[:develop:efl:auto:class:efl:io:copier:event:done|done]]**
 <code c>
 EFL_IO_COPIER_EVENT_DONE(void)
 </code>
 
 %%All available data was copied from source to destination%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:event:error|error]]**
+**[[:develop:efl:auto:class:efl:io:copier:event:error|error]]**
 <code c>
 EFL_IO_COPIER_EVENT_ERROR(Eina_Error)
 </code>
 
 %%An error happened and the copy stopped%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:event:line|line]]**
+**[[:develop:efl:auto:class:efl:io:copier:event:line|line]]**
 <code c>
 EFL_IO_COPIER_EVENT_LINE(const Eina_Slice *)
 </code>
 
-%%If %%[[:docs:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
+%%If %%[[:develop:efl:auto:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:io:copier:event:progress|progress]]**
+**[[:develop:efl:auto:class:efl:io:copier:event:progress|progress]]**
 <code c>
 EFL_IO_COPIER_EVENT_PROGRESS(void)
 </code>
@@ -397,28 +419,28 @@ EFL_IO_COPIER_EVENT_PROGRESS(void)
 \\ 
 ==== Inherited ====
 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:callback_add|callback,add]]**
 <code c>
 EFL_EVENT_CALLBACK_ADD(void, @hot)
 </code>
 
 %%A callback was added.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:callback_del|callback,del]]**
 <code c>
 EFL_EVENT_CALLBACK_DEL(void, @hot)
 </code>
 
 %%A callback was deleted.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:del|del]]**
 <code c>
 EFL_EVENT_DEL(void, @hot)
 </code>
 
 %%Object is being deleted.%%\\ 
 \\ 
-[[:docs:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:docs:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
+[[:develop:efl:auto:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:efl:auto:mixin:efl:io:closer:event:closed|closed]]**
 <code c>
 EFL_IO_CLOSER_EVENT_CLOSED(void)
 </code>

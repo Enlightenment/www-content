@@ -4,9 +4,9 @@
 <code>
 parse @class {
     params {
-        @in numeric_address: string;
+        @in numeric_address: free(string, free);
     }
-    return: own(Efl.Net.Ip_Address);
+    return: free(Efl.Net.Ip_Address, efl_del);
 }
 </code>
 
@@ -30,10 +30,10 @@ Efl_Net_Ip_Address *efl_net_ip_address_parse(const Eo *obj, const char *numeric_
 
 %%- IPv4 complete: 127.0.0.1:1234 - IPv4 no port: 127.0.0.1 - IPv6 complete: [::1]:1234 - IPv6 no port: [::1] - IPv6 no braces (implies no port): ::1%%
 
-%%If you want to translate address and port to numbers use %%[[:docs:efl:auto:class:efl:net:ip_address:method:resolve|Efl.Net.Ip_Address.resolve]]%%.%%
+%%If you want to translate address and port to numbers use %%[[:develop:efl:auto:class:efl:net:ip_address:method:resolve|Efl.Net.Ip_Address.resolve]]%%.%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:net:ip_address:method:parse:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:ip_address:method:parse:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

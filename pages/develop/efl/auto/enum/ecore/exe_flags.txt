@@ -13,7 +13,8 @@ enum Ecore.Exe_Flags {
     respawn: 64,
     use_sh: 128,
     not_leader: 256,
-    term_with_parent: 512
+    term_with_parent: 512,
+    isolate_io: 1024
 }
 </code>
 
@@ -31,7 +32,8 @@ typedef enum {
     ECORE_EXE_RESPAWN = 64,
     ECORE_EXE_USE_SH = 128,
     ECORE_EXE_NOT_LEADER = 256,
-    ECORE_EXE_TERM_WITH_PARENT = 512
+    ECORE_EXE_TERM_WITH_PARENT = 512,
+    ECORE_EXE_ISOLATE_IO = 1024
 } Ecore_Exe_Flags;
 </code>
 
@@ -39,11 +41,11 @@ typedef enum {
 
 %%Flags for executing a child with its stdin and/or stdout piped back.%%
 
-{{page>:docs:efl:user:enum:ecore:exe_flags:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:enum:ecore:exe_flags:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:enum:ecore:exe_flags:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:enum:ecore:exe_flags:fields&nouser&nolink&nodate}}
 
   * **none** - %%No exe flags at all%%
   * **pipe_read** - %%Exe Pipe Read mask%%
@@ -56,4 +58,5 @@ typedef enum {
   * **use_sh** - %%Use /bin/sh to run the command.%%
   * **not_leader** - %%Do not use setsid() to have the executed process be its own session leader%%
   * **term_with_parent** - %%Makes child receive SIGTERM when parent dies.%%
+  * **isolate_io** - %%Try and isolate stdin/out and err of the process so it isn't shared with the parent.%%
 

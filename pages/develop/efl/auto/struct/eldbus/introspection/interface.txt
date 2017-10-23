@@ -3,11 +3,11 @@
 
 <code>
 struct Eldbus.Introspection.Interface {
-    name: stringshare;
-    methods: list<void_ptr>;
-    signals: list<void_ptr>;
-    properties: list<void_ptr>;
-    annotations: list<void_ptr>;
+    name: free(stringshare, eina_stringshare_del);
+    methods: free(list<void_ptr>, eina_list_free);
+    signals: free(list<void_ptr>, eina_list_free);
+    properties: free(list<void_ptr>, eina_list_free);
+    annotations: free(list<void_ptr>, eina_list_free);
 }
 </code>
 
@@ -27,11 +27,11 @@ typedef struct _Eldbus_Introspection_Interface {
 
 %%DBus Interface%%
 
-{{page>:docs:efl:user:struct:eldbus:introspection:interface:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:interface:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:eldbus:introspection:interface:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:interface:fields&nouser&nolink&nodate}}
 
   * **name** - %%Interface name%%
   * **methods** - %%List with interface methods%%

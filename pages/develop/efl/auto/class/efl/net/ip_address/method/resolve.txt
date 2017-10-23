@@ -4,11 +4,11 @@
 <code>
 resolve @class {
     params {
-        @in address: string @nonull;
+        @in address: free(string, free) @nonull;
         @in family: int @optional;
         @in flags: int @optional;
     }
-    return: future<const(Efl.Net.Ip_Address.Resolve_Results)>;
+    return: free(future<const(Efl.Net.Ip_Address.Resolve_Results)>, efl_del);
 }
 </code>
 
@@ -34,10 +34,10 @@ Efl_Future *efl_net_ip_address_resolve(const Eo *obj, const char *address, int f
 
 %%Ports can also be named, for example http resolves to 80. Your system database is used (see getaddrinfo()).%%
 
-%%You may try %%[[:docs:efl:auto:class:efl:net:ip_address:method:parse|Efl.Net.Ip_Address.parse]]%% if you have numeric values for host and port.%%
+%%You may try %%[[:develop:efl:auto:class:efl:net:ip_address:method:parse|Efl.Net.Ip_Address.parse]]%% if you have numeric values for host and port.%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:net:ip_address:method:resolve:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:ip_address:method:resolve:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

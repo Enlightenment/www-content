@@ -5,8 +5,7 @@
 @property screen_size @pure_virtual {
     get {
         values {
-            w: int;
-            h: int;
+            size: Eina.Size2D;
         }
     }
 }
@@ -15,20 +14,21 @@
 ===== C signature =====
 
 <code c>
-void efl_screen_size_get(const Eo *obj, int *w, int *h);
+Eina_Size2D efl_screen_size_get(const Eo *obj);
 </code>
 
 ===== Values =====
 
-  * **w** - %%Where to return the width value. May be %%''null''%%.%%
-  * **h** - %%Where to return the height value. May be %%''null''%%.%%
+  * **size** - %%The screen size.%%
 ===== Description =====
 
 %%Get screen geometry details for the screen that a window is on.%%
-{{page>:docs:efl:user:interface:efl:screen:property:screen_size:description&nodate&nolink&nouser}}
+
+%%Note that on some display systems this information is not available (this could be the case Wayland for instance).%%
+{{page>:develop:efl:user:interface:efl:screen:property:screen_size:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
   * **Efl.Screen.screen_size**
-  * [[:docs:efl:auto:class:efl:ui:win:property:screen_size|Efl.Ui.Win.screen_size]]
+  * [[:develop:efl:auto:class:efl:ui:win:property:screen_size|Efl.Ui.Win.screen_size]]
 

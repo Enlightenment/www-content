@@ -5,7 +5,7 @@
 close_request {
     params {
         @in reason: Efl.Net.Dialer.Websocket.Close_Reason;
-        @in message: string @optional;
+        @in message: free(string, free) @optional;
     }
 }
 </code>
@@ -25,14 +25,14 @@ void efl_net_dialer_websocket_close_request(Eo *obj, Efl_Net_Dialer_Websocket_Cl
 
 %%Requests (opcode=0x8) the server to terminate the connection.%%
 
-%%Unlike %%[[:docs:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%%, this won't abruptly close the connection, rather will queue a message requesting the server to gracefully close it.%%
+%%Unlike %%[[:develop:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%%, this won't abruptly close the connection, rather will queue a message requesting the server to gracefully close it.%%
 
-%%After this method is called you should consider the object in "closing" state, no more messages can be sent (%%[[:docs:efl:auto:class:efl:net:dialer:websocket:method:text_send|Efl.Net.Dialer.Websocket.text_send]]%%, %%[[:docs:efl:auto:class:efl:net:dialer:websocket:method:binary_send|Efl.Net.Dialer.Websocket.binary_send]]%% and %%[[:docs:efl:auto:class:efl:net:dialer:websocket:method:ping|Efl.Net.Dialer.Websocket.ping]]%% will fail).%%
+%%After this method is called you should consider the object in "closing" state, no more messages can be sent (%%[[:develop:efl:auto:class:efl:net:dialer:websocket:method:text_send|Efl.Net.Dialer.Websocket.text_send]]%%, %%[[:develop:efl:auto:class:efl:net:dialer:websocket:method:binary_send|Efl.Net.Dialer.Websocket.binary_send]]%% and %%[[:develop:efl:auto:class:efl:net:dialer:websocket:method:ping|Efl.Net.Dialer.Websocket.ping]]%% will fail).%%
 
-%%The object will be automatically closed with %%[[:docs:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% once the serve replies with his own close message, that will be reported as "closed,reason".%%
+%%The object will be automatically closed with %%[[:develop:efl:auto:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% once the serve replies with his own close message, that will be reported as "closed,reason".%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:net:dialer:websocket:method:close_request:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:dialer:websocket:method:close_request:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

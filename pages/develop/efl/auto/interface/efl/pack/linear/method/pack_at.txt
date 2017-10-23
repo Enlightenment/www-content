@@ -4,7 +4,7 @@
 <code>
 pack_at @pure_virtual {
     params {
-        @in subobj: own(Efl.Gfx);
+        @in subobj: free(Efl.Gfx, efl_del);
         @in index: int;
     }
     return: bool;
@@ -19,7 +19,7 @@ Eina_Bool efl_pack_at(Eo *obj, Efl_Gfx *subobj, int index);
 
 ===== Parameters =====
 
-  * **subobj** //(in)// - %%Item to pack.%%
+  * **subobj** //(in)// - %%Item to pack at given index.%%
   * **index** //(in)// - %%A position.%%
 
 ===== Description =====
@@ -27,13 +27,15 @@ Eina_Bool efl_pack_at(Eo *obj, Efl_Gfx *subobj, int index);
 %%Inserts %%''subobj''%% at the specified %%''index''%%.%%
 
 %%Valid range: -%%''count''%% to +%%''count''%%. -1 refers to the last element. Out of range indices will trigger an append.%%
-{{page>:docs:efl:user:interface:efl:pack:linear:method:pack_at:description&nodate&nolink&nouser}}
+
+%%When this container is deleted, it will request deletion on the given %%''subobj''%%. Use %%[[:develop:efl:auto:interface:efl:pack:method:unpack|Efl.Pack.unpack]]%% to remove %%''subobj''%% from this container without deleting it.%%
+{{page>:develop:efl:user:interface:efl:pack:linear:method:pack_at:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
   * **Efl.Pack.Linear.pack_at**
-  * [[:docs:efl:auto:class:efl:ui:flip:method:pack_at|Efl.Ui.Flip.pack_at]]
-  * [[:docs:efl:auto:class:efl:canvas:layout_internal:box:method:pack_at|Efl.Canvas.Layout_Internal.Box.pack_at]]
-  * [[:docs:efl:auto:class:efl:ui:box:method:pack_at|Efl.Ui.Box.pack_at]]
-  * [[:docs:efl:auto:class:efl:ui:layout_internal:box:method:pack_at|Efl.Ui.Layout_Internal.Box.pack_at]]
+  * [[:develop:efl:auto:class:efl:ui:flip:method:pack_at|Efl.Ui.Flip.pack_at]]
+  * [[:develop:efl:auto:class:efl:canvas:layout:part_box:method:pack_at|Efl.Canvas.Layout.Part_Box.pack_at]]
+  * [[:develop:efl:auto:class:efl:ui:box:method:pack_at|Efl.Ui.Box.pack_at]]
+  * [[:develop:efl:auto:class:efl:ui:layout:part:box:method:pack_at|Efl.Ui.Layout.Part.Box.pack_at]]
 

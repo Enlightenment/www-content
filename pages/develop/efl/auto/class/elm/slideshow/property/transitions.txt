@@ -4,7 +4,7 @@
 <code>
 @property transitions {
     get {
-        return: const(list<string>);
+        return: free(const(list<free(string, free)>), eina_list_free);
     }
 }
 </code>
@@ -25,7 +25,7 @@ const Eina_List *elm_obj_slideshow_transitions_get(const Eo *obj);
 
 %%The stringshared strings get no new references exclusive to the user grabbing the list, here, so if you'd like to use them out of this call's context, you'd better @ref eina_stringshare_ref them. Also the list is an internal list and so is only valid for as long as the slideshow object is valid and has not internally changed its list for some reason, so make a copy if you need it around.%%
 </note>
-{{page>:docs:efl:user:class:elm:slideshow:property:transitions:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:slideshow:property:transitions:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

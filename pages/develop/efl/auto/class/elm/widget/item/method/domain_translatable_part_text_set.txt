@@ -4,9 +4,9 @@
 <code>
 domain_translatable_part_text_set {
     params {
-        @in part: string;
-        @in domain: string;
-        @in label: string;
+        @in part: free(string, free);
+        @in domain: free(string, free);
+        @in label: free(string, free);
     }
 }
 </code>
@@ -27,10 +27,10 @@ void elm_wdg_item_domain_translatable_part_text_set(Eo *obj, const char *part, c
 
 %%Set the text for an object item's part, marking it as translatable.%%
 
-%%The string to set as %%''text''%% must be the original one. Do not pass the return of %%''gettext''%%() here. Elementary will translate the string internally and set it on the object item using %%[[:docs:efl:auto:class:elm:widget:item:property:part_text|Elm.Widget.Item.part_text.set]]%%, also storing the original string so that it can be automatically translated when the language is changed with elm_language_set(). The %%''domain''%% will be stored along to find the translation in the correct catalog. It can be NULL, in which case it will use whatever domain was set by the application with %%''textdomain''%%(). This is useful in case you are building a library on top of Elementary that will have its own translatable strings, that should not be mixed with those of programs using the library.%%
+%%The string to set as %%''text''%% must be the original one. Do not pass the return of %%''gettext''%%() here. Elementary will translate the string internally and set it on the object item using %%[[:develop:efl:auto:class:elm:widget:item:property:part_text|Elm.Widget.Item.part_text.set]]%%, also storing the original string so that it can be automatically translated when the language is changed with elm_language_set(). The %%''domain''%% will be stored along to find the translation in the correct catalog. It can be NULL, in which case it will use whatever domain was set by the application with %%''textdomain''%%(). This is useful in case you are building a library on top of Elementary that will have its own translatable strings, that should not be mixed with those of programs using the library.%%
 
 //Since 1.8//
-{{page>:docs:efl:user:class:elm:widget:item:method:domain_translatable_part_text_set:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:widget:item:method:domain_translatable_part_text_set:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

@@ -1,41 +1,47 @@
 <title>Edje.Object.signal_callback_del</title>
-===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_del|Efl.Canvas.Layout_Signal.signal_callback_del]].//===== Signature =====
 
 <code>
-signal_callback_del {
+signal_callback_del @pure_virtual {
     params {
-        @in emission: string;
-        @in source: string;
-        @in func: Edje.Signal_Cb;
+        @in emission: free(string, free);
+        @in source: free(string, free);
+        @in func: Efl.Signal_Cb;
         @in data: void_ptr;
     }
-    return: void_ptr;
+    return: bool;
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-void *edje_obj_signal_callback_del(Eo *obj, const char *emission, const char *source, Edje_Signal_Cb func, void *data);
+Eina_Bool efl_canvas_layout_signal_callback_del(Eo *obj, const char *emission, const char *source, Efl_Signal_Cb func, void *data);
 </code>
 
 ===== Parameters =====
 
-  * **emission** //(in)// - %%The emission string.%%
-  * **source** //(in)// - %%The source string.%%
-  * **func** //(in)// - %%The callback function.%%
-  * **data** //(in)// - %%The callback function.%%
+  * **emission** //(in)// - %%The signal's "emission" string%%
+  * **source** //(in)// - %%The signal's "source" string%%
+  * **func** //(in)// - %%The callback function to be executed when the signal is emitted.%%
+  * **data** //(in)// - %%A pointer to data to pass to %%''func''%%.%%
 
 ===== Description =====
 
 %%Removes a signal-triggered callback from an object.%%
 
-%%This function removes a callback, previously attached to the emission of a signal, from the object  obj. The parameters emission,  source and  func must match exactly those passed to a previous call to edje_object_signal_callback_add(). The data pointer that was passed to this call will be returned.%%
+%%This function removes a callback, previously attached to the emission of a signal, from the object  obj. The parameters emission, source and func must match exactly those passed to a previous call to %%[[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_add|Efl.Canvas.Layout_Signal.signal_callback_add]]%%().%%
 
-%%See also %%[[:docs:efl:auto:class:edje:object:method:signal_callback_add|Edje.Object.signal_callback_add]]%%(). @ref edje_object_signal_callback_del_full().%%
-{{page>:docs:efl:user:class:edje:object:method:signal_callback_del:description&nodate&nolink&nouser}}
+%%See %%[[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_add|Efl.Canvas.Layout_Signal.signal_callback_add]]%%.%%
+
+//Since 1.21//
+{{page>:develop:efl:user:class:edje:object:method:signal_callback_del:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
+  * [[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_del|Efl.Canvas.Layout_Signal.signal_callback_del]]
+  * [[:develop:efl:auto:class:efl:ui:layout:method:signal_callback_del|Efl.Ui.Layout.signal_callback_del]]
+  * [[:develop:efl:auto:class:elm:entry:method:signal_callback_del|Elm.Entry.signal_callback_del]]
+  * [[:develop:efl:auto:class:efl:ui:text:method:signal_callback_del|Efl.Ui.Text.signal_callback_del]]
   * **Edje.Object.signal_callback_del**
 

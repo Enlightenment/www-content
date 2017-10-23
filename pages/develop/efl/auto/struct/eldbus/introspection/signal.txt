@@ -3,9 +3,9 @@
 
 <code>
 struct Eldbus.Introspection.Signal {
-    name: stringshare;
-    arguments: list<ptr(Eldbus.Introspection.Argument)>;
-    annotations: list<ptr(Eldbus.Introspection.Annotation)>;
+    name: free(stringshare, eina_stringshare_del);
+    arguments: free(list<ptr(Eldbus.Introspection.Argument)>, eina_list_free);
+    annotations: free(list<ptr(Eldbus.Introspection.Annotation)>, eina_list_free);
 }
 </code>
 
@@ -23,11 +23,11 @@ typedef struct _Eldbus_Introspection_Signal {
 
 %%DBus Signal%%
 
-{{page>:docs:efl:user:struct:eldbus:introspection:signal:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:signal:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:eldbus:introspection:signal:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:signal:fields&nouser&nolink&nodate}}
 
   * **name** - %%Signal name%%
   * **arguments** - %%List with signal arguments%%

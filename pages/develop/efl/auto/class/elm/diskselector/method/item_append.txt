@@ -4,12 +4,12 @@
 <code>
 item_append {
     params {
-        @in label: string;
-        @in icon: Efl.Canvas.Object @optional;
+        @in label: free(string, free);
+        @in icon: free(Efl.Canvas.Object, efl_del) @optional;
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -40,8 +40,8 @@ Elm_Widget_Item *elm_obj_diskselector_item_append(Eo *obj, const char *label, Ef
 
 %%If a function is passed as argument, it will be called every time this item is selected, i.e., the user stops the diskselector with this item on center position. If such function isn't needed, just passing %%''null''%% as %%''func''%% is enough. The same should be done for %%''data''%%.%%
 
-%%See also @ref elm_object_item_del, %%[[:docs:efl:auto:class:elm:diskselector:method:clear|Elm.Diskselector.clear]]%%, @ref elm_icon_add.%%
-{{page>:docs:efl:user:class:elm:diskselector:method:item_append:description&nodate&nolink&nouser}}
+%%See also @ref elm_object_item_del, %%[[:develop:efl:auto:class:elm:diskselector:method:clear|Elm.Diskselector.clear]]%%, @ref elm_icon_add.%%
+{{page>:develop:efl:user:class:elm:diskselector:method:item_append:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

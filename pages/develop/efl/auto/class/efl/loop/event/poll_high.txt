@@ -1,0 +1,39 @@
+<title>Efl.Loop: poll,high</title>
+===== Signature =====
+
+<code>
+poll,high;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_EVENT_POLL_HIGH(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_event_poll_high(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_EVENT_POLL_HIGH, on_efl_loop_event_poll_high, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Event occurs multiple time per second. The exact tick is undefined and could be adjusted system wide.%%
+{{page>:develop:efl:user:class:efl:loop:event:poll_high:description&nouser&nolink&nodate}}
+

@@ -4,8 +4,8 @@
 <code>
 adopt {
     params {
-        @in efl_net_socket: Efl.Net.Socket;
-        @in ctx: Efl.Net.Ssl.Context;
+        @in efl_net_socket: free(Efl.Net.Socket, efl_del);
+        @in ctx: free(Efl.Net.Ssl.Context, efl_del);
     }
 }
 </code>
@@ -27,10 +27,10 @@ void efl_net_socket_ssl_adopt(Eo *obj, Efl_Net_Socket *efl_net_socket, Efl_Net_S
 
 %%If used with an Efl.Net.Dialer object, it will assume the 'connect' role, otherwise will use 'accept'.%%
 
-%%This is a constructor only method and should be called before %%[[:docs:efl:auto:class:efl:object:method:finalize|Efl.Object.finalize]]%%.%%
+%%This is a constructor only method and should be called before %%[[:develop:efl:auto:class:efl:object:method:finalize|Efl.Object.finalize]]%%.%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:net:socket:ssl:method:adopt:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:socket:ssl:method:adopt:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

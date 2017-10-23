@@ -4,14 +4,14 @@
 <code>
 item_insert_after {
     params {
-        @in after: Elm.Widget.Item;
-        @in title_label: string @optional;
-        @in prev_btn: Efl.Canvas.Object @nullable;
-        @in next_btn: Efl.Canvas.Object @nullable;
-        @in content: Efl.Canvas.Object;
-        @in item_style: string @nullable;
+        @in after: free(Elm.Widget.Item, efl_del);
+        @in title_label: free(string, free) @optional;
+        @in prev_btn: free(Efl.Canvas.Object, efl_del) @nullable;
+        @in next_btn: free(Efl.Canvas.Object, efl_del) @nullable;
+        @in content: free(Efl.Canvas.Object, efl_del);
+        @in item_style: free(string, free) @nullable;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -37,7 +37,7 @@ Elm_Widget_Item *elm_obj_naviframe_item_insert_after(Eo *obj, Elm_Widget_Item *a
 %%The item is inserted into the naviframe straight away without any transition operations. This item will be deleted when it is popped.%%
 
 %%The following styles are available for this item: "default"%%
-{{page>:docs:efl:user:class:elm:naviframe:method:item_insert_after:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:naviframe:method:item_insert_after:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

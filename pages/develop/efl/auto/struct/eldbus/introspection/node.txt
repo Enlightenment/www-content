@@ -3,9 +3,9 @@
 
 <code>
 struct Eldbus.Introspection.Node {
-    name: stringshare;
-    nodes: list<void_ptr>;
-    interfaces: list<void_ptr>;
+    name: free(stringshare, eina_stringshare_del);
+    nodes: free(list<void_ptr>, eina_list_free);
+    interfaces: free(list<void_ptr>, eina_list_free);
 }
 </code>
 
@@ -23,11 +23,11 @@ typedef struct _Eldbus_Introspection_Node {
 
 %%DBus Node%%
 
-{{page>:docs:efl:user:struct:eldbus:introspection:node:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:node:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:eldbus:introspection:node:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:eldbus:introspection:node:fields&nouser&nolink&nodate}}
 
   * **name** - %%Node name (optional)%%
   * **nodes** - %%List with nodes%%

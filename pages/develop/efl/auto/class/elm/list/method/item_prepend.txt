@@ -4,13 +4,13 @@
 <code>
 item_prepend {
     params {
-        @in label: string;
-        @in icon: Efl.Canvas.Object @optional;
-        @in end: Efl.Canvas.Object @optional;
+        @in label: free(string, free);
+        @in icon: free(Efl.Canvas.Object, efl_del) @optional;
+        @in end: free(Efl.Canvas.Object, efl_del) @optional;
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -42,7 +42,7 @@ Elm_Widget_Item *elm_obj_list_item_prepend(Eo *obj, const char *label, Efl_Canva
 
 %%Remember that the label parameter is copied inside the list. So if an application dynamically allocated the label, the application should free the label after this call.%%
 </note>
-{{page>:docs:efl:user:class:elm:list:method:item_prepend:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:list:method:item_prepend:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

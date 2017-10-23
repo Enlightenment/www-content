@@ -4,7 +4,7 @@
 <code>
 @property items {
     get {
-        return: free(own(list<Elm.Widget.Item>), eina_list_free) @warn_unused;
+        return: free(list<free(Elm.Widget.Item, efl_del)>, eina_list_free) @warn_unused;
     }
 }
 </code>
@@ -18,7 +18,7 @@ Eina_List *elm_obj_naviframe_items_get(const Eo *obj);
 ===== Description =====
 
 %%Get a list of all the naviframe items.%%
-{{page>:docs:efl:user:class:elm:naviframe:property:items:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:naviframe:property:items:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

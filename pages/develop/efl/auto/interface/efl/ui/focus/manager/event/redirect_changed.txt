@@ -1,0 +1,41 @@
+<title>Efl.Ui.Focus.Manager: redirect,changed</title>
+===== Signature =====
+
+<code>
+redirect,changed: free(Efl.Ui.Focus.Manager, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_REDIRECT_CHANGED(Efl_Ui_Focus_Manager *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_ui_focus_manager_event_redirect_changed(void *data, const Efl_Event *event)
+{
+    Efl_Ui_Focus_Manager *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_UI_FOCUS_MANAGER_EVENT_REDIRECT_CHANGED, on_efl_ui_focus_manager_event_redirect_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Emitted when the redirect object has changed, the old manager is passed as event info%%
+
+//Since 1.20//
+{{page>:develop:efl:user:interface:efl:ui:focus:manager:event:redirect_changed:description&nouser&nolink&nodate}}
+

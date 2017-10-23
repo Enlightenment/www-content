@@ -4,13 +4,13 @@
 <code>
 item_add {
     params {
-        @in parent: Elm.Widget.Item @optional;
-        @in icon: string @optional;
-        @in label: string;
+        @in parent: free(Elm.Widget.Item, efl_del) @optional;
+        @in icon: free(string, free) @optional;
+        @in label: free(string, free);
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -34,7 +34,7 @@ Elm_Widget_Item *elm_obj_menu_item_add(Eo *obj, Elm_Widget_Item *parent, const c
 
 %%This function does not accept relative icon path.%%
 </note>
-{{page>:docs:efl:user:class:elm:menu:method:item_add:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:menu:method:item_add:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

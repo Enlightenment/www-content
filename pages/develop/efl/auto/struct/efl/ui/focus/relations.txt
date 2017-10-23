@@ -3,15 +3,15 @@
 
 <code>
 struct Efl.Ui.Focus.Relations {
-    right: list<Efl.Ui.Focus.Object>;
-    left: list<Efl.Ui.Focus.Object>;
-    top: list<Efl.Ui.Focus.Object>;
-    down: list<Efl.Ui.Focus.Object>;
-    next: Efl.Ui.Focus.Object;
-    prev: Efl.Ui.Focus.Object;
-    type: string;
-    parent: Efl.Ui.Focus.Object;
-    redirect: Efl.Ui.Focus.Manager;
+    right: free(list<free(Efl.Ui.Focus.Object, efl_del)>, eina_list_free);
+    left: free(list<free(Efl.Ui.Focus.Object, efl_del)>, eina_list_free);
+    top: free(list<free(Efl.Ui.Focus.Object, efl_del)>, eina_list_free);
+    down: free(list<free(Efl.Ui.Focus.Object, efl_del)>, eina_list_free);
+    next: free(Efl.Ui.Focus.Object, efl_del);
+    prev: free(Efl.Ui.Focus.Object, efl_del);
+    type: free(string, free);
+    parent: free(Efl.Ui.Focus.Object, efl_del);
+    redirect: free(Efl.Ui.Focus.Manager, efl_del);
 }
 </code>
 
@@ -37,11 +37,11 @@ typedef struct _Efl_Ui_Focus_Relations {
 
 //Since 1.20//
 
-{{page>:docs:efl:user:struct:efl:ui:focus:relations:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:efl:ui:focus:relations:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:efl:ui:focus:relations:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:efl:ui:focus:relations:fields&nouser&nolink&nodate}}
 
   * **right** - %%List of objects on the right side%%
   * **left** - %%[List of objects on the left side%%

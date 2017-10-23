@@ -1,11 +1,11 @@
 <title>Elm.Popup.signal_emit</title>
-//Overridden from [[:docs:efl:auto:class:elm:layout:method:signal_emit|Elm.Layout.signal_emit]].//===== Signature =====
+//Overridden from [[:develop:efl:auto:class:efl:ui:layout:method:signal_emit|Efl.Canvas.Layout_Signal.signal_emit]].//===== Signature =====
 
 <code>
-signal_emit {
+signal_emit @pure_virtual {
     params {
-        @in emission: string;
-        @in source: string;
+        @in emission: free(string, free);
+        @in source: free(string, free);
     }
 }
 </code>
@@ -13,26 +13,35 @@ signal_emit {
 ===== C signature =====
 
 <code c>
-void elm_obj_layout_signal_emit(Eo *obj, const char *emission, const char *source);
+void efl_canvas_layout_signal_emit(Eo *obj, const char *emission, const char *source);
 </code>
 
 ===== Parameters =====
 
-  * **emission** //(in)// - %%The signal's name string.%%
-  * **source** //(in)// - %%The signal's source string.%%
+  * **emission** //(in)// - %%The signal's "emission" string%%
+  * **source** //(in)// - %%The signal's "source" string%%
 
 ===== Description =====
 
-%%Send a (Edje) signal to a given layout widget's underlying Edje object.%%
+%%Sends/emits an Edje signal to this layout.%%
 
-%%This function sends a signal to the underlying Edje object of %%''obj''%%. An Edje program on that Edje object's definition can respond to a signal by specifying matching 'signal' and 'source' fields.%%
-{{page>:docs:efl:user:class:elm:popup:method:signal_emit:description&nodate&nolink&nouser}}
+%%This function sends a signal to the object. An Edje program, at the EDC specification level, can respond to a signal by having declared matching "signal" and "source" fields on its block.%%
+
+%%See also the Edje Data Collection Reference for EDC files.%%
+
+%%See %%[[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_add|Efl.Canvas.Layout_Signal.signal_callback_add]]%%() for more on Edje signals.%%
+
+//Since 1.21//
+{{page>:develop:efl:user:class:elm:popup:method:signal_emit:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:class:elm:layout:method:signal_emit|Elm.Layout.signal_emit]]
-  * [[:docs:efl:auto:class:elm:naviframe:method:signal_emit|Elm.Naviframe.signal_emit]]
-  * [[:docs:efl:auto:class:elm:entry:method:signal_emit|Elm.Entry.signal_emit]]
-  * [[:docs:efl:auto:class:efl:ui:text:method:signal_emit|Efl.Ui.Text.signal_emit]]
+  * [[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_emit|Efl.Canvas.Layout_Signal.signal_emit]]
+  * [[:develop:efl:auto:class:efl:ui:layout:method:signal_emit|Efl.Ui.Layout.signal_emit]]
+  * [[:develop:efl:auto:class:elm:entry:method:signal_emit|Elm.Entry.signal_emit]]
+  * [[:develop:efl:auto:class:efl:ui:text:method:signal_emit|Efl.Ui.Text.signal_emit]]
+  * [[:develop:efl:auto:class:elm:naviframe:method:signal_emit|Elm.Naviframe.signal_emit]]
   * **Elm.Popup.signal_emit**
+  * [[:develop:efl:auto:class:efl:ui:image:method:signal_emit|Efl.Ui.Image.signal_emit]]
+  * [[:develop:efl:auto:class:edje:object:method:signal_emit|Edje.Object.signal_emit]]
 

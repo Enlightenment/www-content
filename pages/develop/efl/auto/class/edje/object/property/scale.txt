@@ -1,18 +1,17 @@
 <title>Edje.Object.scale</title>
-===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:ui:base:property:scale|Efl.Ui.Base.scale]] **(get, set)**.//===== Signature =====
 
 <code>
-@property scale {
+@property scale @pure_virtual {
     get {
         values {
-            scale: double;
+            scale: double (0.000000);
         }
     }
     set {
         values {
-            scale: double;
+            scale: double (0.000000);
         }
-        return: bool;
     }
 }
 </code>
@@ -20,42 +19,38 @@
 ===== C signature =====
 
 <code c>
-double edje_obj_scale_get(const Eo *obj);
-Eina_Bool edje_obj_scale_set(Eo *obj, double scale);
+double efl_ui_scale_get(const Eo *obj);
+void efl_ui_scale_set(Eo *obj, double scale);
 </code>
 
 ===== Values =====
 
-  * **scale** - %%The scaling factor (the default value is @0.0, meaning individual scaling  not set)%%
+  * **scale** - %%The scaling factor (the default value is 0.0, meaning individual scaling is not set)%%
 ===== Description =====
 
+%%The scaling factor of an object.%%
 
+%%This property is an individual scaling factor on the object (Edje or UI widget). This property (or Edje's global scaling factor, when applicable), will affect this object's part sizes. If scale is not zero, than the individual scaling will override any global scaling set, for the object obj's parts. Set it back to zero to get the effects of the global scaling again.%%
 
-{{page>:docs:efl:user:class:edje:object:property:scale:description&nodate&nolink&nouser}}
+%%In Edje, only parts which, at EDC level, had the "scale" property set to 1, will be affected by this function. Check the complete "syntax reference" for EDC files.%%
+</note>
+
+{{page>:develop:efl:user:class:edje:object:property:scale:description&nouser&nolink&nodate}}
 
 ==== Getter ====
 
-%%Gets a given Edje object's scaling factor.%%
+%%Gets an object's scaling factor.%%
 
-%%This function returns the individual scaling factor set on the obj Edje object.%%
-
-%%See also %%[[:docs:efl:auto:class:edje:object:property:scale|Edje.Object.scale.set]]%%() for more details%%
-
-{{page>:docs:efl:user:class:edje:object:property:scale:getter_description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:edje:object:property:scale:getter_description&nouser&nolink&nodate}}
 
 ==== Setter ====
 
-%%Sets the scaling factor for a given Edje object.%%
-
-%%This function sets an  individual scaling factor on the  obj Edje object. This property (or Edje's global scaling factor, when applicable), will affect this object's part sizes. If scale is not zero, than the individual scaling will  override any global scaling set, for the object obj's parts. Put it back to zero to get the effects of the global scaling again.%%
-
-%%Only parts which, at EDC level, had the @"scale" property set to @1, will be affected by this function. Check the complete @ref edcref "syntax reference" for EDC files.%%
-</note>
-
-%%See also %%[[:docs:efl:auto:class:edje:object:property:scale|Edje.Object.scale.get]]%%() @ref edje_scale_get() for more details%%{{page>:docs:efl:user:class:edje:object:property:scale:getter_description&nodate&nolink&nouser}}
+%%Sets the scaling factor of an object.%%{{page>:develop:efl:user:class:edje:object:property:scale:getter_description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
 
+  * [[:develop:efl:auto:interface:efl:ui:base:property:scale|Efl.Ui.Base.scale]]
+  * [[:develop:efl:auto:class:elm:widget:property:scale|Elm.Widget.scale]]
   * **Edje.Object.scale**
 

@@ -27,21 +27,21 @@ digraph hierarchy {
 
 ===== Inheritance hierarchy =====
 
-  * **[[:docs:efl:auto:interface:efl:ui:text:interactive|Efl.Ui.Text.Interactive]] //(interface)//**
-    * [[:docs:efl:auto:interface:efl:text|Efl.Text]] //(interface)//
-    * [[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]] //(interface)//
-    * [[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]] //(interface)//
-    * [[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]] //(interface)//
+  * **[[:develop:efl:auto:interface:efl:ui:text:interactive|Efl.Ui.Text.Interactive]] //(interface)//**
+    * [[:develop:efl:auto:interface:efl:text|Efl.Text]] //(interface)//
+    * [[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]] //(interface)//
+    * [[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]] //(interface)//
+    * [[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]] //(interface)//
 
 ===== Description =====
 
 %%This is an interface interactive text inputs should implement%%
 
-{{page>:docs:efl:user:interface:efl:ui:text:interactive:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:interface:efl:ui:text:interactive:description&nouser&nolink&nodate}}
 
 ===== Members =====
 
-**[[:docs:efl:auto:interface:efl:ui:text:interactive:property:editable|editable]]** //**(get, set)**//
+**[[:develop:efl:auto:interface:efl:ui:text:interactive:property:editable|editable]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_text_interactive_editable_get(const Eo *obj);
 void efl_ui_text_interactive_editable_set(Eo *obj, Eina_Bool editable);
@@ -49,7 +49,7 @@ void efl_ui_text_interactive_editable_set(Eo *obj, Eina_Bool editable);
 
 %%Whether the entry is editable.%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:ui:text:interactive:property:selection_allowed|selection_allowed]]** //**(get, set)**//
+**[[:develop:efl:auto:interface:efl:ui:text:interactive:property:selection_allowed|selection_allowed]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_text_interactive_selection_allowed_get(const Eo *obj);
 void efl_ui_text_interactive_selection_allowed_set(Eo *obj, Eina_Bool allowed);
@@ -57,9 +57,9 @@ void efl_ui_text_interactive_selection_allowed_set(Eo *obj, Eina_Bool allowed);
 
 %%Whether or not selection is allowed on this object%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:ui:text:interactive:property:selection_cursors|selection_cursors]]** //**(get)**//
+**[[:develop:efl:auto:interface:efl:ui:text:interactive:property:selection_cursors|selection_cursors]]** //**(get)**//
 <code c>
-void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Canvas_Text_Cursor **start, Efl_Canvas_Text_Cursor **end);
+void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Text_Cursor_Cursor **start, Efl_Text_Cursor_Cursor **end);
 </code>
 
 %%The cursors used for selection handling.%%\\ 
@@ -67,7 +67,15 @@ void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Canvas_Tex
 
 ==== Inherited ====
 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_fallbacks|font_fallbacks]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_bitmap_scalable|font_bitmap_scalable]]** //**(get, set)**//
+<code c>
+Efl_Text_Font_Bitmap_Scalable efl_text_font_bitmap_scalable_get(const Eo *obj);
+void efl_text_font_bitmap_scalable_set(Eo *obj, Efl_Text_Font_Bitmap_Scalable scalable);
+</code>
+
+%%The bitmap fonts have fixed size glyphs for several available sizes. Basically, it is not scalable. But, it needs to be scalable for some use cases. (ex. colorful emoji fonts)%%\\ 
+\\ 
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_fallbacks|font_fallbacks]]** //**(get, set)**//
 <code c>
 const char *efl_text_font_fallbacks_get(const Eo *obj);
 void efl_text_font_fallbacks_set(Eo *obj, const char *font_fallbacks);
@@ -75,7 +83,7 @@ void efl_text_font_fallbacks_set(Eo *obj, const char *font_fallbacks);
 
 %%Comma-separated list of font fallbacks%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_lang|font_lang]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_lang|font_lang]]** //**(get, set)**//
 <code c>
 const char *efl_text_font_lang_get(const Eo *obj);
 void efl_text_font_lang_set(Eo *obj, const char *lang);
@@ -83,7 +91,7 @@ void efl_text_font_lang_set(Eo *obj, const char *lang);
 
 %%Specific language of the displayed font%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_slant|font_slant]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_slant|font_slant]]** //**(get, set)**//
 <code c>
 Efl_Text_Font_Slant efl_text_font_slant_get(const Eo *obj);
 void efl_text_font_slant_set(Eo *obj, Efl_Text_Font_Slant style);
@@ -91,7 +99,7 @@ void efl_text_font_slant_set(Eo *obj, Efl_Text_Font_Slant style);
 
 %%Type of slant of the displayed font%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_source|font_source]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_source|font_source]]** //**(get, set)**//
 <code c>
 const char *efl_text_font_source_get(const Eo *obj);
 void efl_text_font_source_set(Eo *obj, const char *font_source);
@@ -99,7 +107,7 @@ void efl_text_font_source_set(Eo *obj, const char *font_source);
 
 %%The source that will be used to lookup the font of the text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_weight|font_weight]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_weight|font_weight]]** //**(get, set)**//
 <code c>
 Efl_Text_Font_Weight efl_text_font_weight_get(const Eo *obj);
 void efl_text_font_weight_set(Eo *obj, Efl_Text_Font_Weight font_weight);
@@ -107,7 +115,7 @@ void efl_text_font_weight_set(Eo *obj, Efl_Text_Font_Weight font_weight);
 
 %%Type of weight of the displayed font%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font_width|font_width]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font_width|font_width]]** //**(get, set)**//
 <code c>
 Efl_Text_Font_Width efl_text_font_width_get(const Eo *obj);
 void efl_text_font_width_set(Eo *obj, Efl_Text_Font_Width width);
@@ -115,7 +123,7 @@ void efl_text_font_width_set(Eo *obj, Efl_Text_Font_Width width);
 
 %%Type of width of the displayed font%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:docs:efl:auto:interface:efl:text:font:property:font|font]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:font|Efl.Text.Font]].**[[:develop:efl:auto:interface:efl:text:font:property:font|font]]** //**(get, set)**//
 <code c>
 void efl_text_font_get(const Eo *obj, const char **font, int *size);
 void efl_text_font_set(Eo *obj, const char *font, int size);
@@ -123,237 +131,247 @@ void efl_text_font_set(Eo *obj, const char *font, int size);
 
 %%The font name and size that is used for the displayed text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_ellipsis|format_ellipsis]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:ellipsis|ellipsis]]** //**(get, set)**//
 <code c>
-double efl_text_format_ellipsis_get(const Eo *obj);
-void efl_text_format_ellipsis_set(Eo *obj, double value);
+double efl_text_ellipsis_get(const Eo *obj);
+void efl_text_ellipsis_set(Eo *obj, double value);
 </code>
 
 %%Ellipsis value (number from -1.0 to 1.0)%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_halign|format_halign]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:halign|halign]]** //**(get, set)**//
 <code c>
-double efl_text_format_halign_get(const Eo *obj);
-void efl_text_format_halign_set(Eo *obj, double value);
+Efl_Text_Format_Horizontal_Alignment_Type efl_text_halign_get(const Eo *obj);
+void efl_text_halign_set(Eo *obj, Efl_Text_Format_Horizontal_Alignment_Type value);
 </code>
 
-%%Horizontal alignment of text (number from 0.0 to 1.0)%%\\ 
+%%Horizontal alignment of text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_linegap|format_linegap]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:linegap|linegap]]** //**(get, set)**//
 <code c>
-double efl_text_format_linegap_get(const Eo *obj);
-void efl_text_format_linegap_set(Eo *obj, double value);
+double efl_text_linegap_get(const Eo *obj);
+void efl_text_linegap_set(Eo *obj, double value);
 </code>
 
 %%Minimal line gap (top and bottom) for each line in the text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_linerelgap|format_linerelgap]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:linerelgap|linerelgap]]** //**(get, set)**//
 <code c>
-double efl_text_format_linerelgap_get(const Eo *obj);
-void efl_text_format_linerelgap_set(Eo *obj, double value);
+double efl_text_linerelgap_get(const Eo *obj);
+void efl_text_linerelgap_set(Eo *obj, double value);
 </code>
 
 %%Relative line gap (top and bottom) for each line in the text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_multiline|format_multiline]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:multiline|multiline]]** //**(get, set)**//
 <code c>
-Eina_Bool efl_text_format_multiline_get(const Eo *obj);
-void efl_text_format_multiline_set(Eo *obj, Eina_Bool enabled);
+Eina_Bool efl_text_multiline_get(const Eo *obj);
+void efl_text_multiline_set(Eo *obj, Eina_Bool enabled);
 </code>
 
 %%Multiline is enabled or not%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_password|format_password]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:password|password]]** //**(get, set)**//
 <code c>
-Eina_Bool efl_text_format_password_get(const Eo *obj);
-void efl_text_format_password_set(Eo *obj, Eina_Bool enabled);
+Eina_Bool efl_text_password_get(const Eo *obj);
+void efl_text_password_set(Eo *obj, Eina_Bool enabled);
 </code>
 
 %%Whether text is a password%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_replacement_char|format_replacement_char]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:replacement_char|replacement_char]]** //**(get, set)**//
 <code c>
-const char *efl_text_format_replacement_char_get(const Eo *obj);
-void efl_text_format_replacement_char_set(Eo *obj, const char *repch);
+const char *efl_text_replacement_char_get(const Eo *obj);
+void efl_text_replacement_char_set(Eo *obj, const char *repch);
 </code>
 
 %%The character used to replace characters that can not be displayed%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_tabstops|format_tabstops]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:tabstops|tabstops]]** //**(get, set)**//
 <code c>
-int efl_text_format_tabstops_get(const Eo *obj);
-void efl_text_format_tabstops_set(Eo *obj, int value);
+int efl_text_tabstops_get(const Eo *obj);
+void efl_text_tabstops_set(Eo *obj, int value);
 </code>
 
 %%Tabstops value%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_valign|format_valign]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:valign|valign]]** //**(get, set)**//
 <code c>
-double efl_text_format_valign_get(const Eo *obj);
-void efl_text_format_valign_set(Eo *obj, double value);
+Efl_Text_Format_Vertical_Alignment_Type efl_text_valign_get(const Eo *obj);
+void efl_text_valign_set(Eo *obj, Efl_Text_Format_Vertical_Alignment_Type value);
 </code>
 
-%%Vertical alignment of text (number from -1.0 to 1.0)%%\\ 
+%%Vertical alignment of text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:docs:efl:auto:interface:efl:text:format:property:format_wrap|format_wrap]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:format|Efl.Text.Format]].**[[:develop:efl:auto:interface:efl:text:format:property:wrap|wrap]]** //**(get, set)**//
 <code c>
-Efl_Text_Format_Wrap efl_text_format_wrap_get(const Eo *obj);
-void efl_text_format_wrap_set(Eo *obj, Efl_Text_Format_Wrap wrap);
+Efl_Text_Format_Wrap efl_text_wrap_get(const Eo *obj);
+void efl_text_wrap_set(Eo *obj, Efl_Text_Format_Wrap wrap);
 </code>
 
 %%Wrap mode for use in the text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:backing_color|backing_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:backing_color|backing_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_backing_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_backing_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_backing_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_backing_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
+%%Backing color%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:backing_type|backing_type]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:backing_type|backing_type]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Backing_Type efl_text_style_backing_type_get(const Eo *obj);
-void efl_text_style_backing_type_set(Eo *obj, Efl_Text_Style_Backing_Type type);
+Efl_Text_Style_Backing_Type efl_text_backing_type_get(const Eo *obj);
+void efl_text_backing_type_set(Eo *obj, Efl_Text_Style_Backing_Type type);
 </code>
 
+%%Enable or disable backing type%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:effect_type|effect_type]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:effect_type|effect_type]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Effect_Type efl_text_style_effect_type_get(const Eo *obj);
-void efl_text_style_effect_type_set(Eo *obj, Efl_Text_Style_Effect_Type type);
+Efl_Text_Style_Effect_Type efl_text_effect_type_get(const Eo *obj);
+void efl_text_effect_type_set(Eo *obj, Efl_Text_Style_Effect_Type type);
 </code>
 
 %%Type of effect used for the displayed text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:glow2_color|glow2_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:gfx_filter|gfx_filter]]** //**(get, set)**//
 <code c>
-void efl_text_style_glow2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_glow2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+const char *efl_text_gfx_filter_get(const Eo *obj);
+void efl_text_gfx_filter_set(Eo *obj, const char *code);
+</code>
+
+%%Program that applies a special filter%%\\ 
+\\ 
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:glow2_color|glow2_color]]** //**(get, set)**//
+<code c>
+void efl_text_glow2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_glow2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Second color of the glow effect%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:glow_color|glow_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:glow_color|glow_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_glow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_glow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_glow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_glow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of glow effect%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:normal_color|normal_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:normal_color|normal_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_normal_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_normal_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_normal_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_normal_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of text, excluding style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:outline_color|outline_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:outline_color|outline_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_outline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_outline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_outline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_outline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of outline effect%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:shadow_color|shadow_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:shadow_color|shadow_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_shadow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_shadow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_shadow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_shadow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of shadow effect%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:shadow_direction|shadow_direction]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:shadow_direction|shadow_direction]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Shadow_Direction efl_text_style_shadow_direction_get(const Eo *obj);
-void efl_text_style_shadow_direction_set(Eo *obj, Efl_Text_Style_Shadow_Direction type);
+Efl_Text_Style_Shadow_Direction efl_text_shadow_direction_get(const Eo *obj);
+void efl_text_shadow_direction_set(Eo *obj, Efl_Text_Style_Shadow_Direction type);
 </code>
 
 %%Direction of shadow effect%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:strikethrough_color|strikethrough_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:strikethrough_color|strikethrough_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_strikethrough_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_strikethrough_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_strikethrough_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_strikethrough_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of strikethrough_style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:strikethrough_type|strikethrough_type]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:strikethrough_type|strikethrough_type]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Strikethrough_Type efl_text_style_strikethrough_type_get(const Eo *obj);
-void efl_text_style_strikethrough_type_set(Eo *obj, Efl_Text_Style_Strikethrough_Type type);
+Efl_Text_Style_Strikethrough_Type efl_text_strikethrough_type_get(const Eo *obj);
+void efl_text_strikethrough_type_set(Eo *obj, Efl_Text_Style_Strikethrough_Type type);
 </code>
 
 %%Type of strikethrough style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline2_color|underline2_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline2_color|underline2_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_underline2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_underline2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_underline2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of underline2 style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline2_type|underline2_type]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline2_type|underline2_type]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Underline_Type efl_text_style_underline2_type_get(const Eo *obj);
-void efl_text_style_underline2_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
+Efl_Text_Style_Underline_Type efl_text_underline2_type_get(const Eo *obj);
+void efl_text_underline2_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
 </code>
 
 %%Type of underline2 style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_color|underline_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_color|underline_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_underline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_underline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_underline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of normal underline style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_dashed_color|underline_dashed_color]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_dashed_color|underline_dashed_color]]** //**(get, set)**//
 <code c>
-void efl_text_style_underline_dashed_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
-void efl_text_style_underline_dashed_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void efl_text_underline_dashed_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline_dashed_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 </code>
 
 %%Color of dashed underline style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_dashed_gap|underline_dashed_gap]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_dashed_gap|underline_dashed_gap]]** //**(get, set)**//
 <code c>
-int efl_text_style_underline_dashed_gap_get(const Eo *obj);
-void efl_text_style_underline_dashed_gap_set(Eo *obj, int gap);
+int efl_text_underline_dashed_gap_get(const Eo *obj);
+void efl_text_underline_dashed_gap_set(Eo *obj, int gap);
 </code>
 
 %%Gap of dashed underline style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_dashed_width|underline_dashed_width]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_dashed_width|underline_dashed_width]]** //**(get, set)**//
 <code c>
-int efl_text_style_underline_dashed_width_get(const Eo *obj);
-void efl_text_style_underline_dashed_width_set(Eo *obj, int width);
+int efl_text_underline_dashed_width_get(const Eo *obj);
+void efl_text_underline_dashed_width_set(Eo *obj, int width);
 </code>
 
 %%Width of dashed underline style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_height|underline_height]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_height|underline_height]]** //**(get, set)**//
 <code c>
-double efl_text_style_underline_height_get(const Eo *obj);
-void efl_text_style_underline_height_set(Eo *obj, double height);
+double efl_text_underline_height_get(const Eo *obj);
+void efl_text_underline_height_set(Eo *obj, double height);
 </code>
 
 %%Height of underline style%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:docs:efl:auto:interface:efl:text:style:property:underline_type|underline_type]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text:style|Efl.Text.Style]].**[[:develop:efl:auto:interface:efl:text:style:property:underline_type|underline_type]]** //**(get, set)**//
 <code c>
-Efl_Text_Style_Underline_Type efl_text_style_underline_type_get(const Eo *obj);
-void efl_text_style_underline_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
+Efl_Text_Style_Underline_Type efl_text_underline_type_get(const Eo *obj);
+void efl_text_underline_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
 </code>
 
 %%Sets an underline style on the text%%\\ 
 \\ 
-[[:docs:efl:auto:interface:efl:text|Efl.Text]].**[[:docs:efl:auto:interface:efl:text:property:text|text]]** //**(get, set)**//
+[[:develop:efl:auto:interface:efl:text|Efl.Text]].**[[:develop:efl:auto:interface:efl:text:property:text|text]]** //**(get, set)**//
 <code c>
 const char *efl_text_get(const Eo *obj);
 void efl_text_set(Eo *obj, const char *text);
@@ -363,17 +381,17 @@ void efl_text_set(Eo *obj, const char *text);
 
 ===== Events =====
 
-**[[:docs:efl:auto:interface:efl:ui:text:interactive:event:changed_user|changed,user]]**
+**[[:develop:efl:auto:interface:efl:ui:text:interactive:event:changed_user|changed,user]]**
 <code c>
 EFL_UI_TEXT_INTERACTIVE_EVENT_CHANGED_USER(Efl_Ui_Text_Interactive_Change_Info)
 </code>
 
 %%The text object has changed due to user interaction%%\\ 
 \\ 
-**[[:docs:efl:auto:interface:efl:ui:text:interactive:event:selection_changed|selection,changed]]**
+**[[:develop:efl:auto:interface:efl:ui:text:interactive:event:selection_changed|selection,changed]]**
 <code c>
 EFL_UI_TEXT_INTERACTIVE_EVENT_SELECTION_CHANGED(void)
 </code>
 
-%%The selection on the object has changed. Query using %%[[:docs:efl:auto:interface:efl:ui:text:interactive:property:selection_cursors|Efl.Ui.Text.Interactive.selection_cursors]]%%%%\\ 
+%%The selection on the object has changed. Query using %%[[:develop:efl:auto:interface:efl:ui:text:interactive:property:selection_cursors|Efl.Ui.Text.Interactive.selection_cursors]]%%%%\\ 
 \\ 

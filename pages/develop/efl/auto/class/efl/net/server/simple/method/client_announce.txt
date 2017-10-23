@@ -1,10 +1,10 @@
 <title>Efl.Net.Server.Simple.client_announce</title>
-//Overridden from [[:docs:efl:auto:interface:efl:net:server:method:client_announce|Efl.Net.Server.client_announce]].//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:net:server:method:client_announce|Efl.Net.Server.client_announce]].//===== Signature =====
 
 <code>
 client_announce @protected @pure_virtual {
     params {
-        @in client: Efl.Net.Socket;
+        @in client: free(Efl.Net.Socket, efl_del);
     }
     return: bool (false);
 }
@@ -24,7 +24,7 @@ Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 
 %%Implementions should call this method to announce new clients.%%
 
-%%This method will account the new client in %%[[:docs:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% as well as emit the event "client,add".%%
+%%This method will account the new client in %%[[:develop:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% as well as emit the event "client,add".%%
 
 %%After this call, the client ownership will be managed. If no event handler references the object, it will be deleted.%%
 
@@ -34,26 +34,26 @@ Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 
 %%- check if client was referenced%%
 
-%%- if we're not the parent anymore, ignore (do not change %%[[:docs:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%%) and return %%''true''%%.%%
+%%- if we're not the parent anymore, ignore (do not change %%[[:develop:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%%) and return %%''true''%%.%%
 
 %%- if not referenced, delete it and return %%''false''%%.%%
 
 %%- if it's closed, delete it and return %%''false''%%.%%
 
-%%- if referenced, increment %%[[:docs:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% and monitor for client "closed" event and return %%''true''%%.%%
+%%- if referenced, increment %%[[:develop:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% and monitor for client "closed" event and return %%''true''%%.%%
 
-%%- on client "closed", decrease %%[[:docs:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% and unset its parent (if we're still the parent).%%
+%%- on client "closed", decrease %%[[:develop:efl:auto:interface:efl:net:server:property:clients_count|Efl.Net.Server.clients_count]]%% and unset its parent (if we're still the parent).%%
 
 %%Do not monitor "closed" before emitting "client,add". Doing so may lead to double free if callbacks close the client by themselves!%%
 
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:net:server:simple:method:client_announce:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:server:simple:method:client_announce:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:efl:net:server:method:client_announce|Efl.Net.Server.client_announce]]
-  * [[:docs:efl:auto:class:efl:net:server:windows:method:client_announce|Efl.Net.Server.Windows.client_announce]]
+  * [[:develop:efl:auto:interface:efl:net:server:method:client_announce|Efl.Net.Server.client_announce]]
+  * [[:develop:efl:auto:class:efl:net:server:windows:method:client_announce|Efl.Net.Server.Windows.client_announce]]
+  * [[:develop:efl:auto:class:efl:net:server:fd:method:client_announce|Efl.Net.Server.Fd.client_announce]]
+  * [[:develop:efl:auto:class:efl:net:server:ssl:method:client_announce|Efl.Net.Server.Ssl.client_announce]]
   * **Efl.Net.Server.Simple.client_announce**
-  * [[:docs:efl:auto:class:efl:net:server:fd:method:client_announce|Efl.Net.Server.Fd.client_announce]]
-  * [[:docs:efl:auto:class:efl:net:server:ssl:method:client_announce|Efl.Net.Server.Ssl.client_announce]]
 

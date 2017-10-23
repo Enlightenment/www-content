@@ -4,7 +4,7 @@
 <code>
 connect {
     params {
-        @in f: future<void_ptr, void_ptr>;
+        @in f: free(future<void_ptr, void_ptr>, efl_del);
     }
     return: bool;
 }
@@ -22,10 +22,10 @@ Eina_Bool efl_promise_connect(Eo *obj, Efl_Future *f);
 
 ===== Description =====
 
-%%Connect a future output to this promise.%%
+%%Connects a future output to this promise.%%
 
 %%This helper will automatically trigger #value.set or #failed.set when the future succeed or fail respectively with the value provided by the future.%%
-{{page>:docs:efl:user:class:efl:promise:method:connect:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:promise:method:connect:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

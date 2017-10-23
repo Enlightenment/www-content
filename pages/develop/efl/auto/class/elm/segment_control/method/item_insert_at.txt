@@ -4,11 +4,11 @@
 <code>
 item_insert_at {
     params {
-        @in icon: Efl.Canvas.Object @optional;
-        @in label: string @optional;
+        @in icon: free(Efl.Canvas.Object, efl_del) @optional;
+        @in label: free(string, free) @optional;
         @in idx: int;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -34,7 +34,7 @@ Elm_Widget_Item *elm_obj_segment_control_item_insert_at(Eo *obj, Efl_Canvas_Obje
 
 %%%%''label''%% set to %%''NULL''%% is different from empty string "". If an item only has icon, it will be displayed bigger and centered. If it has icon and label, even that an empty string, icon will be smaller and positioned at left.%%
 </note>
-{{page>:docs:efl:user:class:elm:segment_control:method:item_insert_at:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:segment_control:method:item_insert_at:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

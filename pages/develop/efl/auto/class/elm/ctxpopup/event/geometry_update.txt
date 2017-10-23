@@ -2,13 +2,13 @@
 ===== Signature =====
 
 <code>
-geometry,update;
+geometry,update: ptr(free(const(Eina.Rect), eina_rectangle_free));
 </code>
 
 ===== C information =====
 
 <code c>
-ELM_CTXPOPUP_EVENT_GEOMETRY_UPDATE(void)
+ELM_CTXPOPUP_EVENT_GEOMETRY_UPDATE(const Eina_Rect *)
 </code>
 
 ===== C usage =====
@@ -17,7 +17,7 @@ ELM_CTXPOPUP_EVENT_GEOMETRY_UPDATE(void)
 static void
 on_elm_ctxpopup_event_geometry_update(void *data, const Efl_Event *event)
 {
-    void info = event->info;
+    const Eina_Rect *info = event->info;
     Eo *obj = event->object;
     Data *d = data;
 
@@ -35,5 +35,5 @@ setup_event_handler(Eo *obj, Data *d)
 ===== Description =====
 
 %%Called when context popup geometry was updated%%
-{{page>:docs:efl:user:class:elm:ctxpopup:event:geometry_update:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:ctxpopup:event:geometry_update:description&nouser&nolink&nodate}}
 

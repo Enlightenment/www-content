@@ -4,8 +4,8 @@
 <code>
 unregister {
     params {
-        @in klass: const(Efl.Class);
-        @in provider: const(Efl.Object);
+        @in klass: free(const(Efl.Class), efl_del);
+        @in provider: free(const(Efl.Object), efl_del);
     }
     return: bool;
 }
@@ -25,7 +25,7 @@ Eina_Bool efl_loop_unregister(Eo *obj, const Efl_Class *klass, const Efl_Object 
 ===== Description =====
 
 %%Will unregister a manager of a specific class that was previously registered and answered by eo.provider_find.%%
-{{page>:docs:efl:user:class:efl:loop:method:unregister:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:loop:method:unregister:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

@@ -1,22 +1,16 @@
 <title>Efl.Canvas.Image.Internal.fill</title>
-//Overridden from [[:docs:efl:auto:interface:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]] **(get, set)**.//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]] **(get, set)**.//===== Signature =====
 
 <code>
 @property fill @pure_virtual {
     get {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            fill: free(Eina.Rect, eina_rectangle_free);
         }
     }
     set {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            fill: free(Eina.Rect, eina_rectangle_free);
         }
     }
 }
@@ -25,28 +19,25 @@
 ===== C signature =====
 
 <code c>
-void efl_gfx_fill_get(const Eo *obj, int *x, int *y, int *w, int *h);
-void efl_gfx_fill_set(Eo *obj, int x, int y, int w, int h);
+Eina_Rect efl_gfx_fill_get(const Eo *obj);
+void efl_gfx_fill_set(Eo *obj, Eina_Rect fill);
 </code>
 
 ===== Values =====
 
-  * **x** - %%The x coordinate (from the top left corner of the bound image) to start drawing from.%%
-  * **y** - %%The y coordinate (from the top left corner of the bound image) to start drawing from.%%
-  * **w** - %%The width the bound image will be displayed at.%%
-  * **h** - %%The height the bound image will be displayed at.%%
+  * **fill** - %%The top-left corner to start drawing from as well as the size at which the bound image will be displayed.%%
 ===== Description =====
 
 %%Specifies how to tile an image to fill its rectangle geometry.%%
 
 %%Note that if %%''w''%% or %%''h''%% are smaller than the dimensions of the object, the displayed image will be tiled around the object's area. To have only one copy of the bound image drawn, %%''x''%% and %%''y''%% must be 0 and %%''w''%% and %%''h''%% need to be the exact width and height of the image object itself, respectively.%%
 
-%%Setting this property will reset the %%[[:docs:efl:auto:interface:efl:gfx:fill:property:fill_auto|Efl.Gfx.Fill.fill_auto]]%% to %%''false''%%.%%{{page>:docs:efl:user:class:efl:canvas:image:internal:property:fill:description&nodate&nolink&nouser}}
+%%Setting this property will reset the %%[[:develop:efl:auto:interface:efl:gfx:fill:property:fill_auto|Efl.Gfx.Fill.fill_auto]]%% to %%''false''%%.%%{{page>:develop:efl:user:class:efl:canvas:image:internal:property:fill:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]]
-  * [[:docs:efl:auto:class:evas:vg:property:fill|Evas.VG.fill]]
+  * [[:develop:efl:auto:interface:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]]
   * **Efl.Canvas.Image.Internal.fill**
+  * [[:develop:efl:auto:class:evas:vg:property:fill|Evas.VG.fill]]
 

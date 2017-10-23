@@ -1,0 +1,39 @@
+<title>Efl.Loop: pause</title>
+===== Signature =====
+
+<code>
+pause;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_EVENT_PAUSE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_event_pause(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_EVENT_PAUSE, on_efl_loop_event_pause, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when the window is going not be displayed for some time%%
+{{page>:develop:efl:user:class:efl:loop:event:pause:description&nouser&nolink&nodate}}
+

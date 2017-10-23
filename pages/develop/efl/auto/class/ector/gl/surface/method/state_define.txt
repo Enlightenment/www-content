@@ -5,7 +5,7 @@
 state_define {
     params {
         @in op: Efl.Gfx.Render_Op;
-        @in clips: array<ptr(Eina.Rectangle)>;
+        @in clips: free(array<ptr(free(Eina.Rect, eina_rectangle_free))>, eina_array_free);
     }
     return: bool;
 }
@@ -20,12 +20,12 @@ Eina_Bool ector_gl_surface_state_define(Eo *obj, Efl_Gfx_Render_Op op, Eina_Arra
 ===== Parameters =====
 
   * **op** //(in)// - %%Render operation%%
-  * **clips** //(in)// - %%Array of %%[[:docs:efl:auto:struct:eina:rectangle|Eina.Rectangle]]%% clip%%
+  * **clips** //(in)// - %%Array of %%[[:develop:efl:auto:struct:eina:rect|Eina.Rect]]%% clip%%
 
 ===== Description =====
 
 %%Define state%%
-{{page>:docs:efl:user:class:ector:gl:surface:method:state_define:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:ector:gl:surface:method:state_define:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

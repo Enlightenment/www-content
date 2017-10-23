@@ -5,18 +5,12 @@
 @property geometry @pure_virtual {
     get {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            rect: free(Eina.Rect, eina_rectangle_free);
         }
     }
     set {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            rect: free(Eina.Rect, eina_rectangle_free);
         }
     }
 }
@@ -25,25 +19,22 @@
 ===== C signature =====
 
 <code c>
-void efl_gfx_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
-void efl_gfx_geometry_set(Eo *obj, int x, int y, int w, int h);
+Eina_Rect efl_gfx_geometry_get(const Eo *obj);
+void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
 </code>
 
 ===== Values =====
 
-  * **x** - %%X coordinate%%
-  * **y** - %%Y coordinate%%
-  * **w** - %%Width%%
-  * **h** - %%Height%%
+  * **rect** - %%The X,Y position and W,H size, in pixels.%%
 ===== Description =====
 
-%%Rectangular geometry that combines both position and size.%%{{page>:docs:efl:user:interface:efl:gfx:property:geometry:description&nodate&nolink&nouser}}
+%%Rectangular geometry that combines both position and size.%%{{page>:develop:efl:user:interface:efl:gfx:property:geometry:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
 
   * **Efl.Gfx.geometry**
-  * [[:docs:efl:auto:class:efl:vg:property:geometry|Efl.VG.geometry]]
-  * [[:docs:efl:auto:class:efl:canvas:object:property:geometry|Efl.Canvas.Object.geometry]]
-  * [[:docs:efl:auto:class:efl:canvas:layout_internal:property:geometry|Efl.Canvas.Layout_Internal.geometry]]
+  * [[:develop:efl:auto:class:efl:canvas:object:property:geometry|Efl.Canvas.Object.geometry]]
+  * [[:develop:efl:auto:class:efl:canvas:layout:part:property:geometry|Efl.Canvas.Layout.Part.geometry]]
+  * [[:develop:efl:auto:class:efl:vg:property:geometry|Efl.VG.geometry]]
 

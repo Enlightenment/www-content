@@ -4,13 +4,13 @@
 <code>
 item_push {
     params {
-        @in title_label: string @optional;
-        @in prev_btn: Efl.Canvas.Object @nullable;
-        @in next_btn: Efl.Canvas.Object @nullable;
-        @in content: Efl.Canvas.Object;
-        @in item_style: string @nullable;
+        @in title_label: free(string, free) @optional;
+        @in prev_btn: free(Efl.Canvas.Object, efl_del) @nullable;
+        @in next_btn: free(Efl.Canvas.Object, efl_del) @nullable;
+        @in content: free(Efl.Canvas.Object, efl_del);
+        @in item_style: free(string, free) @nullable;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -37,7 +37,7 @@ Elm_Widget_Item *elm_obj_naviframe_item_push(Eo *obj, const char *title_label, E
 %%When push transition animation is in progress, pop operation is blocked until push is complete.%%
 
 %%The following styles are available for this item: "default"%%
-{{page>:docs:efl:user:class:elm:naviframe:method:item_push:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:naviframe:method:item_push:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

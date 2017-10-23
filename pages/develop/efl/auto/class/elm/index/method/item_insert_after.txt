@@ -4,12 +4,12 @@
 <code>
 item_insert_after {
     params {
-        @in after: Elm.Widget.Item;
-        @in letter: string;
+        @in after: free(Elm.Widget.Item, efl_del);
+        @in letter: free(string, free);
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -36,7 +36,7 @@ Elm_Widget_Item *elm_obj_index_item_insert_after(Eo *obj, Elm_Widget_Item *after
 
 %%If %%''relative''%% is %%''NULL''%% this function will behave as elm_index_item_append().%%
 </note>
-{{page>:docs:efl:user:class:elm:index:method:item_insert_after:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:index:method:item_insert_after:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

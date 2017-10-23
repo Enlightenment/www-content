@@ -4,13 +4,13 @@
 <code>
 item_sorted_insert {
     params {
-        @in letter: string;
+        @in letter: free(string, free);
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
         @in cmp_func: Eina_Compare_Cb;
         @in cmp_data_func: Eina_Compare_Cb @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -35,7 +35,7 @@ Elm_Widget_Item *elm_obj_index_item_sorted_insert(Eo *obj, const char *letter, E
 %%Despite the most common usage of the %%''letter''%% argument is for single char strings, one could use arbitrary strings as index entries.%%
 
 %%%%''item''%% will be the pointer returned back on $"changed", "delay,changed" and $"selected" smart events.%%
-{{page>:docs:efl:user:class:elm:index:method:item_sorted_insert:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:index:method:item_sorted_insert:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

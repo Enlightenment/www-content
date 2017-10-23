@@ -1,0 +1,58 @@
+<title>Efl.Config.Global.config</title>
+//Overridden from [[:develop:efl:auto:interface:efl:config:property:config|Efl.Config.config]] **(get, set)**.//===== Signature =====
+
+<code>
+@property config @pure_virtual {
+    get {
+        keys {
+            name: free(string, free);
+        }
+        values {
+            value: free(any_value_ptr, eina_value_free);
+        }
+    }
+    set {
+        keys {
+            name: free(string, free);
+        }
+        values {
+            value: free(const(any_value_ptr), eina_value_free);
+        }
+        return: bool;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Value *efl_config_get(const Eo *obj, const char *name);
+Eina_Bool efl_config_set(Eo *obj, const char *name, const Eina_Value *value);
+</code>
+
+===== Keys =====
+
+==== Getter ====
+
+  * **name** - %%Configuration option name.%%
+==== Setter ====
+
+  * **name** - %%Configuration option name.%%
+===== Values =====
+
+==== Getter ====
+
+  * **value** - %%The value. It will be empty if it doesn't exist. The caller must free it after use (using %%''eina_value_free''%%() in C).%%
+==== Setter ====
+
+  * **value** - %%Configuration option value. May be %%''null''%% if not found.%%
+===== Description =====
+
+%%A generic configuration value, refered to by name.%%{{page>:develop:efl:user:class:efl:config:global:property:config:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * [[:develop:efl:auto:interface:efl:config:property:config|Efl.Config.config]]
+  * **Efl.Config.Global.config**
+

@@ -3,10 +3,10 @@
 
 <code>
 struct Efl.Net.Control.Agent_Request_Input {
-    access_point: Efl.Net.Control.Access_Point;
+    access_point: free(Efl.Net.Control.Access_Point, efl_del);
     fields: Efl.Net.Control.Agent_Request_Input.Field;
-    passphrase_type: string;
-    informational: list<Efl.Net.Control.Agent_Request_Input.Information>;
+    passphrase_type: free(string, free);
+    informational: free(list<Efl.Net.Control.Agent_Request_Input.Information>, eina_list_free);
 }
 </code>
 
@@ -23,15 +23,15 @@ typedef struct _Efl_Net_Control_Agent_Request_Input {
 
 ===== Description =====
 
-%%Request input to the agent.%%
+%%Requests input to the agent.%%
 
 //Since 1.19//
 
-{{page>:docs:efl:user:struct:efl:net:control:agent_request_input:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:efl:net:control:agent_request_input:description&nouser&nolink&nodate}}
 
 ===== Fields =====
 
-{{page>:docs:efl:user:struct:efl:net:control:agent_request_input:fields&nodate&nolink&nouser}}
+{{page>:develop:efl:user:struct:efl:net:control:agent_request_input:fields&nouser&nolink&nodate}}
 
   * **access_point** - %%The access point that triggered this request.%%
   * **fields** - %%Bitwise OR of fields present in this request.%%

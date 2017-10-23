@@ -1,0 +1,59 @@
+<title>Efl.Canvas.Layout_Signal.signal_callback_add</title>
+===== Signature =====
+
+<code>
+signal_callback_add @pure_virtual {
+    params {
+        @in emission: free(string, free);
+        @in source: free(string, free);
+        @in func: Efl.Signal_Cb;
+        @in data: void_ptr;
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_canvas_layout_signal_callback_add(Eo *obj, const char *emission, const char *source, Efl_Signal_Cb func, void *data);
+</code>
+
+===== Parameters =====
+
+  * **emission** //(in)// - %%The signal's "emission" string%%
+  * **source** //(in)// - %%The signal's "source" string%%
+  * **func** //(in)// - %%The callback function to be executed when the signal is emitted.%%
+  * **data** //(in)// - %%A pointer to data to pass to %%''func''%%.%%
+
+===== Description =====
+
+%%Adds a callback for an arriving Edje signal, emitted by a given Edje object.%%
+
+%%Edje signals are one of the communication interfaces between code and a given Edje object's theme. With signals, one can communicate two string values at a time, which are: - "emission" value: the name of the signal, in general - "source" value: a name for the signal's context, in general%%
+
+%%Signals can go both ways, from code to theme, or theme to code.%%
+
+%%Though there are those common uses for the two strings, one is free to use them however they like.%%
+
+%%Signal callback registration is powerful, in the way that blobs may be used to match multiple signals at once. All the "*?[" set of %%''fnmatch''%%() operators can be used, both for emission and source.%%
+
+%%Edje has internal signals it will emit, automatically, on various actions taking place on group parts. For example, the mouse cursor being moved, pressed, released, etc., over a given part's area, all generate individual signals.%%
+
+%%With something like emission = "mouse,down,*", source = "button.*" where "button.*" is the pattern for the names of parts implementing buttons on an interface, you'd be registering for notifications on events of mouse buttons being pressed down on either of those parts (those events all have the "mouse,down," common prefix on their names, with a suffix giving the button number). The actual emission and source strings of an event will be passed in as the emission and source parameters of the callback function (e.g. "mouse,down,2" and "button.close"), for each of those events.%%
+
+%%See also the Edje Data Collection Reference for EDC files.%%
+
+%%See %%[[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_emit|Efl.Canvas.Layout_Signal.signal_emit]]%% on how to emit signals from code to a an object See %%[[:develop:efl:auto:interface:efl:canvas:layout_signal:method:signal_callback_del|Efl.Canvas.Layout_Signal.signal_callback_del]]%%.%%
+
+//Since 1.21//
+{{page>:develop:efl:user:interface:efl:canvas:layout_signal:method:signal_callback_add:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Canvas.Layout_Signal.signal_callback_add**
+  * [[:develop:efl:auto:class:efl:ui:layout:method:signal_callback_add|Efl.Ui.Layout.signal_callback_add]]
+  * [[:develop:efl:auto:class:elm:entry:method:signal_callback_add|Elm.Entry.signal_callback_add]]
+  * [[:develop:efl:auto:class:efl:ui:text:method:signal_callback_add|Efl.Ui.Text.signal_callback_add]]
+  * [[:develop:efl:auto:class:edje:object:method:signal_callback_add|Edje.Object.signal_callback_add]]
+

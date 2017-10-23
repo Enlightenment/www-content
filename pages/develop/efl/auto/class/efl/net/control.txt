@@ -23,49 +23,49 @@ digraph hierarchy {
 
 ===== Inheritance hierarchy =====
 
-  * **[[:docs:efl:auto:class:efl:net:control|Efl.Net.Control]] //(class)//**
-    * [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
-      * [[:docs:efl:auto:class:efl:object|Efl.Object]] //(class)//
+  * **[[:develop:efl:auto:class:efl:net:control|Efl.Net.Control]] //(class)//**
+    * [[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:develop:efl:auto:class:efl:object|Efl.Object]] //(class)//
 
 ===== Description =====
 
-%%Control network connectivity.%%
+%%Controls network connectivity.%%
 
 %%This class and its children objects are only useful to implement control of the network connectivity. If your application is only interested in requesting access to the network, use the @Efl.Net.Session instead.%%
 
 %%The network connectivity is defined on top of technologies that provide access points. A technology can be "ethernet", "wifi", "bluetooth" or something else. Ethernet will provide a single access point, while "wifi" will expose zero or more access points that can come and go.%%
 
-%%Users willing to use access points are expected to monitor "access_point,add" event to know when access points were added. To know when they were deleted, "access_point,del" or an %%[[:docs:efl:auto:class:efl:net:control:access_point|Efl.Net.Control.Access_Point]]%% "del" event. Finally "access_points,changed" is relative to additions, deletions and reordering of access point due changes in their priorities.%%
+%%Users willing to use access points are expected to monitor "access_point,add" event to know when access points were added. To know when they were deleted, "access_point,del" or an %%[[:develop:efl:auto:class:efl:net:control:access_point|Efl.Net.Control.Access_Point]]%% "del" event. Finally "access_points,changed" is relative to additions, deletions and reordering of access point due changes in their priorities.%%
 
 %%The backend system is responsible to remember connection details such as passphrase, last connected access point and priority. The user is NOT supposed to do that.%%
 
-%%For ease of use, %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% tells if at least one access point is online (verified connectivity), local (connected but unverified) or offline.%%
+%%For ease of use, %%[[:develop:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% tells if at least one access point is online (verified connectivity), local (connected but unverified) or offline.%%
 
-%%Due safety reasons all radio transmissions may be disabled with %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% property. This is usually called "airplane mode" in some platforms.%%
+%%Due safety reasons all radio transmissions may be disabled with %%[[:develop:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% property. This is usually called "airplane mode" in some platforms.%%
 
-%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% "online" (%%[[:docs:efl:auto:enum:efl:net:control:state|Efl.Net.Control.State.online]]%%) and iterators for %%[[:docs:efl:auto:class:efl:net:control:property:access_points|Efl.Net.Control.access_points]]%% and %%[[:docs:efl:auto:class:efl:net:control:property:technologies|Efl.Net.Control.technologies]]%% will be empty (they will be returned but won't contain any item).%%
+%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:develop:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% "online" (%%[[:develop:efl:auto:enum:efl:net:control:state|Efl.Net.Control.State.online]]%%) and iterators for %%[[:develop:efl:auto:class:efl:net:control:property:access_points|Efl.Net.Control.access_points]]%% and %%[[:develop:efl:auto:class:efl:net:control:property:technologies|Efl.Net.Control.technologies]]%% will be empty (they will be returned but won't contain any item).%%
 
 //Since 1.19//
 
-{{page>:docs:efl:user:class:efl:net:control:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:net:control:description&nouser&nolink&nodate}}
 
 ===== Members =====
 
-**[[:docs:efl:auto:class:efl:net:control:method:agent_reply|agent_reply]]**
+**[[:develop:efl:auto:class:efl:net:control:method:agent_reply|agent_reply]]**
 <code c>
 void efl_net_control_agent_reply(Eo *obj, const char *name, const Eina_Slice *ssid, const char *username, const char *passphrase, const char *wps);
 </code>
 
 %%If event "agent_request_input" was emitted, this will reply with the requested data%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:property:access_points|access_points]]** //**(get)**//
+**[[:develop:efl:auto:class:efl:net:control:property:access_points|access_points]]** //**(get)**//
 <code c>
 Eina_Iterator *efl_net_control_access_points_get(const Eo *obj);
 </code>
 
 %%The iterator of current access points.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:property:agent_enabled|agent_enabled]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:net:control:property:agent_enabled|agent_enabled]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_net_control_agent_enabled_get(const Eo *obj);
 void efl_net_control_agent_enabled_set(Eo *obj, Eina_Bool agent_enabled);
@@ -73,7 +73,7 @@ void efl_net_control_agent_enabled_set(Eo *obj, Eina_Bool agent_enabled);
 
 %%The agent is responsible for user interaction.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:property:radios_offline|radios_offline]]** //**(get, set)**//
+**[[:develop:efl:auto:class:efl:net:control:property:radios_offline|radios_offline]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_net_control_radios_offline_get(const Eo *obj);
 void efl_net_control_radios_offline_set(Eo *obj, Eina_Bool radios_offline);
@@ -81,14 +81,14 @@ void efl_net_control_radios_offline_set(Eo *obj, Eina_Bool radios_offline);
 
 %%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radios to be used.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:property:state|state]]** //**(get)**//
+**[[:develop:efl:auto:class:efl:net:control:property:state|state]]** //**(get)**//
 <code c>
 Efl_Net_Control_State efl_net_control_state_get(const Eo *obj);
 </code>
 
 %%Summary of network connectivity.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:property:technologies|technologies]]** //**(get)**//
+**[[:develop:efl:auto:class:efl:net:control:property:technologies|technologies]]** //**(get)**//
 <code c>
 Eina_Iterator *efl_net_control_technologies_get(const Eo *obj);
 </code>
@@ -98,14 +98,14 @@ Eina_Iterator *efl_net_control_technologies_get(const Eo *obj);
 
 ==== Inherited ====
 
-[[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:docs:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
+[[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]].**[[:develop:efl:auto:class:efl:loop_user:property:loop|loop]]** //**(get)**//
 <code c>
 Efl_Loop *efl_loop_get(const Eo *obj);
 </code>
 
 %%The loop to which this object belongs to.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:docs:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:efl:auto:class:efl:loop_user|Efl.Loop_User]]]//
 <code c>
 Efl_Object *efl_parent_get(const Eo *obj);
 void efl_parent_set(Eo *obj, Efl_Object *parent);
@@ -113,126 +113,141 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:constructor|constructor]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:net:control:method:constructor|constructor]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_constructor(Eo *obj);
 </code>
 
 %%Call the object's constructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:destructor|destructor]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:net:control:method:destructor|destructor]]** //[Overridden here]//
 <code c>
 void efl_destructor(Eo *obj);
 </code>
 
 %%Call the object's destructor.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:net:control:method:finalize|finalize]]** //[Overridden here]//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:net:control:method:finalize|finalize]]** //[Overridden here]//
 <code c>
 Efl_Object *efl_finalize(Eo *obj);
 </code>
 
 %%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:children_iterator_new|children_iterator_new]]**
 <code c>
 Eina_Iterator *efl_children_iterator_new(Eo *obj);
 </code>
 
 %%Get an iterator on all childrens%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_attach|composite_attach]]**
 <code c>
 Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
 </code>
 
 %%Make an object a composite object of another.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_detach|composite_detach]]**
 <code c>
 Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
 </code>
 
 %%Detach a composite object from another object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:composite_part_is|composite_part_is]]**
 <code c>
 Eina_Bool efl_composite_part_is(Eo *obj);
 </code>
 
 %%Check if an object is part of a composite object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:del|del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:debug_name_override|debug_name_override]]**
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+
+%%Build a read-only name for this object used for debugging.%%\\ 
+\\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:del|del]]**
 <code c>
 void efl_del(const Eo *obj);
 </code>
 
 %%Unrefs the object and reparents it to NULL.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
 <code c>
 void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
 </code>
 
 %%Add an event callback forwarder for an event and an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
 <code c>
 void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
 </code>
 
 %%Remove an event callback forwarder for an event and an object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_callback_stop|event_callback_stop]]**
 <code c>
 void efl_event_callback_stop(Eo *obj);
 </code>
 
 %%Stop the current callback call.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_freeze|event_freeze]]**
 <code c>
 void efl_event_freeze(Eo *obj);
 </code>
 
 %%Freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_global_freeze|event_global_freeze]]**
 <code c>
 void efl_event_global_freeze(const Eo *obj);
 </code>
 
 %%Freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_global_thaw|event_global_thaw]]**
 <code c>
 void efl_event_global_thaw(const Eo *obj);
 </code>
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:event_thaw|event_thaw]]**
 <code c>
 void efl_event_thaw(Eo *obj);
 </code>
 
 %%Thaw events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:name_find|name_find]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:name_find|name_find]]**
 <code c>
-Efl_Object *efl_name_find(Eo *obj, const char *search);
+Efl_Object *efl_name_find(const Eo *obj, const char *search);
 </code>
 
-%%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%\\ 
+%%Find a child object with the given name and return it.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:method:provider_find|provider_find]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:method:provider_find|provider_find]]**
 <code c>
 Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
 </code>
 
 %%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_allow_parent_unref_get(const Eo *obj);
+void efl_allow_parent_unref_set(Eo *obj, Eina_Bool allow);
+</code>
+
+%%Allow an object to be deleted by unref even if it has a parent.%%\\ 
+\\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:comment|comment]]** //**(get, set)**//
 <code c>
 const char *efl_comment_get(const Eo *obj);
 void efl_comment_set(Eo *obj, const char *comment);
@@ -240,28 +255,28 @@ void efl_comment_set(Eo *obj, const char *comment);
 
 %%A human readable comment for the object%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
 <code c>
 int efl_event_freeze_count_get(const Eo *obj);
 </code>
 
 %%Return freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
 <code c>
 int efl_event_global_freeze_count_get(const Eo *obj);
 </code>
 
 %%Return freeze events of object.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:finalized|finalized]]** //**(get)**//
 <code c>
 Eina_Bool efl_finalized_get(const Eo *obj);
 </code>
 
 %%True if the object is already finalized, false otherwise.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:name|name]]** //**(get, set)**//
 <code c>
 const char *efl_name_get(const Eo *obj);
 void efl_name_set(Eo *obj, const char *name);
@@ -269,80 +284,87 @@ void efl_name_set(Eo *obj, const char *name);
 
 %%The name of the object.%%\\ 
 \\ 
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:property:auto_unref|auto_unref]]** //**(set)**// ''protected''
+<code c>
+void efl_auto_unref_set(Eo *obj, Eina_Bool enable);
+</code>
+
+%%Mark an object to be automatically deleted after a function call.%%\\ 
+\\ 
 
 ===== Events =====
 
-**[[:docs:efl:auto:class:efl:net:control:event:access_point_add|access_point,add]]**
+**[[:develop:efl:auto:class:efl:net:control:event:access_point_add|access_point,add]]**
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINT_ADD(Efl_Net_Control_Access_Point *)
 </code>
 
 %%The given access point was added%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:access_point_del|access_point,del]]**
+**[[:develop:efl:auto:class:efl:net:control:event:access_point_del|access_point,del]]**
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINT_DEL(Efl_Net_Control_Access_Point *)
 </code>
 
 %%The given access point will be deleted%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:access_points_changed|access_points,changed]]**
+**[[:develop:efl:auto:class:efl:net:control:event:access_points_changed|access_points,changed]]**
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINTS_CHANGED(void)
 </code>
 
 %%Access points were added, deleted or reordered.%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:agent_browser_url|agent_browser_url]]**
+**[[:develop:efl:auto:class:efl:net:control:event:agent_browser_url|agent_browser_url]]**
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_BROWSER_URL(Efl_Net_Control_Agent_Browser_Url)
 </code>
 
 %%Requires the user to visit a web page%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:agent_error|agent_error]]**
+**[[:develop:efl:auto:class:efl:net:control:event:agent_error|agent_error]]**
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_ERROR(Efl_Net_Control_Agent_Error)
 </code>
 
 %%Requires the error to be reported to the user%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:agent_released|agent_released]]**
+**[[:develop:efl:auto:class:efl:net:control:event:agent_released|agent_released]]**
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_RELEASED(void)
 </code>
 
 %%Notifies we're not the agent anymore%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:agent_request_input|agent_request_input]]**
+**[[:develop:efl:auto:class:efl:net:control:event:agent_request_input|agent_request_input]]**
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT(Efl_Net_Control_Agent_Request_Input)
 </code>
 
-%%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:docs:efl:auto:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%\\ 
+%%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:develop:efl:auto:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:radios_offline_changed|radios_offline,changed]]**
+**[[:develop:efl:auto:class:efl:net:control:event:radios_offline_changed|radios_offline,changed]]**
 <code c>
 EFL_NET_CONTROL_EVENT_RADIOS_OFFLINE_CHANGED(void)
 </code>
 
-%%Property %%[[:docs:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%%\\ 
+%%Property %%[[:develop:efl:auto:class:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:state_changed|state,changed]]**
+**[[:develop:efl:auto:class:efl:net:control:event:state_changed|state,changed]]**
 <code c>
 EFL_NET_CONTROL_EVENT_STATE_CHANGED(void)
 </code>
 
-%%Property %%[[:docs:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%%\\ 
+%%Property %%[[:develop:efl:auto:class:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:technology_add|technology,add]]**
+**[[:develop:efl:auto:class:efl:net:control:event:technology_add|technology,add]]**
 <code c>
 EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD(Efl_Net_Control_Technology *)
 </code>
 
 %%The given technology was added%%\\ 
 \\ 
-**[[:docs:efl:auto:class:efl:net:control:event:technology_del|technology,del]]**
+**[[:develop:efl:auto:class:efl:net:control:event:technology_del|technology,del]]**
 <code c>
 EFL_NET_CONTROL_EVENT_TECHNOLOGY_DEL(Efl_Net_Control_Technology *)
 </code>
@@ -351,21 +373,21 @@ EFL_NET_CONTROL_EVENT_TECHNOLOGY_DEL(Efl_Net_Control_Technology *)
 \\ 
 ==== Inherited ====
 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_add|callback,add]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:callback_add|callback,add]]**
 <code c>
 EFL_EVENT_CALLBACK_ADD(void, @hot)
 </code>
 
 %%A callback was added.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:callback_del|callback,del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:callback_del|callback,del]]**
 <code c>
 EFL_EVENT_CALLBACK_DEL(void, @hot)
 </code>
 
 %%A callback was deleted.%%\\ 
 \\ 
-[[:docs:efl:auto:class:efl:object|Efl.Object]].**[[:docs:efl:auto:class:efl:object:event:del|del]]**
+[[:develop:efl:auto:class:efl:object|Efl.Object]].**[[:develop:efl:auto:class:efl:object:event:del|del]]**
 <code c>
 EFL_EVENT_DEL(void, @hot)
 </code>

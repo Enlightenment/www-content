@@ -5,21 +5,21 @@
 @property xattr {
     get {
         keys {
-            path: string;
-            attribute: string;
+            path: free(string, free);
+            attribute: free(string, free);
         }
-        return: future<Eina.Binbuf>;
+        return: ptr(Eina.Future);
     }
     set {
         keys {
-            path: string;
-            attribute: string;
+            path: free(string, free);
+            attribute: free(string, free);
         }
         values {
-            data: ptr(Eina.Binbuf);
+            data: ptr(free(Eina.Binbuf, eina_binbuf_free));
             flags: Eina.Xattr.Flags;
         }
-        return: future<uint64>;
+        return: ptr(Eina.Future);
     }
 }
 </code>
@@ -27,8 +27,8 @@
 ===== C signature =====
 
 <code c>
-Efl_Future *efl_io_manager_xattr_get(const Eo *obj, const char *path, const char *attribute);
-Efl_Future *efl_io_manager_xattr_set(Eo *obj, const char *path, const char *attribute, Eina_Binbuf *data, Eina_Xattr_Flags flags);
+Eina_Future *efl_io_manager_xattr_get(const Eo *obj, const char *path, const char *attribute);
+Eina_Future *efl_io_manager_xattr_set(Eo *obj, const char *path, const char *attribute, Eina_Binbuf *data, Eina_Xattr_Flags flags);
 </code>
 
 ===== Keys =====
@@ -41,7 +41,7 @@ Efl_Future *efl_io_manager_xattr_set(Eo *obj, const char *path, const char *attr
   * **flags** - %%Extended attributes flags%%
 ===== Description =====
 
-%%Retrieves or sets information of a given extended attribute.%%{{page>:docs:efl:user:class:efl:io:manager:property:xattr:description&nodate&nolink&nouser}}
+%%Retrieves or sets information of a given extended attribute.%%{{page>:develop:efl:user:class:efl:io:manager:property:xattr:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====

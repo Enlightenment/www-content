@@ -1,22 +1,16 @@
 <title>Efl.Canvas.Object.geometry</title>
-//Overridden from [[:docs:efl:auto:interface:efl:gfx:property:geometry|Efl.Gfx.geometry]] **(get, set)**.//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:gfx:property:geometry|Efl.Gfx.geometry]] **(get, set)**.//===== Signature =====
 
 <code>
 @property geometry @pure_virtual {
     get {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            rect: free(Eina.Rect, eina_rectangle_free);
         }
     }
     set {
         values {
-            x: int;
-            y: int;
-            w: int;
-            h: int;
+            rect: free(Eina.Rect, eina_rectangle_free);
         }
     }
 }
@@ -25,25 +19,22 @@
 ===== C signature =====
 
 <code c>
-void efl_gfx_geometry_get(const Eo *obj, int *x, int *y, int *w, int *h);
-void efl_gfx_geometry_set(Eo *obj, int x, int y, int w, int h);
+Eina_Rect efl_gfx_geometry_get(const Eo *obj);
+void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
 </code>
 
 ===== Values =====
 
-  * **x** - %%X coordinate%%
-  * **y** - %%Y coordinate%%
-  * **w** - %%Width%%
-  * **h** - %%Height%%
+  * **rect** - %%The X,Y position and W,H size, in pixels.%%
 ===== Description =====
 
-%%Rectangular geometry that combines both position and size.%%{{page>:docs:efl:user:class:efl:canvas:object:property:geometry:description&nodate&nolink&nouser}}
+%%Rectangular geometry that combines both position and size.%%{{page>:develop:efl:user:class:efl:canvas:object:property:geometry:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:efl:gfx:property:geometry|Efl.Gfx.geometry]]
-  * [[:docs:efl:auto:class:efl:vg:property:geometry|Efl.VG.geometry]]
+  * [[:develop:efl:auto:interface:efl:gfx:property:geometry|Efl.Gfx.geometry]]
   * **Efl.Canvas.Object.geometry**
-  * [[:docs:efl:auto:class:efl:canvas:layout_internal:property:geometry|Efl.Canvas.Layout_Internal.geometry]]
+  * [[:develop:efl:auto:class:efl:canvas:layout:part:property:geometry|Efl.Canvas.Layout.Part.geometry]]
+  * [[:develop:efl:auto:class:efl:vg:property:geometry|Efl.VG.geometry]]
 

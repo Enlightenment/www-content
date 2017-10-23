@@ -5,12 +5,12 @@
 @property focus_highlight_style {
     get {
         values {
-            style: string;
+            style: free(string, free) @nullable;
         }
     }
     set {
         values {
-            style: string;
+            style: free(string, free) @nullable;
         }
         return: bool;
     }
@@ -29,10 +29,17 @@ Eina_Bool elm_obj_widget_focus_highlight_style_set(Eo *obj, const char *style);
   * **style** - %%The name of the focus highlight style.%%
 ===== Description =====
 
-%%Control the widget focus highlight style.%%{{page>:docs:efl:user:class:elm:widget:property:focus_highlight_style:description&nodate&nolink&nouser}}
+%%Control the widget focus highlight style.%%
+
+%%If %%''style''%% is %%''null''%%, the default will be used.%%
+
+%%As of EFL 1.21 focus highlight properties apply to a single window, not a single widget. As a consequence, calls to this function may be forwarded to the parent window. Future versions of EFL may implement widget-specific focus highlight properties.%%
+
+%%See also %%[[:develop:efl:auto:class:elm:widget:property:widget_top|Elm.Widget.widget_top]]%%. See also %%[[:develop:efl:auto:class:elm:widget:property:focus_highlight_enabled|Elm.Widget.focus_highlight_enabled]]%%. See also %%[[:develop:efl:auto:class:elm:widget:property:focus_highlight_animate|Elm.Widget.focus_highlight_animate]]%%.%%{{page>:develop:efl:user:class:elm:widget:property:focus_highlight_style:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
 
   * **Elm.Widget.focus_highlight_style**
+  * [[:develop:efl:auto:class:efl:ui:win:property:focus_highlight_style|Efl.Ui.Win.focus_highlight_style]]
 

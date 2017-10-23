@@ -1,16 +1,16 @@
 <title>Elm.Entry.attribute</title>
-//Overridden from [[:docs:efl:auto:interface:elm:interface:atspi:text:property:attribute|Elm.Interface.Atspi.Text.attribute]] **(get)**.//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:access:text:property:attribute|Efl.Access.Text.attribute]] **(get)**.//===== Signature =====
 
 <code>
 @property attribute @pure_virtual {
     get @protected {
         keys {
-            name: string @nonull;
+            name: free(string, free) @nonull;
             start_offset: ptr(int) @nonull;
             end_offset: ptr(int);
         }
         values {
-            value: ptr(own(char));
+            value: mstring;
         }
         return: bool;
     }
@@ -20,7 +20,7 @@
 ===== C signature =====
 
 <code c>
-Eina_Bool elm_interface_atspi_text_attribute_get(const Eo *obj, const char *name, int *start_offset, int *end_offset, char **value);
+Eina_Bool efl_access_text_attribute_get(const Eo *obj, const char *name, int *start_offset, int *end_offset, char **value);
 </code>
 
 ===== Keys =====
@@ -34,11 +34,11 @@ Eina_Bool elm_interface_atspi_text_attribute_get(const Eo *obj, const char *name
 ===== Description =====
 
 %%Indicate if a text attribute with a given name is set%%
-{{page>:docs:efl:user:class:elm:entry:property:attribute:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:entry:property:attribute:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:elm:interface:atspi:text:property:attribute|Elm.Interface.Atspi.Text.attribute]]
+  * [[:develop:efl:auto:interface:efl:access:text:property:attribute|Efl.Access.Text.attribute]]
   * **Elm.Entry.attribute**
-  * [[:docs:efl:auto:class:efl:ui:text:property:attribute|Efl.Ui.Text.attribute]]
+  * [[:develop:efl:auto:class:efl:ui:text:property:attribute|Efl.Ui.Text.attribute]]
 

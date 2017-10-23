@@ -1,32 +1,26 @@
 <title>Efl.Ui.Win.object_top_in_rectangle_get</title>
-//Overridden from [[:docs:efl:auto:interface:efl:canvas:method:object_top_in_rectangle_get|Efl.Canvas.object_top_in_rectangle_get]].//===== Signature =====
+//Overridden from [[:develop:efl:auto:interface:efl:canvas:method:object_top_in_rectangle_get|Efl.Canvas.object_top_in_rectangle_get]].//===== Signature =====
 
 <code>
 object_top_in_rectangle_get @const @pure_virtual {
     params {
-        @in x: int;
-        @in y: int;
-        @in w: int;
-        @in h: int;
+        @in rect: free(Eina.Rect, eina_rectangle_free);
         @in include_pass_events_objects: bool;
         @in include_hidden_objects: bool;
     }
-    return: Efl.Gfx @warn_unused;
+    return: free(Efl.Gfx, efl_del) @warn_unused;
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Efl_Gfx *efl_canvas_object_top_in_rectangle_get(const Eo *obj, int x, int y, int w, int h, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+Efl_Gfx *efl_canvas_object_top_in_rectangle_get(const Eo *obj, Eina_Rect rect, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
 </code>
 
 ===== Parameters =====
 
-  * **x** //(in)// - %%The top left corner's horizontal coordinate for the rectangular region.%%
-  * **y** //(in)// - %%The top left corner's vertical coordinate for the rectangular region.%%
-  * **w** //(in)// - %%The width of the rectangular region.%%
-  * **h** //(in)// - %%The height of the rectangular region.%%
+  * **rect** //(in)// - %%The rectangular region.%%
   * **include_pass_events_objects** //(in)// - %%Boolean flag to include or not objects which pass events in this calculation.%%
   * **include_hidden_objects** //(in)// - %%Boolean flag to include or not hidden objects in this calculation.%%
 
@@ -38,10 +32,10 @@ Efl_Gfx *efl_canvas_object_top_in_rectangle_get(const Eo *obj, int x, int y, int
 
 %%This function will skip objects parented by smart objects, acting only on the ones at the "top level", with regard to object parenting.%%
 </note>
-{{page>:docs:efl:user:class:efl:ui:win:method:object_top_in_rectangle_get:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:ui:win:method:object_top_in_rectangle_get:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:interface:efl:canvas:method:object_top_in_rectangle_get|Efl.Canvas.object_top_in_rectangle_get]]
+  * [[:develop:efl:auto:interface:efl:canvas:method:object_top_in_rectangle_get|Efl.Canvas.object_top_in_rectangle_get]]
   * **Efl.Ui.Win.object_top_in_rectangle_get**
 

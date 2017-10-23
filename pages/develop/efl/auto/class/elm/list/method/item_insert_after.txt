@@ -4,14 +4,14 @@
 <code>
 item_insert_after {
     params {
-        @in after: Elm.Widget.Item;
-        @in label: string;
-        @in icon: Efl.Canvas.Object @optional;
-        @in end: Efl.Canvas.Object @optional;
+        @in after: free(Elm.Widget.Item, efl_del);
+        @in label: free(string, free);
+        @in icon: free(Efl.Canvas.Object, efl_del) @optional;
+        @in end: free(Efl.Canvas.Object, efl_del) @optional;
         @in func: Evas_Smart_Cb @optional;
         @in data: const(void_ptr) @optional;
     }
-    return: Elm.Widget.Item;
+    return: free(Elm.Widget.Item, efl_del);
 }
 </code>
 
@@ -44,7 +44,7 @@ Elm_Widget_Item *elm_obj_list_item_insert_after(Eo *obj, Elm_Widget_Item *after,
 
 %%Remember that the label parameter is copied inside the list. So if an application dynamically allocated the label, the application should free the label after this call.%%
 </note>
-{{page>:docs:efl:user:class:elm:list:method:item_insert_after:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:elm:list:method:item_insert_after:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

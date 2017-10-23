@@ -1,9 +1,9 @@
 <title>Efl.Input.Focus.dup</title>
-//Overridden from [[:docs:efl:auto:mixin:efl:input:event:method:dup|Efl.Input.Event.dup]].//===== Signature =====
+//Overridden from [[:develop:efl:auto:mixin:efl:input:event:method:dup|Efl.Input.Event.dup]].//===== Signature =====
 
 <code>
 dup @pure_virtual {
-    return: own(Efl.Input.Event);
+    return: free(Efl.Input.Event, efl_del);
 }
 </code>
 
@@ -17,14 +17,19 @@ Efl_Input_Event *efl_input_dup(Eo *obj);
 
 %%Creates a copy of this event.%%
 
+%%The returned event object is similar to the given object in most ways except that %%[[:develop:efl:auto:mixin:efl:input:event:property:fake|Efl.Input.Event.fake]]%% will be %%''true''%%.%%
+
+%%A reference is given to the caller. In order to avoid leaks the C API users should call %%''efl_unref''%%() after use.%%
+</note>
+
 //Since 1.19//
-{{page>:docs:efl:user:class:efl:input:focus:method:dup:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:efl:input:focus:method:dup:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * [[:docs:efl:auto:mixin:efl:input:event:method:dup|Efl.Input.Event.dup]]
-  * [[:docs:efl:auto:class:efl:input:hold:method:dup|Efl.Input.Hold.dup]]
-  * [[:docs:efl:auto:class:efl:input:pointer:method:dup|Efl.Input.Pointer.dup]]
-  * [[:docs:efl:auto:class:efl:input:key:method:dup|Efl.Input.Key.dup]]
+  * [[:develop:efl:auto:mixin:efl:input:event:method:dup|Efl.Input.Event.dup]]
+  * [[:develop:efl:auto:class:efl:input:pointer:method:dup|Efl.Input.Pointer.dup]]
+  * [[:develop:efl:auto:class:efl:input:hold:method:dup|Efl.Input.Hold.dup]]
+  * [[:develop:efl:auto:class:efl:input:key:method:dup|Efl.Input.Key.dup]]
   * **Efl.Input.Focus.dup**
 

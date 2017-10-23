@@ -4,7 +4,7 @@
 <code>
 pack @pure_virtual {
     params {
-        @in subobj: own(Efl.Gfx);
+        @in subobj: free(Efl.Gfx, efl_del);
     }
     return: bool;
 }
@@ -18,7 +18,7 @@ Eina_Bool efl_pack(Eo *obj, Efl_Gfx *subobj);
 
 ===== Parameters =====
 
-  * **subobj** //(in)// - %%Packed object%%
+  * **subobj** //(in)// - %%An object to pack.%%
 
 ===== Description =====
 
@@ -26,15 +26,15 @@ Eina_Bool efl_pack(Eo *obj, Efl_Gfx *subobj);
 
 %%Depending on the container this will either fill in the default spot, replacing any already existing element or append to the end of the container if there is no default part.%%
 
-%%The container takes ownership of this object. This means if packing failed, the object will be unrefed.%%
-{{page>:docs:efl:user:interface:efl:pack:method:pack:description&nodate&nolink&nouser}}
+%%When this container is deleted, it will request deletion on the given %%''subobj''%%. Use %%[[:develop:efl:auto:interface:efl:pack:method:unpack|Efl.Pack.unpack]]%% to remove %%''subobj''%% from this container without deleting it.%%
+{{page>:develop:efl:user:interface:efl:pack:method:pack:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
   * **Efl.Pack.pack**
-  * [[:docs:efl:auto:class:efl:ui:flip:method:pack|Efl.Ui.Flip.pack]]
-  * [[:docs:efl:auto:class:efl:ui:grid:method:pack|Efl.Ui.Grid.pack]]
-  * [[:docs:efl:auto:class:efl:canvas:layout_internal:box:method:pack|Efl.Canvas.Layout_Internal.Box.pack]]
-  * [[:docs:efl:auto:class:efl:ui:box:method:pack|Efl.Ui.Box.pack]]
-  * [[:docs:efl:auto:class:efl:ui:layout_internal:box:method:pack|Efl.Ui.Layout_Internal.Box.pack]]
+  * [[:develop:efl:auto:class:efl:ui:grid:method:pack|Efl.Ui.Grid.pack]]
+  * [[:develop:efl:auto:class:efl:ui:flip:method:pack|Efl.Ui.Flip.pack]]
+  * [[:develop:efl:auto:class:efl:canvas:layout:part_box:method:pack|Efl.Canvas.Layout.Part_Box.pack]]
+  * [[:develop:efl:auto:class:efl:ui:box:method:pack|Efl.Ui.Box.pack]]
+  * [[:develop:efl:auto:class:efl:ui:layout:part:box:method:pack|Efl.Ui.Layout.Part.Box.pack]]
 

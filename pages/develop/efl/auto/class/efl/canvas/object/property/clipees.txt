@@ -4,7 +4,7 @@
 <code>
 @property clipees {
     get {
-        return: iterator<Efl.Canvas.Object> @warn_unused;
+        return: free(iterator<free(Efl.Canvas.Object, efl_del)>, eina_iterator_free) @warn_unused;
     }
 }
 </code>
@@ -21,8 +21,8 @@ Eina_Iterator *efl_canvas_object_clipees_get(const Eo *obj);
 
 %%This returns the internal list handle that contains all objects clipped by the object %%''obj''%%. If none are clipped by it, the call returns %%''null''%%. This list is only valid until the clip list is changed and should be fetched again with another call to this function if any objects being clipped by this object are unclipped, clipped by a new object, deleted or get the clipper deleted. These operations will invalidate the list returned, so it should not be used anymore after that point. Any use of the list after this may have undefined results, possibly leading to crashes.%%
 
-%%See also %%[[:docs:efl:auto:class:efl:canvas:object:property:clip|Efl.Canvas.Object.clip]]%%.%%
-{{page>:docs:efl:user:class:efl:canvas:object:property:clipees:description&nodate&nolink&nouser}}
+%%See also %%[[:develop:efl:auto:class:efl:canvas:object:property:clip|Efl.Canvas.Object.clip]]%%.%%
+{{page>:develop:efl:user:class:efl:canvas:object:property:clipees:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

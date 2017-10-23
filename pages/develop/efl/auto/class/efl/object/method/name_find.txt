@@ -2,18 +2,18 @@
 ===== Signature =====
 
 <code>
-name_find {
+name_find @const {
     params {
-        @in search: string;
+        @in search: free(string, free);
     }
-    return: Efl.Object;
+    return: free(Efl.Object, efl_del);
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Efl_Object *efl_name_find(Eo *obj, const char *search);
+Efl_Object *efl_name_find(const Eo *obj, const char *search);
 </code>
 
 ===== Parameters =====
@@ -22,8 +22,10 @@ Efl_Object *efl_name_find(Eo *obj, const char *search);
 
 ===== Description =====
 
-%%Find a child object with the given name and return it. The search string can be a glob (shell style). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%
-{{page>:docs:efl:user:class:efl:object:method:name_find:description&nodate&nolink&nouser}}
+%%Find a child object with the given name and return it.%%
+
+%%The search string can be a glob (shell style, using *). It can also specify class name in the format of "class:name" where ":" separates class and name. Both class and name can be globs. If class is specified, and name is empty like "class:" then the search will match any object of that class.%%
+{{page>:develop:efl:user:class:efl:object:method:name_find:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

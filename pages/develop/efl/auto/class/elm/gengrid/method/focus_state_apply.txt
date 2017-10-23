@@ -1,0 +1,47 @@
+<title>Elm.Gengrid.focus_state_apply</title>
+//Overridden from [[:develop:efl:auto:class:elm:widget:method:focus_state_apply|Elm.Widget.focus_state_apply]].//===== Signature =====
+
+<code>
+focus_state_apply @protected {
+    params {
+        @in current_state: Elm.Widget.Focus_State;
+        @inout configured_state: Elm.Widget.Focus_State;
+        @in redirect: free(Elm.Widget, efl_del);
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool elm_obj_widget_focus_state_apply(Eo *obj, Elm_Widget_Focus_State current_state, Elm_Widget_Focus_State configured_state, Elm_Widget *redirect);
+</code>
+
+===== Parameters =====
+
+  * **current_state** //(in)// - %%The focus manager to register with.%%
+  * **configured_state** //(inout)// - %%The evalulated Focus state that should be used.%%
+  * **redirect** //(in)// - %%A redirect that will be set by the elm.widget implementation.%%
+
+===== Description =====
+
+%%Register focus with the given configuration.%%
+
+%%The implementation can feel free to change the logical flag as it wants, but other than that it should strictly keep the configuration.%%
+
+%%The implementation in elm.widget updates the current state into what is passed as configured state, respecting manager changes, registeration and unregistration based on if it should be registered or unregistered.%%
+
+%%A manager field that is %%''null''%% means that the widget should not or was not registered.%%
+{{page>:develop:efl:user:class:elm:gengrid:method:focus_state_apply:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * [[:develop:efl:auto:class:elm:widget:method:focus_state_apply|Elm.Widget.focus_state_apply]]
+  * [[:develop:efl:auto:class:elm:scroller:method:focus_state_apply|Elm.Scroller.focus_state_apply]]
+  * **Elm.Gengrid.focus_state_apply**
+  * [[:develop:efl:auto:class:elm:fileselector:method:focus_state_apply|Elm.Fileselector.focus_state_apply]]
+  * [[:develop:efl:auto:mixin:efl:ui:focus:composition:method:focus_state_apply|Efl.Ui.Focus.Composition.focus_state_apply]]
+  * [[:develop:efl:auto:class:elm:toolbar:method:focus_state_apply|Elm.Toolbar.focus_state_apply]]
+  * [[:develop:efl:auto:mixin:efl:ui:focus:layer:method:focus_state_apply|Efl.Ui.Focus.Layer.focus_state_apply]]
+

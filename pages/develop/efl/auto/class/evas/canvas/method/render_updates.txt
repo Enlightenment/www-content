@@ -3,7 +3,7 @@
 
 <code>
 render_updates {
-    return: free(own(list<ptr(Eina.Rectangle)>), evas_render_updates_free) @warn_unused;
+    return: free(list<ptr(free(Eina.Rect, eina_rectangle_free))>, eina_list_free) @warn_unused;
 }
 </code>
 
@@ -24,7 +24,7 @@ Eina_List *evas_canvas_render_updates(Eo *obj);
 
 %%Evas is a stateful canvas. If no operations changing its state took place since the last rendering action, you won't see no changes and this call will be a no-op.%%
 </note>
-{{page>:docs:efl:user:class:evas:canvas:method:render_updates:description&nodate&nolink&nouser}}
+{{page>:develop:efl:user:class:evas:canvas:method:render_updates:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

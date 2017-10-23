@@ -5,14 +5,12 @@
 @property position {
     get {
         values {
-            x: int;
-            y: int;
+            pos: Eina.Position2D;
         }
     }
     set {
         values {
-            x: int;
-            y: int;
+            pos: Eina.Position2D;
         }
     }
 }
@@ -21,21 +19,20 @@
 ===== C signature =====
 
 <code c>
-void efl_input_pointer_position_get(const Eo *obj, int *x, int *y);
-void efl_input_pointer_position_set(Eo *obj, int x, int y);
+Eina_Position2D efl_input_pointer_position_get(const Eo *obj);
+void efl_input_pointer_position_set(Eo *obj, Eina_Position2D pos);
 </code>
 
 ===== Values =====
 
-  * **x** - %%X coordinate of the event%%
-  * **y** - %%Y coordinate of the event%%
+  * **pos** - %%The position of the event, in pixels.%%
 ===== Description =====
 
 %%Position where the event happened, relative to the window.%%
 
-%%This position, in integers, is an approximation of %%[[:docs:efl:auto:class:efl:input:pointer:property:value|Efl.Input.Pointer.value.get]]%%(%%''x''%%), %%[[:docs:efl:auto:class:efl:input:pointer:property:value|Efl.Input.Pointer.value.get]]%%(%%''y''%%). Use %%[[:docs:efl:auto:class:efl:input:pointer:property:position|Efl.Input.Pointer.position]]%% if you need simple pixel positions, but prefer the generic interface if you need precise coordinates.%%
+%%See %%[[:develop:efl:auto:class:efl:input:pointer:property:precise_position|Efl.Input.Pointer.precise_position]]%% for floating point precision (subpixel location).%%
 
-//Since 1.18//{{page>:docs:efl:user:class:efl:input:pointer:property:position:description&nodate&nolink&nouser}}
+//Since 1.18//{{page>:develop:efl:user:class:efl:input:pointer:property:position:description&nouser&nolink&nodate}}
 
 
 ===== Implemented by =====
