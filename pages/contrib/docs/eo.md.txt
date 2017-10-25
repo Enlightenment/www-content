@@ -9,54 +9,54 @@
 This is the quick reference, for a full definition see [Format in EBNF](#Eolian_File_Format)
 
  * General:
-   * `/* comment */` or `//` are comments like in C/C++, they are used to explain the statements surrounding them. It's ignored and will never go to the generated files.
-   * `[[ documentation ]]` will be transformed into documentation for their associated object (variable, class, method, property, enum, type...). In C, that goes as a doxygen-style comment in the generated header file, so do not confuse it with a regular `/* comment */`.
+   * ``/* comment */`` or ``//`` are comments like in C/C++, they are used to explain the statements surrounding them. It's ignored and will never go to the generated files.
+   * ``[[ documentation ]]`` will be transformed into documentation for their associated object (variable, class, method, property, enum, type...). In C, that goes as a doxygen-style comment in the generated header file, so do not confuse it with a regular ``/* comment */``.
    When a comment sits alone on its own line, it refers to the text on the next line. When it sits at the end of a line, it refers to the previous text in that same line.
-   * Groups and blocks are defined within `{` and `}`
-   * Some modifiers may be used, their meaning and scope are defined per context, such as `@extern` may be used with `type`, `enum` and `struct` to denote they are already declared elsewhere (like an included header).
-   * Optional components are defined with `[` and `]`.
+   * Groups and blocks are defined within ``{`` and ``}``
+   * Some modifiers may be used, their meaning and scope are defined per context, such as ``@extern`` may be used with ``type``, ``enum`` and ``struct`` to denote they are already declared elsewhere (like an included header).
+   * Optional components are defined with ``[`` and ``]``.
  * Basic Definitions:
-   * **Variables**: `var [@extern]  name : type [= value] ;`
-   * **Constant**: `const name : type = value ;`
-   * **Enumeration**: `enum [@extern] name { field1, field2 [= value2] ... }`
+   * **Variables**: ``var [@extern]  name : type [= value] ;``
+   * **Constant**: ``const name : type = value ;``
+   * **Enumeration**: ``enum [@extern] name { field1, field2 [= value2] ... }``
  * Structure Definitions:
-   * **Opaque**: `struct [@extern] name ;`
-   * **Opaque with free function**: `struct @free( free_function ) name ;`
-   * **With fields**: `struct name { field1 : type1 , field2 : type2 ... } ;`
+   * **Opaque**: ``struct [@extern] name ;``
+   * **Opaque with free function**: ``struct @free( free_function ) name ;``
+   * **With fields**: ``struct name { field1 : type1 , field2 : type2 ... } ;``
  * Type Definitions:
-   * **Simple**: `type [@extern] name : other ;`
-   * **Simple with free function**: `type @free( free_function ) name : other ;`
-   * **List**: `type name : list<Child_Type>* ;`
-   * **Array**: `type name : array<Child_Type>* ;`
-   * **Hash**: `type name : hash<Key_Type , Value_Type>* ;`
+   * **Simple**: ``type [@extern] name : other ;``
+   * **Simple with free function**: ``type @free( free_function ) name : other ;``
+   * **List**: ``type name : list<Child_Type>* ;``
+   * **Array**: ``type name : array<Child_Type>* ;``
+   * **Hash**: ``type name : hash<Key_Type , Value_Type>* ;``
  * Object Definitions:
    * **Common Body** for class, abstract, interface and mixin: 
-     - `legacy_prefix : prefix ;`
-     - `eo_prefix: prefix ;`
-     - `events { event_name_1 [@private | @protected | @beta | @hot] : type1 ; event_name_2 : type2 ; ... }`
-     - `methods { list_of_methods_and_properties }`
-        - **Methods**: `name [@protected | @const | @class | @pure_virtual] { method_body }`
-          * `legacy: name ;`
-          * `return: type [(expression)] [@warn_unused];`
-          * `params { [@in | @out | @inout] name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }`
-        - **Properties**: `@property name [@protected | @class | @pure_virtual ] { property_body }`
-          * `get [@pure_virtual] [{ return: type ; legacy: name }]`
-          * `set [@pure_virtual] [{ return: type ; legacy: name }]`
-          * `values { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }`
-          * `keys { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }`
-   * **Classes**: `class name ( Base_Class1 , Base_Class2 ) { class_body }`
-     - `data: private_data_type `
-     - `implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }`
-     - `constructors { method_name1 ; .local_method_name2 , ... }`
-   * **Abstract classes**: `abstract name ( Base_Class1 , Base_Class2 ) { abstract_body }`
-     - `data: private_data_type `
-     - `implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }`
-     - `constructors { method_name1 ; .local_method_name2 , ... }`
-   * **Mixins**: `mixin name ( Base_Class1 , Base_Class2 ) { mixin_body }`
-     - `data: private_data_type `
-     - `implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }`
-   * **Interfaces**: `interface name ( Base_Class1 , Base_Class2 ) { interface_body }`
-     - `implements { class.constructor; class.destructor; }`
+     - ``legacy_prefix : prefix ;``
+     - ``eo_prefix: prefix ;``
+     - ``events { event_name_1 [@private | @protected | @beta | @hot] : type1 ; event_name_2 : type2 ; ... }``
+     - ``methods { list_of_methods_and_properties }``
+        - **Methods**: ``name [@protected | @const | @class | @pure_virtual] { method_body }``
+          * ``legacy: name ;``
+          * ``return: type [(expression)] [@warn_unused];``
+          * ``params { [@in | @out | @inout] name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+        - **Properties**: ``@property name [@protected | @class | @pure_virtual ] { property_body }``
+          * ``get [@pure_virtual] [{ return: type ; legacy: name }]``
+          * ``set [@pure_virtual] [{ return: type ; legacy: name }]``
+          * ``values { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+          * ``keys { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+   * **Classes**: ``class name ( Base_Class1 , Base_Class2 ) { class_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+     - ``constructors { method_name1 ; .local_method_name2 , ... }``
+   * **Abstract classes**: ``abstract name ( Base_Class1 , Base_Class2 ) { abstract_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+     - ``constructors { method_name1 ; .local_method_name2 , ... }``
+   * **Mixins**: ``mixin name ( Base_Class1 , Base_Class2 ) { mixin_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+   * **Interfaces**: ``interface name ( Base_Class1 , Base_Class2 ) { interface_body }``
+     - ``implements { class.constructor; class.destructor; }``
 
 ## Eolian File Format Example ##
 
@@ -328,7 +328,7 @@ Before jumping to read the commented example file you may refer to the [Language
 | time    | time_t             | time.h                           |
 | float   | float              |                                  |
 | double  | double             |                                  |
-| bool    | Eina_Bool          | Eina type, builtin values true and false mapping to EINA_TRUE/EINA_FALSE |
+| bool    | Eina_Bool          | Eina type, builtin values true and false mapping to EINA_TRUE and EINA_FALSE |
 | void    | void               | Not applicable in some contexts  |
 | void_ptr | void * | |
 | string | const char * | |
@@ -341,20 +341,20 @@ The description here uses the [extended BNF notation](https://www.ics.uci.edu/~p
 
 Before jumping on the actual Eolian EBNF, a reminder on the EBNF syntax itself:
 
- * Comments: `(* text *)`
- * Definition: `token ::= sequence`
- * Sequence may be another token or a literal within quotes (`'text'`), order matters.
- * Choices are separated with a stroke (pipe char): `choice1 | choice2`
- * Options are enclosed within braces: `[ optional_token ]`
- * Repetitions (zero or more times) are enclosed within curly braces: `{ repeated_token }`
+ * Comments: ``(* text *)``
+ * Definition: ``token ::= sequence``
+ * Sequence may be another token or a literal within quotes (``'text'``), order matters.
+ * Choices are separated with a stroke (pipe char): ``choice1 | choice2``
+ * Options are enclosed within braces: ``[ optional_token ]``
+ * Repetitions (zero or more times) are enclosed within curly braces: ``{ repeated_token }``
 
 Thus in the following EBNF you'll see:
 
 | EBNF | Meaning |
 |------|---------|
-| ` type_complex ::= 'accessor' `<br>` | 'array'`<br>` | 'iterator'`<br>` | 'hash'`<br>` | 'list'` |When `type_complex` token is used, one of `accessor`, `array`, `iterator`, `hash` or `list` strings must be present |
-| `value ::= a-zA-Z0-9_*` | The token `value` must be composed of lower or upper case letters (`a` to `z` and `A-Z`), as well as numbers (`0` to `9`) or the underscore bar (`_`), repeated 0 or more times (`*`) |
-| `name_ns ::= value { '.' value }` | When `name_ns` token is used it may be a token `value` with a repetition of the string `.` followed by other token `value`, such as `My.Token.With.Repetition` |
+| `` type_complex ::= 'accessor' ``<br>`` | 'array'``<br>`` | 'iterator'``<br>`` | 'hash'``<br>`` | 'list'`` |When ``type_complex`` token is used, one of ``accessor``, ``array``, ``iterator``, ``hash`` or ``list`` strings must be present |
+| ``value ::= a-zA-Z0-9_*`` | The token ``value`` must be composed of lower or upper case letters (``a`` to ``z`` and ``A-Z``), as well as numbers (``0`` to ``9``) or the underscore bar (``_``), repeated 0 or more times (``*``) |
+| ``name_ns ::= value { '.' value }`` | When ``name_ns`` token is used it may be a token ``value`` with a repetition of the string ``.`` followed by other token ``value``, such as ``My.Token.With.Repetition`` |
 
 ```ocaml
   (* Base definitions *)
@@ -523,7 +523,7 @@ These include "true", "false" and "null", besides the ones below. The former two
 
 #### Numerical Expressions ####
 
-Eolian numbers follow C syntax. They, however, don't support octal. They support type suffixes (case insensitive): `U` (unsigned int), `L` (long), `UL` (unsigned long), `LL` (long long), `ULL` (unsigned long long), `F` (float). Without suffix, the literal is either a signed integer or double depending on whether it contains a floating point.
+Eolian numbers follow C syntax. They, however, don't support octal. They support type suffixes (case insensitive): ``U`` (unsigned int), ``L`` (long), ``UL`` (unsigned long), ``LL`` (long long), ``ULL`` (unsigned long long), ``F`` (float). Without suffix, the literal is either a signed integer or double depending on whether it contains a floating point.
 
 Examples include:
 ```
@@ -532,7 +532,7 @@ Examples include:
 
 #### Strings ####
 
-Strings are enclosed within double quotes. They can contain any character except a newline (except when escaped). They support several escape sequences: `"\a"`, `"\b"`, `"\f"`, `"\n"`, `"\r"`, `"\t"`, `"\v"` (same as in C), plus `"\""` and `"\'"` to escape quotes (single quotes can remain unescaped, but the lexer will accept escaped too) and arbitrary integer and hex escape sequences `"\ddd"` and `"\xXX"`. A backslash character at the end of the line allows the string to span multiple lines (the newline will be included).
+Strings are enclosed within double quotes. They can contain any character except a newline (except when escaped). They support several escape sequences: ``"\a"``, ``"\b"``, ``"\f"``, ``"\n"``, ``"\r"``, ``"\t"``, ``"\v"`` (same as in C), plus ``"\""`` and ``"\'"`` to escape quotes (single quotes can remain unescaped, but the lexer will accept escaped too) and arbitrary integer and hex escape sequences ``"\ddd"`` and ``"\xXX"``. A backslash character at the end of the line allows the string to span multiple lines (the newline will be included).
 
 Example:
 
@@ -542,25 +542,25 @@ foo"
 ```
 #### Characters ####
 
-A single character. Maps to builtin type **char**. Enclosed within single quotes. Can be either an arbitrary byte (represented within the Eo file, typically as UTF-8) or an escape sequence identical to the ones of strings. Cannot represent Unicode characters - it's just 1 byte. For example: `' a' `, `' \t' `
+A single character. Maps to builtin type **char**. Enclosed within single quotes. Can be either an arbitrary byte (represented within the Eo file, typically as UTF-8) or an escape sequence identical to the ones of strings. Cannot represent Unicode characters - it's just 1 byte. For example: ``' a' ``, ``' \t' ``
 
 ### Unary Expressions ###
 
 There are 4 unary operators in Eolian, all with equal precedence level (see table below).
 
-The unary `+` operator is a no-op, but it enforces typechecking - it must be used in a context that accepts a signed int and its operand must qualify as a signed int. The unary `-` operator acts as a standard unary minus and it typechecks identically to unary plus.
+The unary ``+`` operator is a no-op, but it enforces typechecking - it must be used in a context that accepts a signed int and its operand must qualify as a signed int. The unary ``-`` operator acts as a standard unary minus and it typechecks identically to unary plus.
 
-The `!` operator is a logical "not" and its operand must qualify either as an arbitrary number or a boolean. Its result is always a boolean.
+The ``!`` operator is a logical "not" and its operand must qualify either as an arbitrary number or a boolean. Its result is always a boolean.
 
-The `~` operator is a bitwise "not". Its operand must qualify as an integer and its result is again an integer (of the same type).
+The ``~`` operator is a bitwise "not". Its operand must qualify as an integer and its result is again an integer (of the same type).
 
 ### Binary Operators ###
 
-The binary operators include standard arithmetic (`+`, `-`, `*`, `/`, `%`) - these act on numbers and yield a number of type identical to one of operands (subject to promotion, see below).
+The binary operators include standard arithmetic (``+``, ``-``, ``*``, ``/``, ``%``) - these act on numbers and yield a number of type identical to one of operands (subject to promotion, see below).
 
-Other operators include comparison operators `==`, `!=`, `>`, `<`, `>=`, `<=`. On the former two, operands can be of any type. On the others, operands must be numbers. The "and" and "or" operators (with syntax `&&` and `||` take any types as operands. Comparison operators and and/or yield booleans. Keep in mind that if one of the operands for any of these expressions is non-numerical, the other operand must be of the same type.
+Other operators include comparison operators ``==``, ``!=``, ``>``, ``<``, ``>=``, ``<=``. On the former two, operands can be of any type. On the others, operands must be numbers. The "and" and "or" operators (with syntax ``&&`` and ``||`` take any types as operands. Comparison operators and and/or yield booleans. Keep in mind that if one of the operands for any of these expressions is non-numerical, the other operand must be of the same type.
 
-Finally, there are bitwise binary operators `&`, `|`, `^`, `<<` and `>>` for bitwise AND, OR, XOR, left and right shift respectively. The operands must qualify as integers and it yields again an integer with the same type as one of operands (again, subject to promotion).
+Finally, there are bitwise binary operators ``&``, ``|``, ``^``, ``<<`` and ``>>`` for bitwise AND, OR, XOR, left and right shift respectively. The operands must qualify as integers and it yields again an integer with the same type as one of operands (again, subject to promotion).
 
 Promotion rules for numbers go as follows:
 
@@ -568,7 +568,7 @@ Promotion rules for numbers go as follows:
 2) If either operand is unsigned with rank higher or equal to the other operand, the other operand is converted to an unsigned integer of the same type.
 3) If either operand is signed with rank higher than the other operand (which can be signed or unsigned), the other operand is converted to a signed integer of the same type.
 
-A few examples: `float + int == float`, `unsigned long + long == unsigned long`, `long + unsigned int == long`.
+A few examples: ``float + int == float``, ``unsigned long + long == unsigned long``, ``long + unsigned int == long``.
 
 #### Operator Precedence ####
 
@@ -589,10 +589,10 @@ What follows is a precedence table of operators in Eolian, from higher to lower 
 
 ## Eo File Style Guide ##
 
-- Variable names: `foo_bar`
-- Class names: `Foo.Bar`
-- Type names: `Foo.Bar`
-- Enum names: `Foo.Bar`
+- Variable names: ``foo_bar``
+- Class names: ``Foo.Bar``
+- Type names: ``Foo.Bar``
+- Enum names: ``Foo.Bar``
 - Indentation: 4 spaces per level
 - Brace placement: Opening brace on the same line with previous code, closing brace aligned with first non-whitespace character of the line with the opening brace
 - Please try to keep line length below 80 columns.
@@ -602,7 +602,7 @@ The example code should serve as a decent enough example.
 
 ## Common Eolian Mistakes ##
 
-1. `legacy_prefix: null;` - deprecated, do not use.
+1. ``legacy_prefix: null;`` - deprecated, do not use.
 1. The default naming is the class/struct/enum name all in lower case with periods replaced with _ (e.g. Elm.Widget.Item -> elm_widget_item). No need to set it to that value.
 1. Document the properties themselves, not the set/get sections separately. For example look at [Efl.Image.smooth_scale](https://git.enlightenment.org/core/efl.git/tree/src/lib/efl/interfaces/efl_image.eo#n25) for an example:
 
