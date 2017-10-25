@@ -1,0 +1,39 @@
+<title>Elm.Entry: aborted</title>
+===== Signature =====
+
+<code>
+aborted;
+</code>
+
+===== C information =====
+
+<code c>
+ELM_ENTRY_EVENT_ABORTED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_entry_event_aborted(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_ENTRY_EVENT_ABORTED, on_elm_entry_event_aborted, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when entry was aborted%%
+{{page>:develop:user:class:elm:entry:event:aborted:description&nouser&nolink&nodate}}
+

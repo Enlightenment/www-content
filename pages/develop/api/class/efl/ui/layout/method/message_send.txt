@@ -1,0 +1,41 @@
+<title>Efl.Ui.Layout.message_send</title>
+//Overridden from [[:develop:api:interface:efl:canvas:layout_signal:method:message_send|Efl.Canvas.Layout_Signal.message_send]].//===== Signature =====
+
+<code>
+message_send @pure_virtual {
+    params {
+        @in id: int;
+        @in msg: free(const(any_value), eina_value_flush);
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_canvas_layout_signal_message_send(Eo *obj, int id, const Eina_Value msg);
+</code>
+
+===== Parameters =====
+
+  * **id** //(in)// - %%A identification number for the message to be sent%%
+  * **msg** //(in)// - %%The message's payload%%
+
+===== Description =====
+
+%%Sends an (Edje) message to a given Edje object%%
+
+%%This function sends an Edje message to obj and to all of its child objects, if it has any (swallowed objects are one kind of child object). Only a few types are supported: - int, - float/double, - string/stringshare, - arrays of int, float, double or strings.%%
+
+%%Messages can go both ways, from code to theme, or theme to code.%%
+
+%%The id argument as a form of code and theme defining a common interface on message communication. One should define the same IDs on both code and EDC declaration, to individualize messages (binding them to a given context).%%
+
+//Since 1.21//
+{{page>:develop:user:class:efl:ui:layout:method:message_send:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * [[:develop:api:interface:efl:canvas:layout_signal:method:message_send|Efl.Canvas.Layout_Signal.message_send]]
+  * **Efl.Ui.Layout.message_send**
+

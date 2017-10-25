@@ -1,0 +1,39 @@
+<title>Ecore.Exe: data,get</title>
+===== Signature =====
+
+<code>
+data,get: Ecore.Exe.Event_Data;
+</code>
+
+===== C information =====
+
+<code c>
+ECORE_EXE_EVENT_DATA_GET(Ecore_Exe_Event_Data)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_ecore_exe_event_data_get(void *data, const Efl_Event *event)
+{
+    Ecore_Exe_Event_Data info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ECORE_EXE_EVENT_DATA_GET, on_ecore_exe_event_data_get, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Data received event from the child process%%
+{{page>:develop:user:class:ecore:exe:event:data_get:description&nouser&nolink&nodate}}
+

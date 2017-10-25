@@ -1,0 +1,36 @@
+<title>Elm.Entry.item_provider_append</title>
+===== Signature =====
+
+<code>
+item_provider_append {
+    params {
+        @in func: Elm_Entry_Item_Provider_Cb;
+        @in data: void_ptr @optional;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void elm_obj_entry_item_provider_append(Eo *obj, Elm_Entry_Item_Provider_Cb func, void *data);
+</code>
+
+===== Parameters =====
+
+  * **func** //(in)// - %%The function called to provide the item object.%%
+  * **data** //(in)// - %%The data passed to %%''func''%%.%%
+
+===== Description =====
+
+%%This appends a custom item provider to the list for that entry%%
+
+%%This appends the given callback. The list is walked from beginning to end with each function called given the item href string in the text. If the function returns an object handle other than %%''null''%% (it should create an object to do this), then this object is used to replace that item. If not the next provider is called until one provides an item object, or the default provider in entry does.%%
+
+%%See also @ref entry-items.%%
+{{page>:develop:user:class:elm:entry:method:item_provider_append:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Entry.item_provider_append**
+

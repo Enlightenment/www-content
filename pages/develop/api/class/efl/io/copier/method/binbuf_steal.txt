@@ -1,0 +1,30 @@
+<title>Efl.Io.Copier.binbuf_steal</title>
+===== Signature =====
+
+<code>
+binbuf_steal {
+    return: ptr(free(Eina.Binbuf, eina_binbuf_free)) @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Binbuf *efl_io_copier_binbuf_steal(Eo *obj);
+</code>
+
+===== Description =====
+
+%%Steals the internal binbuf and return it to caller.%%
+
+%%The buffer is then owned by caller, which should call eina_binbuf_free() when it's done.%%
+
+%%Usually call this method when no %%[[:develop:api:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is set, in this case you should wait for "done", "data" or "line" events and then call it to retrieve (and own!) the data.%%
+
+//Since 1.19//
+{{page>:develop:user:class:efl:io:copier:method:binbuf_steal:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Io.Copier.binbuf_steal**
+

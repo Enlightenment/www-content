@@ -1,0 +1,45 @@
+<title>Elm.Calendar.mark_add</title>
+===== Signature =====
+
+<code>
+mark_add {
+    params {
+        @in mark_type: free(string, free);
+        @in mark_time: ptr(Efl.Time);
+        @in repeat: Elm.Calendar.Mark.Repeat.Type;
+    }
+    return: ptr(Elm.Calendar.Mark);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Calendar_Mark *elm_obj_calendar_mark_add(Eo *obj, const char *mark_type, Efl_Time *mark_time, Elm_Calendar_Mark_Repeat_Type repeat);
+</code>
+
+===== Parameters =====
+
+  * **mark_type** //(in)// - %%A string used to define the type of mark. It will be emitted to the theme, that should display a related modification on these days representation.%%
+  * **mark_time** //(in)// - %%A time struct to represent the date of inclusion of the mark. For marks that repeats it will just be displayed after the inclusion date in the calendar.%%
+  * **repeat** //(in)// - %%Repeat the event following this periodicity. Can be a unique mark (that don't repeat), daily, weekly, monthly or annually.%%
+
+===== Description =====
+
+%%Add a new mark to the calendar%%
+
+%%Add a mark that will be drawn in the calendar respecting the insertion time and periodicity. It will emit the type as signal to the widget theme. Default theme supports "holiday" and "checked", but it can be extended.%%
+
+%%It won't immediately update the calendar, drawing the marks. For this, %%[[:develop:api:class:elm:calendar:method:marks_draw|Elm.Calendar.marks_draw]]%%(). However, when user selects next or previous month calendar forces marks drawn.%%
+
+%%Marks created with this method can be deleted with %%[[:develop:api:class:elm:calendar:method:mark_del|Elm.Calendar.mark_del]]%%().%%
+
+%%See also %%[[:develop:api:class:elm:calendar:method:marks_draw|Elm.Calendar.marks_draw]]%%, %%[[:develop:api:class:elm:calendar:method:mark_del|Elm.Calendar.mark_del]]%%().%%
+
+%%@ref calendar_example_06%%
+{{page>:develop:user:class:elm:calendar:method:mark_add:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Calendar.mark_add**
+

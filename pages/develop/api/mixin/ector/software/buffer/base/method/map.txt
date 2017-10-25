@@ -1,0 +1,48 @@
+<title>Ector.Software.Buffer.Base.map</title>
+//Overridden from [[:develop:api:mixin:ector:buffer:method:map|Ector.Buffer.map]].//===== Signature =====
+
+<code>
+map @pure_virtual {
+    params {
+        @out length: uint;
+        @in mode: Ector.Buffer.Access_Flag;
+        @in x: uint;
+        @in y: uint;
+        @in w: uint;
+        @in h: uint;
+        @in cspace: Efl.Gfx.Colorspace;
+        @out stride: uint @optional;
+    }
+    return: void_ptr @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
+</code>
+
+===== Parameters =====
+
+  * **length** //(out)// - %%Accessible buffer size in bytes, should not be %%''null''%%.%%
+  * **mode** //(in)// - %%Specifies whether to map for read-only, write-only or read-write access (OR combination of flags).%%
+  * **x** //(in)// - %%X position of the top-left pixel to map%%
+  * **y** //(in)// - %%Y position of the top-left pixel to map%%
+  * **w** //(in)// - %%If 0, defaults to the buffer width%%
+  * **h** //(in)// - %%If 0, defaults to the buffer height%%
+  * **cspace** //(in)// - %%Requested colorspace. If different from the internal cspace, map should try to convert the data into a new buffer%%
+  * **stride** //(out)// - %%Returns the length in bytes of a mapped line%%
+
+===== Description =====
+
+%%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%
+
+//Since 1.17//
+{{page>:develop:user:mixin:ector:software:buffer:base:method:map:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * [[:develop:api:mixin:ector:buffer:method:map|Ector.Buffer.map]]
+  * **Ector.Software.Buffer.Base.map**
+

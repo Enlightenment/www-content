@@ -1,0 +1,43 @@
+<title>Elm.Gengrid.search_by_text_item_get</title>
+===== Signature =====
+
+<code>
+search_by_text_item_get {
+    params {
+        @in item_to_search_from: free(Elm.Widget.Item, efl_del) @optional;
+        @in part_name: free(string, free);
+        @in pattern: free(string, free);
+        @in flags: Elm.Glob.Match_Flags;
+    }
+    return: free(Elm.Widget.Item, efl_del);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Widget_Item *elm_obj_gengrid_search_by_text_item_get(Eo *obj, Elm_Widget_Item *item_to_search_from, const char *part_name, const char *pattern, Elm_Glob_Match_Flags flags);
+</code>
+
+===== Parameters =====
+
+  * **item_to_search_from** //(in)// - %%Pointer to item to start search from. If %%''null''%%, search will be started from the first item of the gengrid.%%
+  * **part_name** //(in)// - %%Name of the TEXT part of gengrid item to search string in. If %%''null''%%, search by "elm.text" parts.%%
+  * **pattern** //(in)// - %%The search pattern.%%
+  * **flags** //(in)// - %%Search flags.%%
+
+===== Description =====
+
+%%Get gengrid item by given string.%%
+
+%%It takes pointer to the gengrid item that will be used to start search from it.%%
+
+%%This function uses globs (like "*.jpg") for searching and takes search flags as last parameter That is a bitfield with values to be ored together or 0 for no flags.%%
+
+//Since 1.11//
+{{page>:develop:user:class:elm:gengrid:method:search_by_text_item_get:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Gengrid.search_by_text_item_get**
+

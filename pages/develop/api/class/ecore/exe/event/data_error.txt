@@ -1,0 +1,39 @@
+<title>Ecore.Exe: data,error</title>
+===== Signature =====
+
+<code>
+data,error: Ecore.Exe.Event_Data;
+</code>
+
+===== C information =====
+
+<code c>
+ECORE_EXE_EVENT_DATA_ERROR(Ecore_Exe_Event_Data)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_ecore_exe_event_data_error(void *data, const Efl_Event *event)
+{
+    Ecore_Exe_Event_Data info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ECORE_EXE_EVENT_DATA_ERROR, on_ecore_exe_event_data_error, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Error received event from the child process%%
+{{page>:develop:user:class:ecore:exe:event:data_error:description&nouser&nolink&nodate}}
+

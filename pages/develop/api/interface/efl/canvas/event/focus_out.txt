@@ -1,0 +1,39 @@
+<title>Efl.Canvas: focus,out</title>
+===== Signature =====
+
+<code>
+focus,out: free(Efl.Input.Focus, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_CANVAS_EVENT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_canvas_event_focus_out(void *data, const Efl_Event *event)
+{
+    Efl_Input_Focus *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_CANVAS_EVENT_FOCUS_OUT, on_efl_canvas_event_focus_out, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when canvas lost focus%%
+{{page>:develop:user:interface:efl:canvas:event:focus_out:description&nouser&nolink&nodate}}
+

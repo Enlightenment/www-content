@@ -1,0 +1,41 @@
+<title>Efl.Ui.Focus.Object: focus,changed</title>
+===== Signature =====
+
+<code>
+focus,changed: bool;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED(Eina_Bool)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_ui_focus_object_event_focus_changed(void *data, const Efl_Event *event)
+{
+    Eina_Bool info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED, on_efl_ui_focus_object_event_focus_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Emitted if the focus state has changed%%
+
+//Since 1.20//
+{{page>:develop:user:mixin:efl:ui:focus:object:event:focus_changed:description&nouser&nolink&nodate}}
+

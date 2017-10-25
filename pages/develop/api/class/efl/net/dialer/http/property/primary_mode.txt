@@ -1,0 +1,59 @@
+<title>Efl.Net.Dialer.Http.primary_mode</title>
+===== Signature =====
+
+<code>
+@property primary_mode {
+    get {
+        values {
+            primary_mode: Efl.Net.Dialer.Http.Primary_Mode;
+        }
+    }
+    set {
+        values {
+            primary_mode: Efl.Net.Dialer.Http.Primary_Mode;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Net_Dialer_Http_Primary_Mode efl_net_dialer_http_primary_mode_get(const Eo *obj);
+void efl_net_dialer_http_primary_mode_set(Eo *obj, Efl_Net_Dialer_Http_Primary_Mode primary_mode);
+</code>
+
+===== Values =====
+
+  * **primary_mode** - %%Primary HTTP mode%%
+===== Description =====
+
+%%Is this request primarily a download or upload?%%
+
+%%This property will change the behavior of %%[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]]%%:%%
+
+%%- If %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.auto]]%%, then %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.download]]%% or %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.upload]]%% will be choosen based on the %%[[:develop:api:class:efl:net:dialer:http:property:method|Efl.Net.Dialer.Http.method]]%%: if "PUT", then it's upload, otherwise it's download.%%
+
+%%- If %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.upload]]%%, applying a new size with %%[[:develop:api:mixin:efl:io:sizer:method:resize|Efl.Io.Sizer.resize]]%% or %%[[:develop:api:mixin:efl:io:sizer:property:size|Efl.Io.Sizer.size.set]]%% will specify the "Content-Length" to upload. If no size is previously set, then the upload will happen in "Transfer-encoding: chunked".%%
+
+%%- If %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.download]]%%, then %%[[:develop:api:mixin:efl:io:sizer:property:size|Efl.Io.Sizer.size.get]]%% will report the "Content-Length" provided by the server, if any.%%
+
+%%If is worth to mention that one can provide and retrieve these values using %%[[:develop:api:class:efl:net:dialer:http:method:request_headers_get|Efl.Net.Dialer.Http.request_headers_get]]%% (to send) and %%[[:develop:api:class:efl:net:dialer:http:method:response_headers_get|Efl.Net.Dialer.Http.response_headers_get]]%% (what was received), as well as using the specific properties %%[[:develop:api:class:efl:net:dialer:http:property:request_content_length|Efl.Net.Dialer.Http.request_content_length]]%% (upload) and %%[[:develop:api:class:efl:net:dialer:http:property:response_content_length|Efl.Net.Dialer.Http.response_content_length]]%% (download).%%
+
+//Since 1.19//
+
+{{page>:develop:user:class:efl:net:dialer:http:property:primary_mode:description&nouser&nolink&nodate}}
+
+==== Getter ====
+
+%%The effective primary mode.%%
+
+%%This will return one of %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.download]]%% or %%[[:develop:api:enum:efl:net:dialer:http:primary_mode|Efl.Net.Dialer.Http.Primary_Mode.upload]]%%. If "auto" was set (the default), then it will pick the best based on the %%[[:develop:api:class:efl:net:dialer:http:property:method|Efl.Net.Dialer.Http.method]]%% in use.%%
+
+//Since 1.19//{{page>:develop:user:class:efl:net:dialer:http:property:primary_mode:getter_description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Net.Dialer.Http.primary_mode**
+

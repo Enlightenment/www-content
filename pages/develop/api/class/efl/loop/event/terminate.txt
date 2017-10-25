@@ -1,0 +1,39 @@
+<title>Efl.Loop: terminate</title>
+===== Signature =====
+
+<code>
+terminate;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_EVENT_TERMINATE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_event_terminate(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_EVENT_TERMINATE, on_efl_loop_event_terminate, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called before starting the shutdown of elementary%%
+{{page>:develop:user:class:efl:loop:event:terminate:description&nouser&nolink&nodate}}
+

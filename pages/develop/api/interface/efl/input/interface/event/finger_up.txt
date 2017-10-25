@@ -1,0 +1,41 @@
+<title>Efl.Input.Interface: finger,up</title>
+===== Signature =====
+
+<code>
+finger,up: free(Efl.Input.Pointer, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_FINGER_UP(Efl_Input_Pointer *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_finger_up(void *data, const Efl_Event *event)
+{
+    Efl_Input_Pointer *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_FINGER_UP, on_efl_event_finger_up, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Finger released (finger id is known).%%
+
+//Since 1.19//
+{{page>:develop:user:interface:efl:input:interface:event:finger_up:description&nouser&nolink&nodate}}
+

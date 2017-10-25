@@ -1,0 +1,41 @@
+<title>Elm.Glview: render</title>
+===== Signature =====
+
+<code>
+render;
+</code>
+
+===== C information =====
+
+<code c>
+ELM_GLVIEW_EVENT_RENDER(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_glview_event_render(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_GLVIEW_EVENT_RENDER, on_elm_glview_event_render, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Event dispatched when GLView is rendered.%%
+
+%%The callback function gets called in the main loop but whether it runs depends on the rendering policy and whether %%[[:develop:api:class:elm:glview:method:draw_request|Elm.Glview.draw_request]]%% gets called.%%
+{{page>:develop:user:class:elm:glview:event:render:description&nouser&nolink&nodate}}
+

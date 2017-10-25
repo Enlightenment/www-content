@@ -1,0 +1,45 @@
+<title>Elm.Genlist.item_sorted_insert</title>
+===== Signature =====
+
+<code>
+item_sorted_insert {
+    params {
+        @in itc: ptr(const(Elm.Genlist.Item.Class));
+        @in data: const(void_ptr);
+        @in parent: free(Elm.Widget.Item, efl_del) @nullable;
+        @in type: Elm.Genlist.Item.Type;
+        @in comp: Eina_Compare_Cb;
+        @in func: Evas_Smart_Cb @optional;
+        @in func_data: const(void_ptr) @optional;
+    }
+    return: free(Elm.Widget.Item, efl_del);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Widget_Item *elm_obj_genlist_item_sorted_insert(Eo *obj, const Elm_Genlist_Item_Class *itc, const void *data, Elm_Widget_Item *parent, Elm_Genlist_Item_Type type, Eina_Compare_Cb comp, Evas_Smart_Cb func, const void *func_data);
+</code>
+
+===== Parameters =====
+
+  * **itc** //(in)// - %%The item class for the item.%%
+  * **data** //(in)// - %%The item data.%%
+  * **parent** //(in)// - %%The parent item, or %%''null''%% if none.%%
+  * **type** //(in)// - %%Item type.%%
+  * **comp** //(in)// - %%The function called for the sort.%%
+  * **func** //(in)// - %%Convenience function called when the item is selected.%%
+  * **func_data** //(in)// - %%Data passed to %%''func''%% above.%%
+
+===== Description =====
+
+%%Insert a new item into the sorted genlist object%%
+
+%%This inserts an item in the genlist based on user defined comparison function. The two arguments passed to the function %%''func''%% are genlist item handles to compare.%%
+{{page>:develop:user:class:elm:genlist:method:item_sorted_insert:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Genlist.item_sorted_insert**
+

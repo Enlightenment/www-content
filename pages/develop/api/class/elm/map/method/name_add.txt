@@ -1,0 +1,45 @@
+<title>Elm.Map.name_add</title>
+===== Signature =====
+
+<code>
+name_add @const {
+    params {
+        @in address: free(string, free) @optional;
+        @in lon: double;
+        @in lat: double;
+        @in name_cb: Elm_Map_Name_Cb @optional;
+        @in data: void_ptr @optional;
+    }
+    return: ptr(Elm_Map_Name);
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Elm_Map_Name *elm_obj_map_name_add(const Eo *obj, const char *address, double lon, double lat, Elm_Map_Name_Cb name_cb, void *data);
+</code>
+
+===== Parameters =====
+
+  * **address** //(in)// - %%The address.%%
+  * **lon** //(in)// - %%The longitude.%%
+  * **lat** //(in)// - %%The latitude.%%
+  * **name_cb** //(in)// - %%The callback function.%%
+  * **data** //(in)// - %%The user callback data.%%
+
+===== Description =====
+
+%%Request a address or geographic coordinates(longitude, latitude) from a given address or geographic coordinate(longitude, latitude).%%
+
+%%If you want to get address from geographic coordinates, set input %%''address''%% as %%''null''%% and set %%''lon''%%, %%''lat''%% as you want to convert. If address is set except NULL, %%''lon''%% and %%''lat''%% are checked.%%
+
+%%To get the string for this address, @ref elm_map_name_address_get should be used after callback or "name,loaded" signal is called.%%
+
+%%To get the longitude and latitude, @ref elm_map_region_get should be used.%%
+{{page>:develop:user:class:elm:map:method:name_add:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Map.name_add**
+

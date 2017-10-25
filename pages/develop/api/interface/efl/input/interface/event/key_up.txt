@@ -1,0 +1,41 @@
+<title>Efl.Input.Interface: key,up</title>
+===== Signature =====
+
+<code>
+key,up: free(Efl.Input.Key, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_KEY_UP(Efl_Input_Key *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_key_up(void *data, const Efl_Event *event)
+{
+    Efl_Input_Key *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_KEY_UP, on_efl_event_key_up, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Keyboard key release.%%
+
+//Since 1.19//
+{{page>:develop:user:interface:efl:input:interface:event:key_up:description&nouser&nolink&nodate}}
+

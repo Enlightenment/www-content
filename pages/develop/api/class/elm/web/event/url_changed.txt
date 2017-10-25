@@ -1,0 +1,39 @@
+<title>Elm.Web: url,changed</title>
+===== Signature =====
+
+<code>
+url,changed;
+</code>
+
+===== C information =====
+
+<code c>
+ELM_WEB_EVENT_URL_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_web_event_url_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_WEB_EVENT_URL_CHANGED, on_elm_web_event_url_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when URL changed%%
+{{page>:develop:user:class:elm:web:event:url_changed:description&nouser&nolink&nodate}}
+

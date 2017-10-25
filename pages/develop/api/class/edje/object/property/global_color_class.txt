@@ -1,0 +1,86 @@
+<title>Edje.Object.global_color_class</title>
+===== Signature =====
+
+<code>
+@property global_color_class @class {
+    get {
+        keys {
+            color_class: free(string, free);
+            mode: Edje.Color_Class.Mode;
+        }
+        values {
+            r: int;
+            g: int;
+            b: int;
+            a: int;
+        }
+        return: bool;
+    }
+    set {
+        keys {
+            color_class: free(string, free);
+            mode: Edje.Color_Class.Mode;
+        }
+        values {
+            r: int;
+            g: int;
+            b: int;
+            a: int;
+        }
+        return: bool;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool edje_obj_global_color_class_get(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int *r, int *g, int *b, int *a);
+Eina_Bool edje_obj_global_color_class_set(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int r, int g, int b, int a);
+</code>
+
+===== Keys =====
+
+  * **color_class** - %%The name of color class%%
+  * **mode** - %%Edje color class mode%%
+===== Values =====
+
+  * **r** - %%Object Red value%%
+  * **g** - %%Object Green value%%
+  * **b** - %%Object Blue value%%
+  * **a** - %%Object Alpha value%%
+===== Description =====
+
+
+
+{{page>:develop:user:class:edje:object:property:global_color_class:description&nouser&nolink&nodate}}
+
+==== Getter ====
+
+%%Gets Edje color class.%%
+
+%%This function gets the color values for a process level color class. This value is the globally set and not per-object, that is, the value that would be used by objects if they did not override with %%[[:develop:api:class:edje:object:property:color_class|Edje.Object.color_class.set]]%%().%%
+
+%%See also, %%[[:develop:api:class:edje:object:property:global_color_class|Edje.Object.global_color_class.set]]%%()%%
+
+%%unlike Evas, Edje colors are not pre-multiplied. That is, half-transparent white is 255 255 255 128.%%
+</note>
+
+{{page>:develop:user:class:edje:object:property:global_color_class:getter_description&nouser&nolink&nodate}}
+
+==== Setter ====
+
+%%Sets Edje color class.%%
+
+%%This function sets the color values for a process level color class.  This will cause all edje parts in the current process that have the specified color class to have their colors multiplied by these values.  (Object level color classes set by edje_object_color_class_set() will override the values set by this function).%%
+
+%%Setting color emits a signal "color_class,set" with source being the given color class in all objects.%%
+
+%%unlike Evas, Edje colors are not pre-multiplied. That is, half-transparent white is 255 255 255 128.%%
+</note>{{page>:develop:user:class:edje:object:property:global_color_class:getter_description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Edje.Object.global_color_class**
+

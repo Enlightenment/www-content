@@ -1,0 +1,181 @@
+<title>Efl.Canvas</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_canvas [fillcolor = "dodgerblue4", label = "Efl.Canvas", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:api:interface:efl:canvas|Efl.Canvas]] //(interface)//**
+
+===== Description =====
+
+%%Common interface for window and some internal classes in EFL.%%
+
+{{page>:develop:user:interface:efl:canvas:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:api:interface:efl:canvas:method:object_top_at_xy_get|object_top_at_xy_get]]**
+<code c>
+Efl_Gfx *efl_canvas_object_top_at_xy_get(const Eo *obj, Eina_Position2D pos, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+
+%%Retrieve the object stacked at the top of a given position in a canvas.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:object_top_in_rectangle_get|object_top_in_rectangle_get]]**
+<code c>
+Efl_Gfx *efl_canvas_object_top_in_rectangle_get(const Eo *obj, Eina_Rect rect, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+
+%%Retrieve the Evas object stacked at the top of a given rectangular region in a canvas%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:objects_at_xy_get|objects_at_xy_get]]**
+<code c>
+Eina_Iterator *efl_canvas_objects_at_xy_get(const Eo *obj, Eina_Position2D pos, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+
+%%Retrieve a list of objects lying over a given position in a canvas.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:objects_in_rectangle_get|objects_in_rectangle_get]]**
+<code c>
+Eina_Iterator *efl_canvas_objects_in_rectangle_get(const Eo *obj, Eina_Rect rect, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+
+%%Retrieve a list of objects lying over a given rectangular region in a canvas.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:pointer_iterate|pointer_iterate]]**
+<code c>
+Eina_Iterator *efl_canvas_pointer_iterate(const Eo *obj, Eina_Bool hover);
+</code>
+
+%%Returns an iterator over the current known pointer positions.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:seats|seats]]**
+<code c>
+Eina_Iterator *efl_canvas_seats(Eo *obj);
+</code>
+
+%%Iterate over the input device seats.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:method:smart_objects_calculate|smart_objects_calculate]]**
+<code c>
+void efl_canvas_smart_objects_calculate(Eo *obj);
+</code>
+
+%%Call user-provided %%''calculate''%% smart functions and unset the flag signalling that the object needs to get recalculated to all smart objects in the canvas.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:property:device|device]]** //**(get)**//
+<code c>
+Efl_Input_Device *efl_canvas_device_get(const Eo *obj, const char *name);
+</code>
+
+%%An input device attached to this canvas, found by name.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:property:image_max_size|image_max_size]]** //**(get)**//
+<code c>
+Eina_Bool efl_canvas_image_max_size_get(const Eo *obj, Eina_Size2D *max);
+</code>
+
+%%Get the maximum image size evas can possibly handle.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:property:pointer_inside|pointer_inside]]** //**(get)**//
+<code c>
+Eina_Bool efl_canvas_pointer_inside_get(const Eo *obj);
+</code>
+
+%%Returns whether the mouse pointer is logically inside the canvas.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:property:pointer_position|pointer_position]]** //**(get)**//
+<code c>
+Eina_Position2D efl_canvas_pointer_position_get(const Eo *obj);
+</code>
+
+%%This function returns the current known pointer coordinates%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:property:seat|seat]]** //**(get)**//
+<code c>
+Efl_Input_Device *efl_canvas_seat_get(const Eo *obj, int id);
+</code>
+
+%%A seat attached to this canvas, found by id.%%\\ 
+\\ 
+
+===== Events =====
+
+**[[:develop:api:interface:efl:canvas:event:device_added|device,added]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_ADDED(Efl_Input_Device *)
+</code>
+
+%%Called when input device was added%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:device_changed|device,changed]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_CHANGED(Efl_Input_Device *)
+</code>
+
+%%Called when input device changed%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:device_removed|device,removed]]**
+<code c>
+EFL_CANVAS_EVENT_DEVICE_REMOVED(Efl_Input_Device *)
+</code>
+
+%%Called when input device was removed%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:focus_in|focus,in]]**
+<code c>
+EFL_CANVAS_EVENT_FOCUS_IN(Efl_Input_Focus *)
+</code>
+
+%%Called when canvas got focus%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:focus_out|focus,out]]**
+<code c>
+EFL_CANVAS_EVENT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+%%Called when canvas lost focus%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:object_focus_in|object,focus,in]]**
+<code c>
+EFL_CANVAS_EVENT_OBJECT_FOCUS_IN(Efl_Input_Focus *)
+</code>
+
+%%Called when object got focus%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:object_focus_out|object,focus,out]]**
+<code c>
+EFL_CANVAS_EVENT_OBJECT_FOCUS_OUT(Efl_Input_Focus *)
+</code>
+
+%%Called when object lost focus%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:render_post|render,post]]**
+<code c>
+EFL_CANVAS_EVENT_RENDER_POST(void)
+</code>
+
+%%Called when post render happens%%\\ 
+\\ 
+**[[:develop:api:interface:efl:canvas:event:render_pre|render,pre]]**
+<code c>
+EFL_CANVAS_EVENT_RENDER_PRE(void)
+</code>
+
+%%Called when pre render happens%%\\ 
+\\ 

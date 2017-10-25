@@ -1,0 +1,91 @@
+<title>Efl.Text.Annotate</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_text_annotate [fillcolor = "dodgerblue4", label = "Efl.Text.Annotate", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:api:interface:efl:text:annotate|Efl.Text.Annotate]] //(interface)//**
+
+===== Description =====
+
+%%Cursor API%%
+
+//Since 1.20//
+
+{{page>:develop:user:interface:efl:text:annotate:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:api:interface:efl:text:annotate:method:annotation_del|annotation_del]]**
+<code c>
+Eina_Bool efl_text_annotation_del(Eo *obj, Efl_Text_Annotate_Annotation *annotation);
+</code>
+
+%%Deletes given annotation.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:method:annotation_insert|annotation_insert]]**
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_annotation_insert(Eo *obj, Efl_Text_Cursor_Cursor *start, Efl_Text_Cursor_Cursor *end, const char *format);
+</code>
+
+%%Inserts an annotation format in a specified range [%%''start''%%, %%''end''%% - 1].%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:method:annotation_positions_get|annotation_positions_get]]**
+<code c>
+void efl_text_annotation_positions_get(Eo *obj, const Efl_Text_Annotate_Annotation *annotation, Efl_Text_Cursor_Cursor *start, Efl_Text_Cursor_Cursor *end);
+</code>
+
+%%Sets given cursors to the start and end positions of the annotation.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:method:cursor_object_item_insert|cursor_object_item_insert]]**
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_cursor_object_item_insert(Eo *obj, Efl_Text_Cursor_Cursor *cur, const char *format);
+</code>
+
+%%Inserts a object item at specified position.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:method:object_item_geometry_get|object_item_geometry_get]]**
+<code c>
+Eina_Bool efl_text_object_item_geometry_get(Eo *obj, const Efl_Text_Annotate_Annotation *an, int *x, int *y, int *w, int *h);
+</code>
+
+%%Queries a given object item for its geometry.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:method:range_annotations_get|range_annotations_get]]**
+<code c>
+Eina_Iterator *efl_text_range_annotations_get(Eo *obj, const Efl_Text_Cursor_Cursor *start, const Efl_Text_Cursor_Cursor *end);
+</code>
+
+%%Returns an iterator of all the handles in a range.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:property:annotation|annotation]]** //**(get, set)**//
+<code c>
+const char *efl_text_annotation_get(const Eo *obj, Efl_Text_Annotate_Annotation *annotation);
+Eina_Bool efl_text_annotation_set(Eo *obj, Efl_Text_Annotate_Annotation *annotation, const char *format);
+</code>
+
+%%A new format for %%''annotation''%%.%%\\ 
+\\ 
+**[[:develop:api:interface:efl:text:annotate:property:cursor_object_item_annotation|cursor_object_item_annotation]]** //**(get)**//
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_cursor_object_item_annotation_get(const Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+
+%%The object-item annotation at the cursor's position.%%\\ 
+\\ 
+

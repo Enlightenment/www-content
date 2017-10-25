@@ -1,0 +1,49 @@
+<title>Elm.Spinner.base</title>
+===== Signature =====
+
+<code>
+@property base {
+    get {
+        values {
+            base: double;
+        }
+    }
+    set {
+        values {
+            base: double;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+double elm_obj_spinner_base_get(const Eo *obj);
+void elm_obj_spinner_base_set(Eo *obj, double base);
+</code>
+
+===== Values =====
+
+  * **base** - %%The base value%%
+===== Description =====
+
+%%Control the base for rounding%%
+
+%%Rounding works as follows:%%
+
+%%rounded_val = base + (double)(((value - base) / round) * round)%%
+
+%%Where rounded_val, value and base are doubles, and round is an integer.%%
+
+%%This means that things will be rounded to increments (or decrements) of "round" starting from value %%''base''%%. The default base for rounding is 0.%%
+
+%%Example: round = 3, base = 2 Values: ..., -2, 0, 2, 5, 8, 11, 14, ...%%
+
+%%Example: round = 2, base = 5.5 Values: ..., -0.5, 1.5, 3.5, 5.5, 7.5, 9.5, 11.5, ...%%{{page>:develop:user:class:elm:spinner:property:base:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Elm.Spinner.base**
+

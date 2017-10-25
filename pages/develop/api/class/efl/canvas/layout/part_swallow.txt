@@ -1,0 +1,487 @@
+<title>Efl.Canvas.Layout.Part_Swallow</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_canvas_layout_part_swallow [fillcolor = "black", label = "Efl.Canvas.Layout.Part_Swallow", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_canvas_layout_part [fillcolor = "gray15", label = "Efl.Canvas.Layout.Part", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_drag [fillcolor = "gray15", label = "Efl.Ui.Drag", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+    efl_canvas_layout_part_swallow -> efl_canvas_layout_part
+    efl_canvas_layout_part -> efl_object
+    efl_canvas_layout_part -> efl_gfx
+    efl_canvas_layout_part -> efl_ui_drag
+    efl_canvas_layout_part_swallow -> efl_container
+    efl_container -> efl_gfx
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:api:class:efl:canvas:layout:part_swallow|Efl.Canvas.Layout.Part_Swallow]] //(class)//**
+    * [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]] //(class)//
+      * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
+      * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
+      * [[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]] //(interface)//
+    * [[:develop:api:interface:efl:container|Efl.Container]] //(interface)//
+      * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
+
+===== Description =====
+
+%%Represents a SWALLOW part of an Edje object.%%
+
+%%Its lifetime is limited to one function call only, unless an extra reference is explicitely held.%%
+
+{{page>:develop:user:class:efl:canvas:layout:part_swallow:description&nouser&nolink&nodate}}
+
+==== Inherited ====
+
+[[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]].**[[:develop:api:class:efl:canvas:layout:part:property:part_type|part_type]]** //**(get)**//
+<code c>
+Efl_Canvas_Layout_Part_Type efl_canvas_layout_part_type_get(const Eo *obj);
+</code>
+
+%%Type of this part in the layout.%%\\ 
+\\ 
+[[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]].**[[:develop:api:class:efl:canvas:layout:part:property:state|state]]** //**(get)**//
+<code c>
+void efl_canvas_layout_part_state_get(const Eo *obj, const char **state, double *val);
+</code>
+
+%%The name and value of the current state of this part (read-only).%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:canvas:layout:part:method:finalize|finalize]]** //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+<code c>
+Eina_Iterator *efl_children_iterator_new(Eo *obj);
+</code>
+
+%%Get an iterator on all childrens%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_attach|composite_attach]]**
+<code c>
+Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Make an object a composite object of another.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_detach|composite_detach]]**
+<code c>
+Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Detach a composite object from another object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_part_is|composite_part_is]]**
+<code c>
+Eina_Bool efl_composite_part_is(Eo *obj);
+</code>
+
+%%Check if an object is part of a composite object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:constructor|constructor]]**
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:debug_name_override|debug_name_override]]**
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+
+%%Build a read-only name for this object used for debugging.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:del|del]]**
+<code c>
+void efl_del(const Eo *obj);
+</code>
+
+%%Unrefs the object and reparents it to NULL.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:destructor|destructor]]**
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+<code c>
+void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Add an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+<code c>
+void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Remove an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+<code c>
+void efl_event_callback_stop(Eo *obj);
+</code>
+
+%%Stop the current callback call.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_freeze|event_freeze]]**
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+<code c>
+void efl_event_global_freeze(const Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+<code c>
+void efl_event_global_thaw(const Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_thaw|event_thaw]]**
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:name_find|name_find]]**
+<code c>
+Efl_Object *efl_name_find(const Eo *obj, const char *search);
+</code>
+
+%%Find a child object with the given name and return it.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:provider_find|provider_find]]**
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+
+%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_allow_parent_unref_get(const Eo *obj);
+void efl_allow_parent_unref_set(Eo *obj, Eina_Bool allow);
+</code>
+
+%%Allow an object to be deleted by unref even if it has a parent.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:comment|comment]]** //**(get, set)**//
+<code c>
+const char *efl_comment_get(const Eo *obj);
+void efl_comment_set(Eo *obj, const char *comment);
+</code>
+
+%%A human readable comment for the object%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_global_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:finalized|finalized]]** //**(get)**//
+<code c>
+Eina_Bool efl_finalized_get(const Eo *obj);
+</code>
+
+%%True if the object is already finalized, false otherwise.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:name|name]]** //**(get, set)**//
+<code c>
+const char *efl_name_get(const Eo *obj);
+void efl_name_set(Eo *obj, const char *name);
+</code>
+
+%%The name of the object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:parent|parent]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:canvas:layout:part_swallow:method:content_unset|content_unset]]** //[Overridden here]//
+<code c>
+Efl_Gfx *efl_content_unset(Eo *obj);
+</code>
+
+%%Unswallow the object in the current container and return it.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:canvas:layout:part_swallow:property:content|content]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Efl_Gfx *efl_content_get(const Eo *obj);
+Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
+</code>
+
+%%Swallowed sub-object contained in this object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_count|content_count]]**
+<code c>
+int efl_content_count(Eo *obj);
+</code>
+
+%%Returns the number of UI elements packed in this container.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_iterate|content_iterate]]**
+<code c>
+Eina_Iterator *efl_content_iterate(Eo *obj);
+</code>
+
+%%Begin iterating over this object's contents.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_remove|content_remove]]**
+<code c>
+Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
+</code>
+
+%%Unswallow an object from this container.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:class:efl:canvas:layout:part:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Rect efl_gfx_geometry_get(const Eo *obj);
+void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
+</code>
+
+%%Rectangular geometry that combines both position and size.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:color|color]]** //**(get, set)**//
+<code c>
+void efl_gfx_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
+void efl_gfx_color_set(Eo *obj, int r, int g, int b, int a);
+</code>
+
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:position|position]]** //**(get, set)**//
+<code c>
+Eina_Position2D efl_gfx_position_get(const Eo *obj);
+void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
+</code>
+
+%%The 2D position of a canvas object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:size|size]]** //**(get, set)**//
+<code c>
+Eina_Size2D efl_gfx_size_get(const Eo *obj);
+void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
+</code>
+
+%%The 2D size of a canvas object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:visible|visible]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_gfx_visible_get(const Eo *obj);
+void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
+</code>
+
+%%The visibility of a canvas object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:method:drag_page_move|drag_page_move]]** //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_page_move(Eo *obj, double dx, double dy);
+</code>
+
+%%Moves the dragable by %%''dx''%%,%%''dy''%% pages.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:method:drag_step_move|drag_step_move]]** //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_step_move(Eo *obj, double dx, double dy);
+</code>
+
+%%Moves the dragable by %%''dx''%%,%%''dy''%% steps.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:property:drag_dir|drag_dir]]** //**(get)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Efl_Ui_Drag_Dir efl_ui_drag_dir_get(const Eo *obj);
+</code>
+
+%%Determines the dragable directions (read-only).%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:property:drag_page|drag_page]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_page_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_page_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The page step increments.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:property:drag_size|drag_size]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_size_get(const Eo *obj, double *dw, double *dh);
+Eina_Bool efl_ui_drag_size_set(Eo *obj, double dw, double dh);
+</code>
+
+%%The dragable object relative size.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:property:drag_step|drag_step]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_step_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_step_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The drag step increment.%%\\ 
+\\ 
+[[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]].**[[:develop:api:class:efl:canvas:layout:part:property:drag_value|drag_value]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
+<code c>
+Eina_Bool efl_ui_drag_value_get(const Eo *obj, double *dx, double *dy);
+Eina_Bool efl_ui_drag_value_set(Eo *obj, double dx, double dy);
+</code>
+
+%%The dragable object relative location.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:auto_unref|auto_unref]]** //**(set)**// ''protected''
+<code c>
+void efl_auto_unref_set(Eo *obj, Eina_Bool enable);
+</code>
+
+%%Mark an object to be automatically deleted after a function call.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_added|content,added]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_ADDED(Efl_Gfx *)
+</code>
+
+%%Sent after a new item was added.%%\\ 
+\\ 
+[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_removed|content,removed]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
+</code>
+
+%%Sent after an item was removed, before unref.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
+<code c>
+EFL_GFX_EVENT_CHANGED(void)
+</code>
+
+%%Object was changed%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
+<code c>
+EFL_GFX_EVENT_HIDE(void)
+</code>
+
+%%Object just became invisible.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
+<code c>
+EFL_GFX_EVENT_HIDE(void)
+</code>
+
+%%Object just became invisible.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
+<code c>
+EFL_GFX_EVENT_MOVE(void)
+</code>
+
+%%Object was moved, its position during the event is the new one.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
+<code c>
+EFL_GFX_EVENT_MOVE(void)
+</code>
+
+%%Object was moved, its position during the event is the new one.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
+<code c>
+EFL_GFX_EVENT_RESIZE(void)
+</code>
+
+%%Object was resized, its size during the event is the new one.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
+<code c>
+EFL_GFX_EVENT_RESIZE(void)
+</code>
+
+%%Object was resized, its size during the event is the new one.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
+<code c>
+EFL_GFX_EVENT_SHOW(void)
+</code>
+
+%%Object just became visible.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
+<code c>
+EFL_GFX_EVENT_SHOW(void)
+</code>
+
+%%Object just became visible.%%\\ 
+\\ 

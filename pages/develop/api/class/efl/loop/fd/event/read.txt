@@ -1,0 +1,39 @@
+<title>Efl.Loop.Fd: read</title>
+===== Signature =====
+
+<code>
+read;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_FD_EVENT_READ(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_fd_event_read(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_FD_EVENT_READ, on_efl_loop_fd_event_read, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when a read happened on the file descriptor%%
+{{page>:develop:user:class:efl:loop:fd:event:read:description&nouser&nolink&nodate}}
+

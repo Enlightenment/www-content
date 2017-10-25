@@ -1,0 +1,45 @@
+<title>Efl.Io.Reader: can_read,changed</title>
+===== Signature =====
+
+<code>
+can_read,changed;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_reader_event_can_read_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_READER_EVENT_CAN_READ_CHANGED, on_efl_io_reader_event_can_read_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Notifies can_read property changed.%%
+
+%%If %%[[:develop:api:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% is %%''true''%% there is data to %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% without blocking/error. If %%[[:develop:api:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% is %%''false''%%, %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% would either block or fail.%%
+
+%%Note that usually this event is dispatched from inside %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, thus before it returns.%%
+
+//Since 1.19//
+{{page>:develop:user:interface:efl:io:reader:event:can_read_changed:description&nouser&nolink&nodate}}
+

@@ -1,0 +1,41 @@
+<title>Efl.Ui.Focus.Manager: focused</title>
+===== Signature =====
+
+<code>
+focused: free(Efl.Ui.Focus.Object, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_UI_FOCUS_MANAGER_EVENT_FOCUSED(Efl_Ui_Focus_Object *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_ui_focus_manager_event_focused(void *data, const Efl_Event *event)
+{
+    Efl_Ui_Focus_Object *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_UI_FOCUS_MANAGER_EVENT_FOCUSED, on_efl_ui_focus_manager_event_focused, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Emitted if the manager has focused an object%%
+
+//Since 1.20//
+{{page>:develop:user:interface:efl:ui:focus:manager:event:focused:description&nouser&nolink&nodate}}
+

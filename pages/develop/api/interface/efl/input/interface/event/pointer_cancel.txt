@@ -1,0 +1,41 @@
+<title>Efl.Input.Interface: pointer,cancel</title>
+===== Signature =====
+
+<code>
+pointer,cancel: free(Efl.Input.Pointer, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_POINTER_CANCEL(Efl_Input_Pointer *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_pointer_cancel(void *data, const Efl_Event *event)
+{
+    Efl_Input_Pointer *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_POINTER_CANCEL, on_efl_event_pointer_cancel, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Main pointer button press was cancelled (button id is known). This can happen in rare cases when the window manager passes the focus to a more urgent window, for instance. You probably don't need to listen to this event, as it will be accompanied by an up event.%%
+
+//Since 1.19//
+{{page>:develop:user:interface:efl:input:interface:event:pointer_cancel:description&nouser&nolink&nodate}}
+

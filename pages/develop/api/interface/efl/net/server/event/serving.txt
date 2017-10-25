@@ -1,0 +1,41 @@
+<title>Efl.Net.Server: serving</title>
+===== Signature =====
+
+<code>
+serving;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_NET_SERVER_EVENT_SERVING(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_server_event_serving(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_SERVER_EVENT_SERVING, on_efl_net_server_event_serving, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Notifies the server is ready to accept clients. See property %%[[:develop:api:interface:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%
+
+//Since 1.19//
+{{page>:develop:user:interface:efl:net:server:event:serving:description&nouser&nolink&nodate}}
+

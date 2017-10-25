@@ -1,0 +1,96 @@
+<title>Ector.Software.Buffer.Base</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    ector_software_buffer_base [fillcolor = "deepskyblue4", label = "Ector.Software.Buffer.Base", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    ector_buffer [fillcolor = "gray15", label = "Ector.Buffer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    ector_software_buffer_base -> ector_buffer
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:api:mixin:ector:software:buffer:base|Ector.Software.Buffer.Base]] //(mixin)//**
+    * [[:develop:api:mixin:ector:buffer|Ector.Buffer]] //(mixin)//
+
+===== Description =====
+
+%%A buffer in Ector Software is a readable & optionally writable image%%
+
+{{page>:develop:user:mixin:ector:software:buffer:base:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:api:mixin:ector:software:buffer:base:method:pixels_clear|pixels_clear]]** ''protected''
+<code c>
+void ector_software_buffer_pixels_clear(Eo *obj);
+</code>
+
+%%Clear internal pixel buffer%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:buffer:property:cspace|cspace]]** //**(get)**//
+<code c>
+Efl_Gfx_Colorspace ector_buffer_cspace_get(const Eo *obj);
+</code>
+
+%%The colorspace of the pixel buffer.%%\\ 
+\\ 
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:buffer:property:size|size]]** //**(get)**//
+<code c>
+void ector_buffer_size_get(const Eo *obj, int *w, int *h);
+</code>
+
+%%The (rectangular) size of the pixel buffer.%%\\ 
+\\ 
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:software:buffer:base:method:map|map]]** //[Overridden here]//
+<code c>
+void *ector_buffer_map(Eo *obj, unsigned int *length, Ector_Buffer_Access_Flag mode, unsigned int x, unsigned int y, unsigned int w, unsigned int h, Efl_Gfx_Colorspace cspace, unsigned int *stride);
+</code>
+
+%%Map a region of this buffer for read or write access by the CPU, fetch data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%\\ 
+\\ 
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:software:buffer:base:method:pixels_set|pixels_set]]** //[Overridden here]//
+<code c>
+Eina_Bool ector_buffer_pixels_set(Eo *obj, void *pixels, int width, int height, Efl_Gfx_Colorspace cspace, Eina_Bool writable);
+</code>
+
+%%Sets the source pixels for this buffer, or allocate a new memory region%%\\ 
+\\ 
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:software:buffer:base:method:unmap|unmap]]** //[Overridden here]//
+<code c>
+void ector_buffer_unmap(Eo *obj, void *data, unsigned int length);
+</code>
+
+%%Unmap a region of this buffer, and upload data to the GPU (if needed).%%\\ 
+\\ 
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:software:buffer:base:property:flags|flags]]** //**(get)**// //[Overridden here]//
+<code c>
+Ector_Buffer_Flag ector_buffer_flags_get(const Eo *obj);
+</code>
+
+%%The capabilities of this buffer%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:mixin:ector:buffer|Ector.Buffer]].**[[:develop:api:mixin:ector:buffer:event:detached|detached]]**
+<code c>
+ECTOR_BUFFER_EVENT_DETACHED(void)
+</code>
+
+%%Emitted whenever the previously attached pixels are detached during pixels_set%%\\ 
+\\ 

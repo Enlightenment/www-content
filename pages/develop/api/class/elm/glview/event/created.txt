@@ -1,0 +1,41 @@
+<title>Elm.Glview: created</title>
+===== Signature =====
+
+<code>
+created;
+</code>
+
+===== C information =====
+
+<code c>
+ELM_GLVIEW_EVENT_CREATED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_elm_glview_event_created(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, ELM_GLVIEW_EVENT_CREATED, on_elm_glview_event_created, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Event dispatched when first render happens.%%
+
+%%The callback function gets called once during the render loop. Callback function allows glview to hide all the rendering context/surface details and have the user just call GL calls that they desire for initialization GL calls.%%
+{{page>:develop:user:class:elm:glview:event:created:description&nouser&nolink&nodate}}
+

@@ -1,0 +1,44 @@
+<title>Efl.Gfx.Map.perspective_3d</title>
+===== Signature =====
+
+<code>
+perspective_3d {
+    params {
+        @in pivot: free(const(Efl.Gfx), efl_del);
+        @in px: double;
+        @in py: double;
+        @in z0: double;
+        @in foc: double;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_gfx_map_perspective_3d(Eo *obj, const Efl_Gfx *pivot, double px, double py, double z0, double foc);
+</code>
+
+===== Parameters =====
+
+  * **pivot** //(in)// - %%A pivot object for the infinite point, can be %%''null''%%.%%
+  * **px** //(in)// - %%The perspective distance X relative coordinate.%%
+  * **py** //(in)// - %%The perspective distance Y relative coordinate.%%
+  * **z0** //(in)// - %%The "0" Z plane value.%%
+  * **foc** //(in)// - %%The focal distance, must be greater than 0.%%
+
+===== Description =====
+
+%%Apply a perspective transform to the map%%
+
+%%This applies a given perspective (3D) to the map coordinates. X, Y and Z values are used. The px and py points specify the "infinite distance" point in the 3D conversion (where all lines converge to like when artists draw 3D by hand). The %%''z0''%% value specifies the z value at which there is a 1:1 mapping between spatial coordinates and screen coordinates. Any points on this z value will not have their X and Y values modified in the transform. Those further away (Z value higher) will shrink into the distance, and those less than this value will expand and become bigger. The %%''foc''%% value determines the "focal length" of the camera. This is in reality the distance between the camera lens plane itself (at or closer than this rendering results are undefined) and the "z0" z value. This allows for some "depth" control and %%''foc''%% must be greater than 0.%%
+
+%%The coordinates are set relative to the given %%''pivot''%% object. If its geometry changes, then the absolute position of the rotation center will change accordingly. The Z position is absolute. If the %%''pivot''%% is %%''null''%% then this object will be its own pivot.%%
+
+//Since 1.20//
+{{page>:develop:user:mixin:efl:gfx:map:method:perspective_3d:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Gfx.Map.perspective_3d**
+

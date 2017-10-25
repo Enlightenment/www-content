@@ -1,0 +1,42 @@
+<title>Edje.Object.calc_size_min</title>
+//Overridden from [[:develop:api:interface:efl:canvas:layout_calc:method:calc_size_min|Efl.Canvas.Layout_Calc.calc_size_min]].//===== Signature =====
+
+<code>
+calc_size_min @pure_virtual {
+    params {
+        @in restricted: Eina.Size2D @optional;
+    }
+    return: Eina.Size2D;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Size2D efl_canvas_layout_calc_size_min(Eo *obj, Eina_Size2D restricted);
+</code>
+
+===== Parameters =====
+
+  * **restricted** //(in)// - %%The minimum size constraint as input, the returned size can not be lower than this (in both directions).%%
+
+===== Description =====
+
+%%Calculates the minimum required size for a given layout object.%%
+
+%%This call will trigger an internal recalculation of all parts of the object, in order to return its minimum required dimensions for width and height. The user might choose to impose those minimum sizes, making the resulting calculation to get to values greater or equal than %%''restricted''%% in both directions.%%
+
+%%At the end of this call, the object won't be automatically resized to the new dimensions, but just return the calculated sizes. The caller is the one up to change its geometry or not.%%
+</note>
+
+%%Be advised that invisible parts in the object will be taken into account in this calculation.%%
+</note>
+
+//Since 1.21//
+{{page>:develop:user:class:edje:object:method:calc_size_min:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * [[:develop:api:interface:efl:canvas:layout_calc:method:calc_size_min|Efl.Canvas.Layout_Calc.calc_size_min]]
+  * **Edje.Object.calc_size_min**
+

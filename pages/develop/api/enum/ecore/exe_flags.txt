@@ -1,0 +1,62 @@
+<title>Ecore.Exe_Flags</title>
+===== Signature =====
+
+<code>
+enum Ecore.Exe_Flags {
+    none: 0,
+    pipe_read: 1,
+    pipe_write: 2,
+    pipe_error: 4,
+    pipe_read_line_buffered: 8,
+    pipe_error_line_buffered: 16,
+    pipe_auto: 32,
+    respawn: 64,
+    use_sh: 128,
+    not_leader: 256,
+    term_with_parent: 512,
+    isolate_io: 1024
+}
+</code>
+
+===== C signature =====
+
+<code c>
+typedef enum {
+    ECORE_EXE_NONE = 0,
+    ECORE_EXE_PIPE_READ = 1,
+    ECORE_EXE_PIPE_WRITE = 2,
+    ECORE_EXE_PIPE_ERROR = 4,
+    ECORE_EXE_PIPE_READ_LINE_BUFFERED = 8,
+    ECORE_EXE_PIPE_ERROR_LINE_BUFFERED = 16,
+    ECORE_EXE_PIPE_AUTO = 32,
+    ECORE_EXE_RESPAWN = 64,
+    ECORE_EXE_USE_SH = 128,
+    ECORE_EXE_NOT_LEADER = 256,
+    ECORE_EXE_TERM_WITH_PARENT = 512,
+    ECORE_EXE_ISOLATE_IO = 1024
+} Ecore_Exe_Flags;
+</code>
+
+===== Description =====
+
+%%Flags for executing a child with its stdin and/or stdout piped back.%%
+
+{{page>:develop:user:enum:ecore:exe_flags:description&nouser&nolink&nodate}}
+
+===== Fields =====
+
+{{page>:develop:user:enum:ecore:exe_flags:fields&nouser&nolink&nodate}}
+
+  * **none** - %%No exe flags at all%%
+  * **pipe_read** - %%Exe Pipe Read mask%%
+  * **pipe_write** - %%Exe Pipe Write mask%%
+  * **pipe_error** - %%Exe Pipe error mask%%
+  * **pipe_read_line_buffered** - %%Reads are buffered until a newline and split 1 line per Ecore_Exe_Event_Data_Line%%
+  * **pipe_error_line_buffered** - %%Errors are buffered until a newline and split 1 line per Ecore_Exe_Event_Data_Line%%
+  * **pipe_auto** - %%stdout and stderr are buffered automatically%%
+  * **respawn** - %%FIXME: Exe is restarted if it dies%%
+  * **use_sh** - %%Use /bin/sh to run the command.%%
+  * **not_leader** - %%Do not use setsid() to have the executed process be its own session leader%%
+  * **term_with_parent** - %%Makes child receive SIGTERM when parent dies.%%
+  * **isolate_io** - %%Try and isolate stdin/out and err of the process so it isn't shared with the parent.%%
+

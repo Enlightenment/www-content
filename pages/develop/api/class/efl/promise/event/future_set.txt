@@ -1,0 +1,39 @@
+<title>Efl.Promise: future,set</title>
+===== Signature =====
+
+<code>
+future,set: free(future<void_ptr>, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_PROMISE_EVENT_FUTURE_SET(Efl_Future *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_promise_event_future_set(void *data, const Efl_Event *event)
+{
+    Efl_Future *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_PROMISE_EVENT_FUTURE_SET, on_efl_promise_event_future_set, d);
+}
+
+</code>
+
+===== Description =====
+
+%%This event is triggered whenever a future is fully set to receive all events and that the user of it do not hold any more reference on it.%%
+{{page>:develop:user:class:efl:promise:event:future_set:description&nouser&nolink&nodate}}
+

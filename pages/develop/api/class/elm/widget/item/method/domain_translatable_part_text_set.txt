@@ -1,0 +1,38 @@
+<title>Elm.Widget.Item.domain_translatable_part_text_set</title>
+===== Signature =====
+
+<code>
+domain_translatable_part_text_set {
+    params {
+        @in part: free(string, free);
+        @in domain: free(string, free);
+        @in label: free(string, free);
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void elm_wdg_item_domain_translatable_part_text_set(Eo *obj, const char *part, const char *domain, const char *label);
+</code>
+
+===== Parameters =====
+
+  * **part** //(in)// - %%The name of the part to set%%
+  * **domain** //(in)// - %%The translation domain to use%%
+  * **label** //(in)// - %%The original, non-translated text to set%%
+
+===== Description =====
+
+%%Set the text for an object item's part, marking it as translatable.%%
+
+%%The string to set as %%''text''%% must be the original one. Do not pass the return of %%''gettext''%%() here. Elementary will translate the string internally and set it on the object item using %%[[:develop:api:class:elm:widget:item:property:part_text|Elm.Widget.Item.part_text.set]]%%, also storing the original string so that it can be automatically translated when the language is changed with elm_language_set(). The %%''domain''%% will be stored along to find the translation in the correct catalog. It can be NULL, in which case it will use whatever domain was set by the application with %%''textdomain''%%(). This is useful in case you are building a library on top of Elementary that will have its own translatable strings, that should not be mixed with those of programs using the library.%%
+
+//Since 1.8//
+{{page>:develop:user:class:elm:widget:item:method:domain_translatable_part_text_set:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Elm.Widget.Item.domain_translatable_part_text_set**
+

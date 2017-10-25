@@ -1,0 +1,39 @@
+<title>Efl.Access: children,changed</title>
+===== Signature =====
+
+<code>
+children,changed: Efl.Access.Event.Children_Changed.Data;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_ACCESS_EVENT_CHILDREN_CHANGED(Efl_Access_Event_Children_Changed_Data)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_access_event_children_changed(void *data, const Efl_Event *event)
+{
+    Efl_Access_Event_Children_Changed_Data info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_ACCESS_EVENT_CHILDREN_CHANGED, on_efl_access_event_children_changed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when children have changed%%
+{{page>:develop:user:mixin:efl:access:event:children_changed:description&nouser&nolink&nodate}}
+

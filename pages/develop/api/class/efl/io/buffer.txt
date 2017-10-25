@@ -1,0 +1,493 @@
+<title>Efl.Io.Buffer</title>
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_io_buffer [fillcolor = "black", label = "Efl.Io.Buffer", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_sizer [fillcolor = "gray15", label = "Efl.Io.Sizer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_positioner [fillcolor = "gray15", label = "Efl.Io.Positioner", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_io_buffer -> efl_object
+    efl_io_buffer -> efl_io_reader
+    efl_io_buffer -> efl_io_writer
+    efl_io_buffer -> efl_io_closer
+    efl_io_buffer -> efl_io_sizer
+    efl_io_buffer -> efl_io_positioner
+}
+</graphviz>
+
+++++
+
+===== Inheritance hierarchy =====
+
+  * **[[:develop:api:class:efl:io:buffer|Efl.Io.Buffer]] //(class)//**
+    * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
+    * [[:develop:api:interface:efl:io:reader|Efl.Io.Reader]] //(interface)//
+    * [[:develop:api:interface:efl:io:writer|Efl.Io.Writer]] //(interface)//
+    * [[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+    * [[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]] //(mixin)//
+    * [[:develop:api:mixin:efl:io:positioner|Efl.Io.Positioner]] //(mixin)//
+
+===== Description =====
+
+%%Generic In-memory buffer of data to be used as I/O.%%
+
+%%This class offers both input and output, which can be used at the same time since %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% use different offsets/position internally.%%
+
+%%One can get temporary direct access to internal buffer with %%[[:develop:api:class:efl:io:buffer:property:slice|Efl.Io.Buffer.slice]]%% or steal the buffer with %%[[:develop:api:class:efl:io:buffer:method:binbuf_steal|Efl.Io.Buffer.binbuf_steal]]%%.%%
+
+%%A fixed sized buffer can be implemented by setting %%[[:develop:api:class:efl:io:buffer:property:limit|Efl.Io.Buffer.limit]]%% followed by %%[[:develop:api:class:efl:io:buffer:method:preallocate|Efl.Io.Buffer.preallocate]]%%%%
+
+//Since 1.19//
+
+{{page>:develop:user:class:efl:io:buffer:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:api:class:efl:io:buffer:method:adopt_readonly|adopt_readonly]]**
+<code c>
+void efl_io_buffer_adopt_readonly(Eo *obj, const Eina_Slice slice);
+</code>
+
+%%Adopt a read-only slice as buffer's backing store.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:method:adopt_readwrite|adopt_readwrite]]**
+<code c>
+void efl_io_buffer_adopt_readwrite(Eo *obj, Eina_Rw_Slice slice);
+</code>
+
+%%Adopt a read-write slice as buffer's backing store.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:method:binbuf_steal|binbuf_steal]]**
+<code c>
+Eina_Binbuf *efl_io_buffer_binbuf_steal(Eo *obj);
+</code>
+
+%%Steals the internal buffer memory and returns it as a binbuf.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:method:preallocate|preallocate]]**
+<code c>
+void efl_io_buffer_preallocate(Eo *obj, size_t size);
+</code>
+
+%%Immediately pre-allocate a buffer of at least a given size.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:property:limit|limit]]** //**(get, set)**//
+<code c>
+size_t efl_io_buffer_limit_get(const Eo *obj);
+void efl_io_buffer_limit_set(Eo *obj, size_t size);
+</code>
+
+%%Limit how big the buffer can grow.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:property:position_read|position_read]]** //**(get, set)**//
+<code c>
+uint64_t efl_io_buffer_position_read_get(const Eo *obj);
+Eina_Bool efl_io_buffer_position_read_set(Eo *obj, uint64_t position);
+</code>
+
+%%The position used by %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%%.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:property:position_write|position_write]]** //**(get, set)**//
+<code c>
+uint64_t efl_io_buffer_position_write_get(const Eo *obj);
+Eina_Bool efl_io_buffer_position_write_set(Eo *obj, uint64_t position);
+</code>
+
+%%The position used by %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%%.%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:property:slice|slice]]** //**(get)**//
+<code c>
+Eina_Slice efl_io_buffer_slice_get(const Eo *obj);
+</code>
+
+%%Get a temporary access to buffer's internal memory.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:io:buffer:method:destructor|destructor]]** //[Overridden here]//
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+
+%%Call the object's destructor.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:io:buffer:method:finalize|finalize]]** //[Overridden here]//
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+
+%%Called at the end of #eo_add. Should not be called, just overridden.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:children_iterator_new|children_iterator_new]]**
+<code c>
+Eina_Iterator *efl_children_iterator_new(Eo *obj);
+</code>
+
+%%Get an iterator on all childrens%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_attach|composite_attach]]**
+<code c>
+Eina_Bool efl_composite_attach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Make an object a composite object of another.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_detach|composite_detach]]**
+<code c>
+Eina_Bool efl_composite_detach(Eo *obj, Efl_Object *comp_obj);
+</code>
+
+%%Detach a composite object from another object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:composite_part_is|composite_part_is]]**
+<code c>
+Eina_Bool efl_composite_part_is(Eo *obj);
+</code>
+
+%%Check if an object is part of a composite object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:constructor|constructor]]**
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+
+%%Call the object's constructor.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:debug_name_override|debug_name_override]]**
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+
+%%Build a read-only name for this object used for debugging.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:del|del]]**
+<code c>
+void efl_del(const Eo *obj);
+</code>
+
+%%Unrefs the object and reparents it to NULL.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+<code c>
+void efl_event_callback_forwarder_add(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Add an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+<code c>
+void efl_event_callback_forwarder_del(Eo *obj, const Efl_Event_Description *desc, Efl_Object *new_obj);
+</code>
+
+%%Remove an event callback forwarder for an event and an object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_callback_stop|event_callback_stop]]**
+<code c>
+void efl_event_callback_stop(Eo *obj);
+</code>
+
+%%Stop the current callback call.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_freeze|event_freeze]]**
+<code c>
+void efl_event_freeze(Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_global_freeze|event_global_freeze]]**
+<code c>
+void efl_event_global_freeze(const Eo *obj);
+</code>
+
+%%Freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_global_thaw|event_global_thaw]]**
+<code c>
+void efl_event_global_thaw(const Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:event_thaw|event_thaw]]**
+<code c>
+void efl_event_thaw(Eo *obj);
+</code>
+
+%%Thaw events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:name_find|name_find]]**
+<code c>
+Efl_Object *efl_name_find(const Eo *obj, const char *search);
+</code>
+
+%%Find a child object with the given name and return it.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:method:provider_find|provider_find]]**
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+
+%%Searches up in the object tree for a provider which knows the given class/interface.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_allow_parent_unref_get(const Eo *obj);
+void efl_allow_parent_unref_set(Eo *obj, Eina_Bool allow);
+</code>
+
+%%Allow an object to be deleted by unref even if it has a parent.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:comment|comment]]** //**(get, set)**//
+<code c>
+const char *efl_comment_get(const Eo *obj);
+void efl_comment_set(Eo *obj, const char *comment);
+</code>
+
+%%A human readable comment for the object%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+<code c>
+int efl_event_global_freeze_count_get(const Eo *obj);
+</code>
+
+%%Return freeze events of object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:finalized|finalized]]** //**(get)**//
+<code c>
+Eina_Bool efl_finalized_get(const Eo *obj);
+</code>
+
+%%True if the object is already finalized, false otherwise.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:name|name]]** //**(get, set)**//
+<code c>
+const char *efl_name_get(const Eo *obj);
+void efl_name_set(Eo *obj, const char *name);
+</code>
+
+%%The name of the object.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:parent|parent]]** //**(get, set)**//
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+
+%%The parent of an object.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:class:efl:io:buffer:method:read|read]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+
+%%Reads data into a pre-allocated buffer.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:class:efl:io:buffer:property:can_read|can_read]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
+void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
+</code>
+
+%%If %%''true''%% will notify %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:class:efl:io:buffer:property:eos|eos]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_reader_eos_get(const Eo *obj);
+void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
+</code>
+
+%%If %%''true''%% will notify end of stream.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:class:efl:io:buffer:method:write|write]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+
+%%Writes data from a pre-populated buffer.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:class:efl:io:buffer:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+
+%%If %%''true''%% will notify %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:class:efl:io:buffer:method:close|close]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+
+%%Closes the Input/Output object.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:class:efl:io:buffer:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+
+%%If true will automatically close() on object destructor.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:class:efl:io:buffer:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+
+%%If true will automatically close resources on exec() calls.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:class:efl:io:buffer:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+
+%%If true will notify object was closed.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:class:efl:io:buffer:method:seek|seek]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_positioner_seek(Eo *obj, int64_t offset, Efl_Io_Positioner_Whence whence);
+</code>
+
+%%Seek in data%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:class:efl:io:buffer:property:position|position]]** //**(get, set)**// //[Overridden here]//
+<code c>
+uint64_t efl_io_positioner_position_get(const Eo *obj);
+Eina_Bool efl_io_positioner_position_set(Eo *obj, uint64_t position);
+</code>
+
+%%Position property%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:class:efl:io:buffer:method:resize|resize]]** //[Overridden here]//
+<code c>
+Eina_Error efl_io_sizer_resize(Eo *obj, uint64_t size);
+</code>
+
+%%Resize object%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:class:efl:io:buffer:property:size|size]]** //**(get, set)**// //[Overridden here]//
+<code c>
+uint64_t efl_io_sizer_size_get(const Eo *obj);
+Eina_Bool efl_io_sizer_size_set(Eo *obj, uint64_t size);
+</code>
+
+%%Size property%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:auto_unref|auto_unref]]** //**(set)**// ''protected''
+<code c>
+void efl_auto_unref_set(Eo *obj, Eina_Bool enable);
+</code>
+
+%%Mark an object to be automatically deleted after a function call.%%\\ 
+\\ 
+
+===== Events =====
+
+**[[:develop:api:class:efl:io:buffer:event:position_read_changed|position_read,changed]]**
+<code c>
+EFL_IO_BUFFER_EVENT_POSITION_READ_CHANGED(void)
+</code>
+
+%%Notifies %%[[:develop:api:class:efl:io:buffer:property:position_read|Efl.Io.Buffer.position_read]]%% changed%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:event:position_write_changed|position_write,changed]]**
+<code c>
+EFL_IO_BUFFER_EVENT_POSITION_WRITE_CHANGED(void)
+</code>
+
+%%Notifies %%[[:develop:api:class:efl:io:buffer:property:position_write|Efl.Io.Buffer.position_write]]%% changed%%\\ 
+\\ 
+**[[:develop:api:class:efl:io:buffer:event:reallocated|reallocated]]**
+<code c>
+EFL_IO_BUFFER_EVENT_REALLOCATED(void)
+</code>
+
+%%Notifies the internal buffer was reallocated, thus whatever was returned by %%[[:develop:api:class:efl:io:buffer:property:slice|Efl.Io.Buffer.slice]]%% becomes invalid%%\\ 
+\\ 
+==== Inherited ====
+
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:callback_add|callback,add]]**
+<code c>
+EFL_EVENT_CALLBACK_ADD(void, @hot)
+</code>
+
+%%A callback was added.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:callback_del|callback,del]]**
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+%%A callback was deleted.%%\\ 
+\\ 
+[[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:event:del|del]]**
+<code c>
+EFL_EVENT_DEL(void, @hot)
+</code>
+
+%%Object is being deleted.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:interface:efl:io:reader:event:can_read_changed|can_read,changed]]**
+<code c>
+EFL_IO_READER_EVENT_CAN_READ_CHANGED(void)
+</code>
+
+%%Notifies can_read property changed.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:interface:efl:io:reader:event:eos|eos]]**
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+%%Notifies end of stream, when property is marked as true.%%\\ 
+\\ 
+[[:develop:api:interface:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:interface:efl:io:writer:event:can_write_changed|can_write,changed]]**
+<code c>
+EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED(void)
+</code>
+
+%%Notifies can_write property changed.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:mixin:efl:io:closer:event:closed|closed]]**
+<code c>
+EFL_IO_CLOSER_EVENT_CLOSED(void)
+</code>
+
+%%Notifies closed, when property is marked as true%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:mixin:efl:io:positioner:event:position_changed|position,changed]]**
+<code c>
+EFL_IO_POSITIONER_EVENT_POSITION_CHANGED(void)
+</code>
+
+%%Notifies position changed%%\\ 
+\\ 
+[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:mixin:efl:io:sizer:event:size_changed|size,changed]]**
+<code c>
+EFL_IO_SIZER_EVENT_SIZE_CHANGED(void)
+</code>
+
+%%Notifies size changed%%\\ 
+\\ 
