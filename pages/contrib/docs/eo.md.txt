@@ -6,7 +6,7 @@
 
 ## Language Quick Reference ##
 
-This is the quick reference, for a full definition see [Format in EBNF](#Eolian_file_format)
+This is the quick reference, for a full definition see [Format in EBNF](#Eolian_File_Format)
 
  * General:
    * `/* comment */` or `//` are comments like in C/C++, they are used to explain the statements surrounding them. It's ignored and will never go to the generated files.
@@ -58,9 +58,9 @@ This is the quick reference, for a full definition see [Format in EBNF](#Eolian_
    * **Interfaces**: `interface name ( Base_Class1 , Base_Class2 ) { interface_body }`
      - `implements { class.constructor; class.destructor; }`
 
-## Eolian file format example ##
+## Eolian File Format Example ##
 
-Before jumping to read the commented example file you may refer to the [Language Quick Reference](#Language_Quick_Reference) or check the full [Eolian file format](#Eolian_file_format).
+Before jumping to read the commented example file you may refer to the [Language Quick Reference](#Language_Quick_Reference) or check the full [Eolian file format](#Eolian_File_Format).
 
 ```c
   /* COMMENTS ARE IMPORTANT, READ THEM. */
@@ -275,7 +275,7 @@ Before jumping to read the commented example file you may refer to the [Language
   }
 ```
 
-## Type context matrix ##
+## Type Context Matrix ##
 
 |                 | Value  | Named struct | Enum   | Pointer | Void   |
 | --------------- | ------ | ------------ | ------ | ------- | ------ |
@@ -295,7 +295,7 @@ Before jumping to read the commented example file you may refer to the [Language
 
 * Keep in mind that whether const void is allowed or not depends on the outer type. When the const void is a base for a pointer it's allowed, otherwise it is not.
 
-## Builtin types ##
+## Builtin Types ##
 
 | Type    | C type             | Comment                          |
 | ------- | ------------------ | -------------------------------- |
@@ -335,7 +335,7 @@ Before jumping to read the commented example file you may refer to the [Language
 | stringshare| Eina_Stringshare * | |
 | generic_value | Eina_Value * | |
 
-## Eolian file format ##
+## Eolian File Format ##
 
 The description here uses the [extended BNF notation](https://www.ics.uci.edu/~pattis/ICS-33/lectures/ebnf.pdf) to describe the Eolian syntax.
 
@@ -513,15 +513,15 @@ Thus in the following EBNF you'll see:
   return ::= 'return' ':' type return_suffix
 ```
 
-## Eo expressions ##
+## Eo Expressions ##
 
 Eo files support expressions within certain contexts. These expressions can then be evaluated using the Eolian API. There are several types of expressions:
 
-### Simple expressions ###
+### Simple Expressions ###
 
 These include "true", "false" and "null", besides the ones below. The former two are used in boolean contexts while the latter is used for pointers of any kind.
 
-#### Numerical expressions ####
+#### Numerical Expressions ####
 
 Eolian numbers follow C syntax. They, however, don't support octal. They support type suffixes (case insensitive): `U` (unsigned int), `L` (long), `UL` (unsigned long), `LL` (long long), `ULL` (unsigned long long), `F` (float). Without suffix, the literal is either a signed integer or double depending on whether it contains a floating point.
 
@@ -544,7 +544,7 @@ foo"
 
 A single character. Maps to builtin type **char**. Enclosed within single quotes. Can be either an arbitrary byte (represented within the Eo file, typically as UTF-8) or an escape sequence identical to the ones of strings. Cannot represent Unicode characters - it's just 1 byte. For example: `' a' `, `' \t' `
 
-### Unary expressions ###
+### Unary Expressions ###
 
 There are 4 unary operators in Eolian, all with equal precedence level (see table below).
 
@@ -554,7 +554,7 @@ The `!` operator is a logical "not" and its operand must qualify either as an ar
 
 The `~` operator is a bitwise "not". Its operand must qualify as an integer and its result is again an integer (of the same type).
 
-### Binary operators ###
+### Binary Operators ###
 
 The binary operators include standard arithmetic (`+`, `-`, `*`, `/`, `%`) - these act on numbers and yield a number of type identical to one of operands (subject to promotion, see below).
 
@@ -570,7 +570,7 @@ Promotion rules for numbers go as follows:
 
 A few examples: `float + int == float`, `unsigned long + long == unsigned long`, `long + unsigned int == long`.
 
-#### Operator precedence ####
+#### Operator Precedence ####
 
 What follows is a precedence table of operators in Eolian, from higher to lower precedence.
 
@@ -587,7 +587,7 @@ What follows is a precedence table of operators in Eolian, from higher to lower 
 |  &&                           |
 |  \|\|                         |
 
-## Eo file style guide ##
+## Eo File Style Guide ##
 
 - Variable names: `foo_bar`
 - Class names: `Foo.Bar`
