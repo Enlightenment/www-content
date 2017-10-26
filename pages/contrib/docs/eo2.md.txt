@@ -1,0 +1,624 @@
+---
+~~Title: Eolian file format specification~~
+---
+
+# Eolian File Format Specification #
+
+## Language Quick Reference ##
+
+This is the quick reference, for a full definition see [Format in EBNF](#Eolian_File_Format)
+
+ * General:
+   * ``/* comment */`` or ``//`` are comments like in C/C++, they are used to explain the statements surrounding them. It's ignored and will never go to the generated files.
+   * ``[[ documentation ]]`` will be transformed into documentation for their associated object (variable, class, method, property, enum, type...). In C, that goes as a doxygen-style comment in the generated header file, so do not confuse it with a regular ``/* comment */``.
+   When a comment sits alone on its own line, it refers to the text on the next line. When it sits at the end of a line, it refers to the previous text in that same line.
+   * Groups and blocks are defined within ``{`` and ``}``
+   * Some modifiers may be used, their meaning and scope are defined per context, such as ``@extern`` may be used with ``type``, ``enum`` and ``struct`` to denote they are already declared elsewhere (like an included header).
+   * Optional components are defined with ``[`` and ``]``.
+ * Basic Definitions:
+   * **Variables**: ``var [@extern]  name : type [= value] ;``
+   * **Constant**: ``const name : type = value ;``
+   * **Enumeration**: ``enum [@extern] name { field1, field2 [= value2] ... }``
+ * Structure Definitions:
+   * **Opaque**: ``struct [@extern] name ;``
+   * **Opaque with free function**: ``struct @free( free_function ) name ;``
+   * **With fields**: ``struct name { field1 : type1 , field2 : type2 ... } ;``
+ * Type Definitions:
+   * **Simple**: ``type [@extern] name : other ;``
+   * **Simple with free function**: ``type @free( free_function ) name : other ;``
+   * **List**: ``type name : list<Child_Type>* ;``
+   * **Array**: ``type name : array<Child_Type>* ;``
+   * **Hash**: ``type name : hash<Key_Type , Value_Type>* ;``
+ * Object Definitions:
+   * **Common Body** for class, abstract, interface and mixin: 
+     - ``legacy_prefix : prefix ;``
+     - ``eo_prefix: prefix ;``
+     - ``events { event_name_1 [@private | @protected | @beta | @hot] : type1 ; event_name_2 : type2 ; ... }``
+     - ``methods { list_of_methods_and_properties }``
+        - **Methods**: ``name [@protected | @const | @class | @pure_virtual] { method_body }``
+          * ``legacy: name ;``
+          * ``return: type [(expression)] [@warn_unused];``
+          * ``params { [@in | @out | @inout] name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+        - **Properties**: ``@property name [@protected | @class | @pure_virtual ] { property_body }``
+          * ``get [@pure_virtual] [{ return: type ; legacy: name }]``
+          * ``set [@pure_virtual] [{ return: type ; legacy: name }]``
+          * ``values { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+          * ``keys { name1 : type1 [(expression)] [@nonull | @nullable | @optional] ; name2 : type2 , ... }``
+   * **Classes**: ``class name ( Base_Class1 , Base_Class2 ) { class_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+     - ``constructors { method_name1 ; .local_method_name2 , ... }``
+   * **Abstract classes**: ``abstract name ( Base_Class1 , Base_Class2 ) { abstract_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+     - ``constructors { method_name1 ; .local_method_name2 , ... }``
+   * **Mixins**: ``mixin name ( Base_Class1 , Base_Class2 ) { mixin_body }``
+     - ``data: private_data_type ``
+     - ``implements { class.constructor; class.destructor; [@auto | @empty] interface_name1 ; .local_name2 , ... }``
+   * **Interfaces**: ``interface name ( Base_Class1 , Base_Class2 ) { interface_body }``
+     - ``implements { class.constructor; class.destructor; }``
+
+## Eolian File Format Example ##
+
+Before jumping to read the commented example file you may refer to the [Language Quick Reference](#Language_Quick_Reference) or check the full [Eolian file format](#Eolian_File_Format).
+
+```c
+  /* COMMENTS ARE IMPORTANT, READ THEM. */
+
+  import efl_types; /* Import efl_types.eot or efl_types.eo depends on which one exists. */
+  
+  type Something: int; // Simple type definition
+  // complex types and free funcs
+  // own() on typedefs means that the "base" type of the alias
+  // is owned but not its inner types.
+  // free provides the function to be called in order to free the type.
+  // It's useful for humans but essential for automatic binding generations.
+  type @free(eina_list_free) List_Objects: list<Some.Class>*;
+  type @free(my_hash_free) My_Hash: hash<key_type, val_type>*;
+
+  // const syntax: const pointer to const char, think of it like of
+  // a "modifier function"
+  type Foo: const(const(char)*);
+
+  // immediate free for pointers
+  type Bar: free(char *, my_str_free);
+
+  // external structs - defined in the system and not to be generated in C
+  struct @extern foo {
+      x: int;
+      y: float;
+  }
+
+  /* external type definitions - Evas.Coord is defined in eina, so no need to
+   * generate in C, but generators need to know about it */
+  type @extern Evas.Coord: int;
+
+  class Elm.Button (Elm.Layout, Evas.Interface.Clickable) {
+      legacy_prefix: elm_button; // To override the default legacy prefix
+      eo_prefix: elm_obj_button; // To override the default Eo prefix
+      /* To indicate the type for this class. If "null", the data is considered
+       * as not present in the class.
+       */
+      data: Elm_Button_Data;
+      methods {
+          /* @part means that this method/property supports eo_part */
+          @property some_text @part {
+              /* When either of set/get is missing, that one is not generated.
+               * When both are missing, both are generated. This is a short-cut
+               * for prototyping quickly without the docs and extra declarations.
+               */
+
+              [[Doc for the property in general. Both set and get.]]
+              set {
+                  [[Docs - extra for set (optional)]]
+              }
+              get @pure_virtual { // Only the getter is virtual pure (no implementation)
+                  [[Docs -extra for get (optional)]]
+                  values { // you can optionally specify keys and values in get/set too
+                      text: const(char)*;
+                  }
+              }
+              /* Extra params passed to the setter and getter. Modifiers @in/@out/@inout
+               * are *not* supported.
+               */
+              keys {
+                  blah: const(char)*; [[Extra params for both]]
+              }
+              /* Which values make the property. Modifiers @in/@out/@inout are *not*
+               * supported.
+               */
+              values {
+                  text: char*; [[docs]]
+              }
+          }
+          /* This function is a function that should be called when
+           * constructing an object, so bindings should put it in the
+           * generated constructor - it's marked as constructing below
+             in a separate section (constructors) */
+          some_constructing_function {
+              params {
+                  something_important: int;
+              }
+          }
+          foo @class @pure_virtual { /* class method, virtual pure meaning it has no implementation */
+              .....
+          }
+          /* Needed if this is a "const" method, that is, a getter and
+           * obj should be const.
+           */
+          corner_coords_get @const {
+              [[Docs.]]
+              params {
+                  corner: int; [[@in implied.]]
+                  @in corner2: int;
+                  @in base: char* @nullable; [[NULL is a valid value meaning "default".]]
+                  @inout number_of_tries: int; [[Same property in both,
+                                                  implies in/out, only one
+                                                  documentation needed. Rarely
+                                                  used anyway.]]
+                  @out cx: Evas.Coord;
+                  @out cy: Evas.Coord @optional; [[you can pass NULL if you would like to ignore this value]]
+              }
+              /* Lack of return implies return void.
+               * The (false) implies EINA_FALSE is the default return value in case an error
+               * occurs e.g eo_do failing...
+               */
+              return: bool (false) @warn_unused;
+              /* override the legacy function name. If "null", no
+               * legacy is created for this function.
+               */
+              legacy: elm_button_specific_corner_coords_get;
+          }
+          objects_list_get @protected {
+              return: own(list<own(Some.Class)>*);
+              /* own indicates that the ownership of the list is given to the
+               * caller. We will have the same for @in params to give the
+               * ownership to the callee. It means that the owner of the data
+               * is responsible for freeing it when no more used.
+               * In this example, we indicate that the returned data is a list
+               * of Eo objects. Standard types have to be defined and
+               * documented inside Eolian documentation, as it is the common
+               * library used by all the generators.
+               */
+          }
+      }
+      /* Illegal for interface (except ctor/dtor), valid for the rest. */
+      implements {
+          class.constructor; /* Class constructor. */
+          Eo.Base.constructor; /* Default constructor. */
+
+          Elm.Widget.activate;
+          Evas.Smart.add;
+
+          .corner_coords_get; /* Name starting with . implies local class. */
+
+          @empty Bla.foo.get; /* Provides an empty implementation.
+                               * Either to block calls to the super functions,
+                               * or to have a base implementation people can "super" to.
+                               */
+          @auto Bla.foobar.get; /* Only works on properties (set and get),
+                                 * will automatically implement the foo_get function as:
+                                 * "return pd->foo;".
+                                 */
+          /* If there's no modifier (@empty or @auto), it assumed that methods/properties
+           * declared in this eo file are implemented, e.g some_part_text_set.
+           */
+      }
+      /* marking as constructing */
+      constructors {
+          .some_constructing_function;
+      }
+      events {
+          some_private_event @private: int;
+          some_new_event: event_info_type;
+          /* clicked and many others are there because of inheritance,
+           * no need to list them. But there is a need to define the value
+           * of the parameter passed when you get that event. Currently
+           * lacking here!
+           */
+          some_unfreezable_event @hot;
+      }
+  }
+
+  /* Little example on how the namespaces work */
+  class Evas.Text (Efl.Interface.Text) {
+      methods {
+          foo {
+              params {
+                  x: Elm.Button*; /* translates to: Eo *x */
+              }
+          }
+      }
+      implements {
+          Efl.Interface.Text.ellipsis.set;
+      }
+  }
+
+  /* Struct definition */
+  struct Some_Plain_Struct {
+      some_field: int; [[Docs; parsing goes as <name>: <type>]]
+      complex_field: list<int>*;
+  }
+
+  /* Opaque structures */
+  struct Opaque;
+
+  /* Constants - type is guessed from the value - no support for explicit */
+  const some_constant: int = 5;
+  const approximate_pi: float = 3.14;
+
+  /* Globals */
+  var some_global_var: int;
+  var some_global_const_var: const(int);
+
+  /* Global with default value */
+  var other_global: int = 10;
+
+  /* Enumerations - only named and global or in typedef */
+  enum Foo {
+      first_item, [[docs; also, for C usage, field names get uppercased and
+                      prefixed with FOO in this case]]
+      second_item
+  }
+
+  /* Enums allow basic expressions in them; they're purely numerical,
+   * evaluated at generation time, and can contain constants (but not variables)
+   */
+  enum Bar {
+      [[enum docs]]
+      legacy: baz; /* allows to override the prefix field names use for legacy
+                    * C usage - default is guessed by uppercasing enum name
+                    */
+      first_item  = 1 << 4, [[doc comment]]
+      second_item = some_constant * 10,
+      tau         = approximate_pi * 2 /* error: integer base only */
+  }
+```
+
+## Type Context Matrix ##
+
+|                 | Value  | Named struct | Enum   | Pointer | Void   |
+| --------------- | ------ | ------------ | ------ | ------- | ------ |
+| typedef         |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| return          |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| getter return   |   YES  |     **NO**   | **NO** |   YES   | YES    |
+| in param        |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| out/inout param |   YES  |     **NO**   | **NO** |   YES   | YES    |
+| event           |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| struct field    |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| function param  |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| subtype         |   YES  |     **NO**   | **NO** |   YES   | **NO** |
+| pointer base    |   YES  |     **NO**   | **NO** |   YES   | YES    |
+| const modifier  |   YES  |     **NO**   | **NO** |   YES   | YES*   |
+| own modifier    | **NO** |     **NO**   | **NO** |   YES   | **NO** |
+| free modifier   | **NO** |     **NO**   | **NO** |   YES   | **NO** |
+
+* Keep in mind that whether const void is allowed or not depends on the outer type. When the const void is a base for a pointer it's allowed, otherwise it is not.
+
+## Builtin Types ##
+
+| Type    | C type             | Comment                          |
+| ------- | ------------------ | -------------------------------- |
+| byte    | signed char        | Numerical byte                   |
+| ubyte   | unsigned char      | Numerical unsigned byte          |
+| char    | char               | A character - signed or unsigned |
+| short   | signed short       |                                  |
+| ushort  | unsigned short     |                                  |
+| int     | signed int         |                                  |
+| uint    | unsigned int       |                                  |
+| long    | signed long        |                                  |
+| ulong   | unsigned long      |                                  |
+| llong   | signed long long   |                                  |
+| ullong  | unsigned long long |                                  |
+| int8    | int8_t             | stdint.h                         |
+| uint8   | uint8_t            | stdint.h                         |
+| int16   | int16_t            | stdint.h                         |
+| uint16  | uint16_t           | stdint.h                         |
+| int32   | int32_t            | stdint.h                         |
+| uint32  | uint32_t           | stdint.h                         |
+| int64   | int64_t            | stdint.h                         |
+| uint64  | uint64_t           | stdint.h                         |
+| int128  | int128_t           | stdint.h                         |
+| uint128 | uint128_t          | stdint.h                         |
+| size    | size_t             |                                  |
+| ssize   | ssize_t            |                                  |
+| intptr  | intptr_t           | stdint.h                         |
+| uintptr | uintptr_t          | stdint.h                         |
+| ptrdiff | ptrdiff_t          |                                  |
+| time    | time_t             | time.h                           |
+| float   | float              |                                  |
+| double  | double             |                                  |
+| bool    | Eina_Bool          | Eina type, builtin values true and false mapping to EINA_TRUE and EINA_FALSE |
+| void    | void               | Not applicable in some contexts  |
+| void_ptr | void * | |
+| string | const char * | |
+| stringshare| Eina_Stringshare * | |
+| generic_value | Eina_Value * | |
+
+## Eolian File Format ##
+
+The description here uses the [extended BNF notation](https://www.ics.uci.edu/~pattis/ICS-33/lectures/ebnf.pdf) to describe the Eolian syntax.
+
+Before jumping on the actual Eolian EBNF, a reminder on the EBNF syntax itself:
+
+ * Comments: ``(* text *)``
+ * Definition: ``token ::= sequence``
+ * Sequence may be another token or a literal within quotes (``'text'``), order matters.
+ * Choices are separated with a stroke (pipe char): ``choice1 | choice2``
+ * Options are enclosed within braces: ``[ optional_token ]``
+ * Repetitions (zero or more times) are enclosed within curly braces: ``{ repeated_token }``
+
+Thus in the following EBNF you'll see:
+
+| EBNF | Meaning |
+|------|---------|
+| `` type_complex ::= 'accessor' ``<br>`` | 'array'``<br>`` | 'iterator'``<br>`` | 'hash'``<br>`` | 'list'`` |When ``type_complex`` token is used, one of ``accessor``, ``array``, ``iterator``, ``hash`` or ``list`` strings must be present |
+| ``value ::= a-zA-Z0-9_*`` | The token ``value`` must be composed of lower or upper case letters (``a`` to ``z`` and ``A-Z``), as well as numbers (``0`` to ``9``) or the underscore bar (``_``), repeated 0 or more times (``*``) |
+| ``name_ns ::= value { '.' value }`` | When ``name_ns`` token is used it may be a token ``value`` with a repetition of the string ``.`` followed by other token ``value``, such as ``My.Token.With.Repetition`` |
+
+```ocaml
+  (* Base definitions *)
+
+  chunk   ::= { unit }
+  value   ::= a-zA-Z0-9_*
+  name_ns ::= value { '.' value }
+  name    ::= value
+  comment ::= '[[' any character ']]'
+
+  (*
+   * An unit is a basic unit of parsing in Eolian, aka all toplevel elements
+   * (that includes different types of classes, named structs and typedefs)
+   *)
+
+  unit ::= 'abstract'  class_hdr '{' [ comment ] { class_body       } '}'
+         | 'class'     class_hdr '{' [ comment ] { class_body       } '}'
+         | 'mixin'     class_hdr '{' [ comment ] { class_body_mixin } '}'
+         | 'interface' class_hdr '{' [ comment ] { class_body_iface } '}'
+         | 'type' { type_struct_attrs } name_ns ':' (type | struct | enum) ';'
+              [ comment ]
+         | 'const' name_ns ':' type '=' expr ';' [ comment ]
+         | 'var' [ '@extern' ] name_ns ':' type [ '=' expr ] ';' [ comment ]
+         | struct
+         | enum
+
+  (*
+   * Types - they don't mention builtins or where void is allowed (not grammar)
+   *)
+
+  type_complex ::= 'accessor' | 'array' | 'iterator' | 'hash' | 'list'
+
+  (* standard type definition - without named structs *)
+  type ::= 'const' '(' type     ')'
+         | 'own'   '(' type_ptr ')'
+         | 'free'  '(' type_ptr ',' name ')'
+         | 'struct' (name_ns | '{' [ comment ] { struct_field } '}')
+         | 'enum' name_ns
+         | type '*' { '*' }
+         | type_complex '<' type { type } '>'
+         | name_ns
+
+  (* attributes for structs and typedefs *)
+  type_struct_attrs ::= '@extern' | '@free' '(' name ')'
+
+  (* named struct definition *)
+  struct ::= 'struct' { type_struct_attrs } name_ns (';' | '{' [ comment ]
+             { struct_field } '}')
+
+  (* struct field definition *)
+  struct_field ::= name ':' type ';' [ comment ]
+
+  (* enum definition *)
+  enum ::= 'enum' [ '@extern' ] name_ns '{' [ comment ] [ legacy ]
+           enum_field { ',' [ comment ] enum_field } [ comment ] '}'
+
+  (* enum field definition *)
+  enum_field ::= name [ '=' expr ]
+
+  (*
+   * Expressions - we don't handle operator precedences here
+   *)
+
+  expr ::= 'true' | 'false' | 'null' | number | string | character
+         | expr binop expr | unop expr | name_ns
+
+  number ::= a number literal, described elsewhere
+
+  string ::= a string literal, described elsewhere
+
+  character ::= a character literal, described elsewhere
+
+  binop ::= binary operator, described elsewhere
+
+  unop ::= unary operator, described elsewhere
+
+  (*
+   * Classes - everything related to class grammar
+   *)
+
+  (* class header - name + optional inherits in parens *)
+  class_hdr ::= name_ns [ '(' name_ns { ',' name_ns } ')' ]
+
+  (* common members shared by different class types *)
+  class_body_common ::= 'legacy_prefix' ':' value ';'
+                      | 'eo_prefix'     ':' value ';'
+                      | 'methods'       '{' { method | property } '}'
+                      | 'events'        '{' {  event            } '}'
+
+  (* data member - not used for interfaces, used elsewhere *)
+  class_body_data ::= 'data' ':' value ';'
+
+  (* implements - the full form is allowed in everything but interfaces *)
+  class_body_impls ::= 'implements' '{' { impl } '}'
+
+  (* constructors - for class/abstract *)
+  class_body_ctors ::= 'constructors' '{' { [ '.' ] name_ns ';' } '}'
+
+  (* members of regular classes, aka not interfaces or mixins *)
+  class_body ::= class_body_common
+               | class_body_data
+               | class_body_impls
+               | class_body_ctors
+
+  (* members of interfaces - includes custom impl restrictions *)
+  class_body_iface ::= class_body_common
+                     | 'implements' '{' { impl_common } '}'
+
+  (* members of mixins - like normal but doesn't allow ctors *)
+  class_body_mixin ::= class_body_common
+                     | class_body_data
+                     | class_body_impls
+
+  (* implements that are allowed everywhere *)
+  impl_common ::= 'class' '.' ('constructor' | 'destructor') ';'
+
+  (* implements specific for classes and mixins *)
+  impl ::= impl_common | [ '@auto' | '@empty' ] [ '.' ] name_ns ';'
+
+  (* how an event is defined *)
+  event ::= name { ',' name } { '@private' | '@protected' | '@beta' | '@hot' } [ ':' type ] ';'
+
+  (*
+   * Everything related to constructors, methods and properties
+   *)
+
+  (* method, like constructor but more modifiers *)
+  method ::= name { '@protected' | '@const' | '@class' | '@pure_virtual' }
+                 '{' [ comment ] { method_body } '}'
+
+  (* inside of a method *)
+  method_body ::= return | legacy | 'params' '{' { param } '}'
+
+  (* property, has accessors *)
+  property ::= '@property' name { '@protected' | '@class'  | '@pure_virtual' } '{' { property_body } '}'
+
+  (* property body - get/set accessors, keys, values *)
+  property_body ::= 'get' [ '@pure_virtual' ] '{' [ comment ] { return | legacy } '}'
+                  | 'set' [ '@pure_virtual' ] '{' [ comment ] { return | legacy } '}'
+                  | 'keys'   '{' { param_nodir } '}'
+                  | 'values' '{' { param_nodir } '}'
+
+  (* parameter without direction - implied @in *)
+  param_nodir ::= name ':' type [ '(' expr ')' ] {  '@nonull' | '@nullable' | '@optional' }
+                  ';' [ comment ]
+
+  (* parameter with direction - @in/@out/@inout *)
+  param ::= [ '@in' | '@out' | '@inout' ] param_nodir
+
+  (* legacy - used in methods and accessors to specify legacy name *)
+  legacy ::= 'legacy' ':' name ';'
+
+  return_suffix ::=  [ '(' expr ')' ] [ '@warn_unused' ] ';' [ comment ]
+
+  (* return statement - used in methods and accessors - can have a default val *)
+  return ::= 'return' ':' type return_suffix
+```
+
+## Eo Expressions ##
+
+Eo files support expressions within certain contexts. These expressions can then be evaluated using the Eolian API. There are several types of expressions:
+
+### Simple Expressions ###
+
+These include "true", "false" and "null", besides the ones below. The former two are used in boolean contexts while the latter is used for pointers of any kind.
+
+#### Numerical Expressions ####
+
+Eolian numbers follow C syntax. They, however, don't support octal. They support type suffixes (case insensitive): ``U`` (unsigned int), ``L`` (long), ``UL`` (unsigned long), ``LL`` (long long), ``ULL`` (unsigned long long), ``F`` (float). Without suffix, the literal is either a signed integer or double depending on whether it contains a floating point.
+
+Examples include:
+```
+5, 3.14, 2.0f, 50ULL, 0xFF, 0xF3UL.
+```
+
+#### Strings ####
+
+Strings are enclosed within double quotes. They can contain any character except a newline (except when escaped). They support several escape sequences: ``"\a"``, ``"\b"``, ``"\f"``, ``"\n"``, ``"\r"``, ``"\t"``, ``"\v"`` (same as in C), plus ``"\""`` and ``"\'"`` to escape quotes (single quotes can remain unescaped, but the lexer will accept escaped too) and arbitrary integer and hex escape sequences ``"\ddd"`` and ``"\xXX"``. A backslash character at the end of the line allows the string to span multiple lines (the newline will be included).
+
+Example:
+
+```
+"hello world: \xAB \160 \83 \n \
+foo"
+```
+#### Characters ####
+
+A single character. Maps to builtin type **char**. Enclosed within single quotes. Can be either an arbitrary byte (represented within the Eo file, typically as UTF-8) or an escape sequence identical to the ones of strings. Cannot represent Unicode characters - it's just 1 byte. For example: ``' a' ``, ``' \t' ``
+
+### Unary Expressions ###
+
+There are 4 unary operators in Eolian, all with equal precedence level (see table below).
+
+The unary ``+`` operator is a no-op, but it enforces typechecking - it must be used in a context that accepts a signed int and its operand must qualify as a signed int. The unary ``-`` operator acts as a standard unary minus and it typechecks identically to unary plus.
+
+The ``!`` operator is a logical "not" and its operand must qualify either as an arbitrary number or a boolean. Its result is always a boolean.
+
+The ``~`` operator is a bitwise "not". Its operand must qualify as an integer and its result is again an integer (of the same type).
+
+### Binary Operators ###
+
+The binary operators include standard arithmetic (``+``, ``-``, ``*``, ``/``, ``%``) - these act on numbers and yield a number of type identical to one of operands (subject to promotion, see below).
+
+Other operators include comparison operators ``==``, ``!=``, ``>``, ``<``, ``>=``, ``<=``. On the former two, operands can be of any type. On the others, operands must be numbers. The "and" and "or" operators (with syntax ``&&`` and ``||`` take any types as operands. Comparison operators and and/or yield booleans. Keep in mind that if one of the operands for any of these expressions is non-numerical, the other operand must be of the same type.
+
+Finally, there are bitwise binary operators ``&``, ``|``, ``^``, ``<<`` and ``>>`` for bitwise AND, OR, XOR, left and right shift respectively. The operands must qualify as integers and it yields again an integer with the same type as one of operands (again, subject to promotion).
+
+Promotion rules for numbers go as follows:
+
+1) If either of operands is a floating point number, the other operand is promoted to a floating point number of the same type. If both are floating point, the smaller type gets promoted to the larger one.
+2) If either operand is unsigned with rank higher or equal to the other operand, the other operand is converted to an unsigned integer of the same type.
+3) If either operand is signed with rank higher than the other operand (which can be signed or unsigned), the other operand is converted to a signed integer of the same type.
+
+A few examples: ``float + int == float``, ``unsigned long + long == unsigned long``, ``long + unsigned int == long``.
+
+#### Operator Precedence ####
+
+What follows is a precedence table of operators in Eolian, from higher to lower precedence.
+
+| Precedence                    |
+| ----------------------------- |
+|  unary operators (+, -, ~, !) |
+|  *, /, %                      |
+|  +, -                         |
+|  <<, >>                       |
+|  &                            |
+|  ^                            |
+|  \|                           |
+|  ==, !=, >, <, >=, <=         |
+|  &&                           |
+|  \|\|                         |
+
+## Eo File Style Guide ##
+
+- Variable names: ``foo_bar``
+- Class names: ``Foo.Bar``
+- Type names: ``Foo.Bar``
+- Enum names: ``Foo.Bar``
+- Indentation: 4 spaces per level
+- Brace placement: Opening brace on the same line with previous code, closing brace aligned with first non-whitespace character of the line with the opening brace
+- Please try to keep line length below 80 columns.
+- Put a space before every opening brace as well as before inherits list.
+
+The example code should serve as a decent enough example.
+
+## Common Eolian Mistakes ##
+
+1. ``legacy_prefix: null;`` - deprecated, do not use.
+1. The default naming is the class/struct/enum name all in lower case with periods replaced with _ (e.g. Elm.Widget.Item -> elm_widget_item). No need to set it to that value.
+1. Document the properties themselves, not the set/get sections separately. For example look at [Efl.Image.smooth_scale](https://git.enlightenment.org/core/efl.git/tree/src/lib/efl/interfaces/efl_image.eo#n25) for an example:
+
+        @property smooth_scale {
+            [[Whether to use high-quality image scaling algorithm for this image.
+
+            When enabled, a higher quality image scaling algorithm is used
+            when scaling images to sizes other than the source image's
+            original one. This gives better results but is more
+            computationally expensive.
+
+            $true by default
+            ]]
+            set {}
+            get {}
+            values {
+                smooth_scale: bool; [[Whether to use smooth scale or not.]]
+            }
+        }
