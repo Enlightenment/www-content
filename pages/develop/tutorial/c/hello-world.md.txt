@@ -1,13 +1,12 @@
 ---
 ~~Title: Tutorial 1: Hello World~~
-~~NOCACHE~~
 ---
 
 # Tutorial 1: Hello World #
 
-This tutorial will guide you through the necessary steps to build your first "Hello World" example using the _Enlightenment Foundation Libraries_ (EFL). Before continuing make sure you have read the [Setting up the development environment](/develop/setup/c/) guide.
+This tutorial will guide you through the necessary steps to build your first "Hello World" example using the *Enlightenment Foundation Libraries* (EFL). Before continuing make sure you have read the [Setting up the development environment](/develop/setup/c/) guide.
 
-There is very little code in this first tutorial so don't worry if you have little coding experience. The main goal is to build and execute an application using EFL. You will need a basic knowledge of C to get started however.
+There is very little code in this first tutorial so don't worry if you have little coding experience. The main goal is to build and execute an application using EFL. You will need a basic knowledge of C to get started.
 
 ## The Program ##
 
@@ -22,14 +21,13 @@ void
 efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
    printf("Hello World!\n");
-
    efl_exit(0);
 }
 
 EFL_MAIN()
 ```
 
-Next, build this application as outlined in our guide in [Setting up the development environment](/develop/setup/c/#Building). If you are using the ``gcc`` compiler, run:
+Next, build this application as outlined in [Setting up the Development Environment](/develop/setup/c/#Building). If you are using the ``gcc`` compiler, run:
 
 ```bash
 gcc -o hello-world hello-world.c `pkg-config --cflags --libs eina efl elementary` -DEFL_EO_API_SUPPORT=1 -DEFL_BETA_API_SUPPORT=1
@@ -54,18 +52,18 @@ Let's start by focusing on the ``include``s section:
 #include <Efl.h>
 #include <Elementary.h>
 ```
-The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial we are calling methods from the ``Eina`` and ``Efl`` libraries, therefore we need to include the ``"Eina.h"`` and ``"Efl.h"`` headers.
+The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial we are calling methods from the ``Eina`` and ``Efl`` libraries, therefore we need to include the ``Eina.h`` and ``Efl.h`` headers.
 
 > **NOTE:**
-> As of now, the ``"Elementary.h"`` header is special. It will be removed soon.
+> The ``Elementary.h`` header is special and required for the program to compile. It will be removed soon, however.
 
-If you're not sure which libraries your program is actually using, just look at the prefix of the EFL methods and macros. In this case, we're using ``eina_``, ``EINA_``, ``efl_`` and ``EFL_``.
+If you're not sure which libraries your program is actually using just look at the prefix of the EFL methods and macros. In this case we're using ``eina_``, ``EINA_``, ``efl_`` and ``EFL_``.
 
-You will explore the EFL libraries in greater depth in later tutorials. In the meantime, visit the [List of EFL libraries](list-of-efl-libraries.md) for an overview of the purpose of each one. 
+You will explore the EFL libraries in greater depth in later tutorials. In the meantime, visit the [List of EFL Libraries](list-of-efl-libraries.md) for an overview of the purpose of each one. 
 
-### Main function ###
+### Main Function ###
 
-Instead of the ``main()`` function marking the standard C entry point, we're using ``efl_main()``:
+Instead of the ``main()`` function marking the standard C entry point EFL uses ``efl_main()``:
 
 ```c
 void
@@ -76,43 +74,43 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 
 EFL takes care of all initialization tasks and calls your ``efl_main()`` method when everything is ready.
 
-We will focus on the ``efl_main()`` parameters in the following tutorial. In this one, we're not using them hence the ``EINA_UNUSED`` macro. This is optional, but it gets rid of warnings regarding unused parameters, so it's worth having.
+We will focus on the ``efl_main()`` parameters in the following tutorial. In this one we're not using them, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having.
 
-The next line is a regular C ``printf()`` which will output the 'Hello World' string to the console:
+The next line is a regular C ``printf()`` which will output the "Hello World" string to the console:
 
 ```c
-printf("Hello World!\n");
+   printf("Hello World!\n");
 ```
 
 ### Exiting ###
 
-**Any programs you create with EFL must always terminate by calling** ``efl_exit()``. This is an important difference with the regular C ``main()``, where a program exits when it reaches the end of a method. 
+Any programs you create with EFL must always terminate by calling ``efl_exit()``. This is an important difference to the regular C ``main()``, where a program exits when it reaches the end of a method. 
 
 ```c
-efl_exit(0);
+    efl_exit(0);
 ```
 
 The parameter ``efl_exit()`` is the value your program returns to the operating system.
 
-### Automatic EFL setup and shutdown ###
+### Automatic EFL setup and Shutdown ###
 
-This final piece of "boilerplate" code must be included at the end of every EFL program:
+This final piece of "boilerplate" code should be included at the end of every EFL program:
 
 ```c
 EFL_MAIN()
 ```
 
-It defines the real ``main()`` method required by C Programs, which deals with initialization and deinitilization tasks. It also eventually calls the ``efl_main()`` method that you defined above.
+This defines the real ``main()`` method required by C Programs, which deals with initialization and deinitilization tasks. It also eventually calls the ``efl_main()`` method that you defined above.
 
 This is not mandatory, but it simplifies the setup and shutdown processes considerably, so we are going to use it in this series of tutorials. 
 
 ## Summary ##
 
-Hopefully you will not have found this tutorial too difficult. So far you have learned:
+At the end of this tutorial you have learned:
 
 * Header files must be included for any EFL libraries you intend to use. Typically, these are ``Eina.h`` and ``Efl.h``.
 * Your main method should be ``efl_main()``.
-* Your EFL programs should **always** call ``efl_exit()`` at some stage.
-* Your EFL programs should include the ``EFL_MAIN()`` macro at the end, so EFL can insert its own start and shutdown code.
+* Your EFL programs should always call ``efl_exit()`` at some stage.
+* Your EFL programs should include the ``EFL_MAIN()`` macro at the end, so EFL can insert its own start-up and shutdown code.
 
-The next tutorial keeps introducing more basic concepts, and shows how to retrieve the command line parameters passed to your program. See you there!
+The next tutorial keeps introducing more basic concepts, and shows how to retrieve the command line parameters passed to your program.
