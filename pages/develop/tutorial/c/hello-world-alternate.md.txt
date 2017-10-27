@@ -1,355 +1,119 @@
 ---
-~~Title: The Enlightenment Documentation Contribution Guide~~
+~~Title: Tutorial 1: Hello World~~
 ---
 
-# The Enlightenment Documentation Contribution Guide #
-###### Version 0.0.44 DRAFT ######
+# Tutorial 1: Hello World #
 
-Good documentation is at the heart of a good project. The *Enlightenment Documentation Contribution Guide* is designed to offer advice on how to write and format documentation pertaining to the Enlightenment Project, including the use of languages, layout, and terminology.
+This tutorial will guide you through the necessary steps to build your first "Hello World" example using the *Enlightenment Foundation Libraries* (EFL). Before continuing make sure you have read the [Setting up the development environment](/develop/setup/c/) guide.
 
-This document is aimed at writers, editors, and developers seeking to contribute to the Enlightenment Project. The *Enlightenment Documentation Contribution Guide* can also be used by Enlightenment Project users as a means of clarifying existing documentation.
+There is very little code in this first tutorial so don't worry if you have little coding experience. The main goal is to build and execute an application using EFL. You will need a basic knowledge of C to get started.
 
-This document is a work in progress.
+## Step One: Includes ##
 
-## Documentation Overview ##
-
-Although the Enlightenment Project documentation is written by contributors from around the world working in a range of languages, all published documentation must be written in American English and in the second person active voice, present tense. If using a text editor with spell-checking capabilities, please install an American English dictionary. Additionally, treat the Enlightenment Foundation Libraries (EFL) as a collective noun and refer to it as a singular entity using "is" rather than "are".
-
-The documentation is formatted using [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/), a markup language based on work carried out by John Gruber in 2004. Markdown is designed to allow for human-readable plain text files which can also contain formatting for display in web browsers as rich text. PHP Markdown Extra extends the specification with additional features such as pipe-based table layout.
-
-For those unfamiliar with Markdown, [a cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) provides a handy reference for the syntax of the base language while the [official PHP Markdown Extra site](https://michelf.ca/projects/php-markdown/extra/) has details on its extensions. All documentation for the Enlightenment Project should be produced in PHP Markdown Extra format; selected older documentation may be presented in DokuWiki format, but if edited should be recreated in PHP Markdown Extra format.
-
-PHP Markdown Extra files should be created as UTF-8 text with UNIX line endings and their contents pasted into the DokuWiki engine for format verification and publication.
-
-All documentation should include a preface containing the page title for processing by the DokuWiki platform. Details on this preface format can be found in the **Documentation Layout** section below.
-
-## Documentation Naming ##
-
-The Enlightenment Project documentation uses a series of namespaces, detailed below.
-
-* */docs* - User-focused documentation
-* */develop* - Developer-focused documentation
-* */contrib* - Non-developer contributor-focused documentation
-
-More detail on these namespaces and their sub-spaces can be found on the [Document Structure page](https://phab.enlightenment.org/w/doc_system/doc_structure/).
-
-Files added to the Enlightenment Project documentation collection should be categorised using a directory-style layout. Long filenames should be avoided: the naming convention should use ``about/area/file.md`` rather than ``about-area-file.md`` so that files relating to similar topics are properly grouped together.
-
-Do not use capital letters or special characters in filenames; stick with standard ASCII characters which can be properly represented in a URL/URI without encoding. Create pages using the title with dash characters (**-**) in place of spaces, then end the filename with a **.md** extension.
-
-## Documentation Layout ##
-
-Each page of the documentation is presented as a single Markdown file. The layout of each page is as follows:
-
-```markdown
----
-~~Title: Enter Title Here~~
----
-
-# Title #
-
-INTRODUCTION
-
-## Sub-Headings ##
-
-BODY
-
-### Sub-Sub Headings ###
-
-MORE BODY
-```
-
-The DokuWiki preface requires the page title formatted as ``~~Title: Enter Title Here~~``. This should be located at the very start of the document, between a line containing nothing but three dash characters (-) and a line containing another three dash characters. Leave a blank line after this, then begin your PHP Markdown Extra on Line 4.
-
-A blank line should be present between headings, paragraphs, code blocks, and any other part of the document. Headings and sub-headings should be written in Title Case.
-
-Do not insert hard line breaks as you reach column 80 or the edge of your text editor window; allow your text editor to wrap longer lines for ease of display, but ensure that they are saved without linebreaks before submitting a document or edit.
-
-If using a text editor with user-selectable typefaces, please use a monospace font to ensure proper formatting and layout. If using a rich-text editor to create documentation, please turn off any symbol-replacement functionality. In particular, ensure that 'Smart Quotes' are not used: documentation should be written using straight quotes only, i.e. **'** and **"**. Likewise, use only a standard straight-quote-style apostrophe character - **'** - rather than a backtick or other angled character. When quoting something, always use double quotes.
-
-### Section Navigation and Links ###
-
-All headings and sub-headings will be automatically turned into anchors for in-document links and any automatically generated table of contents and navigation functionality. To link to these sections, use Markdown styntax:
-
-```markdown
-[Text of the link](#Name_of_the_Section)
-```
-
-Note that the anchor has underscore characters (\_) in place of spaces; a link created using spaces will not function.
-
-Other links should be inserted using standard Markdown syntax:
-
-```markdown
-[Text of the link](http://www.example.com)
-```
-
-Links to documents within the same namespace should use relative paths; links outside the namespace or to external sites should use absolute paths.
-
-### Code Formatting ###
-
-Code extracts inside documentation should be placed within a code block to ensure proper formatting. Where possible, use Markdown's syntax highlighting feature to increase readability. For instance, a C-language code extract should be written as:
-
-````
-```c
-if (!p) return;
-if (!p) return -EINVAL;
-```
-````
-
-This will produce easily readable, highlighted code as below:
+Using your favorite text editor, create a text file and save it as ``hello-world.c``. Type in the following:
 
 ```c
-if (!p) return;
-if (!p) return -EINVAL;
+#include <Eina.h>
+#include <Efl.h>
+#include <Elementary.h>
 ```
 
-Where a code block contains extracts from a larger program it should follow the indentation of the main program.
-
-Where referencing code within a paragraph of documentation, use paired double-backticks ('') to format the reference as inline code. Writing \`\`-EINVAL;\`\`, for example, will render as ``-EINVAL;``.
-
-For information on the formatting of the code itself, please consult the [Coding Convention Guide](https://phab.enlightenment.org/w/coding_convention/).
-
-### Table Formatting ###
-
-Selected documentation data are better presented in tabular form, rather than as a bulleted or numbered list. Where tables are required, the [PHP Markdown Extra table format](https://michelf.ca/projects/php-markdown/extra/#table) should be applied as below using the secondary table format with leading and trailing pipe characters.
-
-```markdown
-| First Header   | Second Header  |
-| -------------- | -------------- |
-| Content Cell 1 | Content Cell 2 |
-| Content Cell 3 | Content Cell 4 |
-```
-
-This will render as:
-
-| First Header   | Second Header  |
-| -------------- | -------------- |
-| Content Cell 1 | Content Cell 2 |
-| Content Cell 3 | Content Cell 4 |
-
-Please take care to ensure that your tables are laid out so as to be neat when viewed in plain-text form, to assist with document portability. In particular, ensure that your pipes line up correctly.
-
-All text table elements should be left-aligned as standard; number should be right-aligned by suffixing a colon character (:). The Markdown rendering engine will take care of any formatting which needs to be applied to table elements such as headers; do not apply any formatting manually.
-
-If using code elements in a table, such as for API calls, wrap the code in double-backtick characters (\`\`).
-
-```markdown
-| First Header     | Second Header       |
-| ---------------- | ------------------- |
-| ``Code extract`` | Plain-text contents |
-```
-
-This will render neatly as:
-
-| First Header     | Second Header       |
-| ---------------- | ------------------- |
-| ``Code extract`` | Plain-text contents |
- 
-### Image Formatting ###
-
-Images, including screenshots, should be inserted into the document as a Markdown-syntax image tag with a blank line above and below:
-
-```markdown
-![Image Alt Text](image.png "Optional Title")
-```
-
-Where possible, use lossless versions of image files. Vector images should be inserted as Scalable Vector Graphics (SVG), while bitmap files should be inserted as Portable Network Graphics (PNG). In either case, resize large images and compress the resulting files before uploading them using the [DokuWiki Media Manager](https://www.enlightenment.org/playground/start.md?do=media). When uploading an image, please make sure to select the correct namespace first.
-
-Always use relative paths when creating an image link. Do not embed external images from other websites.
-
-### Callout Formatting ###
-
-If a document requires a note, warning, or other callout, use the Markdown blockquote syntax with an emboldened and capitalised header followed by a colon as per:
-
-```markdown
-> **NOTE:**
-> Insert the text of the note here as a single paragraph with no linebreaks.
-```
-
-This will render as:
+The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial we are calling methods from the ``Eina`` and ``Efl`` libraries, therefore we need to include the ``Eina.h`` and ``Efl.h`` headers.
 
 > **NOTE:**
-> Insert the text of the note here as a single paragraph with no linebreaks.
+> The ``Elementary.h`` header is special and required for the program to compile. It will be removed soon, however.
 
-Applicable callout types are: **NOTE** and **WARNING**. 
+If you're not sure which libraries your program is actually using just look at the prefix of the EFL methods and macros. In this case we're using ``eina_``, ``EINA_``, ``efl_`` and ``EFL_``.
 
-### List Formatting ###
+You will explore the EFL libraries in greater depth in later tutorials. In the meantime, visit the [List of EFL Libraries](list-of-efl-libraries.md) for an overview of the purpose of each one.
 
-Lists should be formatted as unordered bullet-points, except where a numbered list would make more sense such as when referring to numbered sections of an image or table. For bullet points, use the following formatting with sub-lists indented by two spaces each:
+## Step Two: Main Function ##
 
-```markdown
-* List Item One
-  * Sub-Item One Point One
-    * Sub-Sub Item One Point One Point One
-* List Item Two
-* List Item Three
+Instead of the ``main()`` function marking the standard C entry point EFL uses ``efl_main()``. Type the following underneath the includes section of your program:
+
+```c
+void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+}
 ```
 
-which will render as:
+EFL takes care of all initialization tasks and calls your ``efl_main()`` method when everything is ready.
 
-* List Item One
-  * Sub-Item One Point One
-    * Sub-Sub Item One Point One Point One
-* List Item Two
-* List Item Three
+We will focus on the ``efl_main()`` parameters in the following tutorial. In this one we're not using them, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having.
 
-For numbered lists, use the following formatting:
+## Step Three: Print "Hello World" ##
 
-```markdown
-1. List Item One
-2. List Item Two
-3. List Item Three
+Type the following between the curly brackets of ``efl_main()``:
+
+```c
+   printf("Hello World!\n");
 ```
 
-which will render as:
+This is a regular C ``printf()`` which will output the "Hello World" string to the console. 
 
-1. List Item One
-2. List Item Two
-3. List Item Three
+## Step Four: Exiting ##
 
-Note that although Markdown does not require the numbers to be in the right order, only that a number is present at the start of each list entry, all numbered lists should use the correctly-ordered numbers so the lists display correctly when viewed as plain text.
+Any programs you create with EFL must always terminate by calling ``efl_exit()``. This is an important difference to the regular C ``main()``, where a program exits when it reaches the end of a method. Enter the following below your ``printf()``:
 
-At present, sub-lists are only correctly rendered in unordered bullet list format and will not display correctly in numbered list format.
-
-## Programming Tutorials ##
-
-Programming tutorials, and other hands-on educational documentation, require a specific approach in order to be both accessible and informative. The template below demonstrates a rough approach to which you should adhere:
-
-````markdown
----
-~~Title: Tutorial N: Program Name~~
----
-
-# Tutorial N: Program Name #
-
-Brief introduction describing the program, its purpose, and what it aims to teach you about EFL.
-
-## Step One: Description ##
-
-```language
-Functional Code Block 1
+```c
+    efl_exit(0);
 ```
 
-Description of Code Block 1's function, including but not limited to: what it does, why it is required, and any EFL-specific information regarding its purpose as it may differ from non-EFL programs.
+The parameter ``efl_exit()`` is the value your program returns to the operating system.
 
-## Step Two: Description ##
+## Step Five: Automatic EFL setup and Shutdown ##
 
-```language
-Functional Code Block 2
+This final piece of "boilerplate" code should be included at the end of every EFL program. Type the following at the very end of your program as the last line:
+
+```c
+EFL_MAIN()
 ```
 
-Description of Code Block 2's function, including but not limited to: what it does, why it is required, and any EFL-specific information regarding its purpose as it may differ from non-EFL programs. Keep adding functional code blocks until...
+This defines the real ``main()`` method required by C programs, which deals with initialization and deinitilization tasks. It also eventually calls the ``efl_main()`` method that you defined above.
+
+This is not mandatory but it simplifies the setup and shutdown processes considerably, so we are going to use it in this series of tutorials.
 
 ## The Complete Program ##
 
-```language
-Functional Code Block 1
-Functional Code Block 2
-...
-Functional Code Block N
-```
-
-Add any notes about the layout of the program, such as indentation which has been added or anything which has differed from the above Code Blocks.
-
-## Running the Program ##
-
-Instructions on compiling and running the program, including tests for its proper functionality.
-
-## Summary ##
-
-Summarise the documentation here, highlighting what the reader should have learned.
-
-## Additional Notes ##
-
-Any additional notes, such as expanded functionality not covered in the core program.
-
-````
-
-Building the program up step-by-step in minimum-viable functional blocks like this provides a welcoming experience and ensures that the reader understands the core concepts properly. It also makes the overall program seem less intimidating than if it were presented in completed form at the beginning then broken down piece-by-piece.
-
-When writing tutorials consider the reader's journey. Look at the tutorials they should have already completed: if the functionality of a particular Code Block has already been fully explained you don't need to repeat that work; simply provide a brief one-sentence summary of its functionality and a link to the tutorial in which it is fully explored.
-
-Each Code Block should be independently functional. Ideally, each code block could be compiled and executed at the end of each Step; if this is the case then feel free to make a note of this at the end of each Step and encourage the reader to test the program out and watch how it changes from Step to Step. Where a concept being introduced is too complex, however, simply split it into logical chunks and note that the program will not function until Step *N* is complete.
-
-## Documentation Best Practices ##
-
-For questions of grammar consult the *[Chicago Manual of Style](http://www.chicagomanualofstyle.org/home.html)*. Other best practices as they relate specifically to Enlightenment Documentation can be found below.
-
-* **No cold opens** - All pages must include the title and an introduction, the latter being one or two paragraphs which explain the purpose of the documentation in plain English with no assumption of prior knowledge nor requirement that the reader have any idea what they are doing.
-* **All terminology marked out** - If a document contains a technical term, whether exclusive to the EFL or not, this term must be highlighted using \*term\* Markdown syntax for its first use. If the precise meaning of an item of terminology is not explained immediately following such marking in the document body, it should be placed after the term itself and before the close of the sentence in brackets.
-* **Expand all acronyms and initialisms** - If a document contains an acronym or initialism, such as EFL, it should be first introduced highlighted in its expanded form followed by the commonly-accepted abbreviation in brackets (so "*Enlightenment Foundation Library (EFL)*.") This is true even for terms the reader should be expected to know (like EFL).
-* **Use paragraphs** - No single paragraph should be longer than four or five sentences. Treat a paragraph as a place to introduce a single concept, and once that concept has been introduced move on to a new paragraph before introducing another or expanding upon what you've written.
-* **Short, sharp sentences** - If you find you're putting commas in a sentence consider splitting it into two or more sentences for improved clarity. 
-* **Use subheads** - Split the document up into as many sub-sections as makes sense. This is especially important for documents where it's likely a reader may want to skip ahead for reference, as we can also use subheads as navigational anchors.
-* **Don't be afraid to split documents** - Just because something is addressed in a single document in the current format doesn't mean it should stay that way in the revamped version. If it makes sense to split an existing document into two or more new documents for clarity, do so.
-* **Don't hide content** - Current EFL documentation includes heavy use of a 'folding' plugin for DokuWiki, which hides contents until it is clicked upon. When encountered, this should be replaced with extreme prejudice: hidden content is anathema to good accessibility. Make sure that all contents of a document is visible as soon as it is opened without manual interaction; if this makes the document unwieldy, consider splitting it into multiple smaller documents as above.
-
-## Documentation Sample ##
-
-A sample document, based on writing a "Hello, World" example in C, is reproduced below for reference. This document, as with the *Documentation Contribution Guide* itself, is a work in progress.
-
-````markdown
----
-~~Title: Your First EFL Script~~
----
-
-# Your First EFL Script #
-
-The Enlightenment Foundation Libraries provide *Application Programming Interfaces (APIs)* to solve everyday coding problems. Some APIs are intended for very low-level functions such as writing a window manager. Others can be used to create simple text-only programs.
-
-In this guide you'll explore how to compose your first "Hello World" script in C. If you are unfamiliar with the basics feel free to go through our [practical C Primer](https://www.enlightenment.org/docs/c/start) before continuing.
-
-If you haven't downloaded EFL yet visit the [Download Page](https://www.enlightenment.org/download) and follow the installation steps there.
-
-## Hello World ##
-
-One of the advantages of C is that you can use pretty much any text editor to edit your code. Open up your preferred application and paste the following:
-
 ```c
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include <Eina.h>
 #include <Efl.h>
 #include <Elementary.h>
 
-EAPI_MAIN void
-efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
-   Efl_Loop_Arguments *args = ev->info;
-
-   if (eina_array_count(args->argv) == 0)
-     {
-        printf("Hello World!\n");
-     }
-   else
-     {
-        printf("Hello %s!\n", (char *) eina_array_data_get(args->argv, 0));
-     }
-
+   printf("Hello World!\n");
    efl_exit(0);
 }
+
 EFL_MAIN()
 ```
 
-Make sure to save and exit the text editor when you're done. Give the file a memorable name such as "hello.c". 
+## Running the Program ##
 
-### Compile and run your script ###
+Save the program then build it as outlined in [Setting up the Development Environment](/develop/setup/c/#Building). If you are using the ``gcc`` compiler, run:
 
-You can use the *GNU C Compiler (gcc)* to compile your EFL script. The program comes pre-installed in most versions of Linux. Simply open Terminal and run:
-
-```
-gcc -o hello hello-world.c `pkg-config --cflags --libs eina efl elementary` -DEFL_EO_API_SUPPORT=1 -DEFL_BETA_API_SUPPORT=1
+```bash
+gcc -o hello-world hello-world.c `pkg-config --cflags --libs eina efl elementary` -DEFL_EO_API_SUPPORT=1 -DEFL_BETA_API_SUPPORT=1
 ```
 
-This command will invoke the GNU C compiler to compile the file hello.c and output (-o) the result to an executable named "hello".
+If the systems displays no errors, your program should be ready. Test it by typing:
 
-You can now execute the script from Terminal by running:
-
-```
-./hello
+```bash
+./hello-world
 ```
 
-If the script compiled correctly you will see the message "Hello World" in the Terminal.
-````
+The words ``Hello World!`` will now appear on the screen. 
+
+## Summary ##
+
+At the end of this tutorial you have learned:
+
+* Header files must be included for any EFL libraries you intend to use. Typically, these are ``Eina.h`` and ``Efl.h``.
+* Your main method should be ``efl_main()``.
+* Your EFL programs should always call ``efl_exit()`` at some stage.
+* Your EFL programs should include the ``EFL_MAIN()`` macro at the end so EFL can insert its own start-up and shutdown code.
+
+The next tutorial keeps introducing more basic concepts, and shows how to retrieve the command line parameters passed to your program.
