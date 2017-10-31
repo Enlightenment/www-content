@@ -8,16 +8,16 @@ of effects and animations in your application.
 === Table of Contents ===
 
   * [[#Handling_Events|Handling Events]]
-    * [[/program_guide/event_effect/evas_smart_events|Evas smart events]]: the most comon king of GUI pregramming
-    * [[/program_guide/event_effect/ecore_events|Ecore events]]: for system events
-    * [[/program_guide/event_effect/edje_events|Edje events]]: signals and messages to or from themes
-    * [[/program_guide/event_effect/evas_object_events|Evas object events]]: drawing- or focus-related low-level events for specific objects on a canvas
-    * [[/program_guide/event_effect/evas_events|Evas events]]: drawing or focus-related low-level events for a whole canvas
+    * [[/develop/legacy/program_guide/event_effect/evas_smart_events|Evas smart events]]: the most comon king of GUI pregramming
+    * [[/develop/legacy/program_guide/event_effect/ecore_events|Ecore events]]: for system events
+    * [[/develop/legacy/program_guide/event_effect/edje_events|Edje events]]: signals and messages to or from themes
+    * [[/develop/legacy/program_guide/event_effect/evas_object_events|Evas object events]]: drawing- or focus-related low-level events for specific objects on a canvas
+    * [[/develop/legacy/program_guide/event_effect/evas_events|Evas events]]: drawing or focus-related low-level events for a whole canvas
   * [[#Creating_Animations_and_Effects|Creating Animations and Effects]]
-    * [[/program_guide/event_effect/ecore_animators|Ecore Animators]]
-    * [[/program_guide/event_effect/elementary_transitions|Elementary Transitions]]
-    * [[/program_guide/event_effect/edje_animations|Edje Animations]]
-    * [[/program_guide/event_effect/evas_map_animations|Evas Map Animations]]
+    * [[/develop/legacy/program_guide/event_effect/ecore_animators|Ecore Animators]]
+    * [[/develop/legacy/program_guide/event_effect/elementary_transitions|Elementary Transitions]]
+    * [[/develop/legacy/program_guide/event_effect/edje_animations|Edje Animations]]
+    * [[/develop/legacy/program_guide/event_effect/evas_map_animations|Evas Map Animations]]
 
 ==== Handling Events ====
 
@@ -38,15 +38,15 @@ application's UI and it appears frozen.
 There are several event types in the EFLs, and their use depends on the level
 of the event. The event types from lower- to higher-level are:
 
-    * [[/program_guide/event_effect/evas_smart_events|Evas smart events]] are the most often used and take place on collections of evas objects (which are most typically handled). They are called "smart" because they have internal logic and can define their own events while other event types are fixed.
-    * [[/program_guide/event_effect/ecore_events|Ecore events]] are the lowest-level events and come directly from the system. Except for application-wide shortcuts, it is not advisable to use them.
-    * [[/program_guide/event_effect/evas_object_events|Evas object events]] events concern the objects that are on the canvas.
-    * [[/program_guide/event_effect/evas_events|Evas events]] are events on the graphical canvas as a whole. They are fairly low-level and mostly useful when drawing directly on the canvas.
+    * [[/develop/legacy/program_guide/event_effect/evas_smart_events|Evas smart events]] are the most often used and take place on collections of evas objects (which are most typically handled). They are called "smart" because they have internal logic and can define their own events while other event types are fixed.
+    * [[/develop/legacy/program_guide/event_effect/ecore_events|Ecore events]] are the lowest-level events and come directly from the system. Except for application-wide shortcuts, it is not advisable to use them.
+    * [[/develop/legacy/program_guide/event_effect/evas_object_events|Evas object events]] events concern the objects that are on the canvas.
+    * [[/develop/legacy/program_guide/event_effect/evas_events|Evas events]] are events on the graphical canvas as a whole. They are fairly low-level and mostly useful when drawing directly on the canvas.
 
 Event types in the EFLs: Inner boxes are more specific than outer ones{{ :event_effect_scope.png |Event types in the EFLs: Inner boxes are more specific than outer ones}}
 
 <note>
-There are also [[/program_guide/event_effect/edje_events|Edje signals]], which
+There are also [[/develop/legacy/program_guide/event_effect/edje_events|Edje signals]], which
 come from program sections in themes; they can be used from high-level
 Elementary APIs or a low-level Edje API.
 </note>
@@ -86,13 +86,13 @@ the EFL: Ecore animators, Elementary transitions, Edje animations, and Evas
 Map animations.
 
 The first option for creating animations with EFL is to use
-[[/program_guide/event_effect/ecore_animators|Ecore
+[[/develop/legacy/program_guide/event_effect/ecore_animators|Ecore
 animators]]. To create an Ecore animation, you must first determine the
 duration of the animation, and then define a callback function that performs
 the animation with that duration.
 
 You can also create animations using
-[[/program_guide/event_effect/elementary_transitions|Elementary transitions]].
+[[/develop/legacy/program_guide/event_effect/elementary_transitions|Elementary transitions]].
 Elementary transitions allow you to apply various transition effects, such as
 translation and rotation, to Evas objects. Elementary transitions are mostly
 based on Ecore animators, but provide some transition methods at a higher
@@ -100,13 +100,13 @@ level of abstraction. Elementary transitions provide a simpler way of
 animating objects than Ecore animators or Edje animations.
 
 A third option for animating objects is to use
-[[/program_guide/event_effect/edje_animations|Edje animations]], which are
+[[/develop/legacy/program_guide/event_effect/edje_animations|Edje animations]], which are
 based on a simple principle: transitioning from one state to another. To
 animate an object with Edje, you have to first define the start and end states
 of the animation, and then transition the object from the start state to the
 end state.
 
-Finally, [[/program_guide/event_effect/evas_map_animations|Evas Map
+Finally, [[/develop/legacy/program_guide/event_effect/evas_map_animations|Evas Map
 animations]] allow you to apply transformations to all types of objects by way
 of UV mapping. In UV mapping, you map points in the source object to 3D space
 positions in the target object. This allows for rotation, perspective, scale,
