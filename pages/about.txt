@@ -4,7 +4,7 @@
 
 ==== Much more than a Window Manager ====
 
-Enlightenment originally began as a project to create a Window Manager for
+Enlightenment was originally developed in the 1990s by Rasterman (Carsten Haitzler) as a simple Window Manager for
 X11. Since then it's grown into the one million lines of C
 code that form the EFL libraries, as well as a Window Manager and a
 set of applications. There's a vibrant and active community of
@@ -69,12 +69,21 @@ The mainloop is designed efficiently. It will remain idle, consuming virtually n
 
 Read more about the Ecore main loop [[https://docs.enlightenment.org/auto/group__Ecore__Main__Loop__Group.html|here.]]
 
+For more detailed information on the EFL model including events and callbacks visit see our [[https://phab.enlightenment.org/w/efl_concept_overview/|EFL Concept Overview.]]
 
+=== EFL Application Structure ===
 
+{{ :efllibs.png }}
 
+Whenever you create a basic EFL Application, it uses a basic set of libraries:
 
+  * **Elementary** is the top-most library. It provides all the functions you need to create windows, manage layouts and add widgets. 
+  * **Edje**  is the library used by Elementary to provide powerful,customisable themes. You can also use Edje to create your own objects and use them in an application. 
+  * **Ecore** is the library which manages the main loop of your application, as outlined above. 
+  * **Evas**  is the canvas engine, which draws content. Any graphical objects you create are Evas objects. It handles the entire state of the window by filling the canvas with objects and manipulating their states. Evas objects are created and then manipulated until they are no longer needed, at which point they are deleted. 
+  * **Eina** forms the basis of all EFL libraries. It's a toolbox that implements an API for data types in an efficient way. Eina contains all the functions needed to create lists and hashes, manage shared strings, open shared libraries, and manage errors and memory pools. 
 
-
+EFL naturally contains many more libraries than the basic ones outlined above. Visit our [[https://www.enlightenment.org/develop/legacy/program_guide/basic_application_structure_pg|Basic Application Structure]] page for more information on the core libraries. You can also learn about other libraries in our other programming guides.
 
 === Supported Platforms ===
 
