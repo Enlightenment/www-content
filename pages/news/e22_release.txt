@@ -1,0 +1,216 @@
+=== Enlightenment DR 0.22.0 Release ===
+  * //2017-11-02 - by Mike//
+
+Highlights:
+      * Greatly improved Wayland support
+      * Improvements to new gadget infrastructure
+      * Added a sudo/ssh askpass utility gui
+      * meson build system
+      * tiling policy improvements
+      * integrated per-window volume controls
+
+Tickets Addressed:
+^ ** Ticket ** ^ ** Description ** ^
+| [[ https://phab.enlightenment.org/T1420 | T1420 ]] |  Backlight level not restored when resuming from suspend on some hardware|
+| [[ https://phab.enlightenment.org/T1526 | T1526 ]] |  Click "Setup Selected Input Methord" Has No Response|
+| [[ https://phab.enlightenment.org/T1571 | T1571 ]] |  Llibreoffice slide presentation mode don't understand enlightenment multi-screen|
+| [[ https://phab.enlightenment.org/T1931 | T1931 ]] |  Using Mouse warping and Automatic Raise results in broken behaviour|
+| [[ https://phab.enlightenment.org/T2126 | T2126 ]] |  Scroll wheel on long menus|
+| [[ https://phab.enlightenment.org/T2452 | T2452 ]] |  Resize with keyboard completely borked.|
+| [[ https://phab.enlightenment.org/T2579 | T2579 ]] |  Resize with keyboard works the opposite way.|
+| [[ https://phab.enlightenment.org/T2879 | T2879 ]] |  Logout/power off popup window resizes.|
+| [[ https://phab.enlightenment.org/T3031 | T3031 ]] |  Setting scale and geometry can lead to unexpected results|
+| [[ https://phab.enlightenment.org/T3093 | T3093 ]] |  Enabling Custom Font Classes in enlightenment makes GTK Application text tiny|
+| [[ https://phab.enlightenment.org/T3144 | T3144 ]] |  calling canvas event feed functions during a post event callback breaks the canvas|
+| [[ https://phab.enlightenment.org/T3164 | T3164 ]] |  Mouse pointer warps on window resize using key bindings|
+| [[ https://phab.enlightenment.org/T3291 | T3291 ]] |  Begin move/resize on overlay gadget doesn't work on secondary screen|
+| [[ https://phab.enlightenment.org/T3495 | T3495 ]] |  Inconsistent window focus when switching desktops with multiple screens|
+| [[ https://phab.enlightenment.org/T3649 | T3649 ]] |  "Suspend even if AC" not working|
+| [[ https://phab.enlightenment.org/T3682 | T3682 ]] |  color class editor widget broken (regression)|
+| [[ https://phab.enlightenment.org/T3842 | T3842 ]] |  Preview popup glitch.|
+| [[ https://phab.enlightenment.org/T4007 | T4007 ]] |  Calculator in everything launcher lags by a keypress|
+| [[ https://phab.enlightenment.org/T4097 | T4097 ]] |  Borderless terminology does not obey window placement rules (non-wayland)|
+| [[ https://phab.enlightenment.org/T4112 | T4112 ]] |  EFL OpenBSD crash run enlightenment_fm|
+| [[ https://phab.enlightenment.org/T4119 | T4119 ]] |  Invalid Argument on spin_trylock|
+| [[ https://phab.enlightenment.org/T4121 | T4121 ]] |  EFL ecore_exe_terminate lost signal!|
+| [[ https://phab.enlightenment.org/T4189 | T4189 ]] |  Internal windows maximize remember|
+| [[ https://phab.enlightenment.org/T4216 | T4216 ]] |  Incomplete message|
+| [[ https://phab.enlightenment.org/T4293 | T4293 ]] |  Blured previews of video.|
+| [[ https://phab.enlightenment.org/T4297 | T4297 ]] |  E crash from closing Qt app|
+| [[ https://phab.enlightenment.org/T4298 | T4298 ]] |  E: fix build issue without libuuid|
+| [[ https://phab.enlightenment.org/T4339 | T4339 ]] |  bryce scaling broken|
+| [[ https://phab.enlightenment.org/T4358 | T4358 ]] |  elm.Window do not update the borderless state correctly|
+| [[ https://phab.enlightenment.org/T4430 | T4430 ]] |  Xwayland in Enlightenment doesn't display anythin|
+| [[ https://phab.enlightenment.org/T4439 | T4439 ]] |  Can't reboot or shut down when xwayland module is running.|
+| [[ https://phab.enlightenment.org/T4479 | T4479 ]] |  Enlightenment should check if PIE is supported|
+| [[ https://phab.enlightenment.org/T4499 | T4499 ]] |  shelf tiling gadget doesn't do anything / overlay on wrong screen|
+| [[ https://phab.enlightenment.org/T4509 | T4509 ]] |  IBar don't wor|
+| [[ https://phab.enlightenment.org/T4510 | T4510 ]] |  Edge Bindings - left click action seem to override other button|
+| [[ https://phab.enlightenment.org/T4512 | T4512 ]] |  Window remembers don't work on Wayland|
+| [[ https://phab.enlightenment.org/T4522 | T4522 ]] |  Alt-scroll desktop flipping not functioning intermittently|
+| [[ https://phab.enlightenment.org/T4524 | T4524 ]] |  IBar Icons disapear on some e restarts / theme changes|
+| [[ https://phab.enlightenment.org/T4543 | T4543 ]] |  E21+ E_FM Preview Freeze|
+| [[ https://phab.enlightenment.org/T4544 | T4544 ]] |  ibar icons no longer dpi scale|
+| [[ https://phab.enlightenment.org/T4632 | T4632 ]] |  E Pager not Updating BG|
+| [[ https://phab.enlightenment.org/T4647 | T4647 ]] |  Enlightenment + vertical shelf containing only IBar has 0 pixel content height|
+| [[ https://phab.enlightenment.org/T4648 | T4648 ]] |  Lock screen gadget issues.|
+| [[ https://phab.enlightenment.org/T4655 | T4655 ]] |  Gadget settings bork lock screen|
+| [[ https://phab.enlightenment.org/T4687 | T4687 ]] |  ctxpopup doesn't report accurate size with evas_object_geometry_get()|
+| [[ https://phab.enlightenment.org/T4716 | T4716 ]] |  E git crasg|
+| [[ https://phab.enlightenment.org/T4732 | T4732 ]] |  Bryce autosize glitch.|
+| [[ https://phab.enlightenment.org/T4733 | T4733 ]] |  Enlightenment IBar sizing issue|
+| [[ https://phab.enlightenment.org/T4747 | T4747 ]] |  elm box size hints can desync|
+| [[ https://phab.enlightenment.org/T4784 | T4784 ]] |  Bryces on second monitor do not survive on E restart|
+| [[ https://phab.enlightenment.org/T4786 | T4786 ]] |  New Pager on desktop inverted direction|
+| [[ https://phab.enlightenment.org/T4787 | T4787 ]] |  New Pager unusable on second monitor|
+| [[ https://phab.enlightenment.org/T4790 | T4790 ]] |  Luncher app icon popup too slow|
+| [[ https://phab.enlightenment.org/T4797 | T4797 ]] |  EFM: "Confirm Delete" dialog not focuse|
+| [[ https://phab.enlightenment.org/T4798 | T4798 ]] |  E_fm Crash|
+| [[ https://phab.enlightenment.org/T4804 | T4804 ]] |  Luncher window popup goes beyond screen limits.|
+| [[ https://phab.enlightenment.org/T4806 | T4806 ]] |  Luncher behavior when you have iconified apps|
+| [[ https://phab.enlightenment.org/T4807 | T4807 ]] |  Bryce pager multiscreen issue|
+| [[ https://phab.enlightenment.org/T4809 | T4809 ]] |  Bryce resizing issue|
+| [[ https://phab.enlightenment.org/T4810 | T4810 ]] |  Changing logical positionning of a Bryce render it unusable.|
+| [[ https://phab.enlightenment.org/T4815 | T4815 ]] |  EFM Crash Preview (file is fifo) w/patch|
+| [[ https://phab.enlightenment.org/T4819 | T4819 ]] |  Bryces set the be below window appear under desktop gadgets|
+| [[ https://phab.enlightenment.org/T4821 | T4821 ]] |  Two sound sources of the same pid are now synchornized|
+| [[ https://phab.enlightenment.org/T4826 | T4826 ]] |  Bryces mispositioned when re-running the wizard|
+| [[ https://phab.enlightenment.org/T4830 | T4830 ]] |  first and last ibar icons clipped out|
+| [[ https://phab.enlightenment.org/T4831 | T4831 ]] |  Pager: switching between virtual desktops via keyboard shows wrong snapshots|
+| [[ https://phab.enlightenment.org/T4885 | T4885 ]] |  Enlightenment XDG Session startup file is missing|
+| [[ https://phab.enlightenment.org/T4887 | T4887 ]] |  Chromium Full Screen - Freeze|
+| [[ https://phab.enlightenment.org/T4893 | T4893 ]] |  Enlightenment. Cursor Falsely Keeps Cursor Animation|
+| [[ https://phab.enlightenment.org/T4916 | T4916 ]] |  Luncher popups get stuck and can crash E.|
+| [[ https://phab.enlightenment.org/T4939 | T4939 ]] |  GTK menus broken as hell|
+| [[ https://phab.enlightenment.org/T4945 | T4945 ]] |  E Build Break (tempget threading newness)|
+| [[ https://phab.enlightenment.org/T4958 | T4958 ]] |  GTK apps crash on start.|
+| [[ https://phab.enlightenment.org/T4960 | T4960 ]] |  pager crashes on reorient|
+| [[ https://phab.enlightenment.org/T4963 | T4963 ]] |  Annoying crash in Luncher|
+| [[ https://phab.enlightenment.org/T4966 | T4966 ]] |  GTK menus take 2.|
+| [[ https://phab.enlightenment.org/T4970 | T4970 ]] |  Luncher confused with a few apps |
+| [[ https://phab.enlightenment.org/T4988 | T4988 ]] |  The Everything crash|
+| [[ https://phab.enlightenment.org/T4991 | T4991 ]] |  After compiling from GIT sourc|
+| [[ https://phab.enlightenment.org/T5003 | T5003 ]] |  Internal window icons don't appear on the Luncher ...|
+| [[ https://phab.enlightenment.org/T5007 | T5007 ]] |  E Wizard Crash - Linux and OpenBSD (X11)|
+| [[ https://phab.enlightenment.org/T5031 | T5031 ]] |  E crashing on "Exit" "Restart" "Desktop Icon" w/tasks|
+| [[ https://phab.enlightenment.org/T5033 | T5033 ]] |  Luncher crash|
+| [[ https://phab.enlightenment.org/T5041 | T5041 ]] |  Gadger ibar icons incorrectly aligned|
+| [[ https://phab.enlightenment.org/T5044 | T5044 ]] |  wayland + fullscreen broken|
+| [[ https://phab.enlightenment.org/T5060 | T5060 ]] |  Pager does not allow to configure number of VD's|
+| [[ https://phab.enlightenment.org/T5076 | T5076 ]] |  Incorrect desktop files|
+| [[ https://phab.enlightenment.org/T5077 | T5077 ]] |  Gadget edit sizing|
+| [[ https://phab.enlightenment.org/T5094 | T5094 ]] |  e + touchscreen - actually tried it before?|
+| [[ https://phab.enlightenment.org/T5097 | T5097 ]] |  Closing iconified apps doesn't make them dissapear from the popup|
+| [[ https://phab.enlightenment.org/T5136 | T5136 ]] |  Crash After Adding Luncher to Bryce|
+| [[ https://phab.enlightenment.org/T5188 | T5188 ]] |  Lots of setxkbmap processes slowing down system|
+| [[ https://phab.enlightenment.org/T5235 | T5235 ]] |  Wayland mode - e client destruction is broken|
+| [[ https://phab.enlightenment.org/T5242 | T5242 ]] |  Crash when exiting E|
+| [[ https://phab.enlightenment.org/T5258 | T5258 ]] |  Could not npen X11 socket connection.|
+| [[ https://phab.enlightenment.org/T5262 | T5262 ]] |  Enlightenment crashes when launching bryce configuration|
+| [[ https://phab.enlightenment.org/T5288 | T5288 ]] |  Can't select custom wallpaper on non-primary displays|
+| [[ https://phab.enlightenment.org/T5295 | T5295 ]] |  Window position not remebered|
+| [[ https://phab.enlightenment.org/T5298 | T5298 ]] |  e crashes on "mute on lock" in emixer setting|
+| [[ https://phab.enlightenment.org/T5340 | T5340 ]] |  EFM -> Delete -> Crash (race)|
+| [[ https://phab.enlightenment.org/T5348 | T5348 ]] |  Hid|
+| [[ https://phab.enlightenment.org/T5350 | T5350 ]] |  Naviframe/portal support in Wayland Enlightenment|
+| [[ https://phab.enlightenment.org/T5370 | T5370 ]] |  Windows application on wine doesn't render the window properly|
+| [[ https://phab.enlightenment.org/T5377 | T5377 ]] |  Launcher: sometimes popups are frozen and prevent bryce autohide|
+| [[ https://phab.enlightenment.org/T5418 | T5418 ]] |  image native_surface_set() does not set load error on failure|
+| [[ https://phab.enlightenment.org/T5442 | T5442 ]] |  Support proxy configuration via connman|
+| [[ https://phab.enlightenment.org/T5444 | T5444 ]] |  elm_win_iconified_set(Elm_Win *ob|
+| [[ https://phab.enlightenment.org/T5464 | T5464 ]] |  Screen doesn\'t blank if "disable blanking for fullscreen windows" is o|
+| [[ https://phab.enlightenment.org/T5483 | T5483 ]] |  Ctrl+Alt + Fx and then back to F1 doesn't work on wayland|
+| [[ https://phab.enlightenment.org/T5485 | T5485 ]] |  Enlightenment can not be compiled on Solaris|
+| [[ https://phab.enlightenment.org/T5500 | T5500 ]] |  mixer does not initialize in editor (gadget versio|
+| [[ https://phab.enlightenment.org/T5521 | T5521 ]] |  E SIGABORTS when starting elementary_test from the tree|
+| [[ https://phab.enlightenment.org/T5544 | T5544 ]] |  Restart/Remember issue with open app.|
+| [[ https://phab.enlightenment.org/T5552 | T5552 ]] |  Edge bindings with "Drag only" -option don\'t work|
+| [[ https://phab.enlightenment.org/T5593 | T5593 ]] |  Xwayland|
+| [[ https://phab.enlightenment.org/T5599 | T5599 ]] |  E: crash|
+| [[ https://phab.enlightenment.org/T5600 | T5600 ]] |  sysinfo gadgets can set invalid aspect|
+| [[ https://phab.enlightenment.org/T5601 | T5601 ]] |  bryce - remove clock SEGV|
+| [[ https://phab.enlightenment.org/T5604 | T5604 ]] |  E screen lock unlocks with empty or wrong password|
+| [[ https://phab.enlightenment.org/T5606 | T5606 ]] |  webgl in browsers unusable|
+| [[ https://phab.enlightenment.org/T5654 | T5654 ]] |  Pager doesn't live update|
+| [[ https://phab.enlightenment.org/T5664 | T5664 ]] |  emixer issus/wishes|
+| [[ https://phab.enlightenment.org/T5666 | T5666 ]] |  Bryces migrate to primary display when secondary displays removed|
+| [[ https://phab.enlightenment.org/T5669 | T5669 ]] |  luncher: preview sizing issues|
+| [[ https://phab.enlightenment.org/T5678 | T5678 ]] |   image rendering fails with no feedback and then never renders|
+| [[ https://phab.enlightenment.org/T5693 | T5693 ]] |  gadgets: gadget list popup dismiss crash|
+| [[ https://phab.enlightenment.org/T5694 | T5694 ]] |  sysinfo gadgets misuse ecore_thread api|
+| [[ https://phab.enlightenment.org/T5700 | T5700 ]] |  time module: day does not change on change of date.|
+| [[ https://phab.enlightenment.org/T5707 | T5707 ]] |  Dual display monitor isssues with resolution and displays being on/off|
+| [[ https://phab.enlightenment.org/T5714 | T5714 ]] |  Screen freezes during fade to blank.|
+| [[ https://phab.enlightenment.org/T5737 | T5737 ]] |  Caps lock message on the lock screen doesn't turn off.|
+| [[ https://phab.enlightenment.org/T5738 | T5738 ]] |  E drops to tty when using arrows or backspace in Xwayland|
+| [[ https://phab.enlightenment.org/T5739 | T5739 ]] |  Broken input on internal windows.|
+| [[ https://phab.enlightenment.org/T5741 | T5741 ]] |  Luncher preview doesn't respected the alpha state of a window|
+| [[ https://phab.enlightenment.org/T5769 | T5769 ]] |  skipping a window in taskbar is only applied when realoding the taskbar|
+| [[ https://phab.enlightenment.org/T5770 | T5770 ]] |  DND borked for efl apps.|
+| [[ https://phab.enlightenment.org/T5780 | T5780 ]] |  ecore_wayland: check to support aux_hint(auxiliary hint) for wayland surface|
+| [[ https://phab.enlightenment.org/T5796 | T5796 ]] |  stop abusing wizard in gadgets|
+| [[ https://phab.enlightenment.org/T5806 | T5806 ]] |  Enlightenment stopped rendering|
+| [[ https://phab.enlightenment.org/T5816 | T5816 ]] |  sysinfo gadget issues|
+| [[ https://phab.enlightenment.org/T5817 | T5817 ]] |  Enlightenment 0.21.9 (pre release) issues changing virtual desktops|
+| [[ https://phab.enlightenment.org/T5845 | T5845 ]] |  Internal windows broken|
+| [[ https://phab.enlightenment.org/T5850 | T5850 ]] |  efl + weston and efl + framerate is really bad|
+| [[ https://phab.enlightenment.org/T5851 | T5851 ]] |  New Gadgets: Analogue Clock (show seconds hand)|
+| [[ https://phab.enlightenment.org/T5871 | T5871 ]] |  Everything closes on focus|
+| [[ https://phab.enlightenment.org/T5877 | T5877 ]] |  gadget popup: display on wrong screen.|
+| [[ https://phab.enlightenment.org/T5878 | T5878 ]] |  Impossible to use Everything|
+| [[ https://phab.enlightenment.org/T5886 | T5886 ]] |  crash in drop callback will crash WM|
+| [[ https://phab.enlightenment.org/T5889 | T5889 ]] |  cannot add bryce with simoteks theme + crash|
+| [[ https://phab.enlightenment.org/T5891 | T5891 ]] |  efm: directory hover preview sizing issue.|
+| [[ https://phab.enlightenment.org/T5914 | T5914 ]] |  Bryce should allow freedom of gadget placement in full screen width|
+| [[ https://phab.enlightenment.org/T5929 | T5929 ]] |  E: shade (sw engine) fails to redraw|
+| [[ https://phab.enlightenment.org/T5937 | T5937 ]] |  Gadgets That use comp object mirrors of windows don't show/update correctly until the window has been focused|
+| [[ https://phab.enlightenment.org/T5945 | T5945 ]] |  Bryce: mixer gadget popup (|
+| [[ https://phab.enlightenment.org/T5948 | T5948 ]] |  luncher: preview sizing issues|
+| [[ https://phab.enlightenment.org/T5952 | T5952 ]] |  elm parenting fails|
+| [[ https://phab.enlightenment.org/T5953 | T5953 ]] |  Alternative to prepending E_BIN_DIR to PATH|
+| [[ https://phab.enlightenment.org/T5957 | T5957 ]] |  E segfault when opening virtualbox console|
+| [[ https://phab.enlightenment.org/T5969 | T5969 ]] |  Putting mouse on desktop edge doesn't work anymore after connecting external screen|
+| [[ https://phab.enlightenment.org/T5970 | T5970 ]] |  Crash when closing from the bar popup.|
+| [[ https://phab.enlightenment.org/T5973 | T5973 ]] |  Spacer Gadget does better job locking in contents on either side|
+| [[ https://phab.enlightenment.org/T5974 | T5974 ]] |  Cannot resize bryce (ALT+Scrolling thing)|
+| [[ https://phab.enlightenment.org/T5975 | T5975 ]] |  Wireless Bryce Gadget - Don't always show bluetooth?|
+| [[ https://phab.enlightenment.org/T5977 | T5977 ]] |  Junk DPMs garbage + blanking timeouts totally broken + junk frames|
+| [[ https://phab.enlightenment.org/T5984 | T5984 ]] |  E switch desktop while resizing windows (it should not)|
+| [[ https://phab.enlightenment.org/T5988 | T5988 ]] |  enlightenment: Crashes when toggling guake|
+| [[ https://phab.enlightenment.org/T5991 | T5991 ]] |  E window remember dialog a bit broken|
+| [[ https://phab.enlightenment.org/T5993 | T5993 ]] |  shelf popup|
+| [[ https://phab.enlightenment.org/T5998 | T5998 ]] |  Bryce: Resizing SEGV|
+| [[ https://phab.enlightenment.org/T6006 | T6006 ]] |  Shaded window state broken on E restart|
+| [[ https://phab.enlightenment.org/T6023 | T6023 ]] |  Crash on resize across multiple monitors with tiling enabled|
+| [[ https://phab.enlightenment.org/T6024 | T6024 ]] |  Win appears on the wrong VD with remebers|
+| [[ https://phab.enlightenment.org/T6070 | T6070 ]] |  E - Wayland mode - internal windows stop rendering|
+| [[ https://phab.enlightenment.org/T6071 | T6071 ]] |  E wayland mode - launching apps like terminology always leads to ibar icon being "disabled/busy starting"|
+| [[ https://phab.enlightenment.org/T6072 | T6072 ]] |  Firefox automatically resizing itself above shelves|
+| [[ https://phab.enlightenment.org/T6074 | T6074 ]] |  Luncher: Preview Size Request|
+| [[ https://phab.enlightenment.org/T6075 | T6075 ]] |  Luncher: preview issue|
+| [[ https://phab.enlightenment.org/T6122 | T6122 ]] |  Xwayland startup apps crash on E start|
+| [[ https://phab.enlightenment.org/T6125 | T6125 ]] |  Issues with the lock screen.|
+| [[ https://phab.enlightenment.org/T6151 | T6151 ]] |  Enlightenment 22 crashing after some tim|
+| [[ https://phab.enlightenment.org/T6157 | T6157 ]] |  e cursors broken in x|
+| [[ https://phab.enlightenment.org/T6210 | T6210 ]] |  e 22+ meson: Program "/usr/sbin/sleep.sh" not found or not executable|
+| [[ https://phab.enlightenment.org/T6242 | T6242 ]] |  Selecting text in Terminology crashes E|
+
+
+
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.22.0.tar.gz | Enlightenment DR 0.22.0 GZIP]]| a14e1b51737cd8db6eecc719a60d8090720bb7a702085219b03e6654f105ce88 |
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.22.0.tar.xz | Enlightenment DR 0.22.0 XZ]]  | 1b3eb9db7dd9c41b90e9ab67be875ea300e13774503fecdd692d96917ddeb976 |
+
+
+== Building and Dependencies ==
+
+If you have an existing EFL install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation.
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README                     | EFL]]
+
+**Note:** E22 depends on EFL **v1.20.5** or newer.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
