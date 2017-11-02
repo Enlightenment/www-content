@@ -1,1 +1,17 @@
-The legacy C API documentation is at https://docs.enlightenment.org/auto/ .
+<JS>
+
+function size_to_content(iframe) {
+    iframe.height = iframe.contentWindow.document.body.scrollHeight;
+    iframe.style.height = (iframe.contentWindow.document.body.scrollHeight+15)+'.px';
+}
+
+window.addEventListener('DOMContentLoaded', function(e) {
+    var iframe = document.querySelectorAll("iframe")[0];
+    iframe.addEventListener('load', function(e) {
+        size_to_content(iframe);
+    }, true);
+}, true);
+
+</JS>
+
+{{url>/develop/legacy/api/c/embed/ noborder}}
