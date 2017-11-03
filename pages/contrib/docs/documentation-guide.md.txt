@@ -237,6 +237,29 @@ Note that although Markdown does not require the numbers to be in the right orde
 
 At present, sub-lists are only correctly rendered in unordered bullet list format and will not display correctly in numbered list format.
 
+## Sidebars ##
+
+Documentation namespaces should have *sidebars*, permanent boxes visible on all pages providing quick navigation through that namespace. These sidebars exist as a page named "sidebar" in the parent namespace.
+
+When creating a new document in a namespace, or moving an existing document, always update the sidebar. To do so, find the sidebar file: the sidebar for the "/contrib" namespace, for example, is "/contrib/sidebar".
+
+The format of a sidebar is shown below:
+
+```
+  * [[/contrib/start]]
+  * [[/contrib/reporting_bugs]]
+  * [[/contrib/efl-debug]]
+  * [[/contrib/enlightenment_debugging]]
+  * [[/contrib/devs/git-guide.md]]
+  * [[contrib/devs/arcanist-guide.md]]
+  * [[contrib/docs/documentation-guide.md]]
+  * [[/contrib/docs/ | Documentation]]
+    * [[/contrib/docs/eo-guide | Eolian Documentation Guide]]
+    * [[/contrib/docs/eo | Eolian File Format]]
+```
+
+Note that these pages are in DokuWiki markup format, not Markdown Extra. Each entry in the sidebar should be in the form of a DokuWiki link; if the page to which you are linking has the DokuWiki title set in the frontmatter this will be pulled through and used as the display text. To override this title, or to link to a page which does not yet exist and thus has no title, use a pipe character followed by your preferred link text.
+
 ## Programming Tutorials ##
 
 Programming tutorials, and other hands-on educational documentation, require a specific approach in order to be both accessible and informative. The template below demonstrates a rough approach to which you should adhere:
