@@ -1,0 +1,121 @@
+---
+~~Title: Eolian documentation guide~~
+---
+
+# Eolian Documentation Guide #
+
+Eolian files (``.eo``) are plain text files which describe an *Application Programming Interface* (API) in a language-independent way. EFL uses them to automatically generate the development files required for each language such as header files for C.
+
+Eolian files also allow **documentation tags**, which are translated both into the development files (as comments) and into the auto-generated [EFL API reference guide](/develop/api/start).
+
+This guide shows how to add documentation tags to existing ``.eo`` files and describes the style to be used.
+
+You can find a thorough description of the file format in the [Eolian File Format Specification](eo.md) but if you're writing documentation you shouldn't need to visit this very often. 
+
+## Documentation Tags ##
+
+Documentation tags go inside double square brackets: ``[[ Documentation text ]]``.
+
+On some target documentation systems (like Doxygen), the first paragraph is handled differently. Normally, it is used as a short summary, followed by a more in-depth description. So, if you need to add a lot of text, use a single-sentence first paragraph, then add the rest.
+
+Note that Eolian also supports **comments**. These are intended to help understand the Eo file itself and **will NOT** be translated into documentation. Eolian comments follow the C/C++ style ``/* comment */`` and ``// comment``.
+
+### Styling ###
+
+You can place any text inside a documentation tag. However, since it will be copied over to different kinds of development files using varying syntaxes, you shouldn't use any Markup whatsoever.
+
+Broken lines are automatically brought together. Indentation and long runs of spaces are automatically removed. Leave a blank line if you need to insert line break.
+
+A limited amount of styling is possible however. The following are guaranteed to work across different documentation platforms:
+
+ * A ``$`` before any word will mark it as a **keyword** and most probably render it in monospace. Use this to highlight method parameters or special values like ``true``, ``false`` or ``null``, for example.
+   ```
+   [[If the $foo parameter is $true amazing things will happen]]
+   ```
+
+ * An ``@`` before any word creates a **reference** to another part of the API, which will probably be rendered as a link to the appropriate page. The syntax is ``@Class.Attribute``. You can omit the ``Class`` part if you want to refer to an attribute of the current class: ``@.Attribute``.
+   ```
+   [[See for instance the @.border_scale method in this class or the
+   @AnotherOne.border_scale]]
+   ```
+
+### Placement ###
+
+Documentation tags can only appear after open braces ``{`` or semicolons ``;``. When placed after a brace, the tag refers to its entire content (e.g., a class). When placed after a semicolon, the tag refers to whatever the semicolon ends (e.g., a parameter)
+
+```
+class Foo {
+    [[This is the documentation for class Foo.]]
+
+    methods {
+        bar {
+            [[This is the documentation for method bar.]]
+
+            return: bool; [[This documents the return value of method bar.]]
+        }
+    }
+}
+```
+
+Bear in mind that documentation tags placed elsewhere will be ignored and may even interfere with compilation of EFL. 
+
+## Style Guide ##
+
+ * End all your sentences with periods.
+ * Keep your lines under 80 characters.
+ * Document properties at the ``@property ... {`` level. In other words, do not document the property's ``get`` and ``set`` methods (accessors) independently. If the methods really do something  other than setting and getting a property, then put as much common text at the ``@property`` level and only put whatever's different in the accessors.
+ * Start the description of methods with a verb in singular form, that is, ``Destroys the object`` and not *Destroy the object*.
+ * Methods returning a Boolean (like ``is_object_a_box``) should start with the phrase ``Returns $true if`` (or ``$false``). For example: ``Returns $true if the $object parameter is of the box type.``.
+
+For anything else not specified here, follow the [Style Guide]().
+
+## Complete Example ##
+
+This is a corrected and stripped-down version of the ``efl_file.eo`` file actually used by EFL. Use it for reference purposes.
+
+```
+mixin Efl.File {
+   [[Efl file interface]]
+   methods {
+      @property file {
+         [[Source file backing the real image data for an image object (it may
+           be an Eet file, besides pure image ones).
+
+           If the file supports storage of multiple data (as Eet files do),
+           you can specify the key to be used as the index of the image in
+           this file.]]
+         set {
+            return: bool; [[$true on success, $false otherwise]]
+         }
+         get {
+         }
+         values {
+            file: string; [[The image file path.]]
+            key: string; [[The image key in $file (if its an Eet one), or
+            $null, otherwise.]]
+         }
+      }
+      save @const @pure_virtual {
+         [[Saves the given image object's contents to an (image) file.
+
+           The extension suffix on $file will determine which saver
+           module Evas is to use when saving, thus the final file's
+           format. If the file supports multiple data storage (Eet ones),
+           you can specify the key to be used as the index of the image in it.
+
+           You can specify some flags when saving the image. Currently
+           acceptable flags are $quality and $compress. Eg.:
+           "quality=100 compress=9"
+           
+           Use the @.file property to set the file name.]]
+
+         return: bool;  [[$true on success, $false otherwise]]
+         params {
+            @in file: string @nonull; [[The filename to be used to save the image (extension obligatory).]]
+            @in key: string; [[The image key in the file (if an Eet one), or $null,otherwise.]]
+            @in flags: string; [[String containing the flags to be used ($null for none).]]
+         }
+      }
+   }
+}
+```
