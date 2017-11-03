@@ -1,0 +1,214 @@
+---
+~~Title: Patch Submission and Review with Arcanist~~
+~~NOCACHE~~
+---
+
+# Patch Submission and Review with Arcanist #
+
+Patches from developers without push access to the Enlightenment Foundation git repositories, or those with push access but who would like to submit their patches to peer review before they are included, are requested to use the Arcanist utility so patches can be properly tracked in the [Phabricator ticket system](https://phab.enlightenment.org/). This document explains how to install Arcanist, how to submit a patch for review, and how to commit a patch post-review.
+
+If you are an experienced Enlightenment developer who has already received push access to the git repositories you can continue to submit patches directly through git. Other developers on the project are then free to comment on your patch and, if necessary, revert or modify it.
+
+For everyone else, please use the following instructions to submit through the peer review process via Arcanist.
+
+## Prerequisites ##
+
+Arcanist requires a local installation of PHP version 5.0 or higher, the ``php-curl`` package, the ``php-json`` package, and ``git``. Linux distributions using the ``apt`` package manager can install these prerequisites with the following command:
+
+```
+sudo apt install php-cli php-curl php-json git
+```
+
+You should also have read the [Git Best Practices guide](git-guide.md) before submitting any patches.
+
+## Installing Arcanist ##
+
+Install Arcanist by creating a new directory and cloning the two required git trees:
+
+```
+mkdir ~/arcanist
+cd ~/arcanist
+git clone git://github.com/phacility/libphutil.git
+git clone git://github.com/phacility/arcanist.git
+```
+
+Add the new Arcanist binary directory to your path with the following command:
+
+```
+export PATH="$HOME/arcanist/arcanist/bin:$PATH"
+```
+
+To have the Arcanist binary directory in your path permanently, add the ``export`` command to your shell's ".profile" file.
+
+Configure Arcanist to communicate with Enlightenment's Phabricator installation:
+
+```
+arc set-config default https://phab.enlightenment.org
+```
+
+Enter the directory of any Enlightenment git tree checked out from an official repository and type the following command:
+
+```
+arc list
+```
+
+Follow the subsequent instructions to set up your conduit key. Once the key is configured you can begin to use Arcanist.
+
+## Preparing a Patch for Submission ##
+
+Create a fresh branch in which to work:
+
+```
+  git checkout -b work
+```
+
+Change, add, or delete code as required, then use ``git add`` as normal to track the changes.
+
+> **WARNING:**
+> If you plan to push to a private developer repository (/devs/{devname}/{branch}) do so prior to the following steps, otherwise Phabricator will see it as a completion action and close the patch.
+
+## Submitting a Patch for Review ##
+
+To submit a review request to Phabricator for your patch use the Arcanist command line tool ``arc``:
+
+```
+arc diff
+```
+
+``arc`` will return a URL for your request. Share this URL with the developers you would like to review your patch. Phabricator will send you emails to chart the progress of the review, while the web interface will show you the status of your patch.
+
+Phabricator's workflow differs from that of [GitHub](https://github.com/) or [Gerrit](https://www.gerritcodereview.com/) and is more fully explained in the post [Write, Review, Merge, Publish: Phabricator Review Workflow](https://secure.phabricator.com/phame/post/view/766/write_review_merge_publish_phabricator_review_workflow/).
+
+## Updating an Existing Patch ##
+
+If your patch needs revising as a result of reviewer feedback you can continue working on it in the same branch. Once the changes are complete, submit the revised copy with:
+
+```
+arc diff --update D{id}
+```
+
+Where ``D{id}`` is your patch's revision ID, for instance ``D25``.
+
+If you want to change the git commit message to reflect your modifications use the ``--edit`` option:
+
+```
+arc diff --edit --update D{id}
+```
+
+## Rebasing your Patch ##
+
+If your patch has been affected by changes in the upstream git repository post-submission, you can to rebase it on top of upstream and update the patch on Phabricator:
+
+```
+git fetch origin master:master
+git rebase master
+arc diff --update D{id} --base arc:upstream
+```
+
+If the above fails, you may need to checkout master, pull and rebase from origin, then go back to branch work and rebase on top of master.
+
+Using the ``--base`` argument will ensure that your patch stays synchronized with upstream changes, preventing Arcanist from polluting the diff with changes that were introduced by other people.
+
+## Committing a Patch ##
+
+A patch will be eligible for committing to the repository once it has been approved in review. How it is committed depends on whether you are the creator or the reviewer.
+
+### Committing as a Patch Creator ###
+
+> **NOTE:**
+>This section applies only to developers who have been granted push access to the Enlightenment repositories. 
+
+Once your patch has been approved you must prepare it for inclusion in the repository through the following steps.
+
+Switch back to master, or whatever branch of the repository from which you were working:
+
+```
+git checkout master
+```
+
+Apply your patch then push the changes to master. If you are the owner of the patch and have commit access, do:
+
+```
+arc patch D{id}
+arc land
+```
+
+Where ``D{id}`` is the revision ID for your patch (e.g. ``D25``).
+
+### Committing as a Patch Reviewer ###
+
+> **NOTE:**
+> This section applies only to patch reviewers who have been granted push access to the Enlightenment git repositories.
+
+If you are the reviewer, rather than creator, of the patch and are going to commit the patch on behalf of the person submitting it, use:
+
+```
+arc patch --nobranch D{id}
+```
+
+Where ``D{id}`` is the revision ID for your patch (e.g. ``D25``).
+
+The commit log you enter during ``arc patch`` will form the git commit log; paste the original patch log from the Phabricator page to ensure the two match. Before pushing the commit, check that authorship of the patch has been preserved during the commit operation:
+
+```
+git show --pretty=fuller
+```
+
+A bug in Phabricator/Arcanist sometimes loses the authorship information. If it is missing or incorrect, fix it:
+
+```
+git commit --amend --author="{Submitter Name} <{submitter@email}>"
+```
+
+Finally, push the changes and close the Arcanist revision:
+
+```
+git push
+arc close-revision D{id}
+```
+
+These commands will only run when the patch has been marked as approved.
+
+## Using Self-Signed Certificates ##
+
+If you are using self-signed certificates you may encounter the following error:
+
+
+```
+$ arc list                                                                                                             
+Exception
+[cURL/60] (https://phab.enlightenment.org/api/conduit.connect) <CURLE_SSL_CACERT> 
+There was an error verifying the SSL Certificate Authority while negotiating the SSL connection. 
+This usually indicates that you are using a self-signed certificate but have not added your CA to the CA bundle. 
+See instructions in "libphutil/resources/ssl/README".
+(Run with --trace for a full exception trace.)
+```
+
+To resolve this issue, make a copy of your certificate in CRT format then place it in the ``ca-certificates`` directory:
+
+```
+sudo cp {yourcert}.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates.
+```
+
+Alternatively, you can place a copy of your certificate in Arcanist's custom certificate store:
+
+```
+cp {yourcert}.crt ~/arcanist/libphutil/resources/ssl/custom.pem
+cd ~/arcanist/arcanist
+arc install-certificates
+```
+
+## Further Reading ##
+
+[Arcanist User Guide](https://secure.phabricator.com/book/phabricator/article/arcanist/)
+:    The official user guide for the Arcanist interface.
+
+[Git Best Practices](git-guide.md)
+:    The Enlightenment guide to best practices with git.
+
+[Enlightenment Phabricator](https://phab.enlightenment.org/)
+:    The Enlightenment installation of the Phabricator ticket tracking system.
+
+[Write, Review, Merge, Publish: Phabricator Review Workflow](https://secure.phabricator.com/phame/post/view/766/write_review_merge_publish_phabricator_review_workflow/)
+:    An explanation of how the Phabricator workflow differs from git.
