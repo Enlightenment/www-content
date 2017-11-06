@@ -1,0 +1,201 @@
+---
+~~Title: Coding Conventions~~~
+~~NOCACHE~~
+---
+
+# Coding Conventions #
+
+To ensure that the Enlightenment Project's code base is as approachable as possible all contributors are asked to adhere to the following conventions on style and layout. All contributed code should adhere to the following guidelines; those new to the Enlightenment Project and looking to contribute their first patches are advised to spend some time reading through the existing code first to get a further feel for the style and layout.
+
+## Prerequisites ##
+
+Before contributing code to the Enlightenment Project please familiarize yourself with the [Git Best Practices guide](https://www.enlightenment.org/contrib/devs/arcanist-guide.md) and [Patch Submission and Review guide](https://www.enlightenment.org/contrib/devs/arcanist-guide.md). You may also find the [Documentation Contribution Guide](https://www.enlightenment.org/contrib/docs/documentation-guide.md) a useful resource.
+
+## General Conventions ##
+
+When modifying or extending existing code, always maintain the existing coding style - even where the existing coding style goes against the conventions outlined in this document. If unsure, send different or sequential patches. If contributing new code, keep to the coding style of its immediate surroundings.
+
+When writing code, adhere to the following:
+
+* **No tabs** - Some older code may include tabs, but no more should be added.
+* **3 space indent after braces** -  Every level of brace ({) character should be followed by a three-space indent.
+* **2 spaces indent after keywords** - This applies to ``if``, ``for``, ``while``, ``do``, ``switch``, ``case`` and so forth.
+* **1 space indent before ``case``** -  This comes after the ``switch`` brace.
+* **1 space before parenthesis for keywords** - This applies to ``if``, ``for``, ``while`` and ``switch``.
+* **No spaces before parenthesis for functions and macros** - This includes ``sizeof()``.
+* **80 column code whenever possible** - Wrap longer lines where required.
+* **Short ``if (cond) action`` are fine as single line**
+* **Use parentheses for every clause or math**
+* **Functions have lower case names separated by an underline** - ``like_this``, as an example.
+* **Structures are declared with a leading underscore and ``typedef``ed with capitalization separated by an underline** - ``typedef struct _Like_This Like_This``, as an example.
+* **Namespace code for clarity** - As ``{module}_{object}_{specializations}_{action}``. For example ``evas_object_color_get()`` makes it clear that you're getting the color of an object from the ``evas`` module.
+* **The action should be the last part of function names** - ``evas_object_color_get()``, not ``evas_object_get_color()``.
+* **Properly mark symbol visibility** -  ``static`` when local to the file and ``EAPI`` when publicly exported. Non marked symbols tend to be exported exclusively to the containing module by means of the linker ``-fvisibility=hidden``.
+* **Properly mark pointer ``const``** -  This applies to getters or when it should not be modified, in both arguments and the return.
+* **Short names to indicate a narrow scope** - ``o`` for object, ``x/y/w/h`` for geometry, ``r/g/b/a`` for colors and so forth.
+* **Optional use of an underscore to prefix local/private symbols**
+* **Single-line function forward declaration/prototype**
+* **Function definition should have the return at one line then the function name starts at the next line, column 0**
+* **Put spaces before/after numerical operators** - e.g. ``+``, ``-``, ``/`` and ``*``.
+* **1 space after a comma** - e.g. ``evas_object_color_set(obj, 255, 255, 255, 255)``.
+
+## Convention Examples ##
+
+### If Statements ###
+
+Short statements can be in single line, which is good for error checking purposes:
+
+```c
+if (!p) return;
+if (!p) return -EINVAL;
+```
+
+Longer statements with a single operation are in separated lines without braces:
+
+```c
+if (!module_object_initialized())
+  module_object_initialize();
+```
+
+Multiple statements are in separate lines with braces, and note the indentation change:
+
+```c
+if (!module_object_initialized())
+  {
+     module_object_initialize();
+     EINA_LOG_DBG("module was initialized");
+  }
+```
+
+Place the smallest branch first to assist with reading the code:
+
+```c
+if (cond < 0)
+  do_something_about_it_long();
+else
+  {
+     int i;
+     for (i = 0; i < cond; i++)
+       call_cond(i);
+  }
+
+if (cond < 0) handle_negative();
+else
+  {
+     int i;
+     for (i = 0; i < cond; i++)
+       call_cond(i);
+  }
+```
+
+Add parentheses around multi-variable conditions:
+
+```c
+if ((a - b) < ((b / a) + c))...
+```
+
+Avoid parentheses around single-variable conditions:
+
+```c
+if (!a && b)...
+```
+
+Use common sense when following these rules; the following is obviously not acceptable:
+
+```c
+if (a - 1 * 3 / 18 | 2 < v % 3 * 6 && x == 2 - z)....
+```
+
+### While/For/Do/Switch Statements ###
+
+Other statements are handled similarly to [If Statements](#If_Statements), as per the following example:
+
+```c
+while (lst) lst = eina_list_remove_list(lst, lst);
+
+while ((lst != lst_last) && (lst != lookup))
+  lst = lst_find_something(lst);
+
+for (i = 0; ((i < 10) && (i * 10 < something()); i++)
+  {
+     if (i % 2) proc_even(i);
+     else proc_odd(i)
+  }
+
+do
+  {
+     process_fds();
+     process_timers();
+     process_idlers();
+  }
+while (run);
+
+switch (action)
+  {
+   case ACTION_NEW: return _new();
+   case ACTION_DEL:
+     {
+        free(xyz);
+        return NULL;
+     }
+  };
+```
+
+### Structures ###
+
+Structures should be handled as per the following example:
+
+```c
+typedef struct _My_Class My_Class;
+struct _My_Class
+{
+   void *base;
+   unsigned int references;
+};
+```
+
+### Functions ###
+
+Forward declarations in functions should be avoided where possible, while the style should follow this example:
+
+```c
+static void my_class_ref(My_Class *cls);
+
+static void
+my_class_ref(My_Class *cls)
+{
+   if (!cls) return;
+   cls->references++;
+}
+```
+
+### Math and Bitwise Operations ###
+
+Always use parentheses to indicate the order of operation, even where operator precedence seems obvious.
+
+```c
+a = (b * c) / d;
+a = b * (c / d);
+a = (b * c) + d;
+a = (b / c) - d;
+a = ((b * c) + d) / e;
+
+a = (b & 0xf) << 8;
+a = (b << 8) & 0xf0;
+a = (b | c) ^ d;
+a = ((b & c) | d) & 0x00ff00;
+```
+
+## Further Reading ##
+
+* [git.enlightenment.org](https://git.enlightenment.org/)
+:    A web interface to the Enlightenment Foundation's git repositories.
+
+* [Git Best Practices guide](https://www.enlightenment.org/contrib/devs/arcanist-guide.md)
+:    A guide to using the git version control system in the Enlightenment Project tree.
+
+* [Patch Submission and Review guide](https://www.enlightenment.org/contrib/devs/arcanist-guide.md)
+:    A guide to creating and submitting patches through Arcanist.
+
+* [Documentation Contribution guide](https://www.enlightenment.org/contrib/docs/documentation-guide.md)
+:    A guide to producing documentation for the Enlightenment Project
