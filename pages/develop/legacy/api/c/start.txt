@@ -1,18 +1,21 @@
 <JS>
 
-function size_to_content(iframe) {
-    var padded = iframe.contentWindow.document.body.scrollHeight + 45;
-    iframe.height = padded;
-    iframe.style.height = padded + 'px';
+function size_to_content(container, iframe) {
+    var padded = iframe.contentWindow.document.body.scrollHeight + 58;
+    container.height = padded;
+    container.style.height = padded + 'px';
 }
 
 window.addEventListener('DOMContentLoaded', function(e) {
     var iframe = document.querySelectorAll("iframe")[0];
+    var container = document.getElementById("embed-iframe");
     iframe.addEventListener('load', function(e) {
-        size_to_content(iframe);
+        size_to_content(container, iframe);
     }, true);
 }, true);
 
 </JS>
 
-{{url>/develop/legacy/api/c/embed/ noborder}}
+<html><div id="embed-iframe"></html>
+{{url>/develop/legacy/api/c/embed/ 100%,100% noborder}}
+<html></div></html>
