@@ -2,11 +2,11 @@
 ~~Title: Introduction to Eo~~
 ---
  
-# Introduction to Eo: Creating and destroying objects #
+# Introduction to Eo: Creating and Destroying Objects #
  
-The Eo generic object system was designed to provide **Object-Oriented capabilities** to the EFL. Eo objects are at the core of almost every EFL entity (like Windows, Buttons or Timers), providing lifecycle management and inheritance abilities, for example.
+The Eo generic object system was designed to provide *Object-Oriented capabilities* to the EFL. Eo objects are at the core of almost every EFL entity (like Windows, Buttons or Timers), providing lifecycle management and inheritance abilities, for example.
 
-This tutorial will show you the basics of creating and destroying Eo objects, along with **Reference Counting**, the technique at the heart of the Eo object lifecycle management.
+This tutorial will show you the basics of creating and destroying Eo objects, along with *Reference Counting*, the technique at the heart of the Eo object lifecycle management.
 
 Due to its fundamental nature, this tutorial is more theoretic than the average. The concepts being explained are crucial, though, so its reading is highly encouraged. If you are familiar with Reference Counting, it should be a breeze.
  
@@ -105,7 +105,7 @@ A common approach to this problem is to use the **Reference Counting** technique
 
 The advantage of this technique is that objects can be automatically destroyed when their internal reference counter reaches 0, because it means that nobody is using them anymore.
 
-### Reference Counting and ``efl_add()`` ###
+### Reference Counting and efl_add() ###
 
 Eo objects created through ``efl_add()`` have a starting reference count of 1, meaning that there is one piece of code using them. **It is very important to understand which one is this piece of code**, because it will be responsible for returning the reference. It is easy, though:
 
@@ -175,7 +175,7 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 EFL_MAIN()
 ```
 
-## Step Two: A more complex hierarchy ##
+## Step Two: A More Complex Hierarchy ##
 
 In this second step more objects will be added forming a hierarchy. This will give you more hands-on training with the concepts you acquired in the previous step.
 
@@ -284,6 +284,14 @@ At the end of this tutorial you have learned:
 * ``efl_add()`` creates objects with **one reference**, which belongs to their parent. You don't have to do anything to destroy the objects.
 * If you do not provide a parent to ``efl_add()`` then the reference belongs to **you**, and you have to return it when you are done working with the object using ``efl_unref()``.
 
-## Further Reading ##
+The following tutorial builds on top of this one, adding instrumentation calls to display the actual values of the different reference counters.
 
-[The following tutorial](eo-intro-2.md) builds on top of this one, adding instrumentation calls to display the actual values of the different reference counters.
+## Further Reading ##
+[Introduction to Eo 2](eo-intro-2.md)
+:    Part two of this tutorial
+
+[Setting up the Development Environment](/develop/setup/c/)
+:    Read this before trying to develop with the EFL
+
+[Hello World tutorial](hello-word.md)
+:    Teaches the basic EFL application skeleton
