@@ -1,0 +1,116 @@
+=== Enlightenment DR 0.21.11 Release ===
+  * //2017-11-09 by Simon Lees//
+
+This is the last general bugfix and stability release for the Enlightenment 21 Release series, we recommend users move to the Enlightenment 22 Release series.
+
+
+== Tickets Addressed ==
+| [[ https://phab.enlightenment.org/T3649|T3649 ]] |"Suspend even if AC" not working |
+| [[ https://phab.enlightenment.org/T4510|T4510 ]] |Edge Bindings - left click action seem to override other button |
+| [[ https://phab.enlightenment.org/T4648|T4648 ]] |Lock screen gadget issues. |
+| [[ https://phab.enlightenment.org/T4988|T4988 ]] |The Everything crash |
+| [[ https://phab.enlightenment.org/T5076|T5076 ]] |Incorrect desktop files |
+| [[ https://phab.enlightenment.org/T5593|T5593 ]] |Xwayland |
+| [[ https://phab.enlightenment.org/T5953|T5953 ]] |Alternative to prepending E_BIN_DIR to PATH |
+| [[ https://phab.enlightenment.org/T5974|T5974 ]] |Cannot resize bryce (ALT+Scrolling thing) |
+| [[ https://phab.enlightenment.org/T5998|T5998 ]] |Bryce: Resizing SEGV |
+| [[ https://phab.enlightenment.org/T6006|T6006 ]] |Shaded window state broken on E restart |
+| [[ https://phab.enlightenment.org/T6023|T6023 ]] |Crash on resize across multiple monitors with tiling enabled |
+| [[ https://phab.enlightenment.org/T6024|T6024 ]] |Win appears on the wrong VD with remebers |
+| [[ https://phab.enlightenment.org/T6071|T6071 ]] |E wayland mode - launching apps like terminology always leads to ibar icon being "disabled/busy starting" |
+| [[ https://phab.enlightenment.org/T6122|T6122 ]] |Xwayland startup apps crash on E start |
+| [[ https://phab.enlightenment.org/T6125|T6125 ]] |Issues with the lock screen. |
+| [[ https://phab.enlightenment.org/T6151|T6151 ]] |Enlightenment 22 crashing after some tim |
+| [[ https://phab.enlightenment.org/T6157|T6157 ]] |e cursors broken in x |
+| [[ https://phab.enlightenment.org/T6197|T6197 ]] |enlightenment is nonresponsive after entering password on lock screen |
+| [[ https://phab.enlightenment.org/T6242|T6242 ]] |Selecting text in Terminology crashes E. |
+
+== Changes ==
+Carsten Haitzler (6):
+  * fix up window+screen positioning fixup so it doesnt catch other clients
+  * e start - fix path prepend/append if already in path assuming clue
+  * tiling - ensure notification struct is 0'd before use
+  * battery modules - actually set ac power flag based on ac presence
+  * e main - xdg runtime dir fixup - dont overwrite same buffer
+  * nvidia driver workaround atexit handlers for pam auth
+
+Chidambar Zinnoury (2):
+  * e remote: Fix script’s execution rights.
+  * e menu: Fix missing realize when using key-activation to the right.
+
+Derek Foreman (4):
+  * Fix crash when processing a wayland client cursor set after death
+  * Fix xwayland related crash when mousing out of a window
+  * Clear stored root window id when shutting down X
+  * Fix crash on wayland logout if xwayland hasn't started yet
+
+Mike Blumenkrantz (46):
+  * use animator del function to delete comp object animators
+  * handle shade <-> unshade toggling in same frame
+  * resolve desktop spec issues with emixer.desktop
+  * use EC_CHANGED when setting changed flag in client idler
+  * hide clients again after show in idler if clients are on hidden desk
+  * block recursive mouse eventing in bryce action handlers
+  * handle unmovable gadgets in gadget move action
+  * flag zone/edge mouse binding activation with ON_HOLD
+  * fix clickable edge binding activation with other mouse buttons
+  * remove fdo interfaces from music control dbus xml
+  * don't perform zone updates on client resize
+  * remove input-only client fastpath to resize crashes
+  * use client geometry for visibility effect geometry, not comp object geometry
+  * emit E_EVENT_EXEC_NEW_CLIENT with phony exes
+  * don't show xwayland clients unconditionally on commit
+  * defer wl startup apps until after xwayland init completes
+  * do ecore-x shutdown on xwayland shutdown
+  * redo bryce eventing
+  * deduplicate global gadget handler variables
+  * block gadget configuration unconditionally while desklock is active
+  * set comp object alpha state when applying native surface
+  * add max size input rects for wl clients on creation
+  * handle x11 shaped input under xwayland
+  * set default cursor on root window for xwl pointer
+  * Revert "disable option for mouse to use Application theme if we are running in Wayland"
+  * move 'show cursor' option in mouse settings inside frame
+  * do not show cursor theme options in wayland compositor mode
+  * move cursor theme options into separate frame
+  * check for non-wl compositor when forcing application cursors onto pointers
+  * always use e cursor theme for canvas pointers
+  * recreate x11 root pointer when changing application<->enlightenment theme
+  * add render update when showing clients if damages exist
+  * add client refs for the nocomp client
+  * do not unqueue render when deleting a client's render update
+  * ignore set_input_region requests for wl surfaces which are cursors or drags
+  * set null input regions for surfaces upon calling set_cursor or start_drag
+  * null wl clipboard+selection source pointers when destroying clipboard source
+  * cancel wl selections after removing destroy listener
+  * move x11 compositor cleanup into shutdown function
+  * unset client's mouse-in state on mouse out even while fullscreen or deleted
+  * send wl pointer leave for deleted clients if viable
+  * unset xwayland client changes.pos flag during xwl->wl switch if client is unplaced
+  * block wl modal window destructor from intercepting xwl modal windows
+  * handle more mouse buttons under wayland
+  * explicitly free client animation agent object during fullscreen operation
+  * Revert "handle x11 shaped input under xwayland"
+
+Stephen 'Okra' Houston (1):
+  * E Exe: Semi revert 2082bb51d3abffd991b4d791ace2567888e2e9fb. The ref count was off to begin with.
+
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.11.tar.xz | Enlightenment DR 0.21.11 XZ]]  | ''821267281fc7821107f524a73f5bab98942300e50cd4c1c8ff15b2c98b448354'' |
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.21.11.tar.gz | Enlightenment DR 0.21.11 GZ]]  | ''5f26514cc8cbc33d9fa16afd0b36bec6d9b1b149b6ffd340c27b7f22ce26584b'' |
+
+
+//Tis the season for releasing.//
+
+== Building and Dependencies ==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README  *   *   *    | EFL]]
+
+**Note:** E21 depends on EFL **v1.17** or newer for X11 compositing although  v1.18 is recommended and v1.18 is required for Wayland support.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
