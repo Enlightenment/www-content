@@ -18,28 +18,17 @@ values are accessed by their index.
 |6     |value6|
 |7     |value7|
 
-Eina provides 2 array types: the classic array and an inline array.
+Eina provides 2 array types: the **classic array** and an **inline array**.
 
 ## Creating and Destroying a Classic Array ##
 
-The ``eina_array_new()`` function creates a new array. You can store strings or
-objects in the created array. The function returns a new array, or if memory
-allocation fails, ``NULL``.
+The ``eina_array_new()`` function creates a new array. You can store strings or objects in the created array. The function returns a new array, or if memory allocation fails, ``NULL``.
 
-The first parameter of the ``eina_array_new()`` function defines the size of
-the array allocation step. For example, if you set it to 4, the function
-returns an array of 4 elements and the next time you grow the array it grows
-by 4 elements. Unless you have pushed 4 elements inside, it does not grow. But
-once you add the 5th element, it grows again and becomes an array of 8
-elements.  The allocation step feature is very useful for optimizing
-performance, and it also reduces memory fragmentation by having a size that
-fits the array usage.  If you set the step to 0, the function sets a default
-safe value.
+The first parameter of the ``eina_array_new()`` function defines the size of the array allocation step. For example, if you set it to 4, the function returns an array of 4 elements. The next time you grow the array it grows by 4 elements. Unless you have pushed 4 elements inside, it does not grow. But once you add the 5th element, it grows again and becomes an array of 8 elements. The allocation step feature is very useful for optimizing performance, and it also reduces memory fragmentation by having a size that fits the array usage. If you set the step to 0, the function sets a default safe value.
 
-### To create an array to store strings ###
+### Creating an Array to Store Strings ###
 
-__**1**__. Create the array:
-
+First create the array:
 
 ```c
 [...]
@@ -65,108 +54,77 @@ for (i = 0; i < 20; i++)
 
 [...]
 ```
+> **NOTE:**
+> ``[...]`` in a Code Block indicates there will usually be code above and below the shown snippet, but that it has been excluded for the sake of brevity. There is no need to type ``[...]`` into your program.
 
-__**2**__. To change the allocation step, use the ``eina_array_step_set()`` function:
-  * The first parameter is the array you want to change.
-  * The second parameter is the size of that specific array (retrieved with the ``sizeof()`` function).
-  * The last parameter is the new step size.
+To change the allocation step, use the ``eina_array_step_set()`` function, the first parameter is the array you want to change, the second parameter is the size of that specific array (retrieved with the ``sizeof()`` function) and the last parameter is the new step size.
 
 In this example, the array step changes from 20 to 30.
 
 ```c
 [...]
-
 eina_array_step_set(array, sizeof(*array), 30);
-
 [...]
 ```
 
-__**3**__. When no longer used, use the ``eina_array_free()`` function to free the array. It first calls the ``eina_array_flush()`` function and frees the memory of the pointer. It does not free the memory allocated for the elements of the array. To free them, use a ``while`` statement with the ``eina_array_pop`` function.
+When no longer used, use the ``eina_array_free()`` function to free the array. It first calls the ``eina_array_flush()`` function and frees the memory of the pointer. It does not free the memory allocated for the elements of the array. To do that, use a ``while`` statement with the ``eina_array_pop`` function.
 
 
 ```c
 [...]
-
 // Freeing the array elements
 while (eina_array_count(array))
    free(eina_array_pop(array));
 
-// Freeing the array itself
+   // Freeing the array itself
 eina_array_free(array);
-
 [...]
 ```
 
 ## Modifying Classic Array Content ##
 
-### To set the data of an element ###
-Use the ``eina_array_data_set()`` function. The first parameter is the array,
-the second is the index of the element you want to set, and the last one is
-the data. You must first get the related pointer if you need to free it, as
-this function replaces the previously held data. Be careful, as there is no
-array or index check. If the value is ``NULL`` or invalid, the application can
-crash.
+### Setting the Data of an Element ###
+Use the ``eina_array_data_set()`` function to set the data of an element. The first parameter is the array, the second is the index of the element you want to set, and the last one is the data. You must first get the related pointer if you need to free it, as this function replaces the previously held data. Be careful, as there is no array or index check. If the value is ``NULL`` or invalid, the application can crash.
 
 
 ```c
 [...]
-
 free(eina_array_data_get(array, 0));
 eina_array_data_set(array, 0, strdup(strings[3]);
-
 [...]
 ```
 
-### To add elements to the end of the array ###
-Use the ``eina_array_push()`` function.  The function returns ``EINA_TRUE`` on
-success, and ``EINA_FALSE`` on failure. The first parameter is the array to
-store the element, the second one is the data you want to store. If you store
-strings, remember to allocate the memory first. The example uses the
-``strdup`` function to duplicate the string contained in ``strings[]``. This
-function allocates the memory of the returned string, so you do not have to do
-it yourself.
+### Adding Elements to the End of an Array ###
+Use the ``eina_array_push()`` function.  The function returns ``EINA_TRUE`` on success, and ``EINA_FALSE`` on failure. The first parameter is the array that will store the element, the second one is the data you want to store. If you store strings, remember to allocate the memory first. The following example uses the ``strdup`` function to duplicate the string contained in ``strings[]``. This function allocates the memory of the returned string, so you do not have to do it yourself.
 
 
 ```c
 [...]
-
 for (i = 0; i < 20; i++)
    eina_array_push(array, strdup(strings[i]));
-
 [...]
 ```
 
-### To remove the last element of an array ###
-Use the ``eina_array_pop()`` function. It takes the array as a parameter, and
-if the operation is successful, returns a pointer to the data of the removed
-element.
-
+### Removing the Last Element of an Array ###
+Use the ``eina_array_pop()`` function. It takes the array as a parameter, and if the operation is successful, returns a pointer to the data of the removed element.
 
 ```c
 [...]
-
 while (eina_array_count(array))
    free(eina_array_pop(array));
-
 [...]
 ```
 
-### To rebuild the array by specifying the data to be kept ###
-Use the ``eina_array_remove()`` function:
-   * The first parameter is the array to be changed.
-   * The second parameter is the function which selects the data to keep in the rebuilt array.
-   * The last parameter is the data to pass to the selector function defined as the second parameter.
+### Rebuilding an Array by Specifying the Data to be Kept ###
 
-The selector function has to return an ``Eina_Bool``, ``EINA_TRUE`` if the
-element stays, and ``EINA_FALSE`` if it has to be removed.
+Use the ``eina_array_remove()`` function. The first parameter is the array to be changed, the second parameter is the function which selects the data to keep in the rebuilt array and the last parameter is the data to pass to the selector function defined as the second parameter.
 
-The following example shows how to remove all the elements of the array that
-are longer than 5.
+The selector function has to return an ``Eina_Bool``, ``EINA_TRUE`` if the element stays, and ``EINA_FALSE`` if it has to be removed.
 
+The following example shows how to remove all the strings from an array that are longer than 5.
 
 ```c
 [...]
-
 // Selector function
 Eina_Bool keep(void *data, void *gdata)
 {
@@ -192,99 +150,82 @@ int remove_array()
 
    return 0;
 }
-
 [...]
 ```
 
-### To completely wipe an array out ###
-Use the ``eina_array_flush()`` function. This function sets the count and
-total members of an array to 0, and frees and sets its data members to
-``NULL``.  For performance reasons, there is no array check. If the value is
-``NULL`` or invalid, the program can crash. The only parameter of this
-function is a pointer to the ``Eina_Array`` array you want to flush.
+### Completely Wipe an Array Out ###
 
+Use the ``eina_array_flush()`` function. This function sets the count and total members of an array to 0, and frees and sets its data members to ``NULL``.  For performance reasons, there is no array check. If the value is ``NULL`` or invalid, the program can crash. The only parameter of this function is a pointer to the ``Eina_Array`` array you want to flush.
 
 ```c
 [...]
-
 eina_array_flush(array);
-
 [...]
 ```
 
-### To empty an array quickly ###
-Use the ``eina_array_clean()`` function. This function sets the counting of
-members in the array to 0. It does not free any space so you have to use it
-carefully. For performance reasons, there is no array check. If the value is
-``NULL`` or invalid, the program can crash.
+### Emptying an Array Quickly ###
+
+Use the ``eina_array_clean()`` function. This function sets the counting of members in the array to 0. It does not free any space so you have to use it carefully. For performance reasons, there is no array check. If the value is ``NULL`` or invalid, the program can crash. 
 
 
 ```c
 [...]
-
 eina_array_clean(array);
-
 [...]
 ```
 
 ## Accessing Classic Array Data ##
 
-### To access the data in the array ###
-Use the ``eina_array_data_get()`` function with the array and the index of the
-element you want to get. The function returns a pointer to the data.
+### Accessing the Data in an Array ###
 
+Use the ``eina_array_data_get()`` function with the array and the index of the element you want to get. The function returns a pointer to the data.
 
 ```c
 [...]
-
 // Getting the data of the first element
 char *mydata;
 mydata = eina_array_data_get(array, 0);
-
 [...]
 ```
 
-### To get the number of elements in an array ###
-Use the ``eina_array_count()`` function. The first parameter is a pointer to
-the array variable returned by the ``eina_array_new()`` function.
+### Getting the Number of Elements in an Array ###
 
-The function returns the number of elements.
-
+Use the ``eina_array_count()`` function. The first parameter is a pointer to the array variable returned by the ``eina_array_new()`` function. The function returns the number of elements.
 
 ```c
 [...]
-
 unsigned int nb_elm;
 nb_elm = eina_array_count(array);
-
 [...]
 ```
 
-### To iterate through an array ###
+### Iterating through an Array ###
 
 You can use various methods:
-  * Use the ``Eina_Array`` iterator called ``ITER_NEXT``. \\ \\ You can use the iterator by calling the macro ``EINA_ARRAY_ITER_NEXT()``. It takes the array to iterate as the first parameter, a counter for the current index during the iteration, and a variable of the same type as the item data and an ``Eina_Iterator``. To use it, declare an ``Eina_Iterator``, an ``int`` counter, and, for example, a ``char *`` item if your array contains any strings.
 
+#### Using the ```ITER_NEXT`` iterator ####
+
+You can use the iterator by calling the macro ``EINA_ARRAY_ITER_NEXT()``. It takes the array to iterate as the first parameter, a counter for the current index during the iteration, and a variable of the same type as the item data and an ``Eina_Iterator``. To use it, declare an ``Eina_Iterator``, an ``int`` counter, and, for example, a ``char *`` item if your array contains strings.
 
 ```c
 [...]
-
 Eina_Array_Iterator iterator;
 const char *item;
 unsigned int i;
 
 EINA_ARRAY_ITER_NEXT(array, i, item, iterator)
    printf("item #%d: %s\n", i, item);
-
 [...]
 ```
 
-  * Use the ``eina_array_foreach()`` function to iterate over the array. \\ \\ The first parameter is the array to iterate, the second is a callback function which determines whether the iteration can continue,and the last is the data passed to the callback function. \\ \\ To iterate over the array and to print the data of each array element:
+#### Using the ``eina_array_foreach()`` Function ####
 
+The first parameter is the array to iterate, the second is a callback function which determines whether the iteration can continue, and the last is the data passed to the callback function. 
+
+To iterate over the array and to print the data of each array element, you can do:
 
 ```c
 [...]
-
 // Callback function
 static Eina_Bool
 elm_print(const void *container, void *data, void *fdata)
@@ -308,15 +249,16 @@ int iterating_array()
 
    return 0;
 }
-
 [...]
 ```
-  * Use the ``eina_array_iterator_new()`` function to create an iterator for the array. \\ \\ The function returns a newly allocated iterator associated with the array. If the array is ``NULL`` or the count of the array members is less than or equal to 0, the function returns ``NULL``. If the memory cannot be allocated, ``NULL`` is returned and ``EINA_ERROR_OUT_OF_MEMORY`` is thrown. Otherwise, a valid iterator is returned. \\ \\ Pass to this function the array for which you want to create a new iterator. The iterator is used to run a sequential walk through the array, just like the ``eina_array_foreach()`` function. \\ \\ To create an iterator and use it to print the data of each array element:
+#### Using the ``eina_array_iterator_new()`` Function ####
 
+This function returns a newly allocated iterator associated with the array. If the array is ``NULL`` or the count of the array members is less than or equal to 0, the function returns ``NULL``. If the memory cannot be allocated, ``NULL`` is returned and ``EINA_ERROR_OUT_OF_MEMORY`` is thrown. Otherwise, a valid iterator is returned. Pass the array for which you want to create a new iterator to this function. The iterator is used to run a sequential walk through the array, just like the ``eina_array_foreach()`` function.
+
+To create an iterator and use it to print the data of each array element, you can do this:
 
 ```c
 [...]
-
 static Eina_Bool
 print_one(const void *container, void *data, void *fdata)
 {
@@ -343,16 +285,17 @@ int new_iterator()
 
    return 0;
 }
-
 [...]
 ```
 
-  * Use the ``eina_array_accessor_new()`` function to get random access to the array elements. \\ \\ The function returns a newly allocated accessor associated with the array. If the array is ``NULL`` or the counting of array members is less than or equal to 0, this function returns ``NULL``. If the memory cannot be allocated, ``NULL`` is returned and ``EINA_ERROR_OUT_OF_MEMORY`` is thrown. Otherwise, a valid accessor is returned. \\ \\ To use the accessor to retrieve and print the data of every other array element:
+#### Using the ``eina_array_accessor_new()`` Function to Randomly access Array Elements ####
 
+The function returns a newly allocated accessor associated with the array. If the array is ``NULL`` or the counting of array members is less than or equal to 0, this function returns ``NULL``. If the memory cannot be allocated, ``NULL`` is returned and ``EINA_ERROR_OUT_OF_MEMORY`` is thrown. Otherwise, a valid accessor is returned. 
+
+To use the accessor to retrieve and print the data of every other array element, you can do this:
 
 ```c
 [...]
-
 int random_access()
 {
    Eina_Array *array;       // Declaration of the array
@@ -380,31 +323,19 @@ int random_access()
    // Freeing the array
    return 0;
 }
-
 [...]
 ```
 
-## Creating and Destroying an Inline Array ##
+## Creating and Destroying Inline Arrays ##
 
-An inline array is a container that stores the data itself, not the pointers
-to the data. This means there is no memory fragmentation, and for small data
-types, such as char, short, and int, it is more memory-efficient. This is
-because the data is stored in the cache and is faster to access. The bigger
-the data gets, however, the less likely it is and the less interesting it
-becomes.
+An inline array is a container that stores the data itself, not the pointers to the data. This means there is no memory fragmentation, and for small data types, such as char, short, and int, it is more memory-efficient. This is because the data is stored in the cache and is faster to access. The bigger the data gets, however, the less likely it is and the less interesting it becomes.
 
-To create an inline array, use the ``eina_inarray_new()`` function:
+To create an inline array, use the ``eina_inarray_new()`` function. The first parameter of this function is the size of the value. In this example, only the characters are stored, and because of that, only ``sizeof(char)`` is passed to the function. The second parameter defines the size of the array allocation step. For example, if you set it to 4, the function returns an inline array of 4 elements, and the next time you grow the inline array, it grows by 4 elements and becomes an array of 8 elements. If you set the step to 0, the function sets a default safe value. The step can be changed later on using the ``eina_inarray_step_set()`` function.
 
-   * The first parameter is the size of the value. In this example, only the characters are stored, and because of that, only ``sizeof(char)`` is passed to the function.
-   * The second parameter defines the size of the array allocation step. For example, if you set it to 4, the function returns an inline array of 4 elements, and the next time you grow the inline array, it grows by 4 elements and becomes an array of 8 elements. If you set the step to 0, the function sets a default safe value. \\ \\ The step can be changed later on using the ``eina_inarray_step_set()`` function.
-
-The ``eina_inarray_new()`` function returns a pointer to the new
-``Eina_Inarray`` variable.
-
+The ``eina_inarray_new()`` function returns a pointer to the new ``Eina_Inarray`` variable.
 
 ```c
 [...]
-
 int inline_array()
 {
    Eina_Inarray *iarr;                        // Declare an inline array variable of the type Eina_Inarray
@@ -415,48 +346,33 @@ int inline_array()
 
    return 0;
 }
-
 [...]
 ```
 
 ## Modifying Inline Array Content ##
 
-### To add data as the last element of the inline array ###
+### Adding Data to the end of and Inline Array ###
 
-Use the ``eina_inarray_push()`` function. The first parameter is a pointer to
-the array variable returned by the ``eina_inarray_new()`` function. The second
-parameter is the data you want to push to the inline array.
+Use the ``eina_inarray_push()`` function. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the data you want to push to the inline array.
 
-If everything runs fine, the function returns the index of the new element. If
-something goes wrong, it returns ``-1``.
-
+If everything runs fine, the function returns the index of the new element. If something goes wrong, it returns ``-1``.
 
 ```c
 [...]
-
 ch = 'a';
 eina_inarray_push(iarr, &ch);
-
 [...]
 ```
 
-### To insert data to a given position of the inline array ###
+### Inserting Data to a Given Position within an Inline Array ###
 
-Use the ``eina_inarray_insert_at()`` function:
-   * The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function.
-   * The second parameter is the index of the element you want to add to the inline array.
-   * The last parameter is a pointer to the content to be added.
+Use the ``eina_inarray_insert_at()`` function. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the index of the element you want to add to the inline array. The last parameter is a pointer to the content to be added.
 
-The content of the pointer is copied to the given position in the inline
-array. All the members from the position to the end of the array are shifted
-towards the end. If the position is equal to the end of the array, the member
-is appended. If the position is bigger than the array length, the function
-fails.
+The content of the pointer is copied to the given position in the inline array. All the members from the position to the end of the array are shifted towards the end. If the position is equal to the end of the array, the member is appended. If the position is bigger than the array length, the function fails.
 
 
 ```c
 [...]
-
 ch = 'a';
 eina_inarray_push(iarr, &ch);
 ch = 'b';
@@ -467,30 +383,21 @@ eina_inarray_push(iarr, &ch);
 // Adding data on position 3
 ch = 'c';
 eina_inarray_insert_at(iarr, 2, &ch)
-
 [...]
 ```
 
-### To insert data with your own position criteria ###
+### Inserting Data Using your own Position Criteria ###
 
-Use the ``eina_inarray_insert()`` or ``eina_inarray_insert_sorted()``
-function. The only difference between these functions is that the
-``eina_inarray_insert_sorted()`` function assumes that the array is already
-sorted and consequently optimizes the insertion position by doing a binary
-search.
+Use the ``eina_inarray_insert()`` or ``eina_inarray_insert_sorted()`` function. The only difference between these functions is that the ``eina_inarray_insert_sorted()`` function assumes that the array is already sorted and consequently optimizes the insertion position by doing a binary search.
 
-In both functions:
+In both functions, the first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the data you want to push to the inline array. The last parameter is the callback comparison function.
 
-  * The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function.
-  * The second parameter is the data you want to push to the inline array.
-  * The last parameter is the callback comparison function.  \\ \\ The ``Eina_Compare_Cb`` callback function compares data1 and data2. data1 is the value contained in the inline array and data2 is the data you pass to the ``eina_inarray_insert()`` or ``eina_inarray_insert_sorted()`` function as the second parameter. If data1 is less than data2, -1 must be returned, if it is greater, 1 must be returned, and if they are equal, 0 must be returned.
+The ``Eina_Compare_Cb`` callback function compares data1 and data2, data1 being the value contained in the inline array and data2 the data you pass to the ``eina_inarray_insert()`` or ``eina_inarray_insert_sorted()`` function as the second parameter. If data1 is less than data2, the function returns -1, if it is greater, it returns 1. If they are equal, it returns 0.
 
 The following example shows how to insert a value before a greater value:
 
-
 ```c
 [...]
-
 // Defining the comparison function with the position criteria
 Eina_Compare_Cb cmp(const void *a, const void *b)
 {
@@ -519,43 +426,29 @@ int inline_insert()
 
    eina_inarray_free(iarr);
 }
-
 [...]
 ```
 
-### To remove the last element of the inline array ###
+### Removing the Last Element from an Inline Array ###
 
-Use the ``eina_inarray_pop()`` function. The only parameter is a pointer to
-the array variable returned by the ``eina_inarray_new()`` function. This
-function returns the data removed from the inline array.
-
+Use the ``eina_inarray_pop()`` function. The only parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. This function returns the data removed from the inline array.
 
 ```c
 [...]
-
 eina_inarray_pop(iarr);
-
 [...]
 ```
 
-### To remove specific data from an inline array ###
+### Removing Specific Data from an Inline Array ###
 
-Use the ``eina_inarray_remove()`` function. The first parameter is a pointer
-to the array variable returned by the ``eina_inarray_new()`` function. The
-second parameter is the data you want to remove from the inline array.
+Use the ``eina_inarray_remove()`` function. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the data you want to remove from the inline array.
 
-The ``eina_inarray_remove()`` function finds the data and removes the matching
-members from the array. The data can be an existing member of an inline array
-for optimized usage. In other cases, the content is matched using the
-``memcmp()`` function.
+The ``eina_inarray_remove()`` function finds the data and removes the matching members from the array. The data can be an existing member of an inline array for optimized usage. In other cases, the content is matched using the ``memcmp()`` function. 
 
-The ``eina_inarray_remove()`` function returns the index of the removed
-member, or -1 if failed.
-
+The ``eina_inarray_remove()`` function returns the index of the removed member, or -1 if it failed.
 
 ```c
 [...]
-
 iarr = eina_inarray_new(sizeof(char), 0);
 
 ch = 'a';
@@ -563,83 +456,55 @@ eina_inarray_push(iarr, &ch);
 
 // Removing data from the array
 eina_inarray_remove(iarr, &ch);
-
 [...]
 ```
 
-### To remove data from a defined position in an inline array ###
+### Removing Data from a Specific Position within an Inline Array ###
 
-Use the ``eina_inarray_remove_at()`` function. The first parameter is a
-pointer to the array variable returned by the ``eina_inarray_new()`` function.
-The second parameter is the index of the element you want to remove from the
-inline array.
+Use the ``eina_inarray_remove_at()`` function. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the index of the element you want to remove from the inline array.
 
-The function returns ``EINA_TRUE`` on success and ``EINA_FALSE`` if something
-goes wrong. The member is removed from the inline array and any members after
-it are moved towards the array's head.
-
+The function returns ``EINA_TRUE`` on success and ``EINA_FALSE`` if something goes wrong. The member is removed from the inline array and any members after it are moved forward towards the array's head.
 
 ```c
 [...]
-
 // Removing data from position 2
 eina_inarray_remove_at(iarr, 2);
-
 [...]
 ```
 
-### To remove all the elements of the array ###
+### Removing all Elements from an Array ###
 
-Use the ``eina_inarray_flush()`` function. The first parameter is a pointer to
-the array variable returned by the ``eina_inarray_new()`` function. The
-function removes every member from the array.
+Use the ``eina_inarray_flush()`` function. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The function removes every member from the array.
 
 
 ```c
 [...]
-
 eina_inarray_flush(iarr);
-
 [...]
 ```
 
-### To replace values in the inline array ###
+### Replacing Values in an Inline Array ###
 
-Use the ``eina_inarray_replace_at()`` function, which copies the data over the
-given position:
+Use the ``eina_inarray_replace_at()`` function, which copies the data over the given position. The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the index of the element you want to remove from the inline array. The last parameter is the data you want to copy in place of the current data.
 
-   * The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function.
-   * The second parameter is the index of the element you want to remove from the inline array.
-   * The last parameter is the data you want to copy in place of the current data.
-
-The function returns ``EINA_TRUE`` on success, and ``EINA_FALSE`` on failure.
-The given pointer content is copied to the given position in the array. The
-pointer is not referenced, instead its contents are copied to the member's
-array using the previously defined ``member_size``. If the position does not
-exist, the function fails.
+The function returns ``EINA_TRUE`` on success, and ``EINA_FALSE`` on failure. The given pointer content is copied to the given position in the array. The pointer is not referenced, instead its contents are copied to the member's array using the previously defined ``member_size``. If the position does not exist, the function fails.
 
 
 ```c
 [...]
-
 // Replacing the member at position 3
 ch = 'd';
 eina_inarray_replace_at(iarr, 3, &ch);
-
 [...]
 ```
 
-### To sort an inline array ###
+### Sorting an Inline Array ###
 
-Use the ``eina_inarray_sort()`` function, which applies a quick sorting algorithm to the inline array:
-
-   * The first parameter is a pointer to the array returned by the ``eina_inarray_new()`` function.
-   * The last parameter is the ``Eina_Compare_Cb`` callback comparison function, which compares data1 and data2. \\ \\ data1 and data2 are values contained in the inline array. If the data matches, the function must return 0, if data1 is less than data2, -1 must be returned and if it is greater, 1 must be returned.
+Use the ``eina_inarray_sort()`` function, which applies a quick sorting algorithm to the inline array. The first parameter is a pointer to the array returned by the ``eina_inarray_new()`` function. The last parameter is the ``Eina_Compare_Cb`` callback comparison function, which compares **data1** and **data2**. **data1** and **data2** are values contained in the inline array. If the data matches, the function returns 0; if data1 is smaller than data2, it returns -1; and if it is greater, it returns 1.
 
 
 ```c
 [...]
-
 static int
 short_cmp(const void *pa, const void *pb)
 {
@@ -658,26 +523,20 @@ int sorting_inline_array()
    eina_inarray_sort(array, short_cmp);
    eina_inarray_free(array);
 }
-
 [...]
 ```
 
-Be careful, the data given to the compare function is the pointer to the
-member memory itself. Do not change it.
+Be careful: the data given to the compare function is the pointer to the member memory itself. Do not change it.
 
 ## Accessing Inline Array Data ##
 
-### To search a member in an inline array ###
+### Search for a Member in an Inline Array ###
 
-Use the ``eina_inarray_search()`` function that runs a linear walk looking for
-the given data:
+Use the ``eina_inarray_search()`` function that runs a linear walk looking for the given data
 
-   * The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function.
-   * The second parameter is the data used by the callback function to run the comparison.
-   * The last parameter is the ``Eina_Compare_Cb`` callback comparison function, which compares data1 and data2. \\ \\ data1 is the value contained in the inline array and data2 is the data you pass to the ``eina_inarray_search()`` function as the second parameter. If the data matches, the function must return 0, if data1 is less than data2, -1 must be returned and if it is greater, 1 must be returned.
+The first parameter is a pointer to the array variable returned by the ``eina_inarray_new()`` function. The second parameter is the data used by the callback function to run the comparison. The last parameter is the ``Eina_Compare_Cb`` callback comparison function, which compares **data1** and **data2**. **data1** is the value contained in the inline array and **data2** is the data you pass to the ``eina_inarray_search()`` function as the second parameter. If the data matches, the function returns 0; if data1 is smaller than data2, it returns -1; and if it is greater, it returns 1.
 
 The function returns the member index, or -1 if not found.
-
 
 ```c
 [...]
@@ -704,41 +563,36 @@ int search_inline_array()
    elm_index = eina_inarray_search(array, &to_search, compare);
    eina_inarray_free(array);
 }
-
 [...]
 ```
 
-Be careful, the data given to the compare function is the pointer to the
-member memory itself. Do not change it.
+Note that the data given to the compare function is the pointer to the member memory itself. Do not change it.
 
-The ``eina_inarray_search_sorted()`` function does exactly the same as
-``eina_inarray_search()``, but uses a binary search for the given data.
+The ``eina_inarray_search_sorted()`` function does exactly the same as ``eina_inarray_search()``, but uses a binary search for the given data.
 
-### To get the number of elements in an inline array ###
+### Retrieving the Number of Elements in an Inline Array ###
 
-Use the ``eina_inarray_count()``. The first parameter is a pointer to the
-array returned by the ``eina_inarray_new()`` function. The function returns an
-``unsigned int``, the number of elements.
-
+Use the ``eina_inarray_count()``. The parameter is a pointer to the array returned by the ``eina_inarray_new()`` function. The function returns an ``unsigned int``, the number of elements.
 
 ```c
 [...]
-
 printf("Inline array of integers with %d elements:\n", eina_inarray_count(iarr));
-
 [...]
 ```
 
-### To iterate through an inline array ###
+### Iterating over an Inline Array ###
 
-You can use various methods:
-  * You can use the iterator macros for the inline arrays: ``FOREACH`` and ``REVERSE_FOREACH``.
-  * To run a linear walk over an array of elements, use the ``EINA_INARRAY_FOREACH()`` macro. The first parameter is a pointer to the array variable returned by ``eina_inarray_new()``, and the second parameter is the variable into which the current value is put during the walk. The ``EINA_INARRAY_REVERSE_FOREACH()`` macro does the same thing but starts from the last element. \\ \\ The following example illustrates the printing of each element and its pointer:
+You can use two methods to iterate over the items contained in an inline array:
+
+1. You can use the iterator macros for the inline arrays: ``FOREACH`` and ``REVERSE_FOREACH``.
+
+2. Running a linear walk over an array of elements, use the ``EINA_INARRAY_FOREACH()`` macro. The first parameter is a pointer to the array variable returned by ``eina_inarray_new()``, and the second parameter is the variable into which the current value is put during the walk. The ``EINA_INARRAY_REVERSE_FOREACH()`` macro does the same thing but starts from the last element.
+
+The following example illustrates the printing of each element and its pointer:
 
 
 ```c
 [...]
-
 iarr = eina_inarray_new(sizeof(char), 0);
 int a, *b;
 
@@ -751,18 +605,14 @@ eina_inarray_push(iarr, &a);
 
 EINA_INARRAY_FOREACH(iarr, b)
   printf("int: %d(pointer: %p)\n", *b, b);
-
 [...]
 ```
 
-  * To process the array data, use the ``eina_inarray_foreach()`` function, which invokes the given function on each element of the array with the given data:
-    * The first parameter is a pointer to the array variable returned by ``eina_inarray_new()``.
-    * The second parameter is the function to run on each element. \\ \\ The function must return ``EINA_TRUE`` as long as you want to continue iterating. By returning ``EINA_FALSE``, you stop the iteration and make the ``eina_inarray_foreach()`` function return ``EINA_FALSE``. \\ \\ The data given to the function is the pointer to the member itself.
-    * The last parameter is the data passed to the function called on each element.
+To process the array data, use the ``eina_inarray_foreach()`` function, which invokes the given function on each element of the array with the given data. The first parameter is a pointer to the array variable returned by ``eina_inarray_new()``. The second parameter is the function to run on each element. The function must return ``EINA_TRUE`` as long as you want to continue iterating. By returning ``EINA_FALSE``, you stop the iteration and make the ``eina_inarray_foreach()`` function return ``EINA_FALSE``. The data given to the function is the pointer to the member itself.
 
-The ``eina_inarray_foreach()`` function returns ``EINA_TRUE`` if it
-successfully iterates through all items of the array. Call the function for
-every given data in the array. This is a safe way to iterate over an array.
+The last parameter is the data passed to the function called on each element.
+
+The ``eina_inarray_foreach()`` function returns ``EINA_TRUE`` if it successfully iterates through all items of the array. Call the function for every given data in the array. This is a safe way to iterate over an array.
 
 
 ```c
@@ -800,14 +650,9 @@ int inline_array_foreach()
 [...]
 ```
 
-### To remove some elements based on your own criteria ###
+### Removing some Elements Based on Your Own Criteria ###
 
-Use the ``eina_inarray_foreach_remove()`` function, which walks through the
-array and, if the value matches in the callback function, removes the element:
-
-  * The first parameter is a pointer to the array returned by ``eina_inarray_new()`` function.
-  * The second parameter is the callback function to run on each element. \\ \\ The callback function returns ``EINA_TRUE`` if the value matches, or ``EINA_FALSE`` if it does not match.
-  * The last parameter is the data passed to the callback function.
+Use the ``eina_inarray_foreach_remove()`` function, which walks through the array and, if the value matches in the callback function, removes the element. The first parameter is a pointer to the array returned by ``eina_inarray_new()`` function. The second parameter is the callback function to run on each element. \\ \\ The callback function returns ``EINA_TRUE`` if the value matches, or ``EINA_FALSE`` if it does not match. The last parameter is the data passed to the callback function.
 
 The function returns the number of removed entries or -1 if something goes wrong.
 
