@@ -4,11 +4,11 @@
  
 # Introduction to Eo: Creating and Destroying Objects #
  
-The Eo generic object system was designed to provide *Object-Oriented capabilities* to the EFL. Eo objects are at the core of almost every EFL entity (like Windows, Buttons or Timers), providing lifecycle management and inheritance abilities, for example.
+The Eo generic object system was designed to provide *Object-Oriented capabilities* to EFL. Eo objects are at the core of almost every EFL entity (like Windows, Buttons or Timers) providing lifecycle management and inheritance abilities amongst other features.
 
-This tutorial will show you the basics of creating and destroying Eo objects, along with *Reference Counting*, the technique at the heart of the Eo object lifecycle management.
+This tutorial shows you the basics of creating and destroying Eo objects as well as *Reference Counting*, the technique at the heart of the Eo object lifecycle management.
 
-Due to its fundamental nature, this tutorial is more theoretic than the average. The concepts being explained are crucial, though, so its reading is highly encouraged. If you are familiar with Reference Counting, it should be a breeze.
+This tutorial is more theoretical than practical however the concepts being explained are crucial, so it's highly advisable to go through it. If you're familiar with Reference Counting, you should have no trouble.
  
 ## Prerequisites ##
  
@@ -54,17 +54,17 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 EFL_MAIN()
 ```
 
-Sensibly enough, the objects will be created in ``_obj_create()``, and will be destroyed in ``_obj_destroy()``.
+Sensibly enough the objects are created in ``_obj_create()`` and destroyed in ``_obj_destroy()``.
 
-Also define some global pointers to keep track of the created objects. In a real application you won't be using global variables, but they help keep these first tutorials as simple as possible. Put this line after the includes:
+Also define some global pointers to keep track of the created objects. In a real application you won't be using global variables but do so in this tutorial for the sake of simplicity. Place this line after the includes:
 
 ```c
 Eo *_root;
 ```
 
-This tutorial will use generic ``Eo *`` pointers to store the objects; your programs can use them too, or use more specific types like ``Efl_Ui_Win *`` or ``Efl_Ui_Button *``. EFL methods will accept both types (generic and specific) and perform runtime checks to ensure that you provide objects of the type a method is expecting.
+This tutorial will use generic ``Eo *`` pointers to store objects. Your programs can use these too or use more specific types like ``Efl_Ui_Win *`` or ``Efl_Ui_Button *``. EFL methods will accept both types (generic and specific) and perform runtime checks to ensure that you provide objects of the type expected by a method.
 
-Now, fill-in the object creation method:
+Next fill-in the object creation method:
 
 ```c
 static void
@@ -82,34 +82,34 @@ _obj_create()
 * Sets the new object as a child of the already existing object specified in the second parameter.
 * Calls a list of methods to further initialize or configure the new object.
 
-In the code snippet above, an object of type ``EFL_MODEL_ITEM_CLASS`` is being created, set as a child of no one (the ``NULL`` parameter) and ``efl_name_set()`` is used to configure the object (as explained below).
+In the code snippet above an object of type ``EFL_MODEL_ITEM_CLASS`` is created, as a child of nothing (the ``NULL`` parameter) and ``efl_name_set()`` is then used to configure the object (as explained below).
 
-The particular kind of object being created in this tutorial (``EFL_MODEL_ITEM_CLASS``) is irrelevant. It was chosen because it does not need configuration and is therefore easier to use.
+Nore that the specific type of object being created in this tutorial (``EFL_MODEL_ITEM_CLASS``) is not important. It was chosen because it does not need configuration and is therefore easier to use.
 
-You can use as many configuration calls inside ``efl_add()`` as you need, since it accepts an infinite number of parameters. Also, configuration calls can use the special symbol ``efl_added`` which refers to the object being created. Together, these two powerful features make object creation code smaller and more compact: You could create an object, configure it and add it to a scene without even requiring a variable to store it!
+You can use as many configuration calls inside ``efl_add()`` as you need, since it accepts an infinite number of parameters. Also, configuration calls can use the special symbol ``efl_added`` which refers to the object being created. Together these two powerful features make object creation code much more compact. You can create an object, configure it and add it to a scene without even requiring a variable to store it.
 
 In this example, ``efl_name_set()`` is used to name the new object "Root" (note the ``efl_added`` parameter being used).
 
-Finally, the return value of ``efl_add()`` is the new object, with type ``Eo *`` which you can safely assign to a pointer of the specific type you requested, or keep the generic ``Eo *``, as you prefer. In this case, the pointer is stored in the ``_root`` variable for later use.
+The return value of ``efl_add()`` is the new object with type ``Eo *``, which you can safely assign to a pointer of the specific type you requested or keep as the generic ``Eo *``. In this case the pointer is stored in the ``_root`` variable for later use.
 
-At this point, you have created your first Eo object. It is time now to talk about who will be responsible for destroying it later on. Because, if the object is not destroyed, system resources will eventually be exhausted (this is known as a *memory leak*).
+At this point you have created your first Eo object. It is now time to decide who will be responsible for destroying it later. If the object is not destroyed system resources will eventually be exhausted. This is known as a *memory leak*.
 
 ### Reference Counting ###
 
-In the simplest case, when only one piece of code is interacting with an object, you can create the object, use it, and then destroy it. In more complex scenarios though, when different parts of the code use the same object, it is not easy to know when an object is not in use anymore and can therefore be safely destroyed.
+In the simplest case when only one piece of code is interacting with an object, you can create the object, use it and then destroy it. In more complex scenarios where different parts of code use the same object, it's not easy to know when an object isn't in use anymore and can therefore be safely destroyed.
 
-A common approach to this problem is to use the **Reference Counting** technique, in which every object keeps track of how many people (pieces of code) are using it in an internal *reference counter*:
+A common approach to this problem is to use the **Reference Counting** technique whereby every object keeps track of how many people (pieces of code) are using it, using an internal *reference counter*:
 
-* When somebody wants to work with a particular object it first needs to *get a reference to it* by using a call like ``efl_ref()`` on the object. This increases the internal reference counter.
-* When that piece of code is done working with the object, it *returns the reference* by calling ``efl_unref()`` on the object. This decreases the internal reference counter.
+* When somebody wants to work with a particular object it first needs to *obtain a reference* by using a call like ``efl_ref()`` on the object. This increments the internal reference counter.
+* When that piece of code is done working with the object it *returns the reference* by calling ``efl_unref()`` on the object in question. This decrements the internal reference counter.
 
-The advantage of this technique is that objects can be automatically destroyed when their internal reference counter reaches 0, because it means that nobody is using them anymore.
+The advantage of this technique is that objects can automatically be destroyed when their internal reference counter reaches 0 as no one else is using them. 
 
 ### Reference Counting and efl_add() ###
 
-Eo objects created through ``efl_add()`` have a starting reference count of 1, meaning that there is one piece of code using them. **It is very important to understand which one is this piece of code**, because it will be responsible for returning the reference. It is easy, though:
+Eo objects created through ``efl_add()`` have a starting reference count of 1, meaning that only one piece of code is using them. **You must know which code this is** as it will be responsible for returning the reference. This is very easy to do.
 
-* **If you gave the object a parent**: Then that parent is the owner of the reference. There is nothing else that you need to do with the object. You cannot actually work with the object, because you do not hold any reference to it (more about this later).
+* **If you assigned the object a parent** then said parent is the owner of the reference. There's nothing else that you need to do with the object. You cannot actually work with the object because you do not hold any reference to it (more about this later).
 * **If you gave no parent to the object**: If you passed ``NULL`` as the parent, then **you** are the owner of the reference and you are responsible for returning it with ``efl_unref()``. Forgetting to do so is the most common cause of memory leaks.
 
 Back to the tutorial code, no parent was given to the object created in ``_obj_create()``, therefore you need to return that reference at some point. It is time to fill-in the ``_obj_destroy()`` method:
@@ -124,11 +124,11 @@ _obj_destroy()
 }
 ```
 
-As you can see, the reference you were holding to the ``_root`` object is returned. Since it was the only existing reference to this object, the internal reference counter will reach 0 and the object will be destroyed. Right now you have no proof of that, but the following tutorial will show you what is happening behind the scenes.
+The reference you were holding to the ``_root`` object has now returned. Since it was the only existing reference to this object, the internal reference counter will reach 0 and the object will be destroyed. This isn't immediately obvious but you will explore this process further in the next tutorial. 
 
-With this, the first step of this tutorial is complete. It does not show much on screen, but it was necessary to explain the fundamental concept of **Object Lifecycle Management**: When are objects created and when are they destroyed.
+The first step of the tutorial is now complete. You may not have seen much on screen but now understand the fundamental concept of **Object Lifecycle Management**: when objects are created and destroyed.
 
-Here you have the complete listing, which you can build and run:
+See below the complete listing, which you can build and run yourself:
 
 ```c
 #define EFL_EO_API_SUPPORT 1
@@ -177,7 +177,7 @@ EFL_MAIN()
 
 ## Step Two: A More Complex Hierarchy ##
 
-In this second step more objects will be added forming a hierarchy. This will give you more hands-on training with the concepts you acquired in the previous step.
+In this second section more objects will be added, forming a hierarchy. This will give you more hands-on training with the concepts you acquired in the previous stection.
 
 Start by adding two more global object pointers to keep track of the new objects. Just below the ``#includes``, replace the ``Eo *_root;`` line with:
 
@@ -185,7 +185,7 @@ Start by adding two more global object pointers to keep track of the new objects
 Eo *_root, *_child1, *_child2;
 ```
 
-And now, in the ``_obj_create()`` method, add a new ``efl_add()`` line below the previous one:
+Next, in the ``_obj_create()`` method add a new ``efl_add()`` line below the previous one:
 
 ```c
    // Create the first child element
@@ -193,9 +193,9 @@ And now, in the ``_obj_create()`` method, add a new ``efl_add()`` line below the
                      efl_name_set(efl_added, "Child1"));
 ```
 
-Here you are creating a new object (of type ``EFL_MODEL_ITEM_CLASS``, again) and setting its parent to ``_root``. As explained in the previous step, since you are giving the object a parent, its one reference now belongs to the parent, therefore you need not worry about returning it. It also means that you won't be able to work with this object later on. In fact, you don't event need to keep the ``_child1`` pointer (it's here because you will be using it in the following tutorial).
+Here you are creating a new object (of type ``EFL_MODEL_ITEM_CLASS``, again) and setting its parent to ``_root``. As you learned in the previous section, since you are assigning the object a parent, its only reference now belongs to said parent. This means you don't need to worry about returning it. It also means that you won't be able to work with this object later on. In fact, you don't event need to keep the ``_child1`` pointer. It exists because you will be using it in the following tutorial.
 
-Add now a second object just below the previous one:
+Now add a second object immediately below the previous one:
 
 ```c
    // Create the second child element, this time, with an extra reference
@@ -203,11 +203,11 @@ Add now a second object just below the previous one:
                          efl_name_set(efl_added, "Child2"));
 ```
 
-This time you didn't use ``efl_add()`` but ``efl_add_ref()``. This method creates objects with an initial reference count of 2, one reference for the parent and another one for you. This is handy when you want the object to have a parent but you also want to work with it. Obviously, you will need to return the extra reference later on.
+This time you didn't use ``efl_add()`` but ``efl_add_ref()``. This method creates objects with an initial reference count of 2, one reference for the parent and one for you. This is handy when you want the object to have a parent but also want to work with it. Obviously, you will need to return the extra reference later on.
 
-In this simple tutorial you will not be doing anything special with ``_child2``, it has been created with an extra reference for illustration purposes only.
+In this simple tutorial you will not be doing anything special with ``_child2``: It has been created with an extra reference for example purposes only.
 
-Move now then to the ``_obj_destroy()`` method. You need to return the extra reference to ``_child2`` there, right below the previous call to ``efl_unref()``:
+Next, move on to the ``_obj_destroy()`` method. You need to return the extra reference to ``_child2``, immediately below the previous call to ``efl_unref()``:
 
 ```c
    // Destroy the child2 element, for which we were keeping an extra reference
@@ -215,9 +215,9 @@ Move now then to the ``_obj_destroy()`` method. You need to return the extra ref
    efl_unref(_child2);
 ```
 
-Note how you are **not** returning the reference to ``_child1``. This is because that reference belongs to its parent, ``_root``, which takes care of it. In this example, when ``_root`` is destroyed it will also return the references for all its children. In turn, this destroys ``_child1`` (because there was only one reference to it) but **not** ``_child2`` (because there is an extra reference to it, which we will manually return with the explicit call to ``efl_unref()``).
+Note how you are **not** returning the reference to ``_child1``. This is because that reference belongs to its parent, ``_root``, which handles it. In this example when ``_root`` is destroyed it will also return the references for all its children. This in turn destroys ``_child1`` because there was only one reference to it but **not** ``_child2`` because there is an extra reference to it. You will manually return this with an explicit call to ``efl_unref()``).
 
-And with that, this tutorial is complete. If you compile and run the complete code below you will only see messages about objects being deleted, but, in the process, you have learned about the very important topic of object creation and destruction, and how to avoid memory leaks.
+If you compile and run the complete code below you will only see messages about objects being deleted but in so doing you've learned about the very important topic of object creation and destruction, as well as how to avoid memory leaks.
 
 ```c
 #define EFL_EO_API_SUPPORT 1
