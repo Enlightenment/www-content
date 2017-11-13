@@ -79,8 +79,7 @@ This defines the real ``main()`` method required by C programs, which deals with
 
 This is not mandatory but it simplifies the setup and shutdown processes considerably, so it is going to be used a lot in this series of tutorials.
 
-## The Complete Program ##
-
+Your program should now look something like this:
 ```c
 #include <Eina.h>
 #include <Efl.h>
@@ -96,8 +95,6 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 EFL_MAIN()
 ```
 
-## Running the Program ##
-
 Save the program then build it as outlined in [Setting up the Development Environment](/develop/setup/c/#Building). As a reminder, if you are using the ``gcc`` compiler, run:
 
 ```bash
@@ -110,7 +107,48 @@ If the systems displays no errors, your program should be ready. Test it by typi
 ./hello-world
 ```
 
-The words ``Hello World!`` will now appear on the screen. 
+The words ``Hello World!`` should now appear on your terminal. 
+
+## Step Six: Retrieve the Command Line Parameters ##
+
+Sometimes you might be interested in retrieving the command line parameters passed to your program. They are passed to ``efl_main()`` but in a slightly different way than they are usually passed to ``main()``.
+
+Replace your current ``efl_main()`` with this slightly modified version:
+
+```c
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+{
+   Efl_Loop_Arguments *args = ev->info;
+
+   if (eina_array_count(args->argv) == 0)
+     {
+        printf("Hello World!\n");
+     }
+   else
+     {
+        printf("Hello %s!\n", (char *) eina_array_data_get(args->argv, 0));
+     }
+
+   efl_exit(0);
+}
+```
+
+As you can see, the ``Efl_Event *ev`` parameters is no longer marked with ``EINA_UNUSED``, because now you are going to use it:
+
+The ``Efl_Event`` structure contains an array with all the command line parameters. You retrieve it like this:
+
+```c
+   Efl_Loop_Arguments *args = ev->info;
+```
+
+Finally, the array can be found in ``args->argv``. Arrays in EFL are handled with the ``Eina_Array`` type, so you can use ``eina_array_count()`` to retrieve the number of elements in an array and ``eina_array_data_get()`` to access the contents of the array.
+
+In the above example, if no parameters are passed to your program (``eina_array_count(args->argv) == 0``), it just prints "Hello World!". Otherwise, the first parameter is retrieved and printed. Try compiling again your program and running it with your name as the first parameter:
+
+```bash
+./hello-world Mike
+```
 
 ## Summary ##
 
@@ -120,5 +158,4 @@ At the end of this tutorial you have learned:
 * Your **main method** should be ``efl_main()``.
 * Your EFL programs should **always call ``efl_exit()``** at some stage.
 * Your EFL programs should **include the ``EFL_MAIN()`` macro** at the end so EFL can insert its own start-up and shutdown code.
-
-The next tutorial keeps introducing more basic concepts, and shows how to retrieve the command line parameters passed to your program.
+* **Command line parameters** are available through the ``Efl_Event *`` parameter in ``efl_main()``, and can be accessed with ``eina_array_count()`` and ``eina_array_data_get()``.
