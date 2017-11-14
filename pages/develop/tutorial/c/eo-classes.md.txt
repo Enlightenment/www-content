@@ -1,0 +1,336 @@
+---
+~~Title: Create New Classes with Eolian~~
+---
+
+# Create New Classes with Eolian #
+
+The [Introduction to Eo](eo-intro.md) tutorial explained how to instantiate Eo objects of a given class using ``efl_add()``. The present tutorial shows how to create new classes so new kinds of objects can be instantiated.
+
+You will learn how to describe classes using the Eolian language and then further customize them with class-specific code. This tutorial also shows you the basis of class inheritance with Eolian.
+
+## Prerequisites ##
+
+* The [Introduction to Eo](eo-intro.md) tutorial explains the basis of Eo object creation and reference counting.
+* The [Hello World](hello-world.md) tutorial explains how to write an application using the EFL.
+
+## Eolian Files and eolian_gen ##
+
+Each class in EFL is described in an *Eolian file*, with the same name as the class and extension *.eo*. Eolian files are plain text files that contain, among other things, the name of the described class and the list of its properties and methods, along with their parameters and return values.
+
+Most importantly, this class description is independent of any programming language and can be used to generate automatic bindings and boiler plate code for other programming languages. With this automatically generated code, you only need to write the details of your implementation, in the language of your choice.
+
+The code generator for the C language is ``eolian_gen``, included in your EFL installation. So far, it is the only language available but more are coming soon.
+
+In short, you invoke ``eolian_gen`` like this:
+
+```bash
+eolian_gen -gchi my_new_class.eo
+```
+
+This generates three files for you:
+
+* ``my_new_class.eo.h``: **Header file** including all the method signatures related to your class. In particular, it contains the class symbol you need to pass to ``efl_add()``, so always include this file if you want to use your class.
+* ``my_new_class.eo.c``: Boilerplate code you don't usually need to worry about. It is automatically included from the implementation file (next one).
+* ``my_new_class.c``: The **implementation file**. It initially contains the empty bodies for all the methods you need to implement in your class. This is the only file you need to modify and include in your builds, as you will see in this tutorial.
+
+The ``-gchi`` parameter tells ``eolian_gen`` to generate the Source file, the Header file and the Implementation file.
+
+To summarize, for each new class you want to create you have to:
+
+1. Describe the class with an ``.eo`` file and call ``eolian_gen``.
+2. Add your code to the implementation file (``my_new_class.c``).
+3. Add the implementation file to your build.
+4. Include the header file (``my_new_class.eo.h``) from your application to use the new class.
+
+The rest of the tutorial shows a practical example which will illustrate this procedure.
+
+## Step One: Creating a Simple Class Description ##
+
+You will now create an Eolian file for a class named ``Example.Rectangle``. The file **must** be called ``examples_rectangle.eo``.
+
+This class will represent a rectangle shape, so it will have two properties, the ``width`` and ``height`` of the rectangle, which can be read and written.
+
+Start with the class name and the list of its parent classes in parentheses:
+
+```
+class Example.Rectangle (Efl.Object) {
+}
+```
+
+The only parent class is ``Efl.Object``, which is mandatory for regular classes (exceptions like *Interfaces* will be dealt with later).
+
+Next, add a method declaration block, where you will list the methods and properties of your class:
+
+```
+class Example.Rectangle (Efl.Object) {
+   methods {
+   }
+}
+```
+
+And now, add a property named ``width`` inside the ``methods`` block, which you can ``set``, ``get`` and whose only value is an ``int``:
+
+```
+      @property width {
+         set {
+         }
+         get {
+         }
+         values {
+            width: int;
+         }
+      }
+```
+
+And do the same thing for the ``height`` property, right after the ``width`` block:
+
+```
+      @property height {
+         set {
+         }
+         get {
+         }
+         values {
+            height: int;
+         }
+      }
+```
+
+With this, the Eolian description for the ``Example.Rectangle`` class is finished. The ``example_rectangle.eo`` file should look like this:
+
+```
+class Example.Rectangle (Efl.Object) {
+   methods {
+      @property width {
+         set {
+         }
+         get {
+         }
+         values {
+            width: int;
+         }
+      }
+      @property height {
+         set {
+         }
+         get {
+         }
+         values {
+            height: int;
+         }
+      }
+   }
+}
+```
+
+Time to turn it into C code with ``eolian_gen``:
+
+```bash
+eolian_gen -gchi example_rectangle.eo
+```
+
+This will create three files in your current folder: ``example_rectangle.c``, ``example_rectangle.eo.c`` and ``example_rectangle.eo.h``. Next you will see what to do with them.
+
+## Step Two: Adding the Implementation ##
+
+As announced, ``eolian_gen`` has generated the boilerplate code for you in the implementation file ``example_rectangle.c``. If you open it, you will see an empty structure at the top:
+
+* ``typedef struct {} Example_Rectangle_Data;``
+
+This structure will hold the private data for your class. You can put here anything you want and it only concerns you. The usual approach is to put here the backing storage for your properties, in this case ``width`` and ``height``.
+
+You will also find in the generated file the following methods, with empty bodies:
+
+* ``_example_rectangle_width_set()``
+* ``_example_rectangle_width_get()``
+* ``_example_rectangle_height_set()``
+* ``_example_rectangle_height_get()``
+
+They are the setters and getters for your properties. Look closely at one of the getters:
+
+```c
+EOLIAN static int
+_example_rectangle_width_get(Eo *obj, Example_Rectangle_Data *pd)
+```
+
+It receives the ``Eo *`` object whose property is being retrieved and, as a convenience, an ``Example_Rectangle_Data *`` pointer to its private data. It returns an integer because that's what you specified as the value for this property in the Eolian file.
+
+Everything is now in place to start coding. First, add to the ``Example_Rectangle_Data`` structure some class variables to store the actual width and height of the rectangle:
+
+```c
+typedef struct
+{
+   int width, height;
+} Example_Rectangle_Data;
+```
+
+And now fill-in the setters and getters for ``width`` and ``height``. They just provide access to the private variables, so the code is very simple:
+
+```c
+EOLIAN static void
+_example_rectangle_width_set(Eo *obj, Example_Rectangle_Data *pd, int width)
+{
+   pd->width = width;
+}
+
+EOLIAN static int
+_example_rectangle_width_get(Eo *obj, Example_Rectangle_Data *pd)
+{
+   return pd->width;
+}
+
+EOLIAN static void
+_example_rectangle_height_set(Eo *obj, Example_Rectangle_Data *pd, int height)
+{
+   pd->height = height;
+}
+
+EOLIAN static int
+_example_rectangle_height_get(Eo *obj, Example_Rectangle_Data *pd)
+{
+   return pd->height;
+}
+```
+
+With this, your class is finished. You cannot test it, though, unless you write some code to use it.
+
+## Step Three: Using the New Class ##
+
+Create a new file (for example ``eo_classes_main.c``) and add the basic EFL application skeleton from the [Hello World tutorial](hello-world.md):
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Efl.h>
+#include <Elementary.h>
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   efl_exit(0);
+}
+EFL_MAIN()
+```
+
+The first step is to include the auto-generated header file for your new class, so that it is available to the application. Add this after the other includes:
+
+```c
+#include "example_rectangle.eo.h"
+```
+
+After that, add an empty method that will instantiate the class:
+
+```c
+Example_Rectangle *
+_rect_create()
+{
+}
+```
+
+And call it from ``efl_main()``, right before calling ``efl_exit()``:
+
+```c
+   Eo *rectangle;
+
+   rectangle = _rect_create();
+```
+
+Finally, instantiate a new object of your shiny new class from within ``_rect_create()``:
+
+```c
+   Example_Rectangle *rectangle;
+
+   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+                       efl_name_set(efl_added, "Rectangle"),
+                       example_rectangle_width_set(efl_added, 5),
+                       example_rectangle_height_set(efl_added, 10));
+
+   return rectangle;
+```
+
+There are many things worth pointing out here, inside the call to ``efl_add()``:
+
+* The symbol you need to use for your class is ``EXAMPLE_RECTANGLE_CLASS``. It is defined in ``example_rectangle.eo.h`` and its name comes from the class name you defined in your Eolian file.
+* The new object is being configured with the two setters you defined for your class, so it starts with a ``width`` of 5 and a ``height`` of 10.
+* The new object is stored in a ``Example_Rectangle *`` pointer so the kind of object it points to is clear. A generic ``Eo *`` would work too.
+
+You could compile and run your program now, and the new object would be instantiated, but nothing would show on screen. Add a simple print statement that proves that everything is working as expected. In ``efl_main()``, right after calling ``_rect_create()``:
+
+```c
+   printf("Rectangle is %dx%d\n",
+          example_rectangle_width_get(rectangle),
+          example_rectangle_height_get(rectangle));
+```
+
+Your ``eo_classes_main.c`` file should now look something like this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Efl.h>
+#include <Elementary.h>
+#include "example_rectangle.eo.h"
+
+Example_Rectangle *
+_rect_create()
+{
+   Example_Rectangle *rectangle;
+
+   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+                       efl_name_set(efl_added, "Rectangle"),
+                       example_rectangle_width_set(efl_added, 5),
+                       example_rectangle_height_set(efl_added, 10));
+
+   return rectangle;
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   Eo *rectangle;
+
+   rectangle = _rect_create();
+
+   printf("Rectangle is %dx%d\n",
+          example_rectangle_width_get(rectangle),
+          example_rectangle_height_get(rectangle));
+
+   efl_exit(0);
+}
+EFL_MAIN()
+```
+
+You can now build you program as usual, but remember to include the implementation file for your new class in the build:
+
+```bash
+gcc -o eo-classes eo_classes_main.c example_rectangle.c `pkg-config --cflags --libs eina efl elementary`
+```
+
+When run, your program should print on the terminal:
+
+```
+Rectangle is 5x10
+```
+
+## Summary ##
+
+At the end of this tutorial you have learned:
+
+* New classes are described in **Eolian files** (same name as your class with ``.eo`` extension).
+* Eolian files are turned into **boilerplate C code** using ``eolian_gen``.
+* The code for your class is added to the **implementation file** (``name_of_your_class.c``).
+* Code using your class has to **include the class header** (``name_of_your_class.eo.h``).
+* Applications using your class have to **build the implementation file**.
+
+The following tutorials show how to inherit from other classes and define interfaces.
+
+## Further Reading ##
+[Introduction to Eo](eo-intro.md)
+:   How to instantiate Eo objects.
+
+[Eolian File Format Specification](/contrib/docs/eo.md)
+:    In-depth description of the Eolian file format.
