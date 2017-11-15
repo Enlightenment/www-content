@@ -96,6 +96,18 @@ And do the same thing for the ``height`` property, right after the ``width`` blo
       }
 ```
 
+Finally, add a method to calculate the ``area`` of the rectangle, after the ``height`` property:
+
+```c
+      area {
+         params {
+         }
+         return: int;
+      }
+```
+
+This method will take no parameters and return an integer.
+
 With this, the Eolian description for the ``Example.Rectangle`` class is finished. The ``example_rectangle.eo`` file should look like this:
 
 ```
@@ -118,6 +130,11 @@ class Example.Rectangle (Efl.Object) {
          values {
             height: int;
          }
+      }
+      area {
+         params {
+         }
+         return: int;
       }
    }
 }
@@ -145,8 +162,9 @@ You will also find in the generated file the following methods, with empty bodie
 * ``_example_rectangle_width_get()``
 * ``_example_rectangle_height_set()``
 * ``_example_rectangle_height_get()``
+* ``_example_rectangle_area()``
 
-They are the setters and getters for your properties. Look closely at one of the getters:
+They are the setters and getters for your properties, and you method. Look closely at one of the getters:
 
 ```c
 EOLIAN static int
@@ -189,6 +207,16 @@ EOLIAN static int
 _example_rectangle_height_get(Eo *obj, Example_Rectangle_Data *pd)
 {
    return pd->height;
+}
+```
+
+Lastly, calculate the area of the rectangle in the ``_example_rectangle_area()`` method:
+
+```c
+EOLIAN static int
+_example_rectangle_area(Eo *obj, Example_Rectangle_Data *pd)
+{
+   return pd->width * pd->height;
 }
 ```
 
@@ -259,9 +287,10 @@ There are many things worth pointing out here, inside the call to ``efl_add()``:
 You could compile and run your program now, and the new object would be instantiated, but nothing would show on screen. Add a simple print statement that proves that everything is working as expected. In ``efl_main()``, right after calling ``_rect_create()``:
 
 ```c
-   printf("Rectangle is %dx%d\n",
+   printf("Rectangle is %dx%d, area is %d\n",
           example_rectangle_width_get(rectangle),
-          example_rectangle_height_get(rectangle));
+          example_rectangle_height_get(rectangle),
+          example_rectangle_area(rectangle));
 ```
 
 Your ``eo_classes_main.c`` file should now look something like this:
@@ -295,9 +324,10 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 
    rectangle = _rect_create();
 
-   printf("Rectangle is %dx%d\n",
+   printf("Rectangle is %dx%d, area is %d\n",
           example_rectangle_width_get(rectangle),
-          example_rectangle_height_get(rectangle));
+          example_rectangle_height_get(rectangle),
+          example_rectangle_area(rectangle));
 
    efl_exit(0);
 }
@@ -313,7 +343,7 @@ gcc -o eo-classes eo_classes_main.c example_rectangle.c `pkg-config --cflags --l
 When run, your program should print on the terminal:
 
 ```
-Rectangle is 5x10
+Rectangle is 5x10, area is 50
 ```
 
 ## Summary ##
