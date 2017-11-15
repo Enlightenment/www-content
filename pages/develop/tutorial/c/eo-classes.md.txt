@@ -182,29 +182,29 @@ typedef struct
 } Example_Rectangle_Data;
 ```
 
-And now fill-in the setters and getters for ``width`` and ``height``. They just provide access to the private variables, so the code is very simple:
+And now fill-in the setters and getters for ``width`` and ``height``. They just provide access to the private variables, so the code is very simple. Also, none of the ``Eo *obj`` is not going to be used, so it is a good idea to mark them with ``EINA_UNUSED`` to avoid compiler warnings:
 
 ```c
 EOLIAN static void
-_example_rectangle_width_set(Eo *obj, Example_Rectangle_Data *pd, int width)
+_example_rectangle_width_set(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd, int width)
 {
    pd->width = width;
 }
 
 EOLIAN static int
-_example_rectangle_width_get(Eo *obj, Example_Rectangle_Data *pd)
+_example_rectangle_width_get(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 {
    return pd->width;
 }
 
 EOLIAN static void
-_example_rectangle_height_set(Eo *obj, Example_Rectangle_Data *pd, int height)
+_example_rectangle_height_set(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd, int height)
 {
    pd->height = height;
 }
 
 EOLIAN static int
-_example_rectangle_height_get(Eo *obj, Example_Rectangle_Data *pd)
+_example_rectangle_height_get(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 {
    return pd->height;
 }
@@ -214,7 +214,7 @@ Lastly, calculate the area of the rectangle in the ``_example_rectangle_area()``
 
 ```c
 EOLIAN static int
-_example_rectangle_area(Eo *obj, Example_Rectangle_Data *pd)
+_example_rectangle_area(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 {
    return pd->width * pd->height;
 }
