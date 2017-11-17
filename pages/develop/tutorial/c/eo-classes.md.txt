@@ -262,7 +262,11 @@ And call it from ``efl_main()``, right before calling ``efl_exit()``:
    Eo *rectangle;
 
    rectangle = _rect_create();
+   
+   efl_unref(rectangle);
 ```
+
+Notice how the object is disposed of using ``efl_unref()`` before quitting. It is a good idea to write the code to remove objects at the same time you write the code that creates them, so you don't forget. Later on you will be doing more things with this ``rectangle``.
 
 Finally, instantiate a new object of your shiny new class from within ``_rect_create()``:
 
@@ -326,6 +330,8 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
           example_rectangle_width_get(rectangle),
           example_rectangle_height_get(rectangle),
           example_rectangle_area(rectangle));
+          
+   efl_unref(rectangle);
 
    efl_exit(0);
 }
