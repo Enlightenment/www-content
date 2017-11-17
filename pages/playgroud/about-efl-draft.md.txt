@@ -52,3 +52,31 @@ The Enlightenment Foundation Libraries already power millions of systems from mo
 
 EFL powers [Samsung Galaxy Gear](http://www.samsung.com/us/mobile/wearable-tech) smartwatches and is behind Samsung Smart Televisions such as the [Class Q9F QLED 4K TV](https://www.samsung.com/us/televisions-home-theater/tvs/qled-tvs/65--class-q9f-qled-4k-tv-qn65q9famfxza/) and refrigerators such as the [Samsung Family Hub Refrigerator](https://www.samsung.com/us/explore/family-hub-refrigerator/overview/), which are based on Tizen. GPS devices such as the [Coyote](https://www.moncoyote.com/) also run EFL.
 
+### The EFL Model ###
+
+![model1](/_media/model1.png "EFL Model")
+
+EFL operates on the same "main loop" concept adopted by GTK+ and many other toolkits. Once you initialize an application it enters the Ecore main loop.
+
+The main loop continuously checks for events, handles timers, callbacks and any other services that have previously been set up until an exit request is sent. By way of an example if EFL were used to create a video game, the mainloop would check for user inputs and update the game world accordingly as you play. 
+
+The mainloop is designed efficiently. It will remain idle, consuming virtually no CPU resources until an event occurs. Events can be based on user input such as using the mouse or time-based. Ecore will then handle the event appropriately.
+
+Read more about the Ecore main loop [here.](https://docs.enlightenment.org/auto/group__Ecore__Main__Loop__Group.html)
+
+For more detailed information on the EFL model including events and callbacks see the [EFL Concept Overview.](https://phab.enlightenment.org/w/efl_concept_overview/)
+
+### EFL Application Structure ###
+
+![model1](/_media/efllibs.png "EFL Libs")
+
+Whenever you create a basic EFL Application, it uses a basic set of libraries:
+
+  * **Elementary** is the top-most library. It provides all the functions you need to create windows, manage layouts and add widgets. 
+  * **Edje**  is the library used by Elementary to provide powerful,customisable themes. You can also use Edje to create your own objects and use them in an application. 
+  * **Ecore** is the library which manages the main loop of your application, as outlined above. 
+  * **Evas**  is the canvas engine, which draws content. Any graphical objects you create are Evas objects. It handles the entire state of the window by filling the canvas with objects and manipulating their states. Evas objects are created and then manipulated until they are no longer needed, at which point they are deleted. 
+  * **Eina** forms the basis of all EFL libraries. It's a toolbox that implements an API for data types in an efficient way. Eina contains all the functions needed to create lists and hashes, manage shared strings, open shared libraries, and manage errors and memory pools. 
+
+EFL naturally contains many more libraries than the basic ones outlined above. Visit our [Basic Application Structure](https://www.enlightenment.org/develop/legacy/program_guide/basic_application_structure_pg) page for more information on the core libraries. You can also learn about other libraries in our other programming guides.
+
