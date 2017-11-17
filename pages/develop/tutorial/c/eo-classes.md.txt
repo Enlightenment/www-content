@@ -4,30 +4,30 @@
 
 # Creating New Classes with Eolian #
 
-The [Introduction to Eo](eo-intro.md) tutorial explained how to instantiate Eo objects of a given class using ``efl_add()``. The present tutorial shows how to create new classes so new kinds of objects can be instantiated.
+The [Introduction to Eo](eo-intro.md) tutorial showed you how to instantiate Eo objects of a given class using ``efl_add()``. This tutorial demonstrates how to create new classes so new kinds of objects can be instantiated.
 
-You will learn how to describe classes using the Eolian language and then further customize them with class-specific code. This tutorial also shows you the basis of class inheritance with Eolian.
+You'll learn how to describe classes using the Eolian language and then further customize them with class-specific code. You will also master the basics of class inheritance with Eolian.
 
 ## Prerequisites ##
 
 * The [Introduction to Eo](eo-intro.md) tutorial explains the basis of Eo object creation and reference counting.
-* The [Hello World](hello-world.md) tutorial explains how to write an application using the EFL.
+* The [Hello World](hello-world.md) tutorial details how to write a simple application using EFL.
 
 ## Eolian Files and eolian_gen ##
 
 Each class in EFL is described in an *Eolian file*, with the same name as the class and extension *.eo*. Eolian files are plain text files that contain, among other things, the name of the described class and the list of its properties and methods, along with their parameters and return values.
 
-Most importantly, this class description is independent of any programming language and can be used to generate automatic bindings and boiler plate code for other programming languages. With this automatically generated code, you only need to write the details of your implementation, in the language of your choice.
+Most importantly, this class description is independent of any programming language and can be used to generate automatic bindings and boiler plate code for other programming languages. With this automatically generated code you only need to write the details of your implementation in the language of your choice.
 
-The code generator for the C language is ``eolian_gen``, included in your EFL installation. So far, it is the only language available but more are coming soon.
+The code generator for the C language is ``eolian_gen``, which is included in your EFL installation. So far, it is the only language available but there are plans to support more in the near future.
 
-In short, you invoke ``eolian_gen`` like this:
+You can invoke ``eolian_gen`` like so:
 
 ```bash
 eolian_gen -gchi my_new_class.eo
 ```
 
-This generates three files for you:
+This generates three files:
 
 * ``my_new_class.eo.h``: **Header file** including all the method signatures related to your class. In particular, it contains the class symbol you need to pass to ``efl_add()``, so always include this file if you want to use your class.
 * ``my_new_class.eo.c``: Boilerplate code you don't usually need to worry about. It is automatically included from the implementation file (next one).
@@ -35,7 +35,7 @@ This generates three files for you:
 
 The ``-gchi`` parameter tells ``eolian_gen`` to generate the Source file, the Header file and the Implementation file.
 
-To summarize, for each new class you want to create you have to:
+In summary, for each new class you create you must:
 
 1. Describe the class with an ``.eo`` file and call ``eolian_gen``.
 2. Add your code to the implementation file (``my_new_class.c``).
@@ -59,7 +59,7 @@ class Example.Rectangle (Efl.Object) {
 
 The only parent class is ``Efl.Object``, which is mandatory for regular classes (exceptions like *Interfaces* will be dealt with later).
 
-Next, add a method declaration block, where you will list the methods and properties of your class:
+Next add a method declaration block, wherein you'll list the methods and properties of your class:
 
 ```
 class Example.Rectangle (Efl.Object) {
@@ -68,7 +68,7 @@ class Example.Rectangle (Efl.Object) {
 }
 ```
 
-And now, add a property named ``width`` inside the ``methods`` block, which you can ``set``, ``get`` and whose only value is an ``int``:
+Now add a property named ``width`` inside the ``methods`` block, which you can ``set``, ``get`` and whose only value is an ``int``:
 
 ```
       @property width {
@@ -82,7 +82,7 @@ And now, add a property named ``width`` inside the ``methods`` block, which you 
       }
 ```
 
-And do the same thing for the ``height`` property, right after the ``width`` block:
+Next do the same for the ``height`` property, right after the ``width`` block:
 
 ```
       @property height {
@@ -96,7 +96,7 @@ And do the same thing for the ``height`` property, right after the ``width`` blo
       }
 ```
 
-Finally, add a method to calculate the ``area`` of the rectangle, after the ``height`` property:
+Finally add a method to calculate the ``area`` of the rectangle after the ``height`` property:
 
 ```
       area {
@@ -108,7 +108,7 @@ Finally, add a method to calculate the ``area`` of the rectangle, after the ``he
 
 This method will take no parameters and return an integer.
 
-With this, the Eolian description for the ``Example.Rectangle`` class is finished. The ``example_rectangle.eo`` file should look like this:
+The Eolian description for the ``Example.Rectangle`` class is now complete. The ``example_rectangle.eo`` file should look like this:
 
 ```
 class Example.Rectangle (Efl.Object) {
@@ -140,23 +140,23 @@ class Example.Rectangle (Efl.Object) {
 }
 ```
 
-Time to turn it into C code with ``eolian_gen``:
+Now turn it into C code with ``eolian_gen``:
 
 ```bash
 eolian_gen -gchi example_rectangle.eo
 ```
 
-This will create three files in your current folder: ``example_rectangle.c``, ``example_rectangle.eo.c`` and ``example_rectangle.eo.h``. Next you will see what to do with them.
+This will create three files in your current folder: ``example_rectangle.c``, ``example_rectangle.eo.c`` and ``example_rectangle.eo.h``.
 
 ## Step Two: Adding the Implementation ##
 
-As announced, ``eolian_gen`` has generated the boilerplate code for you in the implementation file ``example_rectangle.c``. If you open it, you will see an empty structure at the top:
+As you previously found out, ``eolian_gen`` has generated the boilerplate code for you in the implementation file ``example_rectangle.c``. If you open it you will see an empty structure at the top:
 
 * ``typedef struct {} Example_Rectangle_Data;``
 
-This structure will hold the private data for your class. You can put here anything you want and it only concerns you. The usual approach is to put here the backing storage for your properties, in this case ``width`` and ``height``.
+This structure will hold the private data for your class. You can place anything you want here. The usual approach is to put the backing storage for your properties, in this case ``width`` and ``height``.
 
-You will also find in the generated file the following methods, with empty bodies:
+You will also find the following methods with empty bodies in the generated file:
 
 * ``_example_rectangle_width_set()``
 * ``_example_rectangle_width_get()``
@@ -164,7 +164,7 @@ You will also find in the generated file the following methods, with empty bodie
 * ``_example_rectangle_height_get()``
 * ``_example_rectangle_area()``
 
-They are the setters and getters for your properties, and you method. Look closely at one of the getters:
+They are the setters and getters for your properties and method. Examine one of the getters closely:
 
 ```c
 EOLIAN static int
