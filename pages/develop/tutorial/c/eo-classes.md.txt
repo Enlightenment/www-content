@@ -164,16 +164,16 @@ You will also find the following methods with empty bodies in the generated file
 * ``_example_rectangle_height_get()``
 * ``_example_rectangle_area()``
 
-They are the setters and getters for your properties and method. Examine one of the getters closely:
+These are the setters and getters for your properties and method. Examine one of the getters closely:
 
 ```c
 EOLIAN static int
 _example_rectangle_width_get(Eo *obj, Example_Rectangle_Data *pd)
 ```
 
-It receives the ``Eo *`` object whose property is being retrieved and, as a convenience, an ``Example_Rectangle_Data *`` pointer to its private data. It returns an integer because that's what you specified as the value for this property in the Eolian file.
+This getter receives the ``Eo *`` object whose property is being retrieved and an ``Example_Rectangle_Data *`` pointer to its private data. It returns an integer, as that's what you specified as the value for this property in the Eolian file.
 
-Everything is now in place to start coding. First, add to the ``Example_Rectangle_Data`` structure some class variables to store the actual width and height of the rectangle:
+Everything is now in place to start coding. To get started, add some class variables to the ``Example_Rectangle_Data`` structure. This stores the actual width and height of the rectangle:
 
 ```c
 typedef struct
@@ -182,7 +182,7 @@ typedef struct
 } Example_Rectangle_Data;
 ```
 
-And now fill-in the setters and getters for ``width`` and ``height``. They just provide access to the private variables, so the code is very simple. Also, none of the ``Eo *obj`` is not going to be used, so it is a good idea to mark them with ``EINA_UNUSED`` to avoid compiler warnings:
+Now fill-in the setters and getters for ``width`` and ``height``. These simply provide access to the private variables so the code is very simple. Also none of the ``Eo *obj`` is going to be used, so mark them with ``EINA_UNUSED`` to avoid compiler warnings:
 
 ```c
 EOLIAN static void
@@ -210,7 +210,7 @@ _example_rectangle_height_get(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 }
 ```
 
-Lastly, calculate the area of the rectangle in the ``_example_rectangle_area()`` method:
+Finally, calculate the area of the rectangle in the ``_example_rectangle_area()`` method:
 
 ```c
 EOLIAN static int
@@ -220,11 +220,11 @@ _example_rectangle_area(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 }
 ```
 
-With this, your class is finished. You cannot test it, though, unless you write some code to use it.
+Your class is now complete. but you can't test it until you write some code which uses it. 
 
 ## Step Three: Using the New Class ##
 
-Create a new file (for example ``eo_classes_main.c``) and add the basic EFL application skeleton from the [Hello World tutorial](hello-world.md):
+Create a new file (for example ``eo_classes_main.c``) and add the basic EFL application from the [Hello World tutorial](hello-world.md):
 
 ```c
 #define EFL_EO_API_SUPPORT 1
@@ -247,7 +247,7 @@ The first step is to include the auto-generated header file for your new class, 
 #include "example_rectangle.eo.h"
 ```
 
-After that, add an empty method that will instantiate the class:
+Next add an empty method that will instantiate the class:
 
 ```c
 Example_Rectangle *
@@ -256,7 +256,7 @@ _rect_create()
 }
 ```
 
-And call it from ``efl_main()``, right before calling ``efl_exit()``:
+Now call this method from ``efl_main()``, right before calling ``efl_exit()``:
 
 ```c
    Eo *rectangle;
@@ -266,7 +266,7 @@ And call it from ``efl_main()``, right before calling ``efl_exit()``:
    efl_unref(rectangle);
 ```
 
-Notice how the object is disposed of using ``efl_unref()`` before quitting. It is a good idea to write the code to remove objects at the same time you write the code that creates them, so you don't forget. Later on you will be doing more things with this ``rectangle``.
+Notice how the object is discarded using ``efl_unref()`` before quitting. It is a good idea to write the code to remove objects at the same time you write the code that creates them, so you don't forget. You will be doing more with this ``rectangle`` later.
 
 Finally, instantiate a new object of your shiny new class from within ``_rect_create()``:
 
@@ -281,13 +281,15 @@ Finally, instantiate a new object of your shiny new class from within ``_rect_cr
    return rectangle;
 ```
 
-There are many things worth pointing out here, inside the call to ``efl_add()``:
+There are several items of interest inside the call to ``efl_add()``:
 
-* The symbol you need to use for your class is ``EXAMPLE_RECTANGLE_CLASS``. It is defined in ``example_rectangle.eo.h`` and its name comes from the class name you defined in your Eolian file.
-* The new object is being configured with the two setters you defined for your class, so it starts with a ``width`` of 5 and a ``height`` of 10.
-* The new object is stored in a ``Example_Rectangle *`` pointer so the kind of object it points to is clear. A generic ``Eo *`` would work too.
+* The symbol you need to use for your class is ``EXAMPLE_RECTANGLE_CLASS``. It is defined in ``example_rectangle.eo.h``. Its name comes from the class name you defined in your Eolian file.
+* The new object is configured with the two setters you defined for your class and as such starts with a ``width`` of 5 and a ``height`` of 10.
+* The new object is stored in an ``Example_Rectangle *`` pointer so the kind of object it points to is clear. A generic ``Eo *`` would work too.
 
-You could compile and run your program now, and the new object would be instantiated, but nothing would show on screen. Add a simple print statement that proves that everything is working as expected. In ``efl_main()``, right after calling ``_rect_create()``:
+In theory you could now compile and run your program. The new object would be instantiated however nothing would show on screen. You can solve this issue by adding a simple print statement to prove everything is working as expected. 
+
+In ``efl_main()``, right after calling ``_rect_create()`` add:
 
 ```c
    printf("Rectangle is %dx%d, area is %d\n",
@@ -338,13 +340,13 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 EFL_MAIN()
 ```
 
-You can now build you program as usual, but remember to include the implementation file for your new class in the build:
+You can now build you program as usual. Remember to include the implementation file for your new class in the build:
 
 ```bash
 gcc -o eo-classes eo_classes_main.c example_rectangle.c `pkg-config --cflags --libs eina efl elementary`
 ```
 
-When run, your program should print on the terminal:
+When run your program should print the following via terminal:
 
 ```
 Rectangle is 5x10, area is 50
@@ -352,15 +354,15 @@ Rectangle is 5x10, area is 50
 
 ## Summary ##
 
-At the end of this tutorial you have learned:
+After going through this tutorial you've learned:
 
-* New classes are described in **Eolian files** (same name as your class with ``.eo`` extension).
+* New classes are described in **Eolian files** which have the same name as your class with a ``.eo`` extension.
 * Eolian files are turned into **boilerplate C code** using ``eolian_gen``.
 * The code for your class is added to the **implementation file** (``name_of_your_class.c``).
-* Code using your class has to **include the class header** (``name_of_your_class.eo.h``).
+* Code using your class must **include the class header** (``name_of_your_class.eo.h``).
 * Applications using your class have to **build the implementation file**.
 
-The following tutorials show how to inherit from other classes and define interfaces.
+In the following tutorials you'll discover how to inherit from other classes and define interfaces.
 
 ## Further Reading ##
 [Introduction to Eo](eo-intro.md)
