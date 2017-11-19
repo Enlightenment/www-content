@@ -4,7 +4,7 @@
 
 # Tutorial 1: Hello World #
 
-This tutorial will guide you through the necessary steps to build your first "Hello World" example using the *Enlightenment Foundation Libraries* (EFL). Before continuing make sure you have read the [Setting up the Development Environment](/develop/setup/c/) guide.
+This tutorial will guide you through the necessary steps to build your first "Hello World" example program using the *Enlightenment Foundation Libraries* (EFL). Before continuing make sure you have read the [Setting up the Development Environment](/develop/setup/c/) guide.
 
 There is very little code in this first tutorial so don't worry if you have little coding experience. The main goal is to build and execute an application using EFL. You will need a basic knowledge of C to get started.
 
@@ -18,10 +18,9 @@ Using your favorite text editor, create a text file and save it as ``hello-world
 
 #include <Eina.h>
 #include <Efl_Core.h>
-
 ```
 
-The new EFL API has been in Beta stage for a while, and some libraries still need that you define the ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT`` symbols before including any EFL library. Don't worry, though, they should not be required anymore in the near future.
+The new EFL API has been in Beta stage for a while, and some libraries still need that you define the ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT`` symbols before including any EFL library. Don't worry, though, they should not be required any more in the near future.
 
 The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial you will be calling methods from the ``Eina`` and ``Efl`` libraries, therefore you need to include the ``Eina.h`` and ``Efl_Core.h`` headers.
 
@@ -32,41 +31,51 @@ You will explore the EFL libraries in greater depth in later tutorials. Other ex
 Instead of the ``main()`` function marking the standard C entry point EFL uses ``efl_main()``. Type the following underneath the includes section of your program:
 
 ```c
+[...]
+
 void
 efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
 }
 ```
 
+> **NOTE:**
+> ``[...]`` in a Code Block indicates existing code which has been excluded for the sake of brevity. There is no need to type ``[...]`` into your program.
+
 EFL takes care of all initialization tasks and calls your ``efl_main()`` method when everything is ready.
 
-The following tutorial will focus on the ``efl_main()`` parameters. In this one they're not being used, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having.
+The [next tutorial](TODO: Link to next tutorial) will focus on the ``efl_main()`` parameters. In this one they're not being used, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having.
 
 ## Step Three: Print "Hello World" ##
 
 Type the following between the curly brackets of ``efl_main()``:
 
 ```c
+[...]
    printf("Hello World!\n");
+[...]
 ```
 
-This is a regular C ``printf()`` which will output the "Hello World" string to the console. 
+This is a regular C ``printf()`` which will output the "Hello World" string to the console.
 
 ## Step Four: Exiting ##
 
 Any programs you create with EFL must always terminate by calling ``efl_exit()``. This is an important difference to the regular C ``main()``, where a program exits when it reaches the end of a method. Enter the following below your ``printf()``:
 
 ```c
+[...]
     efl_exit(0);
+[...]
 ```
 
-The parameter ``efl_exit()`` is the value your program returns to the operating system.
+The parameter in ``efl_exit()`` is the value your program returns to the operating system.
 
 ## Step Five: Automatic EFL Setup and Shutdown ##
 
 This final piece of "boilerplate" code should be included at the end of every EFL program. Type the following at the very end of your program as the last line:
 
 ```c
+[...]
 EFL_MAIN()
 ```
 
@@ -101,7 +110,7 @@ If the systems displays no errors, your program should be ready. Test it by typi
 ./hello-world
 ```
 
-The words ``Hello World!`` should now appear on your terminal. 
+The words *Hello World!* should now appear on your terminal.
 
 ## Step Six: Retrieve the Command Line Parameters ##
 
@@ -133,7 +142,9 @@ As you can see, the ``Efl_Event *ev`` parameters is no longer marked with ``EINA
 The ``Efl_Event`` structure contains an array with all the command line parameters. You retrieve it like this:
 
 ```c
+[...]
    Efl_Loop_Arguments *args = ev->info;
+[...]
 ```
 
 Finally, the array can be found in ``args->argv``. Arrays in EFL are handled with the ``Eina_Array`` type, so you can use ``eina_array_count()`` to retrieve the number of elements in an array and ``eina_array_data_get()`` to access the contents of the array.
@@ -143,7 +154,6 @@ In the above example, if no parameters are passed to your program (``eina_array_
 ```bash
 ./hello-world Mike
 ```
-
 ## Summary ##
 
 At the end of this tutorial you have learned:
