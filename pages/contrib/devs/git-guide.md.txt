@@ -60,22 +60,7 @@ Depending on the nature of your commit some of the following tags might apply:
 
 All these tags should live in the commit body with the detailed description, and not in the summary line. It is preferred if the tags are added as a separate line at the end of the commit message, though they will function from anywhere in the commit body.
 
-### Commit Message Example 1 ###
-
-```
-eet data: guarantee double-word alignment for temporary stack buffer.
-
-The code was giving enough memory to store doubles and longs, but they
-could be unaligned as "unsigned char" allows 1-byte alignment while
-double may require 8 bytes.
-
-By specifying the array as "long long" we force certain alignment in a
-platform independent way. As this array is small enough and
-short-lived the number of items were not changed. This results in
-more bytes on the stack but it shouldn't matter.
-```
-
-### Commit Message Example 2 ###
+### Simple Message Example ###
 
 ```
 spinner: Uncomment ctype.h inclusion because isspace is used.
@@ -85,18 +70,7 @@ is recommended to explicitly include the necessary header.
 Confirmed by glima as he commented this out.
 ```
 
-### Commit Message Example 3 ###
-
-```
-evas textblock: Fix buffer overflow in anchor code
-
-If we set the anchor on a long text block the buffer might overflow.
-Take string len into account. Long-standing bug.
-@fix
-CID: 123456
-```
-
-### Commit Message Example 4 ###
+### Feature Addition Message Example ###
 
 ```
 eina: Add purple/yellow cherry tree algorithm implementation
@@ -107,14 +81,16 @@ so we can try it out in the real world.
 @feature
 ```
 
-### Commit Message Example 5 ###
+### Bug Fix Message Example ###
 
 ```
-genlist: Allow for more than 5 entries.
+evas textblock: Fix buffer overflow in anchor code
 
-It has been requested that we allow for more than 5 entries in the list.
-I'm not sure if this is really needed but at least allow for it.
+If we set the anchor on a long text block the buffer might overflow.
+Take string len into account. Long-standing bug.
 Fixes T2222
+@fix
+CID: 123456
 ```
 
 ## Merging Changes Back into Master ##
