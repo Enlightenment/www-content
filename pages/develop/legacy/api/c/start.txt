@@ -11,7 +11,19 @@ window.addEventListener('DOMContentLoaded', function(e) {
     var container = document.getElementById("embed-iframe");
     iframe.addEventListener('load', function(e) {
         size_to_content(container, iframe);
+
+        var url = iframe.contentWindow.location.href;
+        var pos = url.indexOf('/embed/')
+        if (pos)
+            document.location.hash = url.substring(pos + 7);
+
     }, true);
+
+    var page = document.location.hash.substring(1);
+    if (page) {
+        var url = '/develop/legacy/api/c/embed/' + page;
+        iframe.setAttribute("src", url);
+    }
 }, true);
 
 </JS>
