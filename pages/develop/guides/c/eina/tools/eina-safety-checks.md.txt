@@ -1,0 +1,83 @@
+---
+~~Title: Safety Checks~~
+~~NOCACHE~~
+---
+
+# Safety Checks #  
+
+Eina safety checks are a set of macros designed to check for parameters or values that must never occur. The concept is similar to the ``assert()`` function, but safety checks log the parameter or value and return instead of aborting the program outright.
+
+## Available Safety Checks ##
+
+The following safety checks are available:
+
+* ``EINA_SAFETY_ON_NULL_RETURN(exp)``
+* ``EINA_SAFETY_ON_NULL_RETURN_VAL(exp, val)``
+* ``EINA_SAFETY_ON_NULL_GOTO(exp, label)``
+* ``EINA_SAFETY_ON_TRUE_RETURN(exp)``
+* ``EINA_SAFETY_ON_TRUE_RETURN_VAL(exp, val)``
+* ``EINA_SAFETY_ON_TRUE_GOTO(exp, label)``
+* ``EINA_SAFETY_ON_FALSE_RETURN(exp)``
+* ``EINA_SAFETY_ON_FALSE_RETURN_VAL(exp, val)``
+* ``EINA_SAFETY_ON_FALSE_GOTO(exp, label)``
+* ``EINA_ARG_NONNULL(...)``
+
+### EINA_SAFETY_ON_NULL_RETURN() ###
+
+Use the ``EINA_SAFETY_ON_NULL_RETURN()`` function to return ``NULL``; this macro calls ``return`` if the given parameter is ``NULL``.
+
+```c
+Eina_Bool myfunction(char *param)
+{
+   // If my param is NULL, EINA_SAFETY_ON_NULL_RETURN calls "return"
+   EINA_SAFETY_ON_NULL_RETURN(param);
+
+   printf("My pram is : %s\n", param);
+
+   return EINA_TRUE;
+}
+```
+
+### EINA_SAFETY_ON_NULL_RETURN_VAL() ###
+
+Use the ``EINA_SAFETY_ON_NULL_RETURN_VAL()``
+function instead of the ``EINA_SAFETY_ON_NULL_RETURN()`` function to return a specific value; this macro returns the given value.
+
+```c
+Eina_Bool void myfunction(char *param)
+{
+   // If the parameter is NULL, return EINA_FALSE;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(param, EINA_FALSE);
+   printf("My pram is : %s\n", param);
+
+   return EINA_TRUE;
+}
+```
+
+### EINA_SAFETY_ON_NULL_GOTO() ###
+
+Use the ``EINA_SAFETY_ON_NULL_GOTO()`` function to call another function if a parameter is ``NULL``. This macro works similarly to the ``EINA_SAFETY_ON_NULL_RETURN()`` function except that it calls ``goto`` with the given function instead of ``return``.
+
+```c
+static void isnullcb()
+{
+   printf("The parameter is NULL\n");
+}
+Eina_Bool void myfunction(char *param)
+{
+   // If the parameter is NULL we return EINA_FALSE;
+   EINA_SAFETY_ON_NULL_GOTO(param, isnullcb);
+   printf("My pram is : %s\n", param);
+
+   return EINA_TRUE;
+}
+```
+
+### EINA_SAFETY_ON_TRUE_RETURN() ###
+
+Eina also provides macros to check whether a given value is ``TRUE`` or ``FALSE``. To call ``return`` if a given value is ``TRUE`` use the ``EINA_SAFETY_ON_TRUE_RETURN()`` function. To call ``goto`` in a given function if a given value is ``TRUE``, use the ``EINA_SAFETY_ON_NULL_GOTO()`` function.
+
+## Further Reading ##
+
+[The Safety Checks API](https://www.enlightenment.org/develop/legacy/api/c/start#group__Eina__Safety__Checks__Group.html)
+:   A reference for the Safety Checks API.
