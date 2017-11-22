@@ -1,0 +1,105 @@
+---
+~~Title: Generic Value~~
+~~NOCACHE~~
+---
+
+# Generic Value #
+
+The ``Eina_Value`` object provides generic data storage and access, allowing you to store what you want in one single type of ``Eina_Value``. It is meant for simple data types, providing uniform access and release functions useful to exchange data while preserving their types. ``Eina_Value`` comes with predefined types for numbers, arrays, lists, hashes, blobs and structs, and it can convert between data types including strings.
+
+## Value Types ##
+
+The ``Eina_Value`` can handle the following types:
+
+* **``EINA_VALUE_TYPE_UCHAR``** -  unsigned char
+* **``EINA_VALUE_TYPE_USHORT``** -  unsigned short
+* **``EINA_VALUE_TYPE_UINT``** -  unsigned int
+* **``EINA_VALUE_TYPE_ULONG``** -  unsigned long
+* **``EINA_VALUE_TYPE_TIMESTAMP``** -  unsigned long, used for timestamps
+* **``EINA_VALUE_TYPE_UINT64``** -  unsigned integer of 64 bits
+* **``EINA_VALUE_TYPE_CHAR``** -  char
+* **``EINA_VALUE_TYPE_SHORT``** -  short
+* **``EINA_VALUE_TYPE_INT``** -  int
+* **``EINA_VALUE_TYPE_LONG``** -  long
+* **``EINA_VALUE_TYPE_INT64``** -  integer of 64 bits
+* **``EINA_VALUE_TYPE_FLOAT``** -  float
+* **``EINA_VALUE_TYPE_DOUBLE``** -  double
+* **``EINA_VALUE_TYPE_STRINGSHARE``** -  stringshared string
+* **``EINA_VALUE_TYPE_STRING``** -  string
+* **``EINA_VALUE_TYPE_ARRAY``** -  array
+* **``EINA_VALUE_TYPE_LIST``** -  list
+* **``EINA_VALUE_TYPE_HASH``** -  hash
+* **``EINA_VALUE_TYPE_TIMEVAL``** -  'struct timeval'
+* **``EINA_VALUE_TYPE_BLOB``** -  blob of bytes
+* **``EINA_VALUE_TYPE_STRUCT``** -  struct
+
+## Setting Up a Generic Value ##
+
+To set up a generic value, declare the necessary variables:
+
+```c
+// The Eina_Value itself
+Eina_Value v;
+// An integer
+int i;
+// And a char *
+char *newstr;
+```
+
+## Storing an Integer Value ##
+
+To set up an ``Eina_Value`` for an integer use the ``eina_value_setup()`` function.  The first argument is the ``Eina_Value`` and the second is the type.
+
+```c
+eina_value_setup(&v, EINA_VALUE_TYPE_INT);
+```
+
+To set an integer use the ``eina_value_set()`` function:
+
+```c
+eina_value_set(&v, 123);
+```
+
+## Getting an Integer Value ##
+
+Use the ``eina_value_get()`` function to get an integer value. Pass the ``Eina_Value`` as the first argument and a pointer to a variable to store the value. The target variable must have the same type as the ``Eina_Value``.
+
+```c
+eina_value_get(&v, &i);
+printf("v=%d\n", i);
+```
+The above example prints "v=123".
+
+## Storing a String Value ##
+
+To store a string:
+
+```c
+const char *s;
+
+eina_value_setup(&v, EINA_VALUE_TYPE_STRING);
+eina_value_set(&v, "My string");
+```
+## Getting a String Value ##
+
+Use the ``eina_value_get()`` function to get a string value. Pass the ``Eina_Value`` as the first argument and a pointer to a variable to store the value. The target variable must have the same type as the ``Eina_Value``.
+
+```c
+eina_value_get(&v, &s);
+printf("v=%s (pointer: %p)\n", s, s);
+```
+
+## Storing a List Value ##
+
+To store a list use the ``Eina_Value`` that corresponds to the ``EINA_VALUE_TYPE_LIST`` type. To create an ``Eina_Value_List``, use the ``eina_value_list_setup()`` function. The function initializes a generic value storage of the list type. The first parameter is the "object" value, and the second one is the type (how to manage the stored list members).
+
+## Further Reading ##
+
+[Generic Value API](https://www.enlightenment.org/develop/legacy/api/c/start#group__Eina__Value__Group.html)
+:    A reference for the Generic Value API.
+
+[Eina Value Example](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_value.c)
+:    An example use of the Generic Value API.
+
+[Eina Value Custom Example](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_value_custom.c)
+:    An example of using custom types with the Generic Value API.
