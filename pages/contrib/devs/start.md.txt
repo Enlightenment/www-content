@@ -9,6 +9,17 @@ The Enlightenment Project is always keen to accept contributions of code, patche
 
 Before contributing, please take the time to read through the following documentation.
 
+## Rules for Contribution ##
+
+Code contributed to the Enlightenment Project must follow the short list of project rules outlined below. Code or other contributions which do not adhere to these rules will not be accepted without modification.
+
+* Contributed code must be written and commented in American English
+* Contributed code should not be malicious or discriminative
+* Code should be tested (including the use of ``valgrind`` before being submitted
+* Contributed code must match the project License
+
+When contributing code to the Enlightenment Project you retain your copyright by default; no contributors are required to assign copyright elsewhere.
+
 ## Coding Conventions ##
 
 To ensure an approachable and maintainable code base the Enlightenment Project has a document outlining [Coding Conventions](https://www.enlightenment.org/contrib/devs/coding-conventions.md), from the use of spaces rather than tabs through to naming conventions.
@@ -28,6 +39,35 @@ If you're looking for an issue to solve, the [Phabricator Ticketing System](http
 ## Patch Submission and Review ##
 
 New contributors to the project are required to submit their patches through the Arcanist system, which automatically brings them through to the Phabricator Ticket System for tracking and review. The [Patch Submission and Review with Arcanist guide](https://www.enlightenment.org/contrib/devs/arcanist-guide.md) explains how to install, configure, and use Arcanist to submit patches for review.
+
+## Testing and Debugging ##
+
+Before submitting code to the Enlightenment git repositories, mailing list, or through the [patch submission process](#Patch_Submission_and_Review), always test it for errors using both positive (expected values/behavior) and negative (unexpected values/behavior) tests. Run your code inside ``valgrind`` to ensure its memory access is correct and it does not leak.
+
+More information on debugging is avaialble on the [Phabricator wiki](https://phab.enlightenment.org/w/debugging/).
+
+## Editors ##
+
+Advice on tailoring particular editors for ease of use during Enlightenment development can be found on the Phabricator wiki, presented here in alphabetical order:
+
+* [Eclipse](https://phab.enlightenment.org/w/ecoding/eclipse/)
+* [Emacs](https://phab.enlightenment.org/w/ecoding/emacs/)
+* [Jed](https://phab.enlightenment.org/w/ecoding/jed/)
+* [SciTE](https://phab.enlightenment.org/w/ecoding/scite/)
+* [Vim](https://phab.enlightenment.org/w/ecoding/vim/)
+* [Geany](https://phab.enlightenment.org/w/ecoding/geany/)
+
+## Contributing New Features or Infrastructure ##
+
+If you have an idea for a new feature, first check that it is not already present within the Enlightenment Foundation Libraries (EFL) or other infrastructure. The following features are sometimes overlooked, and can often provide functionality otherwise missing:
+
+* [Eina](https://phab.enlightenment.org/w/eina/) provides data types (list, hash, array...), logging, safety checks, module loading and more. Before introducing ``printf()`` to debug code, silently ignoring errors or starting to use ``dlopen()`` check Eina
+* [Ecore](https://phab.enlightenment.org/w/ecore/) provides main loop and system integration that includes threads and networking. Consider it before using threads, networking, polling/reading from file descriptors
+ * [Eio](https://phab.enlightenment.org/w/eio/) provides efficient input/output (IO) to the file system including asynchronous copies, moves, stating and directory listing
+ * [Edje](https://phab.enlightenment.org/w/edje/) provides theme capabilities and is good for creating layouts
+ * [Elementary](https://phab.enlightenment.org/w/elementary/) provides efficient handling widgets for lists, text input, and multitudes of helpers.
+
+If you are sure the functionality you wish to implement doesn't yet exist, talk to fellow developers on the [official IRC channel](#IRC_Channels) or via the [mailing list](#Mailing_Lists). Your fellow developers will almost certainly have ideas on how to implement the feature efficiently, advice on problems that have previously cropped up when trying to implement so-called "doomed features," and can coordinate to prevent future problems.
 
 ## IRC Channels ##
 
