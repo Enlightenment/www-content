@@ -1,0 +1,112 @@
+---
+~~Title: String Tool~~
+~~NOCACHE~~
+---
+
+# String Tool # 
+
+String manipulation is one of the most common tasks in any application. Eina provides an application programming interface (API) for the manipulation of C strings: ``eina_str``. This API provides several functions described in this document: splitting strings, joining strings, converting strings to upper or lower case and checking to see whether a string begins or ends with another string.
+
+## Splitting Strings ##
+
+The ``eina_str_split()`` allows you to function to split a string at a delimiter. The first parameter is the string to split, the second determines where to split the string and the final parameter is the maximum number of strings into which the original string should be split. If the maximum number of returned strings is less than one, the function will split the string as many times as possible.
+
+The function returns a newly-allocated ``NULL``-terminated array of strings, or ``NULL`` if it fails to allocate the array.
+
+> **NOTE:**
+>Always remember to free the memory allocated by the ``eina_str_split()`` function.
+
+```c
+char *nicks = "Rasterman:Bluebugs:Tasn:Illogict:billiob:Puppet_Master";
+char **result_arr;
+int i;
+
+// Splitting the string with ':' delimiter
+result_arr = eina_str_split(names, ":", 0);
+
+// Printing the result
+for (i = 0; result_arr[i]; i++)
+   printf("Nick : %s\n", result_arr[i]);
+
+// Remember to free memory
+free(arr[0]);
+free(arr);
+```
+
+
+## Converting Strings to Upper/Lower Case ##
+
+The ``eina_str_tolower()`` and ``eina_str_toupper()`` functions allow strings to be converted to lower or upper case respectively. They change the case for all characters of the given string, regardless of their original case. These functions modify the original strings.
+
+```c
+char *str;
+
+// Initialize the string
+str = malloc(sizeof(char) * 4);
+strcpy(str, "bsd");
+
+// Change the string to uppercase
+eina_str_toupper((char **)&str);
+printf("%s\n", str);
+// Change the string to lowercase
+
+eina_str_tolower(&str);
+printf("%s\n", str);
+// Free the allocated memory
+
+free(str);
+```
+
+## Joining Strings ##
+
+The ``eina_str_join()`` function allows two strings of a known length to be joined together. The fist parameter is the buffer to store the result, the second is the size of the buffer, the third is the
+separator between the two strings and the two final parameters are the stings to be joined.
+
+```c
+char *part1 = "Elementary powered by";
+char *part2 = "Enlightenment Foundation Libraries";
+char *res;
+size_t size;
+
+// Calculate the string size + 1 for the delimiter
+size = strlen(part1) + strlen(part2) + 1
+
+// Allocate memory for the result
+res = malloc(sizeof(char) * size);
+
+// Join the strings
+eina_str_join(res, size, ' ', part1, part2);
+printf("%s\n", res);
+
+// Free the allocated memory
+free(res):
+```
+
+## Matching the Start/End of a String ##
+
+The ``eina_str_has_prefix()`` and ``eina_str_has_suffix()`` function allow for strings to be matched against the beginning or end of another string respectively. You can also check whether a string has a particular extension with the ``eina_str_has_extension()`` function.
+
+These functions return ``EINA_TRUE`` if the given string contains the specified prefix, suffix, or extension and ``EINA_FALSE`` if it does not.
+
+```c
+char *names = "Carsten;Cedric;Tom;Chidambar;Boris;Philippe"
+
+if (eina_str_has_prefix(names, "Carsten"))
+   printf("String starts with 'Carsten'")
+
+if (eina_str_has_suffix(names, "Philippe"))
+   printf("String ends with 'Philippe'")
+
+if (eina_str_has_extension(names, "philippe"))
+   printf("String has extension 'philippe'")
+else
+   printf("String does not have extension "philippe)
+```
+
+## Further Reading ##
+
+[The String Tools API](https://www.enlightenment.org/develop/legacy/api/c/start#group__Eina__String__Group.html)
+:    An auto-generated reference to the String Tools API and its functions.
+
+[The eina_string Tutorial](https://www.enlightenment.org/develop/legacy/api/c/start#tutorial_eina_string.html)
+:    A tutorial demonstrating the use of the String Tools API.
