@@ -1,4 +1,4 @@
-<title>Efl.Canvas.Layout.Part_Swallow</title>
+~~Title: Efl.Canvas.Layout.Part_Swallow~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -15,15 +15,13 @@ digraph hierarchy {
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_ui_drag [fillcolor = "gray15", label = "Efl.Ui.Drag", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_content [fillcolor = "gray15", label = "Efl.Content", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
     efl_canvas_layout_part_swallow -> efl_canvas_layout_part
     efl_canvas_layout_part -> efl_object
     efl_canvas_layout_part -> efl_gfx
     efl_canvas_layout_part -> efl_ui_drag
-    efl_canvas_layout_part_swallow -> efl_container
-    efl_container -> efl_gfx
+    efl_canvas_layout_part_swallow -> efl_content
 }
 </graphviz>
 
@@ -36,8 +34,7 @@ digraph hierarchy {
       * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
       * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
       * [[:develop:api:interface:efl:ui:drag|Efl.Ui.Drag]] //(interface)//
-    * [[:develop:api:interface:efl:container|Efl.Container]] //(interface)//
-      * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
+    * [[:develop:api:interface:efl:content|Efl.Content]] //(interface)//
 
 ===== Description =====
 
@@ -242,41 +239,20 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 
 %%The parent of an object.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:canvas:layout:part_swallow:method:content_unset|content_unset]]** //[Overridden here]//
+[[:develop:api:interface:efl:content|Efl.Content]].**[[:develop:api:class:efl:canvas:layout:part_swallow:method:content_unset|content_unset]]** //[Overridden here]//
 <code c>
 Efl_Gfx *efl_content_unset(Eo *obj);
 </code>
 
 %%Unswallow the object in the current container and return it.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:canvas:layout:part_swallow:property:content|content]]** //**(get, set)**// //[Overridden here]//
+[[:develop:api:interface:efl:content|Efl.Content]].**[[:develop:api:class:efl:canvas:layout:part_swallow:property:content|content]]** //**(get, set)**// //[Overridden here]//
 <code c>
 Efl_Gfx *efl_content_get(const Eo *obj);
 Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
 </code>
 
 %%Swallowed sub-object contained in this object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_count|content_count]]**
-<code c>
-int efl_content_count(Eo *obj);
-</code>
-
-%%Returns the number of UI elements packed in this container.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_iterate|content_iterate]]**
-<code c>
-Eina_Iterator *efl_content_iterate(Eo *obj);
-</code>
-
-%%Begin iterating over this object's contents.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_remove|content_remove]]**
-<code c>
-Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
-</code>
-
-%%Unswallow an object from this container.%%\\ 
 \\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:class:efl:canvas:layout:part:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:layout:part|Efl.Canvas.Layout.Part]]]//
 <code c>
@@ -401,40 +377,12 @@ EFL_EVENT_DEL(void, @hot)
 
 %%Object is being deleted.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_added|content,added]]**
-<code c>
-EFL_CONTAINER_EVENT_CONTENT_ADDED(Efl_Gfx *)
-</code>
-
-%%Sent after a new item was added.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_removed|content,removed]]**
-<code c>
-EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
-</code>
-
-%%Sent after an item was removed, before unref.%%\\ 
-\\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
 <code c>
 EFL_GFX_EVENT_CHANGED(void)
 </code>
 
 %%Object was changed%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
-<code c>
-EFL_GFX_EVENT_CHANGED(void)
-</code>
-
-%%Object was changed%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
-<code c>
-EFL_GFX_EVENT_HIDE(void)
-</code>
-
-%%Object just became invisible.%%\\ 
 \\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
 <code c>
@@ -450,33 +398,12 @@ EFL_GFX_EVENT_MOVE(void)
 
 %%Object was moved, its position during the event is the new one.%%\\ 
 \\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
-<code c>
-EFL_GFX_EVENT_MOVE(void)
-</code>
-
-%%Object was moved, its position during the event is the new one.%%\\ 
-\\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
 <code c>
 EFL_GFX_EVENT_RESIZE(void)
 </code>
 
 %%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
-<code c>
-EFL_GFX_EVENT_RESIZE(void)
-</code>
-
-%%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
-<code c>
-EFL_GFX_EVENT_SHOW(void)
-</code>
-
-%%Object just became visible.%%\\ 
 \\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
 <code c>

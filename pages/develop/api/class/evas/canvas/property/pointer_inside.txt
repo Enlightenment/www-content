@@ -1,10 +1,15 @@
-<title>Evas.Canvas.pointer_inside</title>
-===== Signature =====
+~~Title: Evas.Canvas.pointer_inside~~
+//Overridden from [[:develop:api:interface:efl:canvas:property:pointer_inside|Efl.Canvas.pointer_inside]] **(get)**.//===== Signature =====
 
 <code>
-@property pointer_inside {
+@property pointer_inside @pure_virtual {
     get {
-        return: bool @warn_unused;
+        keys {
+            seat: free(Efl.Input.Device, efl_del) @optional;
+        }
+        values {
+            inside: bool;
+        }
     }
 }
 </code>
@@ -12,23 +17,28 @@
 ===== C signature =====
 
 <code c>
-Eina_Bool evas_canvas_pointer_inside_get(const Eo *obj);
+Eina_Bool efl_canvas_pointer_inside_get(const Eo *obj, Efl_Input_Device *seat);
 </code>
 
+===== Keys =====
+
+  * **seat** - %%The seat to consider, if %%''null''%% then the default seat will be used.%%
+===== Values =====
+
+  * **inside** - %%%%''true''%% if the mouse pointer is inside the canvas, %%''false''%% otherwise%%
 ===== Description =====
 
-%%Returns whether the default mouse pointer is logically inside the canvas.%%
+%%Returns whether the mouse pointer is logically inside the canvas.%%
 
-%%When this function is called it will return a value of either %%''false''%% or %%''true''%%, depending on if event_feed_mouse_in or event_feed_mouse_out have been called to feed in a  mouse enter event into the canvas.%%
+%%When this function is called it will return a value of either %%''false''%% or %%''true''%%, depending on whether a pointer,in or pointer,out event has been called previously.%%
 
 %%A return value of %%''true''%% indicates the mouse is logically inside the canvas, and %%''false''%% implies it is logically outside the canvas.%%
 
 %%A canvas begins with the mouse being assumed outside (%%''false''%%).%%
 
-%%If %%''e''%% is not a valid canvas, the return value is undefined.%%
 {{page>:develop:api:user:class:evas:canvas:property:pointer_inside:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 
-  * **Evas.Canvas.pointer_inside**
+  * [[:develop:api:interface:efl:canvas:property:pointer_inside|Efl.Canvas.pointer_inside]]
 

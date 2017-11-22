@@ -1,4 +1,4 @@
-<title>Elm.Segment_Control.Item</title>
+~~Title: Elm.Segment_Control.Item~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -529,6 +529,20 @@ Eina_Bool elm_wdg_item_tooltip_window_mode_set(Eo *obj, Eina_Bool disable);
 
 %%Control size restriction state of an object's tooltip%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attribute_append|attribute_append]]**
+<code c>
+void efl_access_attribute_append(Eo *obj, const char *key, const char *value);
+</code>
+
+%%Add key-value pair identifying object extra attributes%%\\ 
+\\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attributes_clear|attributes_clear]]**
+<code c>
+void efl_access_attributes_clear(Eo *obj);
+</code>
+
+%%Removes all attributes in accessible object.%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:relationship_append|relationship_append]]**
 <code c>
 Eina_Bool efl_access_relationship_append(Eo *obj, Efl_Access_Relation_Type type, const Efl_Access *relation_object);
@@ -619,7 +633,7 @@ void efl_ui_focus_object_prepare_logical(Eo *obj);
 
 %%Tells the object that the children of it will be queried soon by the given manager.%%\\ 
 \\ 
-[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:mixin:efl:ui:focus:object:property:focus|focus]]** //**(get, set)**//
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:mixin:efl:ui:focus:object:property:focus|focus]]** //**(get, set)**// ''protected set''
 <code c>
 Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
 void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
@@ -756,6 +770,13 @@ int efl_access_component_z_order_get(const Eo *obj);
 
 %%Gets the depth at which the component is shown in relation to other components in the same container.%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:class:elm:widget:item:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:develop:api:class:elm:widget:item|Elm.Widget.Item]]]// ''protected''
+<code c>
+Eina_List *efl_access_attributes_get(const Eo *obj);
+</code>
+
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:class:elm:widget:item:property:state_set|state_set]]** //**(get)**// //[Overridden in [[:develop:api:class:elm:widget:item|Elm.Widget.Item]]]// ''protected''
 <code c>
 Efl_Access_State_Set efl_access_state_set_get(const Eo *obj);
@@ -783,13 +804,6 @@ void efl_access_event_handler_del(const Eo *obj, Efl_Access_Event_Handler *handl
 </code>
 
 %%Deregister accessibility event listener%%\\ 
-\\ 
-[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:attributes|attributes]]** //**(get)**// ''protected''
-<code c>
-Eina_List *efl_access_attributes_get(const Eo *obj);
-</code>
-
-%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:children|children]]** //**(get)**// ''protected''
 <code c>

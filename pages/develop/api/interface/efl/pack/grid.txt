@@ -1,4 +1,4 @@
-<title>Efl.Pack.Grid</title>
+~~Title: Efl.Pack.Grid~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -14,12 +14,10 @@ digraph hierarchy {
     efl_pack_linear [fillcolor = "gray15", label = "Efl.Pack.Linear", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_pack [fillcolor = "gray15", label = "Efl.Pack", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
     efl_pack_grid -> efl_pack_linear
     efl_pack_linear -> efl_pack
     efl_pack -> efl_container
-    efl_container -> efl_gfx
 }
 </graphviz>
 
@@ -31,7 +29,6 @@ digraph hierarchy {
     * [[:develop:api:interface:efl:pack:linear|Efl.Pack.Linear]] //(interface)//
       * [[:develop:api:interface:efl:pack|Efl.Pack]] //(interface)//
         * [[:develop:api:interface:efl:container|Efl.Container]] //(interface)//
-          * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
 
 ===== Description =====
 
@@ -124,60 +121,6 @@ Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
 </code>
 
 %%Unswallow an object from this container.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_unset|content_unset]]**
-<code c>
-Efl_Gfx *efl_content_unset(Eo *obj);
-</code>
-
-%%Unswallow the object in the current container and return it.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:property:content|content]]** //**(get, set)**//
-<code c>
-Efl_Gfx *efl_content_get(const Eo *obj);
-Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
-</code>
-
-%%Swallowed sub-object contained in this object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:color|color]]** //**(get, set)**//
-<code c>
-void efl_gfx_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
-void efl_gfx_color_set(Eo *obj, int r, int g, int b, int a);
-</code>
-
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:geometry|geometry]]** //**(get, set)**//
-<code c>
-Eina_Rect efl_gfx_geometry_get(const Eo *obj);
-void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
-</code>
-
-%%Rectangular geometry that combines both position and size.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:position|position]]** //**(get, set)**//
-<code c>
-Eina_Position2D efl_gfx_position_get(const Eo *obj);
-void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
-</code>
-
-%%The 2D position of a canvas object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:size|size]]** //**(get, set)**//
-<code c>
-Eina_Size2D efl_gfx_size_get(const Eo *obj);
-void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
-</code>
-
-%%The 2D size of a canvas object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:visible|visible]]** //**(get, set)**//
-<code c>
-Eina_Bool efl_gfx_visible_get(const Eo *obj);
-void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
-</code>
-
-%%The visibility of a canvas object.%%\\ 
 \\ 
 [[:develop:api:interface:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:interface:efl:pack:linear:method:pack_after|pack_after]]**
 <code c>
@@ -295,41 +238,6 @@ EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
 </code>
 
 %%Sent after an item was removed, before unref.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
-<code c>
-EFL_GFX_EVENT_CHANGED(void)
-</code>
-
-%%Object was changed%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
-<code c>
-EFL_GFX_EVENT_HIDE(void)
-</code>
-
-%%Object just became invisible.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
-<code c>
-EFL_GFX_EVENT_MOVE(void)
-</code>
-
-%%Object was moved, its position during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
-<code c>
-EFL_GFX_EVENT_RESIZE(void)
-</code>
-
-%%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
-<code c>
-EFL_GFX_EVENT_SHOW(void)
-</code>
-
-%%Object just became visible.%%\\ 
 \\ 
 [[:develop:api:interface:efl:pack|Efl.Pack]].**[[:develop:api:interface:efl:pack:event:layout_updated|layout,updated]]**
 <code c>

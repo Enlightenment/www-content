@@ -1,4 +1,4 @@
-<title>Elm.Genlist.Item</title>
+~~Title: Elm.Genlist.Item~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -11,19 +11,23 @@ digraph hierarchy {
     edge [color = "gray35"]
 
     elm_genlist_item [fillcolor = "black", label = "Elm.Genlist.Item", color = "gray15", fontcolor = "white", style = "filled"]
+    elm_widget_item_static_focus [fillcolor = "gray15", label = "Elm.Widget.Item.Static_Focus", color = "gray15", fontcolor = "white", style = "filled"]
     elm_widget_item [fillcolor = "gray15", label = "Elm.Widget.Item", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_access [fillcolor = "gray15", label = "Efl.Access", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_access_component [fillcolor = "gray15", label = "Efl.Access.Component", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_object [fillcolor = "gray15", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
 
-    elm_genlist_item -> elm_widget_item
+    elm_genlist_item -> elm_widget_item_static_focus
+    elm_widget_item_static_focus -> elm_widget_item
     elm_widget_item -> efl_object
     elm_widget_item -> efl_access
     efl_access -> efl_interface
     efl_access -> efl_object
     elm_widget_item -> efl_access_component
+    elm_widget_item_static_focus -> efl_ui_focus_object
 }
 </graphviz>
 
@@ -32,12 +36,14 @@ digraph hierarchy {
 ===== Inheritance hierarchy =====
 
   * **[[:develop:api:class:elm:genlist:item|Elm.Genlist.Item]] //(class)//**
-    * [[:develop:api:class:elm:widget:item|Elm.Widget.Item]] //(class)//
-      * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
-      * [[:develop:api:mixin:efl:access|Efl.Access]] //(mixin)//
-        * [[:develop:api:interface:efl:interface|Efl.Interface]] //(interface)//
+    * [[:develop:api:class:elm:widget:item:static_focus|Elm.Widget.Item.Static_Focus]] //(class)//
+      * [[:develop:api:class:elm:widget:item|Elm.Widget.Item]] //(class)//
         * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
-      * [[:develop:api:mixin:efl:access:component|Efl.Access.Component]] //(mixin)//
+        * [[:develop:api:mixin:efl:access|Efl.Access]] //(mixin)//
+          * [[:develop:api:interface:efl:interface|Efl.Interface]] //(interface)//
+          * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
+        * [[:develop:api:mixin:efl:access:component|Efl.Access.Component]] //(mixin)//
+      * [[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
 
 ===== Description =====
 
@@ -179,6 +185,13 @@ Elm_Widget_Item *elm_obj_genlist_item_parent_get(const Eo *obj);
 </code>
 
 %%Get the parent item of the given item%%\\ 
+\\ 
+**[[:develop:api:class:elm:genlist:item:property:pin|pin]]** //**(get, set)**//
+<code c>
+Eina_Bool elm_obj_genlist_item_pin_get(const Eo *obj);
+void elm_obj_genlist_item_pin_set(Eo *obj, Eina_Bool pin);
+</code>
+
 \\ 
 **[[:develop:api:class:elm:genlist:item:property:prev|prev]]** //**(get)**//
 <code c>
@@ -681,6 +694,20 @@ void efl_access_name_set(Eo *obj, const char *name);
 
 %%Accessible name of the object.%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attribute_append|attribute_append]]**
+<code c>
+void efl_access_attribute_append(Eo *obj, const char *key, const char *value);
+</code>
+
+%%Add key-value pair identifying object extra attributes%%\\ 
+\\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attributes_clear|attributes_clear]]**
+<code c>
+void efl_access_attributes_clear(Eo *obj);
+</code>
+
+%%Removes all attributes in accessible object.%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:relationship_append|relationship_append]]**
 <code c>
 Eina_Bool efl_access_relationship_append(Eo *obj, Efl_Access_Relation_Type type, const Efl_Access *relation_object);
@@ -748,6 +775,28 @@ void efl_access_type_set(Eo *obj, Efl_Access_Type type);
 </code>
 
 %%Type of accessibility object%%\\ 
+\\ 
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:class:elm:genlist:item:method:prepare_logical|prepare_logical]]** //[Overridden here]//
+<code c>
+void efl_ui_focus_object_prepare_logical(Eo *obj);
+</code>
+
+%%Tells the object that the children of it will be queried soon by the given manager.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:mixin:efl:ui:focus:object:property:focus_geometry|focus_geometry]]** //**(get)**//
+<code c>
+Eina_Rect efl_ui_focus_object_focus_geometry_get(const Eo *obj);
+</code>
+
+%%The geometry to use to calculate the relations to other objects.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:mixin:efl:ui:focus:object:property:focus|focus]]** //**(get, set)**// ''protected set''
+<code c>
+Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
+void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
+</code>
+
+%%This gets called by the manager and should never be called by someone else.%%\\ 
 \\ 
 [[:develop:api:class:efl:object|Efl.Object]].**[[:develop:api:class:efl:object:property:auto_unref|auto_unref]]** //**(set)**// ''protected''
 <code c>
@@ -885,6 +934,13 @@ Efl_Access_State_Set efl_access_state_set_get(const Eo *obj);
 
 %%Gets set describing object accessible states.%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:class:elm:widget:item:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:develop:api:class:elm:widget:item|Elm.Widget.Item]]]// ''protected''
+<code c>
+Eina_List *efl_access_attributes_get(const Eo *obj);
+</code>
+
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:event_emit|event_emit]]** ''protected''
 <code c>
 void efl_access_event_emit(const Eo *obj, Efl_Access *accessible, const Efl_Event_Description *event, void *event_info);
@@ -905,13 +961,6 @@ void efl_access_event_handler_del(const Eo *obj, Efl_Access_Event_Handler *handl
 </code>
 
 %%Deregister accessibility event listener%%\\ 
-\\ 
-[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:attributes|attributes]]** //**(get)**// ''protected''
-<code c>
-Eina_List *efl_access_attributes_get(const Eo *obj);
-</code>
-
-%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:children|children]]** //**(get)**// ''protected''
 <code c>
@@ -1048,4 +1097,11 @@ EFL_ACCESS_EVENT_VISIBLE_DATA_CHANGED(void)
 </code>
 
 %%Called when visibility has changed%%\\ 
+\\ 
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:mixin:efl:ui:focus:object:event:focus_changed|focus,changed]]**
+<code c>
+EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED(Eina_Bool)
+</code>
+
+%%Emitted if the focus state has changed%%\\ 
 \\ 

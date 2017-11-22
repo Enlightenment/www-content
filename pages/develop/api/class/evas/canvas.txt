@@ -1,4 +1,4 @@
-<title>Evas.Canvas</title>
+~~Title: Evas.Canvas~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -509,20 +509,6 @@ void evas_canvas_pointer_canvas_xy_get(const Eo *obj, int *x, int *y);
 
 %%This function returns the current known default pointer coordinates%%\\ 
 \\ 
-**[[:develop:api:class:evas:canvas:property:pointer_inside_by_device|pointer_inside_by_device]]** //**(get)**//
-<code c>
-Eina_Bool evas_canvas_pointer_inside_by_device_get(const Eo *obj, Efl_Input_Device *dev);
-</code>
-
-%%Returns whether the mouse pointer is logically inside the canvas.%%\\ 
-\\ 
-**[[:develop:api:class:evas:canvas:property:pointer_inside|pointer_inside]]** //**(get)**//
-<code c>
-Eina_Bool evas_canvas_pointer_inside_get(const Eo *obj);
-</code>
-
-%%Returns whether the default mouse pointer is logically inside the canvas.%%\\ 
-\\ 
 **[[:develop:api:class:evas:canvas:property:pointer_output_xy_by_device|pointer_output_xy_by_device]]** //**(get)**//
 <code c>
 void evas_canvas_pointer_output_xy_by_device_get(const Eo *obj, Efl_Input_Device *dev, int *x, int *y);
@@ -761,6 +747,13 @@ Efl_Input_Device *efl_canvas_device_get(const Eo *obj, const char *name);
 
 %%An input device attached to this canvas, found by name.%%\\ 
 \\ 
+[[:develop:api:interface:efl:canvas|Efl.Canvas]].**[[:develop:api:class:evas:canvas:property:pointer_inside|pointer_inside]]** //**(get)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_canvas_pointer_inside_get(const Eo *obj, Efl_Input_Device *seat);
+</code>
+
+%%Returns whether the mouse pointer is logically inside the canvas.%%\\ 
+\\ 
 [[:develop:api:interface:efl:canvas|Efl.Canvas]].**[[:develop:api:class:evas:canvas:property:seat|seat]]** //**(get)**// //[Overridden here]//
 <code c>
 Efl_Input_Device *efl_canvas_seat_get(const Eo *obj, int id);
@@ -823,13 +816,6 @@ Eina_Bool efl_canvas_image_max_size_get(const Eo *obj, Eina_Size2D *max);
 </code>
 
 %%Get the maximum image size evas can possibly handle.%%\\ 
-\\ 
-[[:develop:api:interface:efl:canvas|Efl.Canvas]].**[[:develop:api:interface:efl:canvas:property:pointer_inside|pointer_inside]]** //**(get)**//
-<code c>
-Eina_Bool efl_canvas_pointer_inside_get(const Eo *obj);
-</code>
-
-%%Returns whether the mouse pointer is logically inside the canvas.%%\\ 
 \\ 
 [[:develop:api:interface:efl:canvas|Efl.Canvas]].**[[:develop:api:interface:efl:canvas:property:pointer_position|pointer_position]]** //**(get)**//
 <code c>

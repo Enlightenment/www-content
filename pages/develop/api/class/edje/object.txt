@@ -1,4 +1,4 @@
-<title>Edje.Object</title>
+~~Title: Edje.Object~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -26,7 +26,6 @@ digraph hierarchy {
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_file [fillcolor = "gray15", label = "Efl.File", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_part [fillcolor = "gray15", label = "Efl.Part", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_observer [fillcolor = "gray15", label = "Efl.Observer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_ui_base [fillcolor = "gray15", label = "Efl.Ui.Base", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -34,6 +33,9 @@ digraph hierarchy {
     efl_canvas_layout_signal [fillcolor = "gray15", label = "Efl.Canvas.Layout_Signal", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_canvas_layout_group [fillcolor = "gray15", label = "Efl.Canvas.Layout_Group", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_player [fillcolor = "gray15", label = "Efl.Player", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_color_class [fillcolor = "gray15", label = "Efl.Gfx.Color_Class", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_text_class [fillcolor = "gray15", label = "Efl.Gfx.Text_Class", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_size_class [fillcolor = "gray15", label = "Efl.Gfx.Size_Class", color = "cornflowerblue", fontcolor = "white", style = "filled"]
 
     edje_object -> efl_canvas_group
     efl_canvas_group -> efl_canvas_object
@@ -50,7 +52,6 @@ digraph hierarchy {
     efl_loop_user -> efl_object
     edje_object -> efl_file
     edje_object -> efl_container
-    efl_container -> efl_gfx
     edje_object -> efl_part
     edje_object -> efl_observer
     edje_object -> efl_ui_base
@@ -58,6 +59,9 @@ digraph hierarchy {
     edje_object -> efl_canvas_layout_signal
     edje_object -> efl_canvas_layout_group
     edje_object -> efl_player
+    edje_object -> efl_gfx_color_class
+    edje_object -> efl_gfx_text_class
+    edje_object -> efl_gfx_size_class
 }
 </graphviz>
 
@@ -81,7 +85,6 @@ digraph hierarchy {
           * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
     * [[:develop:api:mixin:efl:file|Efl.File]] //(mixin)//
     * [[:develop:api:interface:efl:container|Efl.Container]] //(interface)//
-      * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
     * [[:develop:api:interface:efl:part|Efl.Part]] //(interface)//
     * [[:develop:api:interface:efl:observer|Efl.Observer]] //(interface)//
     * [[:develop:api:interface:efl:ui:base|Efl.Ui.Base]] //(interface)//
@@ -89,6 +92,9 @@ digraph hierarchy {
     * [[:develop:api:interface:efl:canvas:layout_signal|Efl.Canvas.Layout_Signal]] //(interface)//
     * [[:develop:api:interface:efl:canvas:layout_group|Efl.Canvas.Layout_Group]] //(interface)//
     * [[:develop:api:interface:efl:player|Efl.Player]] //(interface)//
+    * [[:develop:api:interface:efl:gfx:color_class|Efl.Gfx.Color_Class]] //(interface)//
+    * [[:develop:api:interface:efl:gfx:text_class|Efl.Gfx.Text_Class]] //(interface)//
+    * [[:develop:api:interface:efl:gfx:size_class|Efl.Gfx.Size_Class]] //(interface)//
 
 ===== Description =====
 
@@ -105,40 +111,12 @@ Eina_Iterator *edje_obj_access_part_iterate(Eo *obj);
 
 %%Iterates over all accessibility-enabled part names.%%\\ 
 \\ 
-**[[:develop:api:class:edje:object:method:color_class_clear|color_class_clear]]**
-<code c>
-Eina_Bool edje_obj_color_class_clear(const Eo *obj);
-</code>
-
-%%Clears object color classes.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:method:color_class_del|color_class_del]]**
-<code c>
-void edje_obj_color_class_del(Eo *obj, const char *color_class);
-</code>
-
-%%Deletes the object color class.%%\\ 
-\\ 
 **[[:develop:api:class:edje:object:method:preload|preload]]**
 <code c>
 Eina_Bool edje_obj_preload(Eo *obj, Eina_Bool cancel);
 </code>
 
 %%Preloads the images on the Edje Object in the background.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:method:size_class_del|size_class_del]]**
-<code c>
-void edje_obj_size_class_del(Eo *obj, const char *size_class);
-</code>
-
-%%Deletes the object size class.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:method:text_class_del|text_class_del]]**
-<code c>
-void edje_obj_text_class_del(Eo *obj, const char *text_class);
-</code>
-
-%%Deletes the object text class.%%\\ 
 \\ 
 **[[:develop:api:class:edje:object:property:animation|animation]]** //**(get, set)**//
 <code c>
@@ -147,27 +125,6 @@ void edje_obj_animation_set(Eo *obj, Eina_Bool on);
 </code>
 
 %%Whether this object is animating or not.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:property:color_class_description|color_class_description]]** //**(get)**//
-<code c>
-const char *edje_obj_color_class_description_get(const Eo *obj, const char *color_class);
-</code>
-
-%%Gets the description of an object color class.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:property:color_class|color_class]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_color_class_get(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int *r, int *g, int *b, int *a);
-Eina_Bool edje_obj_color_class_set(Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int r, int g, int b, int a);
-</code>
-
-\\ 
-**[[:develop:api:class:edje:object:property:global_color_class|global_color_class]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_global_color_class_get(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int *r, int *g, int *b, int *a);
-Eina_Bool edje_obj_global_color_class_set(const Eo *obj, const char *color_class, Edje_Color_Class_Mode mode, int r, int g, int b, int a);
-</code>
-
 \\ 
 **[[:develop:api:class:edje:object:property:item_provider|item_provider]]** //**(set)**//
 <code c>
@@ -204,26 +161,12 @@ Efl_Input_Device *edje_obj_seat_get(const Eo *obj, Eina_Stringshare *name);
 
 %%Returns the seat device given its Edje's name.%%\\ 
 \\ 
-**[[:develop:api:class:edje:object:property:size_class|size_class]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_size_class_get(const Eo *obj, const char *size_class, int *minw, int *minh, int *maxw, int *maxh);
-Eina_Bool edje_obj_size_class_set(Eo *obj, const char *size_class, int minw, int minh, int maxw, int maxh);
-</code>
-
-\\ 
 **[[:develop:api:class:edje:object:property:text_change_cb|text_change_cb]]** //**(set)**//
 <code c>
 void edje_obj_text_change_cb_set(Eo *obj, Edje_Text_Change_Cb func, void *data);
 </code>
 
 %%Sets the object text callback.%%\\ 
-\\ 
-**[[:develop:api:class:edje:object:property:text_class|text_class]]** //**(get, set)**//
-<code c>
-Eina_Bool edje_obj_text_class_get(const Eo *obj, const char *text_class, const char **font, int *size);
-Eina_Bool edje_obj_text_class_set(Eo *obj, const char *text_class, const char *font, int size);
-</code>
-
 \\ 
 
 ==== Inherited ====
@@ -309,14 +252,14 @@ Eina_Bool efl_canvas_object_clipees_has(const Eo *obj);
 \\ 
 [[:develop:api:class:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:class:efl:canvas:object:method:event_animation_get|event_animation_get]]**
 <code c>
-Efl_Object *efl_canvas_object_event_animation_get(Eo *obj, const Efl_Event_Description *event_type);
+Efl_Animation *efl_canvas_object_event_animation_get(Eo *obj, const Efl_Event_Description *event_type);
 </code>
 
 %%Get the %%''animation''%% which starts when the given %%''event''%% happens to the object.%%\\ 
 \\ 
 [[:develop:api:class:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:class:efl:canvas:object:method:event_animation_set|event_animation_set]]**
 <code c>
-void efl_canvas_object_event_animation_set(Eo *obj, const Efl_Event_Description *event_type, Efl_Object *animation);
+void efl_canvas_object_event_animation_set(Eo *obj, const Efl_Event_Description *event_type, Efl_Animation *animation);
 </code>
 
 %%Set the %%''animation''%% which starts when the given %%''event_name''%% happens to the object.%%\\ 
@@ -793,20 +736,33 @@ Eina_Iterator *efl_content_iterate(Eo *obj);
 
 %%Begin iterating over this object's contents.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_unset|content_unset]]**
+[[:develop:api:interface:efl:gfx:color_class|Efl.Gfx.Color_Class]].**[[:develop:api:class:edje:object:method:color_class_clear|color_class_clear]]** //[Overridden here]//
 <code c>
-Efl_Gfx *efl_content_unset(Eo *obj);
+void efl_gfx_color_class_clear(Eo *obj);
 </code>
 
-%%Unswallow the object in the current container and return it.%%\\ 
+%%Delete all color classes defined in object level.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:property:content|content]]** //**(get, set)**//
+[[:develop:api:interface:efl:gfx:color_class|Efl.Gfx.Color_Class]].**[[:develop:api:class:edje:object:method:color_class_del|color_class_del]]** //[Overridden here]//
 <code c>
-Efl_Gfx *efl_content_get(const Eo *obj);
-Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
+void efl_gfx_color_class_del(Eo *obj, const char *color_class);
 </code>
 
-%%Swallowed sub-object contained in this object.%%\\ 
+%%Delete the color class.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx:color_class|Efl.Gfx.Color_Class]].**[[:develop:api:class:edje:object:property:color_class_description|color_class_description]]** //**(get)**// //[Overridden here]//
+<code c>
+const char *efl_gfx_color_class_description_get(const Eo *obj, const char *color_class);
+</code>
+
+%%Get the description of a color class.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx:color_class|Efl.Gfx.Color_Class]].**[[:develop:api:class:edje:object:property:color_class|color_class]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_gfx_color_class_get(const Eo *obj, const char *color_class, Efl_Gfx_Color_Class_Layer layer, int *r, int *g, int *b, int *a);
+Eina_Bool efl_gfx_color_class_set(Eo *obj, const char *color_class, Efl_Gfx_Color_Class_Layer layer, int r, int g, int b, int a);
+</code>
+
 \\ 
 [[:develop:api:interface:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:class:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:canvas:object|Efl.Canvas.Object]]]//
 <code c>
@@ -887,6 +843,20 @@ void efl_gfx_size_hint_step_set(Eo *obj, Eina_Size2D sz);
 
 %%Step size for objects with sizing restrictions.%%\\ 
 \\ 
+[[:develop:api:interface:efl:gfx:size_class|Efl.Gfx.Size_Class]].**[[:develop:api:class:edje:object:method:size_class_del|size_class_del]]** //[Overridden here]//
+<code c>
+void efl_gfx_size_class_del(Eo *obj, const char *size_class);
+</code>
+
+%%Delete the size class.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx:size_class|Efl.Gfx.Size_Class]].**[[:develop:api:class:edje:object:property:size_class|size_class]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_gfx_size_class_get(const Eo *obj, const char *size_class, int *minw, int *minh, int *maxw, int *maxh);
+Eina_Bool efl_gfx_size_class_set(Eo *obj, const char *size_class, int minw, int minh, int maxw, int maxh);
+</code>
+
+\\ 
 [[:develop:api:interface:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:class:efl:canvas:object:method:lower|lower]]** //[Overridden in [[:develop:api:class:efl:canvas:object|Efl.Canvas.Object]]]//
 <code c>
 void efl_gfx_stack_lower(Eo *obj);
@@ -933,6 +903,20 @@ Efl_Gfx_Stack *efl_gfx_stack_below_get(const Eo *obj);
 <code c>
 short efl_gfx_stack_layer_get(const Eo *obj);
 void efl_gfx_stack_layer_set(Eo *obj, short l);
+</code>
+
+\\ 
+[[:develop:api:interface:efl:gfx:text_class|Efl.Gfx.Text_Class]].**[[:develop:api:class:edje:object:method:text_class_del|text_class_del]]** //[Overridden here]//
+<code c>
+void efl_gfx_text_class_del(Eo *obj, const char *text_class);
+</code>
+
+%%Delete the text class.%%\\ 
+\\ 
+[[:develop:api:interface:efl:gfx:text_class|Efl.Gfx.Text_Class]].**[[:develop:api:class:edje:object:property:text_class|text_class]]** //**(get, set)**// //[Overridden here]//
+<code c>
+Eina_Bool efl_gfx_text_class_get(const Eo *obj, const char *text_class, const char **font, Efl_Font_Size *size);
+Eina_Bool efl_gfx_text_class_set(Eo *obj, const char *text_class, const char *font, Efl_Font_Size size);
 </code>
 
 \\ 
@@ -1320,6 +1304,13 @@ void efl_canvas_layout_calc_force(Eo *obj);
 
 ===== Events =====
 
+**[[:develop:api:class:edje:object:event:circular_dependency|circular,dependency]]**
+<code c>
+EDJE_OBJECT_EVENT_CIRCULAR_DEPENDENCY(void)
+</code>
+
+%%Edje found circular dependencies between parts of the object.%%\\ 
+\\ 
 **[[:develop:api:class:edje:object:event:recalc|recalc]]**
 <code c>
 EDJE_OBJECT_EVENT_RECALC(void)
@@ -1434,20 +1425,6 @@ EFL_GFX_EVENT_CHANGED(void)
 
 %%Object was changed%%\\ 
 \\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
-<code c>
-EFL_GFX_EVENT_CHANGED(void)
-</code>
-
-%%Object was changed%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
-<code c>
-EFL_GFX_EVENT_HIDE(void)
-</code>
-
-%%Object just became invisible.%%\\ 
-\\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
 <code c>
 EFL_GFX_EVENT_HIDE(void)
@@ -1462,33 +1439,12 @@ EFL_GFX_EVENT_MOVE(void)
 
 %%Object was moved, its position during the event is the new one.%%\\ 
 \\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
-<code c>
-EFL_GFX_EVENT_MOVE(void)
-</code>
-
-%%Object was moved, its position during the event is the new one.%%\\ 
-\\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
 <code c>
 EFL_GFX_EVENT_RESIZE(void)
 </code>
 
 %%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
-<code c>
-EFL_GFX_EVENT_RESIZE(void)
-</code>
-
-%%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
-<code c>
-EFL_GFX_EVENT_SHOW(void)
-</code>
-
-%%Object just became visible.%%\\ 
 \\ 
 [[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
 <code c>

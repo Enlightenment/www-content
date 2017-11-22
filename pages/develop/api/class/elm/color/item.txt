@@ -1,4 +1,4 @@
-<title>Elm.Color.Item</title>
+~~Title: Elm.Color.Item~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -18,7 +18,7 @@ digraph hierarchy {
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_access_component [fillcolor = "gray15", label = "Efl.Access.Component", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_ui_focus_object [fillcolor = "gray15", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
-    elm_interface_atspi_widget_action [fillcolor = "gray15", label = "Elm.Interface.Atspi_Widget_Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_access_widget_action [fillcolor = "gray15", label = "Efl.Access.Widget.Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
     efl_access_action [fillcolor = "gray15", label = "Efl.Access.Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
 
     elm_color_item -> elm_widget_item
@@ -28,8 +28,8 @@ digraph hierarchy {
     efl_access -> efl_object
     elm_widget_item -> efl_access_component
     elm_color_item -> efl_ui_focus_object
-    elm_color_item -> elm_interface_atspi_widget_action
-    elm_interface_atspi_widget_action -> efl_access_action
+    elm_color_item -> efl_access_widget_action
+    efl_access_widget_action -> efl_access_action
 }
 </graphviz>
 
@@ -45,7 +45,7 @@ digraph hierarchy {
         * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
       * [[:develop:api:mixin:efl:access:component|Efl.Access.Component]] //(mixin)//
     * [[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
-    * [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]] //(mixin)//
+    * [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]] //(mixin)//
       * [[:develop:api:mixin:efl:access:action|Efl.Access.Action]] //(mixin)//
 
 ===== Description =====
@@ -536,6 +536,20 @@ void efl_access_name_set(Eo *obj, const char *name);
 
 %%Accessible name of the object.%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attribute_append|attribute_append]]**
+<code c>
+void efl_access_attribute_append(Eo *obj, const char *key, const char *value);
+</code>
+
+%%Add key-value pair identifying object extra attributes%%\\ 
+\\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:attributes_clear|attributes_clear]]**
+<code c>
+void efl_access_attributes_clear(Eo *obj);
+</code>
+
+%%Removes all attributes in accessible object.%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:relationship_append|relationship_append]]**
 <code c>
 Eina_Bool efl_access_relationship_append(Eo *obj, Efl_Access_Relation_Type type, const Efl_Access *relation_object);
@@ -611,7 +625,7 @@ Eina_Rect efl_ui_focus_object_focus_geometry_get(const Eo *obj);
 
 %%The geometry to use to calculate the relations to other objects.%%\\ 
 \\ 
-[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:class:elm:color:item:property:focus|focus]]** //**(get, set)**// //[Overridden here]//
+[[:develop:api:mixin:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:class:elm:color:item:property:focus|focus]]** //**(get, set)**// //[Overridden here]// ''protected set''
 <code c>
 Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
 void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
@@ -689,35 +703,28 @@ void elm_wdg_item_part_text_custom_set(Eo *obj, const char *part, const char *la
 </code>
 
 \\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:action:property:localized_name|localized_name]]** //**(get)**// ''protected''
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:action:property:action_localized_name|action_localized_name]]** //**(get)**// ''protected''
 <code c>
 const char *efl_access_action_localized_name_get(const Eo *obj, int id);
 </code>
 
 %%Gets localized action name for given id%%\\ 
 \\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:elm:interface:atspi_widget_action:method:action_do|action_do]]** //[Overridden in [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// ''protected''
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:widget:action:method:action_do|action_do]]** //[Overridden in [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
 <code c>
 Eina_Bool efl_access_action_do(Eo *obj, int id);
 </code>
 
 %%Performs action on given widget.%%\\ 
 \\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:elm:interface:atspi_widget_action:method:keybinding_get|keybinding_get]]** //[Overridden in [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// ''protected''
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:widget:action:method:action_keybinding_get|action_keybinding_get]]** //[Overridden in [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
 <code c>
 char *efl_access_action_keybinding_get(Eo *obj, int id);
 </code>
 
 %%Gets configured keybinding for specific action and widget.%%\\ 
 \\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:elm:interface:atspi_widget_action:property:actions|actions]]** //**(get)**// //[Overridden in [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// ''protected''
-<code c>
-Eina_List *efl_access_action_actions_get(const Eo *obj);
-</code>
-
-%%Get list of available widget actions%%\\ 
-\\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:elm:interface:atspi_widget_action:property:description|description]]** //**(get, set)**// //[Overridden in [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// ''protected''
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:widget:action:property:action_description|action_description]]** //**(get, set)**// //[Overridden in [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
 <code c>
 const char *efl_access_action_description_get(const Eo *obj, int id);
 Eina_Bool efl_access_action_description_set(Eo *obj, int id, const char *description);
@@ -725,12 +732,19 @@ Eina_Bool efl_access_action_description_set(Eo *obj, int id, const char *descrip
 
 %%Action description for given id%%\\ 
 \\ 
-[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:elm:interface:atspi_widget_action:property:name|name]]** //**(get)**// //[Overridden in [[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]]]// ''protected''
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:widget:action:property:action_name|action_name]]** //**(get)**// //[Overridden in [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
 <code c>
 const char *efl_access_action_name_get(const Eo *obj, int id);
 </code>
 
 %%Gets action name for given id%%\\ 
+\\ 
+[[:develop:api:mixin:efl:access:action|Efl.Access.Action]].**[[:develop:api:mixin:efl:access:widget:action:property:actions|actions]]** //**(get)**// //[Overridden in [[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+<code c>
+Eina_List *efl_access_action_actions_get(const Eo *obj);
+</code>
+
+%%Get list of available widget actions%%\\ 
 \\ 
 [[:develop:api:mixin:efl:access:component|Efl.Access.Component]].**[[:develop:api:class:elm:widget:item:method:focus_grab|focus_grab]]** //[Overridden in [[:develop:api:class:elm:widget:item|Elm.Widget.Item]]]// ''protected''
 <code c>
@@ -798,12 +812,26 @@ int efl_access_component_z_order_get(const Eo *obj);
 
 %%Gets the depth at which the component is shown in relation to other components in the same container.%%\\ 
 \\ 
+[[:develop:api:mixin:efl:access:widget:action|Efl.Access.Widget.Action]].**[[:develop:api:class:elm:color:item:property:elm_actions|elm_actions]]** //**(get)**// //[Overridden here]// ''protected''
+<code c>
+const Efl_Access_Action_Data *efl_access_widget_action_elm_actions_get(const Eo *obj);
+</code>
+
+%%Elementary actions%%\\ 
+\\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:class:elm:color:item:property:state_set|state_set]]** //**(get)**// //[Overridden here]// ''protected''
 <code c>
 Efl_Access_State_Set efl_access_state_set_get(const Eo *obj);
 </code>
 
 %%Gets set describing object accessible states.%%\\ 
+\\ 
+[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:class:elm:widget:item:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:develop:api:class:elm:widget:item|Elm.Widget.Item]]]// ''protected''
+<code c>
+Eina_List *efl_access_attributes_get(const Eo *obj);
+</code>
+
+%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:method:event_emit|event_emit]]** ''protected''
 <code c>
@@ -825,13 +853,6 @@ void efl_access_event_handler_del(const Eo *obj, Efl_Access_Event_Handler *handl
 </code>
 
 %%Deregister accessibility event listener%%\\ 
-\\ 
-[[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:attributes|attributes]]** //**(get)**// ''protected''
-<code c>
-Eina_List *efl_access_attributes_get(const Eo *obj);
-</code>
-
-%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
 \\ 
 [[:develop:api:mixin:efl:access|Efl.Access]].**[[:develop:api:mixin:efl:access:property:children|children]]** //**(get)**// ''protected''
 <code c>
@@ -867,13 +888,6 @@ const char *efl_access_role_name_get(const Eo *obj);
 </code>
 
 %%Gets human-readable string indentifying object accessibility role.%%\\ 
-\\ 
-[[:develop:api:mixin:elm:interface:atspi_widget_action|Elm.Interface.Atspi_Widget_Action]].**[[:develop:api:class:elm:color:item:property:elm_actions|elm_actions]]** //**(get)**// //[Overridden here]// ''protected''
-<code c>
-const Elm_Atspi_Action *elm_interface_atspi_widget_action_elm_actions_get(const Eo *obj);
-</code>
-
-%%Elementary actions%%\\ 
 \\ 
 
 ==== Inherited ====

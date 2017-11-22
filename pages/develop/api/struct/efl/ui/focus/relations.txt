@@ -1,4 +1,4 @@
-<title>Efl.Ui.Focus.Relations</title>
+~~Title: Efl.Ui.Focus.Relations~~
 ===== Signature =====
 
 <code>
@@ -9,9 +9,11 @@ struct Efl.Ui.Focus.Relations {
     down: free(list<free(Efl.Ui.Focus.Object, efl_del)>, eina_list_free);
     next: free(Efl.Ui.Focus.Object, efl_del);
     prev: free(Efl.Ui.Focus.Object, efl_del);
-    type: free(string, free);
     parent: free(Efl.Ui.Focus.Object, efl_del);
     redirect: free(Efl.Ui.Focus.Manager, efl_del);
+    node: free(Efl.Ui.Focus.Object, efl_del);
+    logical: bool;
+    position_in_history: int;
 }
 </code>
 
@@ -25,9 +27,11 @@ typedef struct _Efl_Ui_Focus_Relations {
     Eina_List *down;
     Efl_Ui_Focus_Object *next;
     Efl_Ui_Focus_Object *prev;
-    const char *type;
     Efl_Ui_Focus_Object *parent;
     Efl_Ui_Focus_Manager *redirect;
+    Efl_Ui_Focus_Object *node;
+    Eina_Bool logical;
+    int position_in_history;
 } Efl_Ui_Focus_Relations;
 </code>
 
@@ -49,7 +53,9 @@ typedef struct _Efl_Ui_Focus_Relations {
   * **down** - %%[List of objects below%%
   * **next** - %%[Next object%%
   * **prev** - %%Previous object%%
-  * **type** - %%Object type%%
   * **parent** - %%Parent object%%
   * **redirect** - %%Redirect manager%%
+  * **node** - %%The node where this is the information from%%
+  * **logical** - %%true if this node is only logical%%
+  * **position_in_history** - %%The position in the history stack%%
 

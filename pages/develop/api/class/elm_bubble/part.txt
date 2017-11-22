@@ -1,4 +1,4 @@
-<title>Elm_Bubble.Part</title>
+~~Title: Elm_Bubble.Part~~
 ++++ Inheritance graph |
 
 <graphviz>
@@ -16,8 +16,7 @@ digraph hierarchy {
     efl_ui_widget_part [fillcolor = "gray15", label = "Efl.Ui.Widget.Part", color = "gray15", fontcolor = "white", style = "filled"]
     efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
     efl_ui_cursor [fillcolor = "gray15", label = "Efl.Ui.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_content [fillcolor = "gray15", label = "Efl.Content", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_text [fillcolor = "gray15", label = "Efl.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_text_markup [fillcolor = "gray15", label = "Efl.Text.Markup", color = "cornflowerblue", fontcolor = "white", style = "filled"]
     efl_text_cursor [fillcolor = "gray15", label = "Efl.Text.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
@@ -28,8 +27,7 @@ digraph hierarchy {
     efl_ui_layout_part -> efl_ui_widget_part
     efl_ui_widget_part -> efl_object
     efl_ui_layout_part -> efl_ui_cursor
-    efl_ui_layout_part_legacy -> efl_container
-    efl_container -> efl_gfx
+    efl_ui_layout_part_legacy -> efl_content
     efl_ui_layout_part_legacy -> efl_text
     efl_ui_layout_part_legacy -> efl_text_markup
     efl_text_markup -> efl_text_cursor
@@ -47,8 +45,7 @@ digraph hierarchy {
         * [[:develop:api:class:efl:ui:widget:part|Efl.Ui.Widget.Part]] //(class)//
           * [[:develop:api:class:efl:object|Efl.Object]] //(class)//
         * [[:develop:api:interface:efl:ui:cursor|Efl.Ui.Cursor]] //(interface)//
-      * [[:develop:api:interface:efl:container|Efl.Container]] //(interface)//
-        * [[:develop:api:interface:efl:gfx|Efl.Gfx]] //(interface)//
+      * [[:develop:api:interface:efl:content|Efl.Content]] //(interface)//
       * [[:develop:api:interface:efl:text|Efl.Text]] //(interface)//
       * [[:develop:api:interface:efl:text:markup|Efl.Text.Markup]] //(interface)//
         * [[:develop:api:interface:efl:text:cursor|Efl.Text.Cursor]] //(interface)//
@@ -241,80 +238,20 @@ void efl_destructor(Eo *obj);
 
 %%Call the object's destructor.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:ui:layout:part_legacy:method:content_unset|content_unset]]** //[Overridden in [[:develop:api:class:efl:ui:layout:part_legacy|Efl.Ui.Layout.Part_Legacy]]]//
+[[:develop:api:interface:efl:content|Efl.Content]].**[[:develop:api:class:efl:ui:layout:part_legacy:method:content_unset|content_unset]]** //[Overridden in [[:develop:api:class:efl:ui:layout:part_legacy|Efl.Ui.Layout.Part_Legacy]]]//
 <code c>
 Efl_Gfx *efl_content_unset(Eo *obj);
 </code>
 
 %%Unswallow the object in the current container and return it.%%\\ 
 \\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:class:efl:ui:layout:part_legacy:property:content|content]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:ui:layout:part_legacy|Efl.Ui.Layout.Part_Legacy]]]//
+[[:develop:api:interface:efl:content|Efl.Content]].**[[:develop:api:class:efl:ui:layout:part_legacy:property:content|content]]** //**(get, set)**// //[Overridden in [[:develop:api:class:efl:ui:layout:part_legacy|Efl.Ui.Layout.Part_Legacy]]]//
 <code c>
 Efl_Gfx *efl_content_get(const Eo *obj);
 Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
 </code>
 
 %%Swallowed sub-object contained in this object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_count|content_count]]**
-<code c>
-int efl_content_count(Eo *obj);
-</code>
-
-%%Returns the number of UI elements packed in this container.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_iterate|content_iterate]]**
-<code c>
-Eina_Iterator *efl_content_iterate(Eo *obj);
-</code>
-
-%%Begin iterating over this object's contents.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:method:content_remove|content_remove]]**
-<code c>
-Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
-</code>
-
-%%Unswallow an object from this container.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:color|color]]** //**(get, set)**//
-<code c>
-void efl_gfx_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
-void efl_gfx_color_set(Eo *obj, int r, int g, int b, int a);
-</code>
-
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:geometry|geometry]]** //**(get, set)**//
-<code c>
-Eina_Rect efl_gfx_geometry_get(const Eo *obj);
-void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
-</code>
-
-%%Rectangular geometry that combines both position and size.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:position|position]]** //**(get, set)**//
-<code c>
-Eina_Position2D efl_gfx_position_get(const Eo *obj);
-void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
-</code>
-
-%%The 2D position of a canvas object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:size|size]]** //**(get, set)**//
-<code c>
-Eina_Size2D efl_gfx_size_get(const Eo *obj);
-void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
-</code>
-
-%%The 2D size of a canvas object.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:property:visible|visible]]** //**(get, set)**//
-<code c>
-Eina_Bool efl_gfx_visible_get(const Eo *obj);
-void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
-</code>
-
-%%The visibility of a canvas object.%%\\ 
 \\ 
 [[:develop:api:interface:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:interface:efl:text:cursor:method:cursor_char_delete|cursor_char_delete]]**
 <code c>
@@ -582,53 +519,4 @@ EFL_EVENT_DEL(void, @hot)
 </code>
 
 %%Object is being deleted.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_added|content,added]]**
-<code c>
-EFL_CONTAINER_EVENT_CONTENT_ADDED(Efl_Gfx *)
-</code>
-
-%%Sent after a new item was added.%%\\ 
-\\ 
-[[:develop:api:interface:efl:container|Efl.Container]].**[[:develop:api:interface:efl:container:event:content_removed|content,removed]]**
-<code c>
-EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
-</code>
-
-%%Sent after an item was removed, before unref.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:changed|changed]]**
-<code c>
-EFL_GFX_EVENT_CHANGED(void)
-</code>
-
-%%Object was changed%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:hide|hide]]**
-<code c>
-EFL_GFX_EVENT_HIDE(void)
-</code>
-
-%%Object just became invisible.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:move|move]]**
-<code c>
-EFL_GFX_EVENT_MOVE(void)
-</code>
-
-%%Object was moved, its position during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:resize|resize]]**
-<code c>
-EFL_GFX_EVENT_RESIZE(void)
-</code>
-
-%%Object was resized, its size during the event is the new one.%%\\ 
-\\ 
-[[:develop:api:interface:efl:gfx|Efl.Gfx]].**[[:develop:api:interface:efl:gfx:event:show|show]]**
-<code c>
-EFL_GFX_EVENT_SHOW(void)
-</code>
-
-%%Object just became visible.%%\\ 
 \\ 
