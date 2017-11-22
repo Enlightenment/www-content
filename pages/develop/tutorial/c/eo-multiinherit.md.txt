@@ -1,10 +1,11 @@
 ---
 ~~Title: Multiple Class Inheritance with Eolian~~
+~~NOCACHE~~
 ---
 
 # Multiple Class Inheritance with Eolian #
 
-The [previous tutorial](eo-inherit.md) showed how a new class can be created by inheriting from an already existing *base class*. Like many other programming languages, Eolian also allows inheriting from more than one place at the same time, with certain restrictions.
+The [previous tutorial](eo-inherit.md) showed you how a new class can be created by inheriting from an already existing *base class*. Like many other programming languages Eolian also allows inheriting from more than one place at the same time, with certain restrictions.
 
 This tutorial explains the special kinds of classes that Eolian offers to allow trouble-free multiple inheritance: *interfaces* and *mixins*.
 
@@ -14,11 +15,11 @@ This tutorial explains the special kinds of classes that Eolian offers to allow 
 
 ## The Risks of Multiple Class Inheritance ##
 
-Allowing a class to have more than one parent has some caveats, like the well-known *diamond problem*: suppose a class ``Parent`` has a method, overridden in different ways by its two children ``Child1`` and ``Child2``. Now a new class ``Grandchild`` inherits from both ``Child1`` and ``Child2`` and calls that method. Which implementation should be actually called?
+Allowing a class to have more than one parent has some caveats, such as the well-known *diamond problem*. Suppose a class ``Parent`` has a method, overridden in different ways by its two children ``Child1`` and ``Child2``, then a new class ``Grandchild`` inherits from both ``Child1`` and ``Child2`` and calls that method. Which implementation should be actually called?
 
-C++, for example, allows you to create such hierarchies, but forces you to specify which implementation you want to use in the ambiguous cases. Most languages, though, solve the diamond problem by imposing restrictions on the classes from which you can inherit. These restrictions remove the possibility of ambiguous hierarchies and result in arguably cleaner code.
+C++, for example, allows you to create such hierarchies but forces you to specify which implementation you want to use in ambiguous cases. Most languages however solve the diamond problem by imposing restrictions on the classes from which you can inherit. These restrictions remove the possibility of ambiguous hierarchies and result in arguably cleaner code.
 
-Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin)) define two new kinds of classes, *interfaces* and *mixins*, and imposes inheritance rules:
+Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin)) define two new kinds of classes, *interfaces* and *mixins* and imposes inheritance rules:
 
 1. You can only *inherit* from one *regular* class, which must be the first one in the inheritance list.
  
@@ -26,44 +27,44 @@ Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin)) define two n
 
 3. You can *include* as many *mixins* as you want.
 
-*Inherit*, *implement* and *include* all mean *use functionality from a parent class*, but using a different word for each kind of parent class helps keep ambiguity to a minimum.
+*Inherit*, *implement* and *include* all mean *use functionality from a parent class*. Using a different word for each kind of parent class helps keep ambiguity to a minimum.
 
-Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations, but they cannot be inherited from, only included. Neither is instantiable on its own, they are meant to be implemented or included.
+Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations but they cannot be inherited from, only included. Neither is instantiable on its own : they are meant to be implemented or included.
 
 The following steps will clarify these concepts.
 
 ## Step One: Copying the Code from the Previous Tutorial ##
 
-This tutorial builds on top of the previous one ([Class Inheritance with Eolian](eo-inherit.md)), so begin by creating a copy of all your code to a new folder.
+This tutorial builds on top of the previous one ([Class Inheritance with Eolian](eo-inherit.md)), so begin by creating a copy of all your existing code to a new folder.
 
-Then rename the main file ``eo_inherit_main.c`` to ``eo_multiinherit_main.c`` to keep consistency with this tutorial's name.
+Next rename the main file ``eo_inherit_main.c`` to ``eo_multiinherit_main.c`` to maintain consistency with the name of this tutorial.
 
 ## Step Two: Merging the Includes ##
 
-As you have already learned, the header file for each new class needs to be included in every file that uses that class. In this example you are going to add several classes and objects to the hierarchy created in the previous tutorial, which means a lot of new header files need to be kept track of.
+As you have already learned, the header file for each new class needs to be included in each file that uses that class. In this example you are going to add several classes and objects to the hierarchy created in the previous tutorial, which means a lot of new header files need to be tracked.
 
-A common practice to simplify this situation is to include all header files from a new file and then only use the new file. Therefore, create a new file and call it ``eo_multiinherit.h``:
+A common practice to simplify this situation is to include all header files from a new file, then use only the new file. To this end, create a new file called ``eo_multiinherit.h``:
 
 ```c
 #include "example_rectangle.eo.h"
 #include "example_square.eo.h"
 ```
 
-And then use:
+Now use:
 
 ```c
 #include "eo_multiinherit.h"
 ```
 
-Instead of ``example_rectangle.eo.h`` and ``example_square.eo.h`` in all implementation files.
+Do this instead of ``example_rectangle.eo.h`` and ``example_square.eo.h`` in all implementation files.
 
-You can build and run your program now to check that everything still works as expected.
+You can now build and run your program to check that everything still works as expected.
 
 ## Step Three: Defining an Interface ##
 
-Interfaces are like classes but do not contain any implementation; they only contain method definitions. When a class *implements* an interface (another way of saying that the class inherits from the interface) it is agreeing to provide the implementation for the missing methods. In this way, the interface methods can be called on different unrelated classes, as long as they all implement the interface.
+Interfaces are like classes but do not contain any implementation, only contain method definitions. When a class *implements* an interface (another way of saying that the class inherits from the interface) it is agreeing to provide the implementation for the missing methods. In this way, the interface methods can be called on different unrelated classes, as long as they all implement the interface.
 
-You are now going to define a new interface in Eolian, which will be implemented by the ``Example.Rectangle`` class. It does not make much sense to use an interface when only one class is implementing it, but the next steps will define more classes.
+You are now going to define a new interface in Eolian, which will be implemented by the ``Example.Rectangle`` class. It does not make much sense to use an interface when only one class is implementing it but you'll define more in the next steps.
 
 The interface will be called ``Example.Shape`` and will only define the method ``area()`` which previously was part of the ``Example.Rectangle`` class.
 
@@ -81,11 +82,11 @@ interface Example.Shape {
 }
 ```
 
-As you can see, the interface is declared with the keyword ``interface`` instead of ``class`` as you did for the other classes. The rest of the file should already be familiar to you: It contains a ``methods`` block which defines only one method called ``area()``.
+As you can see the interface is declared with the keyword ``interface`` instead of ``class`` as you did for the other classes. The rest of the file should already be familiar to you. It contains a ``methods`` block which defines only one method called ``area()``.
 
-Now turn this Eolian file into C code with ``eolian_gen``. It is worth noting that, since interfaces do not contain implementations, you do not need to generate an implementation file (i.e., you could use the ``-gch`` switch instead of ``-gchi`` to avoid generating ``example_shape.c``).
+Next, turn this Eolian file into C code with ``eolian_gen``. Note that since interfaces do not contain implementations, you do not need to generate an implementation file i.e. you could use the ``-gch`` switch instead of ``-gchi`` to avoid generating ``example_shape.c``.
 
-However, you would need to remember to include in your build the boilerplate C file ``example_shape.eo.c`` instead of the usual implementation file ``example_shape.c``, so, for consistency, generate the implementation file. It will be mostly empty anyway, and just include the boilerplate C file.
+If you did do this, you'd have to include the boilerplate C file ``example_shape.eo.c`` in your build instead of the usual implementation file ``example_shape.c``. For consistency, generate the implementation file. It will only contain the boilerplate C file in any case:
 
 ```bash
 eolian_gen -gchi example_shape.eo
@@ -99,7 +100,7 @@ Now edit the includes file ``eo_multiinherit.h`` and add the newly generated ``e
 
 ## Step Four: Implementing the Interface ##
 
-Now tell ``Example.Rectangle`` that it will be implementing the new ``Example.Shape`` interface. Open the ``example_rectangle.eo`` file and:
+Tell ``Example.Rectangle`` that it will be implementing the new ``Example.Shape`` interface. Open the ``example_rectangle.eo`` file, then:
 
 * Add ``Example.Shape`` after ``Efl.Object`` (separated with a comma) in the list of parents at the top of the file.
 
@@ -113,9 +114,9 @@ Now tell ``Example.Rectangle`` that it will be implementing the new ``Example.Sh
      }
   ```
 
-This tells Eolian that the ``Example.Rectangle`` class is going to implement the ``area()`` method from the ``Example.Shape`` interface, instead of providing it own.
+This tells Eolian that the ``Example.Rectangle`` class is going to implement the ``area()`` method from the ``Example.Shape`` interface instead of providing its own.
 
-The whole file should look like this:
+The completed file should look like this:
 
 ```
 class Example.Rectangle (Efl.Object, Example.Shape) {
@@ -151,23 +152,23 @@ Run ``eolian_gen`` again to obtain the C code:
 eolian_gen -gchi example_rectangle.eo -I .
 ```
 
-Mind the ``-I`` switch so it can find the new class you are including now!
+Pay careful attention to the ``-I`` switch so it can find the new class you are now including. 
 
-``eolian_gen`` will **add** to your already existing implementation file ``example_rectangle.c`` any method that is missing, but it **will not** remove already existing methods which are not needed anymore.
+``eolian_gen`` will **add** any missing methods to your already existing implementation file ``example_rectangle.c`` but it **will not** remove existing methods which are no longer needed.
 
 This means that in the implementation file you will now find:
 
-* An empty method where you must put the implementation for ``Example.Shape.area()``: ``_example_rectangle_example_shape_area()``.
+*An empty method where you must put the implementation for ``Example.Shape.area()``: ``_example_rectangle_example_shape_area()``.
 
-* Your previous implementation of the ``Example.Rectangle.area()`` method: ``_example_rectangle_area()``.
+*Your previous implementation of the ``Example.Rectangle.area()`` method: ``_example_rectangle_area()``.
 
-Simply move the one-line implementation (``return pd->width * pd->height;``) from the old method to the new one, and remove completely the old one.
+Simply move the one-line implementation (``return pd->width * pd->height;``) from the old method to the new one, then completely remove the old one.
 
-It might look like not much has changed, but the area method is now available through an interface, which means that all classes implementing it (including ``Example.Rectangle`` and its descendants) can be handled in a similar manner.
+It might look like not much has changed but the area method is now available through an interface, which means that all classes implementing it (including ``Example.Rectangle`` and its descendants) can be handled in a similar manner.
 
 ## Step Five: Using the Interface ##
 
-Since you removed the ``area()`` method from ``Example.Rectangle``, the main program will not work anymore. However, since ``Example.Rectangle`` implements the ``Example.Shape`` interface now, you can use its methods, including ``area()``.
+Since you removed the ``area()`` method from ``Example.Rectangle``, the main program will not work anymore. However since ``Example.Rectangle`` now implements the ``Example.Shape`` interface, you can use its methods, including ``area()``.
 
 Replace both uses of ``example_rectangle_area()`` with ``example_shape_area()``.
 
@@ -180,7 +181,7 @@ Now build and run the program. Remember to include the new source file ``example
 gcc eo_multiinherit_main.c example_rectangle.c example_square.c example_shape.c `pkg-config --cflags --libs elementary`
 ```
 
-Upon execution, you should get on your terminal the same message you got at the end of the previous tutorial:
+Upon execution your terminal should display the same message as at the end of the previous tutorial:
 
 ```
 Rectangle is 5x10, area is 50
@@ -189,7 +190,7 @@ Square is 7x7, area is 49
 
 ## Step Six: Adding Another Class ##
 
-Now, to finally show the usefulness of the interface, you will add another class, unrelated to ``Example.Rectangle`` or ``Example.Square``, but implementing the same ``Example.Shape`` interface.
+In order to demonstrate the usefulness of the interface once and for all, you'll now add another class unrelated to ``Example.Rectangle`` or ``Example.Square`` but implementing the same ``Example.Shape`` interface.
 
 Start by creating a new Eolian file called ``example_circle.eo``:
 
@@ -212,7 +213,7 @@ class Example.Circle (Efl.Object, Example.Shape) {
 }
 ```
 
-It looks a lot like ``example_rectangle.eo`` but it defines a class named ``Example.Circle``, which has a ``radius`` property (instead of ``width`` and ``height``) and also implements the ``area()`` method from the ``Example.Shape`` interface.
+This looks a lot like ``example_rectangle.eo`` but it defines a class named ``Example.Circle``, which has a ``radius`` property (instead of ``width`` and ``height``). It also implements the ``area()`` method from the ``Example.Shape`` interface.
 
 Now turn this file into C code with ``eolian_gen``:
 
@@ -226,7 +227,7 @@ Add the new header file ``example_circle.eo.h`` to ``eo_multiinherit.h``:
 #include "example_circle.eo.h"
 ```
 
-And then add the implementation for the new class. Edit ``example_circle.c`` and:
+Next add the implementation for the new class. Edit ``example_circle.c`` then:
 
 * Replace the automatically generated ``#include "example_circle.eo.h"`` with ``#include "eo_multiinherit.h"``
 
@@ -238,7 +239,7 @@ And then add the implementation for the new class. Edit ``example_circle.c`` and
 
 * Add the implementation for the ``area()`` interface method: ``return (int)(pd->radius * pd->radius * 3.14159f);``
 
-After adding some ``EINA_UNUSED`` to the unused method parameters, the implementation file should look like this:
+After adding some ``EINA_UNUSED`` to the unused method parameters the implementation file should look like this:
 
 ```c
 #define EFL_BETA_API_SUPPORT
@@ -291,7 +292,7 @@ _circle_create()
 }
 ```
 
-Next, you will make use of the fact that all instantiated shapes implement the ``Example.Shape`` interface and remove the duplicated ``printf()`` calls. Create a new method that will take care of printing:
+You'll now make use of the fact that all instantiated shapes implement the ``Example.Shape`` interface and remove the duplicated ``printf()`` calls. Create a new method that will take care of printing:
 
 ```c
 void
@@ -302,9 +303,9 @@ _shape_print(Example_Shape *shape)
 }
 ```
 
-Notice how it receives an ``Example_Shape *`` and uses methods from that interface (and from ``Efl_Object``, like ``efl_name_get()``). This method will not be able to print the ``width`` and ``height`` of the rectangles as before anymore, since it now receives shapes which might not be a rectangle at all.
+Notice how it receives an ``Example_Shape *`` and uses methods from that interface (and from ``Efl_Object``, like ``efl_name_get()``). This method will not be able to print the ``width`` and ``height`` of the rectangles as before since it now receives shapes which might not be rectangular.
 
-Now replace the whole content of ``efl_main()``:
+Next replace the entire content of ``efl_main()``:
 
 ```c
    Eo *shape;
@@ -324,15 +325,15 @@ Now replace the whole content of ``efl_main()``:
    efl_exit(0);
 ```
 
-As you can see, handling the different shapes is easier now through the common interface.
+As you can see handling the different shapes is now much simpler through the common interface.
 
-If you build and run the program (remember to include ``example_circle.c`` in the mix):
+Now build and run the program (remember to include ``example_circle.c`` in the mix):
 
 ```bash
 gcc eo_multiinherit_main.c example_rectangle.c example_square.c example_shape.c example_circle.c `pkg-config --cflags --libs elementary`
 ```
 
-You should get this on the terminal:
+You should see the following in the terminal:
 
 ```
 Shape named Circle has area 78
@@ -340,17 +341,17 @@ Shape named Rectangle has area 50
 Shape named Square has area 49
 ```
 
-This concludes the part regarding interfaces. The next steps exemplify the usage of mixins.
+This concludes the part regarding interfaces. The next steps demonstrate usage of mixins.
 
 ## Step Eight: Defining a Mixin ##
 
-Mixins are meant to provide units of functionality, ideally small and independent of any other class. You can add new functionality to your class simply by including different mixins in it.
+Mixins are meant to provide units of functionality. They're ideally small and independent of any other class. You can add new functionality to your class by including different mixins.
 
-But you cannot inherit from a mixin, meaning that mixins cannot be the first element in the inheritance list of a class (the list in the parentheses after the class name in an Eolian file). This ensures that the ambiguous diamond pattern described in the introduction to this tutorial does not happen.
+You cannot inherit from a mixin however, meaning that they cannot be the first element in the inheritance list of a class (the list in the parentheses after the class name in an Eolian file). This ensures that the ambiguous diamond pattern described in the introduction to this tutorial does not happen.
 
-You will create a mixin called ``Example.Colored`` providing coloring facilities to your classes. Any class including this mixin will have a ``color`` property added to it, complete, with setter and getter. Without further modification of your class, since the mixin provides all the implementation.
+You're now going to create a mixin called ``Example.Colored`` providing coloring facilities to your classes. Any class including this mixin will have a ``color`` property added to it complete with setter and getter. Your class won't be modified since the mixin provides all the implementation.
 
-You will only be adding the mixin to some of the classes, to show how you can mix and match classes and mixins to suit your use case.
+You will only be adding the mixin to some of the classes, to show how you can mix and match classes and mixins to suit your needs.
 
 Start by creating yet another Eo file: ``example_colored.eo``:
 
@@ -372,7 +373,7 @@ mixin Example.Colored {
 }
 ```
 
-As you can see, it looks like a regular class named ``Example.Colored``, providing a single property called ``color`` composed of ``red``, ``green`` and ``blue`` integer values. Nothing special besides the keyword ``mixin`` used instead of ``class``.
+As you can see it looks like a regular class named ``Example.Colored`` providing a single property called ``color`` composed of ``red``, ``green`` and ``blue`` integer values. There's nothing remarkable besides the fact that the keyword ``mixin`` is used instead of ``class``.
 
 Turn into C code using the usual ``eolian_gen`` command:
 
@@ -380,7 +381,7 @@ Turn into C code using the usual ``eolian_gen`` command:
 eolian_gen -gchi example_colored.eo
 ```
 
-As you did before, edit the includes file ``eo_multiinherit.h`` and add the newly generated ``example_colored.eo.h`` after the other includes:
+Edit the includes file ``eo_multiinherit.h`` as before and add the newly generated ``example_colored.eo.h`` after the other includes:
 
 ```c
 #include "example_colored.eo.h"
@@ -388,7 +389,7 @@ As you did before, edit the includes file ``eo_multiinherit.h`` and add the newl
 
 ## Step Nine: Implementing the Mixin ##
 
-The implementation of this mixin is simple, just a standard setter and getter for the property. Open ``example_colored.c`` and:
+The implementation of this mixin is simple, just a standard setter and getter for the property. Open ``example_colored.c`` then:
 
 * Replace the ``#include "example_colored.eo.h`` with ``#include "eo_multiinherit.h"``
 
@@ -436,7 +437,7 @@ _example_colored_color_get(Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
 
 ## Step Ten: Using the Mixin ##
 
-Finally, modify ``eo_multiinherit_main.c`` to make use of this new functionality. There's little to change.
+Modify ``eo_multiinherit_main.c`` to make use of this new functionality. There's little to change.
 
 Add a new configuration call to ``example_colored_color_set()`` in the creation of the rectangle:
 
@@ -448,7 +449,8 @@ Add a new configuration call to ``example_colored_color_set()`` in the creation 
                        example_colored_color_set(efl_added, 255, 0, 0));
 ```
 
-Likewise for the creation of the square:
+Do the same for for the creation of the square:
+
 ```c
    square = efl_add(EXAMPLE_SQUARE_CLASS, NULL,
                     efl_name_set(efl_added, "Square"),
@@ -456,9 +458,9 @@ Likewise for the creation of the square:
                     example_colored_color_set(efl_added, 64, 64, 64));
 ```
 
-No need to modify the circle creation since you didn't include the mixin in ``Example.Circle``.
+There's no need to modify the circle creation since you didn't include the mixin in ``Example.Circle``.
 
-To finish, in the ``_shape_print()`` method, print some additional information in case the requested shape includes the ``Example.Colored`` mixin. Right after the previous ``printf()`` call:
+Finish off by printing some additional information in ``_shape_print()`` in case the requested shape includes the ``Example.Colored`` mixin. Right after the previous ``printf()`` call:
 
 ```c
    if (efl_isa(shape, EXAMPLE_COLORED_MIXIN))
@@ -470,9 +472,9 @@ To finish, in the ``_shape_print()`` method, print some additional information i
      }
 ```
 
-``efl_isa()`` checks if the ``Efl.Object`` passed in the first parameter contains the class specified in the second parameter in its inheritance tree. That is, it returns ``true`` if any of the ancestors of the object are of the given class, or implement the given interface, or include the given mixin. If that is the case, you will print the color information using the ``color`` property.
+``efl_isa()`` checks if the ``Efl.Object`` passed in the first parameter contains the class specified in the second parameter in its inheritance tree. In other words it returns ``true`` if any of the ancestors of the object are of the given class or implement the given interface or include the given mixin. If that is the case, you will print the color information using the ``color`` property.
 
-If you do not perform the ``efl_isa()`` check, you will be assuming that all shapes contain the ``color`` property, and the program will display an error at runtime.
+If you do not perform the ``efl_isa()`` check you will be assuming that all shapes contain the ``color`` property, which means the program will display an error at runtime.
 
 Build your program, including the additional ``example_colored.c`` file:
 
@@ -480,7 +482,7 @@ Build your program, including the additional ``example_colored.c`` file:
 gcc eo_multiinherit_main.c example_rectangle.c example_square.c example_shape.c example_circle.c example_colored.c `pkg-config --cflags --libs elementary`
 ```
 
-Upon running it, you should get this on the terminal:
+Upon running, you should see this in your terminal:
 
 ```
 Shape named Circle has area 78
@@ -490,15 +492,15 @@ Shape named Square has area 49
   Colored 64, 64, 64
 ```
 
-As you can see, only the rectangle and the square contain color information, since only the rectangle includes the ``Example.Colored`` mixin (and the square inherited it).
+As you can see, only the rectangle and the square contain color information since only the rectangle includes the ``Example.Colored`` mixin (and the square inherited it).
 
 ## Summary ##
 
-After this tutorial, you have learned:
+In this tutorial you've learned:
 
-* That **multiple inheritance** is possible with Eolian, with some restrictions.
+* **multiple inheritance** is possible with Eolian, with some restrictions.
 
-* That only **one class** can be inherited from, but multiple **interfaces** can be **implemented** and multiple **mixins** can be **included**.
+* Only **one class** can be inherited from, but multiple **interfaces** can be **implemented** and multiple **mixins** can be **included**.
 
 * How to create **interfaces** and implement them in other classes.
 
