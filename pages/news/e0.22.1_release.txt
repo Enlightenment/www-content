@@ -1,0 +1,62 @@
+=== Enlightenment DR 0.22.1 Release ===
+  * //2017-11-22 by Simon Lees//
+
+This is a bugfix and stability release for the Enlightenment 22 Release series.
+
+== Tickets Addressed ==
+| [[ https://phab.enlightenment.org/T5883|T5883 ]] |screen blank: mouse click broken after waking from screem blank. |
+| [[ https://phab.enlightenment.org/T6258|T6258 ]] |E22 freezes on bryce manipulations |
+| [[ https://phab.enlightenment.org/T6288|T6288 ]] |Luncher app popup doesn't update from different VD |
+| [[ https://phab.enlightenment.org/T6316|T6316 ]] |enlightenment-0.22.0/src/bin/e_intl.c: unbounded file read ? |
+| [[ https://phab.enlightenment.org/T6322|T6322 ]] |No input on Logout problems window. |
+
+
+== Changes ==
+Carsten Haitzler (4):
+  * e sys - frix warning for less noise
+  * hits: silence warnings about possible null string for strcmp
+  * fix mouse hangs after unblank
+  * music-control - install properly with meson build with icon
+
+Marcel Hollerbach (2):
+  * meson: make those scripts executable
+  * meson: this version is enough for the things we use in the moment
+
+Massimo Maiurana (1):
+  * Adding danish strings to desktop files
+
+Mike Blumenkrantz (15):
+  * create wl output resource when running in wl nested
+  * unset wayland cursor for all pointers when running nested in wl
+  * show internal pointer cursor whenever resetting to internal cursor
+  * make wl_pointer cursor handling state-based to correctly handle cursor visuals
+  * update README with meson instructions
+  * check meson module option state before executing subdir
+  * improve meson build module disabling
+  * add field width limits to all fscanf params in e_intlc.
+  * destroy luncher iconify provider on gadget delete
+  * do not add iconify provider for luncher when creating a demo gadget
+  * requeue client for render if show animation completes and damages exist
+  * avoid performing client rescales during shutdown
+  * prevent double shutdown of x11 compositor in xwayland mode
+  * always emit E_EVENT_COMP_OBJECT_ADD events
+  * use last client from E_Exec_Instance list when updating luncher popups
+
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.22.1.tar.xz | Enlightenment DR 0.22.1 XZ]]  | ''207b6b88dafc4932ab007a835510823c5a1dd8c191876ac037628176ca77a7e0'' |
+
+//Left behind, somewhere over that rainbow.//
+
+== Building and Dependencies ==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README  *   *   *    | EFL]]
+
+**Note:** E22 depends on EFL **v1.20.5** or newer.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
