@@ -111,6 +111,9 @@ Eo objects created through ``efl_add()`` have a starting reference count of 1, m
 * **If you assigned the object a parent** then said parent is the owner of the reference. There's nothing else that you need to do with the object. You cannot actually work with the object because you do not hold any reference to it (more about this later).
 * **If you gave no parent to the object**: If you passed ``NULL`` as the parent, then **you** are the owner of the reference and you are responsible for returning it with ``efl_unref()``. Forgetting to do so is the most common cause of memory leaks.
 
+> **NOTE:**
+> Parenthood does need to be permanent in EFL: you can always remove a child object from its parent using ``efl_unparent()``. Be careful, though, because this returns to you the reference the parent was holding. **You are now responsible for returning this reference**, and failing to do so will leak the object. If you want to remove the object from its parent **and** return the reference at the same time, you can use the convenience method ``efl_del()``.
+
 Back to the tutorial code, no parent was given to the object created in ``_obj_create()``, therefore you need to return that reference at some point. It is time to fill-in the ``_obj_destroy()`` method:
 
 ```c
