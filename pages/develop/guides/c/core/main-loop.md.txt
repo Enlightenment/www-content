@@ -1,0 +1,173 @@
+---
+~~Title: Main Loop Programming Guide~~
+---
+
+# Main Loop Programming Guide #
+
+The EFL is event-driven. This means that execution is usually spent inside an internal EFL *Main Loop*, and the application is notified through function callbacks of virtually any event happening on the computer. This is typically more efficient than *polling* for events, in which the application has to repeatedly ask if a certain event has occurred. The reason is that when nothing is happening (no events are pending) the main loop enters the *idle state* in which the CPU consumes very little power.
+
+The EFL manages, among other things, timers, file descriptors, user interface events and it even provides a simple mechanism for applications to perform conventional data polling if desired.
+
+## Prerequisites ##
+
+* Read the [Introduction to Eo](eo-intro.md) to know how Eo objects are created and destroyed.
+
+* Read the [Events Programming Guide](events.md) to know how to register callbacks to be triggered by events.
+
+## Timers ##
+
+Timers allow events to be triggered periodically after the given time has elapsed. After an event callback has been registered with the timer, it will be called at regular intervals.
+
+See usage examples in the EFL examples repository: [``reference/c/core/src/core_idler.c``](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_idler.c) and [``reference/c/core/src/core_poll.c``](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_poll.c).
+
+### Creating and Destroying Timers ###
+
+Timers are Eo objects and are instantiated and destroyed with ``efl_add()`` like all other Eo objects (see [Introduction to Eo](eo-intro.md)). Their class is `EFL_LOOP_TIMER_CLASS`:
+
+```c
+timer_object = efl_add(EFL_LOOP_TIMER_CLASS, ...);
+```
+
+Timers do not need to have a parent. However, it is convenient to create them under the application Main Loop, for instance, so the parent takes care of destroying the timer.
+
+If you want to manually destroy a timer, though, use the regular ``efl_unref()`` or ``efl_del()``.
+
+### The Timer Callback ###
+
+Register the callback using ``efl_event_callback_add()`` and the ``EFL_LOOP_TIMER_EVENT_TICK`` event as explained in the [Events Programming Guide](events.md).
+
+```c
+efl_event_callback_add(timer_object, EFL_LOOP_TIMER_EVENT_TICK, _timer_cb, NULL);
+```
+
+The callback has the usual event handler signature:
+
+```c
+static void
+_timer_cb(void *data, const Efl_Event *event)
+{
+   Efl_Loop_Timer *timer = event->object;
+
+   [...]
+}
+```
+
+Notice how the timer object is recovered from the event structure.
+
+### Configuring a Timer ###
+
+The ``interval`` property controls the amount of time between triggers of the callback, in *seconds*:
+
+```c
+efl_loop_timer_interval_set(timer_object, seconds);
+efl_loop_timer_interval_get(timer_object);
+```
+
+The time left before the next trigger of the timer can be retrieved through the ``pending`` read-only property:
+
+```c
+efl_loop_timer_pending_get(timer_object);
+```
+
+The current interval can be reset with:
+
+```c
+efl_loop_timer_reset(timer_object);
+```
+
+Finally, the current interval can be extended, effectively delaying all future triggers of the timer by the given amount of *seconds*:
+
+```c
+efl_loop_timer_delay(timer_object, seconds);
+```
+
+## File Descriptor Monitors ##
+
+EFL can monitor the system's file descriptor activity through ``Efl.Loop.Fd`` objects and trigger relevant events.
+
+See usage examples in the EFL examples repository: [``reference/c/core/src/core_loop.c``](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_loop.c)
+
+### Creating and Destroying FD Monitors ###
+
+FD monitors are Eo objects that wrap system file descriptors, and are instantiated and destroyed with ``efl_add()`` like all other Eo objects (see [Introduction to Eo](eo-intro.md)). Their class is `EFL_LOOP_FD_CLASS,`:
+
+```c
+fd_object = efl_add(EFL_LOOP_FD_CLASS, ...);
+```
+
+To destroy an FD monitor, use the regular ``efl_unref()`` or ``efl_del()``.
+
+### FD Monitor callbacks ###
+
+Register to receive events on the FD monitor object with the usual ``efl_event_callback_add()``:
+
+```c
+efl_event_callback_add(fd_object, EFL_LOOP_FD_EVENT_READ, _read_fd_cb, NULL);
+```
+
+The available events are:
+
+* ``EFL_LOOP_FD_EVENT_READ``: The file descriptor is ready to be read from.
+
+* ``EFL_LOOP_FD_EVENT_WRITE``: The file descriptor is ready to write to.
+
+* ``EFL_LOOP_FD_EVENT_ERROR``: An error has occurred on the file descriptor. You can retrieve more information from the callback using the ``event->info`` field:
+  ```c
+  void
+  _fd_error(void *data, const Efl_Event *event)
+  {
+     const Eina_Error *perr = event->info;
+
+     fprintf(stderr, "  %s error: #%d '%s'\n",
+             efl_name_get(event->object), *perr, eina_error_msg_get(*perr));
+  ```
+
+### Accessing the File Descriptor ###
+
+Set and get the internal file descriptor wrapped by an FD monitor object with the ``fd`` property:
+
+```c
+efl_loop_fd_get(fd_object);
+efl_loop_fd_set(fd_object, fd);
+```
+
+When the file descriptor corresponds to a file, use ``fd_file`` instead:
+
+```c
+efl_loop_fd_file_get(fd_object);
+efl_loop_fd_file_set(fd_object, fd);
+```
+
+## Idlers ##
+
+When there are no events to process, the EFL main loop enters the Idle state, consuming little CPU power. You can be notified when the Idle state is entered or exited.
+
+EFL defines three different events you can use to be notified of the above conditions:
+
+* ``EFL_LOOP_EVENT_IDLE_ENTER``: Main loop enters the idle state.
+
+* ``EFL_LOOP_EVENT_IDLE_EXIT``: Main loop exits the idle state. 
+
+* ``EFL_LOOP_EVENT_IDLE``: Main loop is in the idle state, meaning that it has nothing else to do. **Be warned** that this callback will be called a lot, consuming a lot of CPU. Also, it defeats the point of an event-driven application: heavy calculations should be performed on a separate thread or they will block the main loop, leading to unresponsive user interface, among other problems.
+
+Register a callback to be notified of these events using ``efl_event_callback_add()`` as explained in the [Events Programming Guide](events.md).
+
+See the example in the EFL examples repository: [``reference/c/core/src/core_idler.c``](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_idler.c).
+
+## Polling ##
+
+In the rare case where EFL does not provide the event you are interested in, you can resort to conventional application-driven polling. EFL can still help you by taking care of the scheduling of the periodic polling, calling you back when it is time to perform the poll.
+
+You can choose among the predefined polling priorities, depending on which event you use to register your callback:
+
+* ``EFL_LOOP_EVENT_POLL_HIGH``: For events that might happen multiple times per second.
+
+* ``EFL_LOOP_EVENT_POLL_MEDIUM``: For events that might happen multiple times per minute.
+
+* ``EFL_LOOP_EVENT_POLL_LOW``: For events that might happen multiple times every 15 minutes.
+
+The actual polling period is controlled by EFL and can be changed system-wide.
+
+## Further Reading ##
+[``Efl.Loop`` API Reference](/develop/api/class/efl/loop)
+:    Detailed documentation for the Loop object
