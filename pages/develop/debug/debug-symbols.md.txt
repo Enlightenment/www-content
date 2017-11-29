@@ -1,0 +1,24 @@
+---
+~~Title: Recompiling with Debug Symbols~~
+---
+
+# Recompiling with Debug Symbols #
+
+A standard installation of Enlightenment or EFL is compiled without *debug symbols*, meaning that debugging tools are unable to extract much information. In order that a backtrace, ``valgrind`` or any any other collection method provides good-quality information the program must be recompiled with debugging symbols activated.
+
+Debugging symbols can be added using the ``-g`` flag during compilation. If you have already configured your own custom compiler flags you will need to add ``-g`` to them. If you do not use any custom compiler flags you can set sensible defaults for debugging with the following command: 
+
+```bash
+export CFLAGS="-O -march=native -g"
+```
+
+Recompile each of the individual libraries, and Enlightenment itself if required, with:
+
+```bash
+make clean distclean
+./autogen.sh
+make
+make install
+```
+
+If your build environment has a different workflow, alter the above steps accordingly while remembering to retain the ``distclean`` option. 
