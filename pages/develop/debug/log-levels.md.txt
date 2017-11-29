@@ -1,0 +1,47 @@
+---
+~~Title: Log Levels~~
+---
+
+# Log Levels #
+
+EFL uses a common method to log error messages, called ``Eina_Log``, which allows you to adjust the verbosity of the logs using environment variables.
+
+``Eina_Log`` introduces the concept of *logging domains*, or *loggers*. For those unfamiliar with this term, it offers a way to separate a set of log messages into a specific context (e.g. a module) and provides a way of controlling this set as a whole.
+
+The log level is used to control which messages should appear. It specifies the lowest level that should be displayed, i.e. a message with level 11 being logged on a domain with level set to 10 would be displayed while a message with level 9 wouldn't.
+
+## Available Log Levels ##
+
+| Level   | Macro                        |
+|---------|------------------------------|
+|Critical |``EINA_LOG_LEVEL_CRITICAL()`` |
+|Error    |``EINA_LOG_ERR()``            |
+|Warning  |``EINA_LOG_WARN()``           |
+|Info     |``EINA_LOG_INFO()``           |
+|Debug    |``EINA_LOG_DBG()``            |
+
+## Setting the Log Level ##
+
+To set the general log level use the ``EINA_LOG_LEVEL`` environment variable:
+
+```bash
+EINA_LOG_LEVEL={N} ./{application}
+```
+
+Where ``{N}`` is the log level number and ``{application}`` the binary you are currently debugging.
+
+You can also use finer-grained control via the ``EINA_LOG_LEVELS`` environment variable:
+
+```bash
+EINA_LOG_LEVELS=module1:5,module2:2,module3:0 ./{application}
+```
+
+In this example the command would set the log level of ``module1`` to 5, ``module2`` to 2, and ``module3`` to 0.
+
+To tidy up the logging output use the following command to disable logging of intenal ``eina`` code:
+
+```bash
+EINA_LOG_LEVEL{N} EINA_LOG_LEVELS_GLOB=eina_*:0 ./{application}
+```
+
+Removing these internal logs from the output makes it easier for you to see your own domain messages.
