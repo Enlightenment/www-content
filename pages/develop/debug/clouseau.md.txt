@@ -1,0 +1,137 @@
+---
+~~Title: Clouseau~~
+---
+
+# Clouseau #
+
+Clouseau is the EFL user interface inspection tool. It is designed to make it easy to query UI components and structure. It supports remote debugging and works with GDB. Clouseau can also provide information about different widgets along with their properties.
+
+## Installing Clouseau ##
+
+Clouseau is available from the Enlightenment git repository using the following command:
+
+```bash
+git clone https:``git.enlightenment.org/tools/clouseau.git
+```
+
+## Debugging with Clouseau ##
+
+The following sections will demonstrate the use of Clouseau to debug a simple "Hello World" program.
+
+### A Hello World Example ###
+
+Create the following program in your development environment or text editor:
+
+```c
+#include <Elementary.h>
+
+static void
+on_done(void *data, Evas_Object *obj, void *event_info)
+{
+  `` quit the mainloop (elm_run function will return)
+  elm_exit();
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+  Evas_Object *win, *box, *lab, *btn;
+
+  `` new window - new background
+  win = elm_win_util_standard_add("hello", "Hello");
+  `` when the user clicks "close" on a window there is a request to delete
+  evas_object_smart_callback_add(win, "delete,request", on_done, NULL);
+  `` add a box object - default is vertical. a box holds children in a row,
+  `` either horizontally or vertically. nothing more.
+  box = elm_box_add(win);
+  `` make the box horizontal
+  elm_box_horizontal_set(box, EINA_TRUE);
+  `` add object as a resize object for the window (controls window minimum
+  `` size as well as gets resized if window is resized)
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  `` add a label widget, set the text and put it in the pad frame
+  lab = elm_label_add(win);
+  `` set default text of the label
+  elm_object_text_set(lab, "Hello out there world!");
+  `` pack the label at the end of the box
+  elm_box_pack_end(box, lab);
+  evas_object_show(lab);
+  `` add an ok button
+  btn = elm_button_add(win);
+  `` set default text of button to "OK"
+  elm_object_text_set(btn, "OK");
+  `` pack the button at the end of the box
+  elm_box_pack_end(box, btn);
+  evas_object_show(btn);
+  `` call on_done when button is clicked
+  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
+  `` now we are done, show the window
+  evas_object_show(win);
+
+  `` run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
+}
+ELM_MAIN()
+```
+
+Save and compile the program as "helloworld".
+
+### Debugging Hello World with Clouseau ###
+
+Run the "helloworld" program through Clouseau with the following command:
+
+```bash
+clouseau ./helloworld
+```
+
+The following screenshot demonstrates Clouseau's output:
+
+![Clouseau](/_media/clouseau.png)
+
+* Yellow - The "helloworld" application
+* Red - the composition of the "helloworld" application
+* Blue - the characteristic of ``Elm`` and ``Evas_object``
+
+### Exploring Hello World ###
+
+The application is composed of three main widgets : ``Elm_win``, ``Elm_bg``, and ``Elm_box``.
+
+```c
+win = elm_win_util_standard_add("hello", "Hello");
+[...]
+box = elm_box_add(win);
+```
+
+The ``elm_win_util_standard_add()`` function creates the window widget, ``win``, which is the root widget often used in an application. It also adds a standard background (``Elm_bg``). Then the ``elm_box_add`` function creates a ``box`` widget.
+
+```c
+elm_box_pack_end(box, lab);
+[...]
+elm_box_pack_end(box, btn);
+```
+
+The ``elm_box_pack_end()`` functions add ``lab`` and ``btn`` widgets at the end of the pack list, so the ``lab`` and ``btn`` widgets appear inside the ``box`` widget.
+
+The blue section of the screenshot shows certain characteristics of the object and widget: their position, size, color and so on. Some of these characteristics are dynamic and can be updated with the reload button in Clouseau.
+
+```c
+elm_win_resize_object_add(win, box);
+```
+
+The ``elm_win_resize_object_add()`` function controls the size of the window such that it takes up the minimum of space. You can see in the blue section that the minimum and maximum size are equal as a consequence of this function call.
+
+### Displaying All Objects ##
+
+To control the objects that are displayed, click on the "Settings" button and deselect "Only show Elementary widgets" as per the below screenshot:
+
+![Clouseau Settings](/_media/settings_clouseau.png)
+
+This will display all the program's ojbects, desmontrating that widgets are just gathered specific objects.
+
+![Clouseau Objects](/_media/clouseau_object.png)
+
+Highlightend in yellow is the ``Elm_box``, which is an ``Evas_box`` composed of an ``Evas_rectangle``, an ``Elm_Label`` and an ``Elm_Button``.
+
+A Button widget is an Edje_Object which is composed of four ``Evas_rectangle``, one ``Evas_image`` and two ``Evas_text``.
