@@ -16,13 +16,15 @@ Programming guides: [New](develop/guides/c/core/main-loop.md#Timers), [Old](deve
 
 * Timers are always periodic. The callback does not return ``ECORE_CALLBACK_RENEW`` or ``ECORE_CALLBACK_CANCEL`` anymore. If you want a one-shot timer, remove it from the callback after it has fired once.
 
-* ``ecore_timer_interval_set()`` -> ``efl_loop_timer_interval_set()``
+* ``ecore_timer_interval_set/get()`` -> ``efl_loop_timer_interval_set/get()``
 
 * ``ecore_timer_pending_get()`` -> ``efl_loop_timer_pending_get()``
 
 * ``ecore_timer_reset()`` -> ``efl_loop_timer_reset()``
 
-* All ``ecore_timer_*()`` methods have been removed.
+* ``ecore_timer_freeze/thaw()`` -> ``efl_event_freeze/thaw()``
+
+* ``ecore_timer_*()`` methods should not be used in new code.
 
 ### File Descriptors ###
 
@@ -34,4 +36,10 @@ Programming guides: [New](develop/guides/c/core/main-loop.md#File_Descriptor_Mon
 
 * Retrieve the internal FDs through the ``fd`` and ``fd_file`` properties .
 
-* All ``ecore_main_fd_*()`` methods have been removed.
+* ``ecore_main_fd_*()`` methods should not be used in new code.
+
+### Idlers ###
+
+# Functionality Losses #
+
+* Timers cannot be paused.
