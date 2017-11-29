@@ -8,7 +8,7 @@
 
 ### Timers ###
 
-Programming guides: [New](develop/guides/c/core/main-loop.md#Timers), [Old](develop/legacy/program_guide/main_loop/timers)
+Programming guides: [New](/develop/guides/c/core/main-loop.md#Timers), [Old](/develop/legacy/program_guide/main_loop/timers)
 
 * Timers are now regular Eo objects created with ``efl_add(EFL_LOOP_TIMER_CLASS, ...)`` and destroyed with ``efl_unref()``.
 
@@ -28,7 +28,7 @@ Programming guides: [New](develop/guides/c/core/main-loop.md#Timers), [Old](deve
 
 ### File Descriptors ###
 
-Programming guides: [New](develop/guides/c/core/main-loop.md#File_Descriptor_Monitors), [Old](develop/legacy/program_guide/main_loop/file_descriptors)
+Programming guides: [New](/develop/guides/c/core/main-loop.md#File_Descriptor_Monitors), [Old](/develop/legacy/program_guide/main_loop/file_descriptors)
 
 * File Descriptors are now regular Eo objects created with ``efl_add(EFL_LOOP_FD_CLASS, ...)`` and destroyed with ``efl_unref()``.
 
@@ -37,3 +37,17 @@ Programming guides: [New](develop/guides/c/core/main-loop.md#File_Descriptor_Mon
 * Retrieve the internal FDs through the ``fd`` and ``fd_file`` properties .
 
 * ``ecore_main_fd_*()`` methods should not be used in new code.
+
+### Idlers ###
+
+Programming guides: [New](/develop/guides/c/core/main-loop.md#Idlers), [Old](/develop/legacy/program_guide/main_loop/idlers)
+
+* All idler functions are handled through regular events on the Loop object.
+
+* ``ecore_idler_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE, ...)``
+
+* ``ecore_idler_enterer_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE_ENTER, ...)``
+
+* ``ecore_idler_exiter_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE_EXIT, ...)``
+
+* ``ecore_idler_*()`` methods should not be used in new code.
