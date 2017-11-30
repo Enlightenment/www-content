@@ -28,8 +28,7 @@ Run the "helloworld" binary through ``gdbserver``:
 ```bash
 #target
 gdbserver localhost:2000 helloworld
-
-$ Process hello created; pid = 2763
+$ Process helloworld created; pid = 2763
 $ Listening on port 2000
 ```
 
@@ -38,19 +37,7 @@ At this point ``gdbserver`` is waiting for a connection on port 2000 of the targ
 > **NOTE:**
 >  The GNU Debugger can be launched as multiple processes using ``gdbserver --multi localhost:2000``.
 
-On the client side, with a run ``gdb``:
-
-```gdb
-#client
-gdb hello
-```
-```bash
-...
-$ Type "apropos word" to search for commands related to "word"...
-$ Reading symbols from test...(no debugging symbols found)...done.
-```
-
-Use ``target remote`` to connect to the target system, replacing ``[target-ip]`` with the IP address of the target system.
+Run ``gdb`` on your local client machine and use ``target remote`` to connect to the target system, replacing ``[target-ip]`` with the IP address of the target system.
 
 ```gdb
 #client
