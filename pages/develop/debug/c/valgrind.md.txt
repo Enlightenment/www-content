@@ -1,0 +1,102 @@
+---
+~~Title: Debugging with Valgrind~~
+---
+
+# Debugging with Valgrind #
+
+Valgrind is a collection of tools for tracking down memory-related issues, from memory leaks through to uninitialized variables. While more information on Valgrind is available on the [Valgrind website](http://valgrind.org/docs/manual/manual.html), this document introduces its use specifically for debugging applications written with the Enlightenment Foundation Libraries (EFL).
+
+## Debugging a Memory Leak ##
+
+In this example an ``Eina`` array is created in a callback function but it is never freed. This generates a memory leak. Begin by creating the following program:
+
+```c
+#include <Elementary.h>
+
+static void
+on_done(void *data, Evas_Object *obj, void *event_info)
+{
+  Eina_Array *array;
+  unsigned int i;
+
+  eina_init();
+  array = eina_array_new(100);
+  eina_array_step_set(array, sizeof(*array), 20);
+  for (i = 0; i < 20; i++) eina_array_push(array, strdup("hello"));
+
+  /****To free array****/
+  //while (eina_array_count(array))
+  //free(eina_array_pop(array));
+  //eina_array_free(array);
+
+  //eina_shutdown();
+
+  // quit the mainloop (elm_run function will return)
+  elm_exit();
+}
+
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+  Evas_Object *win, *box, *btn;
+
+  // new window
+  win = elm_win_util_standard_add("hello", "Hello");
+  // add a box object
+  box = elm_box_add(win);
+  // add object as a resize object for the window (controls window minimum
+  // size as well as gets resized if window is resized)
+  elm_win_resize_object_add(win, box);
+  evas_object_show(box);
+  // add a button
+  btn = elm_button_add(win);
+  // set default text of button to "SEG"
+  elm_object_text_set(btn, "SEG");
+  // pack the button at the end of the box
+  elm_box_pack_end(box, btn);
+  evas_object_show(btn);
+  // call on_done when button is clicked
+  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
+  //show the window
+  evas_object_show(win);
+
+  // run the mainloop and process events and callbacks
+  elm_run();
+  return 0;
+}
+ELM_MAIN()
+```
+
+Save the program as "hello.", compile it, and run it through Valgrind:
+
+```bash
+valgrind --leak-check=full --track-origins=yes ./hello
+[...]
+==22370== 312 (32 direct, 280 indirect) bytes in 1 blocks are definitely lost
+in loss record 349 of 417
+==22370==    at 0x4C28C20: malloc (vg_replace_malloc.c:296)
+==22370==    by 0x55A585D: eina_array_new (eina_array.c:279)
+==22370==    by 0x400E4C: on_done (hello.c:7)
+==22370==    by 0x5CD1B83: _eo_evas_smart_cb (evas_object_smart.c:65)
+==22370==    by 0x6BCFD21: _eo_base_event_callback_call (eo_base_class.c:716)
+==22370==    by 0x6BCEA96: eo_event_callback_call (in
+/usr/local/lib/libeo.so.1.14.99)
+==22370==    by 0x5CD3BAC: evas_object_smart_callback_call
+(evas_object_smart.c:791)
+==22370==    by 0x4F34B8B: _activate (elm_button.c:69)
+==22370==    by 0x4F34BC1: _on_clicked_signal (elm_button.c:191)
+==22370==    by 0x6970424: edje_match_callback_exec_check_finals
+(edje_match.c:556)
+==22370==    by 0x6970424: edje_match_callback_exec (edje_match.c:712)
+==22370==    by 0x697673C: _edje_emit_cb (edje_program.c:1392)
+==22370==    by 0x697673C: _edje_emit_handle (edje_program.c:1345)
+==22370==    by 0x6971295: _edje_message_process (edje_message_queue.c:651)
+[...]
+```
+
+All the memory accesses pass through Valgrind, so it shows you a backtrace when an allocation is made and not freed.
+
+> **NOTE:**
+> There can be other traces in the ``HEAD SUMMARY``, but this example focuses on the memory leak within the application. As a result you may have to ignore things not relevant to that code.
+
+This backtrace demonstrates that an allocation took place in the ``eina_array_new()`` function. This function is called from the ``on_done()`` function. You can go further up the backtrace, but remember that a callback function is called from ``Evas`` so there is a good chance that the allocation is made in your specific callback function.
