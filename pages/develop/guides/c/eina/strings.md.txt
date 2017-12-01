@@ -8,14 +8,13 @@ You can create and manipulate strings in Enlightenment using two Eina types: Str
 
 ## Stringshares ##
 
-The ``Eina_Stringshare`` data type functions allow you to store a single copy of a string and use it in multiple places throughout your program. This way you can save a lot of strings with less memory. It improves string creation and destruction speed, reduces memory use, and decreases memory fragmentation.
+The ``Eina_Stringshare`` data type functions allow you to store a single copy of a string and use it in multiple places throughout your program. This way you can save a mamy strings using minimal memory. This shortens the time to create and destroy strings, reduces memory use and decreases memory fragmentation.
 
-With this data type you can reduce the number of duplicated strings kept in memory. It is common for the same strings to be dynamically allocated repeatedly between applications and libraries, especially in circumstances where you can have multiple copies of a structure that allocates the string. Rather than duplicating and freeing these strings, request a read-only pointer
-to an existing string and only incur the overhead of a hash lookup. This can sound like micro-optimizing, but profiling has shown that this can have a significant impact as the number of copies grows.
+With this data type you can reduce the number of duplicated strings kept in memory. It is common for the same strings to be dynamically allocated repeatedly between applications and libraries, especially in circumstances where you can have multiple copies of a structure that allocates the string. Rather than duplicating and freeing these strings, request a read-only pointer to an existing string and only incur the overhead of a hash lookup. This can sound like micro-optimizing but profiling has shown that this can have a significant impact as the number of copies grows.
 
 ### Managing Stringshares ###
 
-To create a stringshare, declare a string variable and call the ``eina_stringshare_add()`` function:
+To create a stringshare declare a string variable then call the ``eina_stringshare_add()`` function:
 
 ```c
 [...]
@@ -26,9 +25,9 @@ mystr = eina_stringshare_add(prologue);
 [...]
 ```
 > **NOTE:**
-> ``[...]`` in a Code Block indicates there will usually be code above and below the shown snippet, but that it has been excluded for the sake of brevity. There is no need to type ``[...]`` into your program.
+> ``[...]`` in a Code Block indicates there will usually be code above and below the shown snippet but that it has been excluded for the sake of brevity. There is no need to type ``[...]`` into your program.
 
-To retrieve or modify the string data, retrieve a string for use in a program from a format string using the ``eina_stringshare_printf()`` function. If you have a "format" string to pass to a function like ``printf``, you can store it as a stringshare as well. The following example produces "1 desktop manager to rule them all".
+To retrieve or modify string data, retrieve a string for use in a program from a format string using the ``eina_stringshare_printf()`` function. If you have a "format" string to pass to a function like ``printf``, you can store it as a stringshare as well. The following example produces "1 desktop manager to rule them all":
 
 ```c
 [...]
@@ -41,7 +40,7 @@ print(str)
 [...]
 ```
 
-You can replace the value of a stringshare with the ``eina_stringshare_replace()`` function. Pass the pointer address and the new value to the function.
+You can replace the value of a stringshare with the ``eina_stringshare_replace()`` function. Pass the pointer address and the new value to the function:
 
 ```c
 [...]
@@ -49,7 +48,7 @@ eina_stringshare_replace(&str,"One desktop manager to rule them all");
 [...]
 ```
 
-You can retrieve the length of the stringshare value with the ``eina_stringshare_strlen()`` function.
+Retrieve the length of the stringshare value with the ``eina_stringshare_strlen()`` function:
 
 ```c
 [...]
@@ -57,7 +56,7 @@ You can retrieve the length of the stringshare value with the ``eina_stringshare
 [...]
 ```
 
-When the string is no longer needed, delete it using the ``eina_stringshare_del()`` function:
+When the string is no longer needed delete it using the ``eina_stringshare_del()`` function:
 
 ```c
 [...]
@@ -87,7 +86,7 @@ eina_strbuf_append(mybuffer, "This is my string.");
 [...]
 ```
 
-To append 1 character to your buffer, use the ``eina_strbuf_append_char()`` function. You can also append a sized string to the buffer using the ``eina_strbuf_append_length()`` function:
+To append 1 character to your buffer use the ``eina_strbuf_append_char()`` function. You can also append a sized string to the buffer using the ``eina_strbuf_append_length()`` function:
 
 ```c
 [...]
@@ -96,7 +95,7 @@ eina_strbuf_append_char(mybuffer, 'r');
 [...]
 ```
 
-To handle "printf" format strings, use the ``eina_strbuf_append_printf()`` function to add formatted strings to the buffer:
+To handle "printf" format strings use the ``eina_strbuf_append_printf()`` function to add formatted strings to the buffer:
 
 ```c
 [...]
@@ -104,7 +103,7 @@ eina_strbuf_append_printf(buf, "%s%c", "buffe", 'r');
 [...]
 ```
 
-To remove characters from one position to another, use the ``eina_strbuf_remove()`` function. The first parameter is the buffer, the second is the start position of the characters you want to delete, and the last the end position. \\ This example removes the first 19 characters of the buffer:
+To remove characters from one position to another, use the ``eina_strbuf_remove()`` function. The first parameter is the buffer, the second is the start position of the characters you want to delete and the last the end position. \\ This example removes the first 19 characters of the buffer:
 
 ```c
 [...]
@@ -112,7 +111,7 @@ eina_strbuf_remove(buf, 0, 18);
 [...]
 ```
 
-To replace characters use ``eina_strbuf_replace()``  to replace a specific occurrence of a given string in the buffer with another string. Use ``eina_strbuf_replace_all()`` to replace all occurrences of a given string in the buffer with another string.
+Use ``eina_strbuf_replace()``  to replace a specific occurrence of a given string in the buffer with another string. Use ``eina_strbuf_replace_all()`` to replace all occurrences of a given string in the buffer with another:
 
 ```c
 [...]
@@ -129,7 +128,7 @@ eina_strbuf_replace_all(mybuffer, "B-U-F-F-E-R", "Buffer");
 [...]
 ```
 
-To insert a string at the specified position, use the ``eina_strbuf_insert()`` function. Use the ``eina_strbuf_insert_printf()`` function with formatted strings.
+To insert a string at the specified position, use the ``eina_strbuf_insert()`` function. For formatted strings, use the function the ``eina_strbuf_insert_printf()``:
 
 
 ```c
@@ -141,7 +140,7 @@ eina_strbuf_insert_printf(buf, " %s: %d", 6, "length", eina_strbuf_length_get(bu
 [...]
 ```
 
-To get the complete length of the string and the buffer, use the ``eina_strbuf_string_get()`` and ``eina_strbuf_length_get()`` functions:
+To obtain the complete length of the string and buffer, use the functions ``eina_strbuf_string_get()`` and ``eina_strbuf_length_get()``:
 
 ```c
 [...]
@@ -149,7 +148,7 @@ printf("%s : %d\n", eina_strbuf_string_get(mybuffer), eina_strbuf_length_get(buf
 [...]
 ```
 
-When no longer needed, free the buffer with the ``eina_strbuf_free()`` function. You can also free the content of ``Eina_Strbuf`` without freeing the buffer itself using the ``eina_strbuf_string_free()`` function.
+When you no longer require the buffer, free it with the function ``eina_strbuf_free()``. You can also free the content of ``Eina_Strbuf`` without freeing the buffer itself using the ``eina_strbuf_string_free()``:
 
 ```c
 [...]
