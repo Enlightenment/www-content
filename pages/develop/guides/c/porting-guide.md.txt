@@ -4,11 +4,18 @@
 
 # EFL C Porting Guide #
 
+This document highlights the main differences between the original EFL API (known from now on as *Legacy API*) and the new EFL API based on Eo objects (dubbed *Unified API*). The Unified API was introduced in EFL 1.22, around December 2017.
+
+Both APIs can be used simultaneously, but support for the Legacy one will be dropped in the future, and therefore usage of the Unified API is strongly recommended in new code.
+
+> **NOTE:**
+> Meanwhile the Legacy API is not completely removed, enabling the Unified API requires defining two compilation symbols, ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT``, as can be seen in the tutorials and examples.
+
 ## Main Loop ##
 
 ### Timers ###
 
-Programming guides: [New](/develop/guides/c/core/main-loop.md#Timers), [Old](/develop/legacy/program_guide/main_loop/timers)
+Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Timers), [Legacy EFL](/develop/legacy/program_guide/main_loop/timers)
 
 * Timers are now regular Eo objects created with ``efl_add(EFL_LOOP_TIMER_CLASS, ...)`` and destroyed with ``efl_unref()``.
 
@@ -28,7 +35,7 @@ Programming guides: [New](/develop/guides/c/core/main-loop.md#Timers), [Old](/de
 
 ### File Descriptors ###
 
-Programming guides: [New](/develop/guides/c/core/main-loop.md#File_Descriptor_Monitors), [Old](/develop/legacy/program_guide/main_loop/file_descriptors)
+Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#File_Descriptor_Monitors), [Legacy EFL](/develop/legacy/program_guide/main_loop/file_descriptors)
 
 * File Descriptors are now regular Eo objects created with ``efl_add(EFL_LOOP_FD_CLASS, ...)`` and destroyed with ``efl_unref()``.
 
@@ -40,7 +47,7 @@ Programming guides: [New](/develop/guides/c/core/main-loop.md#File_Descriptor_Mo
 
 ### Idlers ###
 
-Programming guides: [New](/develop/guides/c/core/main-loop.md#Idlers), [Old](/develop/legacy/program_guide/main_loop/idlers)
+Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Idlers), [Legacy EFL](/develop/legacy/program_guide/main_loop/idlers)
 
 * All idler functions are handled through regular events on the Loop object.
 
