@@ -4,12 +4,12 @@
 
 # EFL C Porting Guide #
 
-This document highlights the main differences between the original EFL API (known from now on as *Legacy API*) and the new EFL API based on Eo objects (dubbed *Unified API*). The Unified API was introduced in EFL 1.22, around December 2017.
+This document highlights the main differences between the original EFL API (henceforth the *Legacy API*) and the new EFL API based on Eo objects (dubbed *Unified API*). The Unified API was introduced in EFL 1.22, around December 2017.
 
-Both APIs can be used simultaneously, but support for the Legacy one will be dropped in the future, and therefore usage of the Unified API is strongly recommended in new code.
+Both APIs can be used simultaneously but support for the Legacy version will be dropped in the future. As such any new code should use the Unified API.
 
 > **NOTE:**
-> Meanwhile the Legacy API is not completely removed, enabling the Unified API requires defining two compilation symbols, ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT``, as can be seen in the tutorials and examples.
+> Currently the Legacy API has not been completely removed. Enabling the Unified API requires defining two compilation symbols, ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT``, as you can see in the tutorials and examples.
 
 ## Main Loop ##
 
@@ -21,7 +21,7 @@ Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Timers), [
 
 * The timer callback is registered with ``efl_event_callback_add(timer_object, EFL_LOOP_TIMER_EVENT_TICK, ...)``.
 
-* Timers are always periodic. The callback does not return ``ECORE_CALLBACK_RENEW`` or ``ECORE_CALLBACK_CANCEL`` anymore. If you want a one-shot timer, remove it from the callback after it has fired once.
+* Timers are always periodic. The callback does not return ``ECORE_CALLBACK_RENEW`` or ``ECORE_CALLBACK_CANCEL`` any more. If you want a one-shot timer remove it from the callback after it has fired once.
 
 * ``ecore_timer_interval_set/get()`` -> ``efl_loop_timer_interval_set/get()``
 
