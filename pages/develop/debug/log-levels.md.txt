@@ -10,13 +10,13 @@ The ``Eina_Log`` module provides logging facilities for libraries and applicatio
 
 ## Available Log Levels ##
 
-| Level   | Macro                        |
-|---------|------------------------------|
-|Critical |``EINA_LOG_LEVEL_CRITICAL()`` |
-|Error    |``EINA_LOG_ERR()``            |
-|Warning  |``EINA_LOG_WARN()``           |
-|Info     |``EINA_LOG_INFO()``           |
-|Debug    |``EINA_LOG_DBG()``            |
+| Level   | Number | Macro                         |
+|---------|--------|-------------------------------|
+|Critical |      0 | ``EINA_LOG_LEVEL_CRITICAL()`` |
+|Error    |      1 | ``EINA_LOG_ERR()``            |
+|Warning  |      2 | ``EINA_LOG_WARN()``           |
+|Info     |      3 | ``EINA_LOG_INFO()``           |
+|Debug    |      4 | ``EINA_LOG_DBG()``            |
 
 ## Logging Domains ##
 
@@ -26,7 +26,7 @@ Suppose you have three different modules in your application and you want to get
 
 Logging domains are specified by a name, color applied to the name and the level. The first two (log name and log color) are set through code inside your application, module or library.
 
-The log level is used to control which messages should appear. It specifies the lowest level that should be displayed, i.e. a message with level 11 being logged on a domain with level set to 10 would be displayed while a message with level 9 wouldn't.
+The log level is used to control which messages should appear. It specifies the lowest level that should be displayed, i.e. a message with level 2 being logged on a domain with level set to 3 would be displayed while a message with level 4 wouldn't.
 
 ## Setting the Log Level ##
 
@@ -42,10 +42,10 @@ Domain level logging is set during runtime, in contrast with the name and color,
 You can also use finer-grained control via the ``EINA_LOG_LEVELS`` environment variable:
 
 ```bash
-EINA_LOG_LEVELS=module1:5,module2:2,module3:0 ./{application}
+EINA_LOG_LEVELS=module1:4,module2:2,module3:0 ./{application}
 ```
 
-In this example the command would set the log level of ``module1`` to 5, ``module2`` to 2, and ``module3`` to 0.
+In this example the command would set the log level of ``module1`` to 4, ``module2`` to 2, and ``module3`` to 0.
 
 ### General Logging ###
 
