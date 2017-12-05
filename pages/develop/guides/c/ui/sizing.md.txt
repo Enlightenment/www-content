@@ -1,0 +1,41 @@
+---
+~~Title:UI Sizing Programming Guide~~
+---
+
+# User Interface Sizing Programming Guide #
+
+Sometimes, when building a user interface (UI), it is necessary to set the size of some elements to non-default values. A common pitfall is to explicitly set these sizes to values that look OK on the developer's environment, but then fail for other users when the UI is resized, for example.
+
+A better approach is to set *minimum* and *maximum* values for the size of these elements, so they can be customized while still allowing for some flexibility.
+
+You can find an usage example at the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [reference/c/ui/src/ui_sizing.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/ui/src/ui_sizing.c).
+
+## Prerequisites ##
+
+* Read the [Hello GUI Tutorial](hello-gui.md) to know how to build a simple EFL application with a Graphical User Interface.
+
+## Setting a Widget's Minimum Size ##
+
+When a widget has its *minimum* size set with ``efl_gfx_size_hint_min_set()``, resizing the rest of the UI will not shrink the widget below this size. Use it to create elements bigger than normal, which will also prevent the UI from becoming too small:
+
+```c
+   efl_add(EFL_UI_BUTTON_CLASS, win,
+           efl_text_set(efl_added, "Big Button"),
+           efl_pack_end(box, efl_added),
+           efl_gfx_size_hint_min_set(efl_added, EINA_SIZE2D(100, 100)));
+```
+
+## Setting a Widget's Maximum Size ##
+
+When a widget has its *maximum* size set with ``efl_gfx_size_hint_max_set()``, resizing the rest of the UI will not expand the widget above this size. Use it to create elements smaller than normal, or that will not expand past a given point when the UI enlarges.
+
+```c
+   efl_add(EFL_UI_BUTTON_CLASS, win,
+           efl_text_set(efl_added, "Small"),
+           efl_pack_end(box, efl_added),
+           efl_gfx_size_hint_max_set(efl_added, EINA_SIZE2D(50, 50)));
+```
+
+## Further Reading ##
+[Hello GUI Tutorial](hello-gui.md)
+:    Basic tutorial explaining how to build a simple EFL application with a Graphical User Interface.
