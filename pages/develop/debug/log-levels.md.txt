@@ -70,3 +70,21 @@ EINA_LOG_LEVEL={N} EINA_LOG_LEVELS_GLOB=eina_*:0 ./{application}
 ```
 
 Removing these internal logs from the output makes it easier for you to see your own domain messages.
+
+## Eina_Log_Group Log ##
+
+``Eina`` provides ``eina_log_print()``, a standard function to manage all logging messages. This function may be called directly or using helper macros including ``EINA_LOG_DBG()``, ``EINA_LOG_ERR()`` or those that take a specific domain as an argument as with ``EINA_LOG_DOM_DBG()`` and ``EINA_LOG_DOM_ERR()``. Internally, ``eina_log_print()`` will call the function defined with ``eina_log_print_cb_set()``, which defaults to ``eina_log_print_cb_stderr()`` but may be changed to do whatever you need such as networking or syslog logging.
+
+The logging system is thread-safe once initialized with ``eina_log_threads_enable()``. The thread that calls this function first is considered "main thread" and other threads will have their thread id (``pthread_self()``) printed in the log message so it is easy to detect from where the messages are coming.
+
+The different logging levels serve to customize the amount of debugging information and may be used to automatically call ``abort()`` once a message of a given level is printed. This is controlled by the environment variable ``EINA_LOG_ABORT`` and the level to be considered critical with ``EINA_LOG_ABORT_LEVEL``. These can be changed with ``eina_log_abort_on_critical_set()`` and ``eina_log_abort_on_critical_level_set()``.
+
+The default maximum level to print is defined by the environment variable ``EINA_LOG_LEVEL`` but may be set per-domain with ``EINA_LOG_LEVELS``. It will default to ``EINA_LOG_ERR``. This can be changed with ``eina_log_level_set()``.
+
+To use the log system ``Eina`` must be initialized with ``eina_init()`` and later shut down with ``eina_shutdown()``.
+
+## Controlling Print Callbacks ##
+
+The log module allows the user to change the way ``eina_log_print()`` displays messages. It suffices to pass to ``eina_log_print_cb_set()`` the function used to display the message. That function must be of type ``#Eina_Log_Print_Cb``. As custom data can be passed to that callback, customised messages can be displayed.
+
+It is suggested to not use ``__FILE__``, ``__FUNCTION__`` or ``__LINE__`` when writing that callback, but when defining macros like ``EINA_LOG_ERR()`` and others.
