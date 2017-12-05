@@ -4,19 +4,19 @@
 
 # User Interface Sizing Programming Guide #
 
-Sometimes, when building a user interface (UI), it is necessary to set the size of some elements to non-default values. A common pitfall is to explicitly set these sizes to values that look OK on the developer's environment, but then fail for other users when the UI is resized, for example.
+Sometimes when building a *user interface (UI)* you need to set the size of some elements to non-default values. A common pitfall is to explicitly set these sizes to values that look OK in a development environment but then fail for other users when the UI is resized.
 
-A better approach is to set *minimum* and *maximum* values for the size of these elements, so they can be customized while still allowing for some flexibility.
+A better approach is to set *minimum* and *maximum* values for the size of these elements. This means they can be customized while still allowing for some flexibility.
 
-You can find an usage example at the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [reference/c/ui/src/ui_sizing.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/ui/src/ui_sizing.c).
+You can find an usage example in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [reference/c/ui/src/ui_sizing.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/ui/src/ui_sizing.c).
 
 ## Prerequisites ##
 
-* Read the [Hello GUI Tutorial](hello-gui.md) to know how to build a simple EFL application with a Graphical User Interface.
+* Read the [Hello GUI Tutorial](hello-gui.md) to learn how to build a simple EFL application with a Graphical User Interface.
 
 ## Setting a Widget's Minimum Size ##
 
-When a widget has its *minimum* size set with ``efl_gfx_size_hint_min_set()``, resizing the rest of the UI will not shrink the widget below this size. Use it to create elements bigger than normal, which will also prevent the UI from becoming too small:
+When a widget's *minimum* size is defined with ``efl_gfx_size_hint_min_set()``, resizing the rest of the UI will not shrink the widget below the size you set. You can use it to create elements which are bigger than normal, as well as prevent the UI from becoming too small:
 
 ```c
    efl_add(EFL_UI_BUTTON_CLASS, win,
@@ -27,7 +27,7 @@ When a widget has its *minimum* size set with ``efl_gfx_size_hint_min_set()``, r
 
 ## Setting a Widget's Maximum Size ##
 
-When a widget has its *maximum* size set with ``efl_gfx_size_hint_max_set()``, resizing the rest of the UI will not expand the widget above this size. Use it to create elements smaller than normal, or that will not expand past a given point when the UI enlarges.
+When a widget's *maximum* size is defined with ``efl_gfx_size_hint_max_set()``, resizing the rest of the UI will not expand the widget above this size you set. Use it to create elements  which are smaller than normal or that will not expand past a given point when the UI enlarges.
 
 ```c
    efl_add(EFL_UI_BUTTON_CLASS, win,
