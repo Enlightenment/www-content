@@ -10,13 +10,13 @@ The ``Eina_Log`` module provides logging facilities for libraries and applicatio
 
 ## Available Log Levels ##
 
-| Level   | Number | Macro                         |
-|---------|--------|-------------------------------|
-|Critical |      0 | ``EINA_LOG_CRIT()``           |
-|Error    |      1 | ``EINA_LOG_ERR()``            |
-|Warning  |      2 | ``EINA_LOG_WARN()``           |
-|Info     |      3 | ``EINA_LOG_INFO()``           |
-|Debug    |      4 | ``EINA_LOG_DBG()``            |
+| Level   | Number | Macro               |
+|---------|--------|---------------------|
+|Critical |      0 | ``EINA_LOG_CRIT()`` |
+|Error    |      1 | ``EINA_LOG_ERR()``  |
+|Warning  |      2 | ``EINA_LOG_WARN()`` |
+|Info     |      3 | ``EINA_LOG_INFO()`` |
+|Debug    |      4 | ``EINA_LOG_DBG()``  |
 
 ## Logging Domains ##
 
@@ -88,3 +88,92 @@ To use the log system ``Eina`` must be initialized with ``eina_init()`` and late
 The log module allows the user to change the way ``eina_log_print()`` displays messages. It suffices to pass to ``eina_log_print_cb_set()`` the function used to display the message. That function must be of type ``#Eina_Log_Print_Cb``. As custom data can be passed to that callback, customized messages can be displayed.
 
 It is suggested to not use ``__FILE__``, ``__FUNCTION__`` or ``__LINE__`` when writing that callback, but when defining macros like ``EINA_LOG_ERR()`` and others.
+
+## Logging from an Application ##
+
+The following example, available for download from the [Enlightenment Project git repository](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_log.c), demonstrates the control of logging from within an application.
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <stdio.h>
+
+#include <Eina.h>
+#include <Efl_Core.h>
+
+/*
+ * Efl Core Log examples.
+ *
+ * This demo shows how to log at various levels and to change what log is shown.
+ * You can also use a custom log printer in your app as shown in _log_custom.
+ */
+
+static double
+_divide(int num, int denom)
+{
+   if (denom == 0)
+     EINA_LOG_CRIT("Attempt to divide by 0\n");
+   else
+     {
+        if (denom < 0)
+          EINA_LOG_WARN("Possible undesirable effect, divide by negative number");
+
+        double ret = ((double) num / denom);
+        EINA_LOG_INFO("%d / %d = %f\n", num, denom, ret);
+        return ret;
+     }
+
+   return -1;
+}
+
+static void
+_divides()
+{
+   _divide(5, 1);
+   _divide(5, -1);
+   _divide(5, 0);
+}
+
+static void
+_log_levels()
+{
+   printf("Executing with default logging\n");
+   _divides();
+
+   eina_log_level_set(EINA_LOG_LEVEL_WARN);
+   printf("Executing with WARN level\n"); // same as EINA_LOG_LEVEL = 2
+   _divides();
+
+   eina_log_level_set(EINA_LOG_LEVEL_INFO);
+   printf("Executing with INFO on\n"); // same as EINA_LOG_LEVEL = 3
+   _divides();
+}
+
+void _print_cb(const Eina_Log_Domain *domain EINA_UNUSED, Eina_Log_Level level,
+              const char *file, const char *fnc, int line,
+              const char *fmt, void *data EINA_UNUSED, va_list args)
+{
+   fprintf(stdout, "LOG %d <%s (%s:%d)> ", level, fnc, file, line);
+   vfprintf(stdout, fmt, args);
+   putc('\n', stdout);
+}
+
+static void
+_log_custom()
+{
+   printf("Executing with custom log printer\n");
+   eina_log_print_cb_set(_print_cb, NULL);
+   _divides();
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   _log_levels();
+   _log_custom();
+
+   efl_exit(0);
+}
+EFL_MAIN()
+```
