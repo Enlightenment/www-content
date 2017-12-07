@@ -1,97 +1,257 @@
 ---
 ~~Title: Generic Value~~
-~~NOCACHE~~
 ---
 
 # Generic Value #
 
-The ``Eina_Value`` object provides generic data storage and access, allowing you to store what you want in one single type of ``Eina_Value``. It is meant for simple data types, providing uniform access and release functions useful to exchange data while preserving their types. ``Eina_Value`` comes with predefined types for numbers, arrays, lists, hashes, blobs and structs, and it can convert between data types including strings.
+The ``Eina_Value`` object provides generic data storage and access, allowing you to store what you want in one single type of ``Eina_Value``. It is meant for simple data types, providing uniform access and release functions useful to exchange data while preserving their types. ``Eina_Value`` supports a number of predefined types, can be extended with additional user-provided types, and it can convert between data types, including strings.
+
+You can find many usage example in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [reference/c/eina/src/eina_value.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_value.c).
 
 ## Value Types ##
 
-The ``Eina_Value`` can handle the following types:
+``Eina_Value`` can handle the common **simple** types: ``EINA_VALUE_TYPE_UCHAR`` (unsigned char), ``EINA_VALUE_TYPE_USHORT`` (unsigned short), ``EINA_VALUE_TYPE_UINT`` (unsigned int), ``EINA_VALUE_TYPE_ULONG`` (unsigned long), ``EINA_VALUE_TYPE_TIMESTAMP`` (unsigned long, used for timestamps), ``EINA_VALUE_TYPE_UINT64`` (unsigned integer of 64 bits), ``EINA_VALUE_TYPE_CHAR`` (char), ``EINA_VALUE_TYPE_SHORT`` (short), ``EINA_VALUE_TYPE_INT`` (int), ``EINA_VALUE_TYPE_LONG`` (long), ``EINA_VALUE_TYPE_INT64`` (integer of 64 bits), ``EINA_VALUE_TYPE_FLOAT`` (float), ``EINA_VALUE_TYPE_DOUBLE`` (double), ``EINA_VALUE_TYPE_STRINGSHARE`` (stringshared string), ``EINA_VALUE_TYPE_STRING`` (string) and ``EINA_VALUE_TYPE_TIMEVAL`` ('struct timeval').
 
-* **``EINA_VALUE_TYPE_UCHAR``** -  unsigned char
-* **``EINA_VALUE_TYPE_USHORT``** -  unsigned short
-* **``EINA_VALUE_TYPE_UINT``** -  unsigned int
-* **``EINA_VALUE_TYPE_ULONG``** -  unsigned long
-* **``EINA_VALUE_TYPE_TIMESTAMP``** -  unsigned long, used for timestamps
-* **``EINA_VALUE_TYPE_UINT64``** -  unsigned integer of 64 bits
-* **``EINA_VALUE_TYPE_CHAR``** -  char
-* **``EINA_VALUE_TYPE_SHORT``** -  short
-* **``EINA_VALUE_TYPE_INT``** -  int
-* **``EINA_VALUE_TYPE_LONG``** -  long
-* **``EINA_VALUE_TYPE_INT64``** -  integer of 64 bits
-* **``EINA_VALUE_TYPE_FLOAT``** -  float
-* **``EINA_VALUE_TYPE_DOUBLE``** -  double
-* **``EINA_VALUE_TYPE_STRINGSHARE``** -  stringshared string
-* **``EINA_VALUE_TYPE_STRING``** -  string
-* **``EINA_VALUE_TYPE_ARRAY``** -  array
-* **``EINA_VALUE_TYPE_LIST``** -  list
-* **``EINA_VALUE_TYPE_HASH``** -  hash
-* **``EINA_VALUE_TYPE_TIMEVAL``** -  'struct timeval'
-* **``EINA_VALUE_TYPE_BLOB``** -  blob of bytes
-* **``EINA_VALUE_TYPE_STRUCT``** -  struct
+In addition, a number of specializations of ``Eina_Value`` exist to handle **aggregate** types:
 
-## Setting Up a Generic Value ##
+* ``EINA_VALUE_TYPE_ARRAY``: Manages arrays of elements through the ``Eina_Value_Array`` object.
+* ``EINA_VALUE_TYPE_LIST``: Manages lists of elements through the ``Eina_Value_List`` object.
+* ``EINA_VALUE_TYPE_HASH``: Manages hash tables through the ``Eina_Value_Hash`` object.
+* ``EINA_VALUE_TYPE_BLOB``: Manages blobs of bytes (memory buffers) through the ``Eina_Value_Blob`` object.
+* ``EINA_VALUE_TYPE_STRUCT``: Manages user-defined compound types (structures) through the ``Eina_Value_Struct`` object.
 
-To set up a generic value, declare the necessary variables:
+## Simple Values ##
+
+### Creating and Destroying Simple Values ###
+
+New values can be allocated with ``eina_value_new()`` and disposed of with ``eina_value_free()``. The *type* parameter must be one of the ``EINA_VALUE_TYPE_*`` macros listed above:
 
 ```c
-// The Eina_Value itself
+Eina_Value *v = eina_value_new (type);
+eina_value_free (v);
+```
+
+Note that ``eina_value_free()`` will free the memory allocated for the ``Eina_Value`` itself and all its contents, if necessary.
+
+### Managing the Content of Simple Values ###
+
+If you allocate the ``Eina_Value`` structure yourself, you can configure its contents with ``eina_value_setup()`` and free it with ``eina_value_flush()``:
+
+```c
 Eina_Value v;
-// An integer
+eina_value_setup(&v, type);
+eina_value_flush(&v);
+```
+
+Note that ``eina_value_flush()`` will free the content of the ``Eina_Value`` but not the ``Eina_Value`` structure itself.
+
+### Accessing the Content of Simple Values ###
+
+The content of a simple ``Eina_Value`` can be retrieved with ``eina_value_get()`` and set with ``eina_value_set()``. The type of the second parameter must match the type used when creating the ``Eina_Value``:
+
+For instance, for integers:
+```c
+Eina_Value *v = eina_value_new (EINA_VALUE_TYPE_INT);
+eina_value_set(v, 123);
+
 int i;
-// And a char *
-char *newstr;
+eina_value_get(v, &i);
+
+eina_value_free(v);
 ```
 
-## Storing an Integer Value ##
+Notice how strings are also easily handled:
+```c
+Eina_Value *v = eina_value_new (EINA_VALUE_TYPE_STRING);
+eina_value_set(v, "My string");
 
-To set up an ``Eina_Value`` for an integer use the ``eina_value_setup()`` function.  The first argument is the ``Eina_Value`` and the second is the type.
+const char *str;
+eina_value_get(v, &str);
+
+eina_value_free(v);
+```
+
+### Copying the Content of a Value ###
+
+Copy the contents of an ``Eina_Value`` over another one using ``eina_value_copy()``. Note that the destination ``Eina_Value`` must exist (i.e. it will not be allocated for you) and that its contents will be replaced with a copy of the source ``Eina_Value``:
 
 ```c
-eina_value_setup(&v, EINA_VALUE_TYPE_INT);
+Eina_Value src, dst;
+eina_value_setup(&src, EINA_VALUE_TYPE_INT);
+eina_value_set(&src, 123);
+eina_value_copy(&src, dst);
+eina_value_flush(&src);
+eina_value_flush(&dst);
 ```
 
-To set an integer use the ``eina_value_set()`` function:
+### Comparing Two Values ###
+
+Two ``Eina_Value``s of the same type can be compared with ``eina_value_compare(a, b)``. The exact meaning of the comparison depends on the value type, but generally speaking, the method returns a negative int if a<b, a positive int if a>b and 0 if both values are equal:
 
 ```c
-eina_value_set(&v, 123);
+Eina_Value *v1 = eina_value_new(EINA_VALUE_TYPE_FLOAT);
+Eina_Value *v2 = eina_value_new(EINA_VALUE_TYPE_FLOAT);
+eina_value_set(v1, 7.0f);
+eina_value_set(v2, 7.5f);
+int comparison = eina_value_compare(v1, v2);
+eina_value_free(v1);
+eina_value_free(v2);
 ```
 
-## Getting an Integer Value ##
+### Converting Between Values ###
 
-Use the ``eina_value_get()`` function to get an integer value. Pass the ``Eina_Value`` as the first argument and a pointer to a variable to store the value. The target variable must have the same type as the ``Eina_Value``.
+Most ``Eina_Value``s allow converting from one type to another using ``eina_value_convert()``. The meaning of the conversion depends on the type of the involved values. Returns ``EINA_TRUE`` if conversion succeeds. The conversion is typically very strict, meaning that conversion of negative values into unsigned types will fail, and values which will not fit in the target type (overflow) will also fail.
 
 ```c
-eina_value_get(&v, &i);
-printf("v=%d\n", i);
+Eina_Value *v_int = eina_value_new(EINA_VALUE_TYPE_INT);
+Eina_Value *v_str = eina_value_new(EINA_VALUE_TYPE_STRING);
+
+eina_value_set(v_int, 123);
+eina_value_convert(v_int, v_str);
+
+eina_value_set(v_str, "456");
+eina_value_convert(v_str, v_int);
+
+eina_value_free(v_int);
+eina_value_free(v_str);
 ```
-The above example prints "v=123".
 
-## Storing a String Value ##
+### Converting to Strings ###
 
-To store a string:
+All ``Eina_Value``s allow converting into a string, and, for convenience, there is a dedicated conversion method ``eina_value_to_string()``. It allocates a new string which you need to free after use:
 
 ```c
-const char *s;
-
-eina_value_setup(&v, EINA_VALUE_TYPE_STRING);
-eina_value_set(&v, "My string");
+Eina_Value v;
+eina_value_setup(&v, EINA_VALUE_TYPE_DOUBLE);
+eina_value_set(&v, 74.5);
+char *str = eina_value_to_string(&v);
+free(str);
+eina_value_flush(&v);
 ```
-## Getting a String Value ##
 
-Use the ``eina_value_get()`` function to get a string value. Pass the ``Eina_Value`` as the first argument and a pointer to a variable to store the value. The target variable must have the same type as the ``Eina_Value``.
+## Aggregate Values ##
+
+``Eina_Value`` also supports handling collections of simple values through the common aggregate types ``Eina_Value_Array``, ``Eina_Value_List``, ``Eina_Value_Hash`` and ``Eina_Value_Struct``.
+
+All aggregate types allow the operations for simple types described above (including ``eina_value_free()`` and ``eina_value_flush()``), plus some specific methods, which typically include construction and access to particular elements in the collection.
+
+### Arrays ###
+
+An arrays is a contiguous block of memory which holds a collection of elements of the same type. Accessing and appending new elements at the end is typically very fast, but removing elements from the middle is not.
+
+**Create** a new ``Eina_Value_Array`` with ``eina_value_array_new(subtype, step)`` or configure an existing one with ``eina_value_array_setup(subtype, step)``. *subtype* is the type of the ``Eina_Value``s that will be stored in the array. *step* indicates how many elements are added to the end of the array every time it needs to be expanded, since it is typically more efficient to enlarge the array by chunks instead of element by element.
+
+**Dispose of** the array or of its contents with ``eina_value_free()`` or ``eina_value_flush()`` respectively.
+
+**Retrieve the number of elements** in an array with ``eina_value_array_count()``.
+
+**Remove an element** with ``eina_value_array_remove(position)``, where *position* is the zero-based index of the element to remove.
+
+**Append an element** at the end of the array with ``eina_value_array_append()``.
+
+**Insert an element at a given position** with ``eina_value_array_insert(position)``.
+
+**Retrieve the content** of the value at a given position with ``eina_value_array_get(position)``.
+
+**Set the content** of the value at a given position with ``eina_value_array_set(position)``.
 
 ```c
-eina_value_get(&v, &s);
-printf("v=%s (pointer: %p)\n", s, s);
+Eina_Value *array = eina_value_array_new(EINA_VALUE_TYPE_INT, 0);
+int x;
+
+eina_value_array_append(array, 1234);
+eina_value_array_get(array, 0, &x);
+eina_value_free(array);
 ```
 
-## Storing a List Value ##
+**Iterate over all elements** of the array with the ``EINA_VALUE_ARRAY_FOREACH(array, length, it, val)`` macro. *array* is the ``Eina_Value_Array`` to iterate over. *length* is an int variable that will receive the length of the array. *it* is an int variable that will receive the position in the current iteration. *val* is an ``Eina_Value *`` that will receive the value in the array for the current iteration:
 
-To store a list use the ``Eina_Value`` that corresponds to the ``EINA_VALUE_TYPE_LIST`` type. To create an ``Eina_Value_List``, use the ``eina_value_list_setup()`` function. The function initializes a generic value storage of the list type. The first parameter is the "object" value, and the second one is the type (how to manage the stored list members).
+```c
+Eina_Value array;
+unsigned int i, len;
+Eina_Value v = EINA_VALUE_EMPTY;
+
+EINA_VALUE_ARRAY_FOREACH(&array, len, i, &v)
+  {
+  }
+```
+
+### Lists ###
+
+A list is linked collection of ``Eina_Value``s in which each element contains a pointer to the next one. Insertions and deletions anywhere in the list are typically very fast, but accesses to a given position can be slow, since it requires travelling through the list.
+
+**Create** a new ``Eina_Value_List`` with ``eina_value_list_new(subtype)`` or configure an existing one with ``eina_value_list_setup(subtype)``. *subtype* is the type of the ``Eina_Value``s that will be stored in the list.
+
+**Dispose of** the list or of its contents with ``eina_value_free()`` or ``eina_value_flush()`` respectively.
+
+**Retrieve the number of elements** in a list with ``eina_value_list_count()``.
+
+**Remove an element** with ``eina_value_list_remove(position)``, where *position* is the zero-based index of the element to remove.
+
+**Append an element** at the end of the list with ``eina_value_list_append()``.
+
+**Insert an element at a given position** with ``eina_value_list_insert(position)``.
+
+**Retrieve the content** of the value at a given position with ``eina_value_list_get(position)``.
+
+**Set the content** of the value at a given position with ``eina_value_list_set(position)``.
+
+```c
+Eina_Value *list = eina_value_list_new(EINA_VALUE_TYPE_INT);
+int x;
+
+eina_value_list_append(list, 1234);
+eina_value_list_set(list, 0, 5678);
+eina_value_list_get(list, 0, &x);
+eina_value_free(list);
+```
+
+### Hash Tables ###
+
+A hash table stores ``Einva_Value``s indexed by a string key instead of an index. Insertions, deletions and searches are typically very fast, at the cost of increased memory consumption.
+
+**Create** a new ``Eina_Value_Hash`` with ``eina_value_hash_new(subtype, bucket_size)`` or configure an existing one with ``eina_value_hash_setup(subtype, bucket_size)``. *subtype* is the type of the ``Eina_Value``s that will be stored in the hash table. *bucket_size* indicates how the table is expanded as new elements are added. Use 0 so a sane default is chosen automatically.
+
+**Dispose of** the hash table or of its contents with ``eina_value_free()`` or ``eina_value_flush()`` respectively.
+
+**Retrieve the number of elements** in a hash table with ``eina_value_hash_population()``.
+
+**Remove an element** with ``eina_value_hash_del(key)``, where *key* is the string identifying the element to remove.
+
+**Retrieve the content** of the value with a given key with ``eina_value_hash_get(key)``.
+
+**Set the content** of the value with a given key with ``eina_value_hash_set(key)``. It also allows adding new elements into the hash table.
+
+```c
+Eina_Value *hash = eina_value_hash_new(EINA_VALUE_TYPE_INT, 0);
+int x;
+
+eina_value_hash_set(hash, "abc", 1234);
+eina_value_hash_get(hash, "abc", &x);
+eina_value_free(hash);
+```
+
+### Structures ###
+
+Any number of ``Eina_Value``s can be grouped and handled through a single ``Eina_Value_Struct``, just like regular structures in other languages. Upon creation, the content of the structure has to be described through an ``Eina_Value_Struct_Desc`` object.
+
+
+**Create** a new ``Eina_Value_Struct`` with ``eina_value_struct_new(description)`` or configure an existing one with ``eina_value_struct_setup(description)``. *description* is an object of type ``Eina_Value_Struct_Desc`` that lists the members of the structure among other things. Look at the [Generic Value API](https://www.enlightenment.org/develop/legacy/api/c/start#group__Eina__Value__Group.html) reference for details, or the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_value.c).
+
+**Dispose of** the structure or of its contents with ``eina_value_free()`` or ``eina_value_flush()`` respectively.
+
+
+**Retrieve the content** of any of the values in the structure with ``eina_value_struct_get(name)``, where *name* identifies the member you want to retrieve.
+
+**Set the content** of any of the values in the structure with ``eina_value_struct_set(name)``, where *name* identifies the member you want to set.
+
+## Custom Value Types ##
+
+Beyond the above mentioned Simple and Aggregated ``Eina_Value`` types that EFL provides, you can also define your own types, and use them everywhere you can use an ``Eina_Value``.
+
+You achieve this by defining an ``Eina_Value_Type`` structure and using it in your calls to ``eina_value_new()`` and ``eina_value_setup()``. This structure contains mainly function pointers to methods performing operations on your type, like setup, flush, copy, compare, etc.
+
+You can find an usage example in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [reference/c/eina/src/eina_value_custom.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_value_custom.c).
 
 ## Further Reading ##
 
