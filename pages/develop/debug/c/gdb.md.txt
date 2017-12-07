@@ -12,49 +12,53 @@ The GNU Debugger (GDB) is an invaluable tool for tracking down the precise cause
 
 ## Debugging an Incorrect Object ##
 
-The code below creates three Elementary objects: ``win``, ``box`` and ``btn``. It displays a window with an "OK" button which closes the window when it is clicked. Enter the following and save it as "hello.c":
+The code below creates three Elementary objects: ``win``, ``box`` and an anonymous button. It displays a window with an "Quit" button which closes the window when it is clicked. Enter the following and save it as "hello.c":
 
 ```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
 #include <Elementary.h>
+#include <Efl_Ui.h>
 
 static void
-on_done(void *data, Evas_Object *obj, void *event_info)
+_quit(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
 {
-  `` quit the mainloop (elm_run function will return)
-  elm_exit();
+   // quit the mainloop
+   efl_exit(0);
 }
 
-EAPI_MAIN int
-elm_main(int argc, char **argv)
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
-  Evas_Object *win, *box, *btn;
+   Efl_Ui_Win *win;
+   Efl_Ui_Box *box;
 
-  `` new window
-  win = elm_win_util_standard_add("hello", "Hello");
-  `` add a box object
-  box = elm_box_add(win);
-  `` add object as a resize object for the window (controls window minimum
-  `` size as well as gets resized if window is resized)
-  elm_win_resize_object_add(win, box);
-  evas_object_show(box);
-  `` add a button
-  btn = elm_button_add(win);
-  `` set default text of button to "OK"
-  elm_object_text_set(btn, "OK");
-  `` pack the button at the end of the box
-  /****ERROR****/
-  elm_box_pack_end(win, btn); ``win instead of box
-  evas_object_show(btn);
-  `` call on_done when button is clicked
-  evas_object_smart_callback_add(win, "clicked", on_done, NULL);
-  ``show the window
-  evas_object_show(win);
+   // new window - new background
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                  efl_text_set(efl_added, "Hello World"),
+                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
 
-  `` run the mainloop and process events and callbacks
-  elm_run();
-  return 0;
+   // when the user clicks "close" on a window there is a request to delete
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _quit, NULL);
+
+   // add a box object.
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+                 efl_content_set(win, efl_added),
+                 // set a min size as we will break layout
+                 efl_gfx_size_hint_min_set(efl_added, EINA_SIZE2D(100, 50)));
+
+   // add a quit button
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Quit"),
+           // **ERROR**
+           efl_pack(win, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _quit, efl_added));
 }
-ELM_MAIN()
+EFL_MAIN()
 ```
 
 Compile with the ``-g`` flag to enable debugging symbols:
@@ -67,10 +71,10 @@ Then execute the program:
 
 ```bash
 ./hello
-ERR<13670>:eo lib/eo/eo.c:780 _eo_api_op_id_get() in elm_box.eo.c:48: unable to resolve regular api func 'elm_obj_box_pack_end' 0x7f1128f50faf in class 'Elm_Win'.
+ERR<12993>:eo lib/eo/eo.c:605 _efl_object_call_resolve() in ../src/lib/efl/interfaces/efl_pack.eo.c:6: func 'efl_pack' (1656) could not be resolved for class 'Efl.Ui.Win'.
 ```
 
-The cause of this error is that the ``elm_box_pack_end()`` function is called on the incorrect object, ``win``. The error log says that the ``elm_obj_box_pack_end`` is not in the ``Elm_win`` API, and so that the error is coming from the application and not from EFL itself.
+The cause of this error is that the ``efl_pack()`` function is called on the incorrect object, ``win``. The error log says that the ``efl_pack`` is not in the ``Efl.Ui.Win`` API, and so that the error is coming from the application and not from EFL itself.
 
 For a more complicated application, this basic trace is not enough to track down the precise location of the error. Fortunately, EFL provides a macro for backtraces: ``EINA_LOG_ABORT``.
 
@@ -83,38 +87,64 @@ EINA_LOG_ABORT_LEVEL=4 EINA_LOG_ABORT=1 gdb hello
 (gdb) run
 Starting program: /home/efl/test/hello
 [Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-[New Thread 0x7fffea2da700 (LWP 13679)]
-ERR<13675>:eo lib/eo/eo.c:780 _eo_api_op_id_get() in elm_box.eo.c:48: unable
-to resolve regular api func 'elm_obj_box_pack_end' 0x7ffff7991faf in class
-'Elm_Win'.
- 
-Program received signal SIGABRT, Aborted.
-0x00007ffff6c76cc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
-56  ../nptl/sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+Using host libthread_db library "/usr/lib/libthread_db.so.1".
+[New Thread 0x7fffebf01700 (LWP 13092)]
+[New Thread 0x7fffe94d9700 (LWP 13093)]
+[New Thread 0x7fffe8cd8700 (LWP 13094)]
+[New Thread 0x7fffe84d7700 (LWP 13095)]
+[Thread 0x7fffe84d7700 (LWP 13095) exited]
+[New Thread 0x7fffe84d7700 (LWP 13096)]
+ERR<13088>:eo lib/eo/eo.c:605 _efl_object_call_resolve() in ../src/lib/efl/interfaces/efl_pack.eo.c:6: func 'efl_pack' (1656) could not be resolved for class 'Efl.Ui.Win'.
+
+Thread 1 "debugging" received signal SIGABRT, Aborted.
+0x00007ffff3e998a0 in raise () from /usr/lib/libc.so.6
 (gdb) bt
-#0  0x00007ffff6c76cc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
-#1  0x00007ffff6c7a0d8 in __GI_abort () at abort.c:89
-#2  0x00007ffff6387919 in eina_log_print_unlocked (args=0x7fffffffdac8, fmt=0x7ffff561c970 "in %s:%d: unable to resolve %s api func '%s' %p in class '%s'.", line=780,    fnc=0x7ffff561d330 <__FUNCTION__.12409> "_eo_api_op_id_get", file=0x7ffff561c48c "lib/eo/eo.c", level=EINA_LOG_LEVEL_ERR, domain=25) at lib/eina/eina_log.c:1274
-#3  eina_log_print (domain=25, level=level@entry=EINA_LOG_LEVEL_ERR, file=file@entry=0x7ffff561c48c "lib/eo/eo.c", fnc=fnc@entry=0x7ffff561d330 <__FUNCTION__.12409> "_eo_api_op_id_get", line=line@entry=780, fmt=fmt@entry=0x7ffff561c970 "in %s:%d: unable to resolve %s api func '%s' %p in class '%s'.") at lib/eina/eina_log.c:2079
-#4  0x00007ffff56122c5 in _eo_api_op_id_get (api_func=api_func@entry=0x7ffff7991faf <elm_obj_box_pack_end>, is_main_loop=is_main_loop@entry=1 '\001', file=file@entry=0x7ffff7af39cc "elm_box.eo.c", line=line@entry=48) at lib/eo/eo.c:778
-#5  0x00007ffff7991fe3 in elm_obj_box_pack_end (subobj=subobj@entry=0x80000007e0000040) at elm_box.eo.c:48
-#6  0x00007ffff79940cf in elm_box_pack_end (obj=obj@entry=0x80000003a000001e, subobj=subobj@entry=0x80000007e0000040) at elm_box.eo.c:223
-#7  0x0000000000400b69 in elm_main (argc=argc@entry=1, argv=argv@entry=0x7fffffffddb8) at hello.c:34
-#8  0x0000000000400bcd in main (argc=1, argv=0x7fffffffddb8) at hello.c:47
+#0  0x00007ffff3e998a0 in raise () from /usr/lib/libc.so.6
+#1  0x00007ffff3e9af09 in abort () from /usr/lib/libc.so.6
+#2  0x00007ffff739ee25 in eina_log_print_unlocked (domain=<optimized out>, level=EINA_LOG_LEVEL_ERR,
+    file=0x7ffff5ce0a5a "lib/eo/eo.c", fnc=0x7ffff5ce1f70 <__FUNCTION__.14772> "_efl_object_call_resolve",
+    line=<optimized out>, fmt=0x7ffff5ce1410 "in %s:%d: func '%s' (%d) could not be resolved for class '%s'.",
+    args=0x7fffffffdea0) at lib/eina/eina_log.c:1420
+#3  0x00007ffff73a0153 in eina_log_print (domain=29, level=level@entry=EINA_LOG_LEVEL_ERR,
+    file=file@entry=0x7ffff5ce0a5a "lib/eo/eo.c",
+    fnc=fnc@entry=0x7ffff5ce1f70 <__FUNCTION__.14772> "_efl_object_call_resolve", line=605,
+    fmt=0x7ffff5ce1410 "in %s:%d: func '%s' (%d) could not be resolved for class '%s'.") at lib/eina/eina_log.c:2259
+#4  0x00007ffff5cd3fd4 in _efl_object_call_resolve (eo_id=eo_id@entry=0x40000000d32a,
+    func_name=func_name@entry=0x7ffff7651b73 "efl_pack", call=call@entry=0x7fffffffe050, cache=0x7ffff7fa4b60,
+    file=file@entry=0x7ffff7651b18 "../src/lib/efl/interfaces/efl_pack.eo.c", line=line@entry=6) at lib/eo/eo.c:614
+#5  0x00007ffff762e80e in efl_pack (obj=0x40000000d32a, subobj=0x40000002578b) at ../src/lib/efl/interfaces/efl_pack.eo.c:6
+#6  0x00005555555553d1 in efl_main (data=<optimized out>, ev=<optimized out>) at gdb.c:37
+#7  0x00007ffff5cdeb57 in _event_callback_call (legacy_compare=0 '\000', event_info=<optimized out>,
+    desc=0x7ffff6a78b80 <_EFL_LOOP_EVENT_ARGUMENTS>, pd=0x55555578bd50, obj_id=<optimized out>) at lib/eo/eo_base_class.c:1542
+#8  _efl_object_event_callback_call (obj_id=<optimized out>, pd=0x55555578bd50,
+    desc=0x7ffff6a78b80 <_EFL_LOOP_EVENT_ARGUMENTS>, event_info=<optimized out>) at lib/eo/eo_base_class.c:1603
+#9  0x00007ffff5cd90fe in efl_event_callback_call (obj=0x4000000006f7,
+    desc=desc@entry=0x7ffff6a78b80 <_EFL_LOOP_EVENT_ARGUMENTS>, event_info=event_info@entry=0x7fffffffe230)
+    at lib/eo/eo_base_class.c:1606
+#10 0x00007ffff6842c85 in _efl_loop_arguments_send (data=0x5555557a4f40, ev=<optimized out>) at lib/ecore/ecore_main.c:3151
+#11 0x00007ffff684f856 in _efl_loop_future_success (ev=ev@entry=0x7fffffffe2b0, pd=pd@entry=0x5555557a8660, value=0x0)
+    at lib/ecore/efl_promise.c:113
+#12 0x00007ffff685080f in _efl_loop_future_propagate (obj=0x400000008316, pd=0x5555557a8660) at lib/ecore/efl_promise.c:192
+#13 0x00007ffff685088b in _efl_promise_propagate (obj=0x400000007f15, pd=0x5555557a68b0) at lib/ecore/efl_promise.c:580
+#14 0x00007ffff6851640 in ecore_loop_promise_fulfill (obj=<optimized out>) at lib/ecore/efl_promise.c:593
+#15 0x00007ffff68416fd in _ecore_main_loop_iterate_internal (once_only=once_only@entry=0) at lib/ecore/ecore_main.c:2313
+#16 0x00007ffff6841e77 in ecore_main_loop_begin () at lib/ecore/ecore_main.c:1313
+#17 0x00007ffff6841eb9 in _efl_loop_begin (obj=<optimized out>, pd=<optimized out>) at lib/ecore/ecore_main.c:2889
+#18 0x00007ffff683ea9e in efl_loop_begin (obj=0x4000000006f7) at lib/ecore/efl_loop.eo.c:44
+#19 0x00005555555554a6 in main (argc=1, argv=0x7fffffffe4f8) at hello.c:44
 ```
 
-The ``elm_obj_box_pack_end()`` function is in frame six, so is called from frame seven.
+The ``efl_pack()`` function is in frame five, so is called from frame six.
 
 Go to frame seven:
 
 ```gdb
-(gdb) fr 7
-#7  0x0000000000400b69 in elm_main (argc=argc@entry=1, argv=argv@entry=0x7fffffffddb8) at hello.c:34
-34    elm_box_pack_end(win, btn); //win instead of box
+(gdb) fr 6
+#6  0x00005555555553d1 in efl_main (data=<optimized out>, ev=<optimized out>) at gdb.c:37
+37         efl_add(EFL_UI_BUTTON_CLASS, box, // win instead of box
 ```
 
-This frame shows that the ``win`` object is used as a parameter of ``elm_box_pack_end``, instead of ``box``, at line 34 of "hello.c".
+This frame shows that the button constructor (line 37) contains the cause of the issue, and we can see the error at line 40 of "hello.c".
 
 
 ## Debugging a Callback Function ##
@@ -122,95 +152,103 @@ This frame shows that the ``win`` object is used as a parameter of ``elm_box_pac
 To demonstrate the debugging of a callback function, create the following program:
 
 ```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
 #include <Elementary.h>
+#include <Efl_Ui.h>
 
 static void
-on_done(void *data, Evas_Object *obj, void *event_info)
+_quit(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
 {
-  int *pi = (int *)0; `` pointer on 0x0!!!
-  /**SEGFAULT**/
-  int i = *pi; `` segfault accessing 0x0 address
+   int *pi;
 
-  `` quit the mainloop (elm_run function will return)
-  elm_exit();
+   pi = (int *)0; // pointer to 0x0!!!
+   /**SEGFAULT**/
+   printf("Pi = %d\n", *pi); // segfault accessing 0x0 address
+
+   // quit the mainloop
+   efl_exit(0);
 }
 
-EAPI_MAIN int
-elm_main(int argc, char **argv)
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
-  Evas_Object *win, *box, *btn;
+   Efl_Ui_Win *win;
+   Efl_Ui_Box *box;
 
-  `` new window
-  win = elm_win_util_standard_add("hello", "Hello");
-  `` add a box object
-  box = elm_box_add(win);
-  `` add object as a resize object for the window
-  elm_win_resize_object_add(win, box);
-  evas_object_show(box);
-  `` add a button
-  btn = elm_button_add(win);
-  `` set default text of button to "SEG"
-  elm_object_text_set(btn, "SEG");
-  `` pack the button at the end of the box
-  elm_box_pack_end(box, btn);
-  evas_object_show(btn);
-  `` call on_done when button is clicked
-  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
-  ``show the window
-  evas_object_show(win);
+   // new window - new background
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                  efl_text_set(efl_added, "Hello World"),
+                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
 
-  `` run the mainloop and process events and callbacks
-  elm_run();
-  return 0;
+   // when the user clicks "close" on a window there is a request to delete
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _quit, NULL);
+
+   // add a box object.
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+                 efl_content_set(win, efl_added));
+
+   // add a quit button
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Crash"),
+           efl_pack(box, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _quit, efl_added));
 }
-ELM_MAIN()
+EFL_MAIN()
 ```
 
-Save the program as "helloworld.c", compile it, and run it. The program will quit with a segmentation fault (segfault) error when the "seg" button is clicked; in other words, during the callback function.
+Save the program as "helloworld.c", compile it, and run it. The program will quit with a segmentation fault (segfault) error when the "Crash" button is clicked; in other words, during the callback function.
 
 To debug this, load the program into GDB and run it:
 
 ```gdb
 gdb helloworld
 (gdb) run
+[...]
+Thread 1 "debugging2" received signal SIGSEGV, Segmentation fault.
+_quit (data=0x400000025528, event=0x7fffffffdfe0) at gdb2.c:15
+15         printf("Pi = %d\n", *pi); // segfault accessing 0x0 address
 (gdb) bt
-#0  0x0000000000400c7f in on_done (data=0x0, obj=0x8000000800000041, event_info=0x0) at helloworld.c:6
-#1  0x00007ffff6c1cb84 in _eo_evas_smart_cb (data=<optimized out>, eo_obj=<optimized out>, desc=<optimized out>, event_info=<optimized out>) at
-    lib/evas/canvas/evas_object_smart.c:65
-#2  0x00007ffff5e43d22 in _eo_base_event_callback_call (obj_id=0x8000000800000041, pd=0x92b4f0, desc=0x94e320, event_info=0x0) at
-    lib/eo/eo_base_class.c:716
-#3  0x00007ffff5e42a97 in eo_event_callback_call (desc=desc@entry=0x94e320,
-    event_info=event_info@entry=0x0) at lib/eo/eo_base.eo.c:94
-#4  0x00007ffff6c1ebad in evas_object_smart_callback_call (eo_obj=eo_obj@entry=0x8000000800000041, event=event@entry=0x7ffff7af0bdf
-    <SIG_CLICKED> "clicked", event_info=event_info@entry=0x0) at lib/evas/canvas/evas_object_smart.c:791
-#5  0x00007ffff7994b8c in _activate (obj=0x8000000800000041) at elm_button.c:69
-#6  0x00007ffff7994bc2 in _on_clicked_signal (data=<optimized out>,
-    obj=<optimized out>, emission=<optimized out>, source=<optimized out>) at
-    elm_button.c:191
-#7  0x00007ffff60d0425 in edje_match_callback_exec_check_finals (prop=<optimized out>, ed=<optimized out>, source=<optimized out>,
-    sig=<optimized out>, source_states=<optimized out>, signal_states=<optimized out>, matches=<optimized out>, ssp=<optimized
-    out>) at lib/edje/edje_match.c:556
-#8  edje_match_callback_exec (ssp=0x0, ssp@entry=0x946520, matches=0x8000000800000041, sig=0x0, sig@entry=0x92c06c "elm,action,click",
-     source=0x0, source@entry=0x914f60 "elm", ed=0x7ffff5e471b7, ed@entry=0x92ba70, prop=94 '^', prop@entry=0 '\000') at
-     lib/edje/edje_match.c:712
-#9  0x00007ffff60d673d in _edje_emit_cb (prop=0 '\000', data=0x0, src=0x914f60
-    "elm", sig=0x92c06c "elm,action,click", ed=0x92ba70) at lib/edje/edje_program.c:1392
-#10 _edje_emit_handle (ed=0x92ba70, sig=0x92c06c "elm,action,click", src=0x914f60 "elm", sdata=0x0, prop=0 '\000') at lib/edje/edje_program.c:1345
-#11 0x00007ffff60d1296 in _edje_message_process (em=0x669cf0) at lib/edje/edje_message_queue.c:651
-#12 0x00007ffff60d178c in _edje_message_queue_process () at lib/edje/edje_message_queue.c:754
-#13 0x00007ffff60d18ec in _edje_job (data=<optimized out>) at lib/edje/edje_message_queue.c:155
-#14 0x00007ffff696d3e0 in _ecore_job_event_handler (data=<optimized out>, type=<optimized out>, ev=<optimized out>) at lib/ecore/ecore_job.c:113
-#15 0x00007ffff69680a4 in _ecore_call_handler_cb (event=<optimized out>,
-    type=<optimized out>, data=<optimized out>, func=<optimized out>) at lib/ecore/ecore_private.h:386
-#16 _ecore_event_call () at lib/ecore/ecore_events.c:565
-#17 0x00007ffff696f711 in _ecore_main_loop_iterate_internal (once_only=once_only@entry=0) at lib/ecore/ecore_main.c:1927
-#18 0x00007ffff696f81e in ecore_main_loop_begin () at lib/ecore/ecore_main.c:983
-#19 0x00007ffff7a4559f in elm_run () at elm_main.c:1097
-#20 0x0000000000400d79 in elm_main (argc=1, argv=0x7fffffffe398) at helloworld.c:39
-#21 0x0000000000400dc2 in main (argc=1, argv=0x7fffffffe398) at helloworld.c:42
+#0  _quit (data=0x400000025528, event=0x7fffffffdfe0) at helloworld.c:15
+#1  0x00007ffff5cdd967 in _event_callback_call (legacy_compare=1 '\001', event_info=<optimized out>, desc=<optimized out>,
+    pd=0x555555b520c0, obj_id=<optimized out>) at lib/eo/eo_base_class.c:1542
+#2  _efl_object_event_callback_legacy_call (obj_id=<optimized out>, pd=0x555555b520c0, desc=<optimized out>,
+    event_info=<optimized out>) at lib/eo/eo_base_class.c:1615
+#3  0x00007ffff5cd923e in efl_event_callback_legacy_call (obj=0x400000025528, desc=0x7ffff78625b0 <_EFL_UI_EVENT_CLICKED>,
+    event_info=0x0) at lib/eo/eo_base_class.c:1618
+#4  0x00007ffff5cd923e in efl_event_callback_legacy_call (obj=0x400000025528, desc=0x7ffff78625b0 <_EFL_UI_EVENT_CLICKED>,
+    event_info=0x0) at lib/eo/eo_base_class.c:1618
+#5  0x00007ffff5f8879b in edje_match_callback_exec_check_finals (prop=<optimized out>, ed=0x555555b71800,
+    source=0xaaaaaaaaaaaaaaab <error: Cannot access memory at address 0xaaaaaaaaaaaaaaab>, sig=0x555555b52890 "",
+    source_states=<optimized out>, signal_states=<optimized out>, matches=<optimized out>, ssp=0x555555b71800)
+    at lib/edje/edje_match.c:556
+#6  edje_match_callback_exec (ssp=ssp@entry=0x555555b71800, matches=<optimized out>,
+    sig=sig@entry=0x555555b4263c "elm,action,click", source=source@entry=0x555555a42d90 "elm", ed=ed@entry=0x555555b52890,
+    prop=prop@entry=0 '\000') at lib/edje/edje_match.c:711
+#7  0x00007ffff5f8faa2 in _edje_emit_cb (prop=0 '\000', data=0x0, src=0x555555a42d90 "elm",
+    sig=0x555555b4263c "elm,action,click", ed=0x555555b52890) at lib/edje/edje_program.c:1592
+#8  _edje_emit_handle (ed=0x555555b52890, sig=0x555555b4263c "elm,action,click", src=0x555555a42d90 "elm", sdata=0x0,
+    prop=0 '\000') at lib/edje/edje_program.c:1544
+#9  0x00007ffff5f8a2df in _edje_message_queue_process () at lib/edje/edje_message_queue.c:893
+#10 0x00007ffff5f8a499 in _edje_message_queue_process () at lib/edje/edje_message_queue.c:859
+#11 _edje_job (data=<optimized out>) at lib/edje/edje_message_queue.c:260
+#12 0x00007ffff683da6b in _ecore_job_event_handler (data=<optimized out>, type=<optimized out>, ev=<optimized out>)
+    at lib/ecore/ecore_job.c:98
+#13 0x00007ffff6839301 in _ecore_call_handler_cb (event=<optimized out>, type=<optimized out>, data=<optimized out>,
+    func=<optimized out>) at lib/ecore/ecore_private.h:331
+#14 _ecore_event_call () at lib/ecore/ecore_events.c:629
+#15 0x00007ffff6841a88 in _ecore_main_loop_iterate_internal (once_only=once_only@entry=0) at lib/ecore/ecore_main.c:2438
+#16 0x00007ffff6841e77 in ecore_main_loop_begin () at lib/ecore/ecore_main.c:1313
+#17 0x00007ffff6841eb9 in _efl_loop_begin (obj=<optimized out>, pd=<optimized out>) at lib/ecore/ecore_main.c:2889
+#18 0x00007ffff683ea9e in efl_loop_begin (obj=0x400000000494) at lib/ecore/efl_loop.eo.c:44
+#19 0x000055555555549c in main (argc=1, argv=0x7fffffffe528) at helloworld.c:47
 ```
 
-The program failed in the callback function, meaning the problem comes from the program itself and not the libraries - even if the callback is called from ``Evas``.
+The program failed in the callback function, meaning the problem comes from the program itself and not the libraries - even if the callback is called from ``Efl.Event``.
 
 To look at the problem more deeply:
 
@@ -220,12 +258,12 @@ To look at the problem more deeply:
 
 ```bash
 (gdb) fr 0
-#0  0x0000000000400c86 in on_done (data=0x0, obj=0x8000000800000041, event_info=0x0) at helloworld.c:6
-6     int i=*pi;
+#0  _quit (data=0x400000025528, event=0x7fffffffdfe0) at gdb2.c:15
+15         printf("Pi = %d\n", *pi); // segfault accessing 0x0 address
 (gdb) p pi
 $1 (int *) 0x0
 (gdb) p *pi
 Cannot access memory at address 0x0
 ```
 
-This demonstrates the problem: address ``0x0`` cannot be accessed. Using these techniques, even if the callback functions are called from Evas and so generate lots of traces, it is quite simple to track down these types of bug.
+This demonstrates the problem: address ``0x0`` cannot be accessed. Using these techniques, even if the callback functions are called from Efl.Event and so generate lots of traces, it is quite simple to track down these types of bug.
