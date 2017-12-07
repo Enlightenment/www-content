@@ -11,60 +11,63 @@ Valgrind is a collection of tools for tracking down memory-related issues, from 
 In this example an ``Eina`` array is created in a callback function but it is never freed. This generates a memory leak. Begin by creating the following program:
 
 ```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
 #include <Elementary.h>
+#include <Efl_Ui.h>
 
 static void
-on_done(void *data, Evas_Object *obj, void *event_info)
+_quit(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
 {
-  Eina_Array *array;
-  unsigned int i;
+   Eina_Array *array;
+   unsigned int i;
 
-  eina_init();
-  array = eina_array_new(100);
-  eina_array_step_set(array, sizeof(*array), 20);
-  for (i = 0; i < 20; i++) eina_array_push(array, strdup("hello"));
+   // create a new array but don't free it
+   // **LEAK**
+   array = eina_array_new(100);
+   eina_array_step_set(array, sizeof(*array), 20);
+   for (i = 0; i < 20; i++) eina_array_push(array, strdup("hello"));
 
-  /****To free array****/
-  //while (eina_array_count(array))
-  //free(eina_array_pop(array));
-  //eina_array_free(array);
+   /****To free array****/
+   //while (eina_array_count(array))
+   //free(eina_array_pop(array));
+   //eina_array_free(array);
 
-  //eina_shutdown();
-
-  // quit the mainloop (elm_run function will return)
-  elm_exit();
+   // quit the mainloop
+   efl_exit(0);
 }
 
-EAPI_MAIN int
-elm_main(int argc, char **argv)
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 {
-  Evas_Object *win, *box, *btn;
+   Efl_Ui_Win *win;
+   Efl_Ui_Box *box;
 
-  // new window
-  win = elm_win_util_standard_add("hello", "Hello");
-  // add a box object
-  box = elm_box_add(win);
-  // add object as a resize object for the window (controls window minimum
-  // size as well as gets resized if window is resized)
-  elm_win_resize_object_add(win, box);
-  evas_object_show(box);
-  // add a button
-  btn = elm_button_add(win);
-  // set default text of button to "SEG"
-  elm_object_text_set(btn, "SEG");
-  // pack the button at the end of the box
-  elm_box_pack_end(box, btn);
-  evas_object_show(btn);
-  // call on_done when button is clicked
-  evas_object_smart_callback_add(btn, "clicked", on_done, NULL);
-  //show the window
-  evas_object_show(win);
+   // new window - new background
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                  efl_text_set(efl_added, "Hello World"),
+                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
 
-  // run the mainloop and process events and callbacks
-  elm_run();
-  return 0;
+   // when the user clicks "close" on a window there is a request to delete
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _quit, NULL);
+
+   // add a box object - default is vertical.
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+                 efl_content_set(win, efl_added),
+                 // make the box horizontal
+                 efl_ui_direction_set(efl_added, EFL_UI_DIR_HORIZONTAL));
+
+   // add a quit button
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Leak"),
+           efl_pack(box, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _quit, efl_added));
 }
-ELM_MAIN()
+EFL_MAIN()
 ```
 
 Save the program as "hello.", compile it, and run it through Valgrind:
@@ -72,25 +75,24 @@ Save the program as "hello.", compile it, and run it through Valgrind:
 ```bash
 valgrind --leak-check=full --track-origins=yes ./hello
 [...]
-==22370== 312 (32 direct, 280 indirect) bytes in 1 blocks are definitely lost
-in loss record 349 of 417
-==22370==    at 0x4C28C20: malloc (vg_replace_malloc.c:296)
-==22370==    by 0x55A585D: eina_array_new (eina_array.c:279)
-==22370==    by 0x400E4C: on_done (hello.c:7)
-==22370==    by 0x5CD1B83: _eo_evas_smart_cb (evas_object_smart.c:65)
-==22370==    by 0x6BCFD21: _eo_base_event_callback_call (eo_base_class.c:716)
-==22370==    by 0x6BCEA96: eo_event_callback_call (in
-/usr/local/lib/libeo.so.1.14.99)
-==22370==    by 0x5CD3BAC: evas_object_smart_callback_call
-(evas_object_smart.c:791)
-==22370==    by 0x4F34B8B: _activate (elm_button.c:69)
-==22370==    by 0x4F34BC1: _on_clicked_signal (elm_button.c:191)
-==22370==    by 0x6970424: edje_match_callback_exec_check_finals
-(edje_match.c:556)
-==22370==    by 0x6970424: edje_match_callback_exec (edje_match.c:712)
-==22370==    by 0x697673C: _edje_emit_cb (edje_program.c:1392)
-==22370==    by 0x697673C: _edje_emit_handle (edje_program.c:1345)
-==22370==    by 0x6971295: _edje_message_process (edje_message_queue.c:651)
+==10105== 312 (32 direct, 280 indirect) bytes in 1 blocks are definitely lost in loss record 1,362 of 1,417
+==10105==    at 0x4C2CE5F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10105==    by 0x4E4ED9C: eina_array_new (eina_array.c:280)
+==10105==    by 0x109492: _quit (in /tmp/leaking)
+==10105==    by 0x6D3C966: _event_callback_call (eo_base_class.c:1542)
+==10105==    by 0x6D3C966: _efl_object_event_callback_legacy_call (eo_base_class.c:1615)
+==10105==    by 0x6D3823D: efl_event_callback_legacy_call (eo_base_class.c:1618)
+==10105==    by 0x6D3823D: efl_event_callback_legacy_call (eo_base_class.c:1618)
+==10105==    by 0x6AD479A: edje_match_callback_exec_check_finals (edje_match.c:556)
+==10105==    by 0x6AD479A: edje_match_callback_exec (edje_match.c:711)
+==10105==    by 0x6ADBAA1: _edje_emit_cb (edje_program.c:1592)
+==10105==    by 0x6ADBAA1: _edje_emit_handle (edje_program.c:1544)
+==10105==    by 0x6AD62DE: _edje_message_queue_process.part.3 (edje_message_queue.c:893)
+==10105==    by 0x6AD6498: _edje_message_queue_process (edje_message_queue.c:859)
+==10105==    by 0x6AD6498: _edje_job (edje_message_queue.c:260)
+==10105==    by 0x61A1A6A: _ecore_job_event_handler (ecore_job.c:98)
+==10105==    by 0x619D300: _ecore_call_handler_cb (ecore_private.h:331)
+==10105==    by 0x619D300: _ecore_event_call (ecore_events.c:629)
 [...]
 ```
 
@@ -99,4 +101,4 @@ All the memory accesses pass through Valgrind, so it shows you a backtrace when 
 > **NOTE:**
 > There can be other traces in the ``HEAD SUMMARY``, but this example focuses on the memory leak within the application. As a result you may have to ignore things not relevant to that code.
 
-This backtrace demonstrates that an allocation took place in the ``eina_array_new()`` function. This function is called from the ``on_done()`` function. You can go further up the backtrace, but remember that a callback function is called from ``Evas`` so there is a good chance that the allocation is made in your specific callback function.
+This backtrace demonstrates that an allocation took place in the ``eina_array_new()`` function. This function is called from the ``_quit()`` function. You can go further up the backtrace, but remember that a callback function is called from ``Efl.Event`` so there is a good chance that the allocation is made in your specific callback function.
