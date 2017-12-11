@@ -65,8 +65,7 @@ While developing your libraries or applications, you may notice that the ``EINA_
 ```bash
 EINA_LOG_LEVEL={N} EINA_LOG_LEVELS_GLOB=eina_*:0 ./{application}
 ```
-
-Removing these internal logs from the output makes it easier for you to see your own domain messages.
+Where ``{N}`` is the log level number and ``{application}`` the binary you are currently debugging. Removing these internal logs from the output makes it easier for you to see your own domain messages.
 
 ### Aborting on Selected Log Level ##
 
@@ -76,8 +75,9 @@ As well as controlling the logs themselves, the respective log levels can be use
 > Aborting at a particular log level can also be controlled from within the application itself using the ``eina_log_abort_on_critical_set()`` and ``eina_log_abort_on_critical_level_set()`` functions.
 
 ```bash
-EINA_LOG_ABORT_LEVEL={N} EINA_LOG_ABORT ./{application}
+EINA_LOG_ABORT=1 EINA_LOG_ABORT_LEVEL={N} ./{application}
 ```
+Where ``{N}`` is the log level number and ``{application}`` the binary you are currently debugging.
 
 ## Further Reading ##
 
