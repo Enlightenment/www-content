@@ -1,0 +1,41 @@
+~~Title: Efl.Net.Control: agent_request_input~~
+===== Signature =====
+
+<code>
+agent_request_input: Efl.Net.Control.Agent_Request_Input;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT(Efl_Net_Control_Agent_Request_Input)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_control_event_agent_request_input(void *data, const Efl_Event *event)
+{
+    Efl_Net_Control_Agent_Request_Input info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT, on_efl_net_control_event_agent_request_input, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:develop:api:class:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:net:control:event:agent_request_input:description&nouser&nolink&nodate}}
+

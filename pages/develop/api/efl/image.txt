@@ -1,0 +1,121 @@
+~~Title: Efl.Image~~
+====== Efl.Image (interface) ======
+
+===== Description =====
+
+%%Common APIs for all 2D images that can be rendered on the canvas.%%
+
+{{page>:develop:api-include:efl:image:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_image [fillcolor = "dodgerblue4", label = "Efl.Image", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:image:property:border_center_fill|border_center_fill]]** //**(get, set)**//
+<code c>
+Efl_Gfx_Border_Fill_Mode efl_image_border_center_fill_get(const Eo *obj);
+void efl_image_border_center_fill_set(Eo *obj, Efl_Gfx_Border_Fill_Mode fill);
+</code>
+
+%%Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.%%\\ 
+\\ 
+**[[:develop:api:efl:image:property:border_scale|border_scale]]** //**(get, set)**//
+<code c>
+double efl_image_border_scale_get(const Eo *obj);
+void efl_image_border_scale_set(Eo *obj, double scale);
+</code>
+
+%%Scaling factor applied to the image borders.%%\\ 
+\\ 
+**[[:develop:api:efl:image:property:border|border]]** //**(get, set)**//
+<code c>
+void efl_image_border_get(const Eo *obj, int *l, int *r, int *t, int *b);
+void efl_image_border_set(Eo *obj, int l, int r, int t, int b);
+</code>
+
+%%Dimensions of this image's border, a region that does not scale with the center area.%%\\ 
+\\ 
+**[[:develop:api:efl:image:property:content_hint|content_hint]]** //**(get, set)**//
+<code c>
+Efl_Image_Content_Hint efl_image_content_hint_get(const Eo *obj);
+void efl_image_content_hint_set(Eo *obj, Efl_Image_Content_Hint hint);
+</code>
+
+\\ 
+**[[:develop:api:efl:image:property:image_size|image_size]]** //**(get)**//
+<code c>
+Eina_Size2D efl_image_size_get(const Eo *obj);
+</code>
+
+%%This represents the size of the original image in pixels.%%\\ 
+\\ 
+**[[:develop:api:efl:image:property:ratio|ratio]]** //**(get)**//
+<code c>
+double efl_image_ratio_get(const Eo *obj);
+</code>
+
+%%The native width/height ratio of the image.%%\\ 
+\\ 
+**[[:develop:api:efl:image:property:scale_hint|scale_hint]]** //**(get, set)**//
+<code c>
+Efl_Image_Scale_Hint efl_image_scale_hint_get(const Eo *obj);
+void efl_image_scale_hint_set(Eo *obj, Efl_Image_Scale_Hint hint);
+</code>
+
+\\ 
+**[[:develop:api:efl:image:property:smooth_scale|smooth_scale]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_image_smooth_scale_get(const Eo *obj);
+void efl_image_smooth_scale_set(Eo *obj, Eina_Bool smooth_scale);
+</code>
+
+%%Whether to use high-quality image scaling algorithm for this image.%%\\ 
+\\ 
+
+===== Events =====
+
+**[[:develop:api:efl:image:event:preload|preload]]**
+<code c>
+EFL_IMAGE_EVENT_PRELOAD(void)
+</code>
+
+%%Image data has been preloaded.%%\\ 
+\\ 
+**[[:develop:api:efl:image:event:resize|resize]]**
+<code c>
+EFL_IMAGE_EVENT_RESIZE(void)
+</code>
+
+%%Image was resized (its pixel data).%%\\ 
+\\ 
+**[[:develop:api:efl:image:event:unload|unload]]**
+<code c>
+EFL_IMAGE_EVENT_UNLOAD(void)
+</code>
+
+%%Image data has been unloaded (by some mechanism in EFL that threw out the original image data).%%\\ 
+\\ 

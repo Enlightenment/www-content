@@ -1,0 +1,39 @@
+~~Title: Efl.Object: callback,del~~
+===== Signature =====
+
+<code>
+callback,del @hot;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_CALLBACK_DEL(void, @hot)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_callback_del(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_CALLBACK_DEL, on_efl_event_callback_del, d);
+}
+
+</code>
+
+===== Description =====
+
+%%A callback was deleted.%%
+{{page>:develop:api-include:efl:object:event:callback_del:description&nouser&nolink&nodate}}
+

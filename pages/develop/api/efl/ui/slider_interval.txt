@@ -1,0 +1,835 @@
+~~Title: Efl.Ui.Slider_Interval~~
+====== Efl.Ui.Slider_Interval (class) ======
+
+===== Description =====
+
+%%An interval slider.%%
+
+%%This is a slider with two indicators.%%
+
+//Since 1.21//
+
+{{page>:develop:api-include:efl:ui:slider_interval:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:ui:slider|Efl.Ui.Slider]] //(class)// => [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] //(class)// => [[:develop:api:elm:widget|Elm.Widget]] //(class)// => [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)// => [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_ui_slider_interval [fillcolor = "black", label = "Efl.Ui.Slider_Interval", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_ui_slider [fillcolor = "gray15", label = "Efl.Ui.Slider", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_ui_layout [fillcolor = "gray15", label = "Efl.Ui.Layout", color = "gray15", fontcolor = "white", style = "filled"]
+    elm_widget [fillcolor = "gray15", label = "Elm.Widget", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_canvas_group [fillcolor = "gray15", label = "Efl.Canvas.Group", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_canvas_object [fillcolor = "gray15", label = "Efl.Canvas.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_stack [fillcolor = "gray15", label = "Efl.Gfx.Stack", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_animator [fillcolor = "gray15", label = "Efl.Animator", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_input_interface [fillcolor = "gray15", label = "Efl.Input.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_size_hint [fillcolor = "gray15", label = "Efl.Gfx.Size.Hint", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_gfx_map [fillcolor = "gray15", label = "Efl.Gfx.Map", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_ui_base [fillcolor = "gray15", label = "Efl.Ui.Base", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_canvas_pointer [fillcolor = "gray15", label = "Efl.Canvas.Pointer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_access [fillcolor = "gray15", label = "Efl.Access", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_access_component [fillcolor = "gray15", label = "Efl.Access.Component", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_user [fillcolor = "gray15", label = "Efl.Ui.Focus.User", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_part [fillcolor = "gray15", label = "Efl.Part", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_focus_object [fillcolor = "gray15", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_base [fillcolor = "gray15", label = "Efl.Ui.Base", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_cursor [fillcolor = "gray15", label = "Efl.Ui.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_translatable [fillcolor = "gray15", label = "Efl.Ui.Translatable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_part [fillcolor = "gray15", label = "Efl.Part", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_container [fillcolor = "gray15", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_file [fillcolor = "gray15", label = "Efl.File", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_view [fillcolor = "gray15", label = "Efl.Ui.View", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_model_factory_connect [fillcolor = "gray15", label = "Efl.Ui.Model.Factory.Connect", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_layout_calc [fillcolor = "gray15", label = "Efl.Layout.Calc", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_layout_signal [fillcolor = "gray15", label = "Efl.Layout.Signal", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_layout_group [fillcolor = "gray15", label = "Efl.Layout.Group", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_range [fillcolor = "gray15", label = "Efl.Ui.Range", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_direction [fillcolor = "gray15", label = "Efl.Ui.Direction", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_access_value [fillcolor = "gray15", label = "Efl.Access.Value", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_text [fillcolor = "gray15", label = "Efl.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_text_markup [fillcolor = "gray15", label = "Efl.Text.Markup", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_text_cursor [fillcolor = "gray15", label = "Efl.Text.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_ui_format [fillcolor = "gray15", label = "Efl.Ui.Format", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_ui_translatable [fillcolor = "gray15", label = "Efl.Ui.Translatable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_access_widget_action [fillcolor = "gray15", label = "Efl.Access.Widget.Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_access_action [fillcolor = "gray15", label = "Efl.Access.Action", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_content [fillcolor = "gray15", label = "Efl.Content", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+    efl_ui_slider_interval -> efl_ui_slider
+    efl_ui_slider -> efl_ui_layout
+    efl_ui_layout -> elm_widget
+    elm_widget -> efl_canvas_group
+    efl_canvas_group -> efl_canvas_object
+    efl_canvas_object -> efl_object
+    efl_canvas_object -> efl_gfx
+    efl_canvas_object -> efl_gfx_stack
+    efl_canvas_object -> efl_animator
+    efl_canvas_object -> efl_input_interface
+    efl_canvas_object -> efl_gfx_size_hint
+    efl_canvas_object -> efl_gfx_map
+    efl_gfx_map -> efl_interface
+    efl_gfx_map -> efl_object
+    efl_canvas_object -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_canvas_object -> efl_ui_base
+    efl_canvas_object -> efl_canvas_pointer
+    elm_widget -> efl_access
+    efl_access -> efl_interface
+    efl_access -> efl_object
+    elm_widget -> efl_access_component
+    elm_widget -> efl_ui_focus_user
+    elm_widget -> efl_part
+    elm_widget -> efl_ui_focus_object
+    elm_widget -> efl_ui_base
+    elm_widget -> efl_ui_cursor
+    elm_widget -> efl_ui_translatable
+    efl_ui_layout -> efl_part
+    efl_ui_layout -> efl_container
+    efl_ui_layout -> efl_file
+    efl_ui_layout -> efl_ui_view
+    efl_ui_layout -> efl_ui_model_connect
+    efl_ui_layout -> efl_ui_model_factory_connect
+    efl_ui_layout -> efl_layout_calc
+    efl_ui_layout -> efl_layout_signal
+    efl_ui_layout -> efl_layout_group
+    efl_ui_slider -> efl_ui_range
+    efl_ui_slider -> efl_ui_direction
+    efl_ui_slider -> efl_access_value
+    efl_ui_slider -> efl_text
+    efl_ui_slider -> efl_text_markup
+    efl_text_markup -> efl_text_cursor
+    efl_ui_slider -> efl_ui_format
+    efl_ui_slider -> efl_ui_translatable
+    efl_ui_slider -> efl_access_widget_action
+    efl_access_widget_action -> efl_access_action
+    efl_ui_slider -> efl_content
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:ui:slider|Efl.Ui.Slider]] //(class)//
+    * [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] //(class)//
+      * [[:develop:api:elm:widget|Elm.Widget]] //(class)//
+        * [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)//
+          * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
+            * [[:develop:api:efl:object|Efl.Object]] //(class)//
+            * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+            * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
+            * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
+            * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
+            * [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
+            * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
+              * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
+              * [[:develop:api:efl:object|Efl.Object]] //(class)//
+            * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+              * [[:develop:api:efl:object|Efl.Object]] //(class)//
+            * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
+            * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
+        * [[:develop:api:efl:access|Efl.Access]] //(mixin)//
+          * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
+          * [[:develop:api:efl:object|Efl.Object]] //(class)//
+        * [[:develop:api:efl:access:component|Efl.Access.Component]] //(mixin)//
+        * [[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]] //(interface)//
+        * [[:develop:api:efl:part|Efl.Part]] //(interface)//
+        * [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
+        * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
+        * [[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]] //(interface)//
+        * [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] //(interface)//
+      * [[:develop:api:efl:part|Efl.Part]] //(interface)//
+      * [[:develop:api:efl:container|Efl.Container]] //(interface)//
+      * [[:develop:api:efl:file|Efl.File]] //(mixin)//
+      * [[:develop:api:efl:ui:view|Efl.Ui.View]] //(interface)//
+      * [[:develop:api:efl:ui:model:connect|Efl.Ui.Model.Connect]] //(interface)//
+      * [[:develop:api:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] //(interface)//
+      * [[:develop:api:efl:layout:calc|Efl.Layout.Calc]] //(interface)//
+      * [[:develop:api:efl:layout:signal|Efl.Layout.Signal]] //(interface)//
+      * [[:develop:api:efl:layout:group|Efl.Layout.Group]] //(interface)//
+    * [[:develop:api:efl:ui:range|Efl.Ui.Range]] //(interface)//
+    * [[:develop:api:efl:ui:direction|Efl.Ui.Direction]] //(interface)//
+    * [[:develop:api:efl:access:value|Efl.Access.Value]] //(interface)//
+    * [[:develop:api:efl:text|Efl.Text]] //(interface)//
+    * [[:develop:api:efl:text:markup|Efl.Text.Markup]] //(interface)//
+      * [[:develop:api:efl:text:cursor|Efl.Text.Cursor]] //(interface)//
+    * [[:develop:api:efl:ui:format|Efl.Ui.Format]] //(mixin)//
+    * [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] //(interface)//
+    * [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]] //(mixin)//
+      * [[:develop:api:efl:access:action|Efl.Access.Action]] //(mixin)//
+    * [[:develop:api:efl:content|Efl.Content]] //(interface)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:ui:slider_interval:property:interval_value|interval_value]]** //**(get, set)**//
+<code c>
+void efl_ui_slider_interval_value_get(const Eo *obj, double *from, double *to);
+void efl_ui_slider_interval_value_set(Eo *obj, double from, double to);
+</code>
+
+%%Sets up position of two indicators at start and end position.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:attribute_append|attribute_append]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:attributes_clear|attributes_clear]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationship_append|relationship_append]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:description|description]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:role|role]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:root|root]]** //**(get)**//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:type|type]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:name|name]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_change|group_change]]**
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_member_is|group_member_is]]**
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_members_iterate|group_members_iterate]]**
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:ui:slider:method:group_calculate|group_calculate]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:elm:widget:method:group_member_add|group_member_add]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:elm:widget:method:group_member_del|group_member_del]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:group:property:paragraph_direction|paragraph_direction]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:group|Efl.Canvas.Group]]]//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:pointer_coords_inside_get|pointer_coords_inside_get]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:clip|clip]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:is_frame_object|is_frame_object]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:no_render|no_render]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]].**[[:develop:api:efl:canvas:object:property:pointer_inside|pointer_inside]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:method:content_count|content_count]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:method:content_iterate|content_iterate]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:method:content_remove|content_remove]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:content|Efl.Content]].**[[:develop:api:efl:ui:slider:method:content_unset|content_unset]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:content|Efl.Content]].**[[:develop:api:efl:ui:slider:property:content|content]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:method:save|save]]**
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:load_error|load_error]]** //**(get)**//
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:ui:layout:property:file|file]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:ui:layout:property:mmap|mmap]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_has|map_has]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate|rotate]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:translate|translate]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom|zoom]]**
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_aspect|hint_aspect]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_max|hint_max]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]// ''protected set''
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_weight|hint_weight]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_base|hint_base]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_step|hint_step]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:lower|lower]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:raise|raise]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:color|color]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:position|position]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:scale|scale]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:size|size]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:visible|visible]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:method:calc_parts_extends|calc_parts_extends]]**
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:method:calc_size_min|calc_size_min]]**
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:property:calc_auto_update_hints|calc_auto_update_hints]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:ui:layout:method:calc_freeze|calc_freeze]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:ui:layout:method:calc_thaw|calc_thaw]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:group|Efl.Layout.Group]].**[[:develop:api:efl:ui:layout:property:group_data|group_data]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:group|Efl.Layout.Group]].**[[:develop:api:efl:ui:layout:property:group_size_max|group_size_max]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:group|Efl.Layout.Group]].**[[:develop:api:efl:ui:layout:property:group_size_min|group_size_min]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:signal|Efl.Layout.Signal]].**[[:develop:api:efl:ui:layout:method:message_send|message_send]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:signal|Efl.Layout.Signal]].**[[:develop:api:efl:ui:layout:method:signal_callback_add|signal_callback_add]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:signal|Efl.Layout.Signal]].**[[:develop:api:efl:ui:layout:method:signal_callback_del|signal_callback_del]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:signal|Efl.Layout.Signal]].**[[:develop:api:efl:ui:layout:method:signal_emit|signal_emit]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:layout:signal|Efl.Layout.Signal]].**[[:develop:api:efl:ui:layout:method:signal_process|signal_process]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:del|del]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:slider:method:constructor|constructor]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:slider_interval:method:finalize|finalize]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:elm:widget:method:debug_name_override|debug_name_override]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:elm:widget:method:destructor|destructor]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:elm:widget:method:provider_find|provider_find]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:part|Efl.Part]].**[[:develop:api:efl:ui:slider:method:part|part]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_char_delete|cursor_char_delete]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_char_next|cursor_char_next]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_char_prev|cursor_char_prev]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_compare|cursor_compare]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_coord_set|cursor_coord_set]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_copy|cursor_copy]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_equal|cursor_equal]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_free|cursor_free]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_line_char_first|cursor_line_char_first]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_line_char_last|cursor_line_char_last]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_line_jump_by|cursor_line_jump_by]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_new|cursor_new]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_first|cursor_paragraph_char_first]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_last|cursor_paragraph_char_last]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_first|cursor_paragraph_first]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_last|cursor_paragraph_last]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_next|cursor_paragraph_next]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_paragraph_prev|cursor_paragraph_prev]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_text_insert|cursor_text_insert]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_word_end|cursor_word_end]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:method:cursor_word_start|cursor_word_start]]**
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:property:cursor_content|cursor_content]]** //**(get)**//
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:property:cursor_geometry|cursor_geometry]]** //**(get)**//
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:property:cursor_position|cursor_position]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:text:cursor:property:cursor|cursor]]** //**(get)**//
+\\ 
+[[:develop:api:efl:text:markup|Efl.Text.Markup]].**[[:develop:api:efl:text:markup:method:cursor_markup_insert|cursor_markup_insert]]**
+\\ 
+[[:develop:api:efl:text:markup|Efl.Text.Markup]].**[[:develop:api:efl:ui:slider:property:markup|markup]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:text|Efl.Text]].**[[:develop:api:efl:ui:slider:property:text|text]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:elm:widget:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:elm:widget:property:mirrored|mirrored]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor_style|cursor_style]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor|cursor]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:direction|Efl.Ui.Direction]].**[[:develop:api:efl:ui:slider:property:direction|direction]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]**
+\\ 
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:elm:widget:property:focus|focus]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected set''
+\\ 
+[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:elm:widget:property:focus_manager|focus_manager]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:elm:widget:property:focus_parent|focus_parent]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
+\\ 
+[[:develop:api:efl:ui:format|Efl.Ui.Format]].**[[:develop:api:efl:ui:format:property:format_string|format_string]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:ui:format|Efl.Ui.Format]].**[[:develop:api:efl:ui:slider:property:format_cb|format_cb]]** //**(set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:layout|Efl.Ui.Layout]].**[[:develop:api:efl:ui:layout:property:theme|theme]]** //**(set)**//
+\\ 
+[[:develop:api:efl:ui:model:connect|Efl.Ui.Model.Connect]].**[[:develop:api:efl:ui:layout:method:connect|connect]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]].**[[:develop:api:efl:ui:layout:method:connect|connect]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:efl:ui:range|Efl.Ui.Range]].**[[:develop:api:efl:ui:range:property:range_step|range_step]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:ui:range|Efl.Ui.Range]].**[[:develop:api:efl:ui:slider:property:range_min_max|range_min_max]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:range|Efl.Ui.Range]].**[[:develop:api:efl:ui:slider:property:range_value|range_value]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:slider|Efl.Ui.Slider]].**[[:develop:api:efl:ui:slider:property:step|step]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]].**[[:develop:api:efl:ui:slider:property:translatable_text|translatable_text]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]//
+\\ 
+[[:develop:api:efl:ui:view|Efl.Ui.View]].**[[:develop:api:efl:ui:layout:property:model|model]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_freeze_pop|scroll_freeze_pop]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_freeze_push|scroll_freeze_push]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_hold_pop|scroll_hold_pop]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_hold_push|scroll_hold_push]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:access_info|access_info]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:disabled|disabled]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_allow|focus_allow]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_highlight_animate|focus_highlight_animate]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_highlight_enabled|focus_highlight_enabled]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_highlight_style|focus_highlight_style]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_move_policy|focus_move_policy]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focused_item|focused_item]]** //**(get)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:interest_region_mode|interest_region_mode]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**//
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:style|style]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:widget_top|widget_top]]** //**(get)**//
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:action:property:action_localized_name|action_localized_name]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:method:action_do|action_do]]** //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:method:action_keybinding_get|action_keybinding_get]]** //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:action_description|action_description]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:action_name|action_name]]** //**(get)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:actions|actions]]** //**(get)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:method:accessible_at_point_get|accessible_at_point_get]]** ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:method:contains|contains]]** ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:alpha|alpha]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:extents|extents]]** //**(get, set)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:layer|layer]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:position|position]]** //**(get, set)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:size|size]]** //**(get, set)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:z_order|z_order]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:elm:widget:method:focus_grab|focus_grab]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:value|Efl.Access.Value]].**[[:develop:api:efl:ui:slider:property:increment|increment]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:value|Efl.Access.Value]].**[[:develop:api:efl:ui:slider:property:range|range]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:value|Efl.Access.Value]].**[[:develop:api:efl:ui:slider:property:value_and_text|value_and_text]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]].**[[:develop:api:efl:ui:slider:property:elm_actions|elm_actions]]** //**(get)**// //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_emit|event_emit]]** ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:reading_info_type|reading_info_type]]** //**(get, set)**// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:relation_set|relation_set]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:role_name|role_name]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:children|children]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:state_set|state_set]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
+\\ 
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:property:group_clipper|group_clipper]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:method:calc_force|calc_force]]** ''protected''
+\\ 
+[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]].**[[:develop:api:elm:widget:method:translation_update|translation_update]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:layout:method:on_disabled_update|on_disabled_update]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:layout:method:widget_sub_object_add|widget_sub_object_add]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:layout:method:widget_sub_object_del|widget_sub_object_del]]** //[Overridden in [[:develop:api:efl:ui:layout|Efl.Ui.Layout]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:slider:method:on_access_activate|on_access_activate]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:slider:method:on_focus_update|on_focus_update]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:slider:method:theme_apply|theme_apply]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:slider:method:widget_event|widget_event]]** //[Overridden in [[:develop:api:efl:ui:slider|Efl.Ui.Slider]]]// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:focus_manager_create|focus_manager_create]]** ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:focus_state_apply|focus_state_apply]]** ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_access_update|on_access_update]]** ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_orientation_update|on_orientation_update]]** ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_highlight_geometry|focus_highlight_geometry]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:interest_region|interest_region]]** //**(get)**// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:on_show_region_hook|on_show_region_hook]]** //**(set)**// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:resize_object|resize_object]]** //**(set)**// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:show_region|show_region]]** //**(get, set)**// ''protected''
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:widget_parent|widget_parent]]** //**(get, set)**// ''protected''
+\\ 
+
+===== Events =====
+
+==== Inherited ====
+
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:added|added]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:children_changed|children,changed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:property_changed|property,changed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:removed|removed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:state_changed|state,changed]]**
+\\ 
+[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]**
+\\ 
+[[:develop:api:efl:animator|Efl.Animator]].**[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**
+\\ 
+[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:container:event:content_added|content,added]]**
+\\ 
+[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:container:event:content_removed|content,removed]]**
+\\ 
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**
+\\ 
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:event:restack|restack]]**
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:changed|changed]]**
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:hide|hide]]**
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:move|move]]**
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:resize|resize]]**
+\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:show|show]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:hold|hold]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_down|key,down]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_up|key,up]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**
+\\ 
+[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:event:circular_dependency|circular,dependency]]**
+\\ 
+[[:develop:api:efl:layout:calc|Efl.Layout.Calc]].**[[:develop:api:efl:layout:calc:event:recalc|recalc]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:efl:ui:focus:object:event:focus_changed|focus,changed]]**
+\\ 
+[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:efl:ui:focus:user:event:logical_changed|logical,changed]]**
+\\ 
+[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:efl:ui:focus:user:event:manager_changed|manager,changed]]**
+\\ 
+[[:develop:api:efl:ui:layout|Efl.Ui.Layout]].**[[:develop:api:efl:ui:layout:event:theme_changed|theme,changed]]**
+\\ 
+[[:develop:api:efl:ui:slider|Efl.Ui.Slider]].**[[:develop:api:efl:ui:slider:event:changed|changed]]**
+\\ 
+[[:develop:api:efl:ui:slider|Efl.Ui.Slider]].**[[:develop:api:efl:ui:slider:event:delay_changed|delay,changed]]**
+\\ 
+[[:develop:api:efl:ui:slider|Efl.Ui.Slider]].**[[:develop:api:efl:ui:slider:event:slider_drag_start|slider,drag,start]]**
+\\ 
+[[:develop:api:efl:ui:slider|Efl.Ui.Slider]].**[[:develop:api:efl:ui:slider:event:slider_drag_stop|slider,drag,stop]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:access_changed|access,changed]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:language_changed|language,changed]]**
+\\ 
+[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:moved|moved]]**
+\\ 

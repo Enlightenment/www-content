@@ -1,0 +1,240 @@
+~~Title: Efl.Io.File~~
+====== Efl.Io.File (class) ======
+
+===== Description =====
+
+%%File access (open, close, read, write, lseek, ftruncate)%%
+
+%%%%[[:develop:api:mixin:efl:io:closer:property:close_on_exec|Efl.Io.Closer.close_on_exec]]%% and %%[[:develop:api:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% are respected and default to %%''true''%%. %%[[:develop:api:mixin:efl:io:closer:property:close_on_exec|Efl.Io.Closer.close_on_exec.set]]%% sets flag O_CLOEXEC.%%
+
+//Since 1.19//
+
+{{page>:develop:api-include:efl:io:file:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:loop:fd|Efl.Loop.Fd]] //(class)// => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_io_file [fillcolor = "black", label = "Efl.Io.File", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_fd [fillcolor = "gray15", label = "Efl.Loop.Fd", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_file [fillcolor = "gray15", label = "Efl.File", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_reader_fd [fillcolor = "gray15", label = "Efl.Io.Reader.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer_fd [fillcolor = "gray15", label = "Efl.Io.Writer.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer_fd [fillcolor = "gray15", label = "Efl.Io.Closer.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_io_sizer_fd [fillcolor = "gray15", label = "Efl.Io.Sizer.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_sizer [fillcolor = "gray15", label = "Efl.Io.Sizer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_positioner_fd [fillcolor = "gray15", label = "Efl.Io.Positioner.Fd", color = "deepskyblue", fontcolor = "white", style = "filled"]
+    efl_io_positioner [fillcolor = "gray15", label = "Efl.Io.Positioner", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_io_file -> efl_loop_fd
+    efl_loop_fd -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_io_file -> efl_file
+    efl_io_file -> efl_io_reader_fd
+    efl_io_reader_fd -> efl_io_reader
+    efl_io_file -> efl_io_writer_fd
+    efl_io_writer_fd -> efl_io_writer
+    efl_io_file -> efl_io_closer_fd
+    efl_io_closer_fd -> efl_io_closer
+    efl_io_closer_fd -> efl_object
+    efl_io_file -> efl_io_sizer_fd
+    efl_io_sizer_fd -> efl_io_sizer
+    efl_io_file -> efl_io_positioner_fd
+    efl_io_positioner_fd -> efl_io_positioner
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:loop:fd|Efl.Loop.Fd]] //(class)//
+    * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:develop:api:efl:object|Efl.Object]] //(class)//
+  * [[:develop:api:efl:file|Efl.File]] //(mixin)//
+  * [[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]] //(mixin)//
+    * [[:develop:api:efl:io:reader|Efl.Io.Reader]] //(interface)//
+  * [[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]] //(mixin)//
+    * [[:develop:api:efl:io:writer|Efl.Io.Writer]] //(interface)//
+  * [[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]] //(mixin)//
+    * [[:develop:api:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+    * [[:develop:api:efl:object|Efl.Object]] //(class)//
+  * [[:develop:api:efl:io:sizer:fd|Efl.Io.Sizer.Fd]] //(mixin)//
+    * [[:develop:api:efl:io:sizer|Efl.Io.Sizer]] //(mixin)//
+  * [[:develop:api:efl:io:positioner:fd|Efl.Io.Positioner.Fd]] //(mixin)//
+    * [[:develop:api:efl:io:positioner|Efl.Io.Positioner]] //(mixin)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:io:file:property:flags|flags]]** //**(get, set)**//
+<code c>
+uint32_t efl_io_file_flags_get(const Eo *obj);
+void efl_io_file_flags_set(Eo *obj, uint32_t flags);
+</code>
+
+%%Bitwise OR'ed flags to open the file, like O_CREAT, O_APPEND...%%\\ 
+\\ 
+**[[:develop:api:efl:io:file:property:mode|mode]]** //**(get, set)**//
+<code c>
+uint32_t efl_io_file_mode_get(const Eo *obj);
+void efl_io_file_mode_set(Eo *obj, uint32_t mode);
+</code>
+
+%%Mode property%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:method:save|save]]**
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:load_error|load_error]]** //**(get)**//
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:mmap|mmap]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:io:file:property:file|file]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:develop:api:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:fd:property:closed|closed]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:file:method:close|close]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:file:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:positioner:fd|Efl.Io.Positioner.Fd]].**[[:develop:api:efl:io:positioner:fd:property:positioner_fd|positioner_fd]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:efl:io:file:method:seek|seek]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:efl:io:positioner:fd:property:position|position]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:positioner:fd|Efl.Io.Positioner.Fd]]]//
+\\ 
+[[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]].**[[:develop:api:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:file:method:read|read]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:fd:property:can_read|can_read]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]]]// ''protected set''
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:fd:property:eos|eos]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]]]// ''protected set''
+\\ 
+[[:develop:api:efl:io:sizer:fd|Efl.Io.Sizer.Fd]].**[[:develop:api:efl:io:sizer:fd:property:sizer_fd|sizer_fd]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:efl:io:file:method:resize|resize]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:efl:io:sizer:fd:property:size|size]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:sizer:fd|Efl.Io.Sizer.Fd]]]//
+\\ 
+[[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]].**[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:file:method:write|write]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:fd:property:can_write|can_write]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]]]// ''protected set''
+\\ 
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:io:file:property:fd_file|fd_file]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:property:fd|fd]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:file:method:constructor|constructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:file:method:destructor|destructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:file:method:finalize|finalize]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+
+===== Events =====
+
+==== Inherited ====
+
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:event:closed|closed]]**
+\\ 
+[[:develop:api:efl:io:positioner|Efl.Io.Positioner]].**[[:develop:api:efl:io:positioner:event:position_changed|position,changed]]**
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:eos|eos]]**
+\\ 
+[[:develop:api:efl:io:sizer|Efl.Io.Sizer]].**[[:develop:api:efl:io:sizer:event:size_changed|size,changed]]**
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
+\\ 
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:error|error]]**
+\\ 
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:read|read]]**
+\\ 
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:write|write]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 

@@ -1,0 +1,165 @@
+~~Title: Efl.Promise~~
+====== Efl.Promise (class) ======
+
+===== Description =====
+
+%%Efl promise class%%
+
+{{page>:develop:api-include:efl:promise:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_promise [fillcolor = "black", label = "Efl.Promise", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_promise -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+    * [[:develop:api:efl:object|Efl.Object]] //(class)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:promise:method:connect|connect]]**
+<code c>
+Eina_Bool efl_promise_connect(Eo *obj, Efl_Future *f);
+</code>
+
+%%Connects a future output to this promise.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:method:progress_set|progress_set]]**
+<code c>
+void efl_promise_progress_set(Eo *obj, const void *p);
+</code>
+
+%%Updates the progress and send it immediately to all connected Efl_Future.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:property:failed|failed]]** //**(set)**//
+<code c>
+void efl_promise_failed_set(Eo *obj, Eina_Error err);
+</code>
+
+%%Defines the failure state of this promise.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:property:future|future]]** //**(get)**//
+<code c>
+Efl_Future *efl_promise_future_get(const Eo *obj);
+</code>
+
+%%Requests a new future linked to this promise.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:property:value|value]]** //**(set)**//
+<code c>
+void efl_promise_value_set(Eo *obj, void *v, Eina_Free_Cb free_cb);
+</code>
+
+%%The value expected by all connected future.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:promise:method:constructor|constructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:promise:method:destructor|destructor]]** //[Overridden here]//
+\\ 
+
+===== Events =====
+
+**[[:develop:api:efl:promise:event:future_none|future,none]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_NONE(void)
+</code>
+
+%%This event is triggered whenever there is no more future connected to the promise.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:event:future_progress_set|future,progress,set]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_PROGRESS_SET(Efl_Future *)
+</code>
+
+%%This event is triggered whenever a future has a progress callback registered and the user does not hold any more reference on it.%%\\ 
+\\ 
+**[[:develop:api:efl:promise:event:future_set|future,set]]**
+<code c>
+EFL_PROMISE_EVENT_FUTURE_SET(Efl_Future *)
+</code>
+
+%%This event is triggered whenever a future is fully set to receive all events and that the user of it do not hold any more reference on it.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 

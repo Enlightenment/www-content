@@ -1,0 +1,325 @@
+~~Title: Efl.Net.Dialer.Websocket~~
+====== Efl.Net.Dialer.Websocket (class) ======
+
+===== Description =====
+
+%%WebSocket Dialer (Client).%%
+
+%%The WebSocket Protocol (https://tools.ietf.org/html/rfc6455) is a message-based protocol over HTTP, this allows it to leverage on authentication, cookies, proxies and SSL/TLS.%%
+
+%%It's worth to note that although it uses the HTTP dialer, it's not a subclass and thus not all HTTP features are exposed as the WebSocket has strict requirements that must be respected.%%
+
+%%If the proxy is NULL (default), then the system proxy will be used. On UNIX that's the environment variable %%''http_proxy''%% (or '%%''all_proxy''%%') is used if the given address doesn't match %%''no_proxy''%% patterns. To disable proxy use an empty string. If provided proxy must be one of the protocols:%%
+
+%%- http://username:password@proxyserver:port - http://username@proxyserver:port - http://proxyserver:port - http://proxyserver  (default port 1080) - socks5://username:password@proxyserver:port (SOCKSv5) - socks5h://username@proxyserver:port (let socks server to resolve domain) - socks5://proxyserver:port - socks5://proxyserver (default port 1080) - socks4a://proxyserver:port (SOCKSv4 and let socks server to resolve domain) - socks4://proxyserver:port (SOCKSv4)%%
+
+//Since 1.19//
+
+{{page>:develop:api-include:efl:net:dialer:websocket:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_dialer_websocket [fillcolor = "black", label = "Efl.Net.Dialer.Websocket", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_net_dialer [fillcolor = "gray15", label = "Efl.Net.Dialer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_net_socket [fillcolor = "gray15", label = "Efl.Net.Socket", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_reader [fillcolor = "gray15", label = "Efl.Io.Reader", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_writer [fillcolor = "gray15", label = "Efl.Io.Writer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+    efl_io_closer [fillcolor = "gray15", label = "Efl.Io.Closer", color = "deepskyblue", fontcolor = "white", style = "filled"]
+
+    efl_net_dialer_websocket -> efl_loop_user
+    efl_loop_user -> efl_object
+    efl_net_dialer_websocket -> efl_net_dialer
+    efl_net_dialer -> efl_net_socket
+    efl_net_socket -> efl_io_reader
+    efl_net_socket -> efl_io_writer
+    efl_net_socket -> efl_io_closer
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+    * [[:develop:api:efl:object|Efl.Object]] //(class)//
+  * [[:develop:api:efl:net:dialer|Efl.Net.Dialer]] //(interface)//
+    * [[:develop:api:efl:net:socket|Efl.Net.Socket]] //(interface)//
+      * [[:develop:api:efl:io:reader|Efl.Io.Reader]] //(interface)//
+      * [[:develop:api:efl:io:writer|Efl.Io.Writer]] //(interface)//
+      * [[:develop:api:efl:io:closer|Efl.Io.Closer]] //(mixin)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:net:dialer:websocket:method:binary_send|binary_send]]**
+<code c>
+void efl_net_dialer_websocket_binary_send(Eo *obj, const Eina_Slice blob);
+</code>
+
+%%Sends a binary blob (opcode=0x2) to the server.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:close_request|close_request]]**
+<code c>
+void efl_net_dialer_websocket_close_request(Eo *obj, Efl_Net_Dialer_Websocket_Close_Reason reason, const char *message);
+</code>
+
+%%Requests (opcode=0x8) the server to terminate the connection.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:ping|ping]]**
+<code c>
+void efl_net_dialer_websocket_ping(Eo *obj, const char *reason);
+</code>
+
+%%Sends a PING (opcode=0x9) to the server.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_header_add|request_header_add]]**
+<code c>
+void efl_net_dialer_websocket_request_header_add(Eo *obj, const char *key, const char *value);
+</code>
+
+%%Adds a HTTP request header 'key: value'.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_headers_clear|request_headers_clear]]**
+<code c>
+void efl_net_dialer_websocket_request_headers_clear(Eo *obj);
+</code>
+
+%%Clears all request headers.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_headers_get|request_headers_get]]**
+<code c>
+Eina_Iterator *efl_net_dialer_websocket_request_headers_get(Eo *obj);
+</code>
+
+%%Returns an iterator to the key-value pairs for request headers%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_protocol_add|request_protocol_add]]**
+<code c>
+void efl_net_dialer_websocket_request_protocol_add(Eo *obj, const char *protocol);
+</code>
+
+%%Adds a new WebSocket protocol to the request.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_protocols_clear|request_protocols_clear]]**
+<code c>
+void efl_net_dialer_websocket_request_protocols_clear(Eo *obj);
+</code>
+
+%%Clears all request protocols%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:request_protocols_get|request_protocols_get]]**
+<code c>
+Eina_Iterator *efl_net_dialer_websocket_request_protocols_get(Eo *obj);
+</code>
+
+%%Returns an iterator to the requested WebSocket protocols%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:response_protocols_get|response_protocols_get]]**
+<code c>
+Eina_Iterator *efl_net_dialer_websocket_response_protocols_get(Eo *obj);
+</code>
+
+%%Returns an iterator to the server-replied (response) WebSocket protocols it supports%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:method:text_send|text_send]]**
+<code c>
+void efl_net_dialer_websocket_text_send(Eo *obj, const char *text);
+</code>
+
+%%Sends an UTF-8 TEXT (opcode=0x1) to the server.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:property:allow_redirects|allow_redirects]]** //**(get, set)**//
+<code c>
+Eina_Bool efl_net_dialer_websocket_allow_redirects_get(const Eo *obj);
+void efl_net_dialer_websocket_allow_redirects_set(Eo *obj, Eina_Bool allow_redirects);
+</code>
+
+%%Allows HTTP redirects to be followed.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:property:authentication|authentication]]** //**(get, set)**//
+<code c>
+void efl_net_dialer_websocket_authentication_get(const Eo *obj, const char **username, const char **password, Efl_Net_Http_Authentication_Method *method, Eina_Bool *restricted);
+void efl_net_dialer_websocket_authentication_set(Eo *obj, const char *username, const char *password, Efl_Net_Http_Authentication_Method method, Eina_Bool restricted);
+</code>
+
+%%HTTP authentication to use.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:property:cookie_jar|cookie_jar]]** //**(get, set)**//
+<code c>
+const char *efl_net_dialer_websocket_cookie_jar_get(const Eo *obj);
+void efl_net_dialer_websocket_cookie_jar_set(Eo *obj, const char *path);
+</code>
+
+%%This property sets the filename where to read and write cookies.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:property:streaming_mode|streaming_mode]]** //**(get, set)**//
+<code c>
+Efl_Net_Dialer_Websocket_Streaming_Mode efl_net_dialer_websocket_streaming_mode_get(const Eo *obj);
+void efl_net_dialer_websocket_streaming_mode_set(Eo *obj, Efl_Net_Dialer_Websocket_Streaming_Mode streaming_mode);
+</code>
+
+%%Configures how to map streaming APIs to WebSocket.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:property:user_agent|user_agent]]** //**(get, set)**//
+<code c>
+const char *efl_net_dialer_websocket_user_agent_get(const Eo *obj);
+void efl_net_dialer_websocket_user_agent_set(Eo *obj, const char *user_agent);
+</code>
+
+%%The User-Agent to specify.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:dialer:websocket:method:close|close]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:dialer:websocket:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:dialer:websocket:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:dialer:websocket:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:dialer:websocket:method:read|read]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:dialer:websocket:property:can_read|can_read]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:dialer:websocket:property:eos|eos]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:net:dialer:websocket:method:write|write]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:net:dialer:websocket:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:websocket:method:dial|dial]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:websocket:property:address_dial|address_dial]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:websocket:property:connected|connected]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:websocket:property:proxy|proxy]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:websocket:property:timeout_dial|timeout_dial]]** //**(get, set)**// //[Overridden here]//
+\\ 
+[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:dialer:websocket:property:address_local|address_local]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:dialer:websocket:property:address_remote|address_remote]]** //**(get, set)**// //[Overridden here]// ''protected set''
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:websocket:method:constructor|constructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:websocket:method:destructor|destructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+
+===== Events =====
+
+**[[:develop:api:efl:net:dialer:websocket:event:closed_reason|closed,reason]]**
+<code c>
+EFL_NET_DIALER_WEBSOCKET_EVENT_CLOSED_REASON(Efl_Net_Dialer_Websocket_Closed_Reason)
+</code>
+
+%%Received a request to close the connection. It may be a reply/confirmation from a local request, see %%[[:develop:api:class:efl:net:dialer:websocket:method:close_request|Efl.Net.Dialer.Websocket.close_request]]%%, or some server-generated reason. After this point, no more messages are allowed to be sent and no more will be received. %%[[:develop:api:mixin:efl:io:closer:method:close|Efl.Io.Closer.close]]%% will be called.%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:event:message_binary|message,binary]]**
+<code c>
+EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY(const Eina_Slice *)
+</code>
+
+%%Received a binary message (opcode=0x2)%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:event:message_text|message,text]]**
+<code c>
+EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_TEXT(const char *)
+</code>
+
+%%Received a text string message (opcode=0x1)%%\\ 
+\\ 
+**[[:develop:api:efl:net:dialer:websocket:event:pong|pong]]**
+<code c>
+EFL_NET_DIALER_WEBSOCKET_EVENT_PONG(const char *)
+</code>
+
+%%Received a pong (opcode=0xA) with optional message/reason%%\\ 
+\\ 
+==== Inherited ====
+
+[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:event:closed|closed]]**
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**
+\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:eos|eos]]**
+\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:connected|connected]]**
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:error|error]]**
+\\ 
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:resolved|resolved]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 

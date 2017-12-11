@@ -1,0 +1,39 @@
+~~Title: Efl.Image: resize~~
+===== Signature =====
+
+<code>
+resize;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_IMAGE_EVENT_RESIZE(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_image_event_resize(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IMAGE_EVENT_RESIZE, on_efl_image_event_resize, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Image was resized (its pixel data).%%
+{{page>:develop:api-include:efl:image:event:resize:description&nouser&nolink&nodate}}
+

@@ -1,0 +1,77 @@
+~~Title: Efl.Container~~
+====== Efl.Container (interface) ======
+
+===== Description =====
+
+%%Common interface for objects that have multiple contents (sub objects).%%
+
+%%APIs in this interface deal with containers of multiple sub objects, not with individual parts.%%
+
+{{page>:develop:api-include:efl:container:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_container [fillcolor = "dodgerblue4", label = "Efl.Container", color = "cornflowerblue", fontcolor = "white", style = "filled"]
+
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:container:method:content_count|content_count]]**
+<code c>
+int efl_content_count(Eo *obj);
+</code>
+
+%%Returns the number of UI elements packed in this container.%%\\ 
+\\ 
+**[[:develop:api:efl:container:method:content_iterate|content_iterate]]**
+<code c>
+Eina_Iterator *efl_content_iterate(Eo *obj);
+</code>
+
+%%Begin iterating over this object's contents.%%\\ 
+\\ 
+**[[:develop:api:efl:container:method:content_remove|content_remove]]**
+<code c>
+Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
+</code>
+
+%%Unswallow an object from this container.%%\\ 
+\\ 
+
+===== Events =====
+
+**[[:develop:api:efl:container:event:content_added|content,added]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_ADDED(Efl_Gfx *)
+</code>
+
+%%Sent after a new item was added.%%\\ 
+\\ 
+**[[:develop:api:efl:container:event:content_removed|content,removed]]**
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
+</code>
+
+%%Sent after an item was removed, before unref.%%\\ 
+\\ 

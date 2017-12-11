@@ -1,0 +1,50 @@
+~~Title: Efl.Gfx.Map.rotate_quat~~
+===== Signature =====
+
+<code>
+rotate_quat {
+    params {
+        @in qx: double;
+        @in qy: double;
+        @in qz: double;
+        @in qw: double;
+        @in pivot: free(const(Efl.Gfx), efl_del);
+        @in cx: double;
+        @in cy: double;
+        @in cz: double;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_gfx_map_rotate_quat(Eo *obj, double qx, double qy, double qz, double qw, const Efl_Gfx *pivot, double cx, double cy, double cz);
+</code>
+
+===== Parameters =====
+
+  * **qx** //(in)// - %%The x component of the imaginary part of the quaternion.%%
+  * **qy** //(in)// - %%The y component of the imaginary part of the quaternion.%%
+  * **qz** //(in)// - %%The z component of the imaginary part of the quaternion.%%
+  * **qw** //(in)// - %%The w component of the real part of the quaternion.%%
+  * **pivot** //(in)// - %%A pivot object for the center point, can be %%''null''%%.%%
+  * **cx** //(in)// - %%X relative coordinate of the center point.%%
+  * **cy** //(in)// - %%y relative coordinate of the center point.%%
+  * **cz** //(in)// - %%Z absolute coordinate of the center point.%%
+
+===== Description =====
+
+%%Rotate the object in 3D using a unit quaternion.%%
+
+%%This is similar to %%[[:develop:api:mixin:efl:gfx:map:method:rotate_3d|Efl.Gfx.Map.rotate_3d]]%% but uses a unit quaternion (also known as versor) rather than a direct angle-based rotation around a center point. Use this to avoid gimbal locks.%%
+
+%%As with %%[[:develop:api:mixin:efl:gfx:map:method:rotate|Efl.Gfx.Map.rotate]]%%, you provide a pivot and center point to rotate around (in 3D). The Z coordinate of this center point is an absolute value, and not a relative one like X and Y, as objects are flat in a 2D space.%%
+
+//Since 1.20//
+{{page>:develop:api-include:efl:gfx:map:method:rotate_quat:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Gfx.Map.rotate_quat**
+

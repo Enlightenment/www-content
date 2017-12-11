@@ -1,0 +1,39 @@
+~~Title: Efl.Container: content,removed~~
+===== Signature =====
+
+<code>
+content,removed: free(Efl.Gfx, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_CONTAINER_EVENT_CONTENT_REMOVED(Efl_Gfx *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_container_event_content_removed(void *data, const Efl_Event *event)
+{
+    Efl_Gfx *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_CONTAINER_EVENT_CONTENT_REMOVED, on_efl_container_event_content_removed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Sent after an item was removed, before unref.%%
+{{page>:develop:api-include:efl:container:event:content_removed:description&nouser&nolink&nodate}}
+

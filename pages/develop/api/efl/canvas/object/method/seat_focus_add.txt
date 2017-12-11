@@ -1,0 +1,39 @@
+~~Title: Efl.Canvas.Object.seat_focus_add~~
+===== Signature =====
+
+<code>
+seat_focus_add {
+    params {
+        @in seat: free(Efl.Input.Device, efl_del);
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_canvas_object_seat_focus_add(Eo *obj, Efl_Input_Device *seat);
+</code>
+
+===== Parameters =====
+
+  * **seat** //(in)// - %%The seat that should be added to the focus list. Use %%''null''%% for the default seat.%%
+
+===== Description =====
+
+%%Add a seat to the focus list.%%
+
+%%Evas supports that an Efl.Canvas.Object may be focused by multiple seats at the same time. This function adds a new seat to the focus list, in other words, after the seat is added to the list this object will now be also focused by this new seat.%%
+
+%%This function generates an @ref EFL_CANVAS_OBJECT_EVENT_FOCUS_DEVICE_IN event.%%
+
+%%@note The old focus APIs ( @ref evas_object_focus_get, @ref evas_object_focus_set, %%[[:develop:api:class:efl:canvas:object:method:key_grab|Efl.Canvas.Object.key_grab]]%%) will still work, however they will only act on the default seat.%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:canvas:object:method:seat_focus_add:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Canvas.Object.seat_focus_add**
+

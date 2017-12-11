@@ -1,0 +1,56 @@
+~~Title: Efl.Gfx.Filter.filter_state~~
+===== Signature =====
+
+<code>
+@property filter_state @pure_virtual {
+    get {
+        values {
+            cur_state: free(string, free);
+            cur_val: double;
+            next_state: free(string, free) @optional;
+            next_val: double @optional;
+            pos: double @optional;
+        }
+    }
+    set {
+        values {
+            cur_state: free(string, free);
+            cur_val: double;
+            next_state: free(string, free) @optional;
+            next_val: double @optional;
+            pos: double @optional;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_gfx_filter_state_get(const Eo *obj, const char **cur_state, double *cur_val, const char **next_state, double *next_val, double *pos);
+void efl_gfx_filter_state_set(Eo *obj, const char *cur_state, double cur_val, const char *next_state, double next_val, double pos);
+</code>
+
+===== Values =====
+
+  * **cur_state** - %%Current state of the filter%%
+  * **cur_val** - %%Current value%%
+  * **next_state** - %%Next filter state, optional%%
+  * **next_val** - %%Next value, optional%%
+  * **pos** - %%Position, optional%%
+===== Description =====
+
+%%Set the current state of the filter.%%
+
+%%This should be used by Edje (EFL's internal layout engine), but could also be used when implementing animations programmatically.%%
+
+%%A full state is defined by two states (name + value): origin state and target state of an ongoing animation, as well as the %%''pos''%% progress (from 0 to 1) of that animation timeline. The second state can be omitted if there is no ongoing animation.%%
+
+//Since 1.18//
+{{page>:develop:api-include:efl:gfx:filter:property:filter_state:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Gfx.Filter.filter_state**
+

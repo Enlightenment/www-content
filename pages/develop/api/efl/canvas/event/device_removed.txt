@@ -1,0 +1,39 @@
+~~Title: Efl.Canvas: device,removed~~
+===== Signature =====
+
+<code>
+device,removed: free(Efl.Input.Device, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_CANVAS_EVENT_DEVICE_REMOVED(Efl_Input_Device *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_canvas_event_device_removed(void *data, const Efl_Event *event)
+{
+    Efl_Input_Device *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_CANVAS_EVENT_DEVICE_REMOVED, on_efl_canvas_event_device_removed, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Called when input device was removed%%
+{{page>:develop:api-include:efl:canvas:event:device_removed:description&nouser&nolink&nodate}}
+

@@ -1,0 +1,180 @@
+~~Title: Efl.Net.Session~~
+====== Efl.Net.Session (class) ======
+
+===== Description =====
+
+%%Used by application to request network connectivity.%%
+
+%%This API is targeted at applications that need access to the network, specifying the allowed bearer technologies to connect to the internet, as well as if just local networking is enough or validated internet access is required.%%
+
+%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:develop:api:class:efl:net:session:property:state|Efl.Net.Session.state]]%% "online" (%%[[:develop:api:enum:efl:net:session:state|Efl.Net.Session.State.online]]%%) and other properties will be NULL, such as %%[[:develop:api:class:efl:net:session:property:name|Efl.Net.Session.name]]%%, %%[[:develop:api:class:efl:net:session:property:interface|Efl.Net.Session.interface]]%%, %%[[:develop:api:class:efl:net:session:property:ipv4|Efl.Net.Session.ipv4]]%% and %%[[:develop:api:class:efl:net:session:property:ipv6|Efl.Net.Session.ipv6]]%%; as well as %%[[:develop:api:class:efl:net:session:property:technology|Efl.Net.Session.technology]]%% is set to %%[[:develop:api:enum:efl:net:session:technology|Efl.Net.Session.Technology.unknown]]%%. Thus if there is need to detect for an actual backend, check if the state is online but those properties are NULL or technology is unknown.%%
+
+%%@note the %%[[:develop:api:class:efl:net:session:method:connect|Efl.Net.Session.connect]]%% method is subject to backend policy. For instance, ConnMan uses https://github.com/aldebaran/connman/blob/master/doc/session-policy-format.txt%%
+
+//Since 1.19//
+
+{{page>:develop:api-include:efl:net:session:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_session [fillcolor = "black", label = "Efl.Net.Session", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_loop_user [fillcolor = "gray15", label = "Efl.Loop_User", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_net_session -> efl_loop_user
+    efl_loop_user -> efl_object
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+    * [[:develop:api:efl:object|Efl.Object]] //(class)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:net:session:method:connect|connect]]**
+<code c>
+void efl_net_session_connect(Eo *obj, Eina_Bool online_required, Efl_Net_Session_Technology technologies_allowed);
+</code>
+
+%%Asks the session to be connected.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:method:disconnect|disconnect]]**
+<code c>
+void efl_net_session_disconnect(Eo *obj);
+</code>
+
+%%Indicates this session doesn't need a connection anymore.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:interface|interface]]** //**(get)**//
+<code c>
+const char *efl_net_session_interface_get(const Eo *obj);
+</code>
+
+%%The interface allows the application to assign the socket to a given device using SO_BINDTODEVICE%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:ipv4|ipv4]]** //**(get)**//
+<code c>
+void efl_net_session_ipv4_get(const Eo *obj, const char **address, const char **netmask, const char **gateway);
+</code>
+
+%%IPv4 in use for this session.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:ipv6|ipv6]]** //**(get)**//
+<code c>
+void efl_net_session_ipv6_get(const Eo *obj, const char **address, uint8_t *prefix_length, const char **netmask, const char **gateway);
+</code>
+
+%%IPv6 in use for this session.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:name|name]]** //**(get)**//
+<code c>
+const char *efl_net_session_name_get(const Eo *obj);
+</code>
+
+%%The user-friendly access point name.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:state|state]]** //**(get)**//
+<code c>
+Efl_Net_Session_State efl_net_session_state_get(const Eo *obj);
+</code>
+
+%%If the session connectivity is offline, local or online.%%\\ 
+\\ 
+**[[:develop:api:efl:net:session:property:technology|technology]]** //**(get)**//
+<code c>
+Efl_Net_Session_Technology efl_net_session_technology_get(const Eo *obj);
+</code>
+
+%%The access point technology that backs this session%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:session:method:constructor|constructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:session:method:destructor|destructor]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:session:method:finalize|finalize]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+
+===== Events =====
+
+**[[:develop:api:efl:net:session:event:changed|changed]]**
+<code c>
+EFL_NET_SESSION_EVENT_CHANGED(void)
+</code>
+
+%%Called when some properties were changed.%%\\ 
+\\ 
+==== Inherited ====
+
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 

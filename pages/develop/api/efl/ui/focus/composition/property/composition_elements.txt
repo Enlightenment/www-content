@@ -1,0 +1,46 @@
+~~Title: Efl.Ui.Focus.Composition.composition_elements~~
+===== Signature =====
+
+<code>
+@property composition_elements @protected {
+    get {
+        values {
+            logical_order: free(list<free(Efl.Gfx, efl_del)>, eina_list_free);
+        }
+    }
+    set {
+        values {
+            logical_order: free(list<free(Efl.Gfx, efl_del)>, eina_list_free);
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_List *efl_ui_focus_composition_elements_get(const Eo *obj);
+void efl_ui_focus_composition_elements_set(Eo *obj, Eina_List *logical_order);
+</code>
+
+===== Values =====
+
+  * **logical_order** - %%The order to use%%
+===== Description =====
+
+%%Set the order of elements that will be used for composition%%
+
+%%Elements of the list can be either A Elm.Widget, A Efl.Ui.Focus.Object, or a Efl.Gfx.%%
+
+%%If the element is a Efl.Gfx, then the geometry is used as focus geomtry, the focus property is redirected to the evas focus property. The mixin will take care of reistering.%%
+
+%%If the element is a Efl.Ui.Focus.Object, then the mixin will take care of registering the element.%%
+
+%%For the case that the element is a Elm.Widget nothing is done and the widget is just part of the order.%%
+{{page>:develop:api-include:efl:ui:focus:composition:property:composition_elements:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Ui.Focus.Composition.composition_elements**
+

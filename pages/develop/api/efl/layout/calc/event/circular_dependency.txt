@@ -1,0 +1,41 @@
+~~Title: Efl.Layout.Calc: circular,dependency~~
+===== Signature =====
+
+<code>
+circular,dependency;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LAYOUT_EVENT_CIRCULAR_DEPENDENCY(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_layout_event_circular_dependency(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LAYOUT_EVENT_CIRCULAR_DEPENDENCY, on_efl_layout_event_circular_dependency, d);
+}
+
+</code>
+
+===== Description =====
+
+%%A circular dependency between parts of the object was found.%%
+
+//Since 1.21//
+{{page>:develop:api-include:efl:layout:calc:event:circular_dependency:description&nouser&nolink&nodate}}
+

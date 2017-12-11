@@ -1,0 +1,48 @@
+~~Title: Efl.Net.Dialer.Websocket.streaming_mode~~
+===== Signature =====
+
+<code>
+@property streaming_mode {
+    get {
+        values {
+            streaming_mode: Efl.Net.Dialer.Websocket.Streaming_Mode;
+        }
+    }
+    set {
+        values {
+            streaming_mode: Efl.Net.Dialer.Websocket.Streaming_Mode;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Net_Dialer_Websocket_Streaming_Mode efl_net_dialer_websocket_streaming_mode_get(const Eo *obj);
+void efl_net_dialer_websocket_streaming_mode_set(Eo *obj, Efl_Net_Dialer_Websocket_Streaming_Mode streaming_mode);
+</code>
+
+===== Values =====
+
+  * **streaming_mode** - %%Streaming mode%%
+===== Description =====
+
+%%Configures how to map streaming APIs to WebSocket.%%
+
+%%WebSocket is a message-based protocol with these send via %%[[:develop:api:class:efl:net:dialer:websocket:method:text_send|Efl.Net.Dialer.Websocket.text_send]]%% and %%[[:develop:api:class:efl:net:dialer:websocket:method:binary_send|Efl.Net.Dialer.Websocket.binary_send]]%% and delivered via events such as "message,text" and "message,binary".%%
+
+%%However this class can operate in streaming mode, mapping each %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% to a %%[[:develop:api:class:efl:net:dialer:websocket:method:binary_send|Efl.Net.Dialer.Websocket.binary_send]]%% if streaming_mode is set to %%[[:develop:api:enum:efl:net:dialer:websocket:streaming_mode|Efl.Net.Dialer.Websocket.Streaming_Mode.binary]]%%, of %%[[:develop:api:class:efl:net:dialer:websocket:method:text_send|Efl.Net.Dialer.Websocket.text_send]]%% if %%[[:develop:api:enum:efl:net:dialer:websocket:streaming_mode|Efl.Net.Dialer.Websocket.Streaming_Mode.text]]%%%%
+
+%%%%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% may consume less then the whole received message, in this case the rest of the message is kept for the next read call. (Note this differs from SOCK_SEQPACKET + read(2)).%%
+
+%%By default, streaming is disabled (%%[[:develop:api:enum:efl:net:dialer:websocket:streaming_mode|Efl.Net.Dialer.Websocket.Streaming_Mode.disabled]]%%).%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:net:dialer:websocket:property:streaming_mode:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Net.Dialer.Websocket.streaming_mode**
+

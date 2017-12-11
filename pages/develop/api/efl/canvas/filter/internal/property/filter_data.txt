@@ -1,0 +1,56 @@
+~~Title: Efl.Canvas.Filter.Internal.filter_data~~
+//Overridden from [[:develop:api:efl:gfx:filter:property:filter_data|Efl.Gfx.Filter.filter_data]] **(get, set)**.//===== Signature =====
+
+<code>
+@property filter_data @pure_virtual {
+    get {
+        keys {
+            name: free(string, free);
+        }
+        values {
+            value: free(string, free);
+            execute: bool (false);
+        }
+    }
+    set {
+        keys {
+            name: free(string, free);
+        }
+        values {
+            value: free(string, free);
+            execute: bool (false);
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_gfx_filter_data_get(const Eo *obj, const char *name, const char **value, Eina_Bool *execute);
+void efl_gfx_filter_data_set(Eo *obj, const char *name, const char *value, Eina_Bool execute);
+</code>
+
+===== Keys =====
+
+  * **name** - %%Name of the global variable%%
+===== Values =====
+
+  * **value** - %%String value to use as data%%
+  * **execute** - %%If %%''true''%%, execute 'name = value'%%
+===== Description =====
+
+%%Extra data used by the filter program.%%
+
+%%Each data element is a string (%%''value''%%) stored as a global variable %%''name''%%. The program is then responsible for conversion to numbers, tables, etc...%%
+
+%%If the %%''execute''%% flag is set, then the %%''value''%% can be complex and run, as if the original Lua program contained a line 'name = value'. This can be used to pass in tables.%%
+
+//Since 1.18//
+{{page>:develop:api-include:efl:canvas:filter:internal:property:filter_data:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * [[:develop:api:efl:gfx:filter:property:filter_data|Efl.Gfx.Filter.filter_data]]
+

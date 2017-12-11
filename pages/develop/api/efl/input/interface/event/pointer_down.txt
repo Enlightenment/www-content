@@ -1,0 +1,41 @@
+~~Title: Efl.Input.Interface: pointer,down~~
+===== Signature =====
+
+<code>
+pointer,down: free(Efl.Input.Pointer, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_POINTER_DOWN(Efl_Input_Pointer *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_pointer_down(void *data, const Efl_Event *event)
+{
+    Efl_Input_Pointer *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_POINTER_DOWN, on_efl_event_pointer_down, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Main pointer button pressed (button id is known).%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:input:interface:event:pointer_down:description&nouser&nolink&nodate}}
+

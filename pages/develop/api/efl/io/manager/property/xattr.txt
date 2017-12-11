@@ -1,0 +1,51 @@
+~~Title: Efl.Io.Manager.xattr~~
+===== Signature =====
+
+<code>
+@property xattr {
+    get {
+        keys {
+            path: free(string, free);
+            attribute: free(string, free);
+        }
+        return: ptr(Eina.Future);
+    }
+    set {
+        keys {
+            path: free(string, free);
+            attribute: free(string, free);
+        }
+        values {
+            data: ptr(free(Eina.Binbuf, eina_binbuf_free));
+            flags: Eina.Xattr.Flags;
+        }
+        return: ptr(Eina.Future);
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Future *efl_io_manager_xattr_get(const Eo *obj, const char *path, const char *attribute);
+Eina_Future *efl_io_manager_xattr_set(Eo *obj, const char *path, const char *attribute, Eina_Binbuf *data, Eina_Xattr_Flags flags);
+</code>
+
+===== Keys =====
+
+  * **path** - %%File path%%
+  * **attribute** - %%Attribute name%%
+===== Values =====
+
+  * **data** - %%Data to set as information%%
+  * **flags** - %%Extended attributes flags%%
+===== Description =====
+
+%%Retrieves or sets information of a given extended attribute.%%
+{{page>:develop:api-include:efl:io:manager:property:xattr:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Io.Manager.xattr**
+

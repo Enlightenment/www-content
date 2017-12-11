@@ -1,0 +1,41 @@
+~~Title: Efl.Net.Server: client,rejected~~
+===== Signature =====
+
+<code>
+client,rejected: free(string, free);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_NET_SERVER_EVENT_CLIENT_REJECTED(const char *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_server_event_client_rejected(void *data, const Efl_Event *event)
+{
+    const char *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_SERVER_EVENT_CLIENT_REJECTED, on_efl_net_server_event_client_rejected, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Notifies a client was rejected due excess, see %%[[:develop:api:interface:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:net:server:event:client_rejected:description&nouser&nolink&nodate}}
+

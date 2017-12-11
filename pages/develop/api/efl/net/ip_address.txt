@@ -1,0 +1,260 @@
+~~Title: Efl.Net.Ip_Address~~
+====== Efl.Net.Ip_Address (class) ======
+
+===== Description =====
+
+%%An Internet Protocol (IP) Address.%%
+
+%%This class is a set of helpers to translate to and from address strings used in Efl.Net. For IP they take the formats:%%
+
+%%- IPv4 complete: 127.0.0.1:1234 - IPv4 no port: 127.0.0.1 - IPv6 complete: [::1]:1234 - IPv6 no port: [::1] - IPv6 no braces (implies no port): ::1%%
+
+%%However in other libraries one may use the address numbers or even a 'struct sockaddr' handle and translating by yourself may be too much work. To convert to a string, just create an instance with %%[[:develop:api:class:efl:net:ip_address:method:create|Efl.Net.Ip_Address.create]]%% or %%[[:develop:api:class:efl:net:ip_address:method:create_sockaddr|Efl.Net.Ip_Address.create_sockaddr]]%% and then query %%[[:develop:api:class:efl:net:ip_address:property:string|Efl.Net.Ip_Address.string]]%%. To convert from numeric string to sockaddr, create an instance with %%[[:develop:api:class:efl:net:ip_address:method:parse|Efl.Net.Ip_Address.parse]]%% and then query %%[[:develop:api:class:efl:net:ip_address:property:sockaddr|Efl.Net.Ip_Address.sockaddr]]%%.%%
+
+%%To resolve a host and port name to numbers use %%[[:develop:api:class:efl:net:ip_address:method:resolve|Efl.Net.Ip_Address.resolve]]%%, this will asynchronously resolve and return the results in a promise.%%
+
+%%The result of %%[[:develop:api:class:efl:net:ip_address:property:string|Efl.Net.Ip_Address.string]]%% can be passed to %%[[:develop:api:interface:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%% and %%[[:develop:api:interface:efl:net:server:method:serve|Efl.Net.Server.serve]]%%%%
+
+//Since 1.19//
+
+{{page>:develop:api-include:efl:net:ip_address:description&nouser&nolink&nodate}}
+
+===== Inheritance =====
+
+ => [[:develop:api:efl:object|Efl.Object]] //(class)//
+++++ Inheritance graph |
+
+<graphviz>
+digraph hierarchy {
+    bgcolor = "transparent"
+    size = "6"
+    rankdir = "TB"
+
+    node [shape = "box"]
+    edge [color = "gray35"]
+
+    efl_net_ip_address [fillcolor = "black", label = "Efl.Net.Ip_Address", color = "gray15", fontcolor = "white", style = "filled"]
+    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
+
+    efl_net_ip_address -> efl_object
+}
+</graphviz>
+
+++++
+
+++++ Full hierarchy |
+
+  * [[:develop:api:efl:object|Efl.Object]] //(class)//
+
+
+++++
+===== Members =====
+
+**[[:develop:api:efl:net:ip_address:method:any_check|any_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_any_check(const Eo *obj);
+</code>
+
+%%Checks if "0.0.0.0" (IPv4) or "::" (IPv6)%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:create_sockaddr|create_sockaddr]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_create_sockaddr(const Eo *obj, const void *sockaddr);
+</code>
+
+%%Creates an object given sockaddr%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:create|create]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_create(const Eo *obj, uint16_t port, const Eina_Slice address);
+</code>
+
+%%Creates an object given family, port and address.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv4_class_a_check|ipv4_class_a_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_a_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-A%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv4_class_b_check|ipv4_class_b_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_b_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-B%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv4_class_c_check|ipv4_class_c_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_c_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-C%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv4_class_d_check|ipv4_class_d_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv4_class_d_check(const Eo *obj);
+</code>
+
+%%Checks if IPv4 and is CLASS-D%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv6_local_link_check|ipv6_local_link_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_local_link_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is link-local.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv6_local_site_check|ipv6_local_site_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_local_site_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is site-local.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv6_v4compat_check|ipv6_v4compat_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_v4compat_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is compatible with IPv4.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:ipv6_v4mapped_check|ipv6_v4mapped_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_ipv6_v4mapped_check(const Eo *obj);
+</code>
+
+%%Checks if IPv6 is mapping an IPv4.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:loopback_check|loopback_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_loopback_check(const Eo *obj);
+</code>
+
+%%Checks if loopback "127.0.0.1" (IPv4) or "::1" (IPv6)%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:multicast_check|multicast_check]]**
+<code c>
+Eina_Bool efl_net_ip_address_multicast_check(const Eo *obj);
+</code>
+
+%%Checks if multicast%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:parse|parse]]**
+<code c>
+Efl_Net_Ip_Address *efl_net_ip_address_parse(const Eo *obj, const char *numeric_address);
+</code>
+
+%%Parses a numeric address and return an object representing it.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:method:resolve|resolve]]**
+<code c>
+Efl_Future *efl_net_ip_address_resolve(const Eo *obj, const char *address, int family, int flags);
+</code>
+
+%%Asynchronously resolves host and port names.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:property:address|address]]** //**(get, set)**//
+<code c>
+const Eina_Slice efl_net_ip_address_get(const Eo *obj);
+void efl_net_ip_address_set(Eo *obj, const Eina_Slice address);
+</code>
+
+%%The bytes representing the address.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:property:family|family]]** //**(get, set)**//
+<code c>
+int efl_net_ip_address_family_get(const Eo *obj);
+void efl_net_ip_address_family_set(Eo *obj, int family);
+</code>
+
+%%The address family, one of AF_INET6 or AF_INET.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:property:port|port]]** //**(get, set)**//
+<code c>
+uint16_t efl_net_ip_address_port_get(const Eo *obj);
+void efl_net_ip_address_port_set(Eo *obj, uint16_t port);
+</code>
+
+%%The address port in Host/Native endianess.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:property:sockaddr|sockaddr]]** //**(get, set)**//
+<code c>
+const void *efl_net_ip_address_sockaddr_get(const Eo *obj);
+void efl_net_ip_address_sockaddr_set(Eo *obj, const void *sockaddr);
+</code>
+
+%%The <netinet/in.h>-compatible 'struct sockaddr'.%%\\ 
+\\ 
+**[[:develop:api:efl:net:ip_address:property:string|string]]** //**(get)**//
+<code c>
+const char *efl_net_ip_address_string_get(const Eo *obj);
+</code>
+
+%%Returns the numeric address formatted as a string.%%\\ 
+\\ 
+
+==== Inherited ====
+
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:ip_address:method:finalize|finalize]]** //[Overridden here]//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:destructor|destructor]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
+\\ 
+
+===== Events =====
+
+==== Inherited ====
+
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
+\\ 
+[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
+\\ 

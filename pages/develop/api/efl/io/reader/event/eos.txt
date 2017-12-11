@@ -1,0 +1,47 @@
+~~Title: Efl.Io.Reader: eos~~
+===== Signature =====
+
+<code>
+eos;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_IO_READER_EVENT_EOS(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_io_reader_event_eos(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IO_READER_EVENT_EOS, on_efl_io_reader_event_eos, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Notifies end of stream, when property is marked as true.%%
+
+%%If this is used alongside with an %%[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]]%%, then it should be emitted before that call.%%
+
+%%It should be emitted only once for an object unless it implements %%[[:develop:api:mixin:efl:io:positioner:method:seek|Efl.Io.Positioner.seek]]%%.%%
+
+%%The property %%[[:develop:api:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% should change to %%''false''%% before this event is dispatched.%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:io:reader:event:eos:description&nouser&nolink&nodate}}
+

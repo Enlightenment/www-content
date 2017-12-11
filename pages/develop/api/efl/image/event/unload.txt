@@ -1,0 +1,39 @@
+~~Title: Efl.Image: unload~~
+===== Signature =====
+
+<code>
+unload;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_IMAGE_EVENT_UNLOAD(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_image_event_unload(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_IMAGE_EVENT_UNLOAD, on_efl_image_event_unload, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Image data has been unloaded (by some mechanism in EFL that threw out the original image data).%%
+{{page>:develop:api-include:efl:image:event:unload:description&nouser&nolink&nodate}}
+

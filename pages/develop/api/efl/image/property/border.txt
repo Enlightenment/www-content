@@ -1,0 +1,63 @@
+~~Title: Efl.Image.border~~
+===== Signature =====
+
+<code>
+@property border @pure_virtual {
+    get {
+        values {
+            l: int;
+            r: int;
+            t: int;
+            b: int;
+        }
+    }
+    set {
+        values {
+            l: int;
+            r: int;
+            t: int;
+            b: int;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_image_border_get(const Eo *obj, int *l, int *r, int *t, int *b);
+void efl_image_border_set(Eo *obj, int l, int r, int t, int b);
+</code>
+
+===== Values =====
+
+  * **l** - %%The border's left width.%%
+  * **r** - %%The border's right width.%%
+  * **t** - %%The border's top height.%%
+  * **b** - %%The border's bottom height.%%
+===== Description =====
+
+%%Dimensions of this image's border, a region that does not scale with the center area.%%
+
+%%When EFL renders an image, its source may be scaled to fit the size of the object. This function sets an area from the borders of the image inwards which is not to be scaled. This function is useful for making frames and for widget theming, where, for example, buttons may be of varying sizes, but their border size must remain constant.%%
+
+%%The units used for %%''l''%%, %%''r''%%, %%''t''%% and %%''b''%% are canvas units (pixels).%%
+
+<note>
+%%The border region itself may be scaled by the %%[[:develop:api:interface:efl:image:property:border_scale|Efl.Image.border_scale.set]]%% function.%%
+</note>
+
+<note>
+%%By default, image objects have no borders set, i.e. %%''l''%%, %%''r''%%, %%''t''%% and %%''b''%% start as 0.%%
+</note>
+
+<note>
+%%Similar to the concepts of 9-patch images or cap insets.%%
+</note>
+{{page>:develop:api-include:efl:image:property:border:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Image.border**
+

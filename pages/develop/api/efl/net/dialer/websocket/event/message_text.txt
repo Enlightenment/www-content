@@ -1,0 +1,41 @@
+~~Title: Efl.Net.Dialer.Websocket: message,text~~
+===== Signature =====
+
+<code>
+message,text: free(string, free);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_TEXT(const char *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_net_dialer_websocket_event_message_text(void *data, const Efl_Event *event)
+{
+    const char *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_TEXT, on_efl_net_dialer_websocket_event_message_text, d);
+}
+
+</code>
+
+===== Description =====
+
+%%Received a text string message (opcode=0x1)%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:net:dialer:websocket:event:message_text:description&nouser&nolink&nodate}}
+

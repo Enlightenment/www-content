@@ -1,0 +1,39 @@
+~~Title: Efl.Canvas.Image.Internal.save~~
+//Overridden from [[:develop:api:efl:file:method:save|Efl.File.save]].//===== Signature =====
+
+<code>
+save @const @pure_virtual {
+    params {
+        @in file: free(string, free) @nonull;
+        @in key: free(string, free);
+        @in flags: free(string, free);
+    }
+    return: bool;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_file_save(const Eo *obj, const char *file, const char *key, const char *flags);
+</code>
+
+===== Parameters =====
+
+  * **file** //(in)// - %%The filename to be used to save the image (extension obligatory).%%
+  * **key** //(in)// - %%The image key in the file (if an Eet one), or %%''null''%%, otherwise.%%
+  * **flags** //(in)// - %%String containing the flags to be used (%%''null''%% for none).%%
+
+===== Description =====
+
+%%Save the given image object's contents to an (image) file.%%
+
+%%The extension suffix on %%''file''%% will determine which saver module Evas is to use when saving, thus the final file's format. If the file supports multiple data stored in it (Eet ones), you can specify the key to be used as the index of the image in it.%%
+
+%%You can specify some flags when saving the image.  Currently acceptable flags are %%''quality''%% and %%''compress''%%. Eg.: "quality=100 compress=9".%%
+{{page>:develop:api-include:efl:canvas:image:internal:method:save:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * [[:develop:api:efl:file:method:save|Efl.File.save]]
+

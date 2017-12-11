@@ -1,0 +1,42 @@
+~~Title: Efl.Canvas.Object.render_op~~
+===== Signature =====
+
+<code>
+@property render_op {
+    get {
+        values {
+            render_op: Efl.Gfx.Render_Op;
+        }
+    }
+    set {
+        values {
+            render_op: Efl.Gfx.Render_Op;
+        }
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Efl_Gfx_Render_Op efl_canvas_object_render_op_get(const Eo *obj);
+void efl_canvas_object_render_op_set(Eo *obj, Efl_Gfx_Render_Op render_op);
+</code>
+
+===== Values =====
+
+  * **render_op** - %%Blend or copy.%%
+===== Description =====
+
+%%Render mode to be used for compositing the Evas object.%%
+
+%%Only two modes are supported: - %%[[:develop:api:enum:efl:gfx:render_op|Efl.Gfx.Render_Op.blend]]%% means the object will be merged on top of objects below it using simple alpha compositing. - %%[[:develop:api:enum:efl:gfx:render_op|Efl.Gfx.Render_Op.copy]]%% means this object's pixels will replace everything that is below, making this object opaque.%%
+
+%%Please do not assume that %%[[:develop:api:enum:efl:gfx:render_op|Efl.Gfx.Render_Op.copy]]%% mode can be used to "poke" holes in a window (to see through it), as only the compositor can ensure that. Copy mode should only be used with otherwise opaque widgets, or inside non-window surfaces (eg. a transparent background inside a buffer canvas).%%
+{{page>:develop:api-include:efl:canvas:object:property:render_op:description&nouser&nolink&nodate}}
+
+
+===== Implemented by =====
+
+  * **Efl.Canvas.Object.render_op**
+

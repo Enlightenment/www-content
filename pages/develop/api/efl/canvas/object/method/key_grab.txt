@@ -1,0 +1,51 @@
+~~Title: Efl.Canvas.Object.key_grab~~
+===== Signature =====
+
+<code>
+key_grab {
+    params {
+        @in keyname: free(string, free) @nonull;
+        @in modifiers: Efl.Input.Modifier;
+        @in not_modifiers: Efl.Input.Modifier;
+        @in exclusive: bool;
+    }
+    return: bool @warn_unused;
+}
+</code>
+
+===== C signature =====
+
+<code c>
+Eina_Bool efl_canvas_object_key_grab(Eo *obj, const char *keyname, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, Eina_Bool exclusive);
+</code>
+
+===== Parameters =====
+
+  * **keyname** //(in)// - %%The key to request events for.%%
+  * **modifiers** //(in)// - %%A combinaison of modifier keys that must be present to trigger the event.%%
+  * **not_modifiers** //(in)// - %%A combinaison of modifier keys that must not be present to trigger the event.%%
+  * **exclusive** //(in)// - %%Request that the %%''obj''%% is the only object receiving the %%''keyname''%% events.%%
+
+===== Description =====
+
+%%Requests %%''keyname''%% key events be directed to %%''obj''%%.%%
+
+%%Key grabs allow one or more objects to receive key events for specific key strokes even if other objects have focus. Whenever a key is grabbed, only the objects grabbing it will get the events for the given keys.%%
+
+%%%%''keyname''%% is a platform dependent symbolic name for the key pressed (see @ref Evas_Keys for more information).%%
+
+%%%%''modifiers''%% and %%''not_modifiers''%% are bit masks of all the modifiers that must and mustn't, respectively, be pressed along with %%''keyname''%% key in order to trigger this new key grab. Modifiers can be things such as Shift and Ctrl as well as user defined types via @ref evas_key_modifier_add. Retrieve them with @ref evas_key_modifier_mask_get or use 0 for empty masks.%%
+
+%%%%''exclusive''%% will make the given object the only one permitted to grab the given key. If given %%''true''%%, subsequent calls on this function with different %%''obj''%% arguments will fail, unless the key is ungrabbed again.%%
+
+<note warning>
+%%Providing impossible modifier sets creates undefined behavior.%%
+</note>
+
+%%See also %%[[:develop:api:class:efl:canvas:object:method:key_ungrab|Efl.Canvas.Object.key_ungrab]]%%, %%[[:develop:api:class:efl:canvas:object:property:key_focus|Efl.Canvas.Object.key_focus.get]]%%, %%[[:develop:api:class:efl:canvas:object:property:key_focus|Efl.Canvas.Object.key_focus.set]]%%, @ref evas_focus_get, @ref evas_key_modifier_add.%%
+{{page>:develop:api-include:efl:canvas:object:method:key_grab:description&nouser&nolink&nodate}}
+
+===== Implemented by =====
+
+  * **Efl.Canvas.Object.key_grab**
+
