@@ -5,15 +5,15 @@
 
 %%A wrapper object offering an easy to use, buffered streams over existing I/O class.%%
 
-%%The buffered stream encapsulates an actual %%[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]]%% or %%[[:develop:api:interface:efl:io:writer|Efl.Io.Writer]]%%, an input %%[[:develop:api:class:efl:io:queue|Efl.Io.Queue]]%%, an output %%[[:develop:api:class:efl:io:queue|Efl.Io.Queue]]%% and these are linked using a input and a output %%[[:develop:api:class:efl:io:copier|Efl.Io.Copier]]%%.%%
+%%The buffered stream encapsulates an actual %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% or %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%%, an input %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%%, an output %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%% and these are linked using a input and a output %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%.%%
 
-%%The idea is that unlike traditional %%[[:develop:api:interface:efl:io:writer|Efl.Io.Writer]]%% that will attempt to write directly and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual output when it %%[[:develop:api:interface:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:develop:api:class:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%). When finished writing data, the %%[[:develop:api:class:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% and then wait for "write,finished" event to know when all data was sent.%%
+%%The idea is that unlike traditional %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% that will attempt to write directly and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual output when it %%[[:develop:api:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%). When finished writing data, the %%[[:develop:api:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% and then wait for "write,finished" event to know when all data was sent.%%
 
-%%Reading is also much simpler since incoming data is kept in an %%[[:develop:api:class:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:develop:api:class:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:develop:api:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, then discarded with %%[[:develop:api:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:develop:api:class:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
+%%Reading is also much simpler since incoming data is kept in an %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:develop:api:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, then discarded with %%[[:develop:api:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:develop:api:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
 
-%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing and wait, if complete then either %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:develop:api:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:develop:api:class:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
+%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing and wait, if complete then either %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:develop:api:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
 
-%%The actual I/O is set with the constructor method %%[[:develop:api:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.set]]%% and can be retrieved with %%[[:develop:api:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.get]]%%, which should be used with care -- calling %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:develop:api:interface:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on it may produce unexpected results.%%
+%%The actual I/O is set with the constructor method %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.set]]%% and can be retrieved with %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.get]]%%, which should be used with care -- calling %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on it may produce unexpected results.%%
 
 //Since 1.19//
 
@@ -104,7 +104,7 @@ const Eina_Slice efl_io_buffered_stream_line_delimiter_get(const Eo *obj);
 void efl_io_buffered_stream_line_delimiter_set(Eo *obj, const Eina_Slice slice);
 </code>
 
-%%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:class:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%%\\ 
+%%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:property:max_queue_size_input|max_queue_size_input]]** //**(get, set)**//
 <code c>
@@ -134,7 +134,7 @@ size_t efl_io_buffered_stream_pending_read_get(const Eo *obj);
 size_t efl_io_buffered_stream_pending_write_get(const Eo *obj);
 </code>
 
-%%How many bytes are pending write to %%[[:develop:api:class:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%%%%\\ 
+%%How many bytes are pending write to %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%%%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:property:progress|progress]]** //**(get)**//
 <code c>
@@ -261,35 +261,35 @@ EFL_IO_BUFFERED_STREAM_EVENT_FINISHED(void)
 EFL_IO_BUFFERED_STREAM_EVENT_LINE(const Eina_Slice *)
 </code>
 
-%%If %%[[:develop:api:class:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:develop:api:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, don't assume that!%%\\ 
+%%If %%[[:develop:api:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, don't assume that!%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:event:progress|progress]]**
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_PROGRESS(void)
 </code>
 
-%%Property %%[[:develop:api:class:efl:io:buffered_stream:property:progress|Efl.Io.Buffered_Stream.progress]]%% changed%%\\ 
+%%Property %%[[:develop:api:efl:io:buffered_stream:property:progress|Efl.Io.Buffered_Stream.progress]]%% changed%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:event:read_finished|read,finished]]**
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_READ_FINISHED(void)
 </code>
 
-%%Same as %%[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]]%% "eos", for consistency.%%\\ 
+%%Same as %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% "eos", for consistency.%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:event:slice_changed|slice,changed]]**
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_SLICE_CHANGED(void)
 </code>
 
-%%The read-slice returned by %%[[:develop:api:class:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% may have changed.%%\\ 
+%%The read-slice returned by %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% may have changed.%%\\ 
 \\ 
 **[[:develop:api:efl:io:buffered_stream:event:write_finished|write,finished]]**
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_WRITE_FINISHED(void)
 </code>
 
-%%%%[[:develop:api:class:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% was called and all available data was sent to destination%%\\ 
+%%%%[[:develop:api:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% was called and all available data was sent to destination%%\\ 
 \\ 
 ==== Inherited ====
 

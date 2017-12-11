@@ -25,26 +25,26 @@ void efl_io_copier_source_set(Eo *obj, Efl_Io_Reader *source);
 
 ===== Values =====
 
-  * **source** - %%%%[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]]%% source%%
+  * **source** - %%%%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% source%%
 ===== Description =====
 
 %%Copier source object.%%
 
-%%The source object must implement the %%[[:develop:api:interface:efl:io:reader|Efl.Io.Reader]]%% interface and will provide data to the copier, thus it must be provided in order for the copier to work.%%
+%%The source object must implement the %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% interface and will provide data to the copier, thus it must be provided in order for the copier to work.%%
 
-%%The copier will monitor %%[[:develop:api:interface:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% property and "can_read,changed" event. When it's %%''true''%%, then a chunk up to %%[[:develop:api:class:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%% is read using %%[[:develop:api:interface:efl:io:reader:method:read|Efl.Io.Reader.read]]%% into an intermediate storage buffer that can grow up to %%[[:develop:api:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%.%%
+%%The copier will monitor %%[[:develop:api:efl:io:reader:property:can_read|Efl.Io.Reader.can_read]]%% property and "can_read,changed" event. When it's %%''true''%%, then a chunk up to %%[[:develop:api:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%% is read using %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% into an intermediate storage buffer that can grow up to %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%.%%
 
-%%If there is a %%[[:develop:api:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, the read data is written there and afterwards "data" and "line" events are dispatched. If no destination, it's accumulated in the internal storage and "data" and "line" events are dispatched immediately.%%
+%%If there is a %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, the read data is written there and afterwards "data" and "line" events are dispatched. If no destination, it's accumulated in the internal storage and "data" and "line" events are dispatched immediately.%%
 
-%%If there is a %%[[:develop:api:class:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set, then copier will use that in order to attempt to write a full line at a time, including the delimiter. Exceptions may be if the %%[[:develop:api:class:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:develop:api:class:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
+%%If there is a %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set, then copier will use that in order to attempt to write a full line at a time, including the delimiter. Exceptions may be if the %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
 
-%%Once %%[[:develop:api:interface:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% is %%''true''%% or "eos" event happen, then the read process is over. If there is no %%[[:develop:api:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% set, then the process is over and "done" event is called. If there is a %%[[:develop:api:class:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, then all data must be flushed to it, draining the internal intermediate storage, before "done" event is emitted.%%
+%%Once %%[[:develop:api:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% is %%''true''%% or "eos" event happen, then the read process is over. If there is no %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% set, then the process is over and "done" event is called. If there is a %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%%, then all data must be flushed to it, draining the internal intermediate storage, before "done" event is emitted.%%
 
-%%If the source object implements %%[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]]%% interface, then the %%[[:develop:api:class:efl:io:copier:property:progress|Efl.Io.Copier.progress]]%% will report the total size. If the destination object also implements %%[[:develop:api:mixin:efl:io:sizer|Efl.Io.Sizer]]%%, then it will be resized to match the source size, providing the hint that may enhance performance (like pre-allocating the total amount and avoid dynamic resize).%%
+%%If the source object implements %%[[:develop:api:efl:io:sizer|Efl.Io.Sizer]]%% interface, then the %%[[:develop:api:efl:io:copier:property:progress|Efl.Io.Copier.progress]]%% will report the total size. If the destination object also implements %%[[:develop:api:efl:io:sizer|Efl.Io.Sizer]]%%, then it will be resized to match the source size, providing the hint that may enhance performance (like pre-allocating the total amount and avoid dynamic resize).%%
 
-%%If the source object implements %%[[:develop:api:mixin:efl:io:closer|Efl.Io.Closer]]%% and it's not closed, it will be closed when the copier itself is. This may happen, for example, when the copier is deleted and %%[[:develop:api:mixin:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% is %%''true''%% (the default).%%
+%%If the source object implements %%[[:develop:api:efl:io:closer|Efl.Io.Closer]]%% and it's not closed, it will be closed when the copier itself is. This may happen, for example, when the copier is deleted and %%[[:develop:api:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% is %%''true''%% (the default).%%
 
-%%Common source classes are %%[[:develop:api:class:efl:io:buffer|Efl.Io.Buffer]]%% (if fixed data exists in memory), %%[[:develop:api:class:efl:io:queue|Efl.Io.Queue]]%% (used to stream in-memory data) and %%[[:develop:api:class:efl:io:file|Efl.Io.File]]%% (data is present in the file system). Networking classes are also common source objects.%%
+%%Common source classes are %%[[:develop:api:efl:io:buffer|Efl.Io.Buffer]]%% (if fixed data exists in memory), %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%% (used to stream in-memory data) and %%[[:develop:api:efl:io:file|Efl.Io.File]]%% (data is present in the file system). Networking classes are also common source objects.%%
 
 //Since 1.19//
 
