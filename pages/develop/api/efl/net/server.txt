@@ -41,80 +41,67 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:net:server:method:serve|serve]]**
+**[[:develop:api:efl:net:server:method:serve|serve]]**\\
+> %%Starts serving requests.%%
 <code c>
 Eina_Error efl_net_server_serve(Eo *obj, const char *address);
 </code>
-
-%%Starts serving requests.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:property:address|address]]** //**(get, set)**// ''protected set''
+\\
+**[[:develop:api:efl:net:server:property:address|address]]** //**(get, set)**// ''protected set''\\
+> %%The address the server is bound to.%%
 <code c>
 const char *efl_net_server_address_get(const Eo *obj);
 void efl_net_server_address_set(Eo *obj, const char *address);
 </code>
-
-%%The address the server is bound to.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''
+\\
+**[[:develop:api:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''\\
+> %%Number of concurrent clients accepted by this server.%%
 <code c>
 unsigned int efl_net_server_clients_count_get(const Eo *obj);
 void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
 </code>
-
-%%Number of concurrent clients accepted by this server.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//\\
+> %%Number of maximum concurrent clients allowed by this server.%%
 <code c>
 void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
 void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
 </code>
-
-%%Number of maximum concurrent clients allowed by this server.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:property:serving|serving]]** //**(get, set)**// ''protected set''
+\\
+**[[:develop:api:efl:net:server:property:serving|serving]]** //**(get, set)**// ''protected set''\\
+> %%Returns whenever the server is ready to accept clients or not.%%
 <code c>
 Eina_Bool efl_net_server_serving_get(const Eo *obj);
 void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
 </code>
-
-%%Returns whenever the server is ready to accept clients or not.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:method:client_announce|client_announce]]** ''protected''
+\\
+**[[:develop:api:efl:net:server:method:client_announce|client_announce]]** ''protected''\\
+> %%Implementions should call this method to announce new clients.%%
 <code c>
 Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 </code>
-
-%%Implementions should call this method to announce new clients.%%\\ 
-\\ 
+\\
 
 ===== Events =====
 
-**[[:develop:api:efl:net:server:event:client_add|client,add]]**
+**[[:develop:api:efl:net:server:event:client_add|client,add]]**\\
+> %%A new client socket was created.%%
 <code c>
 EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
 </code>
-
-%%A new client socket was created.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]**
+\\ **[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]**\\
+> %%Notifies a client was rejected due excess, see %%[[:develop:api:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%
 <code c>
 EFL_NET_SERVER_EVENT_CLIENT_REJECTED(const char *)
 </code>
-
-%%Notifies a client was rejected due excess, see %%[[:develop:api:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:event:error|error]]**
+\\ **[[:develop:api:efl:net:server:event:error|error]]**\\
+> %%Some error happened and the server needs to be stopped.%%
 <code c>
 EFL_NET_SERVER_EVENT_ERROR(Eina_Error)
 </code>
-
-%%Some error happened and the server needs to be stopped.%%\\ 
-\\ 
-**[[:develop:api:efl:net:server:event:serving|serving]]**
+\\ **[[:develop:api:efl:net:server:event:serving|serving]]**\\
+> %%Notifies the server is ready to accept clients. See property %%[[:develop:api:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%
 <code c>
 EFL_NET_SERVER_EVENT_SERVING(void)
 </code>
-
-%%Notifies the server is ready to accept clients. See property %%[[:develop:api:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%%\\ 
 \\ 

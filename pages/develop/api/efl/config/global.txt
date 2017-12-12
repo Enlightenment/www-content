@@ -41,119 +41,64 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:config:global:method:profile_dir_get|profile_dir_get]]**
+**[[:develop:api:efl:config:global:method:profile_dir_get|profile_dir_get]]**\\
+> %%Returns the directory where a profile is stored.%%
 <code c>
 Eina_Stringshare *efl_config_profile_dir_get(Eo *obj, const char *profile, Eina_Bool is_user);
 </code>
-
-%%Returns the directory where a profile is stored.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:method:profile_exists|profile_exists]]**
+\\
+**[[:develop:api:efl:config:global:method:profile_exists|profile_exists]]**\\
+> %%Returns whether a profile exists or not.%%
 <code c>
 Eina_Bool efl_config_profile_exists(Eo *obj, const char *profile);
 </code>
-
-%%Returns whether a profile exists or not.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:method:profile_iterate|profile_iterate]]**
+\\
+**[[:develop:api:efl:config:global:method:profile_iterate|profile_iterate]]**\\
+> %%Returns the list of available profiles.%%
 <code c>
 Eina_Iterator *efl_config_profile_iterate(Eo *obj, Eina_Bool hidden);
 </code>
-
-%%Returns the list of available profiles.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:property:profile|profile]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:config:global:property:config|config]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:config|Efl.Config]]]//\\
+> %%A generic configuration value, refered to by name.%%
+<code c>
+Eina_Value *efl_config_get(const Eo *obj, const char *name);
+Eina_Bool efl_config_set(Eo *obj, const char *name, const Eina_Value *value);
+</code>
+\\
+**[[:develop:api:efl:config:global:property:profile|profile]]** //**(get, set)**//\\
+> %%The profile for the running application.%%
 <code c>
 const char *efl_config_profile_get(const Eo *obj);
 void efl_config_profile_set(Eo *obj, const char *profile);
 </code>
-
-%%The profile for the running application.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:method:profile_derived_add|profile_derived_add]]** ''protected''
+\\
+**[[:develop:api:efl:config:global:method:profile_derived_add|profile_derived_add]]** ''protected''\\
+> %%Add a new profile of the given name to be derived from the current profile.%%
 <code c>
 void efl_config_profile_derived_add(Eo *obj, const char *profile, const char *options);
 </code>
-
-%%Add a new profile of the given name to be derived from the current profile.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:method:profile_derived_del|profile_derived_del]]** ''protected''
+\\
+**[[:develop:api:efl:config:global:method:profile_derived_del|profile_derived_del]]** ''protected''\\
+> %%Deletes a profile that is derived from the current one.%%
 <code c>
 void efl_config_profile_derived_del(Eo *obj, const char *profile);
 </code>
-
-%%Deletes a profile that is derived from the current one.%%\\ 
-\\ 
-**[[:develop:api:efl:config:global:method:save|save]]** ''protected''
+\\
+**[[:develop:api:efl:config:global:method:save|save]]** ''protected''\\
+> %%Saves Elementary configuration to disk.%%
 <code c>
 Eina_Bool efl_config_save(Eo *obj, const char *profile);
 </code>
-
-%%Saves Elementary configuration to disk.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:config|Efl.Config]].**[[:develop:api:efl:config:global:property:config|config]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:destructor|destructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:destructor|destructor]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

@@ -44,112 +44,73 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:fetch|fetch]]**// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%This will fetch the data from a registered node.%%
+<code c>
+Efl_Ui_Focus_Relations *efl_ui_focus_manager_fetch(Eo *obj, Efl_Ui_Focus_Object *child);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:logical_end|logical_end]]**// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%Return the last logical object.%%
+<code c>
+Efl_Ui_Focus_Manager_Logical_End_Detail efl_ui_focus_manager_logical_end(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:move|move]]**// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%Move the focus into the given direction.%%
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_move(Eo *obj, Efl_Ui_Focus_Direction direction);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:register|register]]**// [Overridden from [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//\\
+> %%Register a new item in the graph.%%
+<code c>
+Eina_Bool efl_ui_focus_manager_calc_register(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Object *parent, Efl_Ui_Focus_Manager *redirect);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:request_move|request_move]]**// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%Returns the object which would be the next object to focus in the given direction.%%
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_request_move(Eo *obj, Efl_Ui_Focus_Direction direction);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:method:unregister|unregister]]**// [Overridden from [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//\\
+> %%Unregister the given item from the focus graph.%%
+<code c>
+void efl_ui_focus_manager_calc_unregister(Eo *obj, Efl_Ui_Focus_Object *child);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:property:border_elements|border_elements]]** //**(get)**//// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%The list of elements which are at the border of the graph.%%
+<code c>
+Eina_Iterator *efl_ui_focus_manager_border_elements_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:root_focus:property:manager_focus|manager_focus]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
+> %%The element which is currently focused by this manager%%
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_focus_get(const Eo *obj);
+void efl_ui_focus_manager_focus_set(Eo *obj, Efl_Ui_Focus_Object *focus);
+</code>
+\\
+
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:focus:manager:calc:method:constructor|constructor]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:focus:manager:calc:method:destructor|destructor]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:focus:manager:calc:method:provider_find|provider_find]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:calc:method:register_logical|register_logical]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:calc:method:update_children|update_children]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:calc:method:update_order|update_order]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:calc:method:update_parent|update_parent]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:calc:method:update_redirect|update_redirect]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:register|register]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:unregister|unregister]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:method:pop_history_stack|pop_history_stack]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:method:request_subchild|request_subchild]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:method:reset_history|reset_history]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:method:setup_on_first_touch|setup_on_first_touch]]** //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:property:redirect|redirect]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:calc:property:root|root]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:fetch|fetch]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:logical_end|logical_end]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:move|move]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:method:request_move|request_move]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:property:border_elements|border_elements]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:root_focus:property:manager_focus|manager_focus]]** //**(get, set)**// //[Overridden here]//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:focus:manager:calc|Efl.Ui.Focus.Manager.Calc]]\\
+> **[[:develop:api:efl:ui:focus:manager:calc:method:constructor|constructor]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:destructor|destructor]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:pop_history_stack|pop_history_stack]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:provider_find|provider_find]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:register_logical|register_logical]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:request_subchild|request_subchild]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:reset_history|reset_history]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:setup_on_first_touch|setup_on_first_touch]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:update_children|update_children]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:update_order|update_order]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:update_parent|update_parent]]**, **[[:develop:api:efl:ui:focus:manager:calc:method:update_redirect|update_redirect]]**, **[[:develop:api:efl:ui:focus:manager:calc:property:redirect|redirect]]** //**(get, set)**//, **[[:develop:api:efl:ui:focus:manager:calc:property:root|root]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:focused|focused]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**\\
+[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]\\
+> **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**, **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]**, **[[:develop:api:efl:ui:focus:manager:event:focused|focused]]**, **[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**

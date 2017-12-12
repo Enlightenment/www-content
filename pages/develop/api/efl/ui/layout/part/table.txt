@@ -52,130 +52,117 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:ui:layout:part:table:property:real_part|real_part]]** //**(set)**// ''protected''
+**[[:develop:api:efl:ui:layout:part:table:method:content_count|content_count]]**// [Overridden from [[:develop:api:efl:container|Efl.Container]]]//\\
+> %%Returns the number of UI elements packed in this container.%%
+<code c>
+int efl_content_count(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:content_iterate|content_iterate]]**// [Overridden from [[:develop:api:efl:container|Efl.Container]]]//\\
+> %%Begin iterating over this object's contents.%%
+<code c>
+Eina_Iterator *efl_content_iterate(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:content_remove|content_remove]]**// [Overridden from [[:develop:api:efl:container|Efl.Container]]]//\\
+> %%Unswallow an object from this container.%%
+<code c>
+Eina_Bool efl_content_remove(Eo *obj, Efl_Gfx *content);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:grid_content_get|grid_content_get]]**// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Returns a child at a given position, see %%[[:develop:api:efl:pack:grid:method:grid_contents_get|Efl.Pack.Grid.grid_contents_get]]%%.%%
+<code c>
+Efl_Gfx *efl_pack_grid_content_get(Eo *obj, int col, int row);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:grid_contents_get|grid_contents_get]]**// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Returns all objects at a given position in this grid.%%
+<code c>
+Eina_Iterator *efl_pack_grid_contents_get(Eo *obj, int col, int row, Eina_Bool below);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:pack_clear|pack_clear]]**// [Overridden from [[:develop:api:efl:pack|Efl.Pack]]]//\\
+> %%Removes all packed contents, and unreferences them.%%
+<code c>
+Eina_Bool efl_pack_clear(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:pack_grid|pack_grid]]**// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Pack object at a given location in the grid.%%
+<code c>
+Eina_Bool efl_pack_grid(Eo *obj, Efl_Gfx *subobj, int col, int row, int colspan, int rowspan);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:unpack_all|unpack_all]]**// [Overridden from [[:develop:api:efl:pack|Efl.Pack]]]//\\
+> %%Removes all packed contents, without unreferencing them.%%
+<code c>
+Eina_Bool efl_pack_unpack_all(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:method:unpack|unpack]]**// [Overridden from [[:develop:api:efl:pack|Efl.Pack]]]//\\
+> %%Removes an existing item from the container, without deleting it.%%
+<code c>
+Eina_Bool efl_pack_unpack(Eo *obj, Efl_Gfx *subobj);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:property:grid_columns|grid_columns]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Gird columns property%%
+<code c>
+int efl_pack_grid_columns_get(const Eo *obj);
+void efl_pack_grid_columns_set(Eo *obj, int cols);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:property:grid_position|grid_position]]** //**(get)**//// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Position and span of the %%''subobj''%% in this container, may be modified to move the %%''subobj''%%%%
+<code c>
+Eina_Bool efl_pack_grid_position_get(const Eo *obj, Efl_Gfx *subobj, int *col, int *row, int *colspan, int *rowspan);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:property:grid_rows|grid_rows]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Grid rows property%%
+<code c>
+int efl_pack_grid_rows_get(const Eo *obj);
+void efl_pack_grid_rows_set(Eo *obj, int rows);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:property:grid_size|grid_size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:pack:grid|Efl.Pack.Grid]]]//\\
+> %%Combines %%[[:develop:api:efl:pack:grid:property:grid_columns|Efl.Pack.Grid.grid_columns]]%% and %%[[:develop:api:efl:pack:grid:property:grid_rows|Efl.Pack.Grid.grid_rows]]%%%%
+<code c>
+void efl_pack_grid_size_get(const Eo *obj, int *cols, int *rows);
+void efl_pack_grid_size_set(Eo *obj, int cols, int rows);
+</code>
+\\
+**[[:develop:api:efl:ui:layout:part:table:property:real_part|real_part]]** //**(set)**// ''protected''\\
+> %%Real part property%%
 <code c>
 void efl_ui_layout_part_table_real_part_set(Eo *obj, Efl_Object *layout, const char *part);
 </code>
-
-%%Real part property%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:part:table:method:content_count|content_count]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:part:table:method:content_iterate|content_iterate]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:ui:layout:part:table:method:content_remove|content_remove]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:layout:part:table:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:pack:grid:property:grid_direction|grid_direction]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:method:grid_content_get|grid_content_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:method:grid_contents_get|grid_contents_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:method:pack_grid|pack_grid]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:property:grid_columns|grid_columns]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:property:grid_position|grid_position]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:property:grid_rows|grid_rows]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:grid|Efl.Pack.Grid]].**[[:develop:api:efl:ui:layout:part:table:property:grid_size|grid_size]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_after|pack_after]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_at|pack_at]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_before|pack_before]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_begin|pack_begin]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_content_get|pack_content_get]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_end|pack_end]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_index_get|pack_index_get]]**
-\\ 
-[[:develop:api:efl:pack:linear|Efl.Pack.Linear]].**[[:develop:api:efl:pack:linear:method:pack_unpack_at|pack_unpack_at]]**
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:pack:method:pack|pack]]**
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:pack:property:pack_align|pack_align]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:pack:property:pack_padding|pack_padding]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:ui:layout:part:table:method:pack_clear|pack_clear]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:ui:layout:part:table:method:unpack_all|unpack_all]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:ui:layout:part:table:method:unpack|unpack]]** //[Overridden here]//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:pack:grid|Efl.Pack.Grid]]\\
+> **[[:develop:api:efl:pack:grid:property:grid_direction|grid_direction]]** //**(get, set)**//\\
+[[:develop:api:efl:pack:linear|Efl.Pack.Linear]]\\
+> **[[:develop:api:efl:pack:linear:method:pack_after|pack_after]]**, **[[:develop:api:efl:pack:linear:method:pack_at|pack_at]]**, **[[:develop:api:efl:pack:linear:method:pack_before|pack_before]]**, **[[:develop:api:efl:pack:linear:method:pack_begin|pack_begin]]**, **[[:develop:api:efl:pack:linear:method:pack_content_get|pack_content_get]]**, **[[:develop:api:efl:pack:linear:method:pack_end|pack_end]]**, **[[:develop:api:efl:pack:linear:method:pack_index_get|pack_index_get]]**, **[[:develop:api:efl:pack:linear:method:pack_unpack_at|pack_unpack_at]]**\\
+[[:develop:api:efl:pack|Efl.Pack]]\\
+> **[[:develop:api:efl:pack:method:pack|pack]]**, **[[:develop:api:efl:pack:property:pack_align|pack_align]]** //**(get, set)**//, **[[:develop:api:efl:pack:property:pack_padding|pack_padding]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:container:event:content_added|content,added]]**
-\\ 
-[[:develop:api:efl:container|Efl.Container]].**[[:develop:api:efl:container:event:content_removed|content,removed]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
-[[:develop:api:efl:pack|Efl.Pack]].**[[:develop:api:efl:pack:event:layout_updated|layout,updated]]**
-\\ 
+[[:develop:api:efl:container|Efl.Container]]\\
+> **[[:develop:api:efl:container:event:content_added|content,added]]**, **[[:develop:api:efl:container:event:content_removed|content,removed]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**\\
+[[:develop:api:efl:pack|Efl.Pack]]\\
+> **[[:develop:api:efl:pack:event:layout_updated|layout,updated]]**

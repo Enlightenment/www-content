@@ -164,957 +164,680 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:ui:win:method:activate|activate]]**
+**[[:develop:api:efl:ui:win:method:activate|activate]]**\\
+> %%Activate a window object.%%
 <code c>
 void efl_ui_win_activate(Eo *obj);
 </code>
-
-%%Activate a window object.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:method:center|center]]**
+\\
+**[[:develop:api:efl:ui:win:method:center|center]]**\\
+> %%Center a window on its screen.%%
 <code c>
 void efl_ui_win_center(Eo *obj, Eina_Bool h, Eina_Bool v);
 </code>
-
-%%Center a window on its screen.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:method:keygrab_set|keygrab_set]]**
+\\
+**[[:develop:api:efl:ui:win:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:content_unset|content_unset]]**// [Overridden from [[:develop:api:efl:content|Efl.Content]]]//\\
+> %%Unswallow the object in the current container and return it.%%
+<code c>
+Efl_Gfx *efl_content_unset(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:debug_name_override|debug_name_override]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Build a read-only name for this object used for debugging.%%
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:keygrab_set|keygrab_set]]**\\
+> %%Set keygrab value of the window%%
 <code c>
 Eina_Bool efl_ui_win_keygrab_set(Eo *obj, const char *key, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers, int priority, Efl_Ui_Win_Keygrab_Mode grab_mode);
 </code>
-
-%%Set keygrab value of the window%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:method:keygrab_unset|keygrab_unset]]**
+\\
+**[[:develop:api:efl:ui:win:method:keygrab_unset|keygrab_unset]]**\\
+> %%Unset keygrab value of the window%%
 <code c>
 Eina_Bool efl_ui_win_keygrab_unset(Eo *obj, const char *key, Efl_Input_Modifier modifiers, Efl_Input_Modifier not_modifiers);
 </code>
-
-%%Unset keygrab value of the window%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:method:move_resize_start|move_resize_start]]**
+\\
+**[[:develop:api:efl:ui:win:method:lower|lower]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%This action is ignored by the Window.%%
+<code c>
+void efl_gfx_stack_lower(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:move_resize_start|move_resize_start]]**\\
+> %%Start moving or resizing the window.%%
 <code c>
 Eina_Bool efl_ui_win_move_resize_start(Eo *obj, Efl_Ui_Win_Move_Resize_Mode mode);
 </code>
-
-%%Start moving or resizing the window.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:method:stack_pop_to|stack_pop_to]]**
+\\
+**[[:develop:api:efl:ui:win:method:object_top_at_xy_get|object_top_at_xy_get]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Retrieve the object stacked at the top of a given position in a canvas.%%
+<code c>
+Efl_Gfx *efl_canvas_object_top_at_xy_get(const Eo *obj, Eina_Position2D pos, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:object_top_in_rectangle_get|object_top_in_rectangle_get]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Retrieve the Evas object stacked at the top of a given rectangular region in a canvas%%
+<code c>
+Efl_Gfx *efl_canvas_object_top_in_rectangle_get(const Eo *obj, Eina_Rect rect, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:objects_at_xy_get|objects_at_xy_get]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Retrieve a list of objects lying over a given position in a canvas.%%
+<code c>
+Eina_Iterator *efl_canvas_objects_at_xy_get(const Eo *obj, Eina_Position2D pos, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:objects_in_rectangle_get|objects_in_rectangle_get]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Retrieve a list of objects lying over a given rectangular region in a canvas.%%
+<code c>
+Eina_Iterator *efl_canvas_objects_in_rectangle_get(const Eo *obj, Eina_Rect rect, Eina_Bool include_pass_events_objects, Eina_Bool include_hidden_objects);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:part|part]]**// [Overridden from [[:develop:api:efl:part|Efl.Part]]]//\\
+> %%Returns %%[[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]]%%.%%
+<code c>
+Efl_Object *efl_part(const Eo *obj, const char *name);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:pointer_iterate|pointer_iterate]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Returns an iterator over the current known pointer positions.%%
+<code c>
+Eina_Iterator *efl_canvas_pointer_iterate(const Eo *obj, Eina_Bool hover);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:provider_find|provider_find]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Searches up in the object tree for a provider which knows the given class/interface.%%
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:raise|raise]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Places the window at the top of the stack, so that it's not covered by any other window.%%
+<code c>
+void efl_gfx_stack_raise(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:smart_objects_calculate|smart_objects_calculate]]**// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Call user-provided %%''calculate''%% smart functions and unset the flag signalling that the object needs to get recalculated to all smart objects in the canvas.%%
+<code c>
+void efl_canvas_smart_objects_calculate(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:stack_pop_to|stack_pop_to]]**\\
+> %%Pop (delete) all windows in the stack above this window.%%
 <code c>
 void efl_ui_win_stack_pop_to(Eo *obj);
 </code>
-
-%%Pop (delete) all windows in the stack above this window.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:accel_preference|accel_preference]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:accel_preference|accel_preference]]** //**(get, set)**//\\
+> %%The hardware acceleration preference for this window.%%
 <code c>
 const char *efl_ui_win_accel_preference_get(const Eo *obj);
 void efl_ui_win_accel_preference_set(Eo *obj, const char *accel);
 </code>
-
-%%The hardware acceleration preference for this window.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:alpha|alpha]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_alpha_get(const Eo *obj);
 void efl_ui_win_alpha_set(Eo *obj, Eina_Bool alpha);
 </code>
-
-\\ 
-**[[:develop:api:efl:ui:win:property:autohide|autohide]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:autohide|autohide]]** //**(get, set)**//\\
+> %%Window's autohide state.%%
 <code c>
 Eina_Bool efl_ui_win_autohide_get(const Eo *obj);
 void efl_ui_win_autohide_set(Eo *obj, Eina_Bool autohide);
 </code>
-
-%%Window's autohide state.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:borderless|borderless]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_borderless_get(const Eo *obj);
 void efl_ui_win_borderless_set(Eo *obj, Eina_Bool borderless);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:ui:win:property:content|content]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:content|Efl.Content]]]//\\
+> %%Swallowed sub-object contained in this object.%%
+<code c>
+Efl_Gfx *efl_content_get(const Eo *obj);
+Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:device|device]]** //**(get)**//// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%An input device attached to this canvas, found by name.%%
+<code c>
+Efl_Input_Device *efl_canvas_device_get(const Eo *obj, const char *name);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:focus_highlight_animate|focus_highlight_animate]]** //**(get, set)**//// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+> %%Whether focus highlight should animate or not.%%
+<code c>
+Eina_Bool efl_ui_widget_focus_highlight_animate_get(const Eo *obj);
+void efl_ui_widget_focus_highlight_animate_set(Eo *obj, Eina_Bool animate);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:focus_highlight_enabled|focus_highlight_enabled]]** //**(get, set)**//// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+> %%Whether focus highlight is enabled or not.%%
+<code c>
+Eina_Bool efl_ui_widget_focus_highlight_enabled_get(const Eo *obj);
+void efl_ui_widget_focus_highlight_enabled_set(Eo *obj, Eina_Bool enabled);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:focus_highlight_style|focus_highlight_style]]** //**(get, set)**//// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+> %%Control the widget focus highlight style.%%
+<code c>
+const char *efl_ui_widget_focus_highlight_style_get(const Eo *obj);
+Eina_Bool efl_ui_widget_focus_highlight_style_set(Eo *obj, const char *style);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:focus|focus]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]]]// ''protected set''\\
+> %%This gets called by the manager and should never be called by someone else.%%
+<code c>
+Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
+void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
+</code>
+\\
 **[[:develop:api:efl:ui:win:property:fullscreen|fullscreen]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_fullscreen_get(const Eo *obj);
 void efl_ui_win_fullscreen_set(Eo *obj, Eina_Bool fullscreen);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:ui:win:property:hint_aspect|hint_aspect]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]//\\
+> %%Defines the aspect ratio to respect when scaling this object.%%
+<code c>
+void efl_gfx_size_hint_aspect_get(const Eo *obj, Efl_Gfx_Size_Hint_Aspect *mode, Eina_Size2D *sz);
+void efl_gfx_size_hint_aspect_set(Eo *obj, Efl_Gfx_Size_Hint_Aspect mode, Eina_Size2D sz);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:hint_base|hint_base]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]//\\
+> %%Base size for objects with sizing restrictions.%%
+<code c>
+Eina_Size2D efl_gfx_size_hint_base_get(const Eo *obj);
+void efl_gfx_size_hint_base_set(Eo *obj, Eina_Size2D sz);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:hint_max|hint_max]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]//\\
+> %%Hints on the object's maximum size.%%
+<code c>
+Eina_Size2D efl_gfx_size_hint_max_get(const Eo *obj);
+void efl_gfx_size_hint_max_set(Eo *obj, Eina_Size2D sz);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:hint_step|hint_step]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]//\\
+> %%Step size for objects with sizing restrictions.%%
+<code c>
+Eina_Size2D efl_gfx_size_hint_step_get(const Eo *obj);
+void efl_gfx_size_hint_step_set(Eo *obj, Eina_Size2D sz);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:hint_weight|hint_weight]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]]//\\
+> %%Hints for an object's weight.%%
+<code c>
+void efl_gfx_size_hint_weight_get(const Eo *obj, double *x, double *y);
+void efl_gfx_size_hint_weight_set(Eo *obj, double x, double y);
+</code>
+\\
 **[[:develop:api:efl:ui:win:property:icon_object|icon_object]]** //**(get, set)**//
 <code c>
 const Efl_Canvas_Object *efl_ui_win_icon_object_get(const Eo *obj);
 void efl_ui_win_icon_object_set(Eo *obj, Efl_Canvas_Object *icon);
 </code>
-
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:iconified|iconified]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_iconified_get(const Eo *obj);
 void efl_ui_win_iconified_set(Eo *obj, Eina_Bool iconified);
 </code>
-
-\\ 
-**[[:develop:api:efl:ui:win:property:indicator_enabled|indicator_enabled]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:image_max_size|image_max_size]]** //**(get)**//// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%Get the maximum image size evas can possibly handle.%%
 <code c>
-Eina_Bool efl_ui_win_indicator_enabled_get(const Eo *obj);
-void efl_ui_win_indicator_enabled_set(Eo *obj, Eina_Bool enabled);
+Eina_Bool efl_canvas_image_max_size_get(const Eo *obj, Eina_Size2D *max);
 </code>
-
-%%In some environments, like phones, you may have an indicator that shows battery status, reception, time etc. This is the indicator.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:indicator_type|indicator_type]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:indicator_mode|indicator_mode]]** //**(get, set)**//\\
+> %%In some environments, like phones, you may have an indicator that shows battery status, reception, time etc. This is the indicator.%%
 <code c>
-Efl_Ui_Win_Indicator_Type efl_ui_win_indicator_type_get(const Eo *obj);
-void efl_ui_win_indicator_type_set(Eo *obj, Efl_Ui_Win_Indicator_Type type);
+Efl_Ui_Win_Indicator_Mode efl_ui_win_indicator_mode_get(const Eo *obj);
+void efl_ui_win_indicator_mode_set(Eo *obj, Efl_Ui_Win_Indicator_Mode type);
 </code>
-
-%%The indicator type of the window.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:keyboard_mode|keyboard_mode]]** //**(get, set)**//
 <code c>
 Efl_Ui_Win_Keyboard_Mode efl_ui_win_keyboard_mode_get(const Eo *obj);
 void efl_ui_win_keyboard_mode_set(Eo *obj, Efl_Ui_Win_Keyboard_Mode mode);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:ui:win:property:lock_enabled|lock_enabled]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:state|Efl.Input.State]]]//\\
+> %%Indicates whether a key lock is on, such as NumLock, CapsLock, ...%%
+<code c>
+Eina_Bool efl_input_lock_enabled_get(const Eo *obj, Efl_Input_Lock lock, const Efl_Input_Device *seat);
+</code>
+\\
 **[[:develop:api:efl:ui:win:property:maximized|maximized]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_maximized_get(const Eo *obj);
 void efl_ui_win_maximized_set(Eo *obj, Eina_Bool maximized);
 </code>
-
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:modal|modal]]** //**(get, set)**//
 <code c>
 Efl_Ui_Win_Modal_Mode efl_ui_win_modal_get(const Eo *obj);
 void efl_ui_win_modal_set(Eo *obj, Efl_Ui_Win_Modal_Mode modal);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:ui:win:property:modifier_enabled|modifier_enabled]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:state|Efl.Input.State]]]//\\
+> %%Indicates whether a key modifier is on, such as Ctrl, Shift, ...%%
+<code c>
+Eina_Bool efl_input_modifier_enabled_get(const Eo *obj, Efl_Input_Modifier mod, const Efl_Input_Device *seat);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:name|name]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:access|Efl.Access]]]//\\
+> %%Accessible name of the object.%%
+<code c>
+const char *efl_access_name_get(const Eo *obj);
+void efl_access_name_set(Eo *obj, const char *name);
+</code>
+\\
 **[[:develop:api:efl:ui:win:property:noblank|noblank]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_noblank_get(const Eo *obj);
 void efl_ui_win_noblank_set(Eo *obj, Eina_Bool noblank);
 </code>
-
-\\ 
-**[[:develop:api:efl:ui:win:property:prop_focus_skip|prop_focus_skip]]** //**(set)**//
+\\
+**[[:develop:api:efl:ui:win:property:parent|parent]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:access|Efl.Access]]]//\\
+> %%Object's accessible parent.%%
+<code c>
+Efl_Access *efl_access_parent_get(const Eo *obj);
+void efl_access_parent_set(Eo *obj, Efl_Access *parent);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:pointer_inside|pointer_inside]]** //**(get)**//// [Overridden from [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]]]//\\
+> %%Returns whether the mouse pointer is logically inside the canvas.%%
+<code c>
+Eina_Bool efl_canvas_pointer_inside_get(const Eo *obj, Efl_Input_Device *seat);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:pointer_position|pointer_position]]** //**(get)**//// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%This function returns the current known pointer coordinates%%
+<code c>
+Eina_Position2D efl_canvas_pointer_position_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:position|position]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The 2D position of a canvas object.%%
+<code c>
+Eina_Position2D efl_gfx_position_get(const Eo *obj);
+void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:prop_focus_skip|prop_focus_skip]]** //**(set)**//\\
+> %%Set the window to be skipped by keyboard focus.%%
 <code c>
 void efl_ui_win_prop_focus_skip_set(Eo *obj, Eina_Bool skip);
 </code>
-
-%%Set the window to be skipped by keyboard focus.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:screen_constrain|screen_constrain]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_screen_constrain_get(const Eo *obj);
 void efl_ui_win_screen_constrain_set(Eo *obj, Eina_Bool constrain);
 </code>
-
-\\ 
-**[[:develop:api:efl:ui:win:property:stack_base|stack_base]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:screen_dpi|screen_dpi]]** //**(get)**//// [Overridden from [[:develop:api:efl:screen|Efl.Screen]]]//\\
+> %%Get screen dpi for the screen that a window is on.%%
+<code c>
+void efl_screen_dpi_get(const Eo *obj, int *xdpi, int *ydpi);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:screen_rotation|screen_rotation]]** //**(get)**//// [Overridden from [[:develop:api:efl:screen|Efl.Screen]]]//\\
+> %%Get the rotation of the screen.%%
+<code c>
+int efl_screen_rotation_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:screen_size|screen_size]]** //**(get)**//// [Overridden from [[:develop:api:efl:screen|Efl.Screen]]]//\\
+> %%Get screen geometry details for the screen that a window is on.%%
+<code c>
+Eina_Size2D efl_screen_size_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:seat|seat]]** //**(get)**//// [Overridden from [[:develop:api:efl:canvas|Efl.Canvas]]]//\\
+> %%A seat attached to this canvas, found by id.%%
+<code c>
+Efl_Input_Device *efl_canvas_seat_get(const Eo *obj, int id);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:size|size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The 2D size of a canvas object.%%
+<code c>
+Eina_Size2D efl_gfx_size_get(const Eo *obj);
+void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:stack_base|stack_base]]** //**(get, set)**//\\
+> %%The stack base state of this window%%
 <code c>
 Eina_Bool efl_ui_win_stack_base_get(const Eo *obj);
 void efl_ui_win_stack_base_set(Eo *obj, Eina_Bool base);
 </code>
-
-%%The stack base state of this window%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:stack_id|stack_id]]** //**(get)**//
+\\
+**[[:develop:api:efl:ui:win:property:stack_id|stack_id]]** //**(get)**//\\
+> %%Get the stack ID string of the window as an opaque string.%%
 <code c>
 const char *efl_ui_win_stack_id_get(const Eo *obj);
 </code>
-
-%%Get the stack ID string of the window as an opaque string.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:stack_master_id|stack_master_id]]** //**(get, set)**//
 <code c>
 const char *efl_ui_win_stack_master_id_get(const Eo *obj);
 void efl_ui_win_stack_master_id_set(Eo *obj, const char *id);
 </code>
-
-\\ 
+\\
 **[[:develop:api:efl:ui:win:property:sticky|sticky]]** //**(get, set)**//
 <code c>
 Eina_Bool efl_ui_win_sticky_get(const Eo *obj);
 void efl_ui_win_sticky_set(Eo *obj, Eina_Bool sticky);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:ui:win:property:text|text]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text|Efl.Text]]]//
+<code c>
+const char *efl_text_get(const Eo *obj);
+void efl_text_set(Eo *obj, const char *text);
+</code>
+\\
 **[[:develop:api:efl:ui:win:property:urgent|urgent]]** //**(get, set)**//
 <code c>
 Efl_Ui_Win_Urgent_Mode efl_ui_win_urgent_get(const Eo *obj);
 void efl_ui_win_urgent_set(Eo *obj, Efl_Ui_Win_Urgent_Mode urgent);
 </code>
-
-\\ 
-**[[:develop:api:efl:ui:win:property:win_name|win_name]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:visible|visible]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The visibility of a canvas object.%%
+<code c>
+Eina_Bool efl_gfx_visible_get(const Eo *obj);
+void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:win_name|win_name]]** //**(get, set)**//\\
+> %%The window name.%%
 <code c>
 const char *efl_ui_win_name_get(const Eo *obj);
 void efl_ui_win_name_set(Eo *obj, const char *name);
 </code>
-
-%%The window name.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:win_role|win_role]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:win_role|win_role]]** //**(get, set)**//\\
+> %%The role of the window.%%
 <code c>
 const char *efl_ui_win_role_get(const Eo *obj);
 void efl_ui_win_role_set(Eo *obj, const char *role);
 </code>
-
-%%The role of the window.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:win_type|win_type]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:win_type|win_type]]** //**(get, set)**//\\
+> %%The type of the window.%%
 <code c>
 Efl_Ui_Win_Type efl_ui_win_type_get(const Eo *obj);
 void efl_ui_win_type_set(Eo *obj, Efl_Ui_Win_Type type);
 </code>
-
-%%The type of the window.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:wm_available_profiles|wm_available_profiles]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:wm_available_profiles|wm_available_profiles]]** //**(get, set)**//\\
+> %%Available profiles on a window.%%
 <code c>
 const Eina_Array *efl_ui_win_wm_available_profiles_get(const Eo *obj);
 void efl_ui_win_wm_available_profiles_set(Eo *obj, const Eina_Array *profiles);
 </code>
-
-%%Available profiles on a window.%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:property:wm_available_rotations|wm_available_rotations]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:ui:win:property:wm_available_rotations|wm_available_rotations]]** //**(get, set)**//\\
+> %%Defines which rotations this window supports.%%
 <code c>
 Eina_Bool efl_ui_win_wm_available_rotations_get(const Eo *obj, Eina_Bool *allow_0, Eina_Bool *allow_90, Eina_Bool *allow_180, Eina_Bool *allow_270);
 void efl_ui_win_wm_available_rotations_set(Eo *obj, Eina_Bool allow_0, Eina_Bool allow_90, Eina_Bool allow_180, Eina_Bool allow_270);
 </code>
-
-%%Defines which rotations this window supports.%%\\ 
-\\ 
+\\
+**[[:develop:api:efl:ui:win:method:focus_manager_create|focus_manager_create]]**// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''\\
+> %%If the widget needs a focus manager, this function will be called.%%
+<code c>
+Efl_Ui_Focus_Manager *efl_ui_widget_focus_manager_create(Eo *obj, Efl_Ui_Focus_Object *root);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:on_focus_update|on_focus_update]]**// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''\\
+> %%Virtual function handling focus in/out events on the widget%%
+<code c>
+Eina_Bool efl_ui_widget_on_focus_update(Eo *obj, Elm_Widget_Item *item);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:theme_apply|theme_apply]]**// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''\\
+> %%Virtual function called when the widget needs to re-apply its theme.%%
+<code c>
+Efl_Ui_Theme_Apply efl_ui_widget_theme_apply(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:method:widget_event|widget_event]]**// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''\\
+> %%Virtual function handling input events on the widget.%%
+<code c>
+Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Object *source);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:elm_actions|elm_actions]]** //**(get)**//// [Overridden from [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''\\
+> %%Elementary actions%%
+<code c>
+const Efl_Access_Action_Data *efl_access_widget_action_elm_actions_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:extents|extents]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:access:component|Efl.Access.Component]]]// ''protected''\\
+> %%Geometry of accessible widget.%%
+<code c>
+Eina_Rect efl_access_component_extents_get(const Eo *obj, Eina_Bool screen_coords);
+Eina_Bool efl_access_component_extents_set(Eo *obj, Eina_Bool screen_coords, Eina_Rect rect);
+</code>
+\\
+**[[:develop:api:efl:ui:win:property:state_set|state_set]]** //**(get)**//// [Overridden from [[:develop:api:efl:access|Efl.Access]]]// ''protected''\\
+> %%Gets set describing object accessible states.%%
+<code c>
+Efl_Access_State_Set efl_access_state_set_get(const Eo *obj);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:attribute_append|attribute_append]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:attributes_clear|attributes_clear]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationship_append|relationship_append]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:description|description]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:role|role]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:root|root]]** //**(get)**//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:type|type]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:ui:win:property:name|name]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:ui:win:property:parent|parent]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_change|group_change]]**
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_member_is|group_member_is]]**
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:method:group_members_iterate|group_members_iterate]]**
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:elm:widget:method:group_calculate|group_calculate]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:elm:widget:method:group_member_add|group_member_add]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:elm:widget:method:group_member_del|group_member_del]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:group:property:paragraph_direction|paragraph_direction]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:group|Efl.Canvas.Group]]]//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:pointer_coords_inside_get|pointer_coords_inside_get]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:clip|clip]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:is_frame_object|is_frame_object]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:elm:widget:property:no_render|no_render]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]].**[[:develop:api:efl:ui:win:property:pointer_inside|pointer_inside]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:method:seats|seats]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:object_top_at_xy_get|object_top_at_xy_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:object_top_in_rectangle_get|object_top_in_rectangle_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:objects_at_xy_get|objects_at_xy_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:objects_in_rectangle_get|objects_in_rectangle_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:pointer_iterate|pointer_iterate]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:method:smart_objects_calculate|smart_objects_calculate]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:property:device|device]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:property:image_max_size|image_max_size]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:property:pointer_position|pointer_position]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:ui:win:property:seat|seat]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:profile_dir_get|profile_dir_get]]**
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:profile_exists|profile_exists]]**
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:profile_iterate|profile_iterate]]**
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:property:profile|profile]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:config|Efl.Config]].**[[:develop:api:efl:config:global:property:config|config]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:config:global|Efl.Config.Global]]]//
-\\ 
-[[:develop:api:efl:content|Efl.Content]].**[[:develop:api:efl:ui:win:method:content_unset|content_unset]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:content|Efl.Content]].**[[:develop:api:efl:ui:win:property:content|content]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_has|map_has]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate|rotate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:translate|translate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom|zoom]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]// ''protected set''
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:ui:win:property:hint_aspect|hint_aspect]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:ui:win:property:hint_base|hint_base]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:ui:win:property:hint_max|hint_max]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:ui:win:property:hint_step|hint_step]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:ui:win:property:hint_weight|hint_weight]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:ui:win:method:lower|lower]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:ui:win:method:raise|raise]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:ui:win:property:position|position]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:ui:win:property:size|size]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:ui:win:property:visible|visible]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:color|color]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:elm:widget:property:scale|scale]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:input:state|Efl.Input.State]].**[[:develop:api:efl:ui:win:property:lock_enabled|lock_enabled]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:state|Efl.Input.State]].**[[:develop:api:efl:ui:win:property:modifier_enabled|modifier_enabled]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:del|del]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:win:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:win:method:debug_name_override|debug_name_override]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:win:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:win:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:ui:win:method:provider_find|provider_find]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:part|Efl.Part]].**[[:develop:api:efl:ui:win:method:part|part]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:screen|Efl.Screen]].**[[:develop:api:efl:ui:win:property:screen_dpi|screen_dpi]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:screen|Efl.Screen]].**[[:develop:api:efl:ui:win:property:screen_rotation|screen_rotation]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:screen|Efl.Screen]].**[[:develop:api:efl:ui:win:property:screen_size|screen_size]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text|Efl.Text]].**[[:develop:api:efl:ui:win:property:text|text]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:elm:widget:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:elm:widget:property:mirrored|mirrored]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor_style|cursor_style]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]].**[[:develop:api:elm:widget:property:cursor|cursor]]** //**(get, set)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:move|move]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:pop_history_stack|pop_history_stack]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:request_subchild|request_subchild]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:reset_history|reset_history]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]**
-\\ 
-[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:efl:ui:win:property:focus|focus]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:elm:widget:property:focus_manager|focus_manager]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:elm:widget:property:focus_parent|focus_parent]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]//
-\\ 
-[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]].**[[:develop:api:efl:ui:translatable:property:translatable_text|translatable_text]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:property:focus_highlight_animate|focus_highlight_animate]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:property:focus_highlight_enabled|focus_highlight_enabled]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:property:focus_highlight_style|focus_highlight_style]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_freeze_pop|scroll_freeze_pop]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_freeze_push|scroll_freeze_push]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_hold_pop|scroll_hold_pop]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:scroll_hold_push|scroll_hold_push]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:access_info|access_info]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:disabled|disabled]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_allow|focus_allow]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_move_policy|focus_move_policy]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focused_item|focused_item]]** //**(get)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:interest_region_mode|interest_region_mode]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**//
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:style|style]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:widget_top|widget_top]]** //**(get)**//
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:action:property:action_localized_name|action_localized_name]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:method:action_do|action_do]]** //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:method:action_keybinding_get|action_keybinding_get]]** //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:action_description|action_description]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:action_name|action_name]]** //**(get)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:action|Efl.Access.Action]].**[[:develop:api:efl:access:widget:action:property:actions|actions]]** //**(get)**// //[Overridden in [[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:method:accessible_at_point_get|accessible_at_point_get]]** ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:method:contains|contains]]** ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:alpha|alpha]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:layer|layer]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:position|position]]** //**(get, set)**// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:size|size]]** //**(get, set)**// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:access:component:property:z_order|z_order]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:efl:ui:win:property:extents|extents]]** //**(get, set)**// //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:access:component|Efl.Access.Component]].**[[:develop:api:elm:widget:method:focus_grab|focus_grab]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
-\\ 
-[[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]].**[[:develop:api:efl:ui:win:property:elm_actions|elm_actions]]** //**(get)**// //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_emit|event_emit]]** ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:reading_info_type|reading_info_type]]** //**(get, set)**// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:relation_set|relation_set]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:property:role_name|role_name]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:ui:win:property:state_set|state_set]]** //**(get)**// //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:attributes|attributes]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:elm:widget:property:children|children]]** //**(get)**// //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:group|Efl.Canvas.Group]].**[[:develop:api:efl:canvas:group:property:group_clipper|group_clipper]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:profile_derived_add|profile_derived_add]]** ''protected''
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:profile_derived_del|profile_derived_del]]** ''protected''
-\\ 
-[[:develop:api:efl:config:global|Efl.Config.Global]].**[[:develop:api:efl:config:global:method:save|save]]** ''protected''
-\\ 
-[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]].**[[:develop:api:elm:widget:method:translation_update|translation_update]]** //[Overridden in [[:develop:api:elm:widget|Elm.Widget]]]// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:method:focus_manager_create|focus_manager_create]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:method:on_focus_update|on_focus_update]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:method:theme_apply|theme_apply]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:efl:ui:win:method:widget_event|widget_event]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:focus_state_apply|focus_state_apply]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_access_activate|on_access_activate]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_access_update|on_access_update]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_disabled_update|on_disabled_update]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:on_orientation_update|on_orientation_update]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:widget_sub_object_add|widget_sub_object_add]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:method:widget_sub_object_del|widget_sub_object_del]]** ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:focus_highlight_geometry|focus_highlight_geometry]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:interest_region|interest_region]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:on_show_region_hook|on_show_region_hook]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:resize_object|resize_object]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:show_region|show_region]]** //**(get, set)**// ''protected''
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:property:widget_parent|widget_parent]]** //**(get, set)**// ''protected''
-\\ 
-
+[[:develop:api:efl:access|Efl.Access]]\\
+> **[[:develop:api:efl:access:method:attribute_append|attribute_append]]**, **[[:develop:api:efl:access:method:attributes_clear|attributes_clear]]**, **[[:develop:api:efl:access:method:relationship_append|relationship_append]]**, **[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]**, **[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]**, **[[:develop:api:efl:access:property:description|description]]** //**(get, set)**//, **[[:develop:api:efl:access:property:role|role]]** //**(get, set)**//, **[[:develop:api:efl:access:property:root|root]]** //**(get)**//, **[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**//, **[[:develop:api:efl:access:property:type|type]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]]\\
+> **[[:develop:api:efl:canvas:group:method:group_change|group_change]]**, **[[:develop:api:efl:canvas:group:method:group_member_is|group_member_is]]**, **[[:develop:api:efl:canvas:group:method:group_members_iterate|group_members_iterate]]**, **[[:develop:api:efl:canvas:group:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**//, **[[:develop:api:efl:canvas:group:property:paragraph_direction|paragraph_direction]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas|Efl.Canvas]]\\
+> **[[:develop:api:efl:canvas:method:seats|seats]]**\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**, **[[:develop:api:efl:canvas:object:method:del|del]]**, **[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**, **[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**, **[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]**, **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]**, **[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:coords_inside|coords_inside]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//\\
+[[:develop:api:efl:config:global|Efl.Config.Global]]\\
+> **[[:develop:api:efl:config:global:method:profile_dir_get|profile_dir_get]]**, **[[:develop:api:efl:config:global:method:profile_exists|profile_exists]]**, **[[:develop:api:efl:config:global:method:profile_iterate|profile_iterate]]**, **[[:develop:api:efl:config:global:property:config|config]]** //**(get, set)**//, **[[:develop:api:efl:config:global:property:profile|profile]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]]\\
+> **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**, **[[:develop:api:efl:gfx:map:method:map_has|map_has]]**, **[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**, **[[:develop:api:efl:gfx:map:method:rotate|rotate]]**, **[[:develop:api:efl:gfx:map:method:translate|translate]]**, **[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**, **[[:develop:api:efl:gfx:map:method:zoom|zoom]]**, **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//, **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:base|Efl.Ui.Base]]\\
+> **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]\\
+> **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]**, **[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]**, **[[:develop:api:efl:ui:focus:manager:method:move|move]]**, **[[:develop:api:efl:ui:focus:manager:method:pop_history_stack|pop_history_stack]]**, **[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]**, **[[:develop:api:efl:ui:focus:manager:method:request_subchild|request_subchild]]**, **[[:develop:api:efl:ui:focus:manager:method:reset_history|reset_history]]**, **[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]**, **[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**//, **[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**//, **[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//, **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]]\\
+> **[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]**\\
+[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]]\\
+> **[[:develop:api:efl:ui:translatable:property:translatable_text|translatable_text]]** //**(get, set)**//\\
+[[:develop:api:elm:widget|Elm.Widget]]\\
+> **[[:develop:api:elm:widget:method:group_calculate|group_calculate]]**, **[[:develop:api:elm:widget:method:group_member_add|group_member_add]]**, **[[:develop:api:elm:widget:method:group_member_del|group_member_del]]**, **[[:develop:api:elm:widget:method:scroll_freeze_pop|scroll_freeze_pop]]**, **[[:develop:api:elm:widget:method:scroll_freeze_push|scroll_freeze_push]]**, **[[:develop:api:elm:widget:method:scroll_hold_pop|scroll_hold_pop]]**, **[[:develop:api:elm:widget:method:scroll_hold_push|scroll_hold_push]]**, **[[:develop:api:elm:widget:property:access_info|access_info]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:clip|clip]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:color|color]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:cursor_style|cursor_style]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:cursor|cursor]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:disabled|disabled]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:focus_allow|focus_allow]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**//, **[[:develop:api:elm:widget:property:focus_manager|focus_manager]]** //**(get)**//, **[[:develop:api:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:focus_move_policy|focus_move_policy]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:focus_parent|focus_parent]]** //**(get)**//, **[[:develop:api:elm:widget:property:focused_item|focused_item]]** //**(get)**//, **[[:develop:api:elm:widget:property:interest_region_mode|interest_region_mode]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:is_frame_object|is_frame_object]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:mirrored|mirrored]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:no_render|no_render]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:scale|scale]]** //**(get, set)**//, **[[:develop:api:elm:widget:property:style|style]]** //**(get, set)**// ''protected set'', **[[:develop:api:elm:widget:property:widget_top|widget_top]]** //**(get)**//\\
+[[:develop:api:efl:access:action|Efl.Access.Action]]\\
+> **[[:develop:api:efl:access:action:property:action_localized_name|action_localized_name]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:access:component|Efl.Access.Component]]\\
+> **[[:develop:api:efl:access:component:method:accessible_at_point_get|accessible_at_point_get]]** ''protected'', **[[:develop:api:efl:access:component:method:contains|contains]]** ''protected'', **[[:develop:api:efl:access:component:property:alpha|alpha]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:component:property:layer|layer]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:component:property:position|position]]** //**(get, set)**// ''protected'', **[[:develop:api:efl:access:component:property:size|size]]** //**(get, set)**// ''protected'', **[[:develop:api:efl:access:component:property:z_order|z_order]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:access|Efl.Access]]\\
+> **[[:develop:api:efl:access:method:event_emit|event_emit]]** ''protected'', **[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** ''protected'', **[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** ''protected'', **[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:property:reading_info_type|reading_info_type]]** //**(get, set)**// ''protected'', **[[:develop:api:efl:access:property:relation_set|relation_set]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:property:role_name|role_name]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:access:widget:action|Efl.Access.Widget.Action]]\\
+> **[[:develop:api:efl:access:widget:action:method:action_do|action_do]]** ''protected'', **[[:develop:api:efl:access:widget:action:method:action_keybinding_get|action_keybinding_get]]** ''protected'', **[[:develop:api:efl:access:widget:action:property:action_description|action_description]]** //**(get, set)**// ''protected'', **[[:develop:api:efl:access:widget:action:property:action_name|action_name]]** //**(get)**// ''protected'', **[[:develop:api:efl:access:widget:action:property:actions|actions]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:canvas:group|Efl.Canvas.Group]]\\
+> **[[:develop:api:efl:canvas:group:property:group_clipper|group_clipper]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:config:global|Efl.Config.Global]]\\
+> **[[:develop:api:efl:config:global:method:profile_derived_add|profile_derived_add]]** ''protected'', **[[:develop:api:efl:config:global:method:profile_derived_del|profile_derived_del]]** ''protected'', **[[:develop:api:efl:config:global:method:save|save]]** ''protected''\\
+[[:develop:api:elm:widget|Elm.Widget]]\\
+> **[[:develop:api:elm:widget:method:focus_grab|focus_grab]]** ''protected'', **[[:develop:api:elm:widget:method:focus_state_apply|focus_state_apply]]** ''protected'', **[[:develop:api:elm:widget:method:on_access_activate|on_access_activate]]** ''protected'', **[[:develop:api:elm:widget:method:on_access_update|on_access_update]]** ''protected'', **[[:develop:api:elm:widget:method:on_disabled_update|on_disabled_update]]** ''protected'', **[[:develop:api:elm:widget:method:on_orientation_update|on_orientation_update]]** ''protected'', **[[:develop:api:elm:widget:method:translation_update|translation_update]]** ''protected'', **[[:develop:api:elm:widget:method:widget_sub_object_add|widget_sub_object_add]]** ''protected'', **[[:develop:api:elm:widget:method:widget_sub_object_del|widget_sub_object_del]]** ''protected'', **[[:develop:api:elm:widget:property:attributes|attributes]]** //**(get)**// ''protected'', **[[:develop:api:elm:widget:property:children|children]]** //**(get)**// ''protected'', **[[:develop:api:elm:widget:property:focus_highlight_geometry|focus_highlight_geometry]]** //**(get)**// ''protected'', **[[:develop:api:elm:widget:property:interest_region|interest_region]]** //**(get)**// ''protected'', **[[:develop:api:elm:widget:property:on_show_region_hook|on_show_region_hook]]** //**(set)**// ''protected'', **[[:develop:api:elm:widget:property:resize_object|resize_object]]** //**(set)**// ''protected'', **[[:develop:api:elm:widget:property:show_region|show_region]]** //**(get, set)**// ''protected'', **[[:develop:api:elm:widget:property:widget_parent|widget_parent]]** //**(get, set)**// ''protected''
 ===== Events =====
 
-**[[:develop:api:efl:ui:win:event:delete_request|delete,request]]**
+**[[:develop:api:efl:ui:win:event:delete_request|delete,request]]**\\
+> %%Called when the window got a delete request%%
 <code c>
 EFL_UI_WIN_EVENT_DELETE_REQUEST(void)
 </code>
-
-%%Called when the window got a delete request%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:elm_action_block_menu|elm,action,block_menu]]**
+\\ **[[:develop:api:efl:ui:win:event:elm_action_block_menu|elm,action,block_menu]]**\\
+> %%Called when elementary block menu action happened%%
 <code c>
 EFL_UI_WIN_EVENT_ELM_ACTION_BLOCK_MENU(void)
 </code>
-
-%%Called when elementary block menu action happened%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:fullscreen|fullscreen]]**
+\\ **[[:develop:api:efl:ui:win:event:fullscreen|fullscreen]]**\\
+> %%Called when window was set fullscreen%%
 <code c>
 EFL_UI_WIN_EVENT_FULLSCREEN(void)
 </code>
-
-%%Called when window was set fullscreen%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:iconified|iconified]]**
+\\ **[[:develop:api:efl:ui:win:event:iconified|iconified]]**\\
+> %%Called when window was iconified%%
 <code c>
 EFL_UI_WIN_EVENT_ICONIFIED(void)
 </code>
-
-%%Called when window was iconified%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:indicator_prop_changed|indicator,prop,changed]]**
+\\ **[[:develop:api:efl:ui:win:event:indicator_prop_changed|indicator,prop,changed]]**\\
+> %%Called when indicator property changed%%
 <code c>
 EFL_UI_WIN_EVENT_INDICATOR_PROP_CHANGED(void)
 </code>
-
-%%Called when indicator property changed%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:ioerr|ioerr]]**
+\\ **[[:develop:api:efl:ui:win:event:ioerr|ioerr]]**\\
+> %%Called on input output error%%
 <code c>
 EFL_UI_WIN_EVENT_IOERR(void)
 </code>
-
-%%Called on input output error%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:maximized|maximized]]**
+\\ **[[:develop:api:efl:ui:win:event:maximized|maximized]]**\\
+> %%Called when window is set maximized%%
 <code c>
 EFL_UI_WIN_EVENT_MAXIMIZED(void)
 </code>
-
-%%Called when window is set maximized%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:normal|normal]]**
+\\ **[[:develop:api:efl:ui:win:event:normal|normal]]**\\
+> %%Called when window got into normal state%%
 <code c>
 EFL_UI_WIN_EVENT_NORMAL(void)
 </code>
-
-%%Called when window got into normal state%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:pause|pause]]**
+\\ **[[:develop:api:efl:ui:win:event:pause|pause]]**\\
+> %%Called when the window is going not be displayed for some time%%
 <code c>
 EFL_UI_WIN_EVENT_PAUSE(void)
 </code>
-
-%%Called when the window is going not be displayed for some time%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:profile_changed|profile,changed]]**
+\\ **[[:develop:api:efl:ui:win:event:profile_changed|profile,changed]]**\\
+> %%Called when profile changed%%
 <code c>
 EFL_UI_WIN_EVENT_PROFILE_CHANGED(void)
 </code>
-
-%%Called when profile changed%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:resume|resume]]**
+\\ **[[:develop:api:efl:ui:win:event:resume|resume]]**\\
+> %%Called before a window get rendered after a pause event%%
 <code c>
 EFL_UI_WIN_EVENT_RESUME(void)
 </code>
-
-%%Called before a window get rendered after a pause event%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:rotation_changed|rotation,changed]]**
+\\ **[[:develop:api:efl:ui:win:event:rotation_changed|rotation,changed]]**\\
+> %%Called when window rotation changed%%
 <code c>
 EFL_UI_WIN_EVENT_ROTATION_CHANGED(void)
 </code>
-
-%%Called when window rotation changed%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:stick|stick]]**
+\\ **[[:develop:api:efl:ui:win:event:stick|stick]]**\\
+> %%Called when window was set sticky%%
 <code c>
 EFL_UI_WIN_EVENT_STICK(void)
 </code>
-
-%%Called when window was set sticky%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:theme_changed|theme,changed]]**
+\\ **[[:develop:api:efl:ui:win:event:theme_changed|theme,changed]]**\\
+> %%Called when theme changed%%
 <code c>
 EFL_UI_WIN_EVENT_THEME_CHANGED(void)
 </code>
-
-%%Called when theme changed%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:unfullscreen|unfullscreen]]**
+\\ **[[:develop:api:efl:ui:win:event:unfullscreen|unfullscreen]]**\\
+> %%Called when window is no longer set fullscreen%%
 <code c>
 EFL_UI_WIN_EVENT_UNFULLSCREEN(void)
 </code>
-
-%%Called when window is no longer set fullscreen%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:unmaximized|unmaximized]]**
+\\ **[[:develop:api:efl:ui:win:event:unmaximized|unmaximized]]**\\
+> %%Called when window is no longer set maximized%%
 <code c>
 EFL_UI_WIN_EVENT_UNMAXIMIZED(void)
 </code>
-
-%%Called when window is no longer set maximized%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:unstick|unstick]]**
+\\ **[[:develop:api:efl:ui:win:event:unstick|unstick]]**\\
+> %%Called when window is no  longer set sticky%%
 <code c>
 EFL_UI_WIN_EVENT_UNSTICK(void)
 </code>
-
-%%Called when window is no  longer set sticky%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:withdrawn|withdrawn]]**
+\\ **[[:develop:api:efl:ui:win:event:withdrawn|withdrawn]]**\\
+> %%Called when window was withdrawn%%
 <code c>
 EFL_UI_WIN_EVENT_WITHDRAWN(void)
 </code>
-
-%%Called when window was withdrawn%%\\ 
-\\ 
-**[[:develop:api:efl:ui:win:event:wm_rotation_changed|wm,rotation,changed]]**
+\\ **[[:develop:api:efl:ui:win:event:wm_rotation_changed|wm,rotation,changed]]**\\
+> %%Called when window manager rotation changed%%
 <code c>
 EFL_UI_WIN_EVENT_WM_ROTATION_CHANGED(void)
 </code>
+\\ ==== Inherited ====
 
-%%Called when window manager rotation changed%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_activated|window,activated]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_created|window,created]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_deactivated|window,deactivated]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_destroyed|window,destroyed]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_maximized|window,maximized]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_minimized|window,minimized]]**
-\\ 
-[[:develop:api:efl:access:window|Efl.Access.Window]].**[[:develop:api:efl:access:window:event:window_restored|window,restored]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:added|added]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:children_changed|children,changed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:property_changed|property,changed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:removed|removed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:state_changed|state,changed]]**
-\\ 
-[[:develop:api:efl:access|Efl.Access]].**[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]**
-\\ 
-[[:develop:api:efl:animator|Efl.Animator]].**[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:device_added|device,added]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:device_changed|device,changed]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:device_removed|device,removed]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:focus_in|focus,in]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:focus_out|focus,out]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:object_focus_in|object,focus,in]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:object_focus_out|object,focus,out]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:render_post|render,post]]**
-\\ 
-[[:develop:api:efl:canvas|Efl.Canvas]].**[[:develop:api:efl:canvas:event:render_pre|render,pre]]**
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:event:restack|restack]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:changed|changed]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:hide|hide]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:move|move]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:resize|resize]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:show|show]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:hold|hold]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_down|key,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_up|key,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:focused|focused]]**
-\\ 
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]].**[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**
-\\ 
-[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]].**[[:develop:api:efl:ui:focus:object:event:focus_changed|focus,changed]]**
-\\ 
-[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:efl:ui:focus:user:event:logical_changed|logical,changed]]**
-\\ 
-[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]].**[[:develop:api:efl:ui:focus:user:event:manager_changed|manager,changed]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:access_changed|access,changed]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:language_changed|language,changed]]**
-\\ 
-[[:develop:api:elm:widget|Elm.Widget]].**[[:develop:api:elm:widget:event:moved|moved]]**
-\\ 
+[[:develop:api:efl:access|Efl.Access]]\\
+> **[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]**, **[[:develop:api:efl:access:event:added|added]]**, **[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]**, **[[:develop:api:efl:access:event:children_changed|children,changed]]**, **[[:develop:api:efl:access:event:property_changed|property,changed]]**, **[[:develop:api:efl:access:event:removed|removed]]**, **[[:develop:api:efl:access:event:state_changed|state,changed]]**, **[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]**\\
+[[:develop:api:efl:access:window|Efl.Access.Window]]\\
+> **[[:develop:api:efl:access:window:event:window_activated|window,activated]]**, **[[:develop:api:efl:access:window:event:window_created|window,created]]**, **[[:develop:api:efl:access:window:event:window_deactivated|window,deactivated]]**, **[[:develop:api:efl:access:window:event:window_destroyed|window,destroyed]]**, **[[:develop:api:efl:access:window:event:window_maximized|window,maximized]]**, **[[:develop:api:efl:access:window:event:window_minimized|window,minimized]]**, **[[:develop:api:efl:access:window:event:window_restored|window,restored]]**\\
+[[:develop:api:efl:animator|Efl.Animator]]\\
+> **[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**\\
+[[:develop:api:efl:canvas|Efl.Canvas]]\\
+> **[[:develop:api:efl:canvas:event:device_added|device,added]]**, **[[:develop:api:efl:canvas:event:device_changed|device,changed]]**, **[[:develop:api:efl:canvas:event:device_removed|device,removed]]**, **[[:develop:api:efl:canvas:event:focus_in|focus,in]]**, **[[:develop:api:efl:canvas:event:focus_out|focus,out]]**, **[[:develop:api:efl:canvas:event:object_focus_in|object,focus,in]]**, **[[:develop:api:efl:canvas:event:object_focus_out|object,focus,out]]**, **[[:develop:api:efl:canvas:event:render_post|render,post]]**, **[[:develop:api:efl:canvas:event:render_pre|render,pre]]**\\
+[[:develop:api:efl:gfx|Efl.Gfx]]\\
+> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]\\
+> **[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**\\
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
+> **[[:develop:api:efl:gfx:stack:event:restack|restack]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**, **[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:hold|hold]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:key_down|key,down]]**, **[[:develop:api:efl:input:interface:event:key_up|key,up]]**, **[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**, **[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**, **[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**, **[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**, **[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**, **[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**\\
+[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]\\
+> **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**, **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]**, **[[:develop:api:efl:ui:focus:manager:event:focused|focused]]**, **[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**\\
+[[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]]\\
+> **[[:develop:api:efl:ui:focus:object:event:focus_changed|focus,changed]]**\\
+[[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]]\\
+> **[[:develop:api:efl:ui:focus:user:event:logical_changed|logical,changed]]**, **[[:develop:api:efl:ui:focus:user:event:manager_changed|manager,changed]]**\\
+[[:develop:api:elm:widget|Elm.Widget]]\\
+> **[[:develop:api:elm:widget:event:access_changed|access,changed]]**, **[[:develop:api:elm:widget:event:language_changed|language,changed]]**, **[[:develop:api:elm:widget:event:moved|moved]]**

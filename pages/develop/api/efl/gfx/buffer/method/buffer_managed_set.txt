@@ -1,4 +1,17 @@
 ~~Title: Efl.Gfx.Buffer.buffer_managed_set~~
+===== Description =====
+
+%%Set the pixels for this buffer, managed externally by the client.%%
+
+%%EFL will use the pixel data directly, and update the GPU-side texture if required. This will mark the image as dirty. If %%''slice''%% is %%''null''%%, this will detach the pixel data.%%
+
+%%If the buffer already had pixel data, the previous image data will be dropped. This is the same as %%[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|Efl.Gfx.Buffer.buffer_copy_set]]%%.%%
+
+%%The memory buffer %%''pixels''%% must be large enough to hold %%''width''%% x %%''height''%% pixels encoded in the colorspace %%''cspace''%%.%%
+
+%%See also %%[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|Efl.Gfx.Buffer.buffer_copy_set]]%% if you want EFL to copy the input buffer internally.%%
+{{page>:develop:api-include:efl:gfx:buffer:method:buffer_managed_set:description&nouser&nolink&nodate}}
+
 ===== Signature =====
 
 <code>
@@ -27,19 +40,6 @@ Eina_Bool efl_gfx_buffer_managed_set(Eo *obj, const Eina_Slice *slice, Eina_Size
   * **stride** //(in)// - %%If 0, automatically guessed from the %%''width''%%.%%
   * **cspace** //(in)// - %%argb8888 by default.%%
   * **plane** //(in)// - %%Plane ID. 0 by default. Useful for planar formats only.%%
-
-===== Description =====
-
-%%Set the pixels for this buffer, managed externally by the client.%%
-
-%%EFL will use the pixel data directly, and update the GPU-side texture if required. This will mark the image as dirty. If %%''slice''%% is %%''null''%%, this will detach the pixel data.%%
-
-%%If the buffer already had pixel data, the previous image data will be dropped. This is the same as %%[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|Efl.Gfx.Buffer.buffer_copy_set]]%%.%%
-
-%%The memory buffer %%''pixels''%% must be large enough to hold %%''width''%% x %%''height''%% pixels encoded in the colorspace %%''cspace''%%.%%
-
-%%See also %%[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|Efl.Gfx.Buffer.buffer_copy_set]]%% if you want EFL to copy the input buffer internally.%%
-{{page>:develop:api-include:efl:gfx:buffer:method:buffer_managed_set:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

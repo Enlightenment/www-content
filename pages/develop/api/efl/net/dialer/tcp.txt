@@ -106,138 +106,94 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
+**[[:develop:api:efl:net:dialer:tcp:method:close|close]]**// [Overridden from [[:develop:api:efl:io:closer|Efl.Io.Closer]]]//\\
+> %%Closes the Input/Output object.%%
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:method:dial|dial]]**// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%Dials to the remote peer.%%
+<code c>
+Eina_Error efl_net_dialer_dial(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:property:address_dial|address_dial]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]// ''protected set''\\
+> %%Returns the address given to %%[[:develop:api:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%%.%%
+<code c>
+const char *efl_net_dialer_address_dial_get(const Eo *obj);
+void efl_net_dialer_address_dial_set(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:property:connected|connected]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]// ''protected set''\\
+> %%Returns whenever the socket is connected or not.%%
+<code c>
+Eina_Bool efl_net_dialer_connected_get(const Eo *obj);
+void efl_net_dialer_connected_set(Eo *obj, Eina_Bool connected);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:property:proxy|proxy]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%Controls/retrieves if the dialer should use a proxy.%%
+<code c>
+const char *efl_net_dialer_proxy_get(const Eo *obj);
+void efl_net_dialer_proxy_set(Eo *obj, const char *proxy_url);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:tcp:property:timeout_dial|timeout_dial]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%The timeout in seconds to use for dialing/connecting.%%
+<code c>
+double efl_net_dialer_timeout_dial_get(const Eo *obj);
+void efl_net_dialer_timeout_dial_set(Eo *obj, double seconds);
+</code>
+\\
+
 ==== Inherited ====
 
-[[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]].**[[:develop:api:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]]]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:dialer:tcp:method:close|close]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:net:socket:fd:property:closed|closed]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
-\\ 
-[[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]].**[[:develop:api:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:socket:fd:method:read|read]]** //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:socket:fd:property:can_read|can_read]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:net:socket:fd:property:eos|eos]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
-\\ 
-[[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]].**[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:net:socket:fd:method:write|write]]** //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:net:socket:fd:property:can_write|can_write]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:net:socket:tcp:property:fd|fd]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:tcp|Efl.Net.Socket.Tcp]]]//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:tcp:method:dial|dial]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:tcp:property:address_dial|address_dial]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:tcp:property:connected|connected]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:tcp:property:proxy|proxy]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:tcp:property:timeout_dial|timeout_dial]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]].**[[:develop:api:efl:net:socket:fd:property:family|family]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:efl:net:socket:tcp|Efl.Net.Socket.Tcp]].**[[:develop:api:efl:net:socket:tcp:property:cork|cork]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:net:socket:tcp|Efl.Net.Socket.Tcp]].**[[:develop:api:efl:net:socket:tcp:property:keep_alive|keep_alive]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:net:socket:tcp|Efl.Net.Socket.Tcp]].**[[:develop:api:efl:net:socket:tcp:property:no_delay|no_delay]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:socket:fd:property:address_local|address_local]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
-\\ 
-[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:socket:fd:property:address_remote|address_remote]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]// ''protected set''
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:tcp:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:tcp:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:socket:fd:method:finalize|finalize]]** //[Overridden in [[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:io:closer:fd|Efl.Io.Closer.Fd]]\\
+> **[[:develop:api:efl:io:closer:fd:property:close_on_destructor|close_on_destructor]]** //**(get, set)**//, **[[:develop:api:efl:io:closer:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**//, **[[:develop:api:efl:io:closer:fd:property:closer_fd|closer_fd]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:io:reader:fd|Efl.Io.Reader.Fd]]\\
+> **[[:develop:api:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]]\\
+> **[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]]\\
+> **[[:develop:api:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**//, **[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//\\
+[[:develop:api:efl:net:socket:fd|Efl.Net.Socket.Fd]]\\
+> **[[:develop:api:efl:net:socket:fd:method:finalize|finalize]]**, **[[:develop:api:efl:net:socket:fd:method:read|read]]**, **[[:develop:api:efl:net:socket:fd:method:write|write]]**, **[[:develop:api:efl:net:socket:fd:property:address_local|address_local]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:fd:property:address_remote|address_remote]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:fd:property:can_read|can_read]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:fd:property:can_write|can_write]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:fd:property:closed|closed]]** //**(get, set)**//, **[[:develop:api:efl:net:socket:fd:property:eos|eos]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:fd:property:family|family]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:net:socket:tcp|Efl.Net.Socket.Tcp]]\\
+> **[[:develop:api:efl:net:socket:tcp:property:cork|cork]]** //**(get, set)**//, **[[:develop:api:efl:net:socket:tcp:property:fd|fd]]** //**(get, set)**//, **[[:develop:api:efl:net:socket:tcp:property:keep_alive|keep_alive]]** //**(get, set)**//, **[[:develop:api:efl:net:socket:tcp:property:no_delay|no_delay]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:event:closed|closed]]**
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:eos|eos]]**
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:error|error]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:read|read]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:write|write]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:connected|connected]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:error|error]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:resolved|resolved]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]]\\
+> **[[:develop:api:efl:io:closer:event:closed|closed]]**\\
+[[:develop:api:efl:io:reader|Efl.Io.Reader]]\\
+> **[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**\\
+[[:develop:api:efl:io:reader|Efl.Io.Reader]]\\
+> **[[:develop:api:efl:io:reader:event:eos|eos]]**\\
+[[:develop:api:efl:io:writer|Efl.Io.Writer]]\\
+> **[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**\\
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]]\\
+> **[[:develop:api:efl:loop:fd:event:error|error]]**, **[[:develop:api:efl:loop:fd:event:read|read]]**, **[[:develop:api:efl:loop:fd:event:write|write]]**\\
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]]\\
+> **[[:develop:api:efl:net:dialer:event:connected|connected]]**, **[[:develop:api:efl:net:dialer:event:error|error]]**, **[[:develop:api:efl:net:dialer:event:resolved|resolved]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:del|del]]**

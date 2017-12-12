@@ -1,4 +1,21 @@
 ~~Title: Efl.Object.allow_parent_unref~~
+===== Values =====
+
+  * **allow** - %%Whether to allow %%''efl_unref''%%() to zero even if %%[[:develop:api:efl:object:property:parent|Efl.Object.parent]]%% is not %%''null''%%.%%
+===== Description =====
+
+%%Allow an object to be deleted by unref even if it has a parent.%%
+
+%%This simply hides error messages warning that an object being destructed still has a parent. This property is false by default.%%
+
+%%In a normal object use case, when ownership of an object is given to a caller, said ownership should be released with efl_unref(). But if the object has a parent, this will print error messages, as %%''efl_unref''%%() is stealing the ref from the parent.%%
+
+<note warning>
+%%Use this function very carefully, if you are absolutely sure of what you are doing.%%
+</note>
+{{page>:develop:api-include:efl:object:property:allow_parent_unref:description&nouser&nolink&nodate}}
+
+
 ===== Signature =====
 
 <code>
@@ -22,23 +39,6 @@
 Eina_Bool efl_allow_parent_unref_get(const Eo *obj);
 void efl_allow_parent_unref_set(Eo *obj, Eina_Bool allow);
 </code>
-
-===== Values =====
-
-  * **allow** - %%Whether to allow %%''efl_unref''%%() to zero even if %%[[:develop:api:efl:object:property:parent|Efl.Object.parent]]%% is not %%''null''%%.%%
-===== Description =====
-
-%%Allow an object to be deleted by unref even if it has a parent.%%
-
-%%This simply hides error messages warning that an object being destructed still has a parent. This property is false by default.%%
-
-%%In a normal object use case, when ownership of an object is given to a caller, said ownership should be released with efl_unref(). But if the object has a parent, this will print error messages, as %%''efl_unref''%%() is stealing the ref from the parent.%%
-
-<note warning>
-%%Use this function very carefully, if you are absolutely sure of what you are doing.%%
-</note>
-{{page>:develop:api-include:efl:object:property:allow_parent_unref:description&nouser&nolink&nodate}}
-
 
 ===== Implemented by =====
 

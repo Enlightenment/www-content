@@ -97,165 +97,127 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:net:dialer:simple:property:inner_class|inner_class]]** //**(get, set)**//
+**[[:develop:api:efl:net:dialer:simple:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:method:dial|dial]]**// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%Dials to the remote peer.%%
+<code c>
+Eina_Error efl_net_dialer_dial(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:address_dial|address_dial]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]// ''protected set''\\
+> %%Returns the address given to %%[[:develop:api:efl:net:dialer:method:dial|Efl.Net.Dialer.dial]]%%.%%
+<code c>
+const char *efl_net_dialer_address_dial_get(const Eo *obj);
+void efl_net_dialer_address_dial_set(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:connected|connected]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]// ''protected set''\\
+> %%Returns whenever the socket is connected or not.%%
+<code c>
+Eina_Bool efl_net_dialer_connected_get(const Eo *obj);
+void efl_net_dialer_connected_set(Eo *obj, Eina_Bool connected);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:inner_class|inner_class]]** //**(get, set)**//\\
+> %%The class used to create %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%% if none was provided.%%
 <code c>
 const Efl_Class *efl_net_dialer_simple_inner_class_get(const Eo *obj);
 void efl_net_dialer_simple_inner_class_set(Eo *obj, const Efl_Class *klass);
 </code>
-
-%%The class used to create %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io]]%% if none was provided.%%\\ 
-\\ 
+\\
+**[[:develop:api:efl:net:dialer:simple:property:inner_io|inner_io]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%The inner I/O this wrapper operates on.%%
+<code c>
+Efl_Object *efl_io_buffered_stream_inner_io_get(const Eo *obj);
+void efl_io_buffered_stream_inner_io_set(Eo *obj, Efl_Object *io);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:line_delimiter|line_delimiter]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%%
+<code c>
+const Eina_Slice efl_io_buffered_stream_line_delimiter_get(const Eo *obj);
+void efl_io_buffered_stream_line_delimiter_set(Eo *obj, const Eina_Slice slice);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:max_queue_size_input|max_queue_size_input]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%Limits how big the input queue can grow, in bytes.%%
+<code c>
+size_t efl_io_buffered_stream_max_queue_size_input_get(const Eo *obj);
+void efl_io_buffered_stream_max_queue_size_input_set(Eo *obj, size_t max_queue_size_input);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:max_queue_size_output|max_queue_size_output]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%Limits how big the output queue can grow, in bytes.%%
+<code c>
+size_t efl_io_buffered_stream_max_queue_size_output_get(const Eo *obj);
+void efl_io_buffered_stream_max_queue_size_output_set(Eo *obj, size_t max_queue_size_output);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:proxy|proxy]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%Controls/retrieves if the dialer should use a proxy.%%
+<code c>
+const char *efl_net_dialer_proxy_get(const Eo *obj);
+void efl_net_dialer_proxy_set(Eo *obj, const char *proxy_url);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:read_chunk_size|read_chunk_size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%Reads chunk size property, in bytes.%%
+<code c>
+size_t efl_io_buffered_stream_read_chunk_size_get(const Eo *obj);
+void efl_io_buffered_stream_read_chunk_size_set(Eo *obj, size_t size);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:timeout_dial|timeout_dial]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:dialer|Efl.Net.Dialer]]]//\\
+> %%The timeout in seconds to use for dialing/connecting.%%
+<code c>
+double efl_net_dialer_timeout_dial_get(const Eo *obj);
+void efl_net_dialer_timeout_dial_set(Eo *obj, double seconds);
+</code>
+\\
+**[[:develop:api:efl:net:dialer:simple:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//\\
+> %%Error as ETIMEDOUT if it becomes inactive for some time.%%
+<code c>
+double efl_io_buffered_stream_timeout_inactivity_get(const Eo *obj);
+void efl_io_buffered_stream_timeout_inactivity_set(Eo *obj, double seconds);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:method:clear|clear]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:method:discard|discard]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:method:eos_mark|eos_mark]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:method:flush|flush]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:property:pending_read|pending_read]]** //**(get)**//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:property:pending_write|pending_write]]** //**(get)**//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:property:progress|progress]]** //**(get)**//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:property:slice|slice]]** //**(get)**//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:inner_io|inner_io]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:line_delimiter|line_delimiter]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:max_queue_size_input|max_queue_size_input]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:max_queue_size_output|max_queue_size_output]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:read_chunk_size|read_chunk_size]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:net:dialer:simple:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:buffered_stream:method:close|close]]** //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:buffered_stream:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:buffered_stream:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:buffered_stream:property:closed|closed]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:buffered_stream:method:read|read]]** //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:buffered_stream:property:can_read|can_read]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// ''protected set''
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:buffered_stream:property:eos|eos]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// ''protected set''
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:buffered_stream:method:write|write]]** //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]//
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:buffered_stream:property:can_write|can_write]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]]// ''protected set''
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:simple:method:dial|dial]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:simple:property:address_dial|address_dial]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:simple:property:connected|connected]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:simple:property:proxy|proxy]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:simple:property:timeout_dial|timeout_dial]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:socket:simple:property:address_local|address_local]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:simple|Efl.Net.Socket.Simple]]]// ''protected set''
-\\ 
-[[:develop:api:efl:net:socket|Efl.Net.Socket]].**[[:develop:api:efl:net:socket:simple:property:address_remote|address_remote]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:net:socket:simple|Efl.Net.Socket.Simple]]]// ''protected set''
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:simple:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:dialer:simple:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]\\
+> **[[:develop:api:efl:io:buffered_stream:method:clear|clear]]**, **[[:develop:api:efl:io:buffered_stream:method:close|close]]**, **[[:develop:api:efl:io:buffered_stream:method:discard|discard]]**, **[[:develop:api:efl:io:buffered_stream:method:eos_mark|eos_mark]]**, **[[:develop:api:efl:io:buffered_stream:method:flush|flush]]**, **[[:develop:api:efl:io:buffered_stream:method:read|read]]**, **[[:develop:api:efl:io:buffered_stream:method:write|write]]**, **[[:develop:api:efl:io:buffered_stream:property:can_read|can_read]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:io:buffered_stream:property:can_write|can_write]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:io:buffered_stream:property:close_on_destructor|close_on_destructor]]** //**(get, set)**//, **[[:develop:api:efl:io:buffered_stream:property:close_on_exec|close_on_exec]]** //**(get, set)**//, **[[:develop:api:efl:io:buffered_stream:property:closed|closed]]** //**(get, set)**//, **[[:develop:api:efl:io:buffered_stream:property:eos|eos]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:io:buffered_stream:property:pending_read|pending_read]]** //**(get)**//, **[[:develop:api:efl:io:buffered_stream:property:pending_write|pending_write]]** //**(get)**//, **[[:develop:api:efl:io:buffered_stream:property:progress|progress]]** //**(get)**//, **[[:develop:api:efl:io:buffered_stream:property:slice|slice]]** //**(get)**//\\
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:net:socket:simple|Efl.Net.Socket.Simple]]\\
+> **[[:develop:api:efl:net:socket:simple:property:address_local|address_local]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:net:socket:simple:property:address_remote|address_remote]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:error|error]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:finished|finished]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:line|line]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:progress|progress]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:read_finished|read,finished]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:slice_changed|slice,changed]]**
-\\ 
-[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]].**[[:develop:api:efl:io:buffered_stream:event:write_finished|write,finished]]**
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:event:closed|closed]]**
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:eos|eos]]**
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:connected|connected]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:error|error]]**
-\\ 
-[[:develop:api:efl:net:dialer|Efl.Net.Dialer]].**[[:develop:api:efl:net:dialer:event:resolved|resolved]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]]\\
+> **[[:develop:api:efl:io:buffered_stream:event:error|error]]**, **[[:develop:api:efl:io:buffered_stream:event:finished|finished]]**, **[[:develop:api:efl:io:buffered_stream:event:line|line]]**, **[[:develop:api:efl:io:buffered_stream:event:progress|progress]]**, **[[:develop:api:efl:io:buffered_stream:event:read_finished|read,finished]]**, **[[:develop:api:efl:io:buffered_stream:event:slice_changed|slice,changed]]**, **[[:develop:api:efl:io:buffered_stream:event:write_finished|write,finished]]**\\
+[[:develop:api:efl:io:closer|Efl.Io.Closer]]\\
+> **[[:develop:api:efl:io:closer:event:closed|closed]]**\\
+[[:develop:api:efl:io:reader|Efl.Io.Reader]]\\
+> **[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**\\
+[[:develop:api:efl:io:reader|Efl.Io.Reader]]\\
+> **[[:develop:api:efl:io:reader:event:eos|eos]]**\\
+[[:develop:api:efl:io:writer|Efl.Io.Writer]]\\
+> **[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**\\
+[[:develop:api:efl:net:dialer|Efl.Net.Dialer]]\\
+> **[[:develop:api:efl:net:dialer:event:connected|connected]]**, **[[:develop:api:efl:net:dialer:event:error|error]]**, **[[:develop:api:efl:net:dialer:event:resolved|resolved]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

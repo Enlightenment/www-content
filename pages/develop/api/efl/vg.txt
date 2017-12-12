@@ -47,150 +47,154 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:vg:method:bounds_get|bounds_get]]**
+**[[:develop:api:efl:vg:method:bounds_get|bounds_get]]**\\
+> %%Give the bounding box in screen coordinate as being drawn.%%
 <code c>
 void efl_vg_bounds_get(Eo *obj, Eina_Rect *r);
 </code>
-
-%%Give the bounding box in screen coordinate as being drawn.%%\\ 
-\\ 
-**[[:develop:api:efl:vg:method:interpolate|interpolate]]**
+\\
+**[[:develop:api:efl:vg:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:method:duplicate|duplicate]]**// [Overridden from [[:develop:api:efl:duplicate|Efl.Duplicate]]]//\\
+> %%Creates a carbon copy of this object and returns it.%%
+<code c>
+Efl_Duplicate *efl_duplicate(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:method:interpolate|interpolate]]**\\
+> %%Interpolate a given vector graphics object%%
 <code c>
 Eina_Bool efl_vg_interpolate(Eo *obj, const Efl_VG *from, const Efl_VG *to, double pos_map);
 </code>
-
-%%Interpolate a given vector graphics object%%\\ 
-\\ 
-**[[:develop:api:efl:vg:property:mask|mask]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:vg:method:lower|lower]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Lower %%''obj''%% to the bottom of its layer.%%
+<code c>
+void efl_gfx_stack_lower(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:method:raise|raise]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Raise %%''obj''%% to the top of its layer.%%
+<code c>
+void efl_gfx_stack_raise(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:method:stack_above|stack_above]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Stack %%''obj''%% immediately %%''above''%%%%
+<code c>
+void efl_gfx_stack_above(Eo *obj, Efl_Gfx_Stack *above);
+</code>
+\\
+**[[:develop:api:efl:vg:method:stack_below|stack_below]]**// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Stack %%''obj''%% immediately %%''below''%%%%
+<code c>
+void efl_gfx_stack_below(Eo *obj, Efl_Gfx_Stack *below);
+</code>
+\\
+**[[:develop:api:efl:vg:property:above|above]]** //**(get)**//// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Get the Evas object stacked right above %%''obj''%%%%
+<code c>
+Efl_Gfx_Stack *efl_gfx_stack_above_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:property:below|below]]** //**(get)**//// [Overridden from [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]]//\\
+> %%Get the Evas object stacked right below %%''obj''%%%%
+<code c>
+Efl_Gfx_Stack *efl_gfx_stack_below_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:vg:property:color|color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//
+<code c>
+void efl_gfx_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
+void efl_gfx_color_set(Eo *obj, int r, int g, int b, int a);
+</code>
+\\
+**[[:develop:api:efl:vg:property:geometry|geometry]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%Rectangular geometry that combines both position and size.%%
+<code c>
+Eina_Rect efl_gfx_geometry_get(const Eo *obj);
+void efl_gfx_geometry_set(Eo *obj, Eina_Rect rect);
+</code>
+\\
+**[[:develop:api:efl:vg:property:mask|mask]]** //**(get, set)**//\\
+> %%Vector graphics object mask%%
 <code c>
 Efl_VG *efl_vg_mask_get(const Eo *obj);
 void efl_vg_mask_set(Eo *obj, Efl_VG *m);
 </code>
-
-%%Vector graphics object mask%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:vg:property:name|name]]** //**(get, set)**//
 <code c>
 const char *efl_vg_name_get(const Eo *obj);
 void efl_vg_name_set(Eo *obj, const char *name);
 </code>
-
-\\ 
+\\
 **[[:develop:api:efl:vg:property:origin|origin]]** //**(get, set)**//
 <code c>
 void efl_vg_origin_get(const Eo *obj, double *x, double *y);
 void efl_vg_origin_set(Eo *obj, double x, double y);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:vg:property:parent|parent]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%The parent of an object.%%
+<code c>
+Efl_Object *efl_parent_get(const Eo *obj);
+void efl_parent_set(Eo *obj, Efl_Object *parent);
+</code>
+\\
+**[[:develop:api:efl:vg:property:position|position]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The 2D position of a canvas object.%%
+<code c>
+Eina_Position2D efl_gfx_position_get(const Eo *obj);
+void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
+</code>
+\\
+**[[:develop:api:efl:vg:property:size|size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The 2D size of a canvas object.%%
+<code c>
+Eina_Size2D efl_gfx_size_get(const Eo *obj);
+void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
+</code>
+\\
 **[[:develop:api:efl:vg:property:transformation|transformation]]** //**(get, set)**//
 <code c>
 const Eina_Matrix3 *efl_vg_transformation_get(const Eo *obj);
 void efl_vg_transformation_set(Eo *obj, const Eina_Matrix3 *m);
 </code>
-
-\\ 
+\\
+**[[:develop:api:efl:vg:property:visible|visible]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The visibility of a canvas object.%%
+<code c>
+Eina_Bool efl_gfx_visible_get(const Eo *obj);
+void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:duplicate|Efl.Duplicate]].**[[:develop:api:efl:vg:method:duplicate|duplicate]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:property:layer|layer]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:method:lower|lower]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:method:raise|raise]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:method:stack_above|stack_above]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:method:stack_below|stack_below]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:property:above|above]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:vg:property:below|below]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:vg:property:color|color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:vg:property:geometry|geometry]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:vg:property:position|position]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:vg:property:size|size]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:vg:property:visible|visible]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:vg:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:vg:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:vg:property:parent|parent]]** //**(get, set)**// //[Overridden here]//
-\\ 
-
+[[:develop:api:efl:gfx|Efl.Gfx]]\\
+> **[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
+> **[[:develop:api:efl:gfx:stack:property:layer|layer]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:event:restack|restack]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:changed|changed]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:hide|hide]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:move|move]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:resize|resize]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:show|show]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:gfx|Efl.Gfx]]\\
+> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
+> **[[:develop:api:efl:gfx:stack:event:restack|restack]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

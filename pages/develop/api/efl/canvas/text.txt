@@ -116,581 +116,714 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:canvas:text:method:async_layout|async_layout]]**
+**[[:develop:api:efl:canvas:text:method:annotation_del|annotation_del]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Deletes given annotation.%%
+<code c>
+Eina_Bool efl_text_annotation_del(Eo *obj, Efl_Text_Annotate_Annotation *annotation);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:annotation_insert|annotation_insert]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Inserts an annotation format in a specified range [%%''start''%%, %%''end''%% - 1].%%
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_annotation_insert(Eo *obj, Efl_Text_Cursor_Cursor *start, Efl_Text_Cursor_Cursor *end, const char *format);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:annotation_positions_get|annotation_positions_get]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Sets given cursors to the start and end positions of the annotation.%%
+<code c>
+void efl_text_annotation_positions_get(Eo *obj, const Efl_Text_Annotate_Annotation *annotation, Efl_Text_Cursor_Cursor *start, Efl_Text_Cursor_Cursor *end);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:async_layout|async_layout]]**\\
+> %%Requests to layout the text off the mainloop.%%
 <code c>
 Eina_Future *efl_canvas_text_async_layout(Eo *obj);
 </code>
-
-%%Requests to layout the text off the mainloop.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:obstacle_add|obstacle_add]]**
+\\
+**[[:develop:api:efl:canvas:text:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_char_delete|cursor_char_delete]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Deletes a single character from position pointed by given cursor.%%
+<code c>
+void efl_text_cursor_char_delete(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_char_next|cursor_char_next]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the next character%%
+<code c>
+void efl_text_cursor_char_next(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_char_prev|cursor_char_prev]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the previous character%%
+<code c>
+void efl_text_cursor_char_prev(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_compare|cursor_compare]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Compare two cursors%%
+<code c>
+int efl_text_cursor_compare(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_coord_set|cursor_coord_set]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Set cursor coordinates%%
+<code c>
+void efl_text_cursor_coord_set(Eo *obj, Efl_Text_Cursor_Cursor *cur, int x, int y);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_copy|cursor_copy]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Copy existing cursor%%
+<code c>
+void efl_text_cursor_copy(Eo *obj, Efl_Text_Cursor_Cursor *dst, const Efl_Text_Cursor_Cursor *src);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_equal|cursor_equal]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Check if two cursors are equal%%
+<code c>
+Eina_Bool efl_text_cursor_equal(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_free|cursor_free]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Free existing cursor%%
+<code c>
+void efl_text_cursor_free(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_line_char_first|cursor_line_char_first]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current line first character%%
+<code c>
+void efl_text_cursor_line_char_first(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_line_char_last|cursor_line_char_last]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current line last character%%
+<code c>
+void efl_text_cursor_line_char_last(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_line_jump_by|cursor_line_jump_by]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Jump the cursor by the given number of lines%%
+<code c>
+void efl_text_cursor_line_jump_by(Eo *obj, Efl_Text_Cursor_Cursor *cur, int by);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_markup_insert|cursor_markup_insert]]**// [Overridden from [[:develop:api:efl:text:markup|Efl.Text.Markup]]]//\\
+> %%Inserts a markup text to the text object in a given cursor position%%
+<code c>
+void efl_text_markup_cursor_markup_insert(Eo *obj, Efl_Text_Cursor_Cursor *cur, const char *markup);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_new|cursor_new]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Create new cursor%%
+<code c>
+Efl_Text_Cursor_Cursor *efl_text_cursor_new(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_object_item_insert|cursor_object_item_insert]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Inserts a object item at specified position.%%
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_cursor_object_item_insert(Eo *obj, Efl_Text_Cursor_Cursor *cur, const char *format);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_char_first|cursor_paragraph_char_first]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the first character in this paragraph%%
+<code c>
+void efl_text_cursor_paragraph_char_first(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_char_last|cursor_paragraph_char_last]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the last character in this paragraph%%
+<code c>
+void efl_text_cursor_paragraph_char_last(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_first|cursor_paragraph_first]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current paragraph first character%%
+<code c>
+void efl_text_cursor_paragraph_first(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_last|cursor_paragraph_last]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current paragraph last character%%
+<code c>
+void efl_text_cursor_paragraph_last(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_next|cursor_paragraph_next]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the start of the next text node%%
+<code c>
+void efl_text_cursor_paragraph_next(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_paragraph_prev|cursor_paragraph_prev]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advances to the end of the previous text node%%
+<code c>
+void efl_text_cursor_paragraph_prev(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_text_insert|cursor_text_insert]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Adds text to the current cursor position and set the cursor to *after* the start of the text just added.%%
+<code c>
+int efl_text_cursor_text_insert(Eo *obj, Efl_Text_Cursor_Cursor *cur, const char *text);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_word_end|cursor_word_end]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current word end%%
+<code c>
+void efl_text_cursor_word_end(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:cursor_word_start|cursor_word_start]]**// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Advance to current word start%%
+<code c>
+void efl_text_cursor_word_start(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:object_item_geometry_get|object_item_geometry_get]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Queries a given object item for its geometry.%%
+<code c>
+Eina_Bool efl_text_object_item_geometry_get(Eo *obj, const Efl_Text_Annotate_Annotation *an, int *x, int *y, int *w, int *h);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:obstacle_add|obstacle_add]]**\\
+> %%Add obstacle evas object %%''eo_obs''%% to be observed during layout of text.%%
 <code c>
 Eina_Bool efl_canvas_text_obstacle_add(Eo *obj, Efl_Canvas_Object *eo_obs);
 </code>
-
-%%Add obstacle evas object %%''eo_obs''%% to be observed during layout of text.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:obstacle_del|obstacle_del]]**
+\\
+**[[:develop:api:efl:canvas:text:method:obstacle_del|obstacle_del]]**\\
+> %%Removes %%''eo_obs''%% from observation during text layout.%%
 <code c>
 Eina_Bool efl_canvas_text_obstacle_del(Eo *obj, Efl_Canvas_Object *eo_obs);
 </code>
-
-%%Removes %%''eo_obs''%% from observation during text layout.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:obstacles_update|obstacles_update]]**
+\\
+**[[:develop:api:efl:canvas:text:method:obstacles_update|obstacles_update]]**\\
+> %%Triggers for relayout due to obstacles' state change.%%
 <code c>
 void efl_canvas_text_obstacles_update(Eo *obj);
 </code>
-
-%%Triggers for relayout due to obstacles' state change.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:range_delete|range_delete]]**
+\\
+**[[:develop:api:efl:canvas:text:method:range_annotations_get|range_annotations_get]]**// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%Returns an iterator of all the handles in a range.%%
+<code c>
+Eina_Iterator *efl_text_range_annotations_get(Eo *obj, const Efl_Text_Cursor_Cursor *start, const Efl_Text_Cursor_Cursor *end);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:range_delete|range_delete]]**\\
+> %%Deletes the range between given cursors.%%
 <code c>
 void efl_canvas_text_range_delete(Eo *obj, Efl_Text_Cursor_Cursor *cur1, Efl_Text_Cursor_Cursor *cur2);
 </code>
-
-%%Deletes the range between given cursors.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:range_geometry_get|range_geometry_get]]**
+\\
+**[[:develop:api:efl:canvas:text:method:range_geometry_get|range_geometry_get]]**\\
+> %%Get the geometry of a range in the text.%%
 <code c>
 Eina_Iterator *efl_canvas_text_range_geometry_get(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
 </code>
-
-%%Get the geometry of a range in the text.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:range_simple_geometry_get|range_simple_geometry_get]]**
+\\
+**[[:develop:api:efl:canvas:text:method:range_simple_geometry_get|range_simple_geometry_get]]**\\
+> %%Get the "simple" geometry of a range.%%
 <code c>
 Eina_Iterator *efl_canvas_text_range_simple_geometry_get(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
 </code>
-
-%%Get the "simple" geometry of a range.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:range_text_get|range_text_get]]**
+\\
+**[[:develop:api:efl:canvas:text:method:range_text_get|range_text_get]]**\\
+> %%Returns the text in the range between %%''cur1''%% and %%''cur2''%%.%%
 <code c>
 char *efl_canvas_text_range_text_get(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
 </code>
-
-%%Returns the text in the range between %%''cur1''%% and %%''cur2''%%.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:method:visible_range_get|visible_range_get]]**
+\\
+**[[:develop:api:efl:canvas:text:method:visible_range_get|visible_range_get]]**\\
+> %%Returns the currently visible range.%%
 <code c>
 Eina_Bool efl_canvas_text_visible_range_get(Eo *obj, Efl_Text_Cursor_Cursor *start, Efl_Text_Cursor_Cursor *end);
 </code>
-
-%%Returns the currently visible range.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:canvas:text:property:annotation|annotation]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%A new format for %%''annotation''%%.%%
+<code c>
+const char *efl_text_annotation_get(const Eo *obj, Efl_Text_Annotate_Annotation *annotation);
+Eina_Bool efl_text_annotation_set(Eo *obj, Efl_Text_Annotate_Annotation *annotation, const char *format);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:backing_color|backing_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Backing color%%
+<code c>
+void efl_text_backing_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_backing_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:backing_type|backing_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Enable or disable backing type%%
+<code c>
+Efl_Text_Style_Backing_Type efl_text_backing_type_get(const Eo *obj);
+void efl_text_backing_type_set(Eo *obj, Efl_Text_Style_Backing_Type type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]]** //**(get, set)**//\\
+> %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%%
 <code c>
 const char *efl_canvas_text_bidi_delimiters_get(const Eo *obj);
 void efl_canvas_text_bidi_delimiters_set(Eo *obj, const char *delim);
 </code>
-
-%%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:is_empty|is_empty]]** //**(get)**//
+\\
+**[[:develop:api:efl:canvas:text:property:cursor_content|cursor_content]]** //**(get)**//// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%The content of the cursor (the character under the cursor)%%
+<code c>
+Eina_Unicode efl_text_cursor_content_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:cursor_geometry|cursor_geometry]]** //**(get)**//// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Returns the geometry of two cursors ("split cursor"), if logical cursor is between LTR/RTL text, also considering paragraph direction. Upper cursor is shown for the text of the same direction as paragraph, lower cursor - for opposite.%%
+<code c>
+Eina_Bool efl_text_cursor_geometry_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur, Efl_Text_Cursor_Cursor_Type ctype, int *cx, int *cy, int *cw, int *ch, int *cx2, int *cy2, int *cw2, int *ch2);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:cursor_object_item_annotation|cursor_object_item_annotation]]** //**(get)**//// [Overridden from [[:develop:api:efl:text:annotate|Efl.Text.Annotate]]]//\\
+> %%The object-item annotation at the cursor's position.%%
+<code c>
+Efl_Text_Annotate_Annotation *efl_text_cursor_object_item_annotation_get(const Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:cursor_position|cursor_position]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%Cursor position%%
+<code c>
+int efl_text_cursor_position_get(const Eo *obj, Efl_Text_Cursor_Cursor *cur);
+void efl_text_cursor_position_set(Eo *obj, Efl_Text_Cursor_Cursor *cur, int position);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:cursor|cursor]]** //**(get)**//// [Overridden from [[:develop:api:efl:text:cursor|Efl.Text.Cursor]]]//\\
+> %%The object's main cursor.%%
+<code c>
+Efl_Text_Cursor_Cursor *efl_text_cursor_get(const Eo *obj, Efl_Text_Cursor_Cursor_Get_Type get_type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:effect_type|effect_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Type of effect used for the displayed text%%
+<code c>
+Efl_Text_Style_Effect_Type efl_text_effect_type_get(const Eo *obj);
+void efl_text_effect_type_set(Eo *obj, Efl_Text_Style_Effect_Type type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:ellipsis|ellipsis]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Ellipsis value (number from -1.0 to 1.0)%%
+<code c>
+double efl_text_ellipsis_get(const Eo *obj);
+void efl_text_ellipsis_set(Eo *obj, double value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:filter_data|filter_data]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]]]//\\
+> %%Extra data used by the filter program.%%
+<code c>
+void efl_gfx_filter_data_get(const Eo *obj, const char *name, const char **value, Eina_Bool *execute);
+void efl_gfx_filter_data_set(Eo *obj, const char *name, const char *value, Eina_Bool execute);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:filter_program|filter_program]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_program_get(const Eo *obj, const char **code, const char **name);
+void efl_gfx_filter_program_set(Eo *obj, const char *code, const char *name);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:filter_source|filter_source]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]]]//\\
+> %%Bind an object to use as a mask or texture in a filter program.%%
+<code c>
+Efl_Gfx *efl_gfx_filter_source_get(const Eo *obj, const char *name);
+void efl_gfx_filter_source_set(Eo *obj, const char *name, Efl_Gfx *source);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_bitmap_scalable|font_bitmap_scalable]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%The bitmap fonts have fixed size glyphs for several available sizes. Basically, it is not scalable. But, it needs to be scalable for some use cases. (ex. colorful emoji fonts)%%
+<code c>
+Efl_Text_Font_Bitmap_Scalable efl_text_font_bitmap_scalable_get(const Eo *obj);
+void efl_text_font_bitmap_scalable_set(Eo *obj, Efl_Text_Font_Bitmap_Scalable scalable);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_fallbacks|font_fallbacks]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%Comma-separated list of font fallbacks%%
+<code c>
+const char *efl_text_font_fallbacks_get(const Eo *obj);
+void efl_text_font_fallbacks_set(Eo *obj, const char *font_fallbacks);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_lang|font_lang]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%Specific language of the displayed font%%
+<code c>
+const char *efl_text_font_lang_get(const Eo *obj);
+void efl_text_font_lang_set(Eo *obj, const char *lang);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_slant|font_slant]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%Type of slant of the displayed font%%
+<code c>
+Efl_Text_Font_Slant efl_text_font_slant_get(const Eo *obj);
+void efl_text_font_slant_set(Eo *obj, Efl_Text_Font_Slant style);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_source|font_source]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%The source that will be used to lookup the font of the text%%
+<code c>
+const char *efl_text_font_source_get(const Eo *obj);
+void efl_text_font_source_set(Eo *obj, const char *font_source);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_weight|font_weight]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%Type of weight of the displayed font%%
+<code c>
+Efl_Text_Font_Weight efl_text_font_weight_get(const Eo *obj);
+void efl_text_font_weight_set(Eo *obj, Efl_Text_Font_Weight font_weight);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font_width|font_width]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%Type of width of the displayed font%%
+<code c>
+Efl_Text_Font_Width efl_text_font_width_get(const Eo *obj);
+void efl_text_font_width_set(Eo *obj, Efl_Text_Font_Width width);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:font|font]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:font|Efl.Text.Font]]]//\\
+> %%The font name and size that is used for the displayed text%%
+<code c>
+void efl_text_font_get(const Eo *obj, const char **font, int *size);
+void efl_text_font_set(Eo *obj, const char *font, int size);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:gfx_filter|gfx_filter]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Program that applies a special filter%%
+<code c>
+const char *efl_text_gfx_filter_get(const Eo *obj);
+void efl_text_gfx_filter_set(Eo *obj, const char *code);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:glow2_color|glow2_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Second color of the glow effect%%
+<code c>
+void efl_text_glow2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_glow2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:glow_color|glow_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of glow effect%%
+<code c>
+void efl_text_glow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_glow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:halign_auto_type|halign_auto_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Horizontal alignment of text%%
+<code c>
+Efl_Text_Format_Horizontal_Alignment_Auto_Type efl_text_halign_auto_type_get(const Eo *obj);
+void efl_text_halign_auto_type_set(Eo *obj, Efl_Text_Format_Horizontal_Alignment_Auto_Type value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:halign|halign]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Horizontal alignment of text%%
+<code c>
+double efl_text_halign_get(const Eo *obj);
+void efl_text_halign_set(Eo *obj, double value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:is_empty|is_empty]]** //**(get)**//\\
+> %%Whether the object is empty (no text) or not%%
 <code c>
 Eina_Bool efl_canvas_text_is_empty_get(const Eo *obj);
 </code>
-
-%%Whether the object is empty (no text) or not%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:legacy_newline|legacy_newline]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:canvas:text:property:legacy_newline|legacy_newline]]** //**(get, set)**//\\
+> %%When %%''true''%%, newline character will behave as a paragraph separator.%%
 <code c>
 Eina_Bool efl_canvas_text_legacy_newline_get(const Eo *obj);
 void efl_canvas_text_legacy_newline_set(Eo *obj, Eina_Bool mode);
 </code>
-
-%%When %%''true''%%, newline character will behave as a paragraph separator.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:size_formatted|size_formatted]]** //**(get)**//
+\\
+**[[:develop:api:efl:canvas:text:property:linegap|linegap]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Minimal line gap (top and bottom) for each line in the text%%
+<code c>
+double efl_text_linegap_get(const Eo *obj);
+void efl_text_linegap_set(Eo *obj, double value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:linerelgap|linerelgap]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Relative line gap (top and bottom) for each line in the text%%
+<code c>
+double efl_text_linerelgap_get(const Eo *obj);
+void efl_text_linerelgap_set(Eo *obj, double value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:markup|markup]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:markup|Efl.Text.Markup]]]//\\
+> %%Markup property%%
+<code c>
+const char *efl_text_markup_get(const Eo *obj);
+void efl_text_markup_set(Eo *obj, const char *markup);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:multiline|multiline]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Multiline is enabled or not%%
+<code c>
+Eina_Bool efl_text_multiline_get(const Eo *obj);
+void efl_text_multiline_set(Eo *obj, Eina_Bool enabled);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:normal_color|normal_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of text, excluding style%%
+<code c>
+void efl_text_normal_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_normal_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:outline_color|outline_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of outline effect%%
+<code c>
+void efl_text_outline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_outline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:paragraph_direction|paragraph_direction]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//\\
+> %%This handles text paragraph direction of the given object. Even if the given object is not textblock or text, its smart child objects can inherit the paragraph direction from the given object. The default paragraph direction is %%''inherit''%%.%%
+<code c>
+Efl_Text_Bidirectional_Type efl_canvas_object_paragraph_direction_get(const Eo *obj);
+void efl_canvas_object_paragraph_direction_set(Eo *obj, Efl_Text_Bidirectional_Type dir);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:password|password]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Whether text is a password%%
+<code c>
+Eina_Bool efl_text_password_get(const Eo *obj);
+void efl_text_password_set(Eo *obj, Eina_Bool enabled);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:replacement_char|replacement_char]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%The character used to replace characters that can not be displayed%%
+<code c>
+const char *efl_text_replacement_char_get(const Eo *obj);
+void efl_text_replacement_char_set(Eo *obj, const char *repch);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:scale|scale]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
+> %%The scaling factor of an object.%%
+<code c>
+double efl_gfx_scale_get(const Eo *obj);
+void efl_gfx_scale_set(Eo *obj, double scale);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:shadow_color|shadow_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of shadow effect%%
+<code c>
+void efl_text_shadow_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_shadow_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:shadow_direction|shadow_direction]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Direction of shadow effect%%
+<code c>
+Efl_Text_Style_Shadow_Direction efl_text_shadow_direction_get(const Eo *obj);
+void efl_text_shadow_direction_set(Eo *obj, Efl_Text_Style_Shadow_Direction type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:size_formatted|size_formatted]]** //**(get)**//\\
+> %%The formatted width and height.%%
 <code c>
 void efl_canvas_text_size_formatted_get(const Eo *obj, int *w, int *h);
 </code>
-
-%%The formatted width and height.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:size_native|size_native]]** //**(get)**//
+\\
+**[[:develop:api:efl:canvas:text:property:size_native|size_native]]** //**(get)**//\\
+> %%The native width and height.%%
 <code c>
 void efl_canvas_text_size_native_get(const Eo *obj, int *w, int *h);
 </code>
-
-%%The native width and height.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:style_insets|style_insets]]** //**(get)**//
+\\
+**[[:develop:api:efl:canvas:text:property:strikethrough_color|strikethrough_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of strikethrough_style%%
+<code c>
+void efl_text_strikethrough_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_strikethrough_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:strikethrough_type|strikethrough_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Type of strikethrough style%%
+<code c>
+Efl_Text_Style_Strikethrough_Type efl_text_strikethrough_type_get(const Eo *obj);
+void efl_text_strikethrough_type_set(Eo *obj, Efl_Text_Style_Strikethrough_Type type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:style_insets|style_insets]]** //**(get)**//\\
+> %%Gets the left, right, top and bottom insets of the text.%%
 <code c>
 void efl_canvas_text_style_insets_get(const Eo *obj, int *l, int *r, int *t, int *b);
 </code>
-
-%%Gets the left, right, top and bottom insets of the text.%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:property:style|style]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:canvas:text:property:style|style]]** //**(get, set)**//\\
+> %%The text style of the object.%%
 <code c>
 const char *efl_canvas_text_style_get(const Eo *obj, const char *key);
 void efl_canvas_text_style_set(Eo *obj, const char *key, const char *style);
 </code>
-
-%%The text style of the object.%%\\ 
-\\ 
+\\
+**[[:develop:api:efl:canvas:text:property:tabstops|tabstops]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Tabstops value%%
+<code c>
+int efl_text_tabstops_get(const Eo *obj);
+void efl_text_tabstops_set(Eo *obj, int value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:text|text]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text|Efl.Text]]]//
+<code c>
+const char *efl_text_get(const Eo *obj);
+void efl_text_set(Eo *obj, const char *text);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline2_color|underline2_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of underline2 style%%
+<code c>
+void efl_text_underline2_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline2_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline2_type|underline2_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Type of underline2 style%%
+<code c>
+Efl_Text_Style_Underline_Type efl_text_underline2_type_get(const Eo *obj);
+void efl_text_underline2_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_color|underline_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of normal underline style%%
+<code c>
+void efl_text_underline_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_dashed_color|underline_dashed_color]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Color of dashed underline style%%
+<code c>
+void efl_text_underline_dashed_color_get(const Eo *obj, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a);
+void efl_text_underline_dashed_color_set(Eo *obj, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_dashed_gap|underline_dashed_gap]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Gap of dashed underline style%%
+<code c>
+int efl_text_underline_dashed_gap_get(const Eo *obj);
+void efl_text_underline_dashed_gap_set(Eo *obj, int gap);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_dashed_width|underline_dashed_width]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Width of dashed underline style%%
+<code c>
+int efl_text_underline_dashed_width_get(const Eo *obj);
+void efl_text_underline_dashed_width_set(Eo *obj, int width);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_height|underline_height]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Height of underline style%%
+<code c>
+double efl_text_underline_height_get(const Eo *obj);
+void efl_text_underline_height_set(Eo *obj, double height);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:underline_type|underline_type]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:style|Efl.Text.Style]]]//\\
+> %%Sets an underline style on the text%%
+<code c>
+Efl_Text_Style_Underline_Type efl_text_underline_type_get(const Eo *obj);
+void efl_text_underline_type_set(Eo *obj, Efl_Text_Style_Underline_Type type);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:valign|valign]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Vertical alignment of text%%
+<code c>
+double efl_text_valign_get(const Eo *obj);
+void efl_text_valign_set(Eo *obj, double value);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:property:wrap|wrap]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
+> %%Wrap mode for use in the text%%
+<code c>
+Efl_Text_Format_Wrap efl_text_wrap_get(const Eo *obj);
+void efl_text_wrap_set(Eo *obj, Efl_Text_Format_Wrap wrap);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:filter_dirty|filter_dirty]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called when the filter changes must trigger a redraw of the object.%%
+<code c>
+void evas_filter_dirty(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:filter_input_render|filter_input_render]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%
+<code c>
+Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *engine, void *output, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
+</code>
+\\
+**[[:develop:api:efl:canvas:text:method:filter_state_prepare|filter_state_prepare]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%%
+<code c>
+void evas_filter_state_prepare(Eo *obj, Efl_Canvas_Filter_State *state, void *data);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:pointer_coords_inside_get|pointer_coords_inside_get]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clip|clip]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:is_frame_object|is_frame_object]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:no_render|no_render]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:text:property:paragraph_direction|paragraph_direction]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]].**[[:develop:api:efl:canvas:object:property:pointer_inside|pointer_inside]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:text:property:filter_data|filter_data]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:text:property:filter_program|filter_program]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:text:property:filter_source|filter_source]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_has|map_has]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate|rotate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:translate|translate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom|zoom]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_aspect|hint_aspect]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_max|hint_max]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]// ''protected set''
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_weight|hint_weight]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_base|hint_base]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_step|hint_step]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:lower|lower]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:raise|raise]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:color|color]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:position|position]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:size|size]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:visible|visible]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:text:property:scale|scale]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:debug_name_override|debug_name_override]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:del|del]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:finalize|finalize]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:text:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:text:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:annotation_del|annotation_del]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:annotation_insert|annotation_insert]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:annotation_positions_get|annotation_positions_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:cursor_object_item_insert|cursor_object_item_insert]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:object_item_geometry_get|object_item_geometry_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:method:range_annotations_get|range_annotations_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:property:annotation|annotation]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:annotate|Efl.Text.Annotate]].**[[:develop:api:efl:canvas:text:property:cursor_object_item_annotation|cursor_object_item_annotation]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_char_delete|cursor_char_delete]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_char_next|cursor_char_next]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_char_prev|cursor_char_prev]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_compare|cursor_compare]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_coord_set|cursor_coord_set]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_copy|cursor_copy]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_equal|cursor_equal]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_free|cursor_free]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_line_char_first|cursor_line_char_first]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_line_char_last|cursor_line_char_last]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_line_jump_by|cursor_line_jump_by]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_new|cursor_new]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_char_first|cursor_paragraph_char_first]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_char_last|cursor_paragraph_char_last]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_first|cursor_paragraph_first]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_last|cursor_paragraph_last]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_next|cursor_paragraph_next]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_paragraph_prev|cursor_paragraph_prev]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_text_insert|cursor_text_insert]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_word_end|cursor_word_end]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:method:cursor_word_start|cursor_word_start]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:property:cursor_content|cursor_content]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:property:cursor_geometry|cursor_geometry]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:property:cursor_position|cursor_position]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]].**[[:develop:api:efl:canvas:text:property:cursor|cursor]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_bitmap_scalable|font_bitmap_scalable]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_fallbacks|font_fallbacks]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_lang|font_lang]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_slant|font_slant]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_source|font_source]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_weight|font_weight]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font_width|font_width]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:font|Efl.Text.Font]].**[[:develop:api:efl:canvas:text:property:font|font]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:ellipsis|ellipsis]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:halign_auto_type|halign_auto_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:halign|halign]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:linegap|linegap]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:linerelgap|linerelgap]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:multiline|multiline]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:password|password]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:replacement_char|replacement_char]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:tabstops|tabstops]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:valign|valign]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:format|Efl.Text.Format]].**[[:develop:api:efl:canvas:text:property:wrap|wrap]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:markup|Efl.Text.Markup]].**[[:develop:api:efl:canvas:text:method:cursor_markup_insert|cursor_markup_insert]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:markup|Efl.Text.Markup]].**[[:develop:api:efl:canvas:text:property:markup|markup]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:properties|Efl.Text.Properties]].**[[:develop:api:efl:text:properties:property:font_source|font_source]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:text:properties|Efl.Text.Properties]].**[[:develop:api:efl:text:properties:property:font|font]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:backing_color|backing_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:backing_type|backing_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:effect_type|effect_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:gfx_filter|gfx_filter]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:glow2_color|glow2_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:glow_color|glow_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:normal_color|normal_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:outline_color|outline_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:shadow_color|shadow_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:shadow_direction|shadow_direction]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:strikethrough_color|strikethrough_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:strikethrough_type|strikethrough_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline2_color|underline2_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline2_type|underline2_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_color|underline_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_dashed_color|underline_dashed_color]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_dashed_gap|underline_dashed_gap]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_dashed_width|underline_dashed_width]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_height|underline_height]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text:style|Efl.Text.Style]].**[[:develop:api:efl:canvas:text:property:underline_type|underline_type]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:text|Efl.Text]].**[[:develop:api:efl:canvas:text:property:text|text]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:mirrored|mirrored]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]]** ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:text:method:filter_dirty|filter_dirty]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:text:method:filter_input_render|filter_input_render]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:text:method:filter_state_prepare|filter_state_prepare]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
-\\ 
-
+[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]\\
+> **[[:develop:api:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**//, **[[:develop:api:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**, **[[:develop:api:efl:canvas:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:canvas:object:method:del|del]]**, **[[:develop:api:efl:canvas:object:method:finalize|finalize]]**, **[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**, **[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**, **[[:develop:api:efl:canvas:object:method:lower|lower]]**, **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:canvas:object:method:raise|raise]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**, **[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]**, **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]**, **[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:clip|clip]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:color|color]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:coords_inside|coords_inside]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_aspect|hint_aspect]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_max|hint_max]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:canvas:object:property:hint_weight|hint_weight]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:is_frame_object|is_frame_object]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:no_render|no_render]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_inside|pointer_inside]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:position|position]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:size|size]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:visible|visible]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]]\\
+> **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**, **[[:develop:api:efl:gfx:map:method:map_has|map_has]]**, **[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**, **[[:develop:api:efl:gfx:map:method:rotate|rotate]]**, **[[:develop:api:efl:gfx:map:method:translate|translate]]**, **[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**, **[[:develop:api:efl:gfx:map:method:zoom|zoom]]**, **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//, **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]\\
+> **[[:develop:api:efl:gfx:size:hint:property:hint_base|hint_base]]** //**(get, set)**//, **[[:develop:api:efl:gfx:size:hint:property:hint_step|hint_step]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:text:properties|Efl.Text.Properties]]\\
+> **[[:develop:api:efl:text:properties:property:font_source|font_source]]** //**(get, set)**//, **[[:develop:api:efl:text:properties:property:font|font]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:base|Efl.Ui.Base]]\\
+> **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//, **[[:develop:api:efl:ui:base:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**//, **[[:develop:api:efl:ui:base:property:mirrored|mirrored]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]\\
+> **[[:develop:api:efl:canvas:filter:internal:method:filter_input_alpha|filter_input_alpha]]** ''protected'', **[[:develop:api:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**// ''protected'', **[[:develop:api:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**// ''protected'', **[[:develop:api:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
 ===== Events =====
 
-**[[:develop:api:efl:canvas:text:event:changed|changed]]**
+**[[:develop:api:efl:canvas:text:event:changed|changed]]**\\
+> %%Called when canvas text changed%%
 <code c>
 EFL_CANVAS_TEXT_EVENT_CHANGED(void)
 </code>
-
-%%Called when canvas text changed%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:event:cursor_changed|cursor,changed]]**
+\\ **[[:develop:api:efl:canvas:text:event:cursor_changed|cursor,changed]]**\\
+> %%Called when cursor changed%%
 <code c>
 EFL_CANVAS_TEXT_EVENT_CURSOR_CHANGED(void)
 </code>
-
-%%Called when cursor changed%%\\ 
-\\ 
-**[[:develop:api:efl:canvas:text:event:style_insets_changed|style_insets,changed]]**
+\\ **[[:develop:api:efl:canvas:text:event:style_insets_changed|style_insets,changed]]**\\
+> %%Called when the property %%[[:develop:api:efl:canvas:text:property:style_insets|Efl.Canvas.Text.style_insets]]%% changed.%%
 <code c>
 EFL_CANVAS_TEXT_EVENT_STYLE_INSETS_CHANGED(void)
 </code>
+\\ ==== Inherited ====
 
-%%Called when the property %%[[:develop:api:efl:canvas:text:property:style_insets|Efl.Canvas.Text.style_insets]]%% changed.%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:animator|Efl.Animator]].**[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:event:restack|restack]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:changed|changed]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:hide|hide]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:move|move]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:resize|resize]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:show|show]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:hold|hold]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_down|key,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_up|key,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:animator|Efl.Animator]]\\
+> **[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**\\
+[[:develop:api:efl:gfx|Efl.Gfx]]\\
+> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]\\
+> **[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**\\
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
+> **[[:develop:api:efl:gfx:stack:event:restack|restack]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**, **[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**, **[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**, **[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**, **[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**, **[[:develop:api:efl:input:interface:event:hold|hold]]**, **[[:develop:api:efl:input:interface:event:key_down|key,down]]**, **[[:develop:api:efl:input:interface:event:key_up|key,up]]**, **[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**, **[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**, **[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**, **[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**, **[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**, **[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**, **[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**, **[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_del|callback,del]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:del|del]]**

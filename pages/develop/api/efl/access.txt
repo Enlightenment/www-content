@@ -41,290 +41,204 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:access:method:attribute_append|attribute_append]]**
+**[[:develop:api:efl:access:method:attribute_append|attribute_append]]**\\
+> %%Add key-value pair identifying object extra attributes%%
 <code c>
 void efl_access_attribute_append(Eo *obj, const char *key, const char *value);
 </code>
-
-%%Add key-value pair identifying object extra attributes%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:attributes_clear|attributes_clear]]**
+\\
+**[[:develop:api:efl:access:method:attributes_clear|attributes_clear]]**\\
+> %%Removes all attributes in accessible object.%%
 <code c>
 void efl_access_attributes_clear(Eo *obj);
 </code>
-
-%%Removes all attributes in accessible object.%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:relationship_append|relationship_append]]**
+\\
+**[[:develop:api:efl:access:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:access:method:relationship_append|relationship_append]]**\\
+> %%Defines the relationship between two accessible objects.%%
 <code c>
 Eina_Bool efl_access_relationship_append(Eo *obj, Efl_Access_Relation_Type type, const Efl_Access *relation_object);
 </code>
-
-%%Defines the relationship between two accessible objects.%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]**
+\\
+**[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]**\\
+> %%Removes the relationship between two accessible objects.%%
 <code c>
 void efl_access_relationship_remove(Eo *obj, Efl_Access_Relation_Type type, const Efl_Access *relation_object);
 </code>
-
-%%Removes the relationship between two accessible objects.%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]**
+\\
+**[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]**\\
+> %%Removes all relationships in accessible object.%%
 <code c>
 void efl_access_relationships_clear(Eo *obj);
 </code>
-
-%%Removes all relationships in accessible object.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:description|description]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:description|description]]** //**(get, set)**//\\
+> %%Contextual information about object.%%
 <code c>
 const char *efl_access_description_get(const Eo *obj);
 void efl_access_description_set(Eo *obj, const char *description);
 </code>
-
-%%Contextual information about object.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:name|name]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:name|name]]** //**(get, set)**//\\
+> %%Accessible name of the object.%%
 <code c>
 const char *efl_access_name_get(const Eo *obj);
 void efl_access_name_set(Eo *obj, const char *name);
 </code>
-
-%%Accessible name of the object.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:parent|parent]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:parent|parent]]** //**(get, set)**//\\
+> %%Object's accessible parent.%%
 <code c>
 Efl_Access *efl_access_parent_get(const Eo *obj);
 void efl_access_parent_set(Eo *obj, Efl_Access *parent);
 </code>
-
-%%Object's accessible parent.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:role|role]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:role|role]]** //**(get, set)**//\\
+> %%The role of the object in accessibility domain.%%
 <code c>
 Efl_Access_Role efl_access_role_get(const Eo *obj);
 void efl_access_role_set(Eo *obj, Efl_Access_Role role);
 </code>
-
-%%The role of the object in accessibility domain.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:root|root]]** //**(get)**//
+\\
+**[[:develop:api:efl:access:property:root|root]]** //**(get)**//\\
+> %%Get root object of accessible object hierarchy%%
 <code c>
 Efl_Object *efl_access_root_get(const Eo *obj);
 </code>
-
-%%Get root object of accessible object hierarchy%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**//\\
+> %%The translation domain of "name" and "description" properties.%%
 <code c>
 const char *efl_access_translation_domain_get(const Eo *obj);
 void efl_access_translation_domain_set(Eo *obj, const char *domain);
 </code>
-
-%%The translation domain of "name" and "description" properties.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:type|type]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:access:property:type|type]]** //**(get, set)**//\\
+> %%Type of accessibility object%%
 <code c>
 Efl_Access_Type efl_access_type_get(const Eo *obj);
 void efl_access_type_set(Eo *obj, Efl_Access_Type type);
 </code>
-
-%%Type of accessibility object%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:event_emit|event_emit]]** ''protected''
+\\
+**[[:develop:api:efl:access:method:event_emit|event_emit]]** ''protected''\\
+> %%Emit event%%
 <code c>
 void efl_access_event_emit(const Eo *obj, Efl_Access *accessible, const Efl_Event_Description *event, void *event_info);
 </code>
-
-%%Emit event%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** ''protected''
+\\
+**[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** ''protected''\\
+> %%Register accessibility event listener%%
 <code c>
 Efl_Access_Event_Handler *efl_access_event_handler_add(const Eo *obj, Efl_Event_Cb cb, void *data);
 </code>
-
-%%Register accessibility event listener%%\\ 
-\\ 
-**[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** ''protected''
+\\
+**[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** ''protected''\\
+> %%Deregister accessibility event listener%%
 <code c>
 void efl_access_event_handler_del(const Eo *obj, Efl_Access_Event_Handler *handler);
 </code>
-
-%%Deregister accessibility event listener%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:attributes|attributes]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:attributes|attributes]]** //**(get)**// ''protected''\\
+> %%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%
 <code c>
 Eina_List *efl_access_attributes_get(const Eo *obj);
 </code>
-
-%%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:children|children]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:children|children]]** //**(get)**// ''protected''\\
+> %%Gets object's accessible children.%%
 <code c>
 Eina_List *efl_access_children_get(const Eo *obj);
 </code>
-
-%%Gets object's accessible children.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// ''protected''\\
+> %%Gets index of the child in parent's children list.%%
 <code c>
 int efl_access_index_in_parent_get(const Eo *obj);
 </code>
-
-%%Gets index of the child in parent's children list.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// ''protected''\\
+> %%Gets an localized string describing accessible object role name.%%
 <code c>
 const char *efl_access_localized_role_name_get(const Eo *obj);
 </code>
-
-%%Gets an localized string describing accessible object role name.%%\\ 
-\\ 
+\\
 **[[:develop:api:efl:access:property:reading_info_type|reading_info_type]]** //**(get, set)**// ''protected''
 <code c>
 Efl_Access_Reading_Info_Type efl_access_reading_info_type_get(const Eo *obj);
 void efl_access_reading_info_type_set(Eo *obj, Efl_Access_Reading_Info_Type reading_info);
 </code>
-
-\\ 
-**[[:develop:api:efl:access:property:relation_set|relation_set]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:relation_set|relation_set]]** //**(get)**// ''protected''\\
+> %%Gets an all relations between accessible object and other accessible objects.%%
 <code c>
 Efl_Access_Relation_Set efl_access_relation_set_get(const Eo *obj);
 </code>
-
-%%Gets an all relations between accessible object and other accessible objects.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:role_name|role_name]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:role_name|role_name]]** //**(get)**// ''protected''\\
+> %%Gets human-readable string indentifying object accessibility role.%%
 <code c>
 const char *efl_access_role_name_get(const Eo *obj);
 </code>
-
-%%Gets human-readable string indentifying object accessibility role.%%\\ 
-\\ 
-**[[:develop:api:efl:access:property:state_set|state_set]]** //**(get)**// ''protected''
+\\
+**[[:develop:api:efl:access:property:state_set|state_set]]** //**(get)**// ''protected''\\
+> %%Gets set describing object accessible states.%%
 <code c>
 Efl_Access_State_Set efl_access_state_set_get(const Eo *obj);
 </code>
-
-%%Gets set describing object accessible states.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:access:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
 ===== Events =====
 
-**[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]**
+**[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]**\\
+> %%Called when active state of descendant has changed%%
 <code c>
 EFL_ACCESS_EVENT_ACTIVE_DESCENDANT_CHANGED(void)
 </code>
-
-%%Called when active state of descendant has changed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:added|added]]**
+\\ **[[:develop:api:efl:access:event:added|added]]**\\
+> %%Called when item was added%%
 <code c>
 EFL_ACCESS_EVENT_ADDED(void)
 </code>
-
-%%Called when item was added%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]**
+\\ **[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]**\\
+> %%Called when bounds have changed%%
 <code c>
 EFL_ACCESS_EVENT_BOUNDS_CHANGED(Efl_Access_Event_Geometry_Changed_Data)
 </code>
-
-%%Called when bounds have changed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:children_changed|children,changed]]**
+\\ **[[:develop:api:efl:access:event:children_changed|children,changed]]**\\
+> %%Called when children have changed%%
 <code c>
 EFL_ACCESS_EVENT_CHILDREN_CHANGED(Efl_Access_Event_Children_Changed_Data)
 </code>
-
-%%Called when children have changed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:property_changed|property,changed]]**
+\\ **[[:develop:api:efl:access:event:property_changed|property,changed]]**\\
+> %%Called when roperty has changed%%
 <code c>
 EFL_ACCESS_EVENT_PROPERTY_CHANGED(const char *)
 </code>
-
-%%Called when roperty has changed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:removed|removed]]**
+\\ **[[:develop:api:efl:access:event:removed|removed]]**\\
+> %%Called when item was removed%%
 <code c>
 EFL_ACCESS_EVENT_REMOVED(void)
 </code>
-
-%%Called when item was removed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:state_changed|state,changed]]**
+\\ **[[:develop:api:efl:access:event:state_changed|state,changed]]**\\
+> %%Called when tate has changed%%
 <code c>
 EFL_ACCESS_EVENT_STATE_CHANGED(Efl_Access_Event_State_Changed_Data)
 </code>
-
-%%Called when tate has changed%%\\ 
-\\ 
-**[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]**
+\\ **[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]**\\
+> %%Called when visibility has changed%%
 <code c>
 EFL_ACCESS_EVENT_VISIBLE_DATA_CHANGED(void)
 </code>
+\\ ==== Inherited ====
 
-%%Called when visibility has changed%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

@@ -1,4 +1,13 @@
 ~~Title: Efl.Gfx.Buffer.buffer_map~~
+===== Description =====
+
+%%Map a region of this buffer for read or write access by the CPU.%%
+
+%%Fetches data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%
+
+%%Note that if the buffer has %%[[:develop:api:efl:gfx:buffer:property:buffer_borders|Efl.Gfx.Buffer.buffer_borders]]%%, then %%''x''%% and %%''y''%% may be negative.%%
+{{page>:develop:api-include:efl:gfx:buffer:method:buffer_map:description&nouser&nolink&nodate}}
+
 ===== Signature =====
 
 <code>
@@ -27,15 +36,6 @@ Eina_Rw_Slice efl_gfx_buffer_map(Eo *obj, Efl_Gfx_Buffer_Access_Mode mode, const
   * **cspace** //(in)// - %%Requested colorspace. If different from the internal cspace, map should try to convert the data into a new buffer. argb8888 by default.%%
   * **plane** //(in)// - %%Plane ID. 0 by default. Useful for planar formats only.%%
   * **stride** //(out)// - %%Returns the length in bytes of a mapped line%%
-
-===== Description =====
-
-%%Map a region of this buffer for read or write access by the CPU.%%
-
-%%Fetches data from the GPU if needed. This operation may be slow if cpu_readable_fast or cpu_writeable_fast are not true, or if the required colorspace is different from the internal one.%%
-
-%%Note that if the buffer has %%[[:develop:api:efl:gfx:buffer:property:buffer_borders|Efl.Gfx.Buffer.buffer_borders]]%%, then %%''x''%% and %%''y''%% may be negative.%%
-{{page>:develop:api-include:efl:gfx:buffer:method:buffer_map:description&nouser&nolink&nodate}}
 
 ===== Implemented by =====
 

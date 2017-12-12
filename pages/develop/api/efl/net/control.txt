@@ -57,190 +57,127 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:net:control:method:agent_reply|agent_reply]]**
+**[[:develop:api:efl:net:control:method:agent_reply|agent_reply]]**\\
+> %%If event "agent_request_input" was emitted, this will reply with the requested data%%
 <code c>
 void efl_net_control_agent_reply(Eo *obj, const char *name, const Eina_Slice *ssid, const char *username, const char *passphrase, const char *wps);
 </code>
-
-%%If event "agent_request_input" was emitted, this will reply with the requested data%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:property:access_points|access_points]]** //**(get)**//
+\\
+**[[:develop:api:efl:net:control:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:control:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:control:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:control:property:access_points|access_points]]** //**(get)**//\\
+> %%The iterator of current access points.%%
 <code c>
 Eina_Iterator *efl_net_control_access_points_get(const Eo *obj);
 </code>
-
-%%The iterator of current access points.%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:property:agent_enabled|agent_enabled]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:net:control:property:agent_enabled|agent_enabled]]** //**(get, set)**//\\
+> %%The agent is responsible for user interaction.%%
 <code c>
 Eina_Bool efl_net_control_agent_enabled_get(const Eo *obj);
 void efl_net_control_agent_enabled_set(Eo *obj, Eina_Bool agent_enabled);
 </code>
-
-%%The agent is responsible for user interaction.%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:property:radios_offline|radios_offline]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:net:control:property:radios_offline|radios_offline]]** //**(get, set)**//\\
+> %%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radios to be used.%%
 <code c>
 Eina_Bool efl_net_control_radios_offline_get(const Eo *obj);
 void efl_net_control_radios_offline_set(Eo *obj, Eina_Bool radios_offline);
 </code>
-
-%%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radios to be used.%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:property:state|state]]** //**(get)**//
+\\
+**[[:develop:api:efl:net:control:property:state|state]]** //**(get)**//\\
+> %%Summary of network connectivity.%%
 <code c>
 Efl_Net_Control_State efl_net_control_state_get(const Eo *obj);
 </code>
-
-%%Summary of network connectivity.%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:property:technologies|technologies]]** //**(get)**//
+\\
+**[[:develop:api:efl:net:control:property:technologies|technologies]]** //**(get)**//\\
+> %%The iterator of current technologies.%%
 <code c>
 Eina_Iterator *efl_net_control_technologies_get(const Eo *obj);
 </code>
-
-%%The iterator of current technologies.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:control:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:control:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:control:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
-**[[:develop:api:efl:net:control:event:access_point_add|access_point,add]]**
+**[[:develop:api:efl:net:control:event:access_point_add|access_point,add]]**\\
+> %%The given access point was added%%
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINT_ADD(Efl_Net_Control_Access_Point *)
 </code>
-
-%%The given access point was added%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:access_point_del|access_point,del]]**
+\\ **[[:develop:api:efl:net:control:event:access_point_del|access_point,del]]**\\
+> %%The given access point will be deleted%%
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINT_DEL(Efl_Net_Control_Access_Point *)
 </code>
-
-%%The given access point will be deleted%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:access_points_changed|access_points,changed]]**
+\\ **[[:develop:api:efl:net:control:event:access_points_changed|access_points,changed]]**\\
+> %%Access points were added, deleted or reordered.%%
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINTS_CHANGED(void)
 </code>
-
-%%Access points were added, deleted or reordered.%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:agent_browser_url|agent_browser_url]]**
+\\ **[[:develop:api:efl:net:control:event:agent_browser_url|agent_browser_url]]**\\
+> %%Requires the user to visit a web page%%
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_BROWSER_URL(Efl_Net_Control_Agent_Browser_Url)
 </code>
-
-%%Requires the user to visit a web page%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:agent_error|agent_error]]**
+\\ **[[:develop:api:efl:net:control:event:agent_error|agent_error]]**\\
+> %%Requires the error to be reported to the user%%
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_ERROR(Efl_Net_Control_Agent_Error)
 </code>
-
-%%Requires the error to be reported to the user%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:agent_released|agent_released]]**
+\\ **[[:develop:api:efl:net:control:event:agent_released|agent_released]]**\\
+> %%Notifies we're not the agent anymore%%
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_RELEASED(void)
 </code>
-
-%%Notifies we're not the agent anymore%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:agent_request_input|agent_request_input]]**
+\\ **[[:develop:api:efl:net:control:event:agent_request_input|agent_request_input]]**\\
+> %%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:develop:api:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT(Efl_Net_Control_Agent_Request_Input)
 </code>
-
-%%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:develop:api:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:radios_offline_changed|radios_offline,changed]]**
+\\ **[[:develop:api:efl:net:control:event:radios_offline_changed|radios_offline,changed]]**\\
+> %%Property %%[[:develop:api:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%%
 <code c>
 EFL_NET_CONTROL_EVENT_RADIOS_OFFLINE_CHANGED(void)
 </code>
-
-%%Property %%[[:develop:api:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% changed%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:state_changed|state,changed]]**
+\\ **[[:develop:api:efl:net:control:event:state_changed|state,changed]]**\\
+> %%Property %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%%
 <code c>
 EFL_NET_CONTROL_EVENT_STATE_CHANGED(void)
 </code>
-
-%%Property %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% changed%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:technology_add|technology,add]]**
+\\ **[[:develop:api:efl:net:control:event:technology_add|technology,add]]**\\
+> %%The given technology was added%%
 <code c>
 EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD(Efl_Net_Control_Technology *)
 </code>
-
-%%The given technology was added%%\\ 
-\\ 
-**[[:develop:api:efl:net:control:event:technology_del|technology,del]]**
+\\ **[[:develop:api:efl:net:control:event:technology_del|technology,del]]**\\
+> %%The given technology will be deleted%%
 <code c>
 EFL_NET_CONTROL_EVENT_TECHNOLOGY_DEL(Efl_Net_Control_Technology *)
 </code>
+\\ ==== Inherited ====
 
-%%The given technology will be deleted%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

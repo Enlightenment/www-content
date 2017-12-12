@@ -107,352 +107,210 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
+**[[:develop:api:efl:canvas:image:internal:method:buffer_update_add|buffer_update_add]]**// [Overridden from [[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]]]//\\
+> %%Mark a sub-region of the given image object to be redrawn.%%
+<code c>
+void efl_gfx_buffer_update_add(Eo *obj, const Eina_Rect *region);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:debug_name_override|debug_name_override]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Build a read-only name for this object used for debugging.%%
+<code c>
+void efl_debug_name_override(Eo *obj, Eina_Strbuf *sb);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:save|save]]**// [Overridden from [[:develop:api:efl:file|Efl.File]]]//\\
+> %%Save the given image object's contents to an (image) file.%%
+<code c>
+Eina_Bool efl_file_save(const Eo *obj, const char *file, const char *key, const char *flags);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:alpha|alpha]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]]]//\\
+> %%Indicates whether the alpha channel should be used.%%
+<code c>
+Eina_Bool efl_gfx_buffer_alpha_get(const Eo *obj);
+void efl_gfx_buffer_alpha_set(Eo *obj, Eina_Bool alpha);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:border_center_fill|border_center_fill]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.%%
+<code c>
+Efl_Gfx_Border_Fill_Mode efl_image_border_center_fill_get(const Eo *obj);
+void efl_image_border_center_fill_set(Eo *obj, Efl_Gfx_Border_Fill_Mode fill);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:border_scale|border_scale]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%Scaling factor applied to the image borders.%%
+<code c>
+double efl_image_border_scale_get(const Eo *obj);
+void efl_image_border_scale_set(Eo *obj, double scale);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:border|border]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%Dimensions of this image's border, a region that does not scale with the center area.%%
+<code c>
+void efl_image_border_get(const Eo *obj, int *l, int *r, int *t, int *b);
+void efl_image_border_set(Eo *obj, int l, int r, int t, int b);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:colorspace|colorspace]]** //**(get)**//// [Overridden from [[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]]]//\\
+> %%The colorspace defines how pixels are encoded in the image in memory.%%
+<code c>
+Efl_Gfx_Colorspace efl_gfx_buffer_colorspace_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:content_hint|content_hint]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//
+<code c>
+Efl_Image_Content_Hint efl_image_content_hint_get(const Eo *obj);
+void efl_image_content_hint_set(Eo *obj, Efl_Image_Content_Hint hint);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:fill_auto|fill_auto]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:fill|Efl.Gfx.Fill]]]//\\
+> %%Binds the object's %%[[:develop:api:efl:gfx:fill:property:fill|Efl.Gfx.Fill.fill]]%% property to its actual geometry.%%
+<code c>
+Eina_Bool efl_gfx_fill_auto_get(const Eo *obj);
+void efl_gfx_fill_auto_set(Eo *obj, Eina_Bool filled);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:fill|fill]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:fill|Efl.Gfx.Fill]]]//\\
+> %%Specifies how to tile an image to fill its rectangle geometry.%%
+<code c>
+Eina_Rect efl_gfx_fill_get(const Eo *obj);
+void efl_gfx_fill_set(Eo *obj, Eina_Rect fill);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:filter_program|filter_program]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]]]//
+<code c>
+void efl_gfx_filter_program_get(const Eo *obj, const char **code, const char **name);
+void efl_gfx_filter_program_set(Eo *obj, const char *code, const char *name);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:flip|flip]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:flipable|Efl.Flipable]]]//\\
+> %%Control the flip of the given image%%
+<code c>
+Efl_Flip efl_flip_get(const Eo *obj);
+void efl_flip_set(Eo *obj, Efl_Flip flip);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:image_size|image_size]]** //**(get)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%This represents the size of the original image in pixels.%%
+<code c>
+Eina_Size2D efl_image_size_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:orientation|orientation]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:orientation|Efl.Orientation]]]//\\
+> %%Control the orientation of a given object.%%
+<code c>
+Efl_Orient efl_orientation_get(const Eo *obj);
+void efl_orientation_set(Eo *obj, Efl_Orient dir);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:ratio|ratio]]** //**(get)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%The native width/height ratio of the image.%%
+<code c>
+double efl_image_ratio_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:scale_hint|scale_hint]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//
+<code c>
+Efl_Image_Scale_Hint efl_image_scale_hint_get(const Eo *obj);
+void efl_image_scale_hint_set(Eo *obj, Efl_Image_Scale_Hint hint);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:smooth_scale|smooth_scale]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:image|Efl.Image]]]//\\
+> %%Whether to use high-quality image scaling algorithm for this image.%%
+<code c>
+Eina_Bool efl_image_smooth_scale_get(const Eo *obj);
+void efl_image_smooth_scale_set(Eo *obj, Eina_Bool smooth_scale);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:property:view_size|view_size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:view|Efl.Gfx.View]]]//\\
+> %%The dimensions of this object's viewport.%%
+<code c>
+Eina_Size2D efl_gfx_view_size_get(const Eo *obj);
+void efl_gfx_view_size_set(Eo *obj, Eina_Size2D size);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:filter_dirty|filter_dirty]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called when the filter changes must trigger a redraw of the object.%%
+<code c>
+void evas_filter_dirty(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:filter_input_alpha|filter_input_alpha]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called by Efl.Canvas.Filter.Internal to determine whether the input is alpha or rgba.%%
+<code c>
+Eina_Bool evas_filter_input_alpha(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:filter_input_render|filter_input_render]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%%
+<code c>
+Eina_Bool evas_filter_input_render(Eo *obj, void *filter, void *engine, void *output, void *drawctx, void *data, int l, int r, int t, int b, int x, int y, Eina_Bool do_async);
+</code>
+\\
+**[[:develop:api:efl:canvas:image:internal:method:filter_state_prepare|filter_state_prepare]]**// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]// ''protected''\\
+> %%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%%
+<code c>
+void evas_filter_state_prepare(Eo *obj, Efl_Canvas_Filter_State *state, void *data);
+</code>
+\\
+
 ==== Inherited ====
 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:pointer_coords_inside_get|pointer_coords_inside_get]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:clip|clip]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:is_frame_object|is_frame_object]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:no_render|no_render]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:paragraph_direction|paragraph_direction]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//
-\\ 
-[[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]].**[[:develop:api:efl:canvas:object:property:pointer_inside|pointer_inside]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:canvas:image:internal:method:save|save]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:file|file]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:load_error|load_error]]** //**(get)**//
-\\ 
-[[:develop:api:efl:file|Efl.File]].**[[:develop:api:efl:file:property:mmap|mmap]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:flipable|Efl.Flipable]].**[[:develop:api:efl:canvas:image:internal:property:flip|flip]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:canvas:image:internal:method:buffer_update_add|buffer_update_add]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:canvas:image:internal:property:alpha|alpha]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:canvas:image:internal:property:colorspace|colorspace]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|buffer_copy_set]]**
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:method:buffer_managed_get|buffer_managed_get]]**
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:method:buffer_managed_set|buffer_managed_set]]**
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:method:buffer_map|buffer_map]]**
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:method:buffer_unmap|buffer_unmap]]**
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:property:buffer_borders|buffer_borders]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:property:buffer_size|buffer_size]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]].**[[:develop:api:efl:gfx:buffer:property:stride|stride]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:fill|Efl.Gfx.Fill]].**[[:develop:api:efl:canvas:image:internal:property:fill_auto|fill_auto]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:fill|Efl.Gfx.Fill]].**[[:develop:api:efl:canvas:image:internal:property:fill|fill]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_data|filter_data]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_source|filter_source]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//
-\\ 
-[[:develop:api:efl:gfx:filter|Efl.Gfx.Filter]].**[[:develop:api:efl:canvas:image:internal:property:filter_program|filter_program]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_has|map_has]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:rotate|rotate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:translate|translate]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:method:zoom|zoom]]**
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:map|Efl.Gfx.Map]].**[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_aspect|hint_aspect]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_max|hint_max]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]// ''protected set''
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:canvas:object:property:hint_weight|hint_weight]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_base|hint_base]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:property:hint_step|hint_step]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:lower|lower]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:raise|raise]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx:view|Efl.Gfx.View]].**[[:develop:api:efl:canvas:image:internal:property:view_size|view_size]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:color|color]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:position|position]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:scale|scale]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:size|size]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:canvas:object:property:visible|visible]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:border_center_fill|border_center_fill]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:border_scale|border_scale]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:border|border]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:content_hint|content_hint]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:image_size|image_size]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:ratio|ratio]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:scale_hint|scale_hint]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:canvas:image:internal:property:smooth_scale|smooth_scale]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**// //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:image:internal:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:image:internal:method:debug_name_override|debug_name_override]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:image:internal:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:image:internal:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:del|del]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** //[Overridden in [[:develop:api:efl:canvas:object|Efl.Canvas.Object]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:orientation|Efl.Orientation]].**[[:develop:api:efl:canvas:image:internal:property:orientation|orientation]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:base|Efl.Ui.Base]].**[[:develop:api:efl:ui:base:property:mirrored|mirrored]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:image:internal:method:filter_dirty|filter_dirty]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:image:internal:method:filter_input_alpha|filter_input_alpha]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:image:internal:method:filter_input_render|filter_input_render]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]].**[[:develop:api:efl:canvas:image:internal:method:filter_state_prepare|filter_state_prepare]]** //[Overridden here]// ''protected''
-\\ 
-[[:develop:api:efl:canvas:object|Efl.Canvas.Object]].**[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
-\\ 
-
+[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]\\
+> **[[:develop:api:efl:canvas:filter:internal:property:filter_data|filter_data]]** //**(get, set)**//, **[[:develop:api:efl:canvas:filter:internal:property:filter_padding|filter_padding]]** //**(get)**//, **[[:develop:api:efl:canvas:filter:internal:property:filter_source|filter_source]]** //**(get, set)**//, **[[:develop:api:efl:canvas:filter:internal:property:filter_state|filter_state]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:method:clipees_has|clipees_has]]**, **[[:develop:api:efl:canvas:object:method:del|del]]**, **[[:develop:api:efl:canvas:object:method:key_grab|key_grab]]**, **[[:develop:api:efl:canvas:object:method:key_ungrab|key_ungrab]]**, **[[:develop:api:efl:canvas:object:method:lower|lower]]**, **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:canvas:object:method:raise|raise]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_add|seat_focus_add]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_check|seat_focus_check]]**, **[[:develop:api:efl:canvas:object:method:seat_focus_del|seat_focus_del]]**, **[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]**, **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]**, **[[:develop:api:efl:canvas:object:property:above|above]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:anti_alias|anti_alias]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:below|below]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:clipees|clipees]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:clip|clip]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:color|color]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:coords_inside|coords_inside]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:event_animation|event_animation]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:freeze_events|freeze_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:geometry|geometry]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_align|hint_align]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_aspect|hint_aspect]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_combined_min|hint_combined_min]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:hint_margin|hint_margin]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_max|hint_max]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_min|hint_min]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:hint_restricted_min|hint_restricted_min]]** //**(get, set)**// ''protected set'', **[[:develop:api:efl:canvas:object:property:hint_weight|hint_weight]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:is_frame_object|is_frame_object]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:key_focus|key_focus]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:layer|layer]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:no_render|no_render]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:paragraph_direction|paragraph_direction]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pass_events|pass_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_inside|pointer_inside]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:pointer_mode|pointer_mode]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:position|position]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:scale|scale]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_event_filter|seat_event_filter]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:seat_focus|seat_focus]]** //**(get)**//, **[[:develop:api:efl:canvas:object:property:size|size]]** //**(get, set)**//, **[[:develop:api:efl:canvas:object:property:visible|visible]]** //**(get, set)**//\\
+[[:develop:api:efl:file|Efl.File]]\\
+> **[[:develop:api:efl:file:property:file|file]]** //**(get, set)**//, **[[:develop:api:efl:file:property:load_error|load_error]]** //**(get)**//, **[[:develop:api:efl:file:property:mmap|mmap]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]]\\
+> **[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|buffer_copy_set]]**, **[[:develop:api:efl:gfx:buffer:method:buffer_managed_get|buffer_managed_get]]**, **[[:develop:api:efl:gfx:buffer:method:buffer_managed_set|buffer_managed_set]]**, **[[:develop:api:efl:gfx:buffer:method:buffer_map|buffer_map]]**, **[[:develop:api:efl:gfx:buffer:method:buffer_unmap|buffer_unmap]]**, **[[:develop:api:efl:gfx:buffer:property:buffer_borders|buffer_borders]]** //**(get)**//, **[[:develop:api:efl:gfx:buffer:property:buffer_size|buffer_size]]** //**(get, set)**//, **[[:develop:api:efl:gfx:buffer:property:stride|stride]]** //**(get)**//\\
+[[:develop:api:efl:gfx:map|Efl.Gfx.Map]]\\
+> **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]**, **[[:develop:api:efl:gfx:map:method:map_has|map_has]]**, **[[:develop:api:efl:gfx:map:method:map_reset|map_reset]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d_absolute|perspective_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:perspective_3d|perspective_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d_absolute|rotate_3d_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_3d|rotate_3d]]**, **[[:develop:api:efl:gfx:map:method:rotate_absolute|rotate_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat_absolute|rotate_quat_absolute]]**, **[[:develop:api:efl:gfx:map:method:rotate_quat|rotate_quat]]**, **[[:develop:api:efl:gfx:map:method:rotate|rotate]]**, **[[:develop:api:efl:gfx:map:method:translate|translate]]**, **[[:develop:api:efl:gfx:map:method:zoom_absolute|zoom_absolute]]**, **[[:develop:api:efl:gfx:map:method:zoom|zoom]]**, **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**//, **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_coord_absolute|map_coord_absolute]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_point_count|map_point_count]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_smooth|map_smooth]]** //**(get, set)**//, **[[:develop:api:efl:gfx:map:property:map_uv|map_uv]]** //**(get, set)**//\\
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]\\
+> **[[:develop:api:efl:gfx:size:hint:property:hint_base|hint_base]]** //**(get, set)**//, **[[:develop:api:efl:gfx:size:hint:property:hint_step|hint_step]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:ui:base|Efl.Ui.Base]]\\
+> **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**//, **[[:develop:api:efl:ui:base:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**//, **[[:develop:api:efl:ui:base:property:mirrored|mirrored]]** //**(get, set)**//\\
+[[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]\\
+> **[[:develop:api:efl:canvas:filter:internal:property:filter_changed|filter_changed]]** //**(set)**// ''protected'', **[[:develop:api:efl:canvas:filter:internal:property:filter_invalid|filter_invalid]]** //**(set)**// ''protected'', **[[:develop:api:efl:canvas:filter:internal:property:filter_output_buffer|filter_output_buffer]]** //**(get)**// ''protected''\\
+[[:develop:api:efl:canvas:object|Efl.Canvas.Object]]\\
+> **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// ''protected''
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:animator|Efl.Animator]].**[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**
-\\ 
-[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]].**[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**
-\\ 
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]].**[[:develop:api:efl:gfx:stack:event:restack|restack]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:changed|changed]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:hide|hide]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:move|move]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:resize|resize]]**
-\\ 
-[[:develop:api:efl:gfx|Efl.Gfx]].**[[:develop:api:efl:gfx:event:show|show]]**
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:image:event:preload|preload]]**
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:image:event:resize|resize]]**
-\\ 
-[[:develop:api:efl:image|Efl.Image]].**[[:develop:api:efl:image:event:unload|unload]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:hold|hold]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_down|key,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:key_up|key,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**
-\\ 
-[[:develop:api:efl:input:interface|Efl.Input.Interface]].**[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:animator|Efl.Animator]]\\
+> **[[:develop:api:efl:animator:event:animator_tick|animator,tick]]**\\
+[[:develop:api:efl:gfx|Efl.Gfx]]\\
+> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
+[[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]]\\
+> **[[:develop:api:efl:gfx:size:hint:event:change_size_hints|change,size,hints]]**\\
+[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
+> **[[:develop:api:efl:gfx:stack:event:restack|restack]]**\\
+[[:develop:api:efl:image|Efl.Image]]\\
+> **[[:develop:api:efl:image:event:preload|preload]]**, **[[:develop:api:efl:image:event:resize|resize]]**, **[[:develop:api:efl:image:event:unload|unload]]**\\
+[[:develop:api:efl:input:interface|Efl.Input.Interface]]\\
+> **[[:develop:api:efl:input:interface:event:finger_down|finger,down]]**, **[[:develop:api:efl:input:interface:event:finger_move|finger,move]]**, **[[:develop:api:efl:input:interface:event:finger_up|finger,up]]**, **[[:develop:api:efl:input:interface:event:focus_in|focus,in]]**, **[[:develop:api:efl:input:interface:event:focus_out|focus,out]]**, **[[:develop:api:efl:input:interface:event:hold|hold]]**, **[[:develop:api:efl:input:interface:event:key_down|key,down]]**, **[[:develop:api:efl:input:interface:event:key_up|key,up]]**, **[[:develop:api:efl:input:interface:event:pointer_axis|pointer,axis]]**, **[[:develop:api:efl:input:interface:event:pointer_cancel|pointer,cancel]]**, **[[:develop:api:efl:input:interface:event:pointer_down|pointer,down]]**, **[[:develop:api:efl:input:interface:event:pointer_in|pointer,in]]**, **[[:develop:api:efl:input:interface:event:pointer_move|pointer,move]]**, **[[:develop:api:efl:input:interface:event:pointer_out|pointer,out]]**, **[[:develop:api:efl:input:interface:event:pointer_up|pointer,up]]**, **[[:develop:api:efl:input:interface:event:pointer_wheel|pointer,wheel]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

@@ -44,98 +44,77 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:model:composite:boolean:method:property_add|property_add]]**
+**[[:develop:api:efl:model:composite:boolean:method:child_add|child_add]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Add a new child.%%
+<code c>
+Efl_Object *efl_model_child_add(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:child_del|child_del]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Remove a child.%%
+<code c>
+void efl_model_child_del(Eo *obj, Efl_Object *child);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:children_count_get|children_count_get]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Get children count.%%
+<code c>
+Efl_Future *efl_model_children_count_get(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:children_slice_get|children_slice_get]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Get children slice OR full range.%%
+<code c>
+Efl_Future *efl_model_children_slice_get(Eo *obj, unsigned int start, unsigned int count);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:property_add|property_add]]**\\
+> %%Adds property%%
 <code c>
 void efl_model_composite_boolean_property_add(Eo *obj, const char *name, Eina_Bool initial_value);
 </code>
-
-%%Adds property%%\\ 
-\\ 
+\\
+**[[:develop:api:efl:model:composite:boolean:method:property_get|property_get]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Retrieve the value of a given property name.%%
+<code c>
+Efl_Future *efl_model_property_get(Eo *obj, const char *property);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:method:property_set|property_set]]**// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Set a property value of a given property name.%%
+<code c>
+Efl_Future *efl_model_property_set(Eo *obj, const char *property, const Eina_Value *value);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:property:model|model]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:view|Efl.Ui.View]]]//\\
+> %%Model that is/will be%%
+<code c>
+Efl_Model *efl_ui_view_model_get(const Eo *obj);
+void efl_ui_view_model_set(Eo *obj, Efl_Model *model);
+</code>
+\\
+**[[:develop:api:efl:model:composite:boolean:property:properties|properties]]** //**(get)**//// [Overridden from [[:develop:api:efl:model|Efl.Model]]]//\\
+> %%Get properties from model.%%
+<code c>
+const Eina_Array *efl_model_properties_get(const Eo *obj);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:child_add|child_add]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:child_del|child_del]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:children_count_get|children_count_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:children_slice_get|children_slice_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:property_get|property_get]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:method:property_set|property_set]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:composite:boolean:property:properties|properties]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:model:composite:boolean:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:constructor|constructor]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:ui:view|Efl.Ui.View]].**[[:develop:api:efl:model:composite:boolean:property:model|model]]** //**(get, set)**// //[Overridden here]//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:event:child_added|child,added]]**
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:event:child_removed|child,removed]]**
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:event:children_count_changed|children,count,changed]]**
-\\ 
-[[:develop:api:efl:model|Efl.Model]].**[[:develop:api:efl:model:event:properties_changed|properties,changed]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:model|Efl.Model]]\\
+> **[[:develop:api:efl:model:event:child_added|child,added]]**, **[[:develop:api:efl:model:event:child_removed|child,removed]]**, **[[:develop:api:efl:model:event:children_count_changed|children,count,changed]]**, **[[:develop:api:efl:model:event:properties_changed|properties,changed]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

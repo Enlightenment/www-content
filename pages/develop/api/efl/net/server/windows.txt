@@ -48,97 +48,77 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:net:server:windows:property:allow_remote|allow_remote]]** //**(get, set)**//
+**[[:develop:api:efl:net:server:windows:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:method:serve|serve]]**// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]//\\
+> %%address parameter will have "\\.\pipe\" prepended%%
+<code c>
+Eina_Error efl_net_server_serve(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:property:address|address]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]// ''protected set''\\
+> %%The address the server is bound to.%%
+<code c>
+const char *efl_net_server_address_get(const Eo *obj);
+void efl_net_server_address_set(Eo *obj, const char *address);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:property:allow_remote|allow_remote]]** //**(get, set)**//\\
+> %%If server allows remote (different machine) clients.%%
 <code c>
 Eina_Bool efl_net_server_windows_allow_remote_get(const Eo *obj);
 void efl_net_server_windows_allow_remote_set(Eo *obj, Eina_Bool allow_remote);
 </code>
-
-%%If server allows remote (different machine) clients.%%\\ 
-\\ 
+\\
+**[[:develop:api:efl:net:server:windows:property:clients_count|clients_count]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]// ''protected set''\\
+> %%Number of concurrent clients accepted by this server.%%
+<code c>
+unsigned int efl_net_server_clients_count_get(const Eo *obj);
+void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:property:clients_limit|clients_limit]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]//\\
+> %%Number of maximum concurrent clients allowed by this server.%%
+<code c>
+void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
+void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:property:serving|serving]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]// ''protected set''\\
+> %%Returns whenever the server is ready to accept clients or not.%%
+<code c>
+Eina_Bool efl_net_server_serving_get(const Eo *obj);
+void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
+</code>
+\\
+**[[:develop:api:efl:net:server:windows:method:client_announce|client_announce]]**// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]// ''protected''\\
+> %%Implementions should call this method to announce new clients.%%
+<code c>
+Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
+</code>
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:method:serve|serve]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:property:address|address]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:property:clients_count|clients_count]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:property:clients_limit|clients_limit]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:property:serving|serving]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:server:windows:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:net:server:windows:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:windows:method:client_announce|client_announce]]** //[Overridden here]// ''protected''
-\\ 
-
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:event:client_add|client,add]]**
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]**
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:event:error|error]]**
-\\ 
-[[:develop:api:efl:net:server|Efl.Net.Server]].**[[:develop:api:efl:net:server:event:serving|serving]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:net:server|Efl.Net.Server]]\\
+> **[[:develop:api:efl:net:server:event:client_add|client,add]]**, **[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]**, **[[:develop:api:efl:net:server:event:error|error]]**, **[[:develop:api:efl:net:server:event:serving|serving]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

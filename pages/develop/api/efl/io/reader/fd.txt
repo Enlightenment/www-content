@@ -40,29 +40,37 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''
+**[[:develop:api:efl:io:reader:fd:method:read|read]]**// [Overridden from [[:develop:api:efl:io:reader|Efl.Io.Reader]]]//\\
+> %%Reads data into a pre-allocated buffer.%%
+<code c>
+Eina_Error efl_io_reader_read(Eo *obj, Eina_Rw_Slice rw_slice);
+</code>
+\\
+**[[:develop:api:efl:io:reader:fd:property:can_read|can_read]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:reader|Efl.Io.Reader]]]// ''protected set''\\
+> %%If %%''true''%% will notify %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% can be called without blocking or failing.%%
+<code c>
+Eina_Bool efl_io_reader_can_read_get(const Eo *obj);
+void efl_io_reader_can_read_set(Eo *obj, Eina_Bool can_read);
+</code>
+\\
+**[[:develop:api:efl:io:reader:fd:property:eos|eos]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:reader|Efl.Io.Reader]]]// ''protected set''\\
+> %%If %%''true''%% will notify end of stream.%%
+<code c>
+Eina_Bool efl_io_reader_eos_get(const Eo *obj);
+void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
+</code>
+\\
+**[[:develop:api:efl:io:reader:fd:property:reader_fd|reader_fd]]** //**(get, set)**// ''protected set''\\
+> %%Reader file descriptor%%
 <code c>
 int efl_io_reader_fd_get(const Eo *obj);
 void efl_io_reader_fd_set(Eo *obj, int fd);
 </code>
-
-%%Reader file descriptor%%\\ 
-\\ 
-
-==== Inherited ====
-
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:fd:method:read|read]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:fd:property:can_read|can_read]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:fd:property:eos|eos]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
+\\
 
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**
-\\ 
-[[:develop:api:efl:io:reader|Efl.Io.Reader]].**[[:develop:api:efl:io:reader:event:eos|eos]]**
-\\ 
+[[:develop:api:efl:io:reader|Efl.Io.Reader]]\\
+> **[[:develop:api:efl:io:reader:event:can_read_changed|can_read,changed]]**, **[[:develop:api:efl:io:reader:event:eos|eos]]**

@@ -52,86 +52,50 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
+**[[:develop:api:efl:io:stdout:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:io:stdout:method:write|write]]**// [Overridden from [[:develop:api:efl:io:writer|Efl.Io.Writer]]]//\\
+> %%Writes data from a pre-populated buffer.%%
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+\\
+**[[:develop:api:efl:io:stdout:property:can_write|can_write]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:writer|Efl.Io.Writer]]]// ''protected set''\\
+> %%If %%''true''%% will notify %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+\\
+**[[:develop:api:efl:io:stdout:property:fd|fd]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//\\
+> %%Defines which file descriptor to watch. If it is a file, use file_fd variant.%%
+<code c>
+int efl_loop_fd_get(const Eo *obj);
+void efl_loop_fd_set(Eo *obj, int fd);
+</code>
+\\
+
 ==== Inherited ====
 
-[[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]].**[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:stdout:method:write|write]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:stdout:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:io:stdout:property:fd|fd]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:stdout:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:fd:method:constructor|constructor]]** //[Overridden in [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:fd:method:destructor|destructor]]** //[Overridden in [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop:fd|Efl.Loop.Fd]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:io:writer:fd|Efl.Io.Writer.Fd]]\\
+> **[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''\\
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]]\\
+> **[[:develop:api:efl:loop:fd:method:constructor|constructor]]**, **[[:develop:api:efl:loop:fd:method:destructor|destructor]]**, **[[:develop:api:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**//, **[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:error|error]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:read|read]]**
-\\ 
-[[:develop:api:efl:loop:fd|Efl.Loop.Fd]].**[[:develop:api:efl:loop:fd:event:write|write]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]]\\
+> **[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**\\
+[[:develop:api:efl:loop:fd|Efl.Loop.Fd]]\\
+> **[[:develop:api:efl:loop:fd:event:error|error]]**, **[[:develop:api:efl:loop:fd:event:read|read]]**, **[[:develop:api:efl:loop:fd:event:write|write]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

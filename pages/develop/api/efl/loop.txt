@@ -40,228 +40,154 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:loop:method:begin|begin]]**
+**[[:develop:api:efl:loop:method:begin|begin]]**\\
+> %%Runs the application main loop.%%
 <code c>
 Eina_Value *efl_loop_begin(Eo *obj);
 </code>
-
-%%Runs the application main loop.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:eina_futurexxx_idle|Eina_FutureXXX_idle]]**
+\\
+**[[:develop:api:efl:loop:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
 <code c>
-Eina_Future *efl_loop_Eina_FutureXXX_idle(Eo *obj);
+Efl_Object *efl_constructor(Eo *obj);
 </code>
-
-%%A future promise that will be resolved from a clean main loop context as soon as the main loop is idle.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:eina_futurexxx_job|Eina_FutureXXX_job]]**
+\\
+**[[:develop:api:efl:loop:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
 <code c>
-Eina_Future *efl_loop_Eina_FutureXXX_job(Eo *obj);
+void efl_destructor(Eo *obj);
 </code>
-
-%%A future promise that will be resolved from a clean main loop context as soon as possible.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:iterate_may_block|iterate_may_block]]**
+\\
+**[[:develop:api:efl:loop:method:idle|idle]]**\\
+> %%A future promise that will be resolved from a clean main loop context as soon as the main loop is idle.%%
+<code c>
+Eina_Future *efl_loop_idle(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:loop:method:iterate_may_block|iterate_may_block]]**\\
+> %%Runs a single iteration of the main loop to process everything on the queue with block/non-blocking status.%%
 <code c>
 int efl_loop_iterate_may_block(Eo *obj, int may_block);
 </code>
-
-%%Runs a single iteration of the main loop to process everything on the queue with block/non-blocking status.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:iterate|iterate]]**
+\\
+**[[:develop:api:efl:loop:method:iterate|iterate]]**\\
+> %%Runs a single iteration of the main loop to process everything on the queue.%%
 <code c>
 void efl_loop_iterate(Eo *obj);
 </code>
-
-%%Runs a single iteration of the main loop to process everything on the queue.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:job|job]]**
+\\
+**[[:develop:api:efl:loop:method:job|job]]**\\
+> %%A future promise that will be resolved from a clean main loop context as soon as possible.%%
 <code c>
-Efl_Future *efl_loop_job(Eo *obj, const void *data);
+Eina_Future *efl_loop_job(Eo *obj);
 </code>
-
-%%Will execute that promise in the near future.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:quit|quit]]**
+\\
+**[[:develop:api:efl:loop:method:provider_find|provider_find]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Searches up in the object tree for a provider which knows the given class/interface.%%
+<code c>
+Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+</code>
+\\
+**[[:develop:api:efl:loop:method:quit|quit]]**\\
+> %%Quits the main loop once all the events currently on the queue have been processed.%%
 <code c>
 void efl_loop_quit(Eo *obj, Eina_Value exit_code);
 </code>
-
-%%Quits the main loop once all the events currently on the queue have been processed.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:register|register]]**
+\\
+**[[:develop:api:efl:loop:method:register|register]]**\\
+> %%Will register a manager of a specific class to be answered by eo.provider_find.%%
 <code c>
 Eina_Bool efl_loop_register(Eo *obj, const Efl_Class *klass, const Efl_Object *provider);
 </code>
-
-%%Will register a manager of a specific class to be answered by eo.provider_find.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:timeout|timeout]]**
+\\
+**[[:develop:api:efl:loop:method:timeout|timeout]]**\\
+> %%A future promise that will be resolved from a clean main loop context after %%''time''%% seconds.%%
 <code c>
 Eina_Future *efl_loop_timeout(Eo *obj, double time);
 </code>
-
-%%A future promise that will be resolved from a clean main loop context after %%''time''%% seconds.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:method:unregister|unregister]]**
+\\
+**[[:develop:api:efl:loop:method:unregister|unregister]]**\\
+> %%Will unregister a manager of a specific class that was previously registered and answered by eo.provider_find.%%
 <code c>
 Eina_Bool efl_loop_unregister(Eo *obj, const Efl_Class *klass, const Efl_Object *provider);
 </code>
-
-%%Will unregister a manager of a specific class that was previously registered and answered by eo.provider_find.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:property:app_efl_version|app_efl_version]]** //**(get)**//
+\\
+**[[:develop:api:efl:loop:property:app_efl_version|app_efl_version]]** //**(get)**//\\
+> %%Indicates the version of EFL with which this application was compiled.%%
 <code c>
 const Efl_Version *efl_loop_app_efl_version_get(const Eo *obj);
 </code>
-
-%%Indicates the version of EFL with which this application was compiled.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:property:efl_version|efl_version]]** //**(get)**//
+\\
+**[[:develop:api:efl:loop:property:efl_version|efl_version]]** //**(get)**//\\
+> %%Indicates the currently running version of EFL.%%
 <code c>
 const Efl_Version *efl_loop_efl_version_get(const Eo *obj);
 </code>
-
-%%Indicates the currently running version of EFL.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:property:main|main]]** //**(get)**//
+\\
+**[[:develop:api:efl:loop:property:main|main]]** //**(get)**//\\
+> %%Points to the main loop instance of the application.%%
 <code c>
 Efl_Loop *efl_loop_main_get(const Eo *obj);
 </code>
-
-%%Points to the main loop instance of the application.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop:method:provider_find|provider_find]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
 ===== Events =====
 
-**[[:develop:api:efl:loop:event:arguments|arguments]]**
+**[[:develop:api:efl:loop:event:arguments|arguments]]**\\
+> %%Event happens when args are provided to the loop by args_add().%%
 <code c>
 EFL_LOOP_EVENT_ARGUMENTS(Efl_Loop_Arguments)
 </code>
-
-%%Event happens when args are provided to the loop by args_add().%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:idle_enter|idle,enter]]**
+\\ **[[:develop:api:efl:loop:event:idle_enter|idle,enter]]**\\
+> %%Event occurs once the main loop enters the idle state.%%
 <code c>
 EFL_LOOP_EVENT_IDLE_ENTER(void, @restart)
 </code>
-
-%%Event occurs once the main loop enters the idle state.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:idle_exit|idle,exit]]**
+\\ **[[:develop:api:efl:loop:event:idle_exit|idle,exit]]**\\
+> %%Event occurs once the main loop exits the idle state.%%
 <code c>
 EFL_LOOP_EVENT_IDLE_EXIT(void, @restart)
 </code>
-
-%%Event occurs once the main loop exits the idle state.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:idle|idle]]**
+\\ **[[:develop:api:efl:loop:event:idle|idle]]**\\
+> %%Event occurs once the main loop is idler. Be carefull, this will spin your CPU high if you keep listening on this event.%%
 <code c>
 EFL_LOOP_EVENT_IDLE(void, @restart)
 </code>
-
-%%Event occurs once the main loop is idler. Be carefull, this will spin your CPU high if you keep listening on this event.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:pause|pause]]**
+\\ **[[:develop:api:efl:loop:event:pause|pause]]**\\
+> %%Called when the window is going not be displayed for some time%%
 <code c>
 EFL_LOOP_EVENT_PAUSE(void)
 </code>
-
-%%Called when the window is going not be displayed for some time%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:poll_high|poll,high]]**
+\\ **[[:develop:api:efl:loop:event:poll_high|poll,high]]**\\
+> %%Event occurs multiple time per second. The exact tick is undefined and could be adjusted system wide.%%
 <code c>
 EFL_LOOP_EVENT_POLL_HIGH(void)
 </code>
-
-%%Event occurs multiple time per second. The exact tick is undefined and could be adjusted system wide.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:poll_low|poll,low]]**
+\\ **[[:develop:api:efl:loop:event:poll_low|poll,low]]**\\
+> %%Event occurs multiple time every 15 minutes. The exact tick is undefined and could be adjusted system wide.%%
 <code c>
 EFL_LOOP_EVENT_POLL_LOW(void)
 </code>
-
-%%Event occurs multiple time every 15 minutes. The exact tick is undefined and could be adjusted system wide.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:poll_medium|poll,medium]]**
+\\ **[[:develop:api:efl:loop:event:poll_medium|poll,medium]]**\\
+> %%Event occurs multiple time per minute. The exact tick is undefined and could be adjusted system wide.%%
 <code c>
 EFL_LOOP_EVENT_POLL_MEDIUM(void)
 </code>
-
-%%Event occurs multiple time per minute. The exact tick is undefined and could be adjusted system wide.%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:resume|resume]]**
+\\ **[[:develop:api:efl:loop:event:resume|resume]]**\\
+> %%Called before a window get rendered after a pause event%%
 <code c>
 EFL_LOOP_EVENT_RESUME(void)
 </code>
-
-%%Called before a window get rendered after a pause event%%\\ 
-\\ 
-**[[:develop:api:efl:loop:event:terminate|terminate]]**
+\\ **[[:develop:api:efl:loop:event:terminate|terminate]]**\\
+> %%Called before starting the shutdown of elementary%%
 <code c>
 EFL_LOOP_EVENT_TERMINATE(void)
 </code>
+\\ ==== Inherited ====
 
-%%Called before starting the shutdown of elementary%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

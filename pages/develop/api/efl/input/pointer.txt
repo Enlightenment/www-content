@@ -55,206 +55,187 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:input:pointer:property:action|action]]** //**(get, set)**//
+**[[:develop:api:efl:input:pointer:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:method:duplicate|duplicate]]**// [Overridden from [[:develop:api:efl:duplicate|Efl.Duplicate]]]//\\
+> %%Creates a copy of this event. %%[[:develop:api:efl:input:event:property:fake|Efl.Input.Event.fake]]%% is %%''true''%%.%%
+<code c>
+Efl_Duplicate *efl_duplicate(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:method:reset|reset]]**// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%Resets the internal data to 0 or default values.%%
+<code c>
+void efl_input_reset(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:action|action]]** //**(get, set)**//\\
+> %%The action represented by this event.%%
 <code c>
 Efl_Pointer_Action efl_input_pointer_action_get(const Eo *obj);
 void efl_input_pointer_action_set(Eo *obj, Efl_Pointer_Action act);
 </code>
-
-%%The action represented by this event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:button_flags|button_flags]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:button_flags|button_flags]]** //**(get, set)**//\\
+> %%Double or triple click information.%%
 <code c>
 Efl_Pointer_Flags efl_input_pointer_button_flags_get(const Eo *obj);
 void efl_input_pointer_button_flags_set(Eo *obj, Efl_Pointer_Flags flags);
 </code>
-
-%%Double or triple click information.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:button_pressed|button_pressed]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:button_pressed|button_pressed]]** //**(get, set)**//\\
+> %%Whether a mouse button is pressed at the moment of the event.%%
 <code c>
 Eina_Bool efl_input_pointer_button_pressed_get(const Eo *obj, int button);
 void efl_input_pointer_button_pressed_set(Eo *obj, int button, Eina_Bool pressed);
 </code>
-
-%%Whether a mouse button is pressed at the moment of the event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:button|button]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:button|button]]** //**(get, set)**//\\
+> %%The mouse button that triggered the event.%%
 <code c>
 int efl_input_pointer_button_get(const Eo *obj);
 void efl_input_pointer_button_set(Eo *obj, int but);
 </code>
-
-%%The mouse button that triggered the event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:double_click|double_click]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:device|device]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%Input device that originated this event.%%
+<code c>
+Efl_Input_Device *efl_input_device_get(const Eo *obj);
+void efl_input_device_set(Eo *obj, Efl_Input_Device *dev);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:double_click|double_click]]** //**(get, set)**//\\
+> %%%%''true''%% if %%[[:develop:api:efl:input:pointer:property:button_flags|Efl.Input.Pointer.button_flags]]%% indicates a double click (2nd press).%%
 <code c>
 Eina_Bool efl_input_pointer_double_click_get(const Eo *obj);
 void efl_input_pointer_double_click_set(Eo *obj, Eina_Bool val);
 </code>
-
-%%%%''true''%% if %%[[:develop:api:efl:input:pointer:property:button_flags|Efl.Input.Pointer.button_flags]]%% indicates a double click (2nd press).%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:position|position]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:event_flags|event_flags]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%Extra flags for this event, may be changed by the user.%%
+<code c>
+Efl_Input_Flags efl_input_event_flags_get(const Eo *obj);
+void efl_input_event_flags_set(Eo *obj, Efl_Input_Flags flags);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:fake|fake]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%%%''true''%% if the event was fake, not triggered by real hardware.%%
+<code c>
+Eina_Bool efl_input_fake_get(const Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:lock_enabled|lock_enabled]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:state|Efl.Input.State]]]//\\
+> %%Indicates whether a key lock is on, such as NumLock, CapsLock, ...%%
+<code c>
+Eina_Bool efl_input_lock_enabled_get(const Eo *obj, Efl_Input_Lock lock, const Efl_Input_Device *seat);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:modifier_enabled|modifier_enabled]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:state|Efl.Input.State]]]//\\
+> %%Indicates whether a key modifier is on, such as Ctrl, Shift, ...%%
+<code c>
+Eina_Bool efl_input_modifier_enabled_get(const Eo *obj, Efl_Input_Modifier mod, const Efl_Input_Device *seat);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:position|position]]** //**(get, set)**//\\
+> %%Position where the event happened, relative to the window.%%
 <code c>
 Eina_Position2D efl_input_pointer_position_get(const Eo *obj);
 void efl_input_pointer_position_set(Eo *obj, Eina_Position2D pos);
 </code>
-
-%%Position where the event happened, relative to the window.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:precise_position|precise_position]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:precise_position|precise_position]]** //**(get, set)**//\\
+> %%Position where the event happened, relative to the window.%%
 <code c>
 Eina_Vector2 efl_input_pointer_precise_position_get(const Eo *obj);
 void efl_input_pointer_precise_position_set(Eo *obj, Eina_Vector2 pos);
 </code>
-
-%%Position where the event happened, relative to the window.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:previous_position|previous_position]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:previous_position|previous_position]]** //**(get, set)**//\\
+> %%Position of the previous event, valid for move events.%%
 <code c>
 Eina_Position2D efl_input_pointer_previous_position_get(const Eo *obj);
 void efl_input_pointer_previous_position_set(Eo *obj, Eina_Position2D pos);
 </code>
-
-%%Position of the previous event, valid for move events.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:source|source]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:source|source]]** //**(get, set)**//\\
+> %%The object where this event first originated, in case of propagation or repetition of the event.%%
 <code c>
 Efl_Object *efl_input_pointer_source_get(const Eo *obj);
 void efl_input_pointer_source_set(Eo *obj, Efl_Object *src);
 </code>
-
-%%The object where this event first originated, in case of propagation or repetition of the event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:tool|tool]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:timestamp|timestamp]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%The time at which an event was generated.%%
+<code c>
+double efl_input_timestamp_get(const Eo *obj);
+void efl_input_timestamp_set(Eo *obj, double ms);
+</code>
+\\
+**[[:develop:api:efl:input:pointer:property:tool|tool]]** //**(get, set)**//\\
+> %%ID of the tool (eg. pen) that triggered this event.%%
 <code c>
 int efl_input_pointer_tool_get(const Eo *obj);
 void efl_input_pointer_tool_set(Eo *obj, int id);
 </code>
-
-%%ID of the tool (eg. pen) that triggered this event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:triple_click|triple_click]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:triple_click|triple_click]]** //**(get, set)**//\\
+> %%%%''true''%% if %%[[:develop:api:efl:input:pointer:property:button_flags|Efl.Input.Pointer.button_flags]]%% indicates a triple click (3rd press).%%
 <code c>
 Eina_Bool efl_input_pointer_triple_click_get(const Eo *obj);
 void efl_input_pointer_triple_click_set(Eo *obj, Eina_Bool val);
 </code>
-
-%%%%''true''%% if %%[[:develop:api:efl:input:pointer:property:button_flags|Efl.Input.Pointer.button_flags]]%% indicates a triple click (3rd press).%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:value_has|value_has]]** //**(get)**//
+\\
+**[[:develop:api:efl:input:pointer:property:value_has|value_has]]** //**(get)**//\\
+> %%%%''true''%% if this event carries a valid value for the specified %%''key''%%.%%
 <code c>
 Eina_Bool efl_input_pointer_value_has_get(const Eo *obj, Efl_Input_Value key);
 </code>
-
-%%%%''true''%% if this event carries a valid value for the specified %%''key''%%.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:value|value]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:value|value]]** //**(get, set)**//\\
+> %%Represents a generic value for this event.%%
 <code c>
 double efl_input_pointer_value_get(const Eo *obj, Efl_Input_Value key);
 Eina_Bool efl_input_pointer_value_set(Eo *obj, Efl_Input_Value key, double val);
 </code>
-
-%%Represents a generic value for this event.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:wheel_delta|wheel_delta]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:wheel_delta|wheel_delta]]** //**(get, set)**//\\
+> %%Delta movement of the wheel in discrete steps.%%
 <code c>
 int efl_input_pointer_wheel_delta_get(const Eo *obj);
 void efl_input_pointer_wheel_delta_set(Eo *obj, int dist);
 </code>
-
-%%Delta movement of the wheel in discrete steps.%%\\ 
-\\ 
-**[[:develop:api:efl:input:pointer:property:wheel_horizontal|wheel_horizontal]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:input:pointer:property:wheel_horizontal|wheel_horizontal]]** //**(get, set)**//\\
+> %%Direction of the wheel, usually vertical.%%
 <code c>
 Eina_Bool efl_input_pointer_wheel_horizontal_get(const Eo *obj);
 void efl_input_pointer_wheel_horizontal_set(Eo *obj, Eina_Bool horizontal);
 </code>
-
-%%Direction of the wheel, usually vertical.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:duplicate|Efl.Duplicate]].**[[:develop:api:efl:input:pointer:method:duplicate|duplicate]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:event:property:processed|processed]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:event:property:scrolling|scrolling]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:pointer:method:reset|reset]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:pointer:property:device|device]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:pointer:property:event_flags|event_flags]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:pointer:property:fake|fake]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:event|Efl.Input.Event]].**[[:develop:api:efl:input:pointer:property:timestamp|timestamp]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:state|Efl.Input.State]].**[[:develop:api:efl:input:pointer:property:lock_enabled|lock_enabled]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:input:state|Efl.Input.State]].**[[:develop:api:efl:input:pointer:property:modifier_enabled|modifier_enabled]]** //**(get)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:input:pointer:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:input:pointer:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:finalize|finalize]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:input:event|Efl.Input.Event]]\\
+> **[[:develop:api:efl:input:event:property:processed|processed]]** //**(get, set)**//, **[[:develop:api:efl:input:event:property:scrolling|scrolling]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_del|callback,del]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:del|del]]**

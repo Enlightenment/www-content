@@ -38,119 +38,82 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:gfx:shape:property:fill_rule|fill_rule]]** //**(get, set)**//
+**[[:develop:api:efl:gfx:shape:method:copy_from|copy_from]]**// [Overridden from [[:develop:api:efl:gfx:path|Efl.Gfx.Path]]]//\\
+> %%Copy the shape data from the object specified.%%
+<code c>
+void efl_gfx_path_copy_from(Eo *obj, const Efl_Object *dup_from);
+</code>
+\\
+**[[:develop:api:efl:gfx:shape:method:interpolate|interpolate]]**// [Overridden from [[:develop:api:efl:gfx:path|Efl.Gfx.Path]]]//\\
+> %%Creates intermediary path part-way between two paths%%
+<code c>
+Eina_Bool efl_gfx_path_interpolate(Eo *obj, const Efl_Object *from, const Efl_Object *to, double pos_map);
+</code>
+\\
+**[[:develop:api:efl:gfx:shape:property:fill_rule|fill_rule]]** //**(get, set)**//\\
+> %%The fill rule of the given shape object. %%''EFL_GFX_FILL_RULE_WINDING''%%, or %%''EFL_GFX_FILL_RULE_ODD_EVEN''%%.%%
 <code c>
 Efl_Gfx_Fill_Rule efl_gfx_shape_fill_rule_get(const Eo *obj);
 void efl_gfx_shape_fill_rule_set(Eo *obj, Efl_Gfx_Fill_Rule fill_rule);
 </code>
-
-%%The fill rule of the given shape object. %%''EFL_GFX_FILL_RULE_WINDING''%%, or %%''EFL_GFX_FILL_RULE_ODD_EVEN''%%.%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_cap|stroke_cap]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_cap|stroke_cap]]** //**(get, set)**//\\
+> %%The cap style to be used for stroking the path. The cap will be used for capping the end point of a open subpath.%%
 <code c>
 Efl_Gfx_Cap efl_gfx_shape_stroke_cap_get(const Eo *obj);
 void efl_gfx_shape_stroke_cap_set(Eo *obj, Efl_Gfx_Cap c);
 </code>
-
-%%The cap style to be used for stroking the path. The cap will be used for capping the end point of a open subpath.%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_color|stroke_color]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_color|stroke_color]]** //**(get, set)**//\\
+> %%The color to be used for stroking the path.%%
 <code c>
 void efl_gfx_shape_stroke_color_get(const Eo *obj, int *r, int *g, int *b, int *a);
 void efl_gfx_shape_stroke_color_set(Eo *obj, int r, int g, int b, int a);
 </code>
-
-%%The color to be used for stroking the path.%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_dash|stroke_dash]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_dash|stroke_dash]]** //**(get, set)**//\\
+> %%Not implemented%%
 <code c>
 void efl_gfx_shape_stroke_dash_get(const Eo *obj, const Efl_Gfx_Dash **dash, unsigned int *length);
 void efl_gfx_shape_stroke_dash_set(Eo *obj, const Efl_Gfx_Dash *dash, unsigned int length);
 </code>
-
-%%Not implemented%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_join|stroke_join]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_join|stroke_join]]** //**(get, set)**//\\
+> %%The join style to be used for stroking the path. The join style will be used for joining the two line segment while stroking the path.%%
 <code c>
 Efl_Gfx_Join efl_gfx_shape_stroke_join_get(const Eo *obj);
 void efl_gfx_shape_stroke_join_set(Eo *obj, Efl_Gfx_Join j);
 </code>
-
-%%The join style to be used for stroking the path. The join style will be used for joining the two line segment while stroking the path.%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_location|stroke_location]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_location|stroke_location]]** //**(get, set)**//\\
+> %%Not implemented%%
 <code c>
 double efl_gfx_shape_stroke_location_get(const Eo *obj);
 void efl_gfx_shape_stroke_location_set(Eo *obj, double centered);
 </code>
-
-%%Not implemented%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_scale|stroke_scale]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_scale|stroke_scale]]** //**(get, set)**//\\
+> %%The stroke scale to be used for stroking the path. Will be used along with stroke width property.%%
 <code c>
 double efl_gfx_shape_stroke_scale_get(const Eo *obj);
 void efl_gfx_shape_stroke_scale_set(Eo *obj, double s);
 </code>
-
-%%The stroke scale to be used for stroking the path. Will be used along with stroke width property.%%\\ 
-\\ 
-**[[:develop:api:efl:gfx:shape:property:stroke_width|stroke_width]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:gfx:shape:property:stroke_width|stroke_width]]** //**(get, set)**//\\
+> %%The stroke width to be used for stroking the path.%%
 <code c>
 double efl_gfx_shape_stroke_width_get(const Eo *obj);
 void efl_gfx_shape_stroke_width_set(Eo *obj, double w);
 </code>
-
-%%The stroke width to be used for stroking the path.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_arc|append_arc]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_circle|append_circle]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_close|append_close]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_cubic_to|append_cubic_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_line_to|append_line_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_move_to|append_move_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_rect|append_rect]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_scubic_to|append_scubic_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:append_svg_path|append_svg_path]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:bounds_get|bounds_get]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:equal_commands|equal_commands]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:method:reset|reset]]**
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:property:length|length]]** //**(get)**//
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:property:path|path]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:shape:method:copy_from|copy_from]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:shape:method:interpolate|interpolate]]** //[Overridden here]//
-\\ 
-
+[[:develop:api:efl:gfx:path|Efl.Gfx.Path]]\\
+> **[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]**, **[[:develop:api:efl:gfx:path:method:append_arc|append_arc]]**, **[[:develop:api:efl:gfx:path:method:append_circle|append_circle]]**, **[[:develop:api:efl:gfx:path:method:append_close|append_close]]**, **[[:develop:api:efl:gfx:path:method:append_cubic_to|append_cubic_to]]**, **[[:develop:api:efl:gfx:path:method:append_line_to|append_line_to]]**, **[[:develop:api:efl:gfx:path:method:append_move_to|append_move_to]]**, **[[:develop:api:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]]**, **[[:develop:api:efl:gfx:path:method:append_rect|append_rect]]**, **[[:develop:api:efl:gfx:path:method:append_scubic_to|append_scubic_to]]**, **[[:develop:api:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]]**, **[[:develop:api:efl:gfx:path:method:append_svg_path|append_svg_path]]**, **[[:develop:api:efl:gfx:path:method:bounds_get|bounds_get]]**, **[[:develop:api:efl:gfx:path:method:equal_commands|equal_commands]]**, **[[:develop:api:efl:gfx:path:method:reset|reset]]**, **[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:length|length]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:path|path]]** //**(get, set)**//
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]].**[[:develop:api:efl:gfx:path:event:changed|changed]]**
-\\ 
+[[:develop:api:efl:gfx:path|Efl.Gfx.Path]]\\
+> **[[:develop:api:efl:gfx:path:event:changed|changed]]**

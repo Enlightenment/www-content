@@ -74,198 +74,161 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:io:copier:method:binbuf_steal|binbuf_steal]]**
+**[[:develop:api:efl:io:copier:method:binbuf_steal|binbuf_steal]]**\\
+> %%Steals the internal binbuf and return it to caller.%%
 <code c>
 Eina_Binbuf *efl_io_copier_binbuf_steal(Eo *obj);
 </code>
-
-%%Steals the internal binbuf and return it to caller.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:method:flush|flush]]**
+\\
+**[[:develop:api:efl:io:copier:method:close|close]]**// [Overridden from [[:develop:api:efl:io:closer|Efl.Io.Closer]]]//\\
+> %%Closes the Input/Output object.%%
+<code c>
+Eina_Error efl_io_closer_close(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:io:copier:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's constructor.%%
+<code c>
+Efl_Object *efl_constructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:io:copier:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Call the object's destructor.%%
+<code c>
+void efl_destructor(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:io:copier:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:io:copier:method:flush|flush]]**\\
+> %%Forces reading from source and writing to destination.%%
 <code c>
 Eina_Bool efl_io_copier_flush(Eo *obj, Eina_Bool may_block, Eina_Bool ignore_line_delimiter);
 </code>
-
-%%Forces reading from source and writing to destination.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:buffer_limit|buffer_limit]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:buffer_limit|buffer_limit]]** //**(get, set)**//\\
+> %%Copier buffer limit property, in bytes.%%
 <code c>
 size_t efl_io_copier_buffer_limit_get(const Eo *obj);
 void efl_io_copier_buffer_limit_set(Eo *obj, size_t size);
 </code>
-
-%%Copier buffer limit property, in bytes.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:destination|destination]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:closer|Efl.Io.Closer]]]//\\
+> %%If true will automatically close() on object destructor.%%
+<code c>
+Eina_Bool efl_io_closer_close_on_destructor_get(const Eo *obj);
+void efl_io_closer_close_on_destructor_set(Eo *obj, Eina_Bool close_on_destructor);
+</code>
+\\
+**[[:develop:api:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:closer|Efl.Io.Closer]]]//\\
+> %%If true will automatically close resources on exec() calls.%%
+<code c>
+Eina_Bool efl_io_closer_close_on_exec_get(const Eo *obj);
+Eina_Bool efl_io_closer_close_on_exec_set(Eo *obj, Eina_Bool close_on_exec);
+</code>
+\\
+**[[:develop:api:efl:io:copier:property:closed|closed]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:closer|Efl.Io.Closer]]]//\\
+> %%If true will notify object was closed.%%
+<code c>
+Eina_Bool efl_io_closer_closed_get(const Eo *obj);
+Eina_Bool efl_io_closer_closed_set(Eo *obj, Eina_Bool is_closed);
+</code>
+\\
+**[[:develop:api:efl:io:copier:property:destination|destination]]** //**(get, set)**//\\
+> %%Copier destination object.%%
 <code c>
 Efl_Io_Writer *efl_io_copier_destination_get(const Eo *obj);
 void efl_io_copier_destination_set(Eo *obj, Efl_Io_Writer *destination);
 </code>
-
-%%Copier destination object.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:done|done]]** //**(get, set)**// ''protected set''
+\\
+**[[:develop:api:efl:io:copier:property:done|done]]** //**(get, set)**// ''protected set''\\
+> %%Reports if copier is done.%%
 <code c>
 Eina_Bool efl_io_copier_done_get(const Eo *obj);
 void efl_io_copier_done_set(Eo *obj, Eina_Bool done);
 </code>
-
-%%Reports if copier is done.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:line_delimiter|line_delimiter]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:line_delimiter|line_delimiter]]** //**(get, set)**//\\
+> %%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
 <code c>
 const Eina_Slice efl_io_copier_line_delimiter_get(const Eo *obj);
 void efl_io_copier_line_delimiter_set(Eo *obj, const Eina_Slice slice);
 </code>
-
-%%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:pending_size|pending_size]]** //**(get)**//
+\\
+**[[:develop:api:efl:io:copier:property:pending_size|pending_size]]** //**(get)**//\\
+> %%Returns the size of the pending buffer.%%
 <code c>
 size_t efl_io_copier_pending_size_get(const Eo *obj);
 </code>
-
-%%Returns the size of the pending buffer.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:progress|progress]]** //**(get)**//
+\\
+**[[:develop:api:efl:io:copier:property:progress|progress]]** //**(get)**//\\
+> %%Progress for read and write.%%
 <code c>
 void efl_io_copier_progress_get(const Eo *obj, uint64_t *read, uint64_t *written, uint64_t *total);
 </code>
-
-%%Progress for read and write.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:read_chunk_size|read_chunk_size]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:read_chunk_size|read_chunk_size]]** //**(get, set)**//\\
+> %%Copier read chunk size property, in bytes.%%
 <code c>
 size_t efl_io_copier_read_chunk_size_get(const Eo *obj);
 void efl_io_copier_read_chunk_size_set(Eo *obj, size_t size);
 </code>
-
-%%Copier read chunk size property, in bytes.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:source|source]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:source|source]]** //**(get, set)**//\\
+> %%Copier source object.%%
 <code c>
 Efl_Io_Reader *efl_io_copier_source_get(const Eo *obj);
 void efl_io_copier_source_set(Eo *obj, Efl_Io_Reader *source);
 </code>
-
-%%Copier source object.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**//
+\\
+**[[:develop:api:efl:io:copier:property:timeout_inactivity|timeout_inactivity]]** //**(get, set)**//\\
+> %%Terminates the copier with ETIMEDOUT if it becomes inactive for some time.%%
 <code c>
 double efl_io_copier_timeout_inactivity_get(const Eo *obj);
 void efl_io_copier_timeout_inactivity_set(Eo *obj, double seconds);
 </code>
-
-%%Terminates the copier with ETIMEDOUT if it becomes inactive for some time.%%\\ 
-\\ 
+\\
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:copier:method:close|close]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:copier:property:close_on_destructor|close_on_destructor]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:copier:property:close_on_exec|close_on_exec]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:copier:property:closed|closed]]** //**(get, set)**// //[Overridden here]//
-\\ 
-[[:develop:api:efl:loop_user|Efl.Loop_User]].**[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:copier:method:constructor|constructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:copier:method:destructor|destructor]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:io:copier:method:finalize|finalize]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// //[Overridden in [[:develop:api:efl:loop_user|Efl.Loop_User]]]//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_attach|composite_attach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_detach|composite_detach]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:del|del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_freeze|event_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:event_thaw|event_thaw]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:name_find|name_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:method:provider_find|provider_find]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
-\\ 
-
+[[:develop:api:efl:loop_user|Efl.Loop_User]]\\
+> **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**//, **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**//\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//
 ===== Events =====
 
-**[[:develop:api:efl:io:copier:event:data|data]]**
+**[[:develop:api:efl:io:copier:event:data|data]]**\\
+> %%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%%
 <code c>
 EFL_IO_COPIER_EVENT_DATA(const Eina_Slice *)
 </code>
-
-%%When data is read to internal buffer, it's emitted in this event. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:event:done|done]]**
+\\ **[[:develop:api:efl:io:copier:event:done|done]]**\\
+> %%All available data was copied from source to destination%%
 <code c>
 EFL_IO_COPIER_EVENT_DONE(void)
 </code>
-
-%%All available data was copied from source to destination%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:event:error|error]]**
+\\ **[[:develop:api:efl:io:copier:event:error|error]]**\\
+> %%An error happened and the copy stopped%%
 <code c>
 EFL_IO_COPIER_EVENT_ERROR(Eina_Error)
 </code>
-
-%%An error happened and the copy stopped%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:event:line|line]]**
+\\ **[[:develop:api:efl:io:copier:event:line|line]]**\\
+> %%If %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%%
 <code c>
 EFL_IO_COPIER_EVENT_LINE(const Eina_Slice *)
 </code>
-
-%%If %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified.%%\\ 
-\\ 
-**[[:develop:api:efl:io:copier:event:progress|progress]]**
+\\ **[[:develop:api:efl:io:copier:event:progress|progress]]**\\
+> %%Total size changed or Data was read/written%%
 <code c>
 EFL_IO_COPIER_EVENT_PROGRESS(void)
 </code>
+\\ ==== Inherited ====
 
-%%Total size changed or Data was read/written%%\\ 
-\\ 
-==== Inherited ====
-
-[[:develop:api:efl:io:closer|Efl.Io.Closer]].**[[:develop:api:efl:io:closer:event:closed|closed]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_add|callback,add]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:callback_del|callback,del]]**
-\\ 
-[[:develop:api:efl:object|Efl.Object]].**[[:develop:api:efl:object:event:del|del]]**
-\\ 
+[[:develop:api:efl:io:closer|Efl.Io.Closer]]\\
+> **[[:develop:api:efl:io:closer:event:closed|closed]]**\\
+[[:develop:api:efl:object|Efl.Object]]\\
+> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**

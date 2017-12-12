@@ -40,25 +40,30 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''
+**[[:develop:api:efl:io:writer:fd:method:write|write]]**// [Overridden from [[:develop:api:efl:io:writer|Efl.Io.Writer]]]//\\
+> %%Writes data from a pre-populated buffer.%%
+<code c>
+Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining);
+</code>
+\\
+**[[:develop:api:efl:io:writer:fd:property:can_write|can_write]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:io:writer|Efl.Io.Writer]]]// ''protected set''\\
+> %%If %%''true''%% will notify %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% can be called without blocking or failing.%%
+<code c>
+Eina_Bool efl_io_writer_can_write_get(const Eo *obj);
+void efl_io_writer_can_write_set(Eo *obj, Eina_Bool can_write);
+</code>
+\\
+**[[:develop:api:efl:io:writer:fd:property:writer_fd|writer_fd]]** //**(get, set)**// ''protected set''\\
+> %%Writer file descriptor%%
 <code c>
 int efl_io_writer_fd_get(const Eo *obj);
 void efl_io_writer_fd_set(Eo *obj, int fd);
 </code>
-
-%%Writer file descriptor%%\\ 
-\\ 
-
-==== Inherited ====
-
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:fd:method:write|write]]** //[Overridden here]//
-\\ 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:fd:property:can_write|can_write]]** //**(get, set)**// //[Overridden here]// ''protected set''
-\\ 
+\\
 
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:io:writer|Efl.Io.Writer]].**[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**
-\\ 
+[[:develop:api:efl:io:writer|Efl.Io.Writer]]\\
+> **[[:develop:api:efl:io:writer:event:can_write_changed|can_write,changed]]**

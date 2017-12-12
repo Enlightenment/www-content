@@ -1,4 +1,19 @@
 ~~Title: Efl.Net.Server.Unix.unlink_before_bind~~
+===== Values =====
+
+  * **unlink_before_bind** - %%If %%''true''%%, server will unlink() the path before bind() is called.%%
+===== Description =====
+
+%%AF_UNIX paths may be stale due crashes, remove files and try again.%%
+
+%%If this property is %%''true''%%, then it will unlink() before bind() is done, repeating this process if EADDRINUSE.%%
+
+%%By default it's false and you will get EADDRINUSE.%%
+
+//Since 1.19//
+{{page>:develop:api-include:efl:net:server:unix:property:unlink_before_bind:description&nouser&nolink&nodate}}
+
+
 ===== Signature =====
 
 <code>
@@ -22,21 +37,6 @@
 Eina_Bool efl_net_server_unix_unlink_before_bind_get(const Eo *obj);
 void efl_net_server_unix_unlink_before_bind_set(Eo *obj, Eina_Bool unlink_before_bind);
 </code>
-
-===== Values =====
-
-  * **unlink_before_bind** - %%If %%''true''%%, server will unlink() the path before bind() is called.%%
-===== Description =====
-
-%%AF_UNIX paths may be stale due crashes, remove files and try again.%%
-
-%%If this property is %%''true''%%, then it will unlink() before bind() is done, repeating this process if EADDRINUSE.%%
-
-%%By default it's false and you will get EADDRINUSE.%%
-
-//Since 1.19//
-{{page>:develop:api-include:efl:net:server:unix:property:unlink_before_bind:description&nouser&nolink&nodate}}
-
 
 ===== Implemented by =====
 
