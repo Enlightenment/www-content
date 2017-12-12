@@ -1,0 +1,129 @@
+---
+~~Title: Events Programming Guide~~
+---
+
+# Events Programming Guide #
+
+The EFL is event-driven. This means that execution usually takes place within an internal EFL *Main Loop*. The application is then notified through function callbacks of virtually any event happening on the computer.
+
+Therefore, events play a central role in EFL. This guide explains all the required methods to handle EFL Events.
+
+You can find usage examples in the EFL examples repository: [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c)
+
+## Prerequisites ##
+
+* Read the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) to understand how Eo objects are created and destroyed.
+
+## Listening to Events from Objects ##
+
+All Eo objects can emit events, as documented in the Events sections in their respective [API Reference documentation](/develop/api/).
+
+To register a callback method to be called when an object emits a given event use ``efl_event_callback_add()``:
+
+```c
+efl_event_callback_add(object, event, callback, data);
+```
+
+Where *object* is any ``Eo *`` or derived object, *event* is the identifier of the event (like ``EFL_LOOP_EVENT_POLL_HIGH`` or ``EFL_LOOP_TIMER_EVENT_TICK``), *callback* is the method to be called when the event occurs and *data* is any data you want to pass to your callback (even ``NULL`` if you don't need it).
+
+The method signature for the callback is:
+
+```c
+void callback(void *data, const Efl_Event *event);
+```
+
+where *data* is the last parameter you used when registering the callback with ``efl_event_callback_add()`` and *event* contains information about the event. Some interesting bits are:
+
+| Attribute             | Type             | Content                       |
+| --------------------- | ---------------- | ----------------------------- |
+| ``event->object``     | ``Eo *``         | Object that emitted the event |
+| ``event->info``       | ``void *``       | Used by some events to provide additional information. Must be cast to the appropriate type (see below). |
+| ``event->desc->name`` | ``const char *`` | Name of the event             |
+
+The [API Reference documentation](/develop/api/) for each event tells you how to use ``event->info``. See [EFL_EVENT_POINTER_DOWN](/develop/api/interface/efl/input/interface/event/pointer_down) for example.
+
+To stop receiving notifications for a particular event (unregister a callback), use ``efl_event_callback_del()``:
+
+```c
+efl_event_callback_del(object, event, callback, data);
+```
+
+Where the parameters have the same meaning as for ``efl_event_callback_add()``. Note that in order to unregister the callback you have to provide **the same parameters** you used to register it. This is due to the fact that you can register different callbacks to the same event, or even the same callback with different *data*.
+
+> **NOTE:**
+> Registering and unregistering callbacks is an expensive process, performance-wise. Should you perform these operations continuously on several callbacks at the same time, it is more efficient to do so in a batch, using ``efl_even_callback_array_add()`` and ``efl_even_callback_array_del()``. Bear in mind that you cannot unregister an individual callback which has been registered in a batch; all of them have to be unregistered together.
+
+Here you have an example snippet based on [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c):
+
+```c
+static void
+callback(void *data, const Efl_Event *event)
+{
+   Efl_Loop *polled = data;
+   printf("  Polled %s from %s\n", efl_name_get(polled), efl_name_get(event->object));
+}
+
+void
+setup()
+{
+   [...]
+   efl_add(EFL_LOOP_TIMER_CLASS, mainloop,
+           efl_name_set(efl_added, "timer2"),
+           efl_loop_timer_interval_set(efl_added, .1),
+           efl_event_callback_add(efl_added, EFL_LOOP_TIMER_EVENT_TICK, callback, polled));
+   [...]
+}
+```
+
+A new timer object is created and added to ``mainloop``. The configuration of this timer is done completely inside the ``efl_add()`` call, as explained in the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial.
+
+Note how the ``polled`` object is passed as the *data* parameter to ``efl_event_callback_add()`` and recovered from the callback. Also note how the object that emitted the event (the timer) is recovered from the callback through the ``event`` parameter.
+
+## Pausing and Resuming Event Notifications ##
+
+All event emission from a given object can be paused (*frozen*) using ``efl_event_freeze()`` and continued with ``efl_event_thaw()``:
+
+```c
+   efl_event_freeze(object);
+   efl_event_thaw(object);
+```
+
+While an object is frozen only high-priority events (marked as *hot*) will be emitted. Hot events cannot be stopped.
+
+Please note that ALL events coming from the frozen object are stopped (except hot events). If you need to stop individual events you can unregister their callback temporarily and register again later.
+
+## Defining Custom Events ##
+
+You can define any number of custom events and emit them from any Eo object. You can then register callbacks to be activated by these events.
+
+First, create a ``Efl_Event_Description`` variable, initialize it with ``EFL_EVENT_DESCRIPTION()`` and make it available everywhere you want to use this new event:
+
+```c
+   Efl_Event_Description CUSTOM_EVENT = EFL_EVENT_DESCRIPTION("custom-event");
+```
+
+Register to this event as you would normally do for EFL events with ``efl_event_callback_add()``:
+
+```c
+   efl_event_callback_add(object, &CUSTOM_EVENT, callback, data);
+```
+
+*data* works as usual and can be recovered from the callback through its ``data`` parameter.
+
+Finally, emit the event using ``efl_event_callback_call()``:
+
+```c
+   efl_event_callback_call(object, &CUSTOM_EVENT, event_info);
+```
+
+*event_info* will be passed to the callback through the ``event->info`` parameter and its meaning is completely up to you, the creator of the event.
+
+## Further Reading ##
+[reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c)
+:    EFL examples repository
+
+[``Efl.Object`` API Reference](/develop/api/efl/object)
+:    Detailed documentation for the EFL object, which implements the events mechanism
+
+[Introduction to Eo](/develop/tutorials/c/eo-intro.md)
+:    Tutorial on instantiating and configuring Eo objects
