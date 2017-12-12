@@ -1,4 +1,10 @@
-~~Title: Efl.Canvas.Object.pointer_coords_inside_get~~
+~~Title: Efl.Canvas.Object.coords_inside~~
+===== Keys =====
+
+  * **pos** - %%The position in pixels.%%
+===== Values =====
+
+  * **return** - %%%%''true''%% if the coords are inside the object, %%''false''%% otherwise%%
 ===== Description =====
 
 %%Returns whether the coords are logically inside the object.%%
@@ -8,32 +14,31 @@
 %%A return value of %%''true''%% indicates the position is logically inside the object, and %%''false''%% implies it is logically outside the object.%%
 
 %%If %%''e''%% is not a valid object, the return value is undefined.%%
-{{page>:develop:api-include:efl:canvas:object:method:pointer_coords_inside_get:description&nouser&nolink&nodate}}
+
+\\ {{page>:develop:api-include:efl:canvas:object:property:coords_inside:description&nouser&nolink&nodate}}
 
 ===== Signature =====
 
 <code>
-pointer_coords_inside_get {
-    params {
-        @in x: int;
-        @in y: int;
+@property coords_inside {
+    get {
+        keys {
+            pos: Eina.Position2D;
+        }
+        values {
+            return: bool;
+        }
     }
-    return: bool @warn_unused;
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Eina_Bool efl_canvas_object_pointer_coords_inside_get(Eo *obj, int x, int y);
+Eina_Bool efl_canvas_object_coords_inside_get(const Eo *obj, Eina_Position2D pos);
 </code>
-
-===== Parameters =====
-
-  * **x** //(in)// - %%The canvas-relative x coordinate.%%
-  * **y** //(in)// - %%The canvas-relative y coordinate.%%
 
 ===== Implemented by =====
 
-  * **Efl.Canvas.Object.pointer_coords_inside_get**
+  * **Efl.Canvas.Object.coords_inside**
 
