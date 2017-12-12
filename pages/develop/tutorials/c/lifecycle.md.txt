@@ -1,0 +1,220 @@
+---
+~~Title: Lifecycle Management~~
+---
+
+# Lifecycle Management #
+
+The [Hello World](/develop/tutorials/c/hello-world) tutorial explained how to create a desktop-like application using the ``EFL_MAIN()`` macro. Applications targeted at mobile or embedded devices, though, often have additional lifecycle constrains, which are explained in this tutorial.
+
+## Prerequisites ##
+
+* Finish the [Hello World](/develop/tutorials/c/hello-world) tutorial to know the basics of EFL application creation.
+
+## Application Management Events ##
+
+EFL will call some special methods in your application to inform you of events related to the application lifecycle, like it being paused, resumed or about to be closed.
+
+If you use the ``EFL_MAIN()`` macro as explained in the [Hello World](/develop/tutorials/c/hello-world) tutorial, though, these methods are hidden from you. While this is usually convenient for desktop applications, you will probably need to use them in mobile or embedded applications. To do this, use the ``EFL_MAIN_EX()`` macro instead.
+
+Create a ``lifecycle_main.c`` file and write this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Efl_Core.h>
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+{
+   printf("Lifecycle: launched\n");
+}
+EFL_MAIN_EX()
+```
+
+This looks like the Hello World tutorial, but using ``EFL_MAIN_EX()`` instead. If you try to compile it, though, it will complain (admittedly in a rather convoluted way) about missing symbols.
+
+These are the new methods that you need to add. All of them have the same signature as ``efl_main()``:
+
+| Method              | Purpose                                  |
+| ------------------- | ---------------------------------------- |
+| ``efl_pause()``     | Application is entering the paused state |
+| ``efl_resume()``    | Application is leaving the paused state  |
+| ``efl_terminate()`` | Application is about to be terminated    |
+
+Add them with a simple ``printf()`` so we can keep track of the application state changes:
+
+```c
+EAPI_MAIN void
+efl_pause(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: paused\n");
+}
+
+EAPI_MAIN void
+efl_resume(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: resumed\n");
+}
+
+EAPI_MAIN void
+efl_terminate(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: terminated\n");
+}
+```
+
+The system will typically put your application in the paused state when it leaves the foreground, therefore, you should free as many resources as you can in ``efl_pause()`` so they are available to other applications. In ``efl_resume()`` you can then reload them.
+
+In ``efl_terminate()`` you normally will commit to permanent storage (like a disk file) the application state, so it can be retrieved next time the application is started.
+
+## Simulating Application Management Events ##
+
+The above section explains everything you need to know about application lifecycle management in EFL. However, the code provided so far will not demonstrate much when tested on a desktop environment.
+
+This sections adds a bit of *simulation code* which will artificially trigger the application management events studied before, for the sake of this tutorial only.
+
+Define this method in your code:
+
+```c
+static void
+_lifecycle_simulation(void *data, const Efl_Event *ev EINA_UNUSED)
+{
+   Efl_Loop *loop = data;
+   static int called = 0;
+
+   switch (called)
+     {
+        case 0:
+          // First call, pause the application
+          efl_event_callback_call(loop, EFL_LOOP_EVENT_PAUSE, NULL);
+          break;
+        case 1:
+          // Second call, resume the application
+          efl_event_callback_call(loop, EFL_LOOP_EVENT_RESUME, NULL);
+          break;
+        default:
+          // Last call, exit the application
+          efl_exit(0);
+     }
+
+   called++;
+}
+```
+
+If you have read the [Events Programming Guide](/develop/guides/c/core/events.md) you will know that ``efl_event_callback_call()`` is manually emitting an event. This is what EFL uses internally to inform your application of these events on systems that support them (i.e. *not* on desktops).
+
+And now create a timer at the end of ``efl_main()`` that will periodically call the above defined ``_lifecycle_simulation()`` method:
+
+```c
+   [...]
+   efl_add(EFL_LOOP_TIMER_CLASS, ev->object,
+           efl_event_callback_add(efl_added, EFL_LOOP_TIMER_EVENT_TICK, _lifecycle_simulation, ev->object),
+           efl_loop_timer_interval_set(efl_added, 1.0));
+```
+
+Read the [Main Loop Programming Guide](/develop/guides/c/core/main-loop.md) to learn about timers. Suffice to say that this call creates one, registers a callback to it, and configures it to trigger every second.
+
+With this, the program is complete, including simulation code.
+
+## Complete Application ##
+
+The whole program, with some additional comments for clarity, should look like this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Efl_Core.h>
+
+/*
+ * This helper method triggers lifecycle events for the purpose of this demo.
+ * efl_pause and efl_resume may never be called for your application, depending
+ * on your environment, therefore this demo triggers them directly to show how
+ * you can respond.
+ */
+
+static void
+_lifecycle_simulation(void *data, const Efl_Event *ev EINA_UNUSED)
+{
+   Efl_Loop *loop = data;
+   static int called = 0;
+
+   switch (called)
+     {
+        case 0:
+          // First call, pause the application
+          efl_event_callback_call(loop, EFL_LOOP_EVENT_PAUSE, NULL);
+          break;
+        case 1:
+          // Second call, resume the application
+          efl_event_callback_call(loop, EFL_LOOP_EVENT_RESUME, NULL);
+          break;
+        default:
+          // Last call, exit the application
+          efl_exit(0);
+     }
+
+   called++;
+}
+
+EAPI_MAIN void
+efl_pause(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: paused\n");
+}
+
+EAPI_MAIN void
+efl_resume(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: resumed\n");
+}
+
+EAPI_MAIN void
+efl_terminate(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   printf("Lifecycle: terminated\n");
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+{
+   printf("Lifecycle: launched\n");
+
+   // The timer function will trigger the chain of simulated events to show
+   // how an app could respond to system lifecycle events.
+   efl_add(EFL_LOOP_TIMER_CLASS, ev->object,
+           efl_event_callback_add(efl_added, EFL_LOOP_TIMER_EVENT_TICK, _lifecycle_simulation, ev->object),
+           efl_loop_timer_interval_set(efl_added, 1.0));
+}
+EFL_MAIN_EX()
+```
+
+You can find it in the EFL repository: [tutorial/c/lifecycle/src/lifecycle_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/lifecycle/src/lifecycle_main.c).
+
+If you execute it, you should see how your application receives events for Launching, Pause, Resume and Termination, spaced every second.
+
+## Summary ##
+
+At the end of this tutorial you have learned:
+
+* To use ``EFL_MAIN_EX()`` instead of ``EFL_MAIN()`` if you are interested in application management events.
+
+* The methods to implement in that case are ``efl_pause()``, ``efl_resume()`` and ``efl_terminate()``.
+
+## Further Reading ##
+
+[Hello World](/develop/tutorials/c/hello-world)
+:    Tutorial explaining how to create an EFL application.
+
+[Events Programming Guide](/develop/guides/c/core/events.md)
+:    Guide explaining how EFL events work.
+
+[Main Loop Programming Guide](/develop/guides/c/core/main-loop.md)
+:    Guide explaining how EFL timers work.
+
+[tutorial/c/lifecycle/src/lifecycle_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/lifecycle/src/lifecycle_main.c)
+:    Application management from the EFL git examples repository.
+
