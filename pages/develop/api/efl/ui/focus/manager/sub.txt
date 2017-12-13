@@ -18,30 +18,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_ui_focus_manager_sub [fillcolor = "deepskyblue4", label = "Efl.Ui.Focus.Manager.Sub", color = "deepskyblue", fontcolor = "white", style = "filled"]
-    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_ui_focus_manager [fillcolor = "gray15", label = "Efl.Ui.Focus.Manager", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-
-    efl_ui_focus_manager_sub -> efl_interface
-    efl_ui_focus_manager_sub -> efl_ui_focus_manager
-    efl_ui_focus_manager_sub -> efl_object
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
@@ -67,15 +43,54 @@ void efl_destructor(Eo *obj);
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]\\
-> **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]**, **[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]**, **[[:develop:api:efl:ui:focus:manager:method:move|move]]**, **[[:develop:api:efl:ui:focus:manager:method:pop_history_stack|pop_history_stack]]**, **[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]**, **[[:develop:api:efl:ui:focus:manager:method:request_subchild|request_subchild]]**, **[[:develop:api:efl:ui:focus:manager:method:reset_history|reset_history]]**, **[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]**, **[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**//, **[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**//, **[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//, **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**//
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
+|  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
+|  | **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**// | %%A human readable comment for the object%% |
+|  | **[[:develop:api:efl:object:method:composite_attach|composite_attach]]** | %%Make an object a composite object of another.%% |
+|  | **[[:develop:api:efl:object:method:composite_detach|composite_detach]]** | %%Detach a composite object from another object.%% |
+|  | **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]** | %%Check if an object is part of a composite object.%% |
+|  | **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:object:method:del|del]]** | %%Unrefs the object and reparents it to NULL.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]** | %%Add an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]** | %%Remove an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
+|  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:finalize|finalize]]** | %%Called at the end of #eo_add. Should not be called, just overridden.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
+|  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
+|  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
+|  | **[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**// | %%The list of elements which are at the border of the graph.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]** | %%This will fetch the data from a registered node.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]** | %%Return the last logical object.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**// | %%The element which is currently focused by this manager%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:move|move]]** | %%Move the focus into the given direction.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:pop_history_stack|pop_history_stack]]** | %%Removes the most upper history element, and gives the focus to the next one below%% |
+|  | **[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**// | %%Add a another manager to serve the move requests.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]** | %%Returns the object which would be the next object to focus in the given direction.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:request_subchild|request_subchild]]** | %%Returns a widget that can receive focus%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:reset_history|reset_history]]** | %%Reset the history stack of this manager object. This means the most upper element will be unfocused, all other elements will be removed from the remembered before.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**// | %%Root node for all logical subtrees.%% |
+|  | **[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]** | %%Called when this manager is set as redirect%% |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**\\
-[[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]\\
-> **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]**, **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]**, **[[:develop:api:efl:ui:focus:manager:event:focused|focused]]**, **[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]**
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
+|  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
+|  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
+^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
+|  | **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]** | %%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%% |
+|  | **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]** | %%Emitted once the graph calculationg will be performed%% |
+|  | **[[:develop:api:efl:ui:focus:manager:event:focused|focused]]** | %%Emitted if the manager has focused an object, the passed focus object is the last focused object%% |
+|  | **[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]** | %%Emitted when the redirect object has changed, the old manager is passed as event info%% |

@@ -1,43 +1,41 @@
 ~~Title: Efl.Canvas.Video.position~~
-===== Values =====
-
-  * **sec** - %%The position (in seconds).%%
 ===== Description =====
 
+%%The 2D position of a canvas object.%%
 
+%%The position is absolute, in pixels, relative to the top-left corner of the window, within its border decorations (application space).%%
 
 
 {{page>:develop:api-include:efl:canvas:video:property:position:description&nouser&nolink&nodate}}
 
+===== Values =====
+
+  * **pos** - %%A 2D coordinate in pixel units.%%
 ==== Getter ====
 
-%%Get the position in the media file.%%
-
-%%The position is returned as the number of seconds since the beginning of the media file.%%
+%%Retrieves the position of the given canvas object.%%
 
 
 {{page>:develop:api-include:efl:canvas:video:property:position:getter_description&nouser&nolink&nodate}}
 
 ==== Setter ====
 
-%%Set the position in the media file.%%
-
-%%This functions sets the current position of the media file to "sec", this only works on seekable streams. Setting the position doesn't change the playing state of the media file.%%
+%%Moves the given canvas object to the given location inside its canvas' viewport. If unchanged this call may be entirely skipped, but if changed this will trigger move events, as well as potential pointer,in or pointer,out events.%%
 {{page>:develop:api-include:efl:canvas:video:property:position:getter_description&nouser&nolink&nodate}}
 
 
-//Overridden from [[:develop:api:efl:player:property:position|Efl.Player.position]] **(get, set)**.//===== Signature =====
+//Overridden from [[:develop:api:efl:canvas:group:property:position|Efl.Gfx.position]] **(set)**.//===== Signature =====
 
 <code>
 @property position @pure_virtual {
     get {
         values {
-            sec: double;
+            pos: Eina.Position2D;
         }
     }
     set {
         values {
-            sec: double;
+            pos: Eina.Position2D;
         }
     }
 }
@@ -46,11 +44,11 @@
 ===== C signature =====
 
 <code c>
-double efl_player_position_get(const Eo *obj);
-void efl_player_position_set(Eo *obj, double sec);
+Eina_Position2D efl_gfx_position_get(const Eo *obj);
+void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
 </code>
 
 ===== Implemented by =====
 
-  * [[:develop:api:efl:player:property:position|Efl.Player.position]]
+  * [[:develop:api:efl:gfx:property:position|Efl.Gfx.position]]
 

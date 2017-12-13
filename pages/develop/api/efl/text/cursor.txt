@@ -9,34 +9,14 @@
 
 {{page>:develop:api-include:efl:text:cursor:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_text_cursor [fillcolor = "dodgerblue4", label = "Efl.Text.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
+**[[:develop:api:efl:text:cursor:property:cursor|cursor]]** //**(get)**//\\
+> %%The object's main cursor.%%
+<code c>
+Efl_Text_Cursor_Cursor *efl_text_cursor_get(const Eo *obj, Efl_Text_Cursor_Cursor_Get_Type get_type);
+</code>
+\\
 **[[:develop:api:efl:text:cursor:method:cursor_char_delete|cursor_char_delete]]**\\
 > %%Deletes a single character from position pointed by given cursor.%%
 <code c>
@@ -61,6 +41,12 @@ void efl_text_cursor_char_prev(Eo *obj, Efl_Text_Cursor_Cursor *cur);
 int efl_text_cursor_compare(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, const Efl_Text_Cursor_Cursor *cur2);
 </code>
 \\
+**[[:develop:api:efl:text:cursor:property:cursor_content|cursor_content]]** //**(get)**//\\
+> %%The content of the cursor (the character under the cursor)%%
+<code c>
+Eina_Unicode efl_text_cursor_content_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
 **[[:develop:api:efl:text:cursor:method:cursor_coord_set|cursor_coord_set]]**\\
 > %%Set cursor coordinates%%
 <code c>
@@ -83,6 +69,12 @@ Eina_Bool efl_text_cursor_equal(Eo *obj, const Efl_Text_Cursor_Cursor *cur1, con
 > %%Free existing cursor%%
 <code c>
 void efl_text_cursor_free(Eo *obj, Efl_Text_Cursor_Cursor *cur);
+</code>
+\\
+**[[:develop:api:efl:text:cursor:property:cursor_geometry|cursor_geometry]]** //**(get)**//\\
+> %%Returns the geometry of two cursors ("split cursor"), if logical cursor is between LTR/RTL text, also considering paragraph direction. Upper cursor is shown for the text of the same direction as paragraph, lower cursor - for opposite.%%
+<code c>
+Eina_Bool efl_text_cursor_geometry_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur, Efl_Text_Cursor_Cursor_Type ctype, int *cx, int *cy, int *cw, int *ch, int *cx2, int *cy2, int *cw2, int *ch2);
 </code>
 \\
 **[[:develop:api:efl:text:cursor:method:cursor_line_char_first|cursor_line_char_first]]**\\
@@ -145,6 +137,13 @@ void efl_text_cursor_paragraph_next(Eo *obj, Efl_Text_Cursor_Cursor *cur);
 void efl_text_cursor_paragraph_prev(Eo *obj, Efl_Text_Cursor_Cursor *cur);
 </code>
 \\
+**[[:develop:api:efl:text:cursor:property:cursor_position|cursor_position]]** //**(get, set)**//\\
+> %%Cursor position%%
+<code c>
+int efl_text_cursor_position_get(const Eo *obj, Efl_Text_Cursor_Cursor *cur);
+void efl_text_cursor_position_set(Eo *obj, Efl_Text_Cursor_Cursor *cur, int position);
+</code>
+\\
 **[[:develop:api:efl:text:cursor:method:cursor_text_insert|cursor_text_insert]]**\\
 > %%Adds text to the current cursor position and set the cursor to *after* the start of the text just added.%%
 <code c>
@@ -161,31 +160,6 @@ void efl_text_cursor_word_end(Eo *obj, Efl_Text_Cursor_Cursor *cur);
 > %%Advance to current word start%%
 <code c>
 void efl_text_cursor_word_start(Eo *obj, Efl_Text_Cursor_Cursor *cur);
-</code>
-\\
-**[[:develop:api:efl:text:cursor:property:cursor_content|cursor_content]]** //**(get)**//\\
-> %%The content of the cursor (the character under the cursor)%%
-<code c>
-Eina_Unicode efl_text_cursor_content_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur);
-</code>
-\\
-**[[:develop:api:efl:text:cursor:property:cursor_geometry|cursor_geometry]]** //**(get)**//\\
-> %%Returns the geometry of two cursors ("split cursor"), if logical cursor is between LTR/RTL text, also considering paragraph direction. Upper cursor is shown for the text of the same direction as paragraph, lower cursor - for opposite.%%
-<code c>
-Eina_Bool efl_text_cursor_geometry_get(const Eo *obj, const Efl_Text_Cursor_Cursor *cur, Efl_Text_Cursor_Cursor_Type ctype, int *cx, int *cy, int *cw, int *ch, int *cx2, int *cy2, int *cw2, int *ch2);
-</code>
-\\
-**[[:develop:api:efl:text:cursor:property:cursor_position|cursor_position]]** //**(get, set)**//\\
-> %%Cursor position%%
-<code c>
-int efl_text_cursor_position_get(const Eo *obj, Efl_Text_Cursor_Cursor *cur);
-void efl_text_cursor_position_set(Eo *obj, Efl_Text_Cursor_Cursor *cur, int position);
-</code>
-\\
-**[[:develop:api:efl:text:cursor:property:cursor|cursor]]** //**(get)**//\\
-> %%The object's main cursor.%%
-<code c>
-Efl_Text_Cursor_Cursor *efl_text_cursor_get(const Eo *obj, Efl_Text_Cursor_Cursor_Get_Type get_type);
 </code>
 \\
 

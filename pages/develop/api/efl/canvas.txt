@@ -7,34 +7,20 @@
 
 {{page>:develop:api-include:efl:canvas:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_canvas [fillcolor = "dodgerblue4", label = "Efl.Canvas", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
+**[[:develop:api:efl:canvas:property:device|device]]** //**(get)**//\\
+> %%An input device attached to this canvas, found by name.%%
+<code c>
+Efl_Input_Device *efl_canvas_device_get(const Eo *obj, const char *name);
+</code>
+\\
+**[[:develop:api:efl:canvas:property:image_max_size|image_max_size]]** //**(get)**//\\
+> %%Get the maximum image size evas can possibly handle.%%
+<code c>
+Eina_Bool efl_canvas_image_max_size_get(const Eo *obj, Eina_Size2D *max);
+</code>
+\\
 **[[:develop:api:efl:canvas:method:object_top_at_xy_get|object_top_at_xy_get]]**\\
 > %%Retrieve the object stacked at the top of a given position in a canvas.%%
 <code c>
@@ -65,30 +51,6 @@ Eina_Iterator *efl_canvas_objects_in_rectangle_get(const Eo *obj, Eina_Rect rect
 Eina_Iterator *efl_canvas_pointer_iterate(const Eo *obj, Eina_Bool hover);
 </code>
 \\
-**[[:develop:api:efl:canvas:method:seats|seats]]**\\
-> %%Iterate over the input device seats.%%
-<code c>
-Eina_Iterator *efl_canvas_seats(Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:canvas:method:smart_objects_calculate|smart_objects_calculate]]**\\
-> %%Call user-provided %%''calculate''%% smart functions and unset the flag signalling that the object needs to get recalculated to all smart objects in the canvas.%%
-<code c>
-void efl_canvas_smart_objects_calculate(Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:canvas:property:device|device]]** //**(get)**//\\
-> %%An input device attached to this canvas, found by name.%%
-<code c>
-Efl_Input_Device *efl_canvas_device_get(const Eo *obj, const char *name);
-</code>
-\\
-**[[:develop:api:efl:canvas:property:image_max_size|image_max_size]]** //**(get)**//\\
-> %%Get the maximum image size evas can possibly handle.%%
-<code c>
-Eina_Bool efl_canvas_image_max_size_get(const Eo *obj, Eina_Size2D *max);
-</code>
-\\
 **[[:develop:api:efl:canvas:property:pointer_position|pointer_position]]** //**(get)**//\\
 > %%This function returns the current known pointer coordinates%%
 <code c>
@@ -99,6 +61,18 @@ Eina_Position2D efl_canvas_pointer_position_get(const Eo *obj);
 > %%A seat attached to this canvas, found by id.%%
 <code c>
 Efl_Input_Device *efl_canvas_seat_get(const Eo *obj, int id);
+</code>
+\\
+**[[:develop:api:efl:canvas:method:seats|seats]]**\\
+> %%Iterate over the input device seats.%%
+<code c>
+Eina_Iterator *efl_canvas_seats(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:canvas:method:smart_objects_calculate|smart_objects_calculate]]**\\
+> %%Call user-provided %%''calculate''%% smart functions and unset the flag signalling that the object needs to get recalculated to all smart objects in the canvas.%%
+<code c>
+void efl_canvas_smart_objects_calculate(Eo *obj);
 </code>
 \\
 

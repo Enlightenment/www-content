@@ -12,44 +12,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:object|Efl.Object]] //(class)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_input_key [fillcolor = "black", label = "Efl.Input.Key", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_input_event [fillcolor = "gray15", label = "Efl.Input.Event", color = "deepskyblue", fontcolor = "white", style = "filled"]
-    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_duplicate [fillcolor = "gray15", label = "Efl.Duplicate", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_input_state [fillcolor = "gray15", label = "Efl.Input.State", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_input_event [fillcolor = "gray15", label = "Efl.Input.Event", color = "deepskyblue", fontcolor = "white", style = "filled"]
-    efl_interface [fillcolor = "gray15", label = "Efl.Interface", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_duplicate [fillcolor = "gray15", label = "Efl.Duplicate", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-    efl_input_key -> efl_object
-    efl_input_key -> efl_input_event
-    efl_input_event -> efl_interface
-    efl_input_event -> efl_object
-    efl_input_event -> efl_duplicate
-    efl_input_key -> efl_input_state
-    efl_input_key -> efl_input_event
-    efl_input_event -> efl_interface
-    efl_input_event -> efl_object
-    efl_input_event -> efl_duplicate
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:object|Efl.Object]] //(class)//
@@ -67,6 +29,13 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
+**[[:develop:api:efl:input:key:property:compose|compose]]** //**(get, set)**//\\
+> %%A UTF8 string if this keystroke has modified a string in the middle of being composed.%%
+<code c>
+const char *efl_input_key_compose_get(const Eo *obj);
+void efl_input_key_compose_set(Eo *obj, const char *val);
+</code>
+\\
 **[[:develop:api:efl:input:key:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
 > %%Call the object's constructor.%%
 <code c>
@@ -79,30 +48,17 @@ Efl_Object *efl_constructor(Eo *obj);
 void efl_destructor(Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:input:key:method:duplicate|duplicate]]**// [Overridden from [[:develop:api:efl:duplicate|Efl.Duplicate]]]//\\
-> %%Creates a copy of this event. %%[[:develop:api:efl:input:event:property:fake|Efl.Input.Event.fake]]%% is %%''true''%%.%%
-<code c>
-Efl_Duplicate *efl_duplicate(const Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:input:key:method:reset|reset]]**// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
-> %%Resets the internal data to 0 or default values.%%
-<code c>
-void efl_input_reset(Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:input:key:property:compose|compose]]** //**(get, set)**//\\
-> %%A UTF8 string if this keystroke has modified a string in the middle of being composed.%%
-<code c>
-const char *efl_input_key_compose_get(const Eo *obj);
-void efl_input_key_compose_set(Eo *obj, const char *val);
-</code>
-\\
 **[[:develop:api:efl:input:key:property:device|device]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
 > %%Input device that originated this event.%%
 <code c>
 Efl_Input_Device *efl_input_device_get(const Eo *obj);
 void efl_input_device_set(Eo *obj, Efl_Input_Device *dev);
+</code>
+\\
+**[[:develop:api:efl:input:key:method:duplicate|duplicate]]**// [Overridden from [[:develop:api:efl:duplicate|Efl.Duplicate]]]//\\
+> %%Creates a copy of this event. %%[[:develop:api:efl:input:event:property:fake|Efl.Input.Event.fake]]%% is %%''true''%%.%%
+<code c>
+Efl_Duplicate *efl_duplicate(const Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:input:key:property:event_flags|event_flags]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
@@ -118,6 +74,13 @@ void efl_input_event_flags_set(Eo *obj, Efl_Input_Flags flags);
 Eina_Bool efl_input_fake_get(const Eo *obj);
 </code>
 \\
+**[[:develop:api:efl:input:key:property:key|key]]** //**(get, set)**//\\
+> %%Logical key.%%
+<code c>
+const char *efl_input_key_get(const Eo *obj);
+void efl_input_key_set(Eo *obj, const char *val);
+</code>
+\\
 **[[:develop:api:efl:input:key:property:key_code|key_code]]** //**(get, set)**//\\
 > %%Key scan code numeric value.%%
 <code c>
@@ -130,13 +93,6 @@ void efl_input_key_code_set(Eo *obj, int val);
 <code c>
 const char *efl_input_key_name_get(const Eo *obj);
 void efl_input_key_name_set(Eo *obj, const char *val);
-</code>
-\\
-**[[:develop:api:efl:input:key:property:key|key]]** //**(get, set)**//\\
-> %%Logical key.%%
-<code c>
-const char *efl_input_key_get(const Eo *obj);
-void efl_input_key_set(Eo *obj, const char *val);
 </code>
 \\
 **[[:develop:api:efl:input:key:property:lock_enabled|lock_enabled]]** //**(get)**//// [Overridden from [[:develop:api:efl:input:state|Efl.Input.State]]]//\\
@@ -158,6 +114,12 @@ Eina_Bool efl_input_key_pressed_get(const Eo *obj);
 void efl_input_key_pressed_set(Eo *obj, Eina_Bool val);
 </code>
 \\
+**[[:develop:api:efl:input:key:method:reset|reset]]**// [Overridden from [[:develop:api:efl:input:event|Efl.Input.Event]]]//\\
+> %%Resets the internal data to 0 or default values.%%
+<code c>
+void efl_input_reset(Eo *obj);
+</code>
+\\
 **[[:develop:api:efl:input:key:property:string|string]]** //**(get, set)**//\\
 > %%A UTF8 string if this keystroke has produced a visible string to be added.%%
 <code c>
@@ -175,17 +137,39 @@ void efl_input_timestamp_set(Eo *obj, double ms);
 
 ==== Inherited ====
 
-[[:develop:api:efl:input:event|Efl.Input.Event]]\\
-> **[[:develop:api:efl:input:event:property:processed|processed]]** //**(get, set)**//, **[[:develop:api:efl:input:event:property:scrolling|scrolling]]** //**(get, set)**//\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
+^ [[:develop:api:efl:input:event|Efl.Input.Event]] ^^^
+|  | **[[:develop:api:efl:input:event:property:processed|processed]]** //**(get, set)**// | %%%%''true''%% if %%[[:develop:api:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event is on hold.%% |
+|  | **[[:develop:api:efl:input:event:property:scrolling|scrolling]]** //**(get, set)**// | %%%%''true''%% if %%[[:develop:api:efl:input:event:property:event_flags|Efl.Input.Event.event_flags]]%% indicates the event happened while scrolling.%% |
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
+|  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
+|  | **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**// | %%A human readable comment for the object%% |
+|  | **[[:develop:api:efl:object:method:composite_attach|composite_attach]]** | %%Make an object a composite object of another.%% |
+|  | **[[:develop:api:efl:object:method:composite_detach|composite_detach]]** | %%Detach a composite object from another object.%% |
+|  | **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]** | %%Check if an object is part of a composite object.%% |
+|  | **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:object:method:del|del]]** | %%Unrefs the object and reparents it to NULL.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]** | %%Add an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]** | %%Remove an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
+|  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:finalize|finalize]]** | %%Called at the end of #eo_add. Should not be called, just overridden.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
+|  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
+|  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_add|callback,add]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_del|callback,del]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:del|del]]**
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
+|  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
+|  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |

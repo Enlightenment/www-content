@@ -3,7 +3,7 @@
 
 ===== Description =====
 
-%%Common class for part proxy objects for %%''Efl''%%.Canvas.Layout.%%
+%%Common class for part proxy objects for %%[[:develop:api:efl:canvas:layout|Efl.Canvas.Layout]]%%.%%
 
 %%As an %%[[:develop:api:efl:part|Efl.Part]]%% implementation class, all objects of this class are meant to be used for one and only one function call. In pseudo-code, the use of object of this type looks like the following: rect = layout.part("somepart").geometry_get();%%
 
@@ -14,30 +14,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:object|Efl.Object]] //(class)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_canvas_layout_part [fillcolor = "black", label = "Efl.Canvas.Layout.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_ui_drag [fillcolor = "gray15", label = "Efl.Ui.Drag", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-    efl_canvas_layout_part -> efl_object
-    efl_canvas_layout_part -> efl_gfx
-    efl_canvas_layout_part -> efl_ui_drag
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:object|Efl.Object]] //(class)//
@@ -48,24 +24,6 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:canvas:layout:part:method:drag_page_move|drag_page_move]]**// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
-> %%Moves the dragable by %%''dx''%%,%%''dy''%% pages.%%
-<code c>
-Eina_Bool efl_ui_drag_page_move(Eo *obj, double dx, double dy);
-</code>
-\\
-**[[:develop:api:efl:canvas:layout:part:method:drag_step_move|drag_step_move]]**// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
-> %%Moves the dragable by %%''dx''%%,%%''dy''%% steps.%%
-<code c>
-Eina_Bool efl_ui_drag_step_move(Eo *obj, double dx, double dy);
-</code>
-\\
-**[[:develop:api:efl:canvas:layout:part:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
-> %%Called at the end of #eo_add. Should not be called, just overridden.%%
-<code c>
-Efl_Object *efl_finalize(Eo *obj);
-</code>
-\\
 **[[:develop:api:efl:canvas:layout:part:property:drag_dir|drag_dir]]** //**(get)**//// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
 > %%Determines the dragable directions (read-only).%%
 <code c>
@@ -77,6 +35,12 @@ Efl_Ui_Drag_Dir efl_ui_drag_dir_get(const Eo *obj);
 <code c>
 Eina_Bool efl_ui_drag_page_get(const Eo *obj, double *dx, double *dy);
 Eina_Bool efl_ui_drag_page_set(Eo *obj, double dx, double dy);
+</code>
+\\
+**[[:develop:api:efl:canvas:layout:part:method:drag_page_move|drag_page_move]]**// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
+> %%Moves the dragable by %%''dx''%%,%%''dy''%% pages.%%
+<code c>
+Eina_Bool efl_ui_drag_page_move(Eo *obj, double dx, double dy);
 </code>
 \\
 **[[:develop:api:efl:canvas:layout:part:property:drag_size|drag_size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
@@ -93,11 +57,23 @@ Eina_Bool efl_ui_drag_step_get(const Eo *obj, double *dx, double *dy);
 Eina_Bool efl_ui_drag_step_set(Eo *obj, double dx, double dy);
 </code>
 \\
+**[[:develop:api:efl:canvas:layout:part:method:drag_step_move|drag_step_move]]**// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
+> %%Moves the dragable by %%''dx''%%,%%''dy''%% steps.%%
+<code c>
+Eina_Bool efl_ui_drag_step_move(Eo *obj, double dx, double dy);
+</code>
+\\
 **[[:develop:api:efl:canvas:layout:part:property:drag_value|drag_value]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:drag|Efl.Ui.Drag]]]//\\
 > %%The dragable object relative location.%%
 <code c>
 Eina_Bool efl_ui_drag_value_get(const Eo *obj, double *dx, double *dy);
 Eina_Bool efl_ui_drag_value_set(Eo *obj, double dx, double dy);
+</code>
+\\
+**[[:develop:api:efl:canvas:layout:part:method:finalize|finalize]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
+> %%Called at the end of #eo_add. Should not be called, just overridden.%%
+<code c>
+Efl_Object *efl_finalize(Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:canvas:layout:part:property:geometry|geometry]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
@@ -122,15 +98,48 @@ void efl_canvas_layout_part_state_get(const Eo *obj, const char **state, double 
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx|Efl.Gfx]]\\
-> **[[:develop:api:efl:gfx:property:color|color]]** //**(get, set)**//, **[[:develop:api:efl:gfx:property:position|position]]** //**(get, set)**//, **[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**//, **[[:develop:api:efl:gfx:property:size|size]]** //**(get, set)**//, **[[:develop:api:efl:gfx:property:visible|visible]]** //**(get, set)**//\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:destructor|destructor]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//
+^ [[:develop:api:efl:gfx|Efl.Gfx]] ^^^
+|  | **[[:develop:api:efl:gfx:property:color|color]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:gfx:property:position|position]]** //**(get, set)**// | %%The 2D position of a canvas object.%% |
+|  | **[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
+|  | **[[:develop:api:efl:gfx:property:size|size]]** //**(get, set)**// | %%The 2D size of a canvas object.%% |
+|  | **[[:develop:api:efl:gfx:property:visible|visible]]** //**(get, set)**// | %%The visibility of a canvas object.%% |
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
+|  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
+|  | **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**// | %%A human readable comment for the object%% |
+|  | **[[:develop:api:efl:object:method:composite_attach|composite_attach]]** | %%Make an object a composite object of another.%% |
+|  | **[[:develop:api:efl:object:method:composite_detach|composite_detach]]** | %%Detach a composite object from another object.%% |
+|  | **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]** | %%Check if an object is part of a composite object.%% |
+|  | **[[:develop:api:efl:object:method:constructor|constructor]]** | %%Call the object's constructor.%% |
+|  | **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:object:method:del|del]]** | %%Unrefs the object and reparents it to NULL.%% |
+|  | **[[:develop:api:efl:object:method:destructor|destructor]]** | %%Call the object's destructor.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]** | %%Add an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]** | %%Remove an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
+|  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
+|  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
+|  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx|Efl.Gfx]]\\
-> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**
+^ [[:develop:api:efl:gfx|Efl.Gfx]] ^^^
+|  | **[[:develop:api:efl:gfx:event:hide|hide]]** | %%Object just became invisible.%% |
+|  | **[[:develop:api:efl:gfx:event:move|move]]** | %%Object was moved, its position during the event is the new one.%% |
+|  | **[[:develop:api:efl:gfx:event:resize|resize]]** | %%Object was resized, its size during the event is the new one.%% |
+|  | **[[:develop:api:efl:gfx:event:show|show]]** | %%Object just became visible.%% |
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
+|  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
+|  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |

@@ -11,34 +11,14 @@
 
 {{page>:develop:api-include:efl:ui:focus:manager:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_ui_focus_manager [fillcolor = "dodgerblue4", label = "Efl.Ui.Focus.Manager", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
+**[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**//\\
+> %%The list of elements which are at the border of the graph.%%
+<code c>
+Eina_Iterator *efl_ui_focus_manager_border_elements_get(const Eo *obj);
+</code>
+\\
 **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]**\\
 > %%This will fetch the data from a registered node.%%
 <code c>
@@ -51,6 +31,13 @@ Efl_Ui_Focus_Relations *efl_ui_focus_manager_fetch(Eo *obj, Efl_Ui_Focus_Object 
 Efl_Ui_Focus_Manager_Logical_End_Detail efl_ui_focus_manager_logical_end(Eo *obj);
 </code>
 \\
+**[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**//\\
+> %%The element which is currently focused by this manager%%
+<code c>
+Efl_Ui_Focus_Object *efl_ui_focus_manager_focus_get(const Eo *obj);
+void efl_ui_focus_manager_focus_set(Eo *obj, Efl_Ui_Focus_Object *focus);
+</code>
+\\
 **[[:develop:api:efl:ui:focus:manager:method:move|move]]**\\
 > %%Move the focus into the given direction.%%
 <code c>
@@ -61,6 +48,13 @@ Efl_Ui_Focus_Object *efl_ui_focus_manager_move(Eo *obj, Efl_Ui_Focus_Direction d
 > %%Removes the most upper history element, and gives the focus to the next one below%%
 <code c>
 void efl_ui_focus_manager_pop_history_stack(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//\\
+> %%Add a another manager to serve the move requests.%%
+<code c>
+Efl_Ui_Focus_Manager *efl_ui_focus_manager_redirect_get(const Eo *obj);
+void efl_ui_focus_manager_redirect_set(Eo *obj, Efl_Ui_Focus_Manager *redirect);
 </code>
 \\
 **[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]**\\
@@ -81,37 +75,17 @@ Efl_Ui_Focus_Object *efl_ui_focus_manager_request_subchild(Eo *obj, Efl_Ui_Focus
 void efl_ui_focus_manager_reset_history(Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]**\\
-> %%Called when this manager is set as redirect%%
-<code c>
-void efl_ui_focus_manager_setup_on_first_touch(Eo *obj, Efl_Ui_Focus_Direction direction, Efl_Ui_Focus_Object *entry);
-</code>
-\\
-**[[:develop:api:efl:ui:focus:manager:property:border_elements|border_elements]]** //**(get)**//\\
-> %%The list of elements which are at the border of the graph.%%
-<code c>
-Eina_Iterator *efl_ui_focus_manager_border_elements_get(const Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**//\\
-> %%The element which is currently focused by this manager%%
-<code c>
-Efl_Ui_Focus_Object *efl_ui_focus_manager_focus_get(const Eo *obj);
-void efl_ui_focus_manager_focus_set(Eo *obj, Efl_Ui_Focus_Object *focus);
-</code>
-\\
-**[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**//\\
-> %%Add a another manager to serve the move requests.%%
-<code c>
-Efl_Ui_Focus_Manager *efl_ui_focus_manager_redirect_get(const Eo *obj);
-void efl_ui_focus_manager_redirect_set(Eo *obj, Efl_Ui_Focus_Manager *redirect);
-</code>
-\\
 **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**//\\
 > %%Root node for all logical subtrees.%%
 <code c>
 Efl_Ui_Focus_Object *efl_ui_focus_manager_root_get(const Eo *obj);
 Eina_Bool efl_ui_focus_manager_root_set(Eo *obj, Efl_Ui_Focus_Object *root);
+</code>
+\\
+**[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]**\\
+> %%Called when this manager is set as redirect%%
+<code c>
+void efl_ui_focus_manager_setup_on_first_touch(Eo *obj, Efl_Ui_Focus_Direction direction, Efl_Ui_Focus_Object *entry);
 </code>
 \\
 

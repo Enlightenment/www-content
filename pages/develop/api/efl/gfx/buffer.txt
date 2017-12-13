@@ -7,34 +7,21 @@
 
 {{page>:develop:api-include:efl:gfx:buffer:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_gfx_buffer [fillcolor = "dodgerblue4", label = "Efl.Gfx.Buffer", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
+**[[:develop:api:efl:gfx:buffer:property:alpha|alpha]]** //**(get, set)**//\\
+> %%Indicates whether the alpha channel should be used.%%
+<code c>
+Eina_Bool efl_gfx_buffer_alpha_get(const Eo *obj);
+void efl_gfx_buffer_alpha_set(Eo *obj, Eina_Bool alpha);
+</code>
+\\
+**[[:develop:api:efl:gfx:buffer:property:buffer_borders|buffer_borders]]** //**(get)**//\\
+> %%Duplicated pixel borders inside this buffer.%%
+<code c>
+void efl_gfx_buffer_borders_get(const Eo *obj, unsigned int *l, unsigned int *r, unsigned int *t, unsigned int *b);
+</code>
+\\
 **[[:develop:api:efl:gfx:buffer:method:buffer_copy_set|buffer_copy_set]]**\\
 > %%Set the pixels for this buffer by copying them, or allocate a new memory region.%%
 <code c>
@@ -59,6 +46,13 @@ Eina_Bool efl_gfx_buffer_managed_set(Eo *obj, const Eina_Slice *slice, Eina_Size
 Eina_Rw_Slice efl_gfx_buffer_map(Eo *obj, Efl_Gfx_Buffer_Access_Mode mode, const Eina_Rect *region, Efl_Gfx_Colorspace cspace, int plane, int *stride);
 </code>
 \\
+**[[:develop:api:efl:gfx:buffer:property:buffer_size|buffer_size]]** //**(get, set)**//\\
+> %%Rectangular size of the pixel buffer as allocated in memory.%%
+<code c>
+Eina_Size2D efl_gfx_buffer_size_get(const Eo *obj);
+void efl_gfx_buffer_size_set(Eo *obj, Eina_Size2D sz);
+</code>
+\\
 **[[:develop:api:efl:gfx:buffer:method:buffer_unmap|buffer_unmap]]**\\
 > %%Unmap a region of this buffer, and update the internal data if needed.%%
 <code c>
@@ -69,26 +63,6 @@ Eina_Bool efl_gfx_buffer_unmap(Eo *obj, Eina_Rw_Slice slice);
 > %%Mark a sub-region of the given image object to be redrawn.%%
 <code c>
 void efl_gfx_buffer_update_add(Eo *obj, const Eina_Rect *region);
-</code>
-\\
-**[[:develop:api:efl:gfx:buffer:property:alpha|alpha]]** //**(get, set)**//\\
-> %%Indicates whether the alpha channel should be used.%%
-<code c>
-Eina_Bool efl_gfx_buffer_alpha_get(const Eo *obj);
-void efl_gfx_buffer_alpha_set(Eo *obj, Eina_Bool alpha);
-</code>
-\\
-**[[:develop:api:efl:gfx:buffer:property:buffer_borders|buffer_borders]]** //**(get)**//\\
-> %%Duplicated pixel borders inside this buffer.%%
-<code c>
-void efl_gfx_buffer_borders_get(const Eo *obj, unsigned int *l, unsigned int *r, unsigned int *t, unsigned int *b);
-</code>
-\\
-**[[:develop:api:efl:gfx:buffer:property:buffer_size|buffer_size]]** //**(get, set)**//\\
-> %%Rectangular size of the pixel buffer as allocated in memory.%%
-<code c>
-Eina_Size2D efl_gfx_buffer_size_get(const Eo *obj);
-void efl_gfx_buffer_size_set(Eo *obj, Eina_Size2D sz);
 </code>
 \\
 **[[:develop:api:efl:gfx:buffer:property:colorspace|colorspace]]** //**(get)**//\\

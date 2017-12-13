@@ -10,42 +10,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:vg:gradient|Efl.VG.Gradient]] //(class)// => [[:develop:api:efl:vg|Efl.VG]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_vg_gradient_radial [fillcolor = "black", label = "Efl.VG.Gradient.Radial", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_vg_gradient [fillcolor = "gray15", label = "Efl.VG.Gradient", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_vg [fillcolor = "gray15", label = "Efl.VG", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_gfx [fillcolor = "gray15", label = "Efl.Gfx", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx_stack [fillcolor = "gray15", label = "Efl.Gfx.Stack", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_duplicate [fillcolor = "gray15", label = "Efl.Duplicate", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx_gradient [fillcolor = "gray15", label = "Efl.Gfx.Gradient", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx_gradient_radial [fillcolor = "gray15", label = "Efl.Gfx.Gradient.Radial", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_gfx_gradient [fillcolor = "gray15", label = "Efl.Gfx.Gradient", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-    efl_vg_gradient_radial -> efl_vg_gradient
-    efl_vg_gradient -> efl_vg
-    efl_vg -> efl_object
-    efl_vg -> efl_gfx
-    efl_vg -> efl_gfx_stack
-    efl_vg -> efl_duplicate
-    efl_vg_gradient -> efl_gfx_gradient
-    efl_vg_gradient_radial -> efl_gfx_gradient_radial
-    efl_gfx_gradient_radial -> efl_gfx_gradient
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:vg:gradient|Efl.VG.Gradient]] //(class)//
@@ -68,6 +32,13 @@ digraph hierarchy {
 void efl_vg_bounds_get(Eo *obj, Eina_Rect *r);
 </code>
 \\
+**[[:develop:api:efl:vg:gradient:radial:property:center|center]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//\\
+> 
+<code c>
+void efl_gfx_gradient_radial_center_get(const Eo *obj, double *x, double *y);
+void efl_gfx_gradient_radial_center_set(Eo *obj, double x, double y);
+</code>
+\\
 **[[:develop:api:efl:vg:gradient:radial:method:constructor|constructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
 > %%Call the object's constructor.%%
 <code c>
@@ -86,25 +57,21 @@ void efl_destructor(Eo *obj);
 Efl_Duplicate *efl_duplicate(const Eo *obj);
 </code>
 \\
+**[[:develop:api:efl:vg:gradient:radial:property:focal|focal]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//\\
+> 
+<code c>
+void efl_gfx_gradient_radial_focal_get(const Eo *obj, double *x, double *y);
+void efl_gfx_gradient_radial_focal_set(Eo *obj, double x, double y);
+</code>
+\\
 **[[:develop:api:efl:vg:gradient:radial:method:interpolate|interpolate]]**// [Overridden from [[:develop:api:efl:vg|Efl.VG]]]//\\
 > %%Interpolate a given vector graphics object%%
 <code c>
 Eina_Bool efl_vg_interpolate(Eo *obj, const Efl_VG *from, const Efl_VG *to, double pos_map);
 </code>
 \\
-**[[:develop:api:efl:vg:gradient:radial:property:center|center]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//
-<code c>
-void efl_gfx_gradient_radial_center_get(const Eo *obj, double *x, double *y);
-void efl_gfx_gradient_radial_center_set(Eo *obj, double x, double y);
-</code>
-\\
-**[[:develop:api:efl:vg:gradient:radial:property:focal|focal]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//
-<code c>
-void efl_gfx_gradient_radial_focal_get(const Eo *obj, double *x, double *y);
-void efl_gfx_gradient_radial_focal_set(Eo *obj, double x, double y);
-</code>
-\\
-**[[:develop:api:efl:vg:gradient:radial:property:radius|radius]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//
+**[[:develop:api:efl:vg:gradient:radial:property:radius|radius]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx:gradient:radial|Efl.Gfx.Gradient.Radial]]]//\\
+> 
 <code c>
 double efl_gfx_gradient_radial_radius_get(const Eo *obj);
 void efl_gfx_gradient_radial_radius_set(Eo *obj, double r);
@@ -113,23 +80,66 @@ void efl_gfx_gradient_radial_radius_set(Eo *obj, double r);
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx|Efl.Gfx]]\\
-> **[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**//\\
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
-> **[[:develop:api:efl:gfx:stack:property:layer|layer]]** //**(get, set)**//\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//\\
-[[:develop:api:efl:vg:gradient|Efl.VG.Gradient]]\\
-> **[[:develop:api:efl:vg:gradient:property:spread|spread]]** //**(get, set)**//, **[[:develop:api:efl:vg:gradient:property:stop|stop]]** //**(get, set)**//\\
-[[:develop:api:efl:vg|Efl.VG]]\\
-> **[[:develop:api:efl:vg:method:lower|lower]]**, **[[:develop:api:efl:vg:method:raise|raise]]**, **[[:develop:api:efl:vg:method:stack_above|stack_above]]**, **[[:develop:api:efl:vg:method:stack_below|stack_below]]**, **[[:develop:api:efl:vg:property:above|above]]** //**(get)**//, **[[:develop:api:efl:vg:property:below|below]]** //**(get)**//, **[[:develop:api:efl:vg:property:color|color]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:geometry|geometry]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:mask|mask]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:origin|origin]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:parent|parent]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:position|position]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:size|size]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:transformation|transformation]]** //**(get, set)**//, **[[:develop:api:efl:vg:property:visible|visible]]** //**(get, set)**//
+^ [[:develop:api:efl:gfx|Efl.Gfx]] ^^^
+|  | **[[:develop:api:efl:gfx:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
+^ [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] ^^^
+|  | **[[:develop:api:efl:gfx:stack:property:layer|layer]]** //**(get, set)**// |  |
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
+|  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
+|  | **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**// | %%A human readable comment for the object%% |
+|  | **[[:develop:api:efl:object:method:composite_attach|composite_attach]]** | %%Make an object a composite object of another.%% |
+|  | **[[:develop:api:efl:object:method:composite_detach|composite_detach]]** | %%Detach a composite object from another object.%% |
+|  | **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]** | %%Check if an object is part of a composite object.%% |
+|  | **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:object:method:del|del]]** | %%Unrefs the object and reparents it to NULL.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]** | %%Add an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]** | %%Remove an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
+|  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:finalize|finalize]]** | %%Called at the end of #eo_add. Should not be called, just overridden.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
+|  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+^ [[:develop:api:efl:vg|Efl.VG]] ^^^
+|  | **[[:develop:api:efl:vg:property:above|above]]** //**(get)**// | %%Get the Evas object stacked right above %%''obj''%%%% |
+|  | **[[:develop:api:efl:vg:property:below|below]]** //**(get)**// | %%Get the Evas object stacked right below %%''obj''%%%% |
+|  | **[[:develop:api:efl:vg:property:color|color]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:vg:property:geometry|geometry]]** //**(get, set)**// | %%Rectangular geometry that combines both position and size.%% |
+|  | **[[:develop:api:efl:vg:method:lower|lower]]** | %%Lower %%''obj''%% to the bottom of its layer.%% |
+|  | **[[:develop:api:efl:vg:property:mask|mask]]** //**(get, set)**// | %%Vector graphics object mask%% |
+|  | **[[:develop:api:efl:vg:property:name|name]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:vg:property:origin|origin]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:vg:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+|  | **[[:develop:api:efl:vg:property:position|position]]** //**(get, set)**// | %%The 2D position of a canvas object.%% |
+|  | **[[:develop:api:efl:vg:method:raise|raise]]** | %%Raise %%''obj''%% to the top of its layer.%% |
+|  | **[[:develop:api:efl:vg:property:size|size]]** //**(get, set)**// | %%The 2D size of a canvas object.%% |
+|  | **[[:develop:api:efl:vg:method:stack_above|stack_above]]** | %%Stack %%''obj''%% immediately %%''above''%%%% |
+|  | **[[:develop:api:efl:vg:method:stack_below|stack_below]]** | %%Stack %%''obj''%% immediately %%''below''%%%% |
+|  | **[[:develop:api:efl:vg:property:transformation|transformation]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:vg:property:visible|visible]]** //**(get, set)**// | %%The visibility of a canvas object.%% |
+^ [[:develop:api:efl:vg:gradient|Efl.VG.Gradient]] ^^^
+|  | **[[:develop:api:efl:vg:gradient:property:spread|spread]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:vg:gradient:property:stop|stop]]** //**(get, set)**// |  |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx|Efl.Gfx]]\\
-> **[[:develop:api:efl:gfx:event:changed|changed]]**, **[[:develop:api:efl:gfx:event:hide|hide]]**, **[[:develop:api:efl:gfx:event:move|move]]**, **[[:develop:api:efl:gfx:event:resize|resize]]**, **[[:develop:api:efl:gfx:event:show|show]]**\\
-[[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]]\\
-> **[[:develop:api:efl:gfx:stack:event:restack|restack]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_add|callback,add]]**, **[[:develop:api:efl:object:event:callback_del|callback,del]]**, **[[:develop:api:efl:object:event:del|del]]**
+^ [[:develop:api:efl:gfx|Efl.Gfx]] ^^^
+|  | **[[:develop:api:efl:gfx:event:hide|hide]]** | %%Object just became invisible.%% |
+|  | **[[:develop:api:efl:gfx:event:move|move]]** | %%Object was moved, its position during the event is the new one.%% |
+|  | **[[:develop:api:efl:gfx:event:resize|resize]]** | %%Object was resized, its size during the event is the new one.%% |
+|  | **[[:develop:api:efl:gfx:event:show|show]]** | %%Object just became visible.%% |
+^ [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] ^^^
+|  | **[[:develop:api:efl:gfx:stack:event:restack|restack]]** | %%Object stacking was changed.%% |
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
+|  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
+|  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |

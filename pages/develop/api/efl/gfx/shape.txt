@@ -10,26 +10,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:gfx:path|Efl.Gfx.Path]] //(mixin)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_gfx_shape [fillcolor = "deepskyblue4", label = "Efl.Gfx.Shape", color = "deepskyblue", fontcolor = "white", style = "filled"]
-    efl_gfx_path [fillcolor = "gray15", label = "Efl.Gfx.Path", color = "deepskyblue", fontcolor = "white", style = "filled"]
-
-    efl_gfx_shape -> efl_gfx_path
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:gfx:path|Efl.Gfx.Path]] //(mixin)//
@@ -44,17 +24,17 @@ digraph hierarchy {
 void efl_gfx_path_copy_from(Eo *obj, const Efl_Object *dup_from);
 </code>
 \\
-**[[:develop:api:efl:gfx:shape:method:interpolate|interpolate]]**// [Overridden from [[:develop:api:efl:gfx:path|Efl.Gfx.Path]]]//\\
-> %%Creates intermediary path part-way between two paths%%
-<code c>
-Eina_Bool efl_gfx_path_interpolate(Eo *obj, const Efl_Object *from, const Efl_Object *to, double pos_map);
-</code>
-\\
 **[[:develop:api:efl:gfx:shape:property:fill_rule|fill_rule]]** //**(get, set)**//\\
 > %%The fill rule of the given shape object. %%''EFL_GFX_FILL_RULE_WINDING''%%, or %%''EFL_GFX_FILL_RULE_ODD_EVEN''%%.%%
 <code c>
 Efl_Gfx_Fill_Rule efl_gfx_shape_fill_rule_get(const Eo *obj);
 void efl_gfx_shape_fill_rule_set(Eo *obj, Efl_Gfx_Fill_Rule fill_rule);
+</code>
+\\
+**[[:develop:api:efl:gfx:shape:method:interpolate|interpolate]]**// [Overridden from [[:develop:api:efl:gfx:path|Efl.Gfx.Path]]]//\\
+> %%Creates intermediary path part-way between two paths%%
+<code c>
+Eina_Bool efl_gfx_path_interpolate(Eo *obj, const Efl_Object *from, const Efl_Object *to, double pos_map);
 </code>
 \\
 **[[:develop:api:efl:gfx:shape:property:stroke_cap|stroke_cap]]** //**(get, set)**//\\
@@ -109,11 +89,30 @@ void efl_gfx_shape_stroke_width_set(Eo *obj, double w);
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]]\\
-> **[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]**, **[[:develop:api:efl:gfx:path:method:append_arc|append_arc]]**, **[[:develop:api:efl:gfx:path:method:append_circle|append_circle]]**, **[[:develop:api:efl:gfx:path:method:append_close|append_close]]**, **[[:develop:api:efl:gfx:path:method:append_cubic_to|append_cubic_to]]**, **[[:develop:api:efl:gfx:path:method:append_line_to|append_line_to]]**, **[[:develop:api:efl:gfx:path:method:append_move_to|append_move_to]]**, **[[:develop:api:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]]**, **[[:develop:api:efl:gfx:path:method:append_rect|append_rect]]**, **[[:develop:api:efl:gfx:path:method:append_scubic_to|append_scubic_to]]**, **[[:develop:api:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]]**, **[[:develop:api:efl:gfx:path:method:append_svg_path|append_svg_path]]**, **[[:develop:api:efl:gfx:path:method:bounds_get|bounds_get]]**, **[[:develop:api:efl:gfx:path:method:equal_commands|equal_commands]]**, **[[:develop:api:efl:gfx:path:method:reset|reset]]**, **[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:length|length]]** //**(get)**//, **[[:develop:api:efl:gfx:path:property:path|path]]** //**(get, set)**//
+^ [[:develop:api:efl:gfx:path|Efl.Gfx.Path]] ^^^
+|  | **[[:develop:api:efl:gfx:path:method:append_arc|append_arc]]** | %%Append an arc that enclosed in the given rectangle (x, y, w, h). The angle is defined in counter clock wise , use -ve angle for clockwise arc.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]** | %%Append an arc that connects from the current point int the point list to the given point (x,y). The arc is defined by the given radius in  x-direction (rx) and radius in y direction (ry).%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_circle|append_circle]]** | %%Append a circle with given center and radius.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_close|append_close]]** | %%Closes the current subpath by drawing a line to the beginning of the subpath, automatically starting a new path. The current point of the new path is (0, 0).%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_cubic_to|append_cubic_to]]** | %%Adds a cubic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x0, ctrl_y0), and (ctrl_x1, ctrl_y1). After the path is drawn, the current position is updated to be at the end point of the path.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_line_to|append_line_to]]** | %%Adds a straight line from the current position to the given end point. After the line is drawn, the current position is updated to be at the end point of the line.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_move_to|append_move_to]]** | %%Moves the current point to the given point,  implicitly starting a new subpath and closing the previous one.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_quadratic_to|append_quadratic_to]]** | %%Adds a quadratic Bezier curve between the current position and the given end point (x,y) using the control points specified by (ctrl_x, ctrl_y). After the path is drawn, the current position is updated to be at the end point of the path.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_rect|append_rect]]** | %%Append the given rectangle with rounded corner to the path.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_scubic_to|append_scubic_to]]** | %%Same as efl_gfx_path_append_cubic_to() api only difference is that it uses the current control point to draw the bezier.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_squadratic_to|append_squadratic_to]]** | %%Same as efl_gfx_path_append_quadratic_to() api only difference is that it uses the current control point to draw the bezier.%% |
+|  | **[[:develop:api:efl:gfx:path:method:append_svg_path|append_svg_path]]** | %%Append SVG path data%% |
+|  | **[[:develop:api:efl:gfx:path:method:bounds_get|bounds_get]]** | %%Compute and return the bounding box of the currently set path%% |
+|  | **[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**// | %%Current point coordinates%% |
+|  | **[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**// | %%Current control point coordinates%% |
+|  | **[[:develop:api:efl:gfx:path:method:equal_commands|equal_commands]]** | %%Equal commands in object%% |
+|  | **[[:develop:api:efl:gfx:path:property:length|length]]** //**(get)**// | %%Path length property%% |
+|  | **[[:develop:api:efl:gfx:path:property:path|path]]** //**(get, set)**// | %%Set the list of commands and points to be used to create the content of shape.%% |
+|  | **[[:develop:api:efl:gfx:path:method:reset|reset]]** | %%Reset the shape data of the shape object.%% |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:gfx:path|Efl.Gfx.Path]]\\
-> **[[:develop:api:efl:gfx:path:event:changed|changed]]**
+^ [[:develop:api:efl:gfx:path|Efl.Gfx.Path]] ^^^
+|  | **[[:develop:api:efl:gfx:path:event:changed|changed]]** | %%Graphics path was changed.%% |

@@ -9,38 +9,13 @@
 
 {{page>:develop:api-include:efl:ui:focus:object:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_ui_focus_object [fillcolor = "deepskyblue4", label = "Efl.Ui.Focus.Object", color = "deepskyblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
-**[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]**\\
-> %%Tells the object that the children of it will be queried soon by the given manager.%%
+**[[:develop:api:efl:ui:focus:object:property:focus|focus]]** //**(get, set)**// ''protected set''\\
+> %%This gets called by the manager and should never be called by someone else.%%
 <code c>
-void efl_ui_focus_object_prepare_logical(Eo *obj);
+Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
+void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
 </code>
 \\
 **[[:develop:api:efl:ui:focus:object:property:focus_geometry|focus_geometry]]** //**(get)**//\\
@@ -49,11 +24,10 @@ void efl_ui_focus_object_prepare_logical(Eo *obj);
 Eina_Rect efl_ui_focus_object_focus_geometry_get(const Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:ui:focus:object:property:focus|focus]]** //**(get, set)**// ''protected set''\\
-> %%This gets called by the manager and should never be called by someone else.%%
+**[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]**\\
+> %%Tells the object that the children of it will be queried soon by the given manager.%%
 <code c>
-Eina_Bool efl_ui_focus_object_focus_get(const Eo *obj);
-void efl_ui_focus_object_focus_set(Eo *obj, Eina_Bool focus);
+void efl_ui_focus_object_prepare_logical(Eo *obj);
 </code>
 \\
 

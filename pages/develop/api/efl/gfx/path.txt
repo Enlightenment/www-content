@@ -7,44 +7,18 @@
 
 {{page>:develop:api-include:efl:gfx:path:description&nouser&nolink&nodate}}
 
-===== Inheritance =====
-
-
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_gfx_path [fillcolor = "deepskyblue4", label = "Efl.Gfx.Path", color = "deepskyblue", fontcolor = "white", style = "filled"]
-
-}
-</graphviz>
-
-++++
-
-++++ Full hierarchy |
-
-
-
-++++
 ===== Members =====
 
-**[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]**\\
-> %%Append an arc that connects from the current point int the point list to the given point (x,y). The arc is defined by the given radius in  x-direction (rx) and radius in y direction (ry).%%
-<code c>
-void efl_gfx_path_append_arc_to(Eo *obj, double x, double y, double rx, double ry, double angle, Eina_Bool large_arc, Eina_Bool sweep);
-</code>
-\\
 **[[:develop:api:efl:gfx:path:method:append_arc|append_arc]]**\\
 > %%Append an arc that enclosed in the given rectangle (x, y, w, h). The angle is defined in counter clock wise , use -ve angle for clockwise arc.%%
 <code c>
 void efl_gfx_path_append_arc(Eo *obj, double x, double y, double w, double h, double start_angle, double sweep_length);
+</code>
+\\
+**[[:develop:api:efl:gfx:path:method:append_arc_to|append_arc_to]]**\\
+> %%Append an arc that connects from the current point int the point list to the given point (x,y). The arc is defined by the given radius in  x-direction (rx) and radius in y direction (ry).%%
+<code c>
+void efl_gfx_path_append_arc_to(Eo *obj, double x, double y, double rx, double ry, double angle, Eina_Bool large_arc, Eina_Bool sweep);
 </code>
 \\
 **[[:develop:api:efl:gfx:path:method:append_circle|append_circle]]**\\
@@ -119,6 +93,18 @@ void efl_gfx_path_bounds_get(Eo *obj, Eina_Rect *r);
 void efl_gfx_path_copy_from(Eo *obj, const Efl_Object *dup_from);
 </code>
 \\
+**[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**//\\
+> %%Current point coordinates%%
+<code c>
+void efl_gfx_path_current_get(const Eo *obj, double *x, double *y);
+</code>
+\\
+**[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//\\
+> %%Current control point coordinates%%
+<code c>
+void efl_gfx_path_current_ctrl_get(const Eo *obj, double *x, double *y);
+</code>
+\\
 **[[:develop:api:efl:gfx:path:method:equal_commands|equal_commands]]**\\
 > %%Equal commands in object%%
 <code c>
@@ -129,24 +115,6 @@ Eina_Bool efl_gfx_path_equal_commands(Eo *obj, const Efl_Object *with);
 > %%Creates intermediary path part-way between two paths%%
 <code c>
 Eina_Bool efl_gfx_path_interpolate(Eo *obj, const Efl_Object *from, const Efl_Object *to, double pos_map);
-</code>
-\\
-**[[:develop:api:efl:gfx:path:method:reset|reset]]**\\
-> %%Reset the shape data of the shape object.%%
-<code c>
-void efl_gfx_path_reset(Eo *obj);
-</code>
-\\
-**[[:develop:api:efl:gfx:path:property:current_ctrl|current_ctrl]]** //**(get)**//\\
-> %%Current control point coordinates%%
-<code c>
-void efl_gfx_path_current_ctrl_get(const Eo *obj, double *x, double *y);
-</code>
-\\
-**[[:develop:api:efl:gfx:path:property:current|current]]** //**(get)**//\\
-> %%Current point coordinates%%
-<code c>
-void efl_gfx_path_current_get(const Eo *obj, double *x, double *y);
 </code>
 \\
 **[[:develop:api:efl:gfx:path:property:length|length]]** //**(get)**//\\
@@ -162,12 +130,18 @@ void efl_gfx_path_get(const Eo *obj, const Efl_Gfx_Path_Command_Type **op, const
 void efl_gfx_path_set(Eo *obj, const Efl_Gfx_Path_Command_Type *op, const double *points);
 </code>
 \\
+**[[:develop:api:efl:gfx:path:method:reset|reset]]**\\
+> %%Reset the shape data of the shape object.%%
+<code c>
+void efl_gfx_path_reset(Eo *obj);
+</code>
+\\
 
 ===== Events =====
 
 **[[:develop:api:efl:gfx:path:event:changed|changed]]**\\
 > %%Graphics path was changed.%%
 <code c>
-EFL_GFX_PATH_EVENT_CHANGED(void)
+EFL_GFX_PATH_EVENT_CHANGED(Efl_Gfx_Path_Change_Event)
 </code>
 \\ 

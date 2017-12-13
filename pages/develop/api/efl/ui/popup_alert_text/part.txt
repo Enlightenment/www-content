@@ -10,54 +10,6 @@
 ===== Inheritance =====
 
  => [[:develop:api:efl:ui:layout:part_content|Efl.Ui.Layout.Part_Content]] //(class)// => [[:develop:api:efl:ui:layout:part|Efl.Ui.Layout.Part]] //(class)// => [[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
-++++ Inheritance graph |
-
-<graphviz>
-digraph hierarchy {
-    bgcolor = "transparent"
-    size = "6"
-    rankdir = "TB"
-
-    node [shape = "box"]
-    edge [color = "gray35"]
-
-    efl_ui_popup_alert_text_part [fillcolor = "black", label = "Efl.Ui.Popup_Alert_Text.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_layout_part_content [fillcolor = "gray15", label = "Efl.Ui.Layout.Part_Content", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_layout_part [fillcolor = "gray15", label = "Efl.Ui.Layout.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_widget_part [fillcolor = "gray15", label = "Efl.Ui.Widget.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_cursor [fillcolor = "gray15", label = "Efl.Ui.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_content [fillcolor = "gray15", label = "Efl.Content", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_ui_layout_part_text [fillcolor = "gray15", label = "Efl.Ui.Layout.Part_Text", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_layout_part [fillcolor = "gray15", label = "Efl.Ui.Layout.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_widget_part [fillcolor = "gray15", label = "Efl.Ui.Widget.Part", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_object [fillcolor = "gray15", label = "Efl.Object", color = "gray15", fontcolor = "white", style = "filled"]
-    efl_ui_cursor [fillcolor = "gray15", label = "Efl.Ui.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_text [fillcolor = "gray15", label = "Efl.Text", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_text_markup [fillcolor = "gray15", label = "Efl.Text.Markup", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_text_cursor [fillcolor = "gray15", label = "Efl.Text.Cursor", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-    efl_ui_translatable [fillcolor = "gray15", label = "Efl.Ui.Translatable", color = "cornflowerblue", fontcolor = "white", style = "filled"]
-
-    efl_ui_popup_alert_text_part -> efl_ui_layout_part_content
-    efl_ui_layout_part_content -> efl_ui_layout_part
-    efl_ui_layout_part -> efl_ui_widget_part
-    efl_ui_widget_part -> efl_object
-    efl_ui_layout_part -> efl_ui_cursor
-    efl_ui_layout_part_content -> efl_content
-    efl_ui_popup_alert_text_part -> efl_ui_layout_part_text
-    efl_ui_layout_part_text -> efl_ui_layout_part
-    efl_ui_layout_part -> efl_ui_widget_part
-    efl_ui_widget_part -> efl_object
-    efl_ui_layout_part -> efl_ui_cursor
-    efl_ui_layout_part_text -> efl_text
-    efl_ui_layout_part_text -> efl_text_markup
-    efl_text_markup -> efl_text_cursor
-    efl_ui_layout_part_text -> efl_ui_translatable
-}
-</graphviz>
-
-++++
-
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:ui:layout:part_content|Efl.Ui.Layout.Part_Content]] //(class)//
@@ -80,12 +32,6 @@ digraph hierarchy {
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:ui:popup_alert_text:part:method:content_unset|content_unset]]**// [Overridden from [[:develop:api:efl:content|Efl.Content]]]//\\
-> %%Unswallow the object in the current container and return it.%%
-<code c>
-Efl_Gfx *efl_content_unset(Eo *obj);
-</code>
-\\
 **[[:develop:api:efl:ui:popup_alert_text:part:property:content|content]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:content|Efl.Content]]]//\\
 > %%Swallowed sub-object contained in this object.%%
 <code c>
@@ -93,7 +39,14 @@ Efl_Gfx *efl_content_get(const Eo *obj);
 Eina_Bool efl_content_set(Eo *obj, Efl_Gfx *content);
 </code>
 \\
-**[[:develop:api:efl:ui:popup_alert_text:part:property:text|text]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text|Efl.Text]]]//
+**[[:develop:api:efl:ui:popup_alert_text:part:method:content_unset|content_unset]]**// [Overridden from [[:develop:api:efl:content|Efl.Content]]]//\\
+> %%Unswallow the object in the current container and return it.%%
+<code c>
+Efl_Gfx *efl_content_unset(Eo *obj);
+</code>
+\\
+**[[:develop:api:efl:ui:popup_alert_text:part:property:text|text]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text|Efl.Text]]]//\\
+> 
 <code c>
 const char *efl_text_get(const Eo *obj);
 void efl_text_set(Eo *obj, const char *text);
@@ -102,27 +55,76 @@ void efl_text_set(Eo *obj, const char *text);
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]**, **[[:develop:api:efl:object:method:composite_attach|composite_attach]]**, **[[:develop:api:efl:object:method:composite_detach|composite_detach]]**, **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]**, **[[:develop:api:efl:object:method:constructor|constructor]]**, **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]**, **[[:develop:api:efl:object:method:del|del]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]**, **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]**, **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]**, **[[:develop:api:efl:object:method:event_freeze|event_freeze]]**, **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]**, **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]**, **[[:develop:api:efl:object:method:event_thaw|event_thaw]]**, **[[:develop:api:efl:object:method:finalize|finalize]]**, **[[:develop:api:efl:object:method:name_find|name_find]]**, **[[:develop:api:efl:object:method:provider_find|provider_find]]**, **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**//, **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**//, **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**//, **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**//, **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**//, **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**//\\
-[[:develop:api:efl:text:cursor|Efl.Text.Cursor]]\\
-> **[[:develop:api:efl:text:cursor:method:cursor_char_delete|cursor_char_delete]]**, **[[:develop:api:efl:text:cursor:method:cursor_char_next|cursor_char_next]]**, **[[:develop:api:efl:text:cursor:method:cursor_char_prev|cursor_char_prev]]**, **[[:develop:api:efl:text:cursor:method:cursor_compare|cursor_compare]]**, **[[:develop:api:efl:text:cursor:method:cursor_coord_set|cursor_coord_set]]**, **[[:develop:api:efl:text:cursor:method:cursor_copy|cursor_copy]]**, **[[:develop:api:efl:text:cursor:method:cursor_equal|cursor_equal]]**, **[[:develop:api:efl:text:cursor:method:cursor_free|cursor_free]]**, **[[:develop:api:efl:text:cursor:method:cursor_line_char_first|cursor_line_char_first]]**, **[[:develop:api:efl:text:cursor:method:cursor_line_char_last|cursor_line_char_last]]**, **[[:develop:api:efl:text:cursor:method:cursor_line_jump_by|cursor_line_jump_by]]**, **[[:develop:api:efl:text:cursor:method:cursor_new|cursor_new]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_first|cursor_paragraph_char_first]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_last|cursor_paragraph_char_last]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_first|cursor_paragraph_first]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_last|cursor_paragraph_last]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_next|cursor_paragraph_next]]**, **[[:develop:api:efl:text:cursor:method:cursor_paragraph_prev|cursor_paragraph_prev]]**, **[[:develop:api:efl:text:cursor:method:cursor_text_insert|cursor_text_insert]]**, **[[:develop:api:efl:text:cursor:method:cursor_word_end|cursor_word_end]]**, **[[:develop:api:efl:text:cursor:method:cursor_word_start|cursor_word_start]]**, **[[:develop:api:efl:text:cursor:property:cursor_content|cursor_content]]** //**(get)**//, **[[:develop:api:efl:text:cursor:property:cursor_geometry|cursor_geometry]]** //**(get)**//, **[[:develop:api:efl:text:cursor:property:cursor_position|cursor_position]]** //**(get, set)**//, **[[:develop:api:efl:text:cursor:property:cursor|cursor]]** //**(get)**//\\
-[[:develop:api:efl:text:markup|Efl.Text.Markup]]\\
-> **[[:develop:api:efl:text:markup:method:cursor_markup_insert|cursor_markup_insert]]**\\
-[[:develop:api:efl:ui:layout:part|Efl.Ui.Layout.Part]]\\
-> **[[:develop:api:efl:ui:layout:part:property:cursor_style|cursor_style]]** //**(get, set)**//, **[[:develop:api:efl:ui:layout:part:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**//, **[[:develop:api:efl:ui:layout:part:property:cursor|cursor]]** //**(get, set)**//\\
-[[:develop:api:efl:ui:layout:part_text|Efl.Ui.Layout.Part_Text]]\\
-> **[[:develop:api:efl:ui:layout:part_text:property:markup|markup]]** //**(get, set)**//, **[[:develop:api:efl:ui:layout:part_text:property:translatable_text|translatable_text]]** //**(get, set)**//\\
-[[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]]\\
-> **[[:develop:api:efl:ui:widget:part:method:destructor|destructor]]**\\
-[[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]]\\
-> **[[:develop:api:efl:ui:translatable:method:translation_update|translation_update]]** ''protected''
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
+|  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
+|  | **[[:develop:api:efl:object:property:comment|comment]]** //**(get, set)**// | %%A human readable comment for the object%% |
+|  | **[[:develop:api:efl:object:method:composite_attach|composite_attach]]** | %%Make an object a composite object of another.%% |
+|  | **[[:develop:api:efl:object:method:composite_detach|composite_detach]]** | %%Detach a composite object from another object.%% |
+|  | **[[:develop:api:efl:object:method:composite_part_is|composite_part_is]]** | %%Check if an object is part of a composite object.%% |
+|  | **[[:develop:api:efl:object:method:constructor|constructor]]** | %%Call the object's constructor.%% |
+|  | **[[:develop:api:efl:object:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:object:method:del|del]]** | %%Unrefs the object and reparents it to NULL.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_add|event_callback_forwarder_add]]** | %%Add an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_forwarder_del|event_callback_forwarder_del]]** | %%Remove an event callback forwarder for an event and an object.%% |
+|  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
+|  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
+|  | **[[:develop:api:efl:object:method:finalize|finalize]]** | %%Called at the end of #eo_add. Should not be called, just overridden.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
+|  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
+|  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+^ [[:develop:api:efl:text:cursor|Efl.Text.Cursor]] ^^^
+|  | **[[:develop:api:efl:text:cursor:property:cursor|cursor]]** //**(get)**// | %%The object's main cursor.%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_char_delete|cursor_char_delete]]** | %%Deletes a single character from position pointed by given cursor.%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_char_next|cursor_char_next]]** | %%Advances to the next character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_char_prev|cursor_char_prev]]** | %%Advances to the previous character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_compare|cursor_compare]]** | %%Compare two cursors%% |
+|  | **[[:develop:api:efl:text:cursor:property:cursor_content|cursor_content]]** //**(get)**// | %%The content of the cursor (the character under the cursor)%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_coord_set|cursor_coord_set]]** | %%Set cursor coordinates%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_copy|cursor_copy]]** | %%Copy existing cursor%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_equal|cursor_equal]]** | %%Check if two cursors are equal%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_free|cursor_free]]** | %%Free existing cursor%% |
+|  | **[[:develop:api:efl:text:cursor:property:cursor_geometry|cursor_geometry]]** //**(get)**// | %%Returns the geometry of two cursors ("split cursor"), if logical cursor is between LTR/RTL text, also considering paragraph direction. Upper cursor is shown for the text of the same direction as paragraph, lower cursor - for opposite.%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_line_char_first|cursor_line_char_first]]** | %%Advance to current line first character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_line_char_last|cursor_line_char_last]]** | %%Advance to current line last character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_line_jump_by|cursor_line_jump_by]]** | %%Jump the cursor by the given number of lines%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_new|cursor_new]]** | %%Create new cursor%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_first|cursor_paragraph_char_first]]** | %%Advances to the first character in this paragraph%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_char_last|cursor_paragraph_char_last]]** | %%Advances to the last character in this paragraph%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_first|cursor_paragraph_first]]** | %%Advance to current paragraph first character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_last|cursor_paragraph_last]]** | %%Advance to current paragraph last character%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_next|cursor_paragraph_next]]** | %%Advances to the start of the next text node%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_paragraph_prev|cursor_paragraph_prev]]** | %%Advances to the end of the previous text node%% |
+|  | **[[:develop:api:efl:text:cursor:property:cursor_position|cursor_position]]** //**(get, set)**// | %%Cursor position%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_text_insert|cursor_text_insert]]** | %%Adds text to the current cursor position and set the cursor to *after* the start of the text just added.%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_word_end|cursor_word_end]]** | %%Advance to current word end%% |
+|  | **[[:develop:api:efl:text:cursor:method:cursor_word_start|cursor_word_start]]** | %%Advance to current word start%% |
+^ [[:develop:api:efl:text:markup|Efl.Text.Markup]] ^^^
+|  | **[[:develop:api:efl:text:markup:method:cursor_markup_insert|cursor_markup_insert]]** | %%Inserts a markup text to the text object in a given cursor position%% |
+^ [[:develop:api:efl:ui:layout:part|Efl.Ui.Layout.Part]] ^^^
+|  | **[[:develop:api:efl:ui:layout:part:property:cursor|cursor]]** //**(get, set)**// | %%The cursor to be shown when mouse is over the object%% |
+|  | **[[:develop:api:efl:ui:layout:part:property:cursor_style|cursor_style]]** //**(get, set)**// | %%A different style for the cursor.%% |
+|  | **[[:develop:api:efl:ui:layout:part:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**// | %%Whether the cursor may be looked in the theme or not.%% |
+^ [[:develop:api:efl:ui:layout:part_text|Efl.Ui.Layout.Part_Text]] ^^^
+|  | **[[:develop:api:efl:ui:layout:part_text:property:markup|markup]]** //**(get, set)**// | %%Markup property%% |
+|  | **[[:develop:api:efl:ui:layout:part_text:property:translatable_text|translatable_text]]** //**(get, set)**// | %%A unique string to be translated.%% |
+^ [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] ^^^
+|  ''protected'' | **[[:develop:api:efl:ui:translatable:method:translation_update|translation_update]]** | %%Requests this object to update its text strings for the current locale.%% |
+^ [[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]] ^^^
+|  | **[[:develop:api:efl:ui:widget:part:method:destructor|destructor]]** | %%Call the object's destructor.%% |
+
 ===== Events =====
 
 ==== Inherited ====
 
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_add|callback,add]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:callback_del|callback,del]]**\\
-[[:develop:api:efl:object|Efl.Object]]\\
-> **[[:develop:api:efl:object:event:del|del]]**
+^ [[:develop:api:efl:object|Efl.Object]] ^^^
+|  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
+|  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
+|  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
