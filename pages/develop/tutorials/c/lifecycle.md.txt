@@ -4,19 +4,19 @@
 
 # Lifecycle Management #
 
-The [Hello World](/develop/tutorials/c/hello-world) tutorial explained how to create a desktop-like application using the ``EFL_MAIN()`` macro. Applications targeted at mobile or embedded devices, though, often have additional lifecycle constrains, which are explained in this tutorial.
+The [Hello World](/develop/tutorials/c/hello-world) tutorial explained how to create a desktop-like application using the ``EFL_MAIN()`` macro. Applications targeted at mobile or embedded devices often have additional lifecycle constrains which are explored in this tutorial.
 
 ## Prerequisites ##
 
-* Finish the [Hello World](/develop/tutorials/c/hello-world) tutorial to know the basics of EFL application creation.
+You should have completed the [Hello World](/develop/tutorials/c/hello-world) tutorial in order to understand the basics of EFL application creation before proceeding with this tutorial.
 
 ## Application Management Events ##
 
-EFL will call some special methods in your application to inform you of events related to the application lifecycle, like it being paused, resumed or about to be closed.
+EFL will call some special methods in your application to inform you of events related to the application lifecycle such as being paused, resumed or when it is about to be closed.
 
-If you use the ``EFL_MAIN()`` macro as explained in the [Hello World](/develop/tutorials/c/hello-world) tutorial, though, these methods are hidden from you. While this is usually convenient for desktop applications, you will probably need to use them in mobile or embedded applications. To do this, use the ``EFL_MAIN_EX()`` macro instead.
+If you use the ``EFL_MAIN()`` macro, as in the [Hello World](/develop/tutorials/c/hello-world) tutorial, these methods are hidden from you. While this is usually convenient for desktop applications, you will likely need to use them when developing mobile or embedded applications. To do this you should use the ``EFL_MAIN_EX()`` macro instead.
 
-Create a ``lifecycle_main.c`` file and write this:
+Begin by creating a ``lifecycle_main.c`` file:
 
 ```c
 #define EFL_EO_API_SUPPORT 1
@@ -33,7 +33,7 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
 EFL_MAIN_EX()
 ```
 
-This looks like the Hello World tutorial, but using ``EFL_MAIN_EX()`` instead. If you try to compile it, though, it will complain (admittedly in a rather convoluted way) about missing symbols.
+This is based on the Hello World tutorial but rewritten to use ``EFL_MAIN_EX()``. If you try to compile it, however, it will complain - admittedly in a rather convoluted way - about missing symbols.
 
 These are the new methods that you need to add. All of them have the same signature as ``efl_main()``:
 
@@ -43,7 +43,7 @@ These are the new methods that you need to add. All of them have the same signat
 | ``efl_resume()``    | Application is leaving the paused state  |
 | ``efl_terminate()`` | Application is about to be terminated    |
 
-Add them with a simple ``printf()`` so we can keep track of the application state changes:
+Add them with a simple ``printf()`` so you can more easily keep track of the application state changes:
 
 ```c
 EAPI_MAIN void
@@ -65,17 +65,17 @@ efl_terminate(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 }
 ```
 
-The system will typically put your application in the paused state when it leaves the foreground, therefore, you should free as many resources as you can in ``efl_pause()`` so they are available to other applications. In ``efl_resume()`` you can then reload them.
+The system will typically put your application in the paused state when it leaves the foreground. You should free as many resources as you can in ``efl_pause()`` so they are available to other applications. You may then reload them in ``efl_resume()``.
 
-In ``efl_terminate()`` you normally will commit to permanent storage (like a disk file) the application state, so it can be retrieved next time the application is started.
+In ``efl_terminate()`` you will usually commit the application state to permanent storage, such as a file on disk, so it can be retrieved next time the application is started.
 
 ## Simulating Application Management Events ##
 
-The above section explains everything you need to know about application lifecycle management in EFL. However, the code provided so far will not demonstrate much when tested on a desktop environment.
+The above section explains everything you need to know about application lifecycle management in EFL. The code provided so far, however, will not demonstrate much when tested on a desktop environment.
 
-This sections adds a bit of *simulation code* which will artificially trigger the application management events studied before, for the sake of this tutorial only.
+This sections adds a bit of *simulation code* which will artificially trigger the application management events, for the sake of this tutorial.
 
-Define this method in your code:
+Begin by defining this method in your existing code:
 
 ```c
 static void
@@ -103,9 +103,9 @@ _lifecycle_simulation(void *data, const Efl_Event *ev EINA_UNUSED)
 }
 ```
 
-If you have read the [Events Programming Guide](/develop/guides/c/core/events.md) you will know that ``efl_event_callback_call()`` is manually emitting an event. This is what EFL uses internally to inform your application of these events on systems that support them (i.e. *not* on desktops).
+If you have read the [Events Programming Guide](/develop/guides/c/core/events.md) you will know that the ``efl_event_callback_call()`` function is manually emitting an event. This used internally by EFL to inform your application of these events on systems that support them - i.e. *not* on desktops.
 
-And now create a timer at the end of ``efl_main()`` that will periodically call the above defined ``_lifecycle_simulation()`` method:
+Now create a timer at the end of ``efl_main()`` that will periodically call the above defined ``_lifecycle_simulation()`` method:
 
 ```c
    [...]
@@ -114,13 +114,13 @@ And now create a timer at the end of ``efl_main()`` that will periodically call 
            efl_loop_timer_interval_set(efl_added, 1.0));
 ```
 
-Read the [Main Loop Programming Guide](/develop/guides/c/core/main-loop.md) to learn about timers. Suffice to say that this call creates one, registers a callback to it, and configures it to trigger every second.
+This call creates a timer, registers a callback to it and configures it to trigger every second. Read the [Main Loop Programming Guide](/develop/guides/c/core/main-loop.md) for more information on timers.
 
-With this, the program is complete, including simulation code.
+With this, the program is complete including the simulation code.
 
 ## Complete Application ##
 
-The whole program, with some additional comments for clarity, should look like this:
+The whole program, with some additional comments for clarity, is reproduced below:
 
 ```c
 #define EFL_EO_API_SUPPORT 1
@@ -192,9 +192,9 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
 EFL_MAIN_EX()
 ```
 
-You can find it in the EFL repository: [tutorial/c/lifecycle/src/lifecycle_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/lifecycle/src/lifecycle_main.c).
+A copy of this program is available in the EFL git repository: [tutorial/c/lifecycle/src/lifecycle_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/lifecycle/src/lifecycle_main.c).
 
-If you execute it, you should see how your application receives events for Launching, Pause, Resume and Termination, spaced every second.
+Execute the program and you will see how it receives events for Launch, Pause, Resume and Termination, spaced every second.
 
 ## Summary ##
 
@@ -202,7 +202,7 @@ At the end of this tutorial you have learned:
 
 * To use ``EFL_MAIN_EX()`` instead of ``EFL_MAIN()`` if you are interested in application management events.
 
-* The methods to implement in that case are ``efl_pause()``, ``efl_resume()`` and ``efl_terminate()``.
+* The methods to implement in that case: ``efl_pause()``, ``efl_resume()`` and ``efl_terminate()``.
 
 ## Further Reading ##
 
@@ -217,4 +217,3 @@ At the end of this tutorial you have learned:
 
 [tutorial/c/lifecycle/src/lifecycle_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/lifecycle/src/lifecycle_main.c)
 :    Application management from the EFL git examples repository.
-
