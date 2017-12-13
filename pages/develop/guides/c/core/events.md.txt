@@ -1,14 +1,15 @@
 ---
 ~~Title: Events Programming Guide~~
+~~NOCACHE~~
 ---
 
 # Events Programming Guide #
 
-The EFL is event-driven. This means that execution usually takes place within an internal EFL *Main Loop*. The application is then notified through function callbacks of virtually any event happening on the computer.
+EFL is event-driven. This means that execution usually takes place within an internal EFL *Main Loop*. The application receives notifications through function callbacks. These can apply to virtually any event which occurs on a computer. 
 
-Therefore, events play a central role in EFL. This guide explains all the required methods to handle EFL Events.
+Events play a central role in EFL. In this guide, you'll learn more about the required methods to handle them.
 
-You can find usage examples in the EFL examples repository: [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c)
+You can also find usage examples in the EFL examples repository: [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c)
 
 ## Prerequisites ##
 
@@ -16,7 +17,7 @@ You can find usage examples in the EFL examples repository: [reference/c/core/sr
 
 ## Listening to Events from Objects ##
 
-All Eo objects can emit events, as documented in the Events sections in their respective [API Reference documentation](/develop/api/).
+All Eo objects can emit events. You can discover more about this in the Events sections of their respective [API Reference documentation](/develop/api/).
 
 To register a callback method to be called when an object emits a given event use ``efl_event_callback_add()``:
 
@@ -24,7 +25,7 @@ To register a callback method to be called when an object emits a given event us
 efl_event_callback_add(object, event, callback, data);
 ```
 
-Where *object* is any ``Eo *`` or derived object, *event* is the identifier of the event (like ``EFL_LOOP_EVENT_POLL_HIGH`` or ``EFL_LOOP_TIMER_EVENT_TICK``), *callback* is the method to be called when the event occurs and *data* is any data you want to pass to your callback (even ``NULL`` if you don't need it).
+Subsitute *object* for any ``Eo *`` or derived object and *event* for the identifier of the event (such as ``EFL_LOOP_EVENT_POLL_HIGH`` or ``EFL_LOOP_TIMER_EVENT_TICK``). Set *callback* to the method to be called when the event occurs and *data* to any data you want to pass to your callback (if you have no need of this use ``NULL``).
 
 The method signature for the callback is:
 
@@ -32,28 +33,28 @@ The method signature for the callback is:
 void callback(void *data, const Efl_Event *event);
 ```
 
-where *data* is the last parameter you used when registering the callback with ``efl_event_callback_add()`` and *event* contains information about the event. Some interesting bits are:
+In the above example *data* is the last parameter you used when registering the callback with ``efl_event_callback_add()``. *event* contains information about the event itself:
 
 | Attribute             | Type             | Content                       |
 | --------------------- | ---------------- | ----------------------------- |
-| ``event->object``     | ``Eo *``         | Object that emitted the event |
+| ``event->object``     | ``Eo *``         | The Object that emitted the event |
 | ``event->info``       | ``void *``       | Used by some events to provide additional information. Must be cast to the appropriate type (see below). |
 | ``event->desc->name`` | ``const char *`` | Name of the event             |
 
-The [API Reference documentation](/develop/api/) for each event tells you how to use ``event->info``. See [EFL_EVENT_POINTER_DOWN](/develop/api/interface/efl/input/interface/event/pointer_down) for example.
+The [API Reference documentation](/develop/api/) for each event tells you how to use ``event->info``. See [EFL_EVENT_POINTER_DOWN](/develop/api/interface/efl/input/interface/event/pointer_down) for more examples.
 
-To stop receiving notifications for a particular event (unregister a callback), use ``efl_event_callback_del()``:
+To stop receiving notifications for a particular event (unregister a callback) use ``efl_event_callback_del()``:
 
 ```c
 efl_event_callback_del(object, event, callback, data);
 ```
 
-Where the parameters have the same meaning as for ``efl_event_callback_add()``. Note that in order to unregister the callback you have to provide **the same parameters** you used to register it. This is due to the fact that you can register different callbacks to the same event, or even the same callback with different *data*.
+The parameters here have the same meaning as for ``efl_event_callback_add()``. Note that in order to unregister the callback you have to provide **the same parameters** you used to register it. This is because you can register different callbacks to the same event or even the same callback with different *data*.
 
 > **NOTE:**
-> Registering and unregistering callbacks is an expensive process, performance-wise. Should you perform these operations continuously on several callbacks at the same time, it is more efficient to do so in a batch, using ``efl_even_callback_array_add()`` and ``efl_even_callback_array_del()``. Bear in mind that you cannot unregister an individual callback which has been registered in a batch; all of them have to be unregistered together.
+> Registering and unregistering callbacks is an resource-itensive process. If you perform these operations continuously on several callbacks at the same time do so in a batch as this is more efficient. You can use ``efl_even_callback_array_add()`` and ``efl_even_callback_array_del()`` to accomplish this. Remember however that you can't unregister an individual callback which has been registered in a batch. They must all be unregistered together. 
 
-Here you have an example snippet based on [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c):
+Below is an example code snippet based on [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c):
 
 ```c
 static void
@@ -75,13 +76,13 @@ setup()
 }
 ```
 
-A new timer object is created and added to ``mainloop``. The configuration of this timer is done completely inside the ``efl_add()`` call, as explained in the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial.
+Here a new timer object is created and added to ``mainloop``. The configuration of this timer takes place entirely inside the ``efl_add()`` call, as explained in the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial.
 
-Note how the ``polled`` object is passed as the *data* parameter to ``efl_event_callback_add()`` and recovered from the callback. Also note how the object that emitted the event (the timer) is recovered from the callback through the ``event`` parameter.
+Note how the ``polled`` object is passed as the *data* parameter to ``efl_event_callback_add()`` and recovered from the callback. The object that emitted the event (the timer) is also recovered from the callback through the ``event`` parameter.
 
 ## Pausing and Resuming Event Notifications ##
 
-All event emission from a given object can be paused (*frozen*) using ``efl_event_freeze()`` and continued with ``efl_event_thaw()``:
+All event emissions from a given object can be paused (*frozen*) using ``efl_event_freeze()`` and resumed with ``efl_event_thaw()``:
 
 ```c
    efl_event_freeze(object);
@@ -90,13 +91,13 @@ All event emission from a given object can be paused (*frozen*) using ``efl_even
 
 While an object is frozen only high-priority events (marked as *hot*) will be emitted. Hot events cannot be stopped.
 
-Please note that ALL events coming from the frozen object are stopped (except hot events). If you need to stop individual events you can unregister their callback temporarily and register again later.
+Remember that ALL events emitting from a object are stopped if its frozen, except for hot events. If you need to stop individual events you can unregister their callback temporarily and then re-register later.
 
 ## Defining Custom Events ##
 
 You can define any number of custom events and emit them from any Eo object. You can then register callbacks to be activated by these events.
 
-First, create a ``Efl_Event_Description`` variable, initialize it with ``EFL_EVENT_DESCRIPTION()`` and make it available everywhere you want to use this new event:
+First create a ``Efl_Event_Description`` variable. Next, initialize it with ``EFL_EVENT_DESCRIPTION()`` and make it available everywhere you want to use this new event:
 
 ```c
    Efl_Event_Description CUSTOM_EVENT = EFL_EVENT_DESCRIPTION("custom-event");
@@ -108,15 +109,15 @@ Register to this event as you would normally do for EFL events with ``efl_event_
    efl_event_callback_add(object, &CUSTOM_EVENT, callback, data);
 ```
 
-*data* works as usual and can be recovered from the callback through its ``data`` parameter.
+*data* works as usual and can be recovered from the callback through the ``data`` parameter.
 
-Finally, emit the event using ``efl_event_callback_call()``:
+Now emit the event using ``efl_event_callback_call()``:
 
 ```c
    efl_event_callback_call(object, &CUSTOM_EVENT, event_info);
 ```
 
-*event_info* will be passed to the callback through the ``event->info`` parameter and its meaning is completely up to you, the creator of the event.
+*event_info* will be passed to the callback through the ``event->info`` parameter. Its meaning is completely up to you as the event creator.
 
 ## Further Reading ##
 [reference/c/core/src/core_event.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_event.c)
