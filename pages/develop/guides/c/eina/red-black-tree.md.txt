@@ -1,0 +1,82 @@
+---
+~~Title: Red-Black Trees~~
+---
+
+# Red-Black Trees #
+
+``Eina`` provides functions for the management of *red-black trees*, a self-balancing binary search tree in which each node has an additional bit which provides the colour - red or black - and used toe ensure that the tree itself remains approximately balanced during insertions and deletions. While imperfect, red-black trees guarantee searching, insertion, and deletion operations complete within O(log *n*) time, in which *n* is the total number of elements found within the tree.
+
+## Using Red-Black Trees ##
+
+``Eina`` provides functions for creation, insertion, removal, deletion, and iteration of red-black trees and their nodes, with support for prefix, infix and postfix tree traversal.
+
+### Creating a New Red-Black Tree ###
+
+Create a new red-black tree using the ``eina_rbtree_inline_insert()`` function:
+
+```c
+Eina_Rbtree * eina_rbtree_inline_insert (NULL)
+```
+
+The function will return the root of the new red-black tree.
+
+### Inserting a Node ##
+
+Use the ``eina_rbtree_inline_insert()`` function to insert a new node into an existing red-black tree:
+
+```c
+Eina_Rbtree * eina_rbtree_inline_insert (
+    Eina_Rbtree * root,
+    Eina_Rbtree * node,
+    Eina_Rbtree_Cmp_Node_Cb cmp,
+    const void * data 
+)
+```
+
+Where ``root`` is the root of a valid red-black tree, ``node`` is the node to be inserted, ``cmp`` is the callback to compare two nodes and ``data`` is private data to help the compare function. The function will return the new root of the red-black tree.
+
+### Removing a Node ###
+
+Use the ``eina_rbtree_inline_remove()`` function to remove a node from an existing red-black tree:
+
+```c
+Eina_Rbtree * eina_rbtree_inline_remove (
+    Eina_Rbtree * root,
+    Eina_Rbtree * node,
+    Eina_Rbtree_Cmp_Node_Cb cmp,
+    const void * data 
+)
+```
+
+Where ``root`` is the root of a valid red-black tree, ``node`` is the node to be removed, ``cmp`` is the callback to compare two nodes and ``data`` is private data to help the compare function. The function will return the new root of the red-black tree.
+
+### Deleting All Nodes ###
+
+Use the ``eina_rbtree_delete()`` function to delete all nodes from an existing red-black tree:
+
+```c
+Eina_Rbtree * eina_rbtree_inline_remove (
+    Eina_Rbtree * root,
+    Eina_Rbtree_Free_Cb func,
+    void * data 
+)
+```
+
+Where ``root`` is the root of a valid red-black tree, ``func`` is the callback that will free each node, and ``data`` is private data to help the compare function.
+
+### Iterating Over the Tree ###
+
+Iterators can be associated with a red-black tree using the ``eina_rbtree_iterator_prefix``, ``eina_rbtree_iterator_infix`` and ``eina_rbtree_iterator_postfix`` functions, depending on whether you want to walk the tree using prefix, infix, or postfix walk methods respectively. In all cases the function is used as follows:
+
+```c
+Eina_Iterator * eina_rbtree_iterator_prefix(const Eina_Rbtree * root)	
+[...]
+Eina_Iterator * eina_rbtree_iterator_infix(const Eina_Rbtree * root)
+[...]
+Eina_Iterator * eina_rbtree_iterator_postfix(const Eina_Rbtree * root)
+```
+
+Where ``root`` ins the root of a valid red-black tree. If ``root`` is ``NULL``, a valid iterator will be provided but one which will always return ``false`` to the function ``eina_iterator_next()``. If memory for the iterator cannot be allocated, the function returns ``NULL`` and sets ``EINA_ERROR_OUT_OF_MEMORY``.
+
+> **WARNING:**
+> If the structure of the red-black tree changes through the addition or removal of nodes the iterator will become invalid, and attempts to use the iterator may result in program crashes.
