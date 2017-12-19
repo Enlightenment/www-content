@@ -1,0 +1,312 @@
+---
+~~Title: EFL IO Programming Guide~~
+---
+
+# EFL IO Programming Guide #
+
+EFL offers some facilities for handling classic input/output (I/O) operations like reading and writing files, Unix file descriptors or network sockets.
+
+These facilities reside in the ``Efl.Io`` namespace and are built around a common set of interfaces. This guide lists these interfaces and their purpose and then describes the available I/O classes and how to use them.
+
+Network communication classes are built on top of ``Efl.Io`` and grouped in the ``Efl.Net`` namespace, detailed in the [Network Programming Guide](/develop/guides/c/core/net.md).
+
+## Prerequisites ##
+
+* You should be familiar with EFL objects, read the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial to know about them.
+
+* You should be familiar with Eolian interfaces, read the [Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md) tutorial to know about them.
+
+## I/O Interfaces ##
+
+The sub-sections below describe Eolian interfaces. You cannot instantiate them directly, instead, they are implemented by the ``Efl.Io`` classes listed in Classes section. By learning these interfaces you will know most of the methods exposed by the EFL I/O classes that implement them.
+
+### ``Efl.Io.Reader`` ###
+
+Read the whole documentation in the ``Efl.Io.Reader`` [API Reference guide](/develop/api/efl/io/reader).
+
+This interface provides a method to read (input) data into a pre-allocated memory buffer (an ``Eina_Rw_Slice``). It also provides properties to know if more data is available and whether the end of the stream (EOS) has been reached. Furthermore, it also emits events for asynchronous notification of changes in these properties.
+
+* ``efl_io_reader_read()`` method: You need to allocate an ``Eina_Rw_Slice`` of any size you want and ``efl_io_reader_read()`` will fill it up to that size (maybe less). Whether this call blocks or not depends on the class implementing it. [Read more about Eina Memory Slices](/develop/legacy/api/c/start#group__Eina__Slice__Group.html).
+
+* ``efl_io_reader_can_read_get()`` property: when ``TRUE``, it guarantees that ``efl_io_reader_read()`` will not block.
+
+* ``efl_io_reader_eos_get()`` property: when ``TRUE``, the stream has ended and no more data is to be expected.
+
+* ``EFL_IO_READER_EVENT_CAN_READ_CHANGED`` event: the ``can_read`` property has changed.
+
+* ``EFL_IO_READER_EVENT_EOS`` event: the ``eos`` property has changed.
+
+### ``Efl.Io.Writer`` ###
+
+Read the whole documentation in the ``Efl.Io.Writer`` [API Reference guide](/develop/api/efl/io/writer).
+
+Symmetric to ``Efl.Io.Reader``, this interface provides a method to write (output) data from a pre-allocated memory buffer (an ``Eina_Rw_Slice``) and a property to know if the output is ready to receive more data. It also emits an event for asynchronous notification of changes in this property.
+
+* ``efl_io_writer_write()`` method: You need to allocate an ``Eina_Rw_Slice`` of any size you want and ``efl_io_writer_write()`` will output up to that size (maybe less). Whether this call blocks or not depend on the class implementing it. [Read more about Eina Memory Slices](/develop/legacy/api/c/start#group__Eina__Slice__Group.html).
+
+* ``efl_io_writer_can_write_get()`` property: when ``TRUE``, it guarantees that ``efl_io_writer_write()`` will not block.
+
+* ``EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED`` event: the ``can_write`` property has changed.
+
+### ``Efl.Io.Closer`` ###
+
+Read the whole documentation in the ``Efl.Io.Closer`` [API Reference guide](/develop/api/efl/io/closer).
+
+This interface provides a method to close a stream (be it an input or output stream) and convenience properties to close it automatically.
+
+* ``efl_io_closer_close()`` method: Closes the stream, deallocating all related resources.
+
+* ``efl_io_closer_close_on_destructor_get/set()`` property: when ``TRUE``, the stream will be automatically closed when the object is destroyed.
+
+* ``efl_io_closer_close_on_exec_get/set()`` property: when ``TRUE``, the stream will be automatically closed on exec() calls.
+
+* ``efl_io_closer_closed_get()`` property: whether the stream has been already closed or not.
+
+* ``EFL_IO_CLOSER_EVENT_CLOSED`` event: the stream has just been closed.
+
+### ``Efl.Io.Positioner`` ###
+
+Read the whole documentation in the ``Efl.Io.Positioner`` [API Reference guide](/develop/api/efl/io/positioner).
+
+This interface provides methods, properties and events to track the current position inside a data stream.
+
+* ``efl_io_positioner_seek()`` method: moves the current position in the stream. Akin to the ``seek()`` C method.
+
+* ``efl_io_positioner_position_get()`` property: contains the current position the stream.
+
+* ``EFL_IO_POSITIONER_EVENT_POSITION_CHANGED`` event: the current position in the stream has changed.
+
+### ``Efl.Io.Sizer`` ###
+
+Read the whole documentation in the ``Efl.Io.Sizer`` [API Reference guide](/develop/api/efl/io/sizer).
+
+This interface provides methods, properties and events to track the size of a data stream.
+
+* ``efl_io_sizer_resize()`` method: changes the size of the stream. Useful for files, for example.
+
+* ``efl_io_sizer_size_get()`` property: returns the current size of the stream.
+
+* ``EFL_IO_SIZER_EVENT_SIZE_CHANGED`` event: the size of the stream has changed.
+
+## Classes ##
+
+This sections details a set of classes which you can instantiate to perform miscellaneous I/O tasks, and the interfaces they implement. You can use the interface methods listed above on the classes that support them. The most relevant class-specific methods are given below, but for a complete list of methods, use the [API Reference guide](/develop/api/) (A direct link to the appropriate page is given for each class).
+
+### ``Efl.Io.File`` ###
+
+Read the whole documentation in the ``Efl.Io.File`` [API Reference guide](/develop/api/efl/io/file). It implements the ``Efl.Io.Reader``, ``Efl.Io.Writer``, ``Efl.Io.Closer``, ``Efl.Io.Positioner`` and ``Efl.Io.Sizer`` interfaces.
+
+You use this object in a similar way as you use a plain ``FILE *`` in C. You create it, give it a filename, perform some read or write operations, and then destroy the object.
+
+Here's an example extracted from the EFL examples repository: [reference/c/core/src/core_io.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_io.c)
+
+```c
+   Eina_Slice content = EINA_SLICE_STR("### This is a sample string for the file io test ###");
+   Efl_Io_File *file;                        
+   
+   file = efl_add(EFL_IO_FILE_CLASS, NULL,
+                  efl_file_set(efl_added, filename, NULL),
+                  efl_io_file_flags_set(efl_added, O_WRONLY | O_CREAT),
+                  efl_io_file_mode_set(efl_added, 0644),
+                  efl_io_closer_close_on_destructor_set(efl_added, EINA_TRUE));
+
+   if (efl_io_writer_write(file, &content, NULL) != EINA_ERROR_NO_ERROR)
+     fprintf(stderr, "  Failed to write test file\n");
+   else          
+     {
+        char *string = eina_slice_strdup(content);
+        printf("  Wrote content: %s\n", string);
+        free(string);
+     }
+   
+   efl_del(file);
+```
+
+### ``Efl.Io.Queue`` ###
+
+Read the whole documentation in the ``Efl.Io.Queue`` [API Reference guide](/develop/api/efl/io/queue). It implements the ``Efl.Io.Reader``, ``Efl.Io.Writer`` and  ``Efl.Io.Closer`` interfaces.
+
+This is a *first-in first-out* (FIFO) memory queue where data can be enqueued using the ``Efl.Io.Writer`` interface and dequeued using the ``Efl.Io.Reader`` interface.
+
+It is convenient, for example, to decouple two processes, as reads and writes can happen independently, and the queue automatically shrinks and grows to adapt to its content.
+
+It's maximum size can be bounded through the ``limit`` property. Writes to a full queue and reads from an empty queue will both fail.
+
+The most representative methods of the ``Efl.Io.Queue`` are:
+
+* ``efl_io_queue_clear()`` empties the queue.
+
+* ``efl_io_queue_discard()`` discards the given number of bytes.
+
+* ``efl_io_queue_eos_mark()`` marks the end-of-stream. Future writes will fail and the reader process will receive the EOS message once the queue is empty.
+
+* ``efl_io_queue_limit_get/set()`` sets the upper bound for the size of the queue.
+
+* ``efl_io_queue_usage_get()`` retrieves the number of bytes currently in the queue.
+
+Example:
+```c
+Eo *send_queue;
+send_queue = efl_add(EFL_IO_QUEUE_CLASS, NULL,
+                     efl_name_set(efl_added, "send_queue"),
+                     efl_io_queue_limit_set(efl_added, buffer_limit));
+efl_io_writer_write(send_queue, &slice, NULL);
+efl_io_queue_eos_mark(send_queue);
+[...]
+efl_io_reader_read(send_queue, &slice);
+efl_io_closer_close(send_queue);
+efl_del(send_queue);
+```
+
+More usage examples can be found in the EFL examples repository: [reference/c/net/src/net_io.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/net/src/net_io.c)
+
+### ``Efl.Io.Buffer`` ###
+
+Read the whole documentation in the ``Efl.Io.Buffer`` [API Reference guide](/develop/api/efl/io/buffer). It implements the ``Efl.Io.Reader``, ``Efl.Io.Writer``, ``Efl.Io.Closer``, ``Efl.Io.Positioner`` and ``Efl.Io.Sizer`` interfaces.
+
+Buffers are similar to Queues in that they act as in-memory storage for data, but they allow independent handling of the read and write pointers, effectively providing complete access to the whole memory block.
+
+If only the ``Efl.Io.Reader`` and ``Efl.Io.Writer`` interfaces are used, it acts as a FIFO, exactly like ``Efl.Io.Queue``. Random access to any portion of the memory block, though, can be gained through the ``position_read`` and ``position_write`` properties, which move the read and write pointers independently.
+
+It's maximum size can be bounded through the ``limit`` property. Writes to a full queue and reads from an empty queue will both fail.
+
+The most representative methods of the ``Efl.Io.Buffer`` are:
+
+* ``efl_io_buffer_position_read_get/set()`` sets the position to read from.
+
+* ``efl_io_buffer_position_write_get/set()`` sets the position to write to.
+
+* ``efl_io_buffer_limit_get/set()`` sets the upper bound for the size of the buffer.
+
+### ``Efl.Io.Copier`` ###
+
+Read the whole documentation in the ``Efl.Io.Copier`` [API Reference guide](/develop/api/efl/io/copier). It implements the ``Efl.Io.Closer`` interface.
+
+This is a convenience object that will copy data asynchronously from any source object implementing the ``Efl.Io.Reader`` interface into any destination object implementing the ``Efl.Io.Writer`` interface until the End-of-Stream event is received or an error occurs.
+
+Usage scenarios include downloading a URL to memory or to a file, copy files around the hard drive or copy data from/to any file descriptor.
+
+To use the ``Efl.Io.Copier`` class, you only need to instantiate it, set the ``source`` and ``destination`` properties and register to receive the ``EVENT_DONE`` or ``EVENT_ERROR`` callbacks.
+
+Data can be copied in blocks of fixed size (controlled through the ``read_chunk_size`` property) or of variable size, using a delimiter (configured through the ``line_delimiter`` property).
+
+The most representative methods of ``Efl.Io.Copier`` are:
+
+* ``efl_io_copier_source_get/set()`` sets the source object, which must implement the ``Efl.Io.Reader`` interface.
+
+* ``efl_io_copier_destination_get/set()`` sets the destination object, which must implement the ``Efl.Io.Writer`` interface.
+
+* ``efl_io_copier_done_get()`` returns ``TRUE`` when the copy has finished. Better use the ``EFL_IO_COPIER_EVENT_DONE`` event for asynchronous operation.
+
+* ``efl_io_copier_line_delimiter_get/set()`` sets the delimiter to use.
+
+* ``efl_io_copier_progress_get()`` returns the amount of bytes read and written, and the total, if known. Better use the ``EFL_IO_COPIER_EVENT_PROGRESS`` for asynchronous operation.
+
+* ``efl_io_copier_read_chunk_size_get/set()`` sets the amount of bytes to fetch in each read operation, if no delimiter is being used.
+
+* ``efl_io_copier_timeout_inactivity_get/set()`` sets the amount of seconds of inactivity to wait before aborting the operation with a timeout error.
+
+* ``EFL_IO_COPIER_EVENT_DATA`` is emitted every time new data is read.
+
+* ``EFL_IO_COPIER_EVENT_DONE`` is emitted when all data has been copied from source to destination.
+
+* ``EFL_IO_COPIER_EVENT_ERROR`` is emitted when an error occurs.
+
+* ``EFL_IO_COPIER_EVENT_LINE`` is emitted when a line (block of data separated by the configured delimiter) is read.
+
+* ``EFL_IO_COPIER_EVENT_PROGRESS`` is emitted when the amount of bytes read, written or total changes.
+
+Here's an usage example extracted from the EFL examples repository, [reference/c/core/src/core_io.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/core/src/core_io.c). It copies data from *stdin* to *stdout* until ``Ctrl+D`` is pressed.
+
+```c
+EFL_CALLBACKS_ARRAY_DEFINE(copier_cbs,
+                           { EFL_IO_COPIER_EVENT_DONE, _copier_done },
+                           { EFL_IO_COPIER_EVENT_ERROR, _copier_error });
+
+   [...]
+
+   Eo *input, *output;
+   Eo *copier = NULL;
+
+   printf("TEST 2: Efl.Io.Copier\n");
+   // set up our objects to copy, use stdin and stdout
+   input = efl_add(EFL_IO_STDIN_CLASS, loop);
+   output = efl_add(EFL_IO_STDOUT_CLASS, loop);
+
+   // copier: set up a copy from input to output
+   copier = efl_add(EFL_IO_COPIER_CLASS, loop,
+                    efl_name_set(efl_added, "Copier"),
+                    efl_io_copier_source_set(efl_added, input),
+                    efl_io_copier_destination_set(efl_added, output),
+                    efl_event_callback_array_add(efl_added, copier_cbs(), NULL));
+```
+
+To understand how the different events are registered through a single callback array, read the [Events Programming Guide](/develop/guides/c/core/events.md).
+
+A more complex usage example can be found in the EFL examples repository:
+[reference/c/net/src/net_io.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/net/src/net_io.c). It sends commands to an HTTP server using an ``Efl.Io.Copier`` that reads from an ``Efl.Io.Queue`` and then receives the answers using a second ``Efl.Io.Copier`` and another ``Efl.Io.Queue``. This example is detailed in the [Network Programming Guide](/develop/guides/c/core/net.md).
+
+### ``Efl.Io.Buffered_Stream`` ###
+
+Read the whole documentation in the ``Efl.Io.Buffered_Stream`` [API Reference guide](/develop/api/efl/io/buffered_stream). It implements the ``Efl.Io.Reader``, ``Efl.Io.Writer`` and ``Efl.Io.Closer`` interfaces.
+
+This is a convenience object that adds buffered input and output to an existing object (called the *inner* object) implementing the ``Efl.Io.Reader`` and/or ``Efl.Io.Writer`` interfaces.
+
+The purpose of ``Efl.Io.Buffered_Stream`` is to overcome the following limitations of these interfaces: The basic writer interface might write less data than actually provided and the user is then responsible for retrying later on when the interface is ready. Likewise, the basic reader interface might provide less data than requested, and the user must wait and retry until all data is read.
+
+``Efl.Io.Buffered_Stream`` uses internal Queues and Copier objects so that you can simply "write and forget": You just need to write all your data in one operation, and the Buffered_Stream object will take care of retrying and guarantee that all your data is sent. Likewise, you can simply "read when ready": Incoming data will be automatically accumulated and you can perform your read when enough of it has been received.
+
+To achieve this, the writer interface of the Buffered_Stream object is connected to an *output* ``Efl.Io.Queue`` and an ``Efl.Io.Copier`` connects this queue to the writer interface of the inner object. Simultaneously, another ``Efl.Io.Copier`` connects the reader interface of the inner object to an *input* ``Efl.Io.Queue`` which is accessible through the Buffered_Stream reader interface.
+
+The most commonly used methods of ``Efl.Io.Buffered_Stream`` are:
+
+* ``efl_io_buffered_stream_inner_io_get/set()`` sets the inner object to wrap. You must set it at least once for the Buffered_Stream object to work.
+
+* ``efl_io_buffered_stream_clear()`` clears all data from the *input* queue.
+
+* ``efl_io_buffered_stream_discard()`` discards the given number of bytes from the *input* queue.
+
+* ``efl_io_buffered_stream_eos_mark()`` marks the end-of-stream. Future writes will fail and EOS marker will be sent once the *output* queue becomes empty.
+
+* ``efl_io_buffered_stream_read_chunk_size_get()`` and ``efl_io_buffered_stream_line_delimiter_get/set()`` control whether data is *read* in blocks of fixed or variable size (bounded by this delimiter). See ``Efl.Io.Copier`` for more information.
+
+* ``efl_io_buffered_stream_max_queue_size_input_get/set()`` and ``efl_io_buffered_stream_max_queue_size_output_get/set()`` set the maximum number of bytes to store in the input and output queues, respectively.
+
+* ``efl_io_buffered_stream_progress_get()`` returns the amount of bytes written to and read from the inner object.
+
+* ``efl_io_buffered_stream_pending_read_get()`` and ``efl_io_buffered_stream_pending_write_get()`` return the amount of bytes in the input and output queues respectively.
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_ERROR`` is emitted when an error occurred.
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_FINISHED`` is emitted when all pending read and write operations are finished.
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_LINE`` is emitted when a line is received (bounded by the configured delimiter).
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_PROGRESS`` is emitted when the ``progress`` property has changed. You can also read the ``pending_write`` or ``pending_read`` properties to check the status of these operations.
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_READ_FINISHED`` is emitted when the end-of-stream marker is received from the inner object, indicating that no more data is to be expected.
+
+* ``EFL_IO_BUFFERED_STREAM_EVENT_WRITE_FINISHED`` is emitted when ``efl_io_buffered_stream_eos_mark()`` has been used and all data has already been written into the inner object.
+
+### ``Efl.Io.Stdin``, ``Efl.Io.Stdout`` and ``Efl.Io.Stderr`` ###
+
+EFL provides wrappers around the standard *input*, *output* and *error* file descriptors available on most operating systems. Just instantiate an ``EFL_IO_STDIN_CLASS`` or ``EFL_IO_STDERR_CLASS`` and you can output to the console using the ``Efl.Io.Writer`` interface. To read from the console instantiate an ``EFL_IO_STDOUT_CLASS`` and use the ``Efl.Io.Reader`` interface on it.
+
+See the ``Efl.Io.Copier`` section above for an usage example.
+
+## Further Reading ##
+
+[Introduction to Eo](/develop/tutorials/c/eo-intro.md)
+:    Explains how to create and destroy EFL objects.
+
+[Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md)
+:    Explains what are Eolian interfaces.
+
+[Events Programming Guide](/develop/guides/c/core/events.md)
+:    Explains how events and event callbacks are handled in EFL.
+
+[EFL API Reference guide](/develop/api)
+:    Detailed documentation on the EFL API.
+
+ [Network Programming Guide](/develop/guides/c/core/net.md)
+:    Description of the ``Efl.Io`` classes dealing with network communications.
