@@ -1,36 +1,37 @@
 ---
 ~~Title: EFL IO Programming Guide~~
+~~NOCACHE~~
 ---
 
 # EFL IO Programming Guide #
 
-EFL offers some facilities for handling classic input/output (I/O) operations like reading and writing files, Unix file descriptors or network sockets.
+EFL offers some facilities for handling classic input/output (I/O) operations such as reading and writing files, Unix file descriptors and network sockets.
 
-These facilities reside in the ``Efl.Io`` namespace and are built around a common set of interfaces. This guide lists these interfaces and their purpose and then describes the available I/O classes and how to use them.
+These facilities reside in the ``Efl.Io`` namespace and are built around a common set of interfaces. This guide lists these interfaces and their purpose. It also describes the available I/O classes and how to use them.
 
 Network communication classes are built on top of ``Efl.Io`` and grouped in the ``Efl.Net`` namespace, detailed in the [Network Programming Guide](/develop/guides/c/core/net.md).
 
 ## Prerequisites ##
 
-* You should be familiar with EFL objects, read the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial to know about them.
+* Make sure you're familiar with EFL objects: read the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial to learn more.
 
-* You should be familiar with Eolian interfaces, read the [Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md) tutorial to know about them.
+* You should also be familiar with Eolian interfaces: read the [Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md) tutorial to understand these.
 
 ## I/O Interfaces ##
 
-The sub-sections below describe Eolian interfaces. You cannot instantiate them directly, instead, they are implemented by the ``Efl.Io`` classes listed in Classes section. By learning these interfaces you will know most of the methods exposed by the EFL I/O classes that implement them.
+The sub-sections below describe Eolian interfaces. You cannot instantiate them directly. Instead, they are implemented by the ``Efl.Io`` classes listed in Classes section. Through understanding these interfaces you will learn most of the methods exposed by the EFL I/O classes which implement them.
 
 ### ``Efl.Io.Reader`` ###
 
-Read the whole documentation in the ``Efl.Io.Reader`` [API Reference guide](/develop/api/efl/io/reader).
+Read the entire documentation in ``Efl.Io.Reader`` [API Reference guide](/develop/api/efl/io/reader).
 
-This interface provides a method to read (input) data into a pre-allocated memory buffer (an ``Eina_Rw_Slice``). It also provides properties to know if more data is available and whether the end of the stream (EOS) has been reached. Furthermore, it also emits events for asynchronous notification of changes in these properties.
+This interface provides a method to read (input) data into a pre-allocated memory buffer (an ``Eina_Rw_Slice``). It also provides properties to know if more data is available and whether the end of the stream (EOS) has been reached. It also emits events for asynchronous notification of changes in these properties.
 
-* ``efl_io_reader_read()`` method: You need to allocate an ``Eina_Rw_Slice`` of any size you want and ``efl_io_reader_read()`` will fill it up to that size (maybe less). Whether this call blocks or not depends on the class implementing it. [Read more about Eina Memory Slices](/develop/legacy/api/c/start#group__Eina__Slice__Group.html).
+* ``efl_io_reader_read()`` method: allocate an ``Eina_Rw_Slice`` of any size you wish and ``efl_io_reader_read()`` will fill it up to that size (maybe less). Whether this call blocks or not depends on the class implementing it. [Read more about Eina Memory Slices](/develop/legacy/api/c/start#group__Eina__Slice__Group.html).
 
-* ``efl_io_reader_can_read_get()`` property: when ``TRUE``, it guarantees that ``efl_io_reader_read()`` will not block.
+* ``efl_io_reader_can_read_get()`` property: when ``TRUE`` it guarantees that ``efl_io_reader_read()`` will not block.
 
-* ``efl_io_reader_eos_get()`` property: when ``TRUE``, the stream has ended and no more data is to be expected.
+* ``efl_io_reader_eos_get()`` property: when ``TRUE`` the stream has ended and no more data is to be expected.
 
 * ``EFL_IO_READER_EVENT_CAN_READ_CHANGED`` event: the ``can_read`` property has changed.
 
@@ -38,9 +39,9 @@ This interface provides a method to read (input) data into a pre-allocated memor
 
 ### ``Efl.Io.Writer`` ###
 
-Read the whole documentation in the ``Efl.Io.Writer`` [API Reference guide](/develop/api/efl/io/writer).
+Read the entire documentation in ``Efl.Io.Writer`` [API Reference guide](/develop/api/efl/io/writer).
 
-Symmetric to ``Efl.Io.Reader``, this interface provides a method to write (output) data from a pre-allocated memory buffer (an ``Eina_Rw_Slice``) and a property to know if the output is ready to receive more data. It also emits an event for asynchronous notification of changes in this property.
+In juxtaposition to ``Efl.Io.Reader``, this interface provides a method to write (output) data from a pre-allocated memory buffer (an ``Eina_Rw_Slice``) and a property to know if the output is ready to receive more. It also emits an event for asynchronous notification of changes in this property.
 
 * ``efl_io_writer_write()`` method: You need to allocate an ``Eina_Rw_Slice`` of any size you want and ``efl_io_writer_write()`` will output up to that size (maybe less). Whether this call blocks or not depend on the class implementing it. [Read more about Eina Memory Slices](/develop/legacy/api/c/start#group__Eina__Slice__Group.html).
 
