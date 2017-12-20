@@ -3,17 +3,17 @@
 
 %%Copier destination object.%%
 
-%%If set it must implement %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% interface and will receive read data once %%[[:develop:api:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%% reports %%''true''%%, this is monitored using "can_write,changed" event.%%
+%%If set it must implement %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% interface and will receive read data once %%[[:develop:api:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%% reports %%''true''%%, this is monitored using the "can_write,changed" event.%%
 
 %%The copier will attempt to write all internal intermediate storage data at once, however the destination object may consume less. The actual data written is emitted in the "data" and "line" events.%%
 
-%%If there is a %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set, then copier will use that in order to attempt to write a full line at a time, including the delimiter. Exceptions may be if the %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
+%%If there is an %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% set then copier will use it in order to attempt to write one full line at a time, including the delimiter. Exceptions may be if the %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% object emitted "eos" and there is no trailing delimiter (ie: missing trailing newline in files), or the %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% is reached.%%
 
-%%If %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is flagged "eos" and all data was written to destination, then "done" event is emitted.%%
+%%If %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is flagged "eos" and all data is written to the destination then the "done" event is emitted.%%
 
-%%If destination is not set (ie: NULL), then data is kept in a internal %%[[:develop:api:eina:binbuf|Eina.Binbuf]]%%, that can be stolen with %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% once "data" or "line" events are emitted. It is allowed as a shortcut to easily drain readers and store all data in memory, not requiring an %%[[:develop:api:efl:io:buffer|Efl.Io.Buffer]]%% or %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%% to be used -- a source and a copier are enough.%%
+%%If the destination is not set (ie: NULL) then data is kept in a internal %%[[:develop:api:eina:binbuf|Eina.Binbuf]]%%, which can be stolen with %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% once "data" or "line" events are emitted. It exists as a useful shortcut to easily drain readers and store all data in memory with no need to use an %%[[:develop:api:efl:io:buffer|Efl.Io.Buffer]]%% or %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%  -- a source and copier are enough.%%
 
-%%If both source and destination object implements %%[[:develop:api:efl:io:sizer|Efl.Io.Sizer]]%%, then destination will be resized to match the source size, providing the hint that may enhance performance (like pre-allocating the total amount and avoid dynamic resize).%%
+%%If both source and destination object implements %%[[:develop:api:efl:io:sizer|Efl.Io.Sizer]]%%, then the destination will be resized to match the source size. It also offers hints to enhance performance such as pre-allocating the total amount and avoid dynamic resize.%%
 
 %%If the destination object implements %%[[:develop:api:efl:io:closer|Efl.Io.Closer]]%% and it's not closed, it will be closed when the copier itself is. This may happen, for example, when the copier is deleted and %%[[:develop:api:efl:io:closer:property:close_on_destructor|Efl.Io.Closer.close_on_destructor]]%% is %%''true''%% (the default).%%
 

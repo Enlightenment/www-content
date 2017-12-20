@@ -5,29 +5,29 @@
 
 %%Copy from an %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% source to %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% destination.%%
 
-%%During usage it will keep reference to %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% objects, automatically relasing them on destructor.%%
+%%During usage it will keep reference to %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% objects, automatically relasing them on destruction.%%
 
-%%By default the read-write process is done based on fixed-size chunks (%%[[:develop:api:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%%), however if %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, the behavior changes to wait for such delimiter or a maximum buffer limit is reached (%%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%).%%
+%%By default the read-write process is done based on fixed-size chunks (%%[[:develop:api:efl:io:copier:property:read_chunk_size|Efl.Io.Copier.read_chunk_size]]%%) but if %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set, the behavior changes to wait for said delimiter or until a maximum buffer limit is reached (%%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%%).%%
 
-%%While a %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is mandatory for the copier to operate properly, the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is optional: if it's not provided, all read data is stored in an internal buffer that can be retrieved using %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%%, usually called when one of "data", "line" or "done" events are emitted.%%
+%%While a %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is mandatory for the copier to operate properly the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% is optional: if it's not provided, all read data is stored in an internal buffer that can be retrieved using %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%%, usually called when one of "data", "line" or "done" events are emitted.%%
 
 %%Most important events:%%
 
-%%- The "data" event is general and notifies some data was written to %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported for data when it's read from %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+%%- The "data" event is general and notifies some data was written to %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported as data when it's read from %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
 
 %%- The "line" event is only emitted when %%[[:develop:api:efl:io:copier:property:line_delimiter|Efl.Io.Copier.line_delimiter]]%% is set and not empty. It's simiar to "data".%%
 
-%%- The "done" event is emitted if %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:develop:api:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data was read from %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
+%%- The "done" event is emitted if %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% is %%[[:develop:api:efl:io:reader:property:eos|Efl.Io.Reader.eos]]%% %%''true''%% and all data was written to %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% (if any, otherwise it will be reported when all data is read from %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%%).%%
 
-%%- The "error" event is reported if the %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error happened, like out of memory. Another common error is ETIMEDOUT if %%[[:develop:api:efl:io:copier:property:timeout_inactivity|Efl.Io.Copier.timeout_inactivity]]%% is set.%%
+%%- The "error" event is reported if the %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%%, %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% or some other internal error occurs, such as being out of memory. Another common error is ETIMEDOUT if %%[[:develop:api:efl:io:copier:property:timeout_inactivity|Efl.Io.Copier.timeout_inactivity]]%% is set.%%
 
-%%A copier is handful to simplify common I/O use cases, such as:%%
+%%A copier is handy for simplifying common I/O use cases, such as:%%
 
-%%- Read a file or download content to memory: provide only the source and wait for "done" event, calling %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% afterwards.%%
+%%- Reading a file or download content to memory: provide only the source and wait for "done" event, calling %%[[:develop:api:efl:io:copier:method:binbuf_steal|Efl.Io.Copier.binbuf_steal]]%% afterwards.%%
 
-%%- Download content to disk: provide a network socket as source and use %%[[:develop:api:efl:io:file|Efl.Io.File]]%% as destination, then wait for "done" event.%%
+%%- Downloading content to disk: provide a network socket as source and use %%[[:develop:api:efl:io:file|Efl.Io.File]]%% as destination, then wait for "done" event.%%
 
-%%- Link two I/O streams: provide both source and destination streams, such as %%[[:develop:api:efl:io:stdin|Efl.Io.Stdin]]%% and %%[[:develop:api:efl:io:stdout|Efl.Io.Stdout]]%%, or some network socket. As data is received from source it will be copied to destination in an endless (asynchronous) loop. You may monitor for "done" if the source may be closed.%%
+%%- Linking two I/O streams: provide both source and destination streams, such as %%[[:develop:api:efl:io:stdin|Efl.Io.Stdin]]%% and %%[[:develop:api:efl:io:stdout|Efl.Io.Stdout]]%%, or some network socket. As data is received from source it will be copied to destination in an endless (asynchronous) loop. You may monitor for "done" if the source is closed.%%
 
 %%If %%[[:develop:api:efl:io:closer:method:close|Efl.Io.Closer.close]]%% is called, then it will be called on %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% and %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% if they implement those interfaces.%%
 
@@ -39,10 +39,10 @@
 
 ===== Inheritance =====
 
- => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+ => [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
 ++++ Full hierarchy |
 
-  * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+  * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
     * [[:develop:api:efl:object|Efl.Object]] //(class)//
   * [[:develop:api:efl:io:closer|Efl.Io.Closer]] //(mixin)//
 
@@ -51,7 +51,7 @@
 ===== Members =====
 
 **[[:develop:api:efl:io:copier:method:binbuf_steal|binbuf_steal]]**\\
-> %%Steals the internal binbuf and return it to caller.%%
+> %%Steals the internal binbuf and returns it to caller.%%
 <code c>
 Eina_Binbuf *efl_io_copier_binbuf_steal(Eo *obj);
 </code>
@@ -129,7 +129,7 @@ Eina_Bool efl_io_copier_flush(Eo *obj, Eina_Bool may_block, Eina_Bool ignore_lin
 </code>
 \\
 **[[:develop:api:efl:io:copier:property:line_delimiter|line_delimiter]]** //**(get, set)**//\\
-> %%If there is a line delimiter, the reads will buffer/queue up to the line delimiter before calling %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with current line. The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
+> %%If there is a line delimiter, reads will buffer/queue up to the line delimiter before calling %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on the %%[[:develop:api:efl:io:copier:property:destination|Efl.Io.Copier.destination]]%% and the event line is emitted with the current line. The line may include the delimiter unless it's end-of-stream on %%[[:develop:api:efl:io:copier:property:source|Efl.Io.Copier.source]]%% or %%[[:develop:api:efl:io:copier:property:buffer_limit|Efl.Io.Copier.buffer_limit]]%% was reached.%%
 <code c>
 const Eina_Slice efl_io_copier_line_delimiter_get(const Eo *obj);
 void efl_io_copier_line_delimiter_set(Eo *obj, const Eina_Slice slice);
@@ -171,9 +171,9 @@ void efl_io_copier_timeout_inactivity_set(Eo *obj, double seconds);
 
 ==== Inherited ====
 
-^ [[:develop:api:efl:loop_user|Efl.Loop_User]] ^^^
-|  | **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**// | %%The loop to which this object belongs to.%% |
-|  | **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+^ [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] ^^^
+|  | **[[:develop:api:efl:loop:consumer:property:loop|loop]]** //**(get)**// | %%The loop to which this object belongs to.%% |
+|  | **[[:develop:api:efl:loop:consumer:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
 ^ [[:develop:api:efl:object|Efl.Object]] ^^^
 |  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
 |  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
@@ -188,14 +188,14 @@ void efl_io_copier_timeout_inactivity_set(Eo *obj, double seconds);
 |  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
 |  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
 |  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
-|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
 |  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
-|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, otherwise false.%% |
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
-|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
 
 ===== Events =====
 

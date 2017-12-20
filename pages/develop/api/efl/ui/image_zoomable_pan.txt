@@ -9,10 +9,10 @@
 
 ===== Inheritance =====
 
- => [[:develop:api:elm:pan|Elm.Pan]] //(class)// => [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)// => [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+ => [[:develop:api:efl:ui:pan|Efl.Ui.Pan]] //(class)// => [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)// => [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
 ++++ Full hierarchy |
 
-  * [[:develop:api:elm:pan|Elm.Pan]] //(class)//
+  * [[:develop:api:efl:ui:pan|Efl.Ui.Pan]] //(class)//
     * [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)//
       * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
         * [[:develop:api:efl:object|Efl.Object]] //(class)//
@@ -24,19 +24,20 @@
         * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
           * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
-        * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
         * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
         * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
+    * [[:develop:api:efl:content|Efl.Content]] //(interface)//
 
 
 ++++
 ===== Members =====
 
-**[[:develop:api:efl:ui:image_zoomable_pan:property:content_size|content_size]]** //**(get)**//// [Overridden from [[:develop:api:elm:pan|Elm.Pan]]]//\\
+**[[:develop:api:efl:ui:image_zoomable_pan:property:content_size|content_size]]** //**(get)**//// [Overridden from [[:develop:api:efl:ui:pan|Efl.Ui.Pan]]]//\\
 > %%Content size%%
 <code c>
-void elm_obj_pan_content_size_get(const Eo *obj, int *w, int *h);
+Eina_Size2D efl_ui_pan_content_size_get(const Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:ui:image_zoomable_pan:method:destructor|destructor]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
@@ -51,23 +52,23 @@ void efl_destructor(Eo *obj);
 void efl_canvas_group_calculate(Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:ui:image_zoomable_pan:property:pos|pos]]** //**(get, set)**//// [Overridden from [[:develop:api:elm:pan|Elm.Pan]]]//\\
+**[[:develop:api:efl:ui:image_zoomable_pan:property:pan_position|pan_position]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:pan|Efl.Ui.Pan]]]//\\
 > %%Position%%
 <code c>
-void elm_obj_pan_pos_get(const Eo *obj, int *x, int *y);
-void elm_obj_pan_pos_set(Eo *obj, int x, int y);
+Eina_Position2D efl_ui_pan_position_get(const Eo *obj);
+void efl_ui_pan_position_set(Eo *obj, Eina_Position2D position);
 </code>
 \\
-**[[:develop:api:efl:ui:image_zoomable_pan:property:pos_max|pos_max]]** //**(get)**//// [Overridden from [[:develop:api:elm:pan|Elm.Pan]]]//\\
-> %%Maximal position%%
+**[[:develop:api:efl:ui:image_zoomable_pan:property:pan_position_max|pan_position_max]]** //**(get)**//// [Overridden from [[:develop:api:efl:ui:pan|Efl.Ui.Pan]]]//\\
+> %%The maximal position to scroll%%
 <code c>
-void elm_obj_pan_pos_max_get(const Eo *obj, int *x, int *y);
+Eina_Position2D efl_ui_pan_position_max_get(const Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:ui:image_zoomable_pan:property:pos_min|pos_min]]** //**(get)**//// [Overridden from [[:develop:api:elm:pan|Elm.Pan]]]//\\
-> %%Minimal position%%
+**[[:develop:api:efl:ui:image_zoomable_pan:property:pan_position_min|pan_position_min]]** //**(get)**//// [Overridden from [[:develop:api:efl:ui:pan|Efl.Ui.Pan]]]//\\
+> %%The minimal position to scroll%%
 <code c>
-void elm_obj_pan_pos_min_get(const Eo *obj, int *x, int *y);
+Eina_Position2D efl_ui_pan_position_min_get(const Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:ui:image_zoomable_pan:property:position|position]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
@@ -133,7 +134,7 @@ void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
 |  | **[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**// | %%Low-level pointer behaviour by device. See %%[[:develop:api:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:develop:api:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%% |
 |  | **[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**// |  |
-|  | **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
 |  | **[[:develop:api:efl:canvas:object:method:raise|raise]]** | %%Raise %%''obj''%% to the top of its layer.%% |
 |  | **[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**// | %%Render mode to be used for compositing the Evas object.%% |
 |  | **[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**// |  |
@@ -146,6 +147,8 @@ void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
 |  | **[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** | %%Stack %%''obj''%% immediately %%''above''%%%% |
 |  | **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** | %%Stack %%''obj''%% immediately %%''below''%%%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// | %%Gets the parent smart object of a given Evas object, if it has one.%% |
+^ [[:develop:api:efl:content|Efl.Content]] ^^^
+|  | **[[:develop:api:efl:content:method:content_unset|content_unset]]** | %%Unswallow the object in the current container and return it.%% |
 ^ [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] ^^^
 |  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lightning effect on the object.%% |
 |  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lightning effect on the object.%% |
@@ -184,11 +187,11 @@ void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
 |  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
 |  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
 |  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
-|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
 |  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
-|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, otherwise false.%% |
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
 |  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
@@ -196,9 +199,10 @@ void efl_gfx_size_set(Eo *obj, Eina_Size2D size);
 |  | **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**// | %%The (human) language for this object.%% |
 |  | **[[:develop:api:efl:ui:base:property:mirrored|mirrored]]** //**(get, set)**// | %%Whether this object should be mirrored.%% |
 |  | **[[:develop:api:efl:ui:base:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**// | %%Whether the property %%[[:develop:api:efl:ui:base:property:mirrored|Efl.Ui.Base.mirrored]]%% should be set automatically.%% |
-^ [[:develop:api:elm:pan|Elm.Pan]] ^^^
-|  | **[[:develop:api:elm:pan:method:constructor|constructor]]** | %%Call the object's constructor.%% |
-|  | **[[:develop:api:elm:pan:property:visible|visible]]** //**(get, set)**// | %%The visibility of a canvas object.%% |
+^ [[:develop:api:efl:ui:pan|Efl.Ui.Pan]] ^^^
+|  | **[[:develop:api:efl:ui:pan:method:constructor|constructor]]** | %%Call the object's constructor.%% |
+|  | **[[:develop:api:efl:ui:pan:property:content|content]]** //**(get, set)**// | %%Swallowed sub-object contained in this object.%% |
+|  | **[[:develop:api:efl:ui:pan:property:visible|visible]]** //**(get, set)**// | %%The visibility of a canvas object.%% |
 
 ===== Events =====
 
@@ -276,5 +280,7 @@ EFL_UI_IMAGE_ZOOMABLE_PAN_EVENT_LOADED_DETAIL(void)
 |  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
 |  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
 |  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
-^ [[:develop:api:elm:pan|Elm.Pan]] ^^^
-|  | **[[:develop:api:elm:pan:event:changed|changed]]** | %%Called when pan object changed%% |
+^ [[:develop:api:efl:ui:pan|Efl.Ui.Pan]] ^^^
+|  | **[[:develop:api:efl:ui:pan:event:content_changed|content,changed]]** | %%Called when pan content changed%% |
+|  | **[[:develop:api:efl:ui:pan:event:position_changed|position,changed]]** | %%Called when pan position changed%% |
+|  | **[[:develop:api:efl:ui:pan:event:viewport_changed|viewport,changed]]** | %%Called when pan viewport changed%% |

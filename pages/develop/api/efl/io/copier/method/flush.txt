@@ -3,13 +3,13 @@
 
 %%Forces reading from source and writing to destination.%%
 
-%%This executes a single read->write cycle, if more data could be read from source (ie: not EOS) or not all data was written to destination, then %%''false''%% is returned. Then to forcefully drain source and write all contents to destination, use in a loop until it returns %%''true''%%.%%
+%%This executes a single read->write cycle if more data can be read from source (ie: not EOS) or not all data is written to destination, then %%''false''%% is returned. To forcefully drain source and write all contents to destination, use in a loop until it returns %%''true''%%.%%
 
-%%The return value matches "done" event, that is, when %%''true''%% is returned, the "done" event is emitted.%%
+%%The return value matches the "done" event: that is, when %%''true''%% is returned, the "done" event is emitted.%%
 
 %%This function may also emit "progress" and "error" events.%%
 
-%%@note this function may block the main loop execution until operations complete! This is bad for usability, as user interface or other operations may freeze. A better approach is to operate asynchronously and wait for "done" event.%%
+%%@note this function may block the main loop execution until operations are complete! This is bad for usability as user interface or other operations may freeze. A better approach is to operate asynchronously and wait for the "done" event.%%
 
 //Since 1.19//
 {{page>:develop:api-include:efl:io:copier:method:flush:description&nouser&nolink&nodate}}

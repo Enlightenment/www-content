@@ -3,15 +3,15 @@
 
 ===== Description =====
 
-%%A wrapper object offering an easy to use, buffered streams over existing I/O class.%%
+%%A wrapper object offering easy to use buffered streams over existing I/O class.%%
 
-%%The buffered stream encapsulates an actual %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% or %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%%, an input %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%%, an output %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%% and these are linked using a input and a output %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%.%%
+%%The buffered stream encapsulates an actual %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% or %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%%, an input %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%% and an output %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%%. These are linked using a input and a output %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%.%%
 
-%%The idea is that unlike traditional %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% that will attempt to write directly and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual output when it %%[[:develop:api:efl:io:writer:property:can_write|Efl.Io.Writer.can_write]]%%. That makes its operation much simpler as %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%). When finished writing data, the %%[[:develop:api:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% and then wait for "write,finished" event to know when all data was sent.%%
+%%The idea is that unlike the traditional %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% which will attempt to write directly and thus may take less data than requested, this one will keep the pending data in its own buffer, feeding to the actual output when %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% can write. That makes its operation much simpler as %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% will always take the full data -- allows "write and forget", if unlimited (see %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_output|Efl.Io.Buffered_Stream.max_queue_size_output]]%%). When finished writing data %%[[:develop:api:efl:io:buffered_stream:method:eos_mark|Efl.Io.Buffered_Stream.eos_mark]]%% then waits for the "write.finished" event to know all data has been sent.%%
 
 %%Reading is also much simpler since incoming data is kept in an %%[[:develop:api:efl:io:queue|Efl.Io.Queue]]%%, thus its size can be queried with %%[[:develop:api:efl:io:buffered_stream:property:pending_read|Efl.Io.Buffered_Stream.pending_read]]%% and read with %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% or peeked with %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, then discarded with %%[[:develop:api:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%% or %%[[:develop:api:efl:io:buffered_stream:method:clear|Efl.Io.Buffered_Stream.clear]]%%.%%
 
-%%Then when waiting for a complete message, just peek at its contents, if not complete do nothing and wait, if complete then either %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:develop:api:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%%%
+%%When waiting for a complete message, just peek at its contents, if not complete do nothing and wait. If complete then use either %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% to get a copy or manipulate a read-only reference from %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%% and then %%[[:develop:api:efl:io:buffered_stream:method:discard|Efl.Io.Buffered_Stream.discard]]%%.%%
 
 %%The actual I/O is set with the constructor method %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.set]]%% and can be retrieved with %%[[:develop:api:efl:io:buffered_stream:property:inner_io|Efl.Io.Buffered_Stream.inner_io.get]]%%, which should be used with care -- calling %%[[:develop:api:efl:io:reader:method:read|Efl.Io.Reader.read]]%% and %%[[:develop:api:efl:io:writer:method:write|Efl.Io.Writer.write]]%% on it may produce unexpected results.%%
 
@@ -21,10 +21,10 @@
 
 ===== Inheritance =====
 
- => [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+ => [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
 ++++ Full hierarchy |
 
-  * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+  * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
     * [[:develop:api:efl:object|Efl.Object]] //(class)//
   * [[:develop:api:efl:io:reader|Efl.Io.Reader]] //(interface)//
   * [[:develop:api:efl:io:writer|Efl.Io.Writer]] //(interface)//
@@ -101,7 +101,7 @@ void efl_io_reader_eos_set(Eo *obj, Eina_Bool is_eos);
 </code>
 \\
 **[[:develop:api:efl:io:buffered_stream:method:eos_mark|eos_mark]]**\\
-> %%Marks this end-of-stream, signals nothing else will be written.%%
+> %%Marks the end-of-stream. Signals nothing else will be written.%%
 <code c>
 void efl_io_buffered_stream_eos_mark(Eo *obj);
 </code>
@@ -126,7 +126,7 @@ void efl_io_buffered_stream_inner_io_set(Eo *obj, Efl_Object *io);
 </code>
 \\
 **[[:develop:api:efl:io:buffered_stream:property:line_delimiter|line_delimiter]]** //**(get, set)**//\\
-> %%If set, incoming data will be checked for the delimiter and "line" events are The line may include the delimiter, unless it's end-of-stream on %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% was reached.%%
+> %%If set incoming data will be checked for the delimiter and "line" events. The line may include the delimiter, unless it's end-of-stream in %%[[:develop:api:efl:io:buffered_stream:property:max_queue_size_input|Efl.Io.Buffered_Stream.max_queue_size_input]]%% has been reached.%%
 <code c>
 const Eina_Slice efl_io_buffered_stream_line_delimiter_get(const Eo *obj);
 void efl_io_buffered_stream_line_delimiter_set(Eo *obj, const Eina_Slice slice);
@@ -140,7 +140,7 @@ void efl_io_buffered_stream_max_queue_size_input_set(Eo *obj, size_t max_queue_s
 </code>
 \\
 **[[:develop:api:efl:io:buffered_stream:property:max_queue_size_output|max_queue_size_output]]** //**(get, set)**//\\
-> %%Limits how big the output queue can grow, in bytes.%%
+> %%Limits how big the output queue can grow in bytes.%%
 <code c>
 size_t efl_io_buffered_stream_max_queue_size_output_get(const Eo *obj);
 void efl_io_buffered_stream_max_queue_size_output_set(Eo *obj, size_t max_queue_size_output);
@@ -199,9 +199,9 @@ Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining)
 
 ==== Inherited ====
 
-^ [[:develop:api:efl:loop_user|Efl.Loop_User]] ^^^
-|  | **[[:develop:api:efl:loop_user:property:loop|loop]]** //**(get)**// | %%The loop to which this object belongs to.%% |
-|  | **[[:develop:api:efl:loop_user:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+^ [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] ^^^
+|  | **[[:develop:api:efl:loop:consumer:property:loop|loop]]** //**(get)**// | %%The loop to which this object belongs to.%% |
+|  | **[[:develop:api:efl:loop:consumer:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
 ^ [[:develop:api:efl:object|Efl.Object]] ^^^
 |  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
 |  | **[[:develop:api:efl:object:method:children_iterator_new|children_iterator_new]]** | %%Get an iterator on all childrens%% |
@@ -217,19 +217,19 @@ Eina_Error efl_io_writer_write(Eo *obj, Eina_Slice slice, Eina_Slice *remaining)
 |  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
 |  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
 |  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
-|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
 |  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
-|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, otherwise false.%% |
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
-|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:efl:object:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
 
 ===== Events =====
 
 **[[:develop:api:efl:io:buffered_stream:event:error|error]]**\\
-> %%An error happened and the I/O stopped%%
+> %%An error has occurred and I/O has stopped%%
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_ERROR(Eina_Error)
 </code>
@@ -239,7 +239,7 @@ EFL_IO_BUFFERED_STREAM_EVENT_ERROR(Eina_Error)
 EFL_IO_BUFFERED_STREAM_EVENT_FINISHED(void)
 </code>
 \\ **[[:develop:api:efl:io:buffered_stream:event:line|line]]**\\
-> %%If %%[[:develop:api:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%, don't assume that!%%
+> %%If %%[[:develop:api:efl:io:buffered_stream:property:line_delimiter|Efl.Io.Buffered_Stream.line_delimiter]]%% is set, will be emitted with current line. The memory is only valid during event callback dispatched and should not be modified. Note that the line slice may not be inside %%[[:develop:api:efl:io:buffered_stream:property:slice|Efl.Io.Buffered_Stream.slice]]%%.%%
 <code c>
 EFL_IO_BUFFERED_STREAM_EVENT_LINE(const Eina_Slice *)
 </code>

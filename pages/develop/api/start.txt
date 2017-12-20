@@ -67,7 +67,7 @@
 | [[:develop:api:efl:interpolator:sinusoidal|Efl.Interpolator.Sinusoidal]] | %%Efl sinusoidal interpolator class%% |
 | [[:develop:api:efl:interpolator:spring|Efl.Interpolator.Spring]] | %%Efl spring interpolator class%% |
 | [[:develop:api:efl:interpolator|Efl.Interpolator]] | %%Efl interpolator class%% |
-| [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]] | %%A wrapper object offering an easy to use, buffered streams over existing I/O class.%% |
+| [[:develop:api:efl:io:buffered_stream|Efl.Io.Buffered_Stream]] | %%A wrapper object offering easy to use buffered streams over existing I/O class.%% |
 | [[:develop:api:efl:io:buffer|Efl.Io.Buffer]] | %%Generic In-memory buffer of data to be used as I/O.%% |
 | [[:develop:api:efl:io:copier|Efl.Io.Copier]] | %%Copy from an %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%% source to %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% destination.%% |
 | [[:develop:api:efl:io:file|Efl.Io.File]] | %%File access (open, close, read, write, lseek, ftruncate)%% |
@@ -76,9 +76,12 @@
 | [[:develop:api:efl:io:stderr|Efl.Io.Stderr]] | %%Application's standard error (stderr).%% |
 | [[:develop:api:efl:io:stdin|Efl.Io.Stdin]] | %%Application's standard input (stdin).%% |
 | [[:develop:api:efl:io:stdout|Efl.Io.Stdout]] | %%Application's standard output (stdout).%% |
-| [[:develop:api:efl:loop:fd|Efl.Loop.Fd]] | %%Fds are objects that what the activity on a given file descriptor. This file descriptor can be a network, a file, provided by a library.%% |
+| [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] | %%An Efl.Loop.Consumer is a class which requires one of the parents to provide an Efl.Loop interface when performing provider_find. It will enforce this by only allowing parents which provide such an interface or NULL.%% |
+| [[:develop:api:efl:loop:fd|Efl.Loop.Fd]] | %%Fds are objects that watch the activity on a given file descriptor. This file descriptor can be a network, a file, provided by a library.%% |
+| [[:develop:api:efl:loop:handler|Efl.Loop.Handler]] | %%An object that describes an low-level source of I/O to listen to for available data to be read or written, depending on the OS and data source type. When I/O becomes available various events are produced and the callbacks attached to them will be called.%% |
+| [[:develop:api:efl:loop:message:handler|Efl.Loop.Message.Handler]] | %%Message handlers represent a single message type on the Efl.Loop parent object. These message handlers can be used to listen for that message type by listening to the message event for the generic case or a class specific event type to get specific message object typing correct.%% |
+| [[:develop:api:efl:loop:message|Efl.Loop.Message]] | %%Base message payload object class. Inherit this and extend for specific message types.%% |
 | [[:develop:api:efl:loop:timer|Efl.Loop.Timer]] | %%Timers are objects that will call a given callback at some point in the future and repeat that tick at a given interval.%% |
-| [[:develop:api:efl:loop_user|Efl.Loop_User]] | %%An Efl.Loop_User is a class that require one of the parent to provide an Efl.Loop interface when doing provider_find. It will enforce this by only allowing parent that provide such interface or NULL.%% |
 | [[:develop:api:efl:loop|Efl.Loop]] | %%The Efl Main Loop%% |
 | [[:develop:api:efl:model:composite:boolean:children|Efl.Model.Composite.Boolean.Children]] | %%Efl model composite boolean children class%% |
 | [[:develop:api:efl:model:composite:boolean|Efl.Model.Composite.Boolean]] | %%Efl model composite boolean class%% |
@@ -122,7 +125,7 @@
 | [[:develop:api:efl:observable|Efl.Observable]] | %%Efl observable class%% |
 | [[:develop:api:efl:promise|Efl.Promise]] | %%Efl promise class%% |
 | [[:develop:api:efl:text:markup_util|Efl.Text.Markup_Util]] | %%Utility class for markup, such as conversions%% |
-| [[:develop:api:efl:ui:bg|Efl.Ui.Bg]] | %%The bg (background) widget is used for setting (solid) background decorations%% |
+| [[:develop:api:efl:ui:bg_widget|Efl.Ui.Bg_Widget]] | %%The bg (background) widget is used for setting (solid) background decorations%% |
 | [[:develop:api:efl:ui:box_flow|Efl.Ui.Box_Flow]] | %%A custom layout engine for %%[[:develop:api:efl:ui:box|Efl.Ui.Box]]%%.%% |
 | [[:develop:api:efl:ui:box_stack|Efl.Ui.Box_Stack]] | %%A custom layout engine for %%[[:develop:api:efl:ui:box|Efl.Ui.Box]]%% that stacks items.%% |
 | [[:develop:api:efl:ui:box|Efl.Ui.Box]] | %%The box widget.%% |
@@ -142,8 +145,6 @@
 | [[:develop:api:efl:ui:focus:rectangle|Efl.Ui.Focus.Rectangle]] | %%EFL UI Focus Rectangle class%% |
 | [[:develop:api:efl:ui:focus:util|Efl.Ui.Focus.Util]] | %%EFL UI Focus Util class%% |
 | [[:develop:api:efl:ui:frame|Efl.Ui.Frame]] | %%Frame widget%% |
-| [[:develop:api:efl:ui:grid_static|Efl.Ui.Grid_Static]] | %%Efl UI grid static class%% |
-| [[:develop:api:efl:ui:grid|Efl.Ui.Grid]] | %%Efl UI grid class%% |
 | [[:develop:api:efl:ui:image:factory|Efl.Ui.Image.Factory]] | %%Efl UI image factory class%% |
 | [[:develop:api:efl:ui:image_zoomable_pan|Efl.Ui.Image_Zoomable_Pan]] | %%Elementary photocom pan class%% |
 | [[:develop:api:efl:ui:image_zoomable|Efl.Ui.Image_Zoomable]] | %%Elementary Image Zoomable class%% |
@@ -156,12 +157,17 @@
 | [[:develop:api:efl:ui:layout:part_legacy|Efl.Ui.Layout.Part_Legacy]] | %%Elementary layout internal part class%% |
 | [[:develop:api:efl:ui:layout:part_text|Efl.Ui.Layout.Part_Text]] | %%Elementary layout internal part class%% |
 | [[:develop:api:efl:ui:layout:part|Efl.Ui.Layout.Part]] | %%Elementary layout internal part class%% |
+| [[:develop:api:efl:ui:layout_factory|Efl.Ui.Layout_Factory]] | %%Efl Ui Layout Factory class%% |
 | [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] | %%Elementary layout class%% |
+| [[:develop:api:efl:ui:list:pan|Efl.Ui.List.Pan]] | %%Elementary Efl_Ui_List pan class%% |
+| [[:develop:api:efl:ui:list:precise_layouter|Efl.Ui.List.Precise_Layouter]] | No description supplied. |
+| [[:develop:api:efl:ui:list|Efl.Ui.List]] | No description supplied. |
 | [[:develop:api:efl:ui:multibuttonentry:part|Efl.Ui.Multibuttonentry.Part]] | %%Elementary multibuttonentry internal part class%% |
 | [[:develop:api:efl:ui:multibuttonentry|Efl.Ui.Multibuttonentry]] | %%Elementary multibuttonentry class%% |
 | [[:develop:api:efl:ui:nstate|Efl.Ui.Nstate]] | %%Efl UI nstate class%% |
 | [[:develop:api:efl:ui:panes:part|Efl.Ui.Panes.Part]] | %%Elementary Panes internal part class%% |
 | [[:develop:api:efl:ui:panes|Efl.Ui.Panes]] | %%Elementary panes class%% |
+| [[:develop:api:efl:ui:pan|Efl.Ui.Pan]] | %%Elementary pan class%% |
 | [[:develop:api:efl:ui:popup:part|Efl.Ui.Popup.Part]] | %%Efl UI Popup internal part class%% |
 | [[:develop:api:efl:ui:popup_alert:part|Efl.Ui.Popup_Alert.Part]] | %%Efl UI Popup Alert internal part class%% |
 | [[:develop:api:efl:ui:popup_alert_scroll:part|Efl.Ui.Popup_Alert_Scroll.Part]] | %%Efl UI Popup Alert Scroll internal part class%% |
@@ -174,11 +180,15 @@
 | [[:develop:api:efl:ui:progressbar:part|Efl.Ui.Progressbar.Part]] | %%Elementary progressbar internal part class%% |
 | [[:develop:api:efl:ui:progressbar|Efl.Ui.Progressbar]] | %%Elementary progressbar class%% |
 | [[:develop:api:efl:ui:radio|Efl.Ui.Radio]] | %%Elementary radio class%% |
+| [[:develop:api:efl:ui:scroll:manager|Efl.Ui.Scroll.Manager]] | %%Efl ui scroll manager class%% |
+| [[:develop:api:efl:ui:scroller|Efl.Ui.Scroller]] | %%Efl ui scroller class%% |
 | [[:develop:api:efl:ui:slider:part_indicator|Efl.Ui.Slider.Part_Indicator]] | %%Elementary slider internal part class%% |
 | [[:develop:api:efl:ui:slider_interval|Efl.Ui.Slider_Interval]] | %%An interval slider.%% |
 | [[:develop:api:efl:ui:slider|Efl.Ui.Slider]] | %%Elementary slider class%% |
 | [[:develop:api:efl:ui:spin_button|Efl.Ui.Spin_Button]] | %%A Button Spin.%% |
 | [[:develop:api:efl:ui:spin|Efl.Ui.Spin]] | %%A Spin.%% |
+| [[:develop:api:efl:ui:table_static|Efl.Ui.Table_Static]] | %%Efl UI table static class%% |
+| [[:develop:api:efl:ui:table|Efl.Ui.Table]] | %%Efl UI table class%% |
 | [[:develop:api:efl:ui:text:editable|Efl.Ui.Text.Editable]] | %%Efl UI text editable class%% |
 | [[:develop:api:efl:ui:text_async|Efl.Ui.Text_Async]] | %%Efl UI text async class%% |
 | [[:develop:api:efl:ui:textpath:part|Efl.Ui.Textpath.Part]] | %%Efl UI Textpath internal part class%% |
@@ -186,6 +196,7 @@
 | [[:develop:api:efl:ui:text|Efl.Ui.Text]] | %%Efl UI text class%% |
 | [[:develop:api:efl:ui:video|Efl.Ui.Video]] | %%Efl UI video class%% |
 | [[:develop:api:efl:ui:widget:part_bg|Efl.Ui.Widget.Part_Bg]] | %%Elementary widget internal part background class%% |
+| [[:develop:api:efl:ui:widget:part_shadow|Efl.Ui.Widget.Part_Shadow]] | %%A drop-shadow or glow effect around any widget.%% |
 | [[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]] | %%This is the base class for all "Part" handles in Efl.Ui widgets.%% |
 | [[:develop:api:efl:ui:win:part|Efl.Ui.Win.Part]] | %%Efl UI window interal part class%% |
 | [[:develop:api:efl:ui:win_inlined|Efl.Ui.Win_Inlined]] | %%An inlined window.%% |
@@ -219,6 +230,7 @@
 | [[:develop:api:efl:control|Efl.Control]] | %%Efl control interface%% |
 | [[:develop:api:efl:duplicate|Efl.Duplicate]] | %%An interface for duplication of objects.%% |
 | [[:develop:api:efl:flipable|Efl.Flipable]] | %%Efl flipable interface%% |
+| [[:develop:api:efl:gfx:blur|Efl.Gfx.Blur]] | %%A simple API to apply blur effects.%% |
 | [[:develop:api:efl:gfx:buffer|Efl.Gfx.Buffer]] | %%Common APIs for all objects representing images and 2D pixel buffers.%% |
 | [[:develop:api:efl:gfx:color_class|Efl.Gfx.Color_Class]] | %%Efl Gfx Color Class interface%% |
 | [[:develop:api:efl:gfx:fill|Efl.Gfx.Fill]] | %%Efl graphics fill interface%% |
@@ -237,7 +249,7 @@
 | [[:develop:api:efl:image|Efl.Image]] | %%Common APIs for all 2D images that can be rendered on the canvas.%% |
 | [[:develop:api:efl:input:interface|Efl.Input.Interface]] | %%An object implementing this interface can send pointer events.%% |
 | [[:develop:api:efl:input:state|Efl.Input.State]] | %%Efl input state interface%% |
-| [[:develop:api:efl:interface|Efl.Interface]] | %%An interface for other interfaces to inherit from. This is useful when you want to create interfaces and mixins that expose functions from a normal class, like for example %%[[:develop:api:efl:object:method:constructor|Efl.Object.constructor]]%%.%% |
+| [[:develop:api:efl:interface|Efl.Interface]] | %%An interface for other interfaces to inherit from. This is useful when you want to create interfaces and mixins that expose functions from a normal class such as %%[[:develop:api:efl:object:method:constructor|Efl.Object.constructor]]%%.%% |
 | [[:develop:api:efl:io:reader|Efl.Io.Reader]] | %%Generic interface for objects that can read data into a provided memory.%% |
 | [[:develop:api:efl:io:writer|Efl.Io.Writer]] | %%Generic interface for objects that can write data from a provided memory.%% |
 | [[:develop:api:efl:layout:calc|Efl.Layout.Calc]] | %%This interface defines a common set of APIs used to trigger calculations with layout objects.%% |
@@ -249,9 +261,9 @@
 | [[:develop:api:efl:net:socket|Efl.Net.Socket]] | %%The basic socket interface.%% |
 | [[:develop:api:efl:observer|Efl.Observer]] | %%Efl observer interface%% |
 | [[:develop:api:efl:orientation|Efl.Orientation]] | %%Efl orientation interface%% |
-| [[:develop:api:efl:pack:grid|Efl.Pack.Grid]] | %%2D containers aligned on a grid with rows and columns%% |
 | [[:develop:api:efl:pack:layout|Efl.Pack.Layout]] | %%Low-level APIs for object that can lay their children out.%% |
 | [[:develop:api:efl:pack:linear|Efl.Pack.Linear]] | %%API for containers%% |
+| [[:develop:api:efl:pack:table|Efl.Pack.Table]] | %%2D containers aligned on a table with rows and columns%% |
 | [[:develop:api:efl:pack|Efl.Pack]] | %%API common to all UI container objects.%% |
 | [[:develop:api:efl:part|Efl.Part]] | %%Interface for objects supporting named parts.%% |
 | [[:develop:api:efl:player|Efl.Player]] | %%Efl media player interface%% |
@@ -266,6 +278,7 @@
 | [[:develop:api:efl:text|Efl.Text]] | %%Efl text interface%% |
 | [[:develop:api:efl:ui:autorepeat|Efl.Ui.Autorepeat]] | %%Efl UI autorepeat interface%% |
 | [[:develop:api:efl:ui:base|Efl.Ui.Base]] | %%A common interface for UI objects.%% |
+| [[:develop:api:efl:ui:bg|Efl.Ui.Bg]] | %%The bg (background) widget is used for setting (solid) background decorations%% |
 | [[:develop:api:efl:ui:clickable|Efl.Ui.Clickable]] | %%Efl UI clickable interface%% |
 | [[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]] | %%An interface to define mouse cursors to use when hovering over UI widgets.%% |
 | [[:develop:api:efl:ui:direction|Efl.Ui.Direction]] | %%EFL UI object direction interface%% |
@@ -276,11 +289,15 @@
 | [[:develop:api:efl:ui:focus:parent_provider|Efl.Ui.Focus.Parent_Provider]] | %%EFL UI Focus Parent Provider interface%% |
 | [[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]] | %%Interface which is used to handle the manager of a user.%% |
 | [[:develop:api:efl:ui:item|Efl.Ui.Item]] | %%Efl UI item interface%% |
+| [[:develop:api:efl:ui:list:model|Efl.Ui.List.Model]] | No description supplied. |
+| [[:develop:api:efl:ui:list:relayout|Efl.Ui.List.Relayout]] | No description supplied. |
 | [[:develop:api:efl:ui:menu|Efl.Ui.Menu]] | %%Efl UI menu interface%% |
 | [[:develop:api:efl:ui:model:connect|Efl.Ui.Model.Connect]] | %%Efl UI model connect interface%% |
 | [[:develop:api:efl:ui:model:factory:connect|Efl.Ui.Model.Factory.Connect]] | %%Efl UI model factory interface%% |
 | [[:develop:api:efl:ui:range|Efl.Ui.Range]] | %%Efl UI progress interface%% |
+| [[:develop:api:efl:ui:scrollable:interactive|Efl.Ui.Scrollable.Interactive]] | No description supplied. |
 | [[:develop:api:efl:ui:scrollable|Efl.Ui.Scrollable]] | %%Efl UI scrollable interface%% |
+| [[:develop:api:efl:ui:scrollbar|Efl.Ui.Scrollbar]] | No description supplied. |
 | [[:develop:api:efl:ui:selectable|Efl.Ui.Selectable]] | %%Efl UI selectable interface%% |
 | [[:develop:api:efl:ui:text:interactive|Efl.Ui.Text.Interactive]] | %%This is an interface interactive text inputs should implement%% |
 | [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] | %%Interface for all translatable text APIs.%% |
@@ -376,6 +393,8 @@
 | [[:develop:api:efl:ui:focus:relations|Efl.Ui.Focus.Relations]] | %%Structure holding the graph of relations between focussable objects.%% |
 | [[:develop:api:efl:ui:image:error|Efl.Ui.Image.Error]] | %%Structure associated with smart callback 'download,progress'.%% |
 | [[:develop:api:efl:ui:image:progress|Efl.Ui.Image.Progress]] | %%Structure associated with smart callback 'download,progress'.%% |
+| [[:develop:api:efl:ui:list:item_event|Efl.Ui.List.Item_Event]] | No description supplied. |
+| [[:develop:api:efl:ui:list:layoutitem|Efl.Ui.List.LayoutItem]] | No description supplied. |
 | [[:develop:api:efl:ui:popup_alert:clicked_event|Efl.Ui.Popup_Alert.Clicked_Event]] | %%Information of clicked event%% |
 | [[:develop:api:efl:ui:text:change_info|Efl.Ui.Text.Change_Info]] | %%This structure includes all the information about content changes.%% |
 | [[:develop:api:efl:ui:widget:focus_state|Efl.Ui.Widget.Focus_State]] | %%All relevant fields needed for the current state of focus registeration%% |
@@ -429,6 +448,7 @@
 | [[:develop:api:efl:image:content_hint|Efl.Image.Content_Hint]] | %%How an image's data is to be treated by EFL, for optimization.%% |
 | [[:develop:api:efl:image:load:error|Efl.Image.Load.Error]] | %%Image or Edje load error type%% |
 | [[:develop:api:efl:image:scale_hint|Efl.Image.Scale_Hint]] | %%How an image's data is to be treated by EFL, with regard to scaling cache.%% |
+| [[:develop:api:efl:image:scale_type|Efl.Image.Scale_Type]] | %%Enumeration that defines scale types of an image.%% |
 | [[:develop:api:efl:input:device:type|Efl.Input.Device.Type]] | %%General type of input device.%% |
 | [[:develop:api:efl:input:flags|Efl.Input.Flags]] | %%Special flags set during an input event propagation.%% |
 | [[:develop:api:efl:input:lock|Efl.Input.Lock]] | %%Key locks such as Num Lock, Scroll Lock and Caps Lock.%% |
@@ -436,6 +456,7 @@
 | [[:develop:api:efl:input:object_pointer_mode|Efl.Input.Object_Pointer_Mode]] | %%How the mouse pointer should be handled by EFL.%% |
 | [[:develop:api:efl:input:value|Efl.Input.Value]] | %%Keys for the generic values of all events.%% |
 | [[:develop:api:efl:io:positioner:whence|Efl.Io.Positioner.Whence]] | %%Seek position modes%% |
+| [[:develop:api:efl:loop:handler:flags|Efl.Loop.Handler.Flags]] | %%A set of flags that can be OR'd together to indicate which are desired%% |
 | [[:develop:api:efl:net:control:access_point:error|Efl.Net.Control.Access_Point.Error]] | %%The connection error reason.%% |
 | [[:develop:api:efl:net:control:access_point:ipv4_method|Efl.Net.Control.Access_Point.Ipv4_Method]] | %%The method used to configure IPv4%% |
 | [[:develop:api:efl:net:control:access_point:ipv6_method|Efl.Net.Control.Access_Point.Ipv6_Method]] | %%The method used to configure IPv6%% |
@@ -482,11 +503,12 @@
 | [[:develop:api:efl:ui:focus:autoscroll_mode|Efl.Ui.Focus.Autoscroll_Mode]] | %%Focus Autoscroll Mode%% |
 | [[:develop:api:efl:ui:focus:direction|Efl.Ui.Focus.Direction]] | %%Focus directions.%% |
 | [[:develop:api:efl:ui:focus:move_policy|Efl.Ui.Focus.Move_Policy]] | %%Focus Movement Policy.%% |
-| [[:develop:api:efl:ui:image:scale_type|Efl.Ui.Image.Scale_Type]] | %%Enumeration that defines scale types for the object's internal image.%% |
 | [[:develop:api:efl:ui:interest_region_mode|Efl.Ui.Interest_Region_Mode]] | %%Focus region show mode.%% |
 | [[:develop:api:efl:ui:popup:align|Efl.Ui.Popup.Align]] | %%Popup alignment type%% |
 | [[:develop:api:efl:ui:popup_alert:button|Efl.Ui.Popup_Alert.Button]] | %%Defines the type of the alert button.%% |
 | [[:develop:api:efl:ui:scroll_block|Efl.Ui.Scroll_Block]] | %%Direction in which a scroller should be blocked.%% |
+| [[:develop:api:efl:ui:scrollbar_direction|Efl.Ui.Scrollbar_Direction]] | No description supplied. |
+| [[:develop:api:efl:ui:scrollbar_mode|Efl.Ui.Scrollbar_Mode]] | No description supplied. |
 | [[:develop:api:efl:ui:slider:indicator_visible_mode|Efl.Ui.Slider.Indicator_Visible_Mode]] | %%Slider's indicator visiblity mode.%% |
 | [[:develop:api:efl:ui:softcursor_mode|Efl.Ui.Softcursor_Mode]] | %%Software cursor mode.%% |
 | [[:develop:api:efl:ui:textpath:direction|Efl.Ui.Textpath.Direction]] | %%Textpath direction%% |

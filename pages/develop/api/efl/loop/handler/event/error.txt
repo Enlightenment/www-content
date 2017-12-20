@@ -1,0 +1,39 @@
+~~Title: Efl.Loop.Handler: error~~
+===== Description =====
+
+%%Called when a error occurrs on the descriptor.%%
+{{page>:develop:api-include:efl:loop:handler:event:error:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+error;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_HANDLER_EVENT_ERROR(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_handler_event_error(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_HANDLER_EVENT_ERROR, on_efl_loop_handler_event_error, d);
+}
+
+</code>
+

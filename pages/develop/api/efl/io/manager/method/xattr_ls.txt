@@ -10,20 +10,22 @@
 xattr_ls {
     params {
         @in path: free(string, free);
+        @in paths: EflIoPath;
     }
-    return: free(future<uint64, free(const(array<free(string, free)>), eina_array_free)>, efl_del);
+    return: ptr(Eina.Future);
 }
 </code>
 
 ===== C signature =====
 
 <code c>
-Efl_Future *efl_io_manager_xattr_ls(Eo *obj, const char *path);
+Eina_Future *efl_io_manager_xattr_ls(Eo *obj, const char *path, EflIoPath paths);
 </code>
 
 ===== Parameters =====
 
   * **path** //(in)// - %%Path we want to list entries for%%
+  * **paths** //(in)// - %%Callback called for each packet of extended attributes found.%%
 
 ===== Implemented by =====
 

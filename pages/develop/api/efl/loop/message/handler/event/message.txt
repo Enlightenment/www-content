@@ -1,0 +1,39 @@
+~~Title: Efl.Loop.Message.Handler: message~~
+===== Description =====
+
+%%The message payload data%%
+{{page>:develop:api-include:efl:loop:message:handler:event:message:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+message: free(Efl.Loop.Message, efl_del);
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_MESSAGE_HANDLER_EVENT_MESSAGE(Efl_Loop_Message *)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_message_handler_event_message(void *data, const Efl_Event *event)
+{
+    Efl_Loop_Message *info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_MESSAGE_HANDLER_EVENT_MESSAGE, on_efl_loop_message_handler_event_message, d);
+}
+
+</code>
+

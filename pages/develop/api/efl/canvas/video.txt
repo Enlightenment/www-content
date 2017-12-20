@@ -23,7 +23,7 @@
       * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
         * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
         * [[:develop:api:efl:object|Efl.Object]] //(class)//
-      * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+      * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
         * [[:develop:api:efl:object|Efl.Object]] //(class)//
       * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
       * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
@@ -193,7 +193,7 @@ void efl_player_volume_set(Eo *obj, double volume);
 |  | **[[:develop:api:efl:canvas:object:property:pointer_mode_by_device|pointer_mode_by_device]]** //**(get, set)**// | %%Low-level pointer behaviour by device. See %%[[:develop:api:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.get]]%% and %%[[:develop:api:efl:canvas:object:property:pointer_mode|Efl.Canvas.Object.pointer_mode.set]]%% for more explanation.%% |
 |  | **[[:develop:api:efl:canvas:object:property:precise_is_inside|precise_is_inside]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:canvas:object:property:propagate_events|propagate_events]]** //**(get, set)**// |  |
-|  | **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:efl:canvas:object:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
 |  | **[[:develop:api:efl:canvas:object:method:raise|raise]]** | %%Raise %%''obj''%% to the top of its layer.%% |
 |  | **[[:develop:api:efl:canvas:object:property:render_op|render_op]]** //**(get, set)**// | %%Render mode to be used for compositing the Evas object.%% |
 |  | **[[:develop:api:efl:canvas:object:property:repeat_events|repeat_events]]** //**(get, set)**// |  |
@@ -243,11 +243,11 @@ void efl_player_volume_set(Eo *obj, double volume);
 |  | **[[:develop:api:efl:image:property:content_hint|content_hint]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:image:property:image_size|image_size]]** //**(get)**// | %%This represents the size of the original image in pixels.%% |
 |  | **[[:develop:api:efl:image:property:scale_hint|scale_hint]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:image:property:scale_type|scale_type]]** //**(get, set)**// | %%Control how the image is scaled.%% |
 ^ [[:develop:api:efl:image:load|Efl.Image.Load]] ^^^
 |  | **[[:develop:api:efl:image:load:method:load_async_cancel|load_async_cancel]]** | %%Cancel preloading an image object's image data in the background.%% |
 |  | **[[:develop:api:efl:image:load:method:load_async_start|load_async_start]]** | %%Begin preloading an image object's image data in the background.%% |
 |  | **[[:develop:api:efl:image:load:property:load_dpi|load_dpi]]** //**(get, set)**// |  |
-|  | **[[:develop:api:efl:image:load:property:load_error|load_error]]** //**(get)**// | %%Retrieves a number representing any error that occurred during the last loading of the given image object's source image.%% |
 |  | **[[:develop:api:efl:image:load:property:load_orientation|load_orientation]]** //**(get, set)**// | %%Defines whether the orientation information in the image file should be honored.%% |
 |  | **[[:develop:api:efl:image:load:property:load_region|load_region]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:image:load:property:load_region_support|load_region_support]]** //**(get)**// | %%Indicates whether the %%[[:develop:api:efl:image:load:property:load_region|Efl.Image.Load.load_region]]%% property is supported for the current file.%% |
@@ -265,11 +265,11 @@ void efl_player_volume_set(Eo *obj, double volume);
 |  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
 |  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
 |  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
-|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
 |  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
-|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, otherwise false.%% |
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
 |  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |

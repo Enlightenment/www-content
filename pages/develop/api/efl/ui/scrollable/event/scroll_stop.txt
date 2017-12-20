@@ -1,0 +1,39 @@
+~~Title: Efl.Ui.Scrollable: scroll,stop~~
+===== Description =====
+
+%%Called when scroll operation stopped%%
+{{page>:develop:api-include:efl:ui:scrollable:event:scroll_stop:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+scroll,stop;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_UI_EVENT_SCROLL_STOP(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_ui_event_scroll_stop(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_UI_EVENT_SCROLL_STOP, on_efl_ui_event_scroll_stop, d);
+}
+
+</code>
+

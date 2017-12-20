@@ -24,7 +24,7 @@
         * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
           * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
-        * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+        * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
         * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
         * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
@@ -51,7 +51,7 @@
           * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
             * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
             * [[:develop:api:efl:object|Efl.Object]] //(class)//
-          * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
+          * [[:develop:api:efl:loop:consumer|Efl.Loop.Consumer]] //(class)//
             * [[:develop:api:efl:object|Efl.Object]] //(class)//
           * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
           * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
@@ -83,39 +83,9 @@
     * [[:develop:api:efl:layout:group|Efl.Layout.Group]] //(interface)//
     * [[:develop:api:efl:layout:signal|Efl.Layout.Signal]] //(interface)//
   * [[:develop:api:efl:ui:zoom|Efl.Ui.Zoom]] //(interface)//
-  * [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]] //(mixin)//
+  * [[:develop:api:efl:ui:scrollable:interactive|Efl.Ui.Scrollable.Interactive]] //(interface)//
     * [[:develop:api:efl:ui:scrollable|Efl.Ui.Scrollable]] //(interface)//
-    * [[:develop:api:efl:ui:focus:manager:sub|Efl.Ui.Focus.Manager.Sub]] //(mixin)//
-      * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
-      * [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] //(interface)//
-      * [[:develop:api:efl:object|Efl.Object]] //(class)//
-    * [[:develop:api:elm:widget|Elm.Widget]] //(class)//
-      * [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)//
-        * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
-          * [[:develop:api:efl:object|Efl.Object]] //(class)//
-          * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
-          * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
-          * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
-          * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
-          * [[:develop:api:efl:gfx:size:hint|Efl.Gfx.Size.Hint]] //(interface)//
-          * [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] //(mixin)//
-            * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
-            * [[:develop:api:efl:object|Efl.Object]] //(class)//
-          * [[:develop:api:efl:loop_user|Efl.Loop_User]] //(class)//
-            * [[:develop:api:efl:object|Efl.Object]] //(class)//
-          * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
-          * [[:develop:api:efl:canvas:pointer|Efl.Canvas.Pointer]] //(interface)//
-      * [[:develop:api:efl:access|Efl.Access]] //(mixin)//
-        * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
-        * [[:develop:api:efl:object|Efl.Object]] //(class)//
-      * [[:develop:api:efl:access:component|Efl.Access.Component]] //(mixin)//
-      * [[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]] //(interface)//
-      * [[:develop:api:efl:part|Efl.Part]] //(interface)//
-      * [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]] //(mixin)//
-      * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
-      * [[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]] //(interface)//
-      * [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] //(interface)//
-  * [[:develop:api:efl:ui:scrollable|Efl.Ui.Scrollable]] //(interface)//
+  * [[:develop:api:efl:ui:scrollbar|Efl.Ui.Scrollbar]] //(interface)//
 
 
 ++++
@@ -213,10 +183,22 @@ Eina_Position2D efl_gfx_position_get(const Eo *obj);
 void efl_gfx_position_set(Eo *obj, Eina_Position2D pos);
 </code>
 \\
-**[[:develop:api:efl:ui:image_zoomable:method:region_bring_in|region_bring_in]]**// [Overridden from [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]]]//\\
+**[[:develop:api:efl:ui:image_zoomable:method:scroll|scroll]]**// [Overridden from [[:develop:api:efl:ui:scrollable:interactive|Efl.Ui.Scrollable.Interactive]]]//\\
 > %%Show a specific virtual region within the scroller content object.%%
 <code c>
-void elm_interface_scrollable_region_bring_in(Eo *obj, int x, int y, int w, int h);
+void efl_ui_scrollable_scroll(Eo *obj, Eina_Rect rect, Eina_Bool animation);
+</code>
+\\
+**[[:develop:api:efl:ui:image_zoomable:method:signal_callback_add|signal_callback_add]]**// [Overridden from [[:develop:api:efl:layout:signal|Efl.Layout.Signal]]]//\\
+> %%Adds a callback for an arriving Edje signal, emitted by a given Edje object.%%
+<code c>
+Eina_Bool efl_layout_signal_callback_add(Eo *obj, const char *emission, const char *source, Efl_Signal_Cb func, void *data);
+</code>
+\\
+**[[:develop:api:efl:ui:image_zoomable:method:signal_callback_del|signal_callback_del]]**// [Overridden from [[:develop:api:efl:layout:signal|Efl.Layout.Signal]]]//\\
+> %%Removes a signal-triggered callback from an object.%%
+<code c>
+Eina_Bool efl_layout_signal_callback_del(Eo *obj, const char *emission, const char *source, Efl_Signal_Cb func, void *data);
 </code>
 \\
 **[[:develop:api:efl:ui:image_zoomable:property:size|size]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:gfx|Efl.Gfx]]]//\\
@@ -289,12 +271,12 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:access:method:relationship_remove|relationship_remove]]** | %%Removes the relationship between two accessible objects.%% |
 |  | **[[:develop:api:efl:access:method:relationships_clear|relationships_clear]]** | %%Removes all relationships in accessible object.%% |
 |  | **[[:develop:api:efl:access:property:role|role]]** //**(get, set)**// | %%The role of the object in accessibility domain.%% |
-|  | **[[:develop:api:efl:access:property:root|root]]** //**(get)**// | %%Get root object of accessible object hierarchy%% |
+|  ''class'' | **[[:develop:api:efl:access:property:root|root]]** //**(get)**// | %%Get root object of accessible object hierarchy%% |
 |  | **[[:develop:api:efl:access:property:translation_domain|translation_domain]]** //**(get, set)**// | %%The translation domain of "name" and "description" properties.%% |
 |  | **[[:develop:api:efl:access:property:type|type]]** //**(get, set)**// | %%Type of accessibility object%% |
-|  ''protected'' | **[[:develop:api:efl:access:method:event_emit|event_emit]]** | %%Emit event%% |
-|  ''protected'' | **[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** | %%Register accessibility event listener%% |
-|  ''protected'' | **[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** | %%Deregister accessibility event listener%% |
+|  ''class'' ''protected'' | **[[:develop:api:efl:access:method:event_emit|event_emit]]** | %%Emit event%% |
+|  ''class'' ''protected'' | **[[:develop:api:efl:access:method:event_handler_add|event_handler_add]]** | %%Register accessibility event listener%% |
+|  ''class'' ''protected'' | **[[:develop:api:efl:access:method:event_handler_del|event_handler_del]]** | %%Deregister accessibility event listener%% |
 |  ''protected'' | **[[:develop:api:efl:access:property:index_in_parent|index_in_parent]]** //**(get)**// | %%Gets index of the child in parent's children list.%% |
 |  ''protected'' | **[[:develop:api:efl:access:property:localized_role_name|localized_role_name]]** //**(get)**// | %%Gets an localized string describing accessible object role name.%% |
 |  ''protected'' | **[[:develop:api:efl:access:property:reading_info_type|reading_info_type]]** //**(get, set)**// |  |
@@ -409,7 +391,6 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:image:load:method:load_async_cancel|load_async_cancel]]** | %%Cancel preloading an image object's image data in the background.%% |
 |  | **[[:develop:api:efl:image:load:method:load_async_start|load_async_start]]** | %%Begin preloading an image object's image data in the background.%% |
 |  | **[[:develop:api:efl:image:load:property:load_dpi|load_dpi]]** //**(get, set)**// |  |
-|  | **[[:develop:api:efl:image:load:property:load_error|load_error]]** //**(get)**// | %%Retrieves a number representing any error that occurred during the last loading of the given image object's source image.%% |
 |  | **[[:develop:api:efl:image:load:property:load_orientation|load_orientation]]** //**(get, set)**// | %%Defines whether the orientation information in the image file should be honored.%% |
 |  | **[[:develop:api:efl:image:load:property:load_region|load_region]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:image:load:property:load_region_support|load_region_support]]** //**(get)**// | %%Indicates whether the %%[[:develop:api:efl:image:load:property:load_region|Efl.Image.Load.load_region]]%% property is supported for the current file.%% |
@@ -424,8 +405,6 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:layout:group:property:group_data|group_data]]** //**(get)**// | %%Retrives an EDC data field's value from a given Edje object's group.%% |
 ^ [[:develop:api:efl:layout:signal|Efl.Layout.Signal]] ^^^
 |  | **[[:develop:api:efl:layout:signal:method:message_send|message_send]]** | %%Sends an (Edje) message to a given Edje object%% |
-|  | **[[:develop:api:efl:layout:signal:method:signal_callback_add|signal_callback_add]]** | %%Adds a callback for an arriving Edje signal, emitted by a given Edje object.%% |
-|  | **[[:develop:api:efl:layout:signal:method:signal_callback_del|signal_callback_del]]** | %%Removes a signal-triggered callback from an object.%% |
 |  | **[[:develop:api:efl:layout:signal:method:signal_process|signal_process]]** | %%Processes an object's messages and signals queue.%% |
 ^ [[:develop:api:efl:object|Efl.Object]] ^^^
 |  | **[[:develop:api:efl:object:property:allow_parent_unref|allow_parent_unref]]** //**(get, set)**// | %%Allow an object to be deleted by unref even if it has a parent.%% |
@@ -439,11 +418,11 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:object:method:event_callback_stop|event_callback_stop]]** | %%Stop the current callback call.%% |
 |  | **[[:develop:api:efl:object:method:event_freeze|event_freeze]]** | %%Freeze events of object.%% |
 |  | **[[:develop:api:efl:object:property:event_freeze_count|event_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
-|  | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
-|  | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_freeze|event_global_freeze]]** | %%Freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:property:event_global_freeze_count|event_global_freeze_count]]** //**(get)**// | %%Return freeze events of object.%% |
+|  ''class'' | **[[:develop:api:efl:object:method:event_global_thaw|event_global_thaw]]** | %%Thaw events of object.%% |
 |  | **[[:develop:api:efl:object:method:event_thaw|event_thaw]]** | %%Thaw events of object.%% |
-|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, false otherwise.%% |
+|  | **[[:develop:api:efl:object:property:finalized|finalized]]** //**(get)**// | %%True if the object is already finalized, otherwise false.%% |
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
 |  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
@@ -457,18 +436,6 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:player:property:volume|volume]]** //**(get, set)**// | %%Control the audio volume.%% |
 ^ [[:develop:api:efl:ui:base|Efl.Ui.Base]] ^^^
 |  | **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**// | %%The (human) language for this object.%% |
-^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
-|  | **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]** | %%This will fetch the data from a registered node.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]** | %%Return the last logical object.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:property:manager_focus|manager_focus]]** //**(get, set)**// | %%The element which is currently focused by this manager%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:move|move]]** | %%Move the focus into the given direction.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:pop_history_stack|pop_history_stack]]** | %%Removes the most upper history element, and gives the focus to the next one below%% |
-|  | **[[:develop:api:efl:ui:focus:manager:property:redirect|redirect]]** //**(get, set)**// | %%Add a another manager to serve the move requests.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:request_move|request_move]]** | %%Returns the object which would be the next object to focus in the given direction.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:request_subchild|request_subchild]]** | %%Returns a widget that can receive focus%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:reset_history|reset_history]]** | %%Reset the history stack of this manager object. This means the most upper element will be unfocused, all other elements will be removed from the remembered before.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**// | %%Root node for all logical subtrees.%% |
-|  | **[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]** | %%Called when this manager is set as redirect%% |
 ^ [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]] ^^^
 |  | **[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]** | %%Tells the object that the children of it will be queried soon by the given manager.%% |
 ^ [[:develop:api:efl:ui:image|Efl.Ui.Image]] ^^^
@@ -480,71 +447,29 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:efl:ui:image:property:mmap|mmap]]** //**(get, set)**// |  |
 |  | **[[:develop:api:efl:ui:image:property:model|model]]** //**(get, set)**// | %%Model that is/will be%% |
 |  | **[[:develop:api:efl:ui:image:property:scalable|scalable]]** //**(get, set)**// | %%Enable or disable scaling up or down the internal image.%% |
-|  | **[[:develop:api:efl:ui:image:property:scale_type|scale_type]]** //**(get, set)**// | %%Control how the internal image is scaled.%% |
+|  | **[[:develop:api:efl:ui:image:property:scale_type|scale_type]]** //**(get, set)**// | %%Control how the image is scaled.%% |
 |  | **[[:develop:api:efl:ui:image:method:signal_emit|signal_emit]]** | %%Sends/emits an Edje signal to this layout.%% |
 |  | **[[:develop:api:efl:ui:image:property:smooth_scale|smooth_scale]]** //**(get, set)**// | %%Whether to use high-quality image scaling algorithm for this image.%% |
 |  ''protected'' | **[[:develop:api:efl:ui:image:method:calc_force|calc_force]]** | %%Forces a Size/Geometry calculation.%% |
 |  ''protected'' | **[[:develop:api:efl:ui:image:property:extents|extents]]** //**(get)**// | %%Gets an image extents.%% |
+^ [[:develop:api:efl:ui:scrollable:interactive|Efl.Ui.Scrollable.Interactive]] ^^^
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:bounce_enabled|bounce_enabled]]** //**(get, set)**// | %%Bouncing behavior%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:content_pos|content_pos]]** //**(get, set)**// | %%The content position%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:content_size|content_size]]** //**(get)**// | %%The content size%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:gravity|gravity]]** //**(get, set)**// | %%Control scrolling gravity on the scrollable%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:looping|looping]]** //**(get, set)**// | %%Controls an infinite loop for a scroller.%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:match_content|match_content]]** //**(set)**// | %%Prevent the scrollable from being smaller than the minimum size of the content.%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:movement_block|movement_block]]** //**(get, set)**// | %%Blocking of scrolling (per axis)%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:scroll_freeze|scroll_freeze]]** //**(get, set)**// | %%Freeze property This function will freeze scrolling movement (by input of a user). Unlike efl_ui_scrollable_movement_block_set, this function freezes bidirectional. If you want to freeze only one direction, See %%[[:develop:api:efl:ui:scrollable:interactive:property:movement_block|Efl.Ui.Scrollable.Interactive.movement_block.set]]%%.%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:scroll_hold|scroll_hold]]** //**(get, set)**// | %%Hold property When hold turns on, it only scrolls by holding action.%% |
+|  | **[[:develop:api:efl:ui:scrollable:interactive:property:viewport_geometry|viewport_geometry]]** //**(get)**// | %%The viewport geometry%% |
+^ [[:develop:api:efl:ui:scrollbar|Efl.Ui.Scrollbar]] ^^^
+|  | **[[:develop:api:efl:ui:scrollbar:property:bar_mode|bar_mode]]** //**(get, set)**// | %%Scrollbar visibility policy%% |
+|  | **[[:develop:api:efl:ui:scrollbar:property:bar_position|bar_position]]** //**(get, set)**// | %%Scrollbar position. It is calculated based on current position-maximum positions.%% |
+|  | **[[:develop:api:efl:ui:scrollbar:property:bar_size|bar_size]]** //**(get)**// | %%Scrollbar size. It is calculated based on viewport size-content sizes.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:scrollbar:method:bar_visibility_update|bar_visibility_update]]** | %%Update bar visibility.%% |
 ^ [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] ^^^
 |  | **[[:develop:api:efl:ui:translatable:property:translatable_text|translatable_text]]** //**(get, set)**// | %%A unique string to be translated.%% |
-^ [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]] ^^^
-|  | **[[:develop:api:elm:interface_scrollable:property:animate_start_cb|animate_start_cb]]** //**(set)**// | %%Set the callback to run when the scrolling animation has started.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:animate_stop_cb|animate_stop_cb]]** //**(set)**// | %%Set the callback to run when the scrolling animation has stopped.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:border_elements|border_elements]]** //**(get)**// | %%The list of elements which are at the border of the graph.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:bounce_allow|bounce_allow]]** //**(get, set)**// | %%Bouncing behavior%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:bounce_animator_disabled|bounce_animator_disabled]]** //**(get, set)**// | %%Bounce animator%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content|content]]** //**(set)**// | %%Content property%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:content_min_limit|content_min_limit]]** | %%Prevent the scrollable from being smaller than the minimum size of the content.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content_min_limit_cb|content_min_limit_cb]]** //**(set)**// | %%set the callback to run on minimal limit content%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:content_pos_get|content_pos_get]]** | %%Get content position%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:content_pos_set|content_pos_set]]** | %%Set the content position%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content_region|content_region]]** //**(get, set)**// | %%Currently visible content region%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:content_region_show|content_region_show]]** | %%Show a specific virtual region within the scroller content object%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content_size|content_size]]** //**(get)**// | %%Get the size of the content object%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content_viewport_geometry|content_viewport_geometry]]** //**(get)**// | %%Content viewport geometry%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:content_viewport_resize_cb|content_viewport_resize_cb]]** //**(set)**// | %%When the viewport is resized, the callback is called.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:current_page|current_page]]** //**(get)**// | %%Get scroll current page number.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:drag_start_cb|drag_start_cb]]** //**(set)**// | %%Set the callback to run when dragging of the contents has started.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:drag_stop_cb|drag_stop_cb]]** //**(set)**// | %%Set the callback to run when dragging of the contents has stopped.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:edge_bottom_cb|edge_bottom_cb]]** //**(set)**// | %%Set the callback to run when the bottom edge of the content has been reached.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:edge_left_cb|edge_left_cb]]** //**(set)**// | %%Set the callback to run when the left edge of the content has been reached.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:edge_right_cb|edge_right_cb]]** //**(set)**// | %%Set the callback to run when the right edge of the content has been reached.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:edge_top_cb|edge_top_cb]]** //**(set)**// | %%Set the callback to run when the top edge of the content has been reached.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:extern_pan|extern_pan]]** //**(set)**// | %%Extern pan%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:freeze|freeze]]** //**(set)**// | %%Freeze property%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:gravity|gravity]]** //**(get, set)**// | %%Control scrolling gravity on the scrollable%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:hbar_drag_cb|hbar_drag_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is dragged.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:hbar_press_cb|hbar_press_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is pressed.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:hbar_unpress_cb|hbar_unpress_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is unpressed.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:hold|hold]]** //**(set)**// | %%Hold property%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:item_loop_enabled|item_loop_enabled]]** //**(get, set)**// | %%Whether scrolling should loop around.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:last_page|last_page]]** //**(get)**// | %%Get scroll last page number.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:loop|loop]]** //**(get, set)**// | %%Controls an infinite loop for a scroller.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:mirrored|mirrored]]** //**(set)**// | %%Mirroed property%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:momentum_animator_disabled|momentum_animator_disabled]]** //**(get, set)**// | %%Momentum animator%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:movement_block|movement_block]]** //**(get, set)**// | %%Blocking of scrolling (per axis)%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:objects|objects]]** //**(set)**// | %%Object property%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:page_bring_in|page_bring_in]]** | %%Show a specific virtual region within the scroller content object by page number.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:page_change_cb|page_change_cb]]** //**(set)**// | %%Set the callback to run when the visible page changes.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:page_relative|page_relative]]** //**(set)**// | %%Set scroll page size relative to viewport size.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:page_scroll_limit|page_scroll_limit]]** //**(get, set)**// | %%Page scroll limit%% |
-|  | **[[:develop:api:elm:interface_scrollable:method:page_show|page_show]]** | %%Show a specific virtual region within the scroller content object by page number.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:page_size|page_size]]** //**(get, set)**// | %%Scroll page size relative to viewport size.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:page_snap_allow|page_snap_allow]]** //**(get, set)**// | %%Page snapping behavior%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:paging|paging]]** //**(get, set)**// | %%Pagin property%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:policy|policy]]** //**(get, set)**// | %%Scrollbar visibility policy%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:repeat_events|repeat_events]]** //**(get, set)**// | %%It decides whether the scrollable object propagates the events to content object or not.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:scroll_cb|scroll_cb]]** //**(set)**// | %%Set the callback to run when the content has been moved.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:scroll_down_cb|scroll_down_cb]]** //**(set)**// | %%Set the callback to run when the content has been moved down.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:scroll_left_cb|scroll_left_cb]]** //**(set)**// | %%Set the callback to run when the content has been moved to the left%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:scroll_right_cb|scroll_right_cb]]** //**(set)**// | %%Set the callback to run when the content has been moved to the right.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:scroll_up_cb|scroll_up_cb]]** //**(set)**// | %%Set the callback to run when the content has been moved up.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:single_direction|single_direction]]** //**(get, set)**// | %%Single direction scroll configuration%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:step_size|step_size]]** //**(get, set)**// | %%Step size%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:vbar_drag_cb|vbar_drag_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is dragged.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:vbar_press_cb|vbar_press_cb]]** //**(set)**// | %%Set the callback to run when the vertical scrollbar is pressed.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:vbar_unpress_cb|vbar_unpress_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is unpressed.%% |
-|  | **[[:develop:api:elm:interface_scrollable:property:wheel_disabled|wheel_disabled]]** //**(get, set)**// | %%Control Wheel disable Enable or disable mouse wheel to be used to scroll the scroller content. heel is enabled by default.%% |
 ^ [[:develop:api:elm:widget|Elm.Widget]] ^^^
 |  | **[[:develop:api:elm:widget:property:access_info|access_info]]** //**(get, set)**// | %%Accessibility information.%% |
 |  | **[[:develop:api:elm:widget:property:clip|clip]]** //**(get, set)**// |  |
@@ -578,7 +503,7 @@ Eina_Bool efl_ui_widget_event(Eo *obj, const Efl_Event *eo_event, Efl_Canvas_Obj
 |  | **[[:develop:api:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**// | %%Whether the widget's automatic orientation is disabled or not.%% |
 |  | **[[:develop:api:elm:widget:property:parent|parent]]** //**(get, set)**// | %%Object's accessible parent.%% |
 |  | **[[:develop:api:elm:widget:method:part|part]]** | %%Returns %%[[:develop:api:efl:ui:widget:part|Efl.Ui.Widget.Part]]%%.%% |
-|  | **[[:develop:api:elm:widget:method:provider_find|provider_find]]** | %%Searches up in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:elm:widget:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
 |  | **[[:develop:api:elm:widget:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
 |  | **[[:develop:api:elm:widget:method:scroll_freeze_pop|scroll_freeze_pop]]** | %%Pop scroller freeze%% |
 |  | **[[:develop:api:elm:widget:method:scroll_freeze_push|scroll_freeze_push]]** | %%Push scroller freeze%% |
@@ -725,11 +650,6 @@ EFL_UI_IMAGE_ZOOMABLE_EVENT_PRESS(void)
 |  | **[[:develop:api:efl:ui:draggable:event:drag_start_right|drag,start,right]]** | %%Called when drag starts into right direction%% |
 |  | **[[:develop:api:efl:ui:draggable:event:drag_start_up|drag,start,up]]** | %%Called when drag starts into up direction%% |
 |  | **[[:develop:api:efl:ui:draggable:event:drag_stop|drag,stop]]** | %%Called when drag stopped%% |
-^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
-|  | **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]** | %%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%% |
-|  | **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]** | %%Emitted once the graph calculationg will be performed%% |
-|  | **[[:develop:api:efl:ui:focus:manager:event:focused|focused]]** | %%Emitted if the manager has focused an object, the passed focus object is the last focused object%% |
-|  | **[[:develop:api:efl:ui:focus:manager:event:redirect_changed|redirect,changed]]** | %%Emitted when the redirect object has changed, the old manager is passed as event info%% |
 ^ [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]] ^^^
 |  | **[[:develop:api:efl:ui:focus:object:event:focus_changed|focus,changed]]** | %%Emitted if the focus state has changed%% |
 ^ [[:develop:api:efl:ui:focus:user|Efl.Ui.Focus.User]] ^^^
@@ -738,17 +658,33 @@ EFL_UI_IMAGE_ZOOMABLE_EVENT_PRESS(void)
 ^ [[:develop:api:efl:ui:image|Efl.Ui.Image]] ^^^
 |  | **[[:develop:api:efl:ui:image:event:drop|drop]]** | %%Called when drop from drag and drop happened%% |
 ^ [[:develop:api:efl:ui:scrollable|Efl.Ui.Scrollable]] ^^^
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll|scroll]]** | %%Called when scroll operation started%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:edge_down|edge,down]]** | %%Called when hitting the bottom edge%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:edge_left|edge,left]]** | %%Called when hitting the left edge%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:edge_right|edge,right]]** | %%Called when hitting the right edge%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:edge_up|edge,up]]** | %%Called when hitting the top edge%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll|scroll]]** | %%Called when scroll operation%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_start|scroll,anim,start]]** | %%Called when scroll animation started%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_stop|scroll,anim,stop]]** | %%Called when scroll animation stopped%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_down|scroll,down]]** | %%Called when scrolling to downwards%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_start|scroll,drag,start]]** | %%Called when scroll drag started%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_stop|scroll,drag,stop]]** | %%Called when scroll drag stopped%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_left|scroll,left]]** | %%Called when scrolling to left%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_right|scroll,right]]** | %%Called when scrolling to right%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_start|scroll,start]]** | %%Called when scroll operation started%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_stop|scroll,stop]]** | %%Called when scroll operation stopped%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_up|scroll,up]]** | %%Called when scrolling to upwards%% |
+^ [[:develop:api:efl:ui:scrollbar|Efl.Ui.Scrollbar]] ^^^
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_drag|bar,drag]]** | %%Called when bar is dragged%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_hide|bar,hide]]** | %%Called when bar is hidden%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_pos_changed|bar,pos,changed]]** | %%Called when bar position is changed%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_press|bar,press]]** | %%Called when bar is pressed%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_show|bar,show]]** | %%Callend when bar is shown%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_size_changed|bar,size,changed]]** | %%Called when bar size is changed%% |
+|  | **[[:develop:api:efl:ui:scrollbar:event:bar_unpress|bar,unpress]]** | %%Called when bar is unpressed%% |
 ^ [[:develop:api:efl:ui:zoom|Efl.Ui.Zoom]] ^^^
 |  | **[[:develop:api:efl:ui:zoom:event:zoom_change|zoom,change]]** | %%Called when zooming changed%% |
 |  | **[[:develop:api:efl:ui:zoom:event:zoom_start|zoom,start]]** | %%Called when zooming started%% |
 |  | **[[:develop:api:efl:ui:zoom:event:zoom_stop|zoom,stop]]** | %%Called when zooming stopped%% |
-^ [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]] ^^^
-|  | **[[:develop:api:elm:interface_scrollable:event:changed|changed]]** | %%Called when content changed%% |
 ^ [[:develop:api:elm:widget|Elm.Widget]] ^^^
 |  | **[[:develop:api:elm:widget:event:access_changed|access,changed]]** | %%Called when accessibility changed%% |
 |  | **[[:develop:api:elm:widget:event:language_changed|language,changed]]** | %%Called when widget language changed%% |
