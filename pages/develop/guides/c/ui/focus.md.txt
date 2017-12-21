@@ -1,0 +1,105 @@
+---
+~~Title: EFL Focus Programming Guide~~
+---
+
+# EFL Focus Programming Guide #
+
+When using a keyboard instead of a mouse or a touch screen, you need the concept of Focus: a graphical indicator of the widget currently selected, which you can move around using the cursor keys, for example.
+
+EFL handles the focus of your application in a way which works in most situations. For the rare scenario where this is not the case, this guide shows you how focus is handled in EFL and how you can tweak it to suit your needs.
+
+## Prerequisites ##
+
+* Make sure you're familiar with EFL objects: read the [Introduction to Eo](/develop/tutorials/c/eo-intro.md) tutorial to learn more.
+
+* You should also be familiar with Eolian interfaces: read the [Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md) tutorial to understand these.
+
+* Read also the [Events Programming Guide](/develop/guides/c/core/events.md) to learn about event emission and registration in EFL.
+
+## Understanding the Focus ##
+
+Graphical User Interfaces (*GUI*s) are typically made of widgets arranged on a window. Some widgets are meant to convey information to the user, like labels or progress bars, some are meant to receive information from the user, like text boxes or sliders, and some are meant to execute commands, like buttons.
+
+To act on a widget, you first need to *activate* it: Using a *mouse*, the widget under the mouse pointer is activated when you click on it. Likewise when using a *touch screen*, the widget under your finger is activated when you press it.
+
+Things are not so straightforward when you use a *keyboard*, though. To begin with, a keyboard requires a widget to be the *selected* widget. Then, you have keys (typically the <kbd>Tab</kbd> or the Cursor keys) that allow you to change the selected widget, and keys (typically <kbd>Enter</kbd> or the <kbd>Space</kbd>) that activate the selected widget.
+
+The selected widget is said to have the *Focus* and is shown with some sort of highlight to distinguish it from the other widgets. Changing the focus from one widget to another using the keyboard is called *Focus Navigation*.
+
+## Focus Management in EFL ##
+
+When developing applications with EFL, you normally don't have to worry about focus management. You just build your GUI by adding and arranging widgets to it, and focus works out of the box. It is worth understanding how EFL does this, though, in case you are not satisfied with the focus navigation it provides.
+
+There are 6 commands for Focus navigation: 4 *directional* (Up, Down, Left, Right) and 2 *ordinal* (Previous and Next).
+
+When EFL receives a directional focus navigation command (typically through a cursor key) it does its best to move the focus to the widget closest to the currently selected one, moving in the requested direction as it appears on the screen.
+
+When EFL receives an ordinal focus navigation command (typically though the <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> keys) it moves the focus to the next (or previous) widget in the *focus hierarchy*. This hierarchy is built as you add widgets to your GUI, so **the order in which you add the widgets matters**.
+
+As you add widgets to your GUI, the *focusable* ones are added to a list (not all widgets can be selected, like text labels, for example). Ordinal commands then move the focus through this list. If a widget is a container for other widgets (like Box), focus will move through its children *before* moving out of the container and onto its siblings.
+
+## Setting the Focus on a Widget ##
+
+Sometimes you want to bypass EFL's default behavior and programmatically set the focus to a particular widget, for example, on the [OK] button once enough information has been added to a form.
+
+To achieve this, you can use the ``Efl.Ui.Focus.Util`` class. It has a single method called ``efl_ui_focus_util_focus()`` which receives as a parameter the widget you want to move the focus to.
+
+When using this method, the widget currently selected will lose the focus, and the one you passed in will gain the focus. In the process, all focus-related events will be emitted (see the next section).
+
+This method can only be used on widgets implementing the ``Efl.Ui.Focus.User`` and ``Efl.Ui.Focus.Object`` interfaces, but most widgets inherit from ``Elm.Widget`` which already does this, so you don't have to worry.
+
+Here's an usage example based on the EFL examples repository [tutorial/c/focus/src/focus_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/focus/src/focus_main.c):
+
+```c
+   button = efl_add(EFL_UI_BUTTON_CLASS, hbox,
+                    efl_text_set(efl_added, "OK"),
+                    efl_pack(hbox, efl_added),
+                    efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                           _gui_ok_cb, efl_added));
+
+   efl_ui_focus_util_focus(EFL_UI_FOCUS_UTIL_CLASS, button);
+```
+
+> **NOTE:**
+> Since ``efl_ui_focus_util_focus()`` is a *class method* its first parameter is not an Eo Object but an Eo Class, which must **always** be the ``EFL_UI_FOCUS_UTIL_CLASS``.
+
+## Reacting to Focus Changes ##
+
+Every time a widget gains or loses the focus, it emits the event ``EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED``. You can then retrieve the current focused state of the widget through the ``focus`` property using ``efl_ui_focus_object_focus_get()``.
+
+Here's an usage example based on the EFL examples repository [tutorial/c/focus/src/focus_main.c](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c/focus/src/focus_main.c):
+
+```c
+   static void
+   _focus_changed(void *data EINA_UNUSED, const Efl_Event *event)
+   {
+      printf("Current widget state is %d\n",
+             efl_ui_focus_object_focus_get(event->object));
+   }
+
+   static void
+   _gui_setup()
+   {
+      button = efl_add(EFL_UI_BUTTON_CLASS, hbox,
+                       efl_text_set(efl_added, "OK"),
+                       efl_pack(hbox, efl_added),
+                       efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                              _gui_ok_cb, efl_added),
+                       efl_event_callback_add(efl_added, EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED,
+                                              _focus_changed, NULL));
+   }
+```
+
+## Further Reading ##
+
+[Introduction to Eo](/develop/tutorials/c/eo-intro.md)
+:    Explains how to create and destroy EFL objects.
+
+[Multiple Inheritance with Eolian](/develop/tutorials/c/eo-multiinherit.md)
+:    Explains what are Eolian interfaces.
+
+[Events Programming Guide](/develop/guides/c/core/events.md)
+:    Explains how events and event callbacks are handled in EFL.
+
+[EFL API Reference guide](/develop/api)
+:    Detailed documentation on the EFL API.
