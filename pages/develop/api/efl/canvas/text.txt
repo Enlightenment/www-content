@@ -15,6 +15,7 @@
   * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
     * [[:develop:api:efl:object|Efl.Object]] //(class)//
     * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+    * [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] //(mixin)//
     * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
     * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
     * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
@@ -90,7 +91,7 @@ void efl_text_backing_type_set(Eo *obj, Efl_Text_Style_Backing_Type type);
 </code>
 \\
 **[[:develop:api:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]]** //**(get, set)**//\\
-> %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%%
+> %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful, for example, in the recipient fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%%
 <code c>
 const char *efl_canvas_text_bidi_delimiters_get(const Eo *obj);
 void efl_canvas_text_bidi_delimiters_set(Eo *obj, const char *delim);
@@ -527,7 +528,7 @@ char *efl_canvas_text_range_text_get(Eo *obj, const Efl_Text_Cursor_Cursor *cur1
 </code>
 \\
 **[[:develop:api:efl:canvas:text:property:replacement_char|replacement_char]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:text:format|Efl.Text.Format]]]//\\
-> %%The character used to replace characters that can not be displayed%%
+> %%The character used to replace characters that can't be displayed%%
 <code c>
 const char *efl_text_replacement_char_get(const Eo *obj);
 void efl_text_replacement_char_set(Eo *obj, const char *repch);
@@ -684,7 +685,7 @@ void efl_text_wrap_set(Eo *obj, Efl_Text_Format_Wrap wrap);
 </code>
 \\
 **[[:develop:api:efl:canvas:text:method:filter_dirty|filter_dirty]]** ''protected''// [Overridden from [[:develop:api:efl:canvas:filter:internal|Efl.Canvas.Filter.Internal]]]//\\
-> %%Called when the filter changes must trigger a redraw of the object.%%
+> %%Called when filter changes must trigger a redraw of the object.%%
 <code c>
 void evas_filter_dirty(Eo *obj);
 </code>
@@ -763,9 +764,11 @@ void evas_filter_state_prepare(Eo *obj, Efl_Canvas_Filter_State *state, void *da
 |  | **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** | %%Stack %%''obj''%% immediately %%''below''%%%% |
 |  | **[[:develop:api:efl:canvas:object:property:visible|visible]]** //**(get, set)**// | %%The visibility of a canvas object.%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// | %%Gets the parent smart object of a given Evas object, if it has one.%% |
+^ [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] ^^^
+|  | **[[:develop:api:efl:gfx:color:property:color_code|color_code]]** //**(get, set)**// |  |
 ^ [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] ^^^
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lightning effect on the object.%% |
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lightning effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lighting effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lighting effect to the object.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**// | %%Alpha flag for map rendering.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**// | %%Clockwise state of a map (read-only).%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**// | %%Color of a vertex in the map.%% |

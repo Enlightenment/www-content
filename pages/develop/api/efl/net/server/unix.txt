@@ -5,7 +5,7 @@
 
 %%An AF_UNIX server.%%
 
-%%The %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%% method will call bind(2) directly, thus path will be accessed and created in that method. If the created socket must be subject to some special mode or user, change before executing that method, for example calling umask(2).%%
+%%The %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%% method will call bind(2) directly. This means the path will be accessed and created in that method. If the created socket must be subject to some special mode or user, change before executing said method, for example by calling umask(2).%%
 
 //Since 1.19//
 
@@ -33,7 +33,7 @@ void efl_destructor(Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:net:server:unix:property:leading_directories_create|leading_directories_create]]** //**(get, set)**//\\
-> %%If %%''true''%%, all parent directories will be created with given mode.%%
+> %%If %%''true''%%, all parent directories will be created with the given mode.%%
 <code c>
 void efl_net_server_unix_leading_directories_create_get(const Eo *obj, Eina_Bool *leading_directories_create, unsigned int *mode);
 void efl_net_server_unix_leading_directories_create_set(Eo *obj, Eina_Bool leading_directories_create, unsigned int mode);
@@ -46,13 +46,13 @@ Eina_Error efl_net_server_serve(Eo *obj, const char *address);
 </code>
 \\
 **[[:develop:api:efl:net:server:unix:method:socket_activate|socket_activate]]**// [Overridden from [[:develop:api:efl:net:server:fd|Efl.Net.Server.Fd]]]//\\
-> %%If this method is called use an already activated socket.%%
+> %%If this method is called, use an already activated socket.%%
 <code c>
 Eina_Error efl_net_server_fd_socket_activate(Eo *obj, const char *address);
 </code>
 \\
 **[[:develop:api:efl:net:server:unix:property:unlink_before_bind|unlink_before_bind]]** //**(get, set)**//\\
-> %%AF_UNIX paths may be stale due crashes, remove files and try again.%%
+> %%AF_UNIX paths may be stale due to crashes. Remove files and try again.%%
 <code c>
 Eina_Bool efl_net_server_unix_unlink_before_bind_get(const Eo *obj);
 void efl_net_server_unix_unlink_before_bind_set(Eo *obj, Eina_Bool unlink_before_bind);
@@ -79,9 +79,9 @@ void efl_net_server_fd_client_reject(Eo *obj, int client_fd);
 |  | **[[:develop:api:efl:loop:fd:property:fd_file|fd_file]]** //**(get, set)**// | %%Defines which file descriptor to watch when watching a file.%% |
 |  | **[[:develop:api:efl:loop:fd:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
 ^ [[:develop:api:efl:net:server:fd|Efl.Net.Server.Fd]] ^^^
-|  ''protected set'' | **[[:develop:api:efl:net:server:fd:property:address|address]]** //**(get, set)**// | %%The address the server is bound to.%% |
-|  ''protected set'' | **[[:develop:api:efl:net:server:fd:property:clients_count|clients_count]]** //**(get, set)**// | %%Number of concurrent clients accepted by this server.%% |
-|  | **[[:develop:api:efl:net:server:fd:property:clients_limit|clients_limit]]** //**(get, set)**// | %%Number of maximum concurrent clients allowed by this server.%% |
+|  ''protected set'' | **[[:develop:api:efl:net:server:fd:property:address|address]]** //**(get, set)**// | %%The address to which the server is bound.%% |
+|  ''protected set'' | **[[:develop:api:efl:net:server:fd:property:clients_count|clients_count]]** //**(get, set)**// | %%Number of concurrent clients accepted by the server.%% |
+|  | **[[:develop:api:efl:net:server:fd:property:clients_limit|clients_limit]]** //**(get, set)**// | %%Number of maximum concurrent clients allowed by the server.%% |
 |  | **[[:develop:api:efl:net:server:fd:property:close_on_exec|close_on_exec]]** //**(get, set)**// | %%Controls Close-on-Exec() using FD_CLOEXEC.%% |
 |  | **[[:develop:api:efl:net:server:fd:method:constructor|constructor]]** | %%Call the object's constructor.%% |
 |  ''protected set'' | **[[:develop:api:efl:net:server:fd:property:family|family]]** //**(get, set)**// | %%The address family (AF_*) family of this socket.%% |
@@ -124,7 +124,7 @@ void efl_net_server_fd_client_reject(Eo *obj, int client_fd);
 |  | **[[:develop:api:efl:loop:fd:event:read|read]]** | %%Called when a read happened on the file descriptor%% |
 |  | **[[:develop:api:efl:loop:fd:event:write|write]]** | %%Called when a write happened on the file descriptor%% |
 ^ [[:develop:api:efl:net:server|Efl.Net.Server]] ^^^
-|  | **[[:develop:api:efl:net:server:event:client_add|client,add]]** | %%A new client socket was created.%% |
+|  | **[[:develop:api:efl:net:server:event:client_add|client,add]]** | %%A new client socket has been created.%% |
 |  | **[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]** | %%Notifies a client was rejected due excess, see %%[[:develop:api:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%% |
 |  | **[[:develop:api:efl:net:server:event:serving|serving]]** | %%Notifies the server is ready to accept clients. See property %%[[:develop:api:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%% |
 ^ [[:develop:api:efl:object|Efl.Object]] ^^^

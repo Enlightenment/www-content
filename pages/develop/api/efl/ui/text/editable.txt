@@ -19,6 +19,7 @@
           * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
             * [[:develop:api:efl:object|Efl.Object]] //(class)//
             * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+            * [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] //(mixin)//
             * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
             * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
             * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
@@ -60,6 +61,7 @@
           * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
             * [[:develop:api:efl:object|Efl.Object]] //(class)//
             * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+            * [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] //(mixin)//
             * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
             * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
             * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
@@ -137,8 +139,8 @@ Efl_Object *efl_constructor(Eo *obj);
 ^ [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] ^^^
 |  | **[[:develop:api:efl:canvas:group:method:group_change|group_change]]** | %%Marks the object as dirty.%% |
 |  | **[[:develop:api:efl:canvas:group:method:group_member_is|group_member_is]]** | %%Finds out if a given object is a member of this group.%% |
-|  | **[[:develop:api:efl:canvas:group:method:group_members_iterate|group_members_iterate]]** | %%Returns an iterator over the children of this object, that are canvas objects.%% |
-|  | **[[:develop:api:efl:canvas:group:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**// | %%Indicates that the group's layout need to be recalculated.%% |
+|  | **[[:develop:api:efl:canvas:group:method:group_members_iterate|group_members_iterate]]** | %%Returns an iterator over the children of this object, which are canvas objects.%% |
+|  | **[[:develop:api:efl:canvas:group:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**// | %%Indicates that the group's layout needs to be recalculated.%% |
 |  | **[[:develop:api:efl:canvas:group:property:paragraph_direction|paragraph_direction]]** //**(get, set)**// | %%This handles text paragraph direction of the given object. Even if the given object is not textblock or text, its smart child objects can inherit the paragraph direction from the given object. The default paragraph direction is %%''inherit''%%.%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:group:property:group_clipper|group_clipper]]** //**(get)**// | %%The internal clipper object used by this group.%% |
 ^ [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] ^^^
@@ -186,9 +188,11 @@ Efl_Object *efl_constructor(Eo *obj);
 ^ [[:develop:api:efl:file|Efl.File]] ^^^
 |  | **[[:develop:api:efl:file:property:load_error|load_error]]** //**(get)**// | %%Gets the (last) file loading error for a given object.%% |
 |  | **[[:develop:api:efl:file:method:save|save]]** | %%Save the given image object's contents to an (image) file.%% |
+^ [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] ^^^
+|  | **[[:develop:api:efl:gfx:color:property:color_code|color_code]]** //**(get, set)**// |  |
 ^ [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] ^^^
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lightning effect on the object.%% |
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lightning effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lighting effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lighting effect to the object.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**// | %%Alpha flag for map rendering.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**// | %%Clockwise state of a map (read-only).%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**// | %%Color of a vertex in the map.%% |
@@ -256,7 +260,7 @@ Efl_Object *efl_constructor(Eo *obj);
 |  | **[[:develop:api:efl:text:format:property:linerelgap|linerelgap]]** //**(get, set)**// | %%Relative line gap (top and bottom) for each line in the text%% |
 |  | **[[:develop:api:efl:text:format:property:multiline|multiline]]** //**(get, set)**// | %%Multiline is enabled or not%% |
 |  | **[[:develop:api:efl:text:format:property:password|password]]** //**(get, set)**// | %%Whether text is a password%% |
-|  | **[[:develop:api:efl:text:format:property:replacement_char|replacement_char]]** //**(get, set)**// | %%The character used to replace characters that can not be displayed%% |
+|  | **[[:develop:api:efl:text:format:property:replacement_char|replacement_char]]** //**(get, set)**// | %%The character used to replace characters that can't be displayed%% |
 |  | **[[:develop:api:efl:text:format:property:tabstops|tabstops]]** //**(get, set)**// | %%Tabstops value%% |
 |  | **[[:develop:api:efl:text:format:property:valign|valign]]** //**(get, set)**// | %%Vertical alignment of text%% |
 |  | **[[:develop:api:efl:text:format:property:wrap|wrap]]** //**(get, set)**// | %%Wrap mode for use in the text%% |
@@ -562,14 +566,14 @@ Efl_Object *efl_constructor(Eo *obj);
 |  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
 |  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
 ^ [[:develop:api:efl:ui:clickable|Efl.Ui.Clickable]] ^^^
-|  | **[[:develop:api:efl:ui:clickable:event:clicked|clicked]]** | %%Called when object was clicked%% |
-|  | **[[:develop:api:efl:ui:clickable:event:clicked_double|clicked,double]]** | %%Called when object received a double click%% |
-|  | **[[:develop:api:efl:ui:clickable:event:clicked_right|clicked,right]]** | %%Called when object received a right click%% |
-|  | **[[:develop:api:efl:ui:clickable:event:clicked_triple|clicked,triple]]** | %%Called when object received a triple click%% |
-|  | **[[:develop:api:efl:ui:clickable:event:longpressed|longpressed]]** | %%Called when the object received a longpress%% |
-|  | **[[:develop:api:efl:ui:clickable:event:pressed|pressed]]** | %%Called when the object was pressed%% |
-|  | **[[:develop:api:efl:ui:clickable:event:repeated|repeated]]** | %%Called when the object received repeated presses/clicks%% |
-|  | **[[:develop:api:efl:ui:clickable:event:unpressed|unpressed]]** | %%Called when the object is now longer pressed%% |
+|  | **[[:develop:api:efl:ui:clickable:event:clicked|clicked]]** | %%Called when object iss clicked%% |
+|  | **[[:develop:api:efl:ui:clickable:event:clicked_double|clicked,double]]** | %%Called when object receives a double click%% |
+|  | **[[:develop:api:efl:ui:clickable:event:clicked_right|clicked,right]]** | %%Called when object receives a right click%% |
+|  | **[[:develop:api:efl:ui:clickable:event:clicked_triple|clicked,triple]]** | %%Called when object receives a triple click%% |
+|  | **[[:develop:api:efl:ui:clickable:event:longpressed|longpressed]]** | %%Called when the object receives a long press%% |
+|  | **[[:develop:api:efl:ui:clickable:event:pressed|pressed]]** | %%Called when the object is pressed%% |
+|  | **[[:develop:api:efl:ui:clickable:event:repeated|repeated]]** | %%Called when the object receives repeated presses/clicks%% |
+|  | **[[:develop:api:efl:ui:clickable:event:unpressed|unpressed]]** | %%Called when the object is no longer pressed%% |
 ^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
 |  | **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]** | %%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%% |
 |  | **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]** | %%Emitted once the graph calculationg will be performed%% |
@@ -587,24 +591,24 @@ Efl_Object *efl_constructor(Eo *obj);
 |  | **[[:develop:api:efl:ui:scrollable:event:edge_left|edge,left]]** | %%Called when hitting the left edge%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:edge_right|edge,right]]** | %%Called when hitting the right edge%% |
 |  | **[[:develop:api:efl:ui:scrollable:event:edge_up|edge,up]]** | %%Called when hitting the top edge%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll|scroll]]** | %%Called when scroll operation%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_start|scroll,anim,start]]** | %%Called when scroll animation started%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_stop|scroll,anim,stop]]** | %%Called when scroll animation stopped%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_down|scroll,down]]** | %%Called when scrolling to downwards%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_start|scroll,drag,start]]** | %%Called when scroll drag started%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_stop|scroll,drag,stop]]** | %%Called when scroll drag stopped%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_left|scroll,left]]** | %%Called when scrolling to left%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_right|scroll,right]]** | %%Called when scrolling to right%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_start|scroll,start]]** | %%Called when scroll operation started%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_stop|scroll,stop]]** | %%Called when scroll operation stopped%% |
-|  | **[[:develop:api:efl:ui:scrollable:event:scroll_up|scroll,up]]** | %%Called when scrolling to upwards%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll|scroll]]** | %%Called when scrolling%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_start|scroll,anim,start]]** | %%Called when scroll animation starts%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_anim_stop|scroll,anim,stop]]** | %%Called when scroll animation stopps%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_down|scroll,down]]** | %%Called when scrolling downwards%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_start|scroll,drag,start]]** | %%Called when scroll drag starts%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_drag_stop|scroll,drag,stop]]** | %%Called when scroll drag stops%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_left|scroll,left]]** | %%Called when scrolling left%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_right|scroll,right]]** | %%Called when scrolling right%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_start|scroll,start]]** | %%Called when scroll operation starts%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_stop|scroll,stop]]** | %%Called when scroll operation stops%% |
+|  | **[[:develop:api:efl:ui:scrollable:event:scroll_up|scroll,up]]** | %%Called when scrolling upwards%% |
 ^ [[:develop:api:efl:ui:selectable|Efl.Ui.Selectable]] ^^^
 |  | **[[:develop:api:efl:ui:selectable:event:selected|selected]]** | %%Called when selected%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_changed|selection,changed]]** | %%Called when selection changed%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_cleared|selection,cleared]]** | %%Called when selection was cleared%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_copy|selection,copy]]** | %%Called when selection was copied%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_cut|selection,cut]]** | %%Called when selection was cut%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_paste|selection,paste]]** | %%Called when selection got pasted%% |
+|  | **[[:develop:api:efl:ui:selectable:event:selection_changed|selection,changed]]** | %%Called when selection is changed%% |
+|  | **[[:develop:api:efl:ui:selectable:event:selection_cleared|selection,cleared]]** | %%Called when selection is cleared%% |
+|  | **[[:develop:api:efl:ui:selectable:event:selection_copy|selection,copy]]** | %%Called when selection is copied%% |
+|  | **[[:develop:api:efl:ui:selectable:event:selection_cut|selection,cut]]** | %%Called when selection is cut%% |
+|  | **[[:develop:api:efl:ui:selectable:event:selection_paste|selection,paste]]** | %%Called when selection is pasted%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_start|selection,start]]** | %%Called at selection start%% |
 |  | **[[:develop:api:efl:ui:selectable:event:unselected|unselected]]** | %%Called when no longer selected%% |
 ^ [[:develop:api:efl:ui:text|Efl.Ui.Text]] ^^^

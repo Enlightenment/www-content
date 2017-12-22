@@ -18,6 +18,7 @@
     * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
       * [[:develop:api:efl:object|Efl.Object]] //(class)//
       * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+      * [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] //(mixin)//
       * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
       * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
       * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
@@ -153,7 +154,7 @@ void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Text_Curso
 |  | **[[:develop:api:efl:canvas:text:method:async_layout|async_layout]]** | %%Requests to layout the text off the mainloop.%% |
 |  | **[[:develop:api:efl:canvas:text:property:backing_color|backing_color]]** //**(get, set)**// | %%Backing color%% |
 |  | **[[:develop:api:efl:canvas:text:property:backing_type|backing_type]]** //**(get, set)**// | %%Enable or disable backing type%% |
-|  | **[[:develop:api:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]]** //**(get, set)**// | %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful for example in recipients fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%% |
+|  | **[[:develop:api:efl:canvas:text:property:bidi_delimiters|bidi_delimiters]]** //**(get, set)**// | %%BiDi delimiters are used for in-paragraph separation of bidi segments. This is useful, for example, in the recipient fields of e-mail clients where bidi oddities can occur when mixing RTL and LTR.%% |
 |  | **[[:develop:api:efl:canvas:text:property:cursor|cursor]]** //**(get)**// | %%The object's main cursor.%% |
 |  | **[[:develop:api:efl:canvas:text:method:cursor_char_delete|cursor_char_delete]]** | %%Deletes a single character from position pointed by given cursor.%% |
 |  | **[[:develop:api:efl:canvas:text:method:cursor_char_next|cursor_char_next]]** | %%Advances to the next character%% |
@@ -220,7 +221,7 @@ void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Text_Curso
 |  | **[[:develop:api:efl:canvas:text:method:range_geometry_get|range_geometry_get]]** | %%Get the geometry of a range in the text.%% |
 |  | **[[:develop:api:efl:canvas:text:method:range_simple_geometry_get|range_simple_geometry_get]]** | %%Get the "simple" geometry of a range.%% |
 |  | **[[:develop:api:efl:canvas:text:method:range_text_get|range_text_get]]** | %%Returns the text in the range between %%''cur1''%% and %%''cur2''%%.%% |
-|  | **[[:develop:api:efl:canvas:text:property:replacement_char|replacement_char]]** //**(get, set)**// | %%The character used to replace characters that can not be displayed%% |
+|  | **[[:develop:api:efl:canvas:text:property:replacement_char|replacement_char]]** //**(get, set)**// | %%The character used to replace characters that can't be displayed%% |
 |  | **[[:develop:api:efl:canvas:text:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
 |  | **[[:develop:api:efl:canvas:text:property:shadow_color|shadow_color]]** //**(get, set)**// | %%Color of shadow effect%% |
 |  | **[[:develop:api:efl:canvas:text:property:shadow_direction|shadow_direction]]** //**(get, set)**// | %%Direction of shadow effect%% |
@@ -243,12 +244,14 @@ void efl_ui_text_interactive_selection_cursors_get(const Eo *obj, Efl_Text_Curso
 |  | **[[:develop:api:efl:canvas:text:property:valign|valign]]** //**(get, set)**// | %%Vertical alignment of text%% |
 |  | **[[:develop:api:efl:canvas:text:method:visible_range_get|visible_range_get]]** | %%Returns the currently visible range.%% |
 |  | **[[:develop:api:efl:canvas:text:property:wrap|wrap]]** //**(get, set)**// | %%Wrap mode for use in the text%% |
-|  ''protected'' | **[[:develop:api:efl:canvas:text:method:filter_dirty|filter_dirty]]** | %%Called when the filter changes must trigger a redraw of the object.%% |
+|  ''protected'' | **[[:develop:api:efl:canvas:text:method:filter_dirty|filter_dirty]]** | %%Called when filter changes must trigger a redraw of the object.%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:text:method:filter_input_render|filter_input_render]]** | %%Called by Efl.Canvas.Filter.Internal when the parent class must render the input.%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:text:method:filter_state_prepare|filter_state_prepare]]** | %%Called by Efl.Canvas.Filter.Internal to request the parent class for state information (color, etc...).%% |
+^ [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] ^^^
+|  | **[[:develop:api:efl:gfx:color:property:color_code|color_code]]** //**(get, set)**// |  |
 ^ [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] ^^^
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lightning effect on the object.%% |
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lightning effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lighting effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lighting effect to the object.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**// | %%Alpha flag for map rendering.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**// | %%Clockwise state of a map (read-only).%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**// | %%Color of a vertex in the map.%% |

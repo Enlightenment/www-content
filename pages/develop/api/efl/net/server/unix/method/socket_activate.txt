@@ -1,23 +1,23 @@
 ~~Title: Efl.Net.Server.Unix.socket_activate~~
 ===== Description =====
 
-%%If this method is called use an already activated socket.%%
+%%If this method is called, use an already activated socket.%%
 
-%%This method allows a server to use an existing socket received from systemd or similar system.%%
+%%This method allows a server to use an existing socket received from systemd or any similar system.%%
 
-%%It will replace %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%, thus if this is used, that method will return EALREADY.%%
+%%It will replace %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%, thus if this is used, this method will return EALREADY.%%
 
-%%@note The parameter 'address' given to this function is only used to validate the next socket available, it doesn't search for a socket with the given address. Thus the socket to be used is the next unused and orders matter is using multiple servers!%%
+%%@note The parameter 'address' given to this function is only used to validate the next socket available. It doesn't search for a socket with the given address. Thus the socket to be used is the next unused one : order matters if using multiple servers!%%
 
-%%@note subclasses must validate the socket and return EINVAL prior to call the base class with Efl.Object.super. They must also emit "serving" when ready, for instance stream protocols may need to check for listening and if not try to listen. Usually they will also query getsockname() and set %%[[:develop:api:efl:net:server:property:address|Efl.Net.Server.address]]%%.%%
+%%@note subclasses must validate the socket and return EINVAL prior to call the base class with Efl.Object.super. They must also emit "serving" when ready. For instance stream protocols may need to check for listening and if not, try to listen. Usually they will also query getsockname() and set %%[[:develop:api:efl:net:server:property:address|Efl.Net.Server.address]]%%.%%
 
 %%Errors:%%
 
-%%- EALREADY: already have a socket, either from previous %%[[:develop:api:efl:net:server:fd:method:socket_activate|Efl.Net.Server.Fd.socket_activate]]%% or %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%. Usually represents a programming error.%%
+%%- EALREADY: There already is a socket, either from previous %%[[:develop:api:efl:net:server:fd:method:socket_activate|Efl.Net.Server.Fd.socket_activate]]%% or %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%. Usually represents a programming error.%%
 
-%%- ENOENT: no sockets received from process manager (ie: systemd). Usually this is not a fatal error, just proceed by calling %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%%%
+%%- ENOENT: No sockets received from process manager (ie: systemd). Usually this is not a fatal error, just proceed by calling %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%%%%
 
-%%- EINVAL: the socket received is not of the correct family, type or protocol. Usually this means a configuration mismatch with the order of server creation and calls to socket_activate. The systemd.socket entries must match the order in your application.%%
+%%- EINVAL: the socket received is not of the correct family, type or protocol. Usually this means a configuration mismatch between the order of server creation and calls to socket_activate. The systemd.socket entries must match the order in your application.%%
 
 //Since 1.19//
 {{page>:develop:api-include:efl:net:server:unix:method:socket_activate:description&nouser&nolink&nodate}}
@@ -41,7 +41,7 @@ Eina_Error efl_net_server_fd_socket_activate(Eo *obj, const char *address);
 
 ===== Parameters =====
 
-  * **address** //(in)// - %%The address to validate the next available socket. It doesn't serve as search, only as validation!%%
+  * **address** //(in)// - %%The address to validate the next available socket. It cannot be used to search, only for validation.%%
 
 ===== Implemented by =====
 

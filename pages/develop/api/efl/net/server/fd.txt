@@ -24,21 +24,21 @@
 ===== Members =====
 
 **[[:develop:api:efl:net:server:fd:property:address|address]]** //**(get, set)**// ''protected set''// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]//\\
-> %%The address the server is bound to.%%
+> %%The address to which the server is bound.%%
 <code c>
 const char *efl_net_server_address_get(const Eo *obj);
 void efl_net_server_address_set(Eo *obj, const char *address);
 </code>
 \\
 **[[:develop:api:efl:net:server:fd:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]//\\
-> %%Number of concurrent clients accepted by this server.%%
+> %%Number of concurrent clients accepted by the server.%%
 <code c>
 unsigned int efl_net_server_clients_count_get(const Eo *obj);
 void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
 </code>
 \\
 **[[:develop:api:efl:net:server:fd:property:clients_limit|clients_limit]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:net:server|Efl.Net.Server]]]//\\
-> %%Number of maximum concurrent clients allowed by this server.%%
+> %%Number of maximum concurrent clients allowed by the server.%%
 <code c>
 void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
 void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
@@ -111,7 +111,7 @@ void efl_net_server_serving_set(Eo *obj, Eina_Bool serving);
 </code>
 \\
 **[[:develop:api:efl:net:server:fd:method:socket_activate|socket_activate]]**\\
-> %%If this method is called use an already activated socket.%%
+> %%If this method is called, use an already activated socket.%%
 <code c>
 Eina_Error efl_net_server_fd_socket_activate(Eo *obj, const char *address);
 </code>
@@ -180,7 +180,7 @@ void efl_net_server_fd_process_incoming_data(Eo *obj);
 |  | **[[:develop:api:efl:loop:fd:event:read|read]]** | %%Called when a read happened on the file descriptor%% |
 |  | **[[:develop:api:efl:loop:fd:event:write|write]]** | %%Called when a write happened on the file descriptor%% |
 ^ [[:develop:api:efl:net:server|Efl.Net.Server]] ^^^
-|  | **[[:develop:api:efl:net:server:event:client_add|client,add]]** | %%A new client socket was created.%% |
+|  | **[[:develop:api:efl:net:server:event:client_add|client,add]]** | %%A new client socket has been created.%% |
 |  | **[[:develop:api:efl:net:server:event:client_rejected|client,rejected]]** | %%Notifies a client was rejected due excess, see %%[[:develop:api:efl:net:server:property:clients_limit|Efl.Net.Server.clients_limit]]%%.%% |
 |  | **[[:develop:api:efl:net:server:event:serving|serving]]** | %%Notifies the server is ready to accept clients. See property %%[[:develop:api:efl:net:server:property:serving|Efl.Net.Server.serving]]%%%% |
 ^ [[:develop:api:efl:object|Efl.Object]] ^^^

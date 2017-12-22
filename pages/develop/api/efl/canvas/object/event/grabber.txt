@@ -11,7 +11,7 @@
 
 %%Child objects are not modified in any way, unlike other types of smart objects.%%
 
-%%It is a user error for any child objects to be stacked above the event grabber parent while the event grabber is visible. A critical error will be raised if this is detected at any point.%%
+%%No child objects should be stacked above the event grabber parent while the grabber is visible. A critical error will be raised if this is detected.%%
 
 //Since 1.20//
 
@@ -26,6 +26,7 @@
     * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
       * [[:develop:api:efl:object|Efl.Object]] //(class)//
       * [[:develop:api:efl:gfx|Efl.Gfx]] //(interface)//
+      * [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] //(mixin)//
       * [[:develop:api:efl:gfx:stack|Efl.Gfx.Stack]] //(interface)//
       * [[:develop:api:efl:animator|Efl.Animator]] //(interface)//
       * [[:develop:api:efl:input:interface|Efl.Input.Interface]] //(interface)//
@@ -92,13 +93,13 @@ Eina_Bool efl_canvas_group_member_is(const Eo *obj, const Efl_Canvas_Object *sub
 </code>
 \\
 **[[:develop:api:efl:canvas:object:event:grabber:method:group_members_iterate|group_members_iterate]]**// [Overridden from [[:develop:api:efl:canvas:group|Efl.Canvas.Group]]]//\\
-> %%Returns an iterator over the children of this object, that are canvas objects.%%
+> %%Returns an iterator over the children of this object, which are canvas objects.%%
 <code c>
 Eina_Iterator *efl_canvas_group_members_iterate(const Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:canvas:object:event:grabber:property:group_need_recalculate|group_need_recalculate]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:canvas:group|Efl.Canvas.Group]]]//\\
-> %%Indicates that the group's layout need to be recalculated.%%
+> %%Indicates that the group's layout needs to be recalculated.%%
 <code c>
 Eina_Bool efl_canvas_group_need_recalculate_get(const Eo *obj);
 void efl_canvas_group_need_recalculate_set(Eo *obj, Eina_Bool value);
@@ -187,9 +188,11 @@ void efl_gfx_visible_set(Eo *obj, Eina_Bool v);
 |  | **[[:develop:api:efl:canvas:object:method:stack_above|stack_above]]** | %%Stack %%''obj''%% immediately %%''above''%%%% |
 |  | **[[:develop:api:efl:canvas:object:method:stack_below|stack_below]]** | %%Stack %%''obj''%% immediately %%''below''%%%% |
 |  ''protected'' | **[[:develop:api:efl:canvas:object:property:render_parent|render_parent]]** //**(get)**// | %%Gets the parent smart object of a given Evas object, if it has one.%% |
+^ [[:develop:api:efl:gfx:color|Efl.Gfx.Color]] ^^^
+|  | **[[:develop:api:efl:gfx:color:property:color_code|color_code]]** //**(get, set)**// |  |
 ^ [[:develop:api:efl:gfx:map|Efl.Gfx.Map]] ^^^
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lightning effect on the object.%% |
-|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lightning effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d|lightning_3d]]** | %%Apply a lighting effect on the object.%% |
+|  | **[[:develop:api:efl:gfx:map:method:lightning_3d_absolute|lightning_3d_absolute]]** | %%Apply a lighting effect to the object.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_alpha|map_alpha]]** //**(get, set)**// | %%Alpha flag for map rendering.%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_clockwise|map_clockwise]]** //**(get)**// | %%Clockwise state of a map (read-only).%% |
 |  | **[[:develop:api:efl:gfx:map:property:map_color|map_color]]** //**(get, set)**// | %%Color of a vertex in the map.%% |

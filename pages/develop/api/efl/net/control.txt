@@ -5,19 +5,19 @@
 
 %%Controls network connectivity.%%
 
-%%This class and its children objects are only useful to implement control of the network connectivity. If your application is only interested in requesting access to the network, use the @Efl.Net.Session instead.%%
+%%This class and its child objects are only useful to implement control of the network connectivity. If your application only needs to request access to the network, use @Efl.Net.Session instead.%%
 
-%%The network connectivity is defined on top of technologies that provide access points. A technology can be "ethernet", "wifi", "bluetooth" or something else. Ethernet will provide a single access point, while "wifi" will expose zero or more access points that can come and go.%%
+%%Network connectivity is defined on top of technologies that provide access points. A technology can be "ethernet", "wifi", "bluetooth" or something else. Ethernet will provide a single access point, while "wifi" will expose zero or more access points that can come and go.%%
 
-%%Users willing to use access points are expected to monitor "access_point,add" event to know when access points were added. To know when they were deleted, "access_point,del" or an %%[[:develop:api:efl:net:control:access_point|Efl.Net.Control.Access_Point]]%% "del" event. Finally "access_points,changed" is relative to additions, deletions and reordering of access point due changes in their priorities.%%
+%%Users willing to use access points are expected to monitor "access_point,add" event to know when access points are added. To know when they were deleted, "access_point,del" or an %%[[:develop:api:efl:net:control:access_point|Efl.Net.Control.Access_Point]]%% "del" event. Finally "access_points,changed" is relative to additions, deletions and reordering of access point due changes in their priorities.%%
 
-%%The backend system is responsible to remember connection details such as passphrase, last connected access point and priority. The user is NOT supposed to do that.%%
+%%The backend system is responsible for remembering connection details such as passphrase, last connected access point and priority. The user is NOT supposed to do that.%%
 
-%%For ease of use, %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% tells if at least one access point is online (verified connectivity), local (connected but unverified) or offline.%%
+%%For ease of use %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% determines if at least one access point is online (verified connectivity), local (connected but unverified) or offline.%%
 
-%%Due safety reasons all radio transmissions may be disabled with %%[[:develop:api:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% property. This is usually called "airplane mode" in some platforms.%%
+%%For safety reasons all radio transmissions may be disabled with %%[[:develop:api:efl:net:control:property:radios_offline|Efl.Net.Control.radios_offline]]%% property. This is usually called "airplane mode" on some platforms.%%
 
-%%Some platforms may not implement the backend for this class, in such cases the system will report always %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% "online" (%%[[:develop:api:efl:net:control:state|Efl.Net.Control.State.online]]%%) and iterators for %%[[:develop:api:efl:net:control:property:access_points|Efl.Net.Control.access_points]]%% and %%[[:develop:api:efl:net:control:property:technologies|Efl.Net.Control.technologies]]%% will be empty (they will be returned but won't contain any item).%%
+%%Some platforms may not implement the backend for this class, in which case the system will report %%[[:develop:api:efl:net:control:property:state|Efl.Net.Control.state]]%% as permanently "online" (%%[[:develop:api:efl:net:control:state|Efl.Net.Control.State.online]]%%) and iterators for %%[[:develop:api:efl:net:control:property:access_points|Efl.Net.Control.access_points]]%% and %%[[:develop:api:efl:net:control:property:technologies|Efl.Net.Control.technologies]]%% will be empty (they will be returned but won't contain any items).%%
 
 //Since 1.19//
 
@@ -73,7 +73,7 @@ Efl_Object *efl_finalize(Eo *obj);
 </code>
 \\
 **[[:develop:api:efl:net:control:property:radios_offline|radios_offline]]** //**(get, set)**//\\
-> %%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radios to be used.%%
+> %%If %%''true''%% disable all network technologies that use radio transmission, such as bluetooth and wifi. If %%''false''%%, allows radio to be used.%%
 <code c>
 Eina_Bool efl_net_control_radios_offline_get(const Eo *obj);
 void efl_net_control_radios_offline_set(Eo *obj, Eina_Bool radios_offline);
@@ -123,7 +123,7 @@ Eina_Iterator *efl_net_control_technologies_get(const Eo *obj);
 ===== Events =====
 
 **[[:develop:api:efl:net:control:event:access_point_add|access_point,add]]**\\
-> %%The given access point was added%%
+> %%The given access point has been added%%
 <code c>
 EFL_NET_CONTROL_EVENT_ACCESS_POINT_ADD(Efl_Net_Control_Access_Point *)
 </code>
@@ -153,7 +153,7 @@ EFL_NET_CONTROL_EVENT_AGENT_ERROR(Efl_Net_Control_Agent_Error)
 EFL_NET_CONTROL_EVENT_AGENT_RELEASED(void)
 </code>
 \\ **[[:develop:api:efl:net:control:event:agent_request_input|agent_request_input]]**\\
-> %%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user entered information, reply by calling %%[[:develop:api:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%
+> %%Requires the user to enter information in order to proceed, such as hidden SSID, passphrase, etc. After the user enters the information, reply by calling %%[[:develop:api:efl:net:control:method:agent_reply|Efl.Net.Control.agent_reply]]%%%%
 <code c>
 EFL_NET_CONTROL_EVENT_AGENT_REQUEST_INPUT(Efl_Net_Control_Agent_Request_Input)
 </code>
@@ -168,7 +168,7 @@ EFL_NET_CONTROL_EVENT_RADIOS_OFFLINE_CHANGED(void)
 EFL_NET_CONTROL_EVENT_STATE_CHANGED(void)
 </code>
 \\ **[[:develop:api:efl:net:control:event:technology_add|technology,add]]**\\
-> %%The given technology was added%%
+> %%The given technology has been added%%
 <code c>
 EFL_NET_CONTROL_EVENT_TECHNOLOGY_ADD(Efl_Net_Control_Technology *)
 </code>

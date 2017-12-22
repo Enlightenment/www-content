@@ -5,9 +5,9 @@
 
 %%The basic server interface.%%
 
-%%It will start serving and accepting clients once %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%% is called and the "serving" event is dispatched.%%
+%%This will start serving and accepting clients once %%[[:develop:api:efl:net:server:method:serve|Efl.Net.Server.serve]]%% is called and the "serving" event is dispatched.%%
 
-%%When new clients are accepted, then "client,add" event is dispatched with a child object implementing %%[[:develop:api:efl:net:socket|Efl.Net.Socket]]%% interface. These implement the standard %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%%, %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% and %%[[:develop:api:efl:io:closer|Efl.Io.Closer]]%% interfaces, thus can be used with utilities such as %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%.%%
+%%When new clients are accepted the "client,add" event is dispatched with a child object implementing %%[[:develop:api:efl:net:socket|Efl.Net.Socket]]%% interface. These implement the standard %%[[:develop:api:efl:io:reader|Efl.Io.Reader]]%%, %%[[:develop:api:efl:io:writer|Efl.Io.Writer]]%% and %%[[:develop:api:efl:io:closer|Efl.Io.Closer]]%% interfaces, so can be used with utilities such as %%[[:develop:api:efl:io:copier|Efl.Io.Copier]]%%.%%
 
 //Since 1.19//
 
@@ -16,21 +16,21 @@
 ===== Members =====
 
 **[[:develop:api:efl:net:server:property:address|address]]** //**(get, set)**// ''protected set''\\
-> %%The address the server is bound to.%%
+> %%The address to which the server is bound.%%
 <code c>
 const char *efl_net_server_address_get(const Eo *obj);
 void efl_net_server_address_set(Eo *obj, const char *address);
 </code>
 \\
 **[[:develop:api:efl:net:server:property:clients_count|clients_count]]** //**(get, set)**// ''protected set''\\
-> %%Number of concurrent clients accepted by this server.%%
+> %%Number of concurrent clients accepted by the server.%%
 <code c>
 unsigned int efl_net_server_clients_count_get(const Eo *obj);
 void efl_net_server_clients_count_set(Eo *obj, unsigned int count);
 </code>
 \\
 **[[:develop:api:efl:net:server:property:clients_limit|clients_limit]]** //**(get, set)**//\\
-> %%Number of maximum concurrent clients allowed by this server.%%
+> %%Number of maximum concurrent clients allowed by the server.%%
 <code c>
 void efl_net_server_clients_limit_get(const Eo *obj, unsigned int *limit, Eina_Bool *reject_excess);
 void efl_net_server_clients_limit_set(Eo *obj, unsigned int limit, Eina_Bool reject_excess);
@@ -59,7 +59,7 @@ Eina_Bool efl_net_server_client_announce(Eo *obj, Efl_Net_Socket *client);
 ===== Events =====
 
 **[[:develop:api:efl:net:server:event:client_add|client,add]]**\\
-> %%A new client socket was created.%%
+> %%A new client socket has been created.%%
 <code c>
 EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
 </code>
@@ -69,7 +69,7 @@ EFL_NET_SERVER_EVENT_CLIENT_ADD(Efl_Net_Socket *, @hot)
 EFL_NET_SERVER_EVENT_CLIENT_REJECTED(const char *)
 </code>
 \\ **[[:develop:api:efl:net:server:event:error|error]]**\\
-> %%Some error happened and the server needs to be stopped.%%
+> %%An error has occurred and the server needs to be stopped.%%
 <code c>
 EFL_NET_SERVER_EVENT_ERROR(Eina_Error)
 </code>
