@@ -38,6 +38,8 @@ When EFL receives an ordinal focus navigation command (typically though the <kbd
 
 As you add widgets to your GUI, the *focusable* ones are added to a list (not all widgets can be selected, like text labels, for example). Ordinal commands then move the focus through this list. If a widget is a container for other widgets (like Box), focus will move through its children *before* moving out of the container and onto its siblings.
 
+So, the bottom line is: **Add widgets to your GUI in the same order in which you will want the user to navigate them**. The order in which the widgets are added has no other impact, so it is worth walking the extra mile and do it in a sensible order: In this way, your GUI will be more keyboard-friendly.
+
 ## Setting the Focus on a Widget ##
 
 Sometimes you want to bypass EFL's default behavior and programmatically set the focus to a particular widget, for example, on the [OK] button once enough information has been added to a form.
@@ -89,6 +91,14 @@ Here's an usage example based on the EFL examples repository [tutorial/c/focus/s
                                               _focus_changed, NULL));
    }
 ```
+
+## Summary ##
+
+* Add widgets to your GUI in the same order you will want your users to navigate them.
+
+* Manually set the focus to a widget using ``efl_ui_focus_util_focus()``.
+
+* Be notified of focus changes by listening to the ``EFL_UI_FOCUS_OBJECT_EVENT_FOCUS_CHANGED`` event.
 
 ## Further Reading ##
 
