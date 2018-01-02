@@ -1,0 +1,443 @@
+---
+~~Title: Tutorial 3: Graphical "Hello World"~~
+~~NOCACHE~~
+---
+
+# Tutorial 3: "Hello World" in a EFL Window #
+
+In this guide you will learn how to build a complete graphical application, with a window and typical elements like a text box and button. After following this guide your application should look something like this:
+
+![Full application with text box and button](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image01.png)
+
+## Prerequisites ##
+
+If you haven't already done so take a look at our [previous guide](https://www.enlightenment.org/develop/tutorial/c/hello-world.md) on how to write a "Hello World" command line program for a terminal window. This guide shows you how to include [EFL libraries](https://www.enlightenment.org/develop/setup/c/start.md) in your applications.
+
+As you'll be building on the code from the prior tutorial, take a look at the program below to refresh your memory:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Efl_Core.h>
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+{
+   Efl_Loop_Arguments *args = ev->info;
+
+   if (eina_array_count(args->argv) == 0)
+     {
+        printf("Hello World!\n");
+     }
+   else
+     {
+        printf("Hello %s!\n", (char *) eina_array_data_get(args->argv, 0));
+     }
+
+   efl_exit(0);
+}
+EFL_MAIN()
+```
+
+Let's get started.
+
+## Step 1: Displaying a Window ##
+
+Instead of printing to the command line, this time your message will be displayed in a window. The first thing to do is to delete the lines within the main EFL loop: in other words, get rid of lines 10 through 21:
+
+```c
+[...]
+   Efl_Loop_Arguments *args = ev->info;
+
+   if (eina_array_count(args->argv) == 0)
+     {
+        printf("Hello World!\n");
+     }
+   else
+     {
+        printf("Hello %s!\n", (char *) eina_array_data_get(args->argv, 0));
+     }
+
+   efl_exit(0);
+[...]
+```
+
+> **NOTE:**
+> ``[...]`` in a Code Block indicates existing code which has been excluded for the sake of brevity. There is no need to type ``[...]`` into your program.
+
+
+Technically you could put all the code for opening the window, text boxes, buttons and so on into the main function which previously contained the lines you just deleted but that's messy. In general it's much better and cleaner to use the main function to call other functions.
+
+Create a function to set up your window and name it ``_gui_setup()``. Insert a call to the function from within the mani EFL loop. Your program should look like this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Elementary.h>
+#include <Efl_Ui.h>
+
+
+static void
+_gui_setup()
+{
+  // Build Graphical User Interface here
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   _gui_setup();
+}
+EFL_MAIN()
+```
+
+Your function is set up on lines 9 to 13. As it's not meant to return anything to the main function you can declare it as ``void``. You also don't need to pass anything on to this function as it will show only static text. This means there are no parameters either. You call ``_gui_setup()`` from line 18, within the main EFL loop.
+
+So far ``_gui_setup`` is empty. Create a window by adding the following lines within your ``_gui_setup()`` function:
+
+```c
+[...]
+   Eo *win;
+
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                 efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                 efl_text_set(efl_added, "Hello World"),
+                 efl_ui_win_autodel_set(efl_added, EINA_TRUE));
+[...]
+```
+
+As far as EFL is concerned, a window is just another object. You can declare it with ``Eo *win;``. The ``Eo`` type is the base object system for EFL. Most graphical elements such as windows, text boxes, buttons, sliders, etc. are ``Eo`` objects. You can give your window any name you wish but for now call it ``win``for simplicity's sake.
+
+The next part of the code defines the window itself. The ``efl_add()`` method creates a new object of the class specified in the first parameter and puts it inside the already existing object specified in the second parameter. In an EFL graphical application widgets are inserted inside other objects. For example, you can place a text object inside a text box inside a window and so on. In this case we want to create a window (``EFL_UI_WIN _CLASS``) and don't need to put it inside any other object, so we pass ``NULL`` as the second parameter. The ``EFL_UI_WIN_CLASS``parameter is actually a macro. [You can learn more about these macros and see a list of useful macros here](macros.md).
+
+The rest of the parameters of ``efl_add()`` are a list of methods that will be called in order, normally to configure the object we have just created. You can add as many configuration methods as you want in this list and can use the special symbol ``efl_added`` to refer to the created object if you need to.
+
+The ``efl_ui_win_type_set()`` function does what it says on the box. There are several types of window types (basic, dialog, popup menus, etc.) : here we want the most basic type. You can see the other types of windows you can choose by [visiting the list of macros](macros.md). The ``efl_text_set()`` function sets the text of the window's title bar, in this case, to "Hello World". The ``efl_ui_win_autodel_set()`` procedure tells the program to automatically make the window disappear if it's closed. You can look up the exact meaning of these calls in the [API Reference Guide](link to /devel/auto).
+
+Your program will now look like this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Elementary.h>
+#include <Efl_Ui.h>
+
+
+static void
+_gui_setup()
+{
+   Eo *win;
+
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                 efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                 efl_text_set(efl_added, "Hello World"),
+                 efl_ui_win_autodel_set(efl_added, EINA_TRUE));
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   _gui_setup();
+}
+EFL_MAIN()
+```
+
+Save this program to a file named ``hello-world-gui.c``.
+
+You can compile this program following the instructions in our [*Compile and Run* section in the EFL Installation Guide](eflinstallationguide.md#Compiling). The compile will produce a file named "hello-world-gui" which you can execute, although at this stage you won't see much. The window opens but it is empty and of minimal size. You may be able to see it in the upper left corner of your screen as a thin sliver. You can try to drag its edges with your mouse to enlarge it if you wish.
+
+You also must quit your application manually by pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> from the terminal since the application won't stop even when the window's closed.
+
+You can resolve both these issues however.
+
+## Step 2: Stopping the App ##
+
+As an application can have multiple windows, closing one of them won't stop the app. That's why your program above does not stop even if you close the one and only window. To cleanly exit the app call EFL's ``efl_exit()`` function. Add a new function to your program to do this:
+
+```c
+[...]
+static void
+_gui_quit_cb(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+{
+   efl_exit(0);
+}
+[...]
+```
+
+Now add the line:
+
+```c
+[...]
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _gui_quit_cb, NULL);
+[...]
+```
+
+to the ``_gui_setup()`` function.
+
+This ensures that when the window ``win`` is closed (``EFL_UI_WIN_EVENT_DELETE_REQUEST``) the app is also closed by calling ``_gui_quit_cb()``.
+
+## Step 3: Adding a Box ##
+
+By adding a simple container box inside your window you can set the initial size of the window, since it adapta to the size of the widgets you place in it.
+
+Declare a new ``Eo`` objects in ``_gui_setup()`` by changing the ``Eo *win;`` line to ``Eo *win, *box;``.
+
+Next create the box object and add it to the window:
+
+```c
+[...]
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+         efl_content_set(win, efl_added),
+         efl_gfx_size_hint_min_set(efl_added, EINA_SIZE2D(360, 240)));
+[...]
+```
+
+As with the ``EFL_UI_WIN_CLASS`` you saw in the ``win`` creation block, [``EFL_UI_BOX_CLASS``](macros.md##Box) is a macro which establishes that this object will be a box object. The next parameter tells your application what object the box has to go into : in this case inside the ``win`` window you created earlier. The ``efl_content_set()`` function activates the text box within the window. Until you call this function the box will not be visible. The ``efl_gfx_size_hint_min_set()`` function sets the minimum size for the box -- it can be made larger by dragging the corners of the window but it can't be any smaller.
+
+Your program should now look like this:
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Elementary.h>
+#include <Efl_Ui.h>
+
+static void
+_gui_quit_cb(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+{
+   efl_exit(0);
+}
+
+static void
+_gui_setup()
+{
+   Eo *win, *box;
+
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                 efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                 efl_text_set(efl_added, "Hello World"),
+                 efl_ui_win_autodel_set(efl_added, EINA_TRUE));
+ 
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _gui_quit_cb, NULL);
+
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+         efl_content_set(win, efl_added),
+         efl_gfx_size_hint_min_set(efl_added, EINA_SIZE2D(360, 240)));
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   _gui_setup();
+}
+EFL_MAIN()
+```
+
+If you compile and run this program you should see something like what's shown below:
+
+![Window with empty box](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image02.png)
+
+## Step 4: Adding Widgets ##
+
+The next step is to add the text box and button widgets. 
+
+You can add a text box widget using the ``EFL_UI_TEXT_CLASS`` and insert into your ``box`` object. Insert the following code in your ``_gui_setup()`` function:
+
+```c
+[...]
+  efl_add(EFL_UI_TEXT_CLASS, box,
+           efl_text_markup_set(efl_added, "Hello World. This is an <b>Efl.Ui</b> application!"),
+           efl_ui_text_interactive_selection_allowed_set(efl_added, EINA_FALSE),
+           efl_pack(box, efl_added));
+[...]
+```
+
+The ``efl_text_markup_set()`` lets you define what text to show in the text box. You can apply some formatting if you wish using some basic HTML-like markup. The ``efl_ui_text_interactive_selection_allowed_set(efl_added, EINA_FALSE)`` tells the application that the text cannot be modified by the user. ``efl_pack()`` fits the text box inside container box, taking up all the space available.  This doesn't necessarily mean all the space: see below.
+
+To add a button use the following code:
+
+```c
+[...]
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Quit"),
+           efl_pack(box, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _gui_quit_cb, efl_added));
+[...]
+```
+
+The ``efl_text_set()`` adds a *Quit* label to the button and ``efl_event_callback_add()`` defines what event will trigger the button, in this case, being clicked (``EFL_UI_EVENT_CLICKED``). You'll also define what to do if the event is indeed triggered. Here, the program quits by calling the ``_gui_quit_cb()`` callback function you defined earlier.
+
+Notice how you're using ``efl_pack()`` once again to define how much space the button will take up. Without including any more information EFL shares the available space equally between all widgets. This means that if you compile and run the program you should see something like this:
+
+![The text box and button share the available space 50/50.](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image03.png)
+
+As you can see the text box takes up one half of the space and button takes up the other.
+
+## Step 5: Adding some Formatting to your Widgets ##
+
+The layout of your window is slightly skewed. In this section you'll learn how to change the space assigned by default to each widget to make your app look better. You''ll also discover how to change the alignment of the text in the text box.
+
+To change how much relative space each widget takes up, you use *weight hinting*: in other words you can assign a how much proportional space each widget should take up relative to each other and the overall space available in the container. For example you can add an ``efl_gfx_size_hint_weight_set()`` function to your text box and button like so:
+
+```c
+[...]
+   efl_add(EFL_UI_TEXT_CLASS, box,
+           efl_text_markup_set(efl_added, "Hello World.<br>This is an <b>Efl.Ui</b> application!"),
+           efl_ui_text_interactive_selection_allowed_set(efl_added, EINA_FALSE),
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 1.0),
+           efl_pack(box, efl_added));
+
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Quit"),
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 1.0),
+           efl_pack(box, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _gui_quit_cb, efl_added));
+[...]
+```
+
+The ``1.0, 1.0`` parameters in both the functions tell Enlightenment to assign the maximum available space on the horizontal and vertical axis. This means they each get 50% of the space and the window looks like what you see above.
+
+However if you change ``efl_gfx_size_hint_weight_set()`` for the text box to:
+
+```c
+[...]
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 0.9),
+[...]
+```
+
+then change the function for the button to:
+
+```c
+[...]
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 0.1),
+[...]
+```
+
+Enlightenment assigns approximately 90% of the vertical space to the text box and about 10% of the space to the button. This is not exact, since there is a minimum height for the button. The minimum height is there to make sure that however small you want to make the button, its label will always be visible.
+
+Changing horizontal weights will not change the look of the widgets. As there are no two widgets in your application along the same horizontal axis, both will expand to the maximum available space regardless of the values you assign them.
+
+To change the alignment of the text in the text box use an ``efl_gfx_size_hint_align_set()`` function with it. For example:
+
+```c
+[...]
+    efl_gfx_size_hint_align_set(efl_added, 0.0, 1.0),
+[...]
+```
+
+This aligns the text against the left side of the box which is the default setting.
+
+Changing the parameters to the following aligns the text to the right as you can see below:
+
+```c
+[...]
+    efl_gfx_size_hint_align_set(efl_added, 1.0, 0.0),
+[...]
+```
+
+![You can align the text in the text box using hinting.](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image04.png)
+
+If you use ``0.5, 0.5``, the text will be centered. Take a look at [the complete program](#The_Complete_hello-world-guic_Program) below to see an example of this.
+
+## The Complete "hello-world-gui.c" Program ##
+
+```c
+#define EFL_EO_API_SUPPORT 1
+#define EFL_BETA_API_SUPPORT 1
+
+#include <Eina.h>
+#include <Elementary.h>
+#include <Efl_Ui.h>
+
+static void
+_gui_quit_cb(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+{
+   efl_exit(0);
+}
+
+static void
+_gui_setup()
+{
+   Eo *win, *box;
+
+   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+                 efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
+                 efl_text_set(efl_added, "Hello World"),
+                 efl_ui_win_autodel_set(efl_added, EINA_TRUE));
+
+   efl_event_callback_add(win, EFL_UI_WIN_EVENT_DELETE_REQUEST, _gui_quit_cb, NULL);
+
+   box = efl_add(EFL_UI_BOX_CLASS, win,
+                efl_content_set(win, efl_added),
+                efl_gfx_size_hint_min_set(efl_added, EINA_SIZE2D(360, 240)));
+
+   efl_add(EFL_UI_TEXT_CLASS, box,
+           efl_text_markup_set(efl_added, "Hello World. This is an <b>Efl.Ui</b> application!"),
+           efl_ui_text_interactive_selection_allowed_set(efl_added, EINA_FALSE),
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 0.9),
+           efl_gfx_size_hint_align_set(efl_added, 0.5, 0.5),
+           efl_pack(box, efl_added));
+
+   efl_add(EFL_UI_BUTTON_CLASS, box,
+           efl_text_set(efl_added, "Quit"),
+           efl_gfx_size_hint_weight_set(efl_added, 1.0, 0.1),
+           efl_pack(box, efl_added),
+           efl_event_callback_add(efl_added, EFL_UI_EVENT_CLICKED,
+                                  _gui_quit_cb, efl_added));
+}
+
+EAPI_MAIN void
+efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+{
+   _gui_setup();
+}
+EFL_MAIN()
+```
+
+## Compiling and Running ##
+
+Follow the instructions in the [*Compile and Run* section in the EFL Installation Guide](efl-installation-guide.md#Compiling) to create an executable file called *hello-world-gui*. Run this with:
+
+```
+./hello-world-gui
+```
+You will see something like what is shown below.
+
+!["Hello World!" in a window with a button.](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image01.png)
+
+The window shows the text window with centered text and a button which exits the program when the user clicks it.
+
+Visit the [Things to Try](#Things_to_Try) section below for suggestions on what you can try next and become more familiar with programming graphical applications with EFL.
+
+If anything goes wrong check out the [Troubleshooting](#Troubleshooting) section at the end of the page.
+
+## Things to Try ##
+
+Try adding more widgets such as an *About* button to your program. Experiment with different values of weight hinting to understand better how you can place and size your widgets. Create a new callback for your *About* button to practise linking an action with a function.
+
+## Summary ##
+
+In this tutorial you have learned:
+
+* How to create a graphical window with ``efl_add()`` and ``EFL_UI_WIN_CLASS``.
+* How to add and position widgets in a window with ``efl_add()``, ``efl_gfx_size_hint_align_set()`` and ``efl_gfx_size_hint_weight_set()``.
+* How to exit an application that uses windows cleanly with ``efl_quit()``.
+
+## Troubleshooting ##
+
+Apart from typos that may cause problems compiling or running, there is not much that can go wrong with this application. If it fails to compile check that you have installed all the EFL libraries and development files and that they are up to date. [Learn more about installing the EFL files here]().
+
+## Resources ##
+
+1. [Download EFL from here](https://download.enlightenment.org/rel/libs/efl/efl-1.20.6.tar.xz)
+2. [Download more examples of code from here](https://git.enlightenment.org/tools/examples.git/tree/tutorial/c)
