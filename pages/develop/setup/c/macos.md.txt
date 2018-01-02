@@ -1,0 +1,171 @@
+---
+~~Title: Installing EFL on macOS~~
+~~NOCACHE~~
+---
+
+# Installing EFL on macOS #
+
+> **NOTE:**
+> The Enlightenment (Desktop Manager) is not supported on macOS and there are no plans to do so in the near future.  Please [contact us](https://www.enlightenment.org/contrib/start) if you'd like to help with this.
+
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You will need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
+
+This tutorial describes two ways of installing EFL on your system. You will only need one so use the index on the right to navigate to the most useful method for you.
+
+The Enlightenment Foundation's projects mostly targets Linux platforms therefore not everything work on macOS works the first time. This is due to the specific requirements of macOS (kernel+userland) and the fact that there are very few 'Englightened' macOS users.
+
+This document explains how to install EFL using either the [Homebrew package manager](https://brew.sh/) or by building from source via git.
+
+Whichever installation method you use, read through the section on [Compiling EFL Applications](#Compiling_EFL_Applications) to find out more about building apps. 
+
+## Install EFL with Homebrew ##
+
+Homebrew is an unofficial package manager for macOS which you can install a number of programs that aren't available in macOS by default. 
+
+To install Homebrew open Terminal in macOS and run:
+
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+The script will prompt you through the install process. Feel free to visit the [Homebrew website](https://docs.brew.sh/Installation.html) for more information on fine tuning the installation.
+
+Homebrew should run an update prior to installing any new software but double check this by running:
+
+```bash
+brew update
+```
+
+Next install EFL with:
+
+```bash
+brew install efl
+```
+
+The distributed version of EFL is [1.20.6](http://braumeister.org/formula/efl).
+
+## Installing from Git ##
+
+Installing EFL manually is broadly a three step process. Firstly you need to have the macOS *Command Line Tools (CLT)* installed on your system, then install the necessary software dependencies. You can then configure and compile the EFL source code. 
+
+### Step 1: Install Command Line Tools ###
+
+If you've already installed [XCode](https://developer.apple.com/xcode/) via the Mac App Store, the command line tools are already embedded in the *Integrated Development Environment (IDE)*. Failing this, install the CLT by opening Terminal then run:
+
+```bash
+xcode-select --install
+```
+
+### Step 2: Installing Dependencies ###
+
+The easiest way to install the necessary software dependencies is to use a package manager like Homebrew. If you haven't already installed it do so now by opening Terminal and running:
+
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+The script will prompt you through the install process. Feel free to visit the [Homebrew website](https://docs.brew.sh/Installation.html) for more information on fine tuning the installation.
+
+Homebrew should run an update prior to installing any new software but double check this by running:
+
+```bash
+brew update
+```
+
+Next install the dependencies with:
+
+```bash
+brew install autoconf automake libtool autoconf-archive gettext check pkg-config luajit jpeg freetype fribidi fontconfig giflib libtiff glib dbus libsndfile bullet libspectre libraw librsvg poppler gstreamer gst-plugins-good pulseaudio
+brew migrate dbus
+```
+If you're using a fresh install of macOS, create a 'LaunchAgents' folder for your own account if it doesn't exist already:
+
+```bash
+mkdir -p ~/Library/LaunchAgents
+```
+
+Next use ``launchctl`` to automatically start and stop ``dbus``:
+
+```bash
+ln -sfv /usr/local/opt/dbus/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/org.freedesktop.dbus-session.plist
+```
+
+If you want to use ``gettext`` you'll also need ''autopoint'' to your ''$PATH'' your in '~/.profile' file or similar. If the file doesn't exist user ``nano`` to create it, for instance:
+
+```bash
+cd ~/
+nano .profile
+export PATH="$(brew --prefix gettext)/bin:$PATH"
+```
+
+### Step 3: Install and configure SSL ###
+
+Since El Capitan, Apple no longer distributes OpenSSL headers. Fortunately you can install OpenSSL manually via Homebrew:
+
+```bash
+brew install openssl
+brew link openssl --force
+```
+
+To add flags to '~/.bashrc' or similar use:
+
+```bash
+export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS"
+export LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"
+```
+
+### Step 4: Modify linker flags ###
+
+> **NOTE:**
+> This step is only necessary if you wish to build macOS App Bundles (.app). 
+
+You can do this using 'osx-packager', which is a python package for generating App Bundles and/or .dmg files for easy distribution. To download, open Terminal and run:
+
+```bash
+git clone https://git.enlightenment.org/devs/jayji/osx-packager.git
+```
+For osx-packager to work properly, you must provide custom linker flags:
+
+```bash
+export LDFLAGS="-Wl,-headerpad_max_install_names ${LDFLAGS}"
+```
+
+### Step 5: Configuring the Software ###
+
+Now that you've installed all the required packages, you can download EFL itself directly from the git repository. Open Terminal and run:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a a directory called *efl/*. Use ``cd`` to switch to the new directory, then compile EFL:
+
+```bash
+./autogen.sh --disable-cxx-bindings
+make -j $(nproc)
+```
+
+Finally, install EFL with:
+
+```bash
+sudo make -j $(nproc) install
+```
+
+## Compiling EFL Applications ###
+
+With EFL installed you can start compiling the applications you write using Enlightenment technologies:
+
+```bash
+gcc -o your_app your_app.c `pkg-config --cflags --libs eina efl elementary`
+```
+
+Substitute``your_app`` for the name of the app you want to build and ``your_app.c`` for the file containing source code of your application.
+
+If the compilation is successful this will create an executable application called *your_app* in the directory. You can run this app like any other program.
+
+## Troubleshooting ##
+
+If you get errors when you compile the examples in this guide, you may be using an out of date version of EFL. Update your libraries installing from [EFL's git repository](#Installing_From_Git).
+
+If you are having problems compiling with installing EFL, you can also find help on any of [our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
