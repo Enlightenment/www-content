@@ -1,0 +1,688 @@
+---
+~~Title: Debugging~~
+---
+
+# Debugging EFL #
+
+The following is designed as a quick reference guide for debugging the Enlightenment Foundation Libraries (EFL); it is not exhaustive, and will require previous knowledge of programming and debugging tools.
+
+## Compilation ##
+
+You will need to build EFL, Enlightenment and any othe related software to be tested with debugging compile flags. [The Get Source documentation](/docs/distros/start) will have section on this for your build environment. Remember to have ``-g`` as a ``CFLAGS`` option to ensure binaries and libraries have all the debug information required. If you didn't build with debugging, simply build again with these flags correctly set and debugging can begin.
+
+## EFL Logs ##
+
+Sometimes you will see logs as follows:
+
+```bash
+CRI<10094>:elementary elm_toolbar.c:1453 _elm_toolbar_elm_widget_theme_apply() Failed to set layout!
+*** Backtrace ***
+/usr/local/lib/libeina.so.1	 0x7f8c2fc0be86 0x7f8c2fbea000
+/usr/local/lib/libeina.so.1	 0x7f8c2fc0d1a9 0x7f8c2fbea000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028c87d 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c302aa086 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c30288d58 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028618c 0x7f8c30072000
+/usr/local/lib/libelementary.so.1	 0x7f8c3028f087 0x7f8c30072000
+/usr/local/bin/terminology	 0x416d58 0x400000
+/usr/local/lib/libevas.so.1	 0x7f8c2f3daca6 0x7f8c2f34a000
+/usr/local/lib/libeo.so.1	 0x7f8c2e5ed37b 0x7f8c2e5e0000
+/usr/local/lib/libeo.so.1	 0x7f8c2e5ebbcb 0x7f8c2e5e0000
+/usr/local/lib/libevas.so.1	 0x7f8c2f3dceaa 0x7f8c2f34a000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87d5e1 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e8837a7 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87e90f 0x7f8c2e7f8000
+/usr/local/lib/libedje.so.1	 0x7f8c2e87eab7 0x7f8c2e7f8000
+/usr/local/lib/libecore.so.1	 0x7f8c2f122d0b 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f11d775 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f1251f8 0x7f8c2f110000
+/usr/local/lib/libecore.so.1	 0x7f8c2f1253d7 0x7f8c2f110000
+/usr/local/bin/terminology	 0x4138b7 0x400000
+/usr/local/bin/terminology	 0x40c74c 0x400000
+/usr/lib/libc.so.6	 0x7f8c2c675800 0x7f8c2c655000
+```
+
+This log shows EFL logging a critical error. There are various levels of error: critical, error, warning and debug are the main ones, but by default you should normally only see ``CRI`` (critical) and ``ERR`` error levels.
+
+Following the error, which includes the name of the source file and the line number on which the error was encountered, is a full backtrace. This is not generally human readable, because making it so is relatively costly so is not done at runtime. A utility to parse the backtrace for readability is provided: ``eina_btlog``. Simply do the following:
+
+```bash
+cat > mybacktrace.txt
+# copy and paste the above lines following *** Backtrace *** that start with file paths
+# now hit CTRL+D to end input
+cat mybacktrace.txt | eina_btlog
+```
+
+This tool will output a colorized log, as below, that humans can easily read. This is the log a developer needs in order to identify the full path used to trigger the issue, with functions called from the bottom to the top of the stack - so the newest functions called are at the top of this log - and with file paths,line numbers, and even binary files listed.
+
+```bash
+/usr/local/lib/libeina.so.1       |        /efl/src/lib/eina/eina_log.c           : 1875 @ eina_log_print_cb_stderr()
+/usr/local/lib/libeina.so.1       |        /efl/src/lib/eina/eina_log.c           : 1272 @ eina_log_print_unlocked()
+/usr/local/lib/libelementary.so.1 |      /elementary/src/lib/elm_toolbar.c        : 1453 @ _elm_toolbar_elm_widget_theme_apply()
+/usr/local/lib/libelementary.so.1 |      /elementary/src/lib/elm_widget.eo.c      :  451 @ elm_obj_widget_theme_apply()
+/usr/local/lib/libelementary.so.1 |      /elementary/src/lib/elm_toolbar.c        : 2949 @ _elm_toolbar_icon_size_set()
+/usr/local/lib/libelementary.so.1 |      /elementary/src/lib/elm_toolbar.eo.c     :   56 @ elm_obj_toolbar_icon_size_set()
+/usr/local/lib/libelementary.so.1 |      /elementary/src/lib/elm_toolbar.eo.c     :  354 @ elm_toolbar_icon_size_set()
+/usr/local/bin/terminology        |     /terminology/src/bin/options.c            :  156 @ options_toggle()
+/usr/local/lib/libevas.so.1       | /efl/src/lib/evas/canvas/evas_object_smart.c  :   67 @ _eo_evas_smart_cb()
+/usr/local/lib/libeo.so.1         |          /efl/src/lib/eo/eo_base_class.c      :  712 @ _eo_base_event_callback_call()
+/usr/local/lib/libeo.so.1         |          /efl/src/lib/eo/eo_base.eo.c         :   94 @ eo_event_callback_call()
+/usr/local/lib/libevas.so.1       | /efl/src/lib/evas/canvas/evas_object_smart.c  :  787 @ evas_object_smart_callback_call()
+/usr/local/lib/libedje.so.1       |        /efl/src/lib/edje/edje_match.c         :  557 @ edje_match_callback_exec_check_finals()
+/usr/local/lib/libedje.so.1       |        /efl/src/lib/edje/edje_program.c       : 1430 @ _edje_emit_cb()
+/usr/local/lib/libedje.so.1       |        /efl/src/lib/edje/edje_message_queue.c :  788 @ _edje_message_queue_process()
+/usr/local/lib/libedje.so.1       |        /efl/src/lib/edje/edje_message_queue.c :  155 @ _edje_job()
+/usr/local/lib/libecore.so.1      |       /efl/src/lib/ecore/ecore_job.c          :  123 @ _ecore_job_event_handler()
+/usr/local/lib/libecore.so.1      |       /efl/src/lib/ecore/ecore_private.h      :  308 @ _ecore_lock()
+/usr/local/lib/libecore.so.1      |       /efl/src/lib/ecore/ecore_main.c         : 1928 @ _ecore_main_loop_iterate_internal()
+/usr/local/lib/libecore.so.1      |       /efl/src/lib/ecore/ecore_main.c         :  983 @ ecore_main_loop_begin()
+/usr/local/bin/terminology        |     /terminology/src/bin/main.c               :  933 @ elm_main()
+/usr/local/bin/terminology        |     /terminology/src/bin/main.c               :  970 @ main()
+      /usr/lib/libc.so.6          |                       ??/??                   :  970 @ __libc_start_main()
+```
+
+If you are working on EFL, writing apps that use EFL or just want to report these as a user, it is this resulting ``btlog`` that is most useful.
+
+If you don't see these logs, set the following environment variable:
+
+```bash
+export EINA_LOG_BACKTRACE=999
+```
+
+## Error Logging ##
+
+EFL uses a common method to log error messages called ``Eina_Log``. With this you can tweak the verbosity of the logs simply by setting some environment variables.
+
+``Eina_Log`` introduces the concept of logging domains (or loggers), which might already be familiar to readers. It is basically a way to separate a set of log messages into a context (e.g. a module) and provide a way of controlling this set as a whole.
+
+The level is used for controlling which messages should appear. It specifies the lowest level that should be displayed, i.e. a message with level 2 being logged on a domain with level set to 3 would be displayed while a message with level 4 wouldn't.
+
+The available log levels are as follows:
+
+| Level   | Number | Macro               |
+|---------|--------|---------------------|
+|Critical |      0 | ``EINA_LOG_CRIT()`` |
+|Error    |      1 | ``EINA_LOG_ERR()``  |
+|Warning  |      2 | ``EINA_LOG_WARN()`` |
+|Info     |      3 | ``EINA_LOG_INFO()`` |
+|Debug    |      4 | ``EINA_LOG_DBG()``  |
+
+To set the general log level you can use the ``EINA_LOG_LEVEL`` variable:
+
+```bash
+EINA_LOG_LEVEL=4 myapp
+```
+
+You can use a finer selection using the ``EINA_LOG_LEVELS`` variable:
+
+```bash
+EINA_LOG_LEVELS=module1:4,module2:2,module3:0 myapp
+```
+
+This line would set the logging level for ``module1`` to 4, ``module2`` to 2 and ``module3`` to 0. 
+
+```bash
+EINA_LOG_LEVEL=3 EINA_LOG_LEVELS_GLOB=eina_*:0 myapp
+```
+
+This will prevent ``eina_log`` from outputting internal ``eina`` code, thus allowing you to see your own domain messages more easily.
+
+You may also want to enforce crashes when errors occur: ``EINA_ERROR_ABORT` will do this:
+
+```bash
+EINA_ERROR_ABORT=1 gdb myapp
+```
+
+This will now cause the program to abort when it encounters an error of the set level or above, allowing you to poke around with GDB and see why this is happening.
+
+## Debugging Tools ##
+
+There are a range of tools available for debugging, the most common of which are introduced below.
+
+### GDB ###
+
+In general you would use the GNU Debugger (GDB) as follows:
+
+```bash
+gdb myapp
+```
+
+You can also attach to a running process with:
+
+```bash
+gdb myapp PID
+```
+
+Where ``PID`` is the process ID of the ``myapp`` process you to which you are attaching and debugging.
+
+On some systems, attaching via GDB is prohibited. To enable it, sue the following command:
+
+```bash
+sudo sysctl -w kernel.yama.ptrace_scope=0
+```
+
+### GDB with Enlightenment ###
+
+Enlightenment is special, because it already has something monitoring it for crashes: ``enlightenment_start``. This means you can't attach GDB to it as normal. Enlightenment will produce a ``~/.e-crashdump.txt`` log for every crash that happens through this monitor. If no ``~/.e-crashdump.txt`` file is created, GDB attachment may be disabled; enable it using the following command:
+
+```bash
+sudo sysctl -w kernel.yama.ptrace_scope=0
+```
+
+When Enlightenment crashes it is automatically stopped and a "white box of death" is displayed on screen. The ``~/.e-crashdump.txt`` file should have been appended with error details, but if you want to poke around manually you will need to attach GDB manually.
+
+Switch to a text console with CTRL+ALT+F1 and log in, or use something like ``ssh`` to remotely log into your machine. Attach GDB to enlightenment by finding out the process ID of Enlightenment as shown below.
+
+```
+kill -SIGUSR1 "$(pidof enlightenment_start)"
+gdb enlightenment "$(pidof enlightenment)"
+```
+
+If the above fails you must find the PIDs manually: 
+
+```
+ps -auwx | grep enlightenment
+```
+
+or:
+
+```
+pgrep enlightenment
+```
+
+Find two process IDs: one for the process ``enlightenment_start`` and one for the process ``enlightenment``. When you have both process IDs you can attach GDB:
+
+```
+kill -SIGUSR1 {pid_of_enlightenment_start}
+gdb enlightenment {pid_of_enlightenment}
+```
+
+Where ``{pid_of_enlightenment_start}`` and ``{pid_of_enlightenment}`` are the process IDs you found, e.g. ``17455`` and ``17477``. The GDB debugger will load, stream its initial output then load a debugging prompt. You can now proceed with debugging.
+
+### Logging GDB's Output ###
+
+You can save a copy of your debugging session by typing the following into the GDB debugging prompt:
+
+```
+(gdb) set logging file {logfile.txt}
+(gdb) set logging on
+```
+
+Where ``{logfile.txt}`` is the name of the file to which the log should be written.
+
+### Backtracing with GDB ###
+
+Begin your debugging session with GDB's ``backtrace`` command: 
+
+```
+(gdb) backtrace
+#0  0xb7d539f8 in select () from /lib/tls/libc.so.6
+#1  0xb7dff66a in _XEnq () from /usr/X11R6/lib/libX11.so.6
+#2  0xb7dffa7e in _XRead () from /usr/X11R6/lib/libX11.so.6
+#3  0xb7e01795 in _XReadEvents () from /usr/X11R6/lib/libX11.so.6
+#4  0xb7defa88 in XNextEvent () from /usr/X11R6/lib/libX11.so.6
+#5  0x0809b698 in e_alert_show (
+    text=0x80a34f0 "This is very bad. Enlightenment has segfaulted.\nThis 
+    is not meant to happen and is likely a 
+    sign of a\nbug in Enlightenment
+    or the libraries it relies on.\n\nYou can gdb attach to this process 
+    now to try"...)
+    at e_alert.c:136
+#6  0x0808f706 in e_sigseg_act (x=11, info=0x80a9fb0, data=0x80aa030)
+    at e_signals.c:54
+#7  <signal handler called>
+#8  0xb7d539f8 in select () from /lib/tls/libc.so.6
+#9  0xb7f814ee in _ecore_main_select (timeout=0) 
+    at ecore_main.c:338
+#10 0xb7f819ba in _ecore_main_loop_iterate_internal (once_only=0)
+    at ecore_main.c:575
+#11 xb7f81a2b in ecore_main_loop_begin () at ecore_main.c:79
+#12 0x08059bb3 in main (argc=1, argv=0xbffff144) at e_main.c:551
+```
+
+This is the *stack trace*. It shows the ``main()`` function called ``ecore_main_loop_begin()``, which called ``_ecore_main_loop_iterate_internal()``, this function called ``_ecore_main_select()``, and that in turn called ``select()`` and so on.
+
+It is important to understand that Enlightenment has its own segmentation fault (segfault) handler: it traps its own problems and tries to let you recover via the "white box of death" prompt. Look at the function that was called:
+
+```
+#6  0x0808f706 in e_sigseg_act (x=11, info=0x80a9fb0, data=0x80aa030)
+```
+
+The ``e_sigseg_act()`` function is called when the program segfaults. It is called directly by the kernel, interrupting anything Enlightenment was doing just before it was called. It's whatever Enlightenment was doing at that time which has caused the segfault. In this example Enlightenment segfaulted inside the ``select()`` function; frame 7 is an intermediate frame that calls the signal handler.
+
+To gather some more information about this crash go to the stack frame just before the segfault - in this case, stack frame 8. To obtain more detail from this frame, use the following commands:
+
+```
+(gdb) frame 8
+(gdb) list
+(gdb) print ret
+```
+
+The first command, ``frame 8``, moves to frame 8; the second command, ``list``, lists the source code in the frame; ``print ret`` prints the value of ``ret``.
+
+In this example you can't debug ``select`` because it is in ``libc``, and it is probably not the reason for the crash. Move to the frame above that, frame 9, to see if any nasty data was being sent to ``select``:
+
+```
+(gdb) frame 9
+#9  0xb7f814ee in _ecore_main_select (timeout=0) at ecore_main.c:338
+338        ret = select(max_fd + 1, &rfds, &wfds, &exfds, t);
+(gdb) list
+333               }
+334          }
+335     #ifndef WIN32
+336        if (_ecore_signal_count_get()) return -1;
+337     #endif
+338        ret = select(max_fd + 1, &rfds, &wfds, &exfds, t);
+339        if (ret < 0)
+340          {
+341             if (errno == EINTR) return -1;
+342          }
+```
+
+This listing includes both variables and function calls. Variables like pointers may contain garbage or NULL, and thus causing a "segv" error. Find out their values with the ``print`` command: 
+
+```
+(gdb) print ret
+$1 = -4
+(gdb) print rfds
+$2 = {__fds_bits = {1280, 0 <repeats 31 times>}}
+(gdb) print wfds
+$3 = {__fds_bits = {0 <repeats 32 times>}}
+(gdb) print exfds
+$4 = {__fds_bits = {0 <repeats 32 times>}}
+```
+
+Note that if the variable is a pointer the ``print`` command will print the pointer value. To see what the pointer is actually pointing to use:
+
+```
+print *{pointer}
+```
+
+Where ``{pointer}`` is the name of the pointer.
+
+#### Backtracing Example ####
+
+```
+(gdb) frame 5
+#5  0x0809b698 in e_alert_show (
+    text=0x80a34f0 "This is very bad. Enlightenment has segfaulted.\nThis 
+    is not meant to happen and is likely a sign of a\nbug in Enlightenment 
+    or the libraries it relies on.\n\nYou can gdb attach to this process 
+    now to try"...)
+    at e_alert.c:136
+136             XNextEvent(dd, &ev);
+(gdb) list
+131        XSync(dd, False);
+132        
+133        button = 0;
+134        for (; button == 0;)
+135          {
+136             XNextEvent(dd, &ev);
+137             switch (ev.type)
+138               {
+139               case KeyPress:
+140                  key = XKeysymToKeycode(dd, XStringToKeysym("F1")); 
+(gdb) print dd
+$5 = (Display *) 0x80d1018
+```
+
+``Display *`` indicates a pointer to a "Display" struct or type. In this example the pointer value looks healthy, i.e. it is not ``0x0`` or a very low number. Look at the data it is pointing to:
+
+```
+(gdb) print *dd
+$6 = <incomplete type>
+```
+
+That is ``xlib``'s display struct. It's private, so you can't see what's inside. This is unusual: all the types used by Enlightenment will generally allow you to see inside.
+
+When reporting a bug, working through an issue with GDB and including it with a Phab ticket will prove extremely helpful. Even if you can't decode the output of a GDB session yourself, it provides valuable information for use in hunting down the precise cause of the issue.
+
+### Valgrind ###
+
+Running Enlightenment through ``valgrind`` will allow you to debug memory-related issues. With an X Server running on your system, execute Enlightenment through ``valgrind`` with the following command:
+
+```
+valgrind --tool=memcheck --vgdb-error=0 enlightenment
+```
+
+If you are debugging an environment in which the window manager is corrupted or malfunctioning you will still need a working console session; the easiest way to achieve this is by connecting to the machine on test using a Secure Shell (SSH) session.
+
+Running this way ``valgrind`` intercepts all memory operations, so it will make things very slow. The upside is that ``valgrind`` is extremely thorough, and can find a lot of issues that would be otherwise difficult to spot. When you get a problem ``valgrind`` will report on the issue then ask if you want to attach GDB. Sometimes Enlightenment may trigger a ``valgrind`` error on start-up, as follows:
+
+```
+==7072== Syscall param writev(vector[...]) points to uninitialised byte(s)
+==7072==    at 0x1BC255E8: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BAC66D6: (within /usr/X11R6/lib/libX11.so.6.2)
+==7072==    by 0x1BAC6986: _X11TransWritev (in /usr/X11R6/lib/libX11.so.6.2)
+==7072==    by 0x1BAAB03C: _XSend (in /usr/X11R6/lib/libX11.so.6.2)
+==7072==    by 0x1BA9EA6B: (within /usr/X11R6/lib/libX11.so.6.2)
+==7072==    by 0x1BA9F1D2: XPutImage (in /usr/X11R6/lib/libX11.so.6.2)
+==7072==    by 0x1B957459: evas_software_x11_x_output_buffer_paste (evas_x_buffer.c:173)
+==7072==    by 0x1B955FEA: evas_software_x11_outbuf_flush (evas_outbuf.c:327)
+==7072==    by 0x1B953EB4: evas_engine_software_x11_output_flush (evas_engine.c:417)
+==7072==    by 0x1B93A6A4: evas_render_updates (evas_render.c:298)
+==7072==    by 0x1B9A0960: _ecore_evas_x_render (ecore_evas_x.c:173)
+==7072==    by 0x1B9A1EF8: _ecore_evas_x_idle_enter (ecore_evas_x.c:825)
+==7072==  Address 0x1ED603FC is 596 bytes inside a block of size 38912 allocd
+==7072==    at 0x1B90459D: malloc (vg_replace_malloc.c:130)
+==7072==    by 0x1B957200: evas_software_x11_x_output_buffer_new (evas_x_buffer.c:132)
+==7072==    by 0x1B955224: evas_software_x11_outbuf_new_region_for_update (evas_outbuf.c:256)
+==7072==   by0x1B953DDA:evas_engine_software_x11_output_redraws_next_update_get (evas_engine.c:394)
+==7072==    by 0x1B93A355: evas_render_updates (evas_render.c:210)
+==7072==    by 0x1B9A0960: _ecore_evas_x_render (ecore_evas_x.c:173)
+==7072==    by 0x1B9A1EF8: _ecore_evas_x_idle_enter (ecore_evas_x.c:825)
+==7072==    by 0x1B9725E3: _ecore_idle_enterer_call (ecore_idle_enterer.c:78)
+==7072==    by 0x1B9746AE: _ecore_main_loop_iterate_internal (ecore_main.c:477)
+==7072==    by 0x1B974A2A: ecore_main_loop_begin (ecore_main.c:79)
+==7072==    by 0x8059BB2: main (e_main.c:551)
+==7072== 
+==7072== ---- Attach to debugger ? --- [Return/N/n/Y/y/C/c] ---- 
+```
+
+This is a harmless error which does not affect Enlightenment's operation. To ignore this error respond ``N`` (No), and Enlightenment will continue to load. Note that multi-headed systems may see the error additional times per attached display.
+
+An additional harmless error may be reported when Enlightenment is shut down, as follows:
+
+```
+==7072== 
+==7072== Invalid read of size 4
+==7072==    at 0x1BB6B16C: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BB6B58C: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BBE6FF6: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC61422: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC61337: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC616C4: __libc_freeres (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1B8FEA08: _vgw(float, long double,...)(...)(long double,...)(short) (vg_intercept.c:55)
+==7072==    by 0x1BB7F1C5: exit (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BB6997D: __libc_start_main (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x8058AE0: ??? (start.S:102)
+==7072==  Address 0x1C7BFD98 is 8 bytes inside a block of size 60 free"d
+==7072==    at 0x1B904B04: free (vg_replace_malloc.c:152)
+==7072==    by 0x1BB6BD37: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC2A902: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC2A7A6: tdestroy (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC611C1: (within /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BC616C4: __libc_freeres (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1B8FEA08: _vgw(float, long double,...)(...)(long double,...)(short) (vg_intercept.c:55)
+==7072==    by 0x1BB7F1C5: exit (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x1BB6997D: __libc_start_main (in /lib/tls/libc-2.3.2.so)
+==7072==    by 0x8058AE0: ??? (start.S:102)
+==7072== 
+==7072== ---- Attach to debugger ? --- [Return/N/n/Y/y/C/c] ---- 
+```
+
+This error is caused by the internal debugging hooks in ``valgrind``, and can again be safely ignored.
+
+Any other error reported by ``valgrind`` is a likely candidate for a problem. When ``valgrind`` reports an error respond ``Y`` (Yes) to attach GDB; this will provide both ``valgrind`` and GDB information simultaneously.
+
+### Debugging a Window Manager with Valgrind ###
+
+To debug a window manager issue using ``valgrind``, you will need to create a fresh X Server:
+
+```
+sudo X -ac :1 &
+export DISPLAY=:1
+valgrind --tool=memcheck --vgdb-error=0 enlightenment
+```
+
+This command creates an empty X Server on display :1 and flips to it. To flip back to the original console use Ctrl + Alt + F1 (or the Function Key appropriate for your original TTY number).
+
+Enlightenment runs extremely slowly under ``valgrind``. Methodically work to reproduce the issue on test; when Enlightenment appears to "lock up" but the mouse remains responsive flip back to the text console running ``valgrind`` and see if it has reported an error.
+
+### Invoking Valgrind with Xephyr ###
+
+To invoke ``valgrind`` with Xephyr, you will need to be running Bash 4. Begin by saving the following script as "desktop-xephyr" in your ``$PATH``:
+
+```bash
+#!/usr/bin/env bash
+if [[ -z "$@" ]]; then
+    echo "You need to supply something to be started in Xephyr"
+    exit 1
+fi
+  
+xdisplay()
+{
+    local disp=0;
+    while [ -e "/tmp/.X${disp}-lock" ]; do
+        disp=$(( disp + 1 ));
+    done;
+    echo $disp
+}
+
+# Select display
+display=$(xdisplay)
+
+# Start XServer
+Xephyr -ac -screen 1600x900 -br 2> /dev/null :$display &
+
+# Set display
+export DISPLAY=:$display
+
+# Wait for Xephyr to become ready
+sleep 1
+  
+# Start window manager
+bash -c "$@"
+
+# Remove X lock
+rm -fr /tmp/.X${display}-lock
+```
+
+Add the following script to your ``$PATH`` as "valgrind-xephyr":
+
+```bash
+#!/usr/bin/env bash
+
+# Uncomment to use a separate home for debugging
+#export HOME=/home/$USER/nobackup/HOME-$USER-debug
+
+# Uncomment to enable core files
+#limit -c unlimited
+
+# Set log file
+log_file="$HOME/e17-xephyr-debug-valgrind.log"
+
+# Set the path to the Enlightenment installation
+e17_install_path=/opt/e17
+
+set_and_log(){
+    export "$1=$2"
+    if [[ $1 == "PATH" ]]; then
+        #show head of PATH only
+        echo "$1=${!1%%:*}: ... " | tee -a $log_file
+    else
+        echo "$1=${!1}" | tee -a $log_file
+    fi
+}
+
+# Start logging and set environment
+echo "Enlightenment Valgrind Debugging Log: $(date +%F)" > $log_file
+
+set_and_log LD_LIBRARY_PATH "$e17_install_path/lib"
+set_and_log PATH            "$e17_install_path/bin:$PATH"
+
+# Override enlightenment path autodetection
+set_and_log E_PREFIX "$e17_install_path"
+if [[ -n "$E_PREFIX" ]]; then
+    set_and_log E_BIN_DIR    "$E_PREFIX/bin"
+    set_and_log E_LIB_DIR    "$E_PREFIX/lib"
+    set_and_log E_DATA_DIR   "$E_PREFIX/share/enlightenment"
+    set_and_log E_LOCALE_DIR "$E_PREFIX/share/locale"
+fi
+
+# Build valgrind command
+valgrind_a="--tool=memcheck --vgdb-error=0 --num-callers=32"
+valgrind_b="--show-reachable=no --read-var-info=yes --leak-check=full"
+valgrind_c="--leak-resolution=high --undef-value-errors=yes"
+valgrind_d="--track-origins=yes --trace-children=yes"
+valgrind="exec valgrind $valgrind_a $valgrind_b $valgrind_c $valgrind_d"
+
+# Call the frist script
+desktop-xephyr "$valgrind $e17_install_path/bin/enlightenment_start 2>&1 | tee -a $log_file"
+```
+
+Run the second script to load a debugging session.
+
+### Valgrind Invocation with Xinit ###
+
+Create a file called "xinitrc-debug" in your home directory with the following contents:
+
+```bash
+#!/bin/sh
+
+ulimit -c unlimited
+
+log_file="$HOME/e17-xinit-debug-valgrind.log"
+# Path of the Enlightenment installation
+e17_install_path=/opt/e17
+
+# Set variables
+LD_LIBRARY_PATH="$e17_install_path/lib"
+PATH="$e17_install_path/bin:$PATH"
+
+# Log to a file
+echo "Using installation at $e17_install_path"
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >  $log_file
+echo "PATH=$e17_install_path/bin: ... " >> $log_file
+
+# Start Enlightenment with valgrind
+exec valgrind --tool=memcheck --vgdb-error=0 --num-callers=32 \
+         --show-reachable=no --read-var-info=yes --leak-check=full \
+         --leak-resolution=high --undef-value-errors=yes \
+         --track-origins=yes --trace-children=yes \
+         $e17_install_path/bin/enlightenment_start 2>&1 | tee -a "$log_file"
+```
+
+Begin a debugging session with the following command:
+
+```
+/usr/bin/xinit ~/xinitrc-debug -- :1 -nolisten tcp
+```
+
+### Perf ###
+
+``perf`` is a tool for Linux which can help you identify performance bottlenecks. This is also a part of debugging: to find where CPU time is being spent and perhaps answer why things are slow. Probably the most useful and simplest way to use ``perf`` is with ``perf top`` as follows:
+
+```bash
+sudo perf top
+```
+
+You will get something like ``top`` but for functions instead of processes:
+
+```bash
+Samples: 11K of event 'cycles', Event count (approx.): 401331122 [z]
+Overhead  Shared Object             Symbol
+  35.91%  libevas.so.1.14.99        [.] _evas_common_scale_rgba_in_to_out_clip_smooth_mmx
+   9.60%  libevas.so.1.14.99        [.] _op_copy_p_dp_mmx
+   7.29%  libevas.so.1.14.99        [.] _op_blend_p_dp_mmx
+   2.59%  libevas.so.1.14.99        [.] _op_copy_c_dp_mmx
+   1.90%  libevas.so.1.14.99        [.] _op_blend_pas_dp_sse3
+   0.94%  [kernel]                  [k] clear_page_c
+   0.74%  libevas.so.1.14.99        [.] evas_common_rgba_image_scalecache_items_ref
+   0.67%  [kernel]                  [k] shmem_getpage_gfp
+   0.65%  libeo.so.1.14.99          [.] _eo_do_start
+   0.63%  libevas.so.1.14.99        [.] evas_render_updates_internal
+   0.63%  libeo.so.1.14.99          [.] _eo_call_resolve
+   0.57%  [kernel]                  [k] page_fault
+   0.54%  libc-2.21.so              [.] malloc_consolidate
+   0.52%  [kernel]                  [k] unmapped_area_topdown
+   0.51%  libc-2.21.so              [.] _int_malloc
+   0.45%  libeina.so.1.14.99        [.] eina_hash_find_by_hash
+   0.43%  libpthread-2.21.so        [.] pthread_spin_trylock
+   0.42%  [kernel]                  [k] mem_cgroup_begin_page_stat
+   0.39%  libevas.so.1.14.99        [.] evas_common_tilebuf_get_render_rects
+   0.39%  libevas.so.1.14.99        [.] evas_common_scale_rgba_sample_draw
+   0.37%  libevas.so.1.14.99        [.] evas_object_image_render
+   0.34%  [kernel]                  [k] unmap_single_vma
+   0.33%  libeo.so.1.14.99          [.] _eo_base_event_callback_call
+   0.33%  libevas.so.1.14.99        [.] _evas_common_scalecache_key_cmp
+   0.31%  libeo.so.1.14.99          [.] eo_data_scope_get
+   0.30%  [kernel]                  [k] _raw_spin_lock
+   0.29%  [kernel]                  [k] __wake_up_bit
+   0.29%  [kernel]                  [k] get_page_from_freelist
+   0.28%  libeina.so.1.14.99        [.] _eina_chained_mempool_alloc_in
+   0.27%  libevas.so.1.14.99        [.] evas_render_mapped
+   0.26%  [vdso]                    [.] __vdso_gettimeofday
+   0.26%  [kernel]                  [k] __rmqueue
+   0.26%  libeina.so.1.14.99        [.] eina_log_print
+   0.26%  module.so                 [.] _find_xob.constprop.3
+   0.24%  libeo.so.1.14.99          [.] _eo_do_end
+   0.23%  libpthread-2.21.so        [.] pthread_mutex_lock
+   0.23%  [kernel]                  [k] find_vma
+   0.22%  libeina.so.1.14.99        [.] eina_chained_mempool_free
+   0.22%  libc-2.21.so              [.] malloc
+   0.22%  [kernel]                  [k] __radix_tree_create
+   0.22%  libeina.so.1.14.99        [.] eina_evlog
+   0.21%  libc-2.21.so              [.] _int_free
+```
+
+Here you can see almost 34% of CPU execution time is spent in the ``_evas_common_scale_rgba_in_to_out_clip_smooth_mmx`` function from the ``libevas.so.1.14.99`` library. You can narrow down to a specific process, which is generally most useful, with:
+
+```bash
+sudo perf top -p PID
+```
+
+And ensure that every sample clears previous sample history (like ``top`` does):
+
+```bash
+sudo perf top -p PID -z
+```
+
+And also try higher sample frequencies (the higher the sample frequency the better the accuracy):
+
+```bash
+sudo perf top -p PID -z -F 50000
+```
+
+### Strace ###
+
+``strace`` is a tool to trace all the system calls a process does. This will intercept and log every interaction with a kernel via a system call. Sometimes this is very useful to find out what is going on. You can run a process under ``strace`` as follows:
+
+```bash
+strace myapp
+```
+
+You can also attach to an existing process with:
+
+```bash
+strace -p PID
+```
+
+Be aware that as with attaching GDB, this may be not allowed by your kernel. If so, enable it with the following command:
+
+```bash
+sudo sysctl -w kernel.yama.ptrace_scope=0
+```
+
+If you're debugging Enlightenment there already is a process attached - ``enlightenment_start`` and you will need to tell it to stop monitoring:
+
+```bash
+kill -SIGUSR1 PID_OF_enlightenment_start
+```
+
+You will then be able to attach with ``strace``. Some useful ways of using ``strace`` are as follows:
+
+Write the ``strace`` log to a specific file for the process ID ``PID``:
+
+```bash
+strace -o logfile.txt -p PID
+```
+
+Write the ``strace`` log to a specific file and put a timestamp next to every system call for process ID ``PID``:
+
+```bash
+strace -o logfile.txt -tt -p PID
+```
+
+Write the ``strace`` log to a specific file and time how long every system call takes, to find calls that take too long and slow things down:
+
+```bash
+strace -o logfile.txt -ttt myapp
+```
+
+You can combine the above options. See the ``strace`` manual page for more details with ``man strace``.
+
+## Reporting bugs ##
+
+If you have encountered a bug and would like to help by reporting it please
+follow our [Reporting Bugs guidelines](/contrib/report-bug.md).
