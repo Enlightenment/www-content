@@ -9,7 +9,7 @@ animation, use the Ecore animators described in the
 
 To use the ''ecore_thread_feedback()'' function:
 
-**__1__**. Implement the GUI function that sets the text of a label and can be
+**1**. Implement the GUI function that sets the text of a label and can be
 called from the main thread.
 
 <code c>
@@ -23,7 +23,7 @@ _set_label_text(void *data, Ecore_Thread *thread __UNUSED__, void *msgdata)
 }
 </code>
 
-**__2__**. Send the feedback from the other thread using the ''ecore_thread_feedback()''
+**2**. Send the feedback from the other thread using the ''ecore_thread_feedback()''
 function. The following function does nothing besides sending the feedback and
 sleeping.
 
@@ -46,7 +46,7 @@ _long_function(void *data __UNUSED__, Ecore_Thread *thread)
 }
 </code>
 
-**__3__**. Create an end function that is called when the thread exits. In
+**3**. Create an end function that is called when the thread exits. In
 this example, the end function is called only right before the application
 exits. However, if the blocking function is more complex, it can trigger the
 end function.
@@ -60,7 +60,7 @@ _end_func(void *data, Ecore_Thread *thread __UNUSED__)
 }
 </code>
 
-**__4__**. Call the ''ecore_thread_feedback_run()'' function to start the thread:
+**4**. Call the ''ecore_thread_feedback_run()'' function to start the thread:
 
 <code c>
 ecore_thread_feedback_run(_long_function, _set_label_text, _end_func, NULL, label, EINA_FALSE);
@@ -68,7 +68,7 @@ ecore_thread_feedback_run(_long_function, _set_label_text, _end_func, NULL, labe
 
 To use the ''ecore_main_loop_thread_safe_call_sync()'' function:
 
-**__1__**. Implement the GUI function that sets the text of a label and can be
+**1**. Implement the GUI function that sets the text of a label and can be
 called from the main thread. The function receives data as a structure and
 alternatively displays "Tick d" or "Tock d".
 
@@ -92,7 +92,7 @@ _set_label_text_tick_tock(void *data)
 }
 </code>
 
-**__2__**. Use the ''ecore_main_loop_thread_safe_call_sync()'' function call
+**2**. Use the ''ecore_main_loop_thread_safe_call_sync()'' function call
 the GUI function. Differentiate between the ticks and the tocks:
 
 <code c>
@@ -114,7 +114,7 @@ _long_function_tick_tock(void *data, Ecore_Thread *thread __UNUSED__)
 }
 </code>
 
-**__3__**. Start the thread through the ''ecore_thread_run()'' function:
+**3**. Start the thread through the ''ecore_thread_run()'' function:
 
 <code c>
 ecore_thread_run(_long_function_tick_tock, _end_func, NULL, label);
