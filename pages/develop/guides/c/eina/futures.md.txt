@@ -1,0 +1,229 @@
+---
+~~Title: Eina Promises and Futures~~
+---
+
+# Eina Promises and Futures #
+
+[Futures and Promises](https://en.wikipedia.org/wiki/Futures_and_promises) is a programming paradigm that simplifies synchronization when concurrent execution is present.
+
+Since C does not natively support this feature, the Eina library provides the ``Eina_Promise`` and ``Eina_Future`` objects described in this programming guide.
+
+## Introduction ##
+
+In procedural languages like C, if you need a value which is not available yet, be it because it takes a long time to calculate or because it has to be fetched from a server far away, you typically have to *wait*.
+
+In other words, the following code completely blocks execution until the function call returns:
+
+```c
+int item_price = go_fetch_item_price();
+int total_price = item_price * number_of_items;
+```
+
+[Other languages](https://en.wikipedia.org/wiki/Futures_and_promises#List_of_implementations), instead, can return a *Promise* and continue execution immediately. A promise acts as a placeholder for the requested value: the value is not available *yet*, but it will be at some point in the future.
+
+With a promise in hand you can attach callbacks to be triggered when the value becomes available (when the promise is fulfilled) and then continue your calculations. You can even pass the promise to other methods, which will then be executed as values become available, forming complex chains.
+
+An ``Eina_Promise`` can be considered an object with the sole purpose of emitting an event, the "Promise Resolved" event. ``Eina_Future`` are then callbacks attached to this object to be called when the event is emitted. The promised value (``item_price`` in the example above) is passed to the callbacks whenever it is available.
+
+The following sections explain how to use ``Eina_Promise`` and ``Eina_Future``, along with details like how to handle error conditions or how to cancel pending promises.
+
+## Creating a Promise ##
+
+The code returning the delayed value, that it, the promise of a value, creates an ``Eina_promise`` using ``eina_promise_new()`` like this:
+
+```c
+   Efl_Loop *loop;
+   Eina_Future_Scheduler *scheduler;
+   Eina_Promise *promise;
+   void *data;
+
+   loop = efl_loop_main_get(EFL_LOOP_CLASS);
+   scheduler = efl_loop_future_scheduler_get(loop);
+   promise = eina_promise_new(scheduler, _promise_cancel_cb, data);
+```
+
+You will most of the time be using the *main loop* and its scheduler so you can cache the ``loop`` and ``scheduler`` variables from the above snippet in your code. There is no need to free them.
+
+> **NOTE**:
+> You can also use ``efl_loop_promise_new()`` to simplify your code a bit:
+> ```c
+>    loop = efl_loop_main_get(EFL_LOOP_CLASS);
+>    promise = efl_loop_promise_new(loop, _promise_cancel_cb, data);
+> ```
+> Or even simpler with ``efl_loop_main_promise_new()``:
+> ```c
+>    promise = efl_loop_main_promise_new(_promise_cancel_cb, data);
+> ```
+
+You can attach arbitrary data to ``Efl_Promise``s which you can later retrieve with ``eina_promise_data_get()``.
+
+Finally, when creating ``Efl_Promise``s you should **always** provide a ``_cancel_callback`` as above, so you get notified if the promise is cancelled. Mainly, because any pointer you might be keeping to the cancelled promise will be invalid after the callback, but also because you have a chance to stop whatever process you had running to obtain the promised value.
+
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n93).
+
+## Creating a Future ##
+
+The code receiving an ``Eina_Promise`` (that is, the promise of a value instead of the actual value) must associate it to a callback in order to be notified when the value becomes available. The ``Eina_Future`` object contains such callback and some others (described below), along with associated information.
+
+You can create an ``Eina_Future`` using ``eina_future_new()`` and assign callbacks to it using one of the ``eina_future_then*()`` family of functions:
+
+```c
+   Eina_Future *future;
+
+   future = eina_future_new(promise);
+   eina_future_then_easy(future,
+                         .success = _promise_resolved_cb,
+                         .error = _promise_error_cb,
+                         .free = _cleanup_data_cb,
+                         .data = NULL);
+```
+
+The benefit of ``eina_future_then_easy()`` is that you can define the callbacks you want and don't worry about the others (there's no need to pass a string of ``NULL``s for unneeded callbacks).
+
+The ``success`` callback will be triggered when the promise is fulfilled, and it will receive the promised value as a parameter. The ``error`` callback will be triggered if any error prevented the promise from being resolved (for example, it was rejected or cancelled, see below). You are guaranteed that either one will be called.
+
+You can pass any data you want when registering the callbacks, and they will receive it through the ``data`` parameter. Use the ``free`` callback to free it, since it will be called no matter what way the promise ended (successfully resolved or cancelled).
+
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n99).
+
+## Resolving a Promise ##
+
+Once the code that delivered an ``Eina_Promise`` instead of a value has the actual value available, it is time to fulfill the promise. That is called *promise resolution* and is performed through the ``eina_promise_resolve()`` method:
+
+```c
+   Eina_Promise *promise;
+   Eina_Value *value;
+
+   [...]
+   eina_promise_resolve(promise, value);
+```
+
+Resolving a promise means delivering the promised value, and that is done through an ``Eina_Value`` object, since it can accommodate any kind of value. Read more about them in the [Eina Generic Values Programming Guide](/develop/guides/c/eina/generic-value.md).
+
+All the callback methods registered with this promise (through ``Eina_Future`` objects as seen above) will be called and the ``Eina_Value`` will be delivered to them.
+
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n71).
+
+## Rejecting a Promise ##
+
+Sometimes the code that delivered a promise can't fulfill it (think of a server returning an error instead of a file, or a calculation unexpectedly dividing by zero). However, there might be code waiting for the promised value, and it must be notified of the failure or it will keep waiting forever. To account for this case, Eina allows promises to be *rejected* using ``eina_promise_reject()``
+
+```c
+   Eina_Promise *promise;
+   Eina_Value *value;
+
+   [...]
+   eina_promise_reject(promise, EINA_ERROR_NOT_IMPLEMENTED);
+```
+
+Instead of the ``success`` callback used in normal promise resolution, all ``Eina_Future`` objects registered to the rejected ``Eina_Promise`` will have their ``error`` callback triggered. Instead of the promised ``Eina_Value``, they will receive the ``Eina_Error`` provided to ``eina_promise_reject()``.
+
+See an example in [Test 2 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n120).
+
+## Cancelling a Future ##
+
+Sometimes, the code is no longer interested in a value it requested (think of a user requesting a file and then quitting the application before the file arrives). You could simply disregard the delivered value once the callback is triggered, but that would be a waste of resources, because somewhere else there is code still running trying to fulfill the promise and retrieve the requested value.
+
+It is more efficient to *cancel* the ``Eina_Future`` once you know you are no longer interested in it. It's not only about being a good Samaritan, you also get multiple benefits:
+
+* Once the ``Eina_Future`` is cancelled, its callbacks won't be triggered, so in the callback code you don't have to bother checking whether you are still interested in the delivered value or not.
+
+* The code trying to fulfill the promise will receive a cancellation callback (registered with ``eina_promise_new()``) so it has a chance to stop whatever process it started to retrieve the requested value. For instance, if this process involves a CPU-intensive calculation, the power-saving gains can be significant.
+
+Future cancellation is achieved through ``efl_future_cancel()``:
+
+```c
+   promise = efl_loop_promise_new(loop, _promise_cancel_cb, data);
+   future = eina_future_new(promise);
+   eina_future_then_easy(future,
+                         .success = _promise_resolved_cb,
+                         .error = _promise_error_cb,
+                         .free = _cleanup_data_cb);
+
+   [...]
+   eina_future_cancel(future);
+```
+
+In the above example, ``_promise_cancel_cb()`` will be called to notify the promise-fulfilling code that it has been cancelled. Besides, ``_promise_error_cb()`` will also be called to notify any code waiting on the promised value that it will never arrive (the reported error will be ``EINA_ERROR_FUTURE_CANCEL``).
+
+See an example in [Test 3 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n198).
+
+## Chaining Futures ##
+
+Typically, values are not needed on their own, but as part of the calculation of other values. Therefore, when waiting for a promised value to become available, there are probably other parts of the code waiting on *us* to deliver our value too.
+
+In this scenario, Eina's ability to chain futures is very handy. Using ``eina_future_chain()`` you can specify multiple callbacks to be triggered *in order* when an ``Eina_Promise`` is resolved. The value delivered by the promise then *trickles down* the chain, and each callback has a chance to modify the value before passing it along to the next callback.
+
+Compare this behavior with attaching multiple *independent* ``Eina_Future`` to the same promise: all callbacks will be triggered when the promise is resolved, but they will all get the same value, without the chance to build on top of each other's results.
+
+Future chains are built with ``eina_future_chain()``, which works similarly to ``eina_future_then_easy()`` explained before:
+
+```c
+   eina_future_chain(eina_future_new(promise),
+                     {.cb = _step1_cb, .data = NULL},
+                     {.cb = _step2_cb, .data = NULL},
+                     {.cb = _step3_cb, .data = NULL});
+```
+
+``_step1_cb()`` will be given the ``Eina_Value`` delivered by the ``Eina_Promise`` and it will return a new ``Eina_Value`` which will in turn be passed onto ``_step2_cb()``, and so on.
+
+Note also how each callback can have a different data passed to it.
+
+A rejection of the promise or the cancellation of any of the futures will cancel the whole chain.
+
+See an example in [Test 4 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n269).
+
+## Callbacks and Easy Callbacks ##
+
+You might have noticed how ``eina_future_then_easy()`` accepted callbacks for ``success``, ``error`` and ``free`` (all of them optional), whereas ``eina_future_chain()`` only accepted one callback, ``cb``. That's because most of the ``Eina_Promise`` and ``Eina_Future`` methods come in two flavors: *regular* and *easy*.
+
+*Regular* methods only provide one callback (called ``cb``). This single callback will be triggered if the promise is resolved and also if it is rejected (or if the future is cancelled). Your callback code has to distinguish each case by inspecting the type of the ``Eina_Value`` that the promise delivers to you.
+
+If you receive an ``Eina_Value`` of type ``EINA_VALUE_TYPE_ERROR`` the promise has not been resolved, and the value contains information about the problem:
+
+```c
+static Eina_Value
+_step1_cb(void *data, const Eina_Value value, const Eina_Future *dead_future EINA_UNUSED)
+{
+   if (value.type == EINA_VALUE_TYPE_ERROR)
+    {
+      Eina_Error err;
+      eina_value_get(&value, &err);
+      fprintf(stderr, "Operation failed. Reason: %s\n", eina_error_msg_get(err));
+      return value;
+    }
+}
+```
+
+Note how the error value is also returned, so it can be passed along to other callbacks if used inside a chain.
+
+Also, if the ``data`` you pass to your callback needs to be freed, you must do it in the callback.
+
+*Easy* methods require that you provide separate callbacks for ``success``, ``error`` and ``free`` conditions, making it a bit more cumbersome to use. The benefit, though, is that the actual callback code can be simplified, since you do not need to check whether the promise resolved OK or not.
+
+Due to the particular syntax of these methods (making use of ISO C99's Designated Initializers) you do not need to provide all callbacks. Say, for instance, that your ``data`` does not need to be freed, you do not need to provide the ``free`` callback to ``eina_future_then_easy()``. Likewise, you do not need to provide the ``data`` pointer if you don't need it.
+
+## Summary ##
+
+* If you cannot deliver a requested result right now and do not want to block the program execution, return an ``Eina_Promise`` and resolve it at a later stage.
+
+* If you are given an ``Eina_Promise`` instead of an actual value, create an ``Eina_Future`` containing callbacks to be triggered when the value is available and continue your calculations there.
+
+* ``Eina_Promise`` can be resolved or rejected.
+
+* ``Eina_Future`` can be cancelled if you are no longer interested in the promised value.
+
+* Always provide cancellation callbacks for your promises.
+
+* ``Eina_Future`` callbacks can be chained to perform calculations in multiple stages in separate parts of the code.
+
+## Further Reading ##
+
+[Eina Promise Reference Guide](/develop/api/efl/promise)
+:    Reference Guide for the ``Eina_Promise`` class.
+
+[Eina Generic Value Reference Guide](/develop/guides/c/eina/generic-value.md)
+:    Reference guide for the ``Eina_value`` class.
+
+[reference/c/eina/src/eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c)
+:    Set of examples using ``Eina_Promise`` and ``Eina_Future``.
