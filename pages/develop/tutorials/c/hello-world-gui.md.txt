@@ -70,7 +70,7 @@ Instead of printing to the command line, this time your message will be displaye
 
 Technically you could put all the code for opening the window, text boxes, buttons and so on into the main function which previously contained the lines you just deleted but that's messy. In general it's much better and cleaner to use the main function to call other functions.
 
-Create a function to set up your window and name it ``_gui_setup()``. Insert a call to the function from within the mani EFL loop. Your program should look like this:
+Create a function to set up your window and name it ``_gui_setup()``. Insert a call to the function from within the main EFL loop. Your program should look like this:
 
 ```c
 #define EFL_EO_API_SUPPORT 1
@@ -112,11 +112,11 @@ So far ``_gui_setup`` is empty. Create a window by adding the following lines wi
 
 As far as EFL is concerned, a window is just another object. You can declare it with ``Eo *win;``. The ``Eo`` type is the base object system for EFL. Most graphical elements such as windows, text boxes, buttons, sliders, etc. are ``Eo`` objects. You can give your window any name you wish but for now call it ``win``for simplicity's sake.
 
-The next part of the code defines the window itself. The ``efl_add()`` method creates a new object of the class specified in the first parameter and puts it inside the already existing object specified in the second parameter. In an EFL graphical application widgets are inserted inside other objects. For example, you can place a text object inside a text box inside a window and so on. In this case we want to create a window (``EFL_UI_WIN _CLASS``) and don't need to put it inside any other object, so we pass ``NULL`` as the second parameter. The ``EFL_UI_WIN_CLASS``parameter is actually a macro. [You can learn more about these macros and see a list of useful macros here](macros.md).
+The next part of the code defines the window itself. The ``efl_add()`` method creates a new object of the class specified in the first parameter and puts it inside the already existing object specified in the second parameter. In an EFL graphical application widgets are inserted inside other objects. For example, you can place a text object inside a text box inside a window and so on. In this case we want to create a window (``EFL_UI_WIN _CLASS``) and don't need to put it inside any other object, so we pass ``NULL`` as the second parameter. The ``EFL_UI_WIN_CLASS``parameter is actually a macro.
 
 The rest of the parameters of ``efl_add()`` are a list of methods that will be called in order, normally to configure the object we have just created. You can add as many configuration methods as you want in this list and can use the special symbol ``efl_added`` to refer to the created object if you need to.
 
-The ``efl_ui_win_type_set()`` function does what it says on the box. There are several types of window types (basic, dialog, popup menus, etc.) : here we want the most basic type. You can see the other types of windows you can choose by [visiting the list of macros](macros.md). The ``efl_text_set()`` function sets the text of the window's title bar, in this case, to "Hello World". The ``efl_ui_win_autodel_set()`` procedure tells the program to automatically make the window disappear if it's closed. You can look up the exact meaning of these calls in the [API Reference Guide](link to /devel/auto).
+The ``efl_ui_win_type_set()`` function does what it says on the box. There are several types of window types (basic, dialog, popup menus, etc.) : here we want the most basic type. The ``efl_text_set()`` function sets the text of the window's title bar, in this case, to "Hello World". The ``efl_ui_win_autodel_set()`` procedure tells the program to automatically make the window disappear if it's closed. You can look up the exact meaning of these calls in the [API Reference Guide](link to /devel/auto).
 
 Your program will now look like this:
 
