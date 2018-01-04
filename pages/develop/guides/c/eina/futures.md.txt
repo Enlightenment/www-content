@@ -56,9 +56,9 @@ Most of the time you'll be using the *main loop* and its scheduler so you can ca
 >    promise = efl_loop_main_promise_new(_promise_cancel_cb, data);
 > ```
 
-You can attach arbitrary data to ``Efl_Promise``s which you can later retrieve with ``eina_promise_data_get()``.
+You can attach arbitrary data to ``Eina_Promise``s which you can later retrieve with ``eina_promise_data_get()``.
 
-Finally when creating ``Efl_Promise``s you should **always** provide a ``_cancel_callback`` as above, so you're notified if the promise is cancelled. This is chiefly because any pointer you might be keeping to the cancelled promise will be invalid after the callback but also because you have a chance to stop whatever process you had running to obtain the promised value.
+Finally when creating ``Eina_Promise``s you should **always** provide a ``_cancel_callback`` as above, so you're notified if the promise is cancelled. This is chiefly because any pointer you might be keeping to the cancelled promise will be invalid after the callback but also because you have a chance to stop whatever process you had running to obtain the promised value.
 
 See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n93).
 
@@ -220,11 +220,14 @@ Due to the particular syntax of these methods (making use of ISO C99's Designate
 
 ## Further Reading ##
 
-[Eina Promise Reference Guide](/develop/api/efl/promise)
+[Eina Promise Reference Guide](/develop/legacy/api/c/start#group__Eina__Promise.html)
 :    Reference Guide for the ``Eina_Promise`` class.
 
-[Eina Generic Value Reference Guide](/develop/guides/c/eina/generic-value.md)
-:    Reference guide for the ``Eina_value`` class.
+[Eina Future Reference Guide](/develop/legacy/api/c/start#group__Eina__Future.html)
+:    Reference Guide for the ``Eina_Future`` class.
+
+[Eina Generic Value Programming Guide](/develop/guides/c/eina/generic-value.md)
+:    Programming guide for the ``Eina_value`` class.
 
 [reference/c/eina/src/eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c)
 :    Set of examples using ``Eina_Promise`` and ``Eina_Future``.
