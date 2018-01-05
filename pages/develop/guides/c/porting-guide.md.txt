@@ -4,33 +4,32 @@
 
 # EFL C Porting Guide #
 
-This document highlights the main differences between the original EFL API (known from now on as *Legacy API*) and the new EFL API based on Eo objects (dubbed *Unified API*). The Unified API was introduced in EFL 1.22, around December 2017.
+This document highlights the main differences between the original EFL API (known from now on as *Legacy API*) and the new EFL API based on Eo objects (dubbed *Unified API*). The Unified API was introduced in EFL 1.21, early in 2018.
 
 Both APIs can be used simultaneously, but support for the Legacy one will be dropped in the future, and therefore usage of the Unified API is strongly recommended in new code.
 
 > **NOTE:**
-> Meanwhile the Legacy API is not completely removed, enabling the Unified API requires defining two compilation symbols, ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT``, as can be seen in the tutorials and examples.
+> Meanwhile the Legacy API is still the default, enabling the Unified API requires defining two compilation symbols, ``EFL_EO_API_SUPPORT`` and ``EFL_BETA_API_SUPPORT``, as can be seen in the tutorials and examples.
 
 ## Main Loop ##
+
+In the Unified EFL you no longer access the main loop directly. Each application may run in a different loop and therefor there be no single main loop. To access the main loop for your application retain a reference to the loop that was passed in to your main function as ``event->object``. To retain a reference, add the following code to your application:
+
+```
+Efl_Loop *main_loop = event->object
+```
 
 ### Timers ###
 
 Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Timers), [Legacy EFL](/develop/legacy/program_guide/main_loop/timers)
 
 * Timers are now regular Eo objects created with ``efl_add(EFL_LOOP_TIMER_CLASS, ...)`` and destroyed with ``efl_unref()``.
-
 * The timer callback is registered with ``efl_event_callback_add(timer_object, EFL_LOOP_TIMER_EVENT_TICK, ...)``.
-
 * Timers are always periodic. The callback does not return ``ECORE_CALLBACK_RENEW`` or ``ECORE_CALLBACK_CANCEL`` anymore. If you want a one-shot timer, remove it from the callback after it has fired once.
-
 * ``ecore_timer_interval_set/get()`` -> ``efl_loop_timer_interval_set/get()``
-
 * ``ecore_timer_pending_get()`` -> ``efl_loop_timer_pending_get()``
-
 * ``ecore_timer_reset()`` -> ``efl_loop_timer_reset()``
-
 * ``ecore_timer_freeze/thaw()`` -> ``efl_event_freeze/thaw()``
-
 * ``ecore_timer_*()`` methods should not be used in new code.
 
 ### File Descriptors ###
@@ -38,11 +37,8 @@ Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Timers), [
 Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#File_Descriptor_Monitors), [Legacy EFL](/develop/legacy/program_guide/main_loop/file_descriptors)
 
 * File Descriptors are now regular Eo objects created with ``efl_add(EFL_LOOP_FD_CLASS, ...)`` and destroyed with ``efl_unref()``.
-
 * Register to FD events with ``efl_event_callback_add()``, possible events are ``EFL_LOOP_FD_EVENT_READ``, ``_WRITE`` and ``_ERROR``.
-
 * Retrieve the internal FDs through the ``fd`` and ``fd_file`` properties .
-
 * ``ecore_main_fd_*()`` methods should not be used in new code.
 
 ### Idlers ###
@@ -50,21 +46,21 @@ Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#File_Descr
 Programming guides: [Unified EFL](/develop/guides/c/core/main-loop.md#Idlers), [Legacy EFL](/develop/legacy/program_guide/main_loop/idlers)
 
 * All idler functions are handled through regular events on the Loop object.
-
 * ``ecore_idler_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE, ...)``
-
 * ``ecore_idler_enterer_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE_ENTER, ...)``
-
 * ``ecore_idler_exiter_add()`` -> ``efl_event_callback_add(loop_object, EFL_LOOP_EVENT_IDLE_EXIT, ...)``
-
 * ``ecore_idler_*()`` methods should not be used in new code.
 
 ## User Interface ##
+
+### Widgets ###
+
+In the Unified Efl.Ui widgets are visible and set to expand by default whilst in Legacy EFL they had to be shown after the correct weight and alignment were set. This should not cause any need for code changes but should mean that UI setup code is much shorter.
 
 ### Sizing ###
 
 Programming guides: [Unified EFL](/develop/guides/c/ui/sizing.md), [Legacy EFL](/develop/legacy/samples/elm_min_size_control)
 
+* ``evas_object_resize()`` -> ``efl_gfk_size_set()``
 * ``evas_object_size_hint_min_set/get()`` -> ``efl_gfx_size_hint_min_set/get()``
-
 * ``evas_object_size_hint_max_set/get()`` -> ``efl_gfx_size_hint_max_set/get()``
