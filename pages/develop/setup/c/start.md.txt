@@ -4,14 +4,23 @@
 
 # Setting Up a C Development Environment #
 
-Installing the Enlightenment Foundation Libraries for C development is a simple task on common platforms. The following documentation walks you through the process step-by-step, beginning with selecting your development platform's operating system.
+[Installing the Enlightenment Foundation Libraries](https://www.enlightenment.org/docs/distros/start) for C development is a simple task on common platforms.
 
-## Operating Systems ##
+The following documentation adds to that by describing how to install and run the right tools and prepare for building apps using EFL.
+## Compiling EFL Applications ###
 
-* [Ubuntu](ubuntu.md)
-* [Arch Linux](arch.md)
-* [Debian](debian.md)
-* [Fedora](fedora.md)
-* [FreeBSD](freebsd.md)
-* [openSUSE](opensuse.md)
-* [macOS](macos.md)
+With EFL installed, you can start compiling the applications you write using Enlightenment technologies:
+
+```bash
+gcc -o your_app your_app.c `pkg-config --cflags --libs eina efl elementary`
+```
+
+Where ``your_app`` is the name of the app you want to build and ``your_app.c`` contains the source code of your application.
+
+If the compilation is successful, this will create an executable application called *your_app* in the directory. You can run this app like any other program.
+
+## Troubleshooting ##
+
+If you get errors when you compile the examples in this guide, you may be using an out of date version of EFL. Update your libraries installing from [EFL's git repository](#Installing_from_Git).
+
+If you are having problems compiling and installing EFL, you can come and seek advice on the [any of our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
