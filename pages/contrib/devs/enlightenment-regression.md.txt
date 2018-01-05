@@ -15,14 +15,71 @@ but it must be installed using the following instructions before it can be used.
 
 The test suite should be cloned from git and installed in the usual autotools manner:
 
-```
     $ git clone https://git.enlightenment.org/devs/discomfitor/test-e.git
     $ cd test-e
     $ ./autogen.sh --prefix=<your enlightenment prefix here>
     $ make
     $ make install
-```
 
 ## Running Tests ##
 
+Tests are invoked using the run script:
+
+  * ``./run.sh`` runs all available tests
+  * ``./run.sh <test1> <test2>`` run the specified tests
+
+Graphical output is rendered to a png file matching the name of the test i.e. test1.png. 
+
+Test stdout and stderr are saved to a log file with the same name i.e. test1.log.
+
+## Configuration ##
+
+The following environment variables are supported to control the behaviour of the tests:
+
+VG_ON
+:  Run test(s) under valgrind
+
+GDB_ON
+:  Automatically print a backtrace on crash
+
+TEST_EXIT
+:  Use exit() instead of logging out after tests
+
+CLEAN
+:  Run ‘git clean -dxf’ before running tests
+
+DELAY_ON
+:  Wait 4 extra seconds before beginning tests
+
+STRACE_ON
+:  Run tests under strace
+
+E_COMP_ENGINE
+:  ‘sw’ or ‘gl’ to set software or gl rendering
+
+E_WL_FORCE
+:  ‘buffer’, ‘drm’, ‘x11’, ‘wl’ to set the output engine
+
+Additionally you can change the expected outcome of a test by editing the
+imgs/testname.png file. If you delete the file then it will be recreated
+from the output of the next test run.
+
 ## Adding New Tests ##
+
+To add a new test to the suite follow these steps
+
+    Create src/<newtestname>.c
+    Copy scripts/basic.sh to scripts/<newtestname>.sh
+    Add src/<newtestname>.c to src/Makefile.mk
+    Add RUN_TEST(<newtestname>); to src/e_mod_main.c
+    Add TEST_FN(<newtestname>); to src/e_mod_main.h
+
+Add the following content to src/<newtestname>.c as a starting point:
+
+    #include "e_mod_main.h"
+    TEST_FN(<testname>)
+    {
+        // Initialize stuff here
+    }
+
+For further examples of how to write tests please check the content of existing test files.
