@@ -1,0 +1,155 @@
+---
+~~Title: Installing EFL on Debian~~
+~~NOCACHE~~
+---
+
+# Installing EFL on Debian #
+
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You'll need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
+
+This tutorial describes several ways to install EFL on your system. You will only need to use one of these. Select your chosen method using the index on the right.
+
+Many distributions offer EFL as an installable package from their default repositories. In this case you only need to use your distribution's software management system to install. However most versions of EFL in default repositories are out of date and will not compile more recent Enlightenment applications. If this is not an issue for you, read through the ["From  Distribution Repositories"](#From_Distribution_Repositories) section below.
+
+Distributions often provide a special repository maintained by users or a method of integrating a bleeding edge version of EFL with your software management system. This means that once installed you can keep EFL current just by running system updates. If your distribution offers this, take a look at the section ["Installing from a Special Repository"](#Installing_from_a_Special_Repository).
+
+The Enlightenment developers provide a pre-packaged source of EFL. Although not bleeding edge it is up to date and considered stable for production environments. You can download, compile and install it yourself by following the instructions in ["Installing from Packaged Source"](#Installing_from_Packaged_Source).
+
+You can also download the source code for the most recent version from the EFL git repositories. This will provide you with the latest code, which is updated on a nightly basis. To get started, read the section ["Installing from Git"](#Installing_from_Git).
+
+Whichever installation method you use, visit ["Compiling EFL Applications"](#Compiling_EFL_Applications) to discover how to compile your Enlightenment applications.
+
+## From  Distribution Repositories ##
+
+There's no EFL package in the official Debian repositories nor in any of the working user-maintained repositories. In light of this either [install EFL from the packaged source](#Installing_from Packaged_Source) or [download and install the most recent source code from the git repository](Installing_from_Git) as described below.
+
+## Installing from Packaged Source ##
+
+There are two versions of EFL available from the Enlightenment website. One is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). The other comes already packaged and is available from the [EFL's download site](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
+
+### Step 1: Downloading Stable Version ###
+
+[Download the latest version of EFL](https://download.enlightenment.org/rel/libs/efl/) and check it against its SHA256 hash:
+
+```bash
+wget https://download.enlightenment.orgtar /rel/libs/efl/efl-X.XX.X.tar.xz
+wget https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz.sha256
+cat efl-X.XX.X.tar.xz.sha256; sha256sum efl-X.XX.X.tar.xz
+```
+
+Note that you will have to change ``X.XX.X`` to the actual version of EFL.
+
+### Step 2: Unpacking ###
+
+Once you have the archive file containing EFL on your hard disk unpack it with:
+
+```bash
+tar xvf efl-X.XX.X.tar.xz
+```
+
+This will create a folder named *efl-X.XX.X*.
+
+### Step 3: Installing Dependencies ###
+
+In order to compile and install EFL, first download the necessary software:
+
+```bash
+su -c "apt install gcc g++ check libssl-dev libsystemd-dev libjpeg-dev libglib2.0-dev libgstreamer1.0-dev libluajit-5.1-dev libfreetype6-dev libfontconfig1-dev libfribidi-dev libx11-dev libxext-dev libxrender-dev libgl1-mesa-dev libgif-dev libtiff5-dev libpoppler-dev libpoppler-cpp-dev libspectre-dev libraw-dev librsvg2-dev libudev-dev libmount-dev libdbus-1-dev libpulse-dev libsndfile1-dev libxcursor-dev libxcomposite-dev libxinerama-dev libxrandr-dev libxtst-dev libxss-dev libbullet-dev libgstreamer-plugins-base1.0-dev doxygen"
+```
+
+### Step 4: Building and Installing ###
+
+Once you have installed all the required packages to compile and install EFL, ``cd`` into the *efl-X.XX.X* folder and run 
+
+```bash
+./configure
+make
+su -c "make install"
+```
+
+This will configure the files needed to compile software, then compile and install it.
+
+### Step 5: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, ensure that some files are visible to *dbus*:
+
+```bash
+su -c "ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service"
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+su -c "ldconfig"
+```
+
+## Installing from Git ##
+
+You can also get the bleeding edge version of EFL by cloning it from the git repository.
+
+### Step 1: Installing git and Cloning ###
+
+By default, *git* is not installed in Debian so the first step is to install it:
+
+```bash
+su -c "apt install git"
+```
+
+Next clone EFL's source code:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a a directory named *efl/*.
+
+### Step 2: Installing Dependencies ###
+
+You'll need to install some tools to build the configuration file:
+
+```bash
+su -c "apt install autoconf autopoint libtool"
+```
+
+You'll also need to download the software dependencies for EFL itself:
+
+```bash
+su -c "apt install gcc g++ check libssl-dev libsystemd-dev libjpeg-dev libglib2.0-dev libgstreamer1.0-dev libluajit-5.1-dev libfreetype6-dev libfontconfig1-dev libfribidi-dev libx11-dev libxext-dev libxrender-dev libgl1-mesa-dev libgif-dev libtiff5-dev libpoppler-dev libpoppler-cpp-dev libspectre-dev libraw-dev librsvg2-dev libudev-dev libmount-dev libdbus-1-dev libpulse-dev libsndfile1-dev libxcursor-dev libxcomposite-dev libxinerama-dev libxrandr-dev libxtst-dev libxss-dev libbullet-dev libgstreamer-plugins-base1.0-dev doxygen"
+```
+
+### Step 3: Configuring the Software ###
+
+You can now ``cd`` into the *efl\* directory and run the *autoreconf* script to create and configure the software ready for compilation:
+
+```bash
+./autogen.sh
+```
+
+Once configured, compile the software with:
+
+```bash
+make
+su -c "make install"
+```
+
+### Step 4: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, you will have to ensure that some files are visible to *dbus*:
+
+```bash
+su -c "ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service"
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+su -c "ldconfig"
+```
+
+## Troubleshooting ##
+
+If you're having problems compiling and installing EFL, you can find help on any of [our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
+
+## Installing on Other Operating Systems ##
+
+If you would like to install EFL on a different operating system visit the [Setting up a C Development Environment page](start.md).
