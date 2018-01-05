@@ -33,7 +33,7 @@ The version in Arch's official repositories may lag behind the latest version of
 
 ## Installing from a Special Repository ##
 
-You can use Arch's package management system to install an up-to-date version of EFL from the *Arch User Repository (AUR)* named *elf-git*. Using the *elf-git*  AUR is relatively simple and makes your EFL package easey to maintain using Arch's package management system, *pacman*. 
+You can use Arch's package management system to install an up-to-date version of EFL from the *Arch User Repository (AUR)* named *efl-git*. Using the *efl-git*  AUR is relatively simple and makes your EFL package easy to maintain using Arch's package management system, *pacman*. 
 
 ### Step 1: Download Meta Package ###
 
@@ -59,7 +59,7 @@ pacman -S wayland-protocols
 
 ### Step 3: Make Package ###
 
-Unpack the file you downloaded in Step 1 with ``tar xvf efl-git.tar.gz``. Next, ``cd`` into the new *efl-git/* directory and build the package with:
+Unpack the file you downloaded in Step 1 with ``tar xvf efl-git.tar.gz``. Next, ``cd`` into the new ``efl-git/`` directory and build the package with:
 
 ```bash
 makepkg -s
@@ -69,7 +69,7 @@ This process will download EFL from the Enlightenment git repositories, run the 
 
 ### Step 4: Install the package ###
 
-When *makepkg* is finished you'll find a file in your directory with a name like *efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz*. This is the actual package you can install. Switch to root and run:
+When *makepkg* is finished you'll find a file in your directory with a name like ``efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz``. This is the actual package you can install. Switch to root and run:
 
 ```bash
 pacman -U efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz
@@ -79,7 +79,7 @@ pacman -U efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz
 
 ## Installing from Packaged Source ##
 
-There are two versions available from the Enlightenment website. One is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). The other is packaged and available from the [EFL download site](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
+There are two versions available from the Enlightenment website. One is the bleeding edge version which you can [download using git](#Installing_from_Git). The other is packaged and available from the [EFL download site](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
 
 ### Step 1: Downloading Stable Version ###
 
@@ -101,7 +101,7 @@ Once you have the archive file containing EFL on your hard disk unpack it with:
 tar xvf efl-X.XX.X.tar.xz
 ```
 
-This will produce a folder named *efl-X.XX.X*.
+This will produce a folder named ``efl-X.XX.X``.
 
 ### Step 3: Installing Dependencies ###
 
@@ -113,7 +113,7 @@ pacman -S gcc make pkg-config luajit libjpeg gstreamer freetype2 fontconfig frib
 
 ### Step 4: Building and Installing ###
 
-Once you have installed all the required packages, ``cd`` into the *efl-X.XX.X* folder and run 
+Once you have installed all the required packages, ``cd`` into the ``efl-X.XX.X`` folder and run 
 
 ```bash
 ./configure
@@ -125,13 +125,13 @@ This will configure the files needed for compiling, compile the software, then i
 
 ### Step 5: Carrying out Post Installation Tasks ###
 
-As you are not installing to */usr* but to */usr/local* you'll have to ensure that some files are visible to *dbus*:
+As you are not installing to ``/usr`` but to ``/usr/local`` you'll have to ensure that some files are visible to *dbus*:
 
 ```bash
 sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
 ```
 
-You also have to make some files visible to *pkgconfig*. To do this open */etc/profile* in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
+You also have to make some files visible to *pkgconfig*. To do this open ``/etc/profile`` in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
 
 ```bash
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
@@ -161,7 +161,7 @@ Next clone EFL's source code:
 git clone https://git.enlightenment.org/core/efl.git
 ```
 
-This will create a a directory named *efl/*.
+This will create a a directory named ``efl/``.
 
 ### Step 2: Installing Dependencies ###
 
@@ -179,7 +179,7 @@ pacman -S luajit libjpeg gstreamer freetype2 fontconfig fribidi libx11 xorg-serv
 
 ### Step 3: Configuring the Software ###
 
-You can now ``cd`` into the *efl\* directory and run the *autoreconf* script to create and configure the software, ready for compilation:
+You can now ``cd`` into the ``efl\`` directory and run the ``autoreconf`` script to create and configure the software, ready for compilation:
 
 ```bash
 ./autogen.sh
@@ -194,13 +194,13 @@ su -c "make install"
 
 ### Step 4: Carrying out Post Installation Tasks ###
 
-As you are not installing to */usr* but to */usr/local* you'll have to ensure that some files are visible to *dbus*:
+As you are not installing to ``/usr`` but to ``/usr/local`` you'll have to ensure that some files are visible to *dbus*:
 
 ```bash
 sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
 ```
 
-You also have to make some files visible to *pkgconfig*. To do this open */etc/profile* in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
+You also have to make some files visible to *pkgconfig*. To do this open ``/etc/profile`` in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
 
 ```bash
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
