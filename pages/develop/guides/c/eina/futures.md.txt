@@ -38,29 +38,24 @@ The code returning the delayed value (the promise of a value) creates an ``Eina_
    Eina_Promise *promise;
    void *data;
 
-   loop = efl_loop_main_get(EFL_LOOP_CLASS);
+   [...]
    scheduler = efl_loop_future_scheduler_get(loop);
    promise = eina_promise_new(scheduler, _promise_cancel_cb, data);
 ```
 
-Most of the time you'll be using the *main loop* and its scheduler so you can cache the ``loop`` and ``scheduler`` variables from the above snippet in your code. There is no need to free them.
+Most of the time you'll be using the *application loop* you received in the ``efl_main()`` method of your application (see the [Main Loop Programming Guide](/develop/guides/c/core/main-loop.md)) and its scheduler so you can cache the ``loop`` and ``scheduler`` variables from the above snippet in your code. There is no need to free them.
 
 > **NOTE**:
 > You can also use ``efl_loop_promise_new()`` to simplify your code a bit:
 > ```c
->    loop = efl_loop_main_get(EFL_LOOP_CLASS);
 >    promise = efl_loop_promise_new(loop, _promise_cancel_cb, data);
-> ```
-> Or even simpler with ``efl_loop_main_promise_new()``:
-> ```c
->    promise = efl_loop_main_promise_new(_promise_cancel_cb, data);
 > ```
 
 You can attach arbitrary data to ``Eina_Promise``s which you can later retrieve with ``eina_promise_data_get()``.
 
 Finally when creating ``Eina_Promise``s you should **always** provide a ``_cancel_callback`` as above, so you're notified if the promise is cancelled. This is chiefly because any pointer you might be keeping to the cancelled promise will be invalid after the callback but also because you have a chance to stop whatever process you had running to obtain the promised value.
 
-See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n93).
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n91).
 
 ## Creating a Future ##
 
@@ -85,7 +80,7 @@ The ``success`` callback will be triggered when the promise is fulfilled and wil
 
 You can pass any data you want when registering callbacks. They will receive it through the ``data`` parameter. Use the ``free`` callback to free it since it will be called no matter what way the promise ends (successfully resolved or cancelled).
 
-See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n99).
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n97).
 
 ## Resolving a Promise ##
 
@@ -103,7 +98,7 @@ Resolving a promise means delivering the promised value. This is done through an
 
 All the callback methods registered with this promise (through ``Eina_Future`` objects as seen above) will be called and the ``Eina_Value`` will be delivered to them.
 
-See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n71).
+See an example in [Test 1 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n69).
 
 ## Rejecting a Promise ##
 
@@ -119,7 +114,7 @@ Sometimes the code that delivers a promise can't fulfill it (think of a server r
 
 Instead of the ``success`` callback used in normal promise resolution, all ``Eina_Future`` objects registered to the rejected ``Eina_Promise`` will have their ``error`` callback triggered. Instead of the promised ``Eina_Value`` they'll receive the ``Eina_Error`` provided to ``eina_promise_reject()``.
 
-See an example in [Test 2 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n120).
+See an example in [Test 2 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n118).
 
 ## Cancelling a Future ##
 
@@ -147,7 +142,7 @@ Future cancellation is achieved through ``efl_future_cancel()``:
 
 In the above example, ``_promise_cancel_cb()`` will be called to notify the promise-fulfilling code that it has been cancelled. In addition to this ``_promise_error_cb()`` will be called to notify any code waiting on the promised value that it will never arrive (the reported error will be ``EINA_ERROR_FUTURE_CANCEL``).
 
-See an example in [Test 3 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n198).
+See an example in [Test 3 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n196).
 
 ## Chaining Futures ##
 
@@ -172,7 +167,7 @@ Note also how each callback can have different data passed to it.
 
 A rejection of the promise or the cancellation of any of the futures will cancel the whole chain.
 
-See an example in [Test 4 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n269).
+See an example in [Test 4 of eina_future.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/eina/src/eina_future.c#n265).
 
 ## Callbacks and Easy Callbacks ##
 
