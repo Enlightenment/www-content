@@ -21,18 +21,32 @@ EFL covers a wide range of functions including inter-process communication (IPC)
 
 ## Parts of EFL ###
 
-EFL is made up of a number of libraries which build on top of each other in layers, steadily becoming higher-level, yet allowing access to each level as they go. The higher up you go, the less you have to do yourself. Elementary is about as high up as you get, while you still access layers below it for day to day tasks.
+EFL is made up of a number of libraries which build on top of each other in layers, steadily becoming higher-level, yet allowing access to each level as they go. The higher up you go, the less you have to do yourself. Out widget toolkit is about as high up as you get, while you can still access layers below it for greater control or lower level tasks.
 
-EFL exposes all of its APIs by default in C. There are several bindings available. Work is progressing on supporting bindings for various language as first-class-citizens in EFL by auto-generating them directly from the new object orientation infrastructure for C.
+EFL is written in C and exposes all of its APIs by default in C. Binding support exists for several languages including Python, C++ and Lua. As the object based Unified API is completed more language bindings will become available.
 
-The main focus is on C mostly because the libraries have been around for a long time, were originally written in that language and the developers of those libraries prefer C. The developers add OO features in C with tools and infrastructure where needed. Moving from C would also limit the audience. C programmers couldn't access a C++ API for instance, whereas a C++ programmer can access both C and C++. That is partly why the developers aim to auto-generate bindings so programmers of various languages can get native-like APIs for their chose language from the same core EFL API set.
+The main focus is on C mostly because the underlying libraries have been around for a long time, were originally written in that language and the developers of those libraries prefer C. Moving from C would also limit the audience. C programmers couldn't access a C++ API for instance, whereas a C++ programmer can access both C and C++. The developers aim to have bindings auto-generate so programmers of various languages can get native-like APIs for their chosen language from the same core EFL API set.
 
-The components are divided into named libraries or projects. Core EFL components include:
+Efl is currently undergoing a transition from our current stable module based presentation where each area has it's own name to a unified structure all under the Efl namespace.
 
-| Component   | Description |
-| -------------- | -------------- |
-| Evas | Core scene graph and rendering    |
-| Eina | Data structures and low level helpers   |
+### Unified EFL ###
+
+The Unified Efl API is split into three main areas: Efl_Core, Efl_Net and Efl_Ui, each encompassing the one before so you can include a single reference in your app. For basic offline applications use Efl_Core, for additional network and connectivity use Efl_Net and if you are building a graphical application then use Efl_Ui (the widget toolkit).
+
+| Component | Description |
+| --------- | ----------- |
+| Efl_Core  | Structures and functions for application runtime and object lifecycle including mainloop, I/O and events |
+| Efl_Net   | Network access and session management including helpers for HTTP etc |
+| Efl_Ui    | Full graphical features including scene graph rendering, 3D and widget toolkit |
+
+### Stable (module based) API ###
+
+The stable EFL API components are divided into named modules. Core EFL components include:
+
+| Component | Description |
+| --------- | ----------- |
+| Evas | Core scene graph and rendering |
+| Eina | Data structures and low level helpers |
 | Edje | UI layout & animation data files for themes |
 | Eet | Data (de)serialization and storage  |
 | Ecore | Core loop and system abstractions like X11 |
@@ -41,15 +55,12 @@ The components are divided into named libraries or projects. Core EFL components
 | Embryo | Tiny VM and compiler based on Pawn  |
 | Eeze | Device enumeration and access library  |
 | Emotion | Video decode wrapping, glue and abstraction |
-| Ethumb| Thumbnailing handler  |
+| Ethumb | Thumbnailing handler  |
 | Ephysics | Physics (bullet) wrapper and Evas glue  |
 | EIO | Asynchronous I/O handling  |
-| Evas Generic Loaders  | Extra image loaders for complex image types|
+| Evas Generic Loaders | Extra image loaders for complex image types|
 | Emotion Generic Players | Extra video decoders (for VLC)      |
-| Elementary     | Widgets and high level abstractions    |
-
-
-Binding support exists for several languages such , including Python, Javascript, C++, Ruby and Lua.
+| Elementary | Widgets and high level abstractions    |
 
 ### The EFL Model ###
 
