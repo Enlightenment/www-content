@@ -1,0 +1,174 @@
+---
+~~Title: Installing EFL on FreeBSD~~
+~~NOCACHE~~
+---
+
+# Installing EFL on FreeBSD #
+
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You'll need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
+
+This tutorial describes several ways to install EFL on your system. You will only need to use one of these. Select your chosen method using the index on the right.
+
+Many distributions offer EFL as an installable package from their default repositories. In this case you only need to use your distribution's software management system to install. However most versions of EFL in default repositories are out of date and will not compile more recent Enlightenment applications. If this is not an issue for you read through the ["From  Distribution Repositories"](#From_Distribution_Repositories) section below.
+
+The Enlightenment developers provide a pre-packaged source of EFL. Although not bleeding edge it is up to date and considered stable for production environments. You can download, compile and install it yourself by following the instructions in ["Installing from Packaged Source"](#Installing_from_Packaged_Source).
+
+You can also download the source code for the most recent version from the EFL git repositories. This will provide you with the latest code, which is updated on a nightly basis. To get started, read the section ["Installing from Git"](#Installing_from_Git).
+
+Whichever installation method you use, visit ["Compiling EFL Applications"](#Compiling_EFL_Applications) to discover how to compile your Enlightenment applications.
+
+## From  Distribution Repositories ##
+
+FreeBSD contains an instance of the EFL package in its official repositories. To install it run the following command as root:
+
+```bash
+pkg install efl
+```
+
+This will give you a working EFL installation.
+
+The version in FreeBSD's official repositories may lag behind the latest version of EFL and give you problems when trying to compile examples from tutorials in this documentation. If this is the case, install a more recent version of EFL using one of the methods below.
+
+## Installing from Packaged Source ##
+
+There are two versions of EFL available from the Enlightenment website. One is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). The other is packaged and available from the [EFL download page](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
+
+### Step 1: Downloading Stable Version ###
+
+[Download the latest version of EFL](https://download.enlightenment.org/rel/libs/efl/) and check it against its SHA256 hash:
+
+```bash
+wget --no-check-certificate https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz
+wget --no-check-certificate https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz.sha256
+cat efl-X.XX.X.tar.xz.sha256; sha256sum efl-X.XX.X.tar.xz
+```
+
+Note that you'll need to change ``X.XX.X`` to the actual version of EFL e.g. efl-1.20.6.tar.xz
+
+### Step 2: Unpacking ###
+
+Once you've downloaded the archive file containing EFL to your hard drive unpack it with:
+
+```bash
+tar xvf efl-X.XX.X.tar.xz
+```
+
+This will produce a folder named *efl-X.XX.X*.
+
+### Step 3: Installing Dependencies ###
+
+To compile from source you'll need *gcc* and few more GNU tools:
+
+```bash
+su
+pkg install gcc automake gmake pkgconf
+```
+
+Next install the software packages required by EFL:
+
+```bash
+su
+pkg install check pkgconfig doxygen openssl jpeg gstreamer1 luajit fribidi tiff poppler libspectre libraw librsvg2 pulseaudio libXcursor libXcomposite libXinerama libXrandr libXScrnSaver bullet gstreamer1-plugins
+```
+
+### Step 4: Building and Installing ###
+
+Once you have installed all the required packages ``cd`` into the *efl-X.XX.X* folder and run 
+
+```bash
+./configure
+gmake
+su
+gmake install
+```
+
+This will configure the files needed for compiling, compile the software itself and then install it.
+
+### Step 5: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local* you need to ensure that some files are visible to *dbus*:
+
+```bash
+su
+ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+ldconfig
+```
+
+## Installing from Git ##
+
+You can also install the bleeding edge version of EFL by cloning it from the git repository.
+
+### Step 1: Installing git and Cloning ###
+
+By default, *git* is not installed in FreeBSD, so the first step is to install it:
+
+```bash
+pkg install git
+```
+
+Next clone EFL's source code:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a a directory named *efl/*.
+
+### Step 2: Installing Dependencies ###
+
+You now need to install some tools to build the configuration file:
+
+```bash
+pkg install gcc automake gmake pkgconf
+```
+
+Make sure to install the dependencies specific to EFL also:
+
+```bash
+pkg install check doxygen openssl jpeg gstreamer1 luajit fribidi tiff poppler libspectre libraw librsvg2 pulseaudio libXcursor libXcomposite libXinerama libXrandr libXScrnSaver bullet gstreamer1-plugins
+```
+
+### Step 3: Configuring the Software ###
+
+You can now ``cd`` into the *efl\* directory and run the *autoreconf* script to create and configure the software ready for compilation:
+
+```bash
+./autogen.sh
+```
+
+Once configured, compile the software with:
+
+```bash
+gmake
+su
+gmake install
+```
+
+### Step 4: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, you need to ensure that some files are visible to *dbus*:
+
+```bash
+su
+ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+su
+ldconfig
+```
+
+## Troubleshooting ##
+
+If you are having problems compiling and installing EFL you can find help on any of [our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
+
+## Installing on Other Operating Systems ##
+
+If you would like to install EFL on a different operating system visit the [Setting up a C Development Environment page](start.md).
