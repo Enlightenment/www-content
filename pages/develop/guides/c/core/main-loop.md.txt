@@ -15,6 +15,20 @@ EFL manages timers, file descriptors, user interface events amongst other things
 
 * Read the [Events Programming Guide](events.md) to learn how to register callbacks, which can be triggered by events.
 
+## The Application Main Loop ##
+
+For convenience, when your application starts, EFL creates one Main Loop for you, called the *Application Main Loop*. You can use it as the parent for any object you create that requires a main loop (Like [Promises and Futures](/develop/guides/c/eina/futures.md), for example).
+
+In the [Hello World](/develop/tutorials/c/hello-world.md) tutorial you learned that all EFL applications start with the ``efl_main()`` method. You can retrieve the Application Main Loop from the ``Efl_Event *`` parameter like this:
+
+```c
+EAPI_MAIN void
+efl_main(void *data, const Efl_Event *ev)
+{
+   Efl_Loop *loop = ev->object;
+}
+```
+
 ## Timers ##
 
 Timers allow events to be triggered periodically after the given time has elapsed. After an event callback has been registered with the timer, it will be called at regular intervals.
