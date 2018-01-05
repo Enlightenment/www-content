@@ -1,81 +1,180 @@
-~~Title: EFL on Ubuntu~~
-==== Compiling from Source ====
+---
+~~Title: Installing EFL on Ubuntu ~~
+---
 
-== Build Dependencies ==
+# Installing EFL on Ubuntu #
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You'll need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
 
-Satisfying dependencies under **Ubuntu Xenial Xerus** and recommended packages:
+This tutorial describes several ways to install EFL on your system. You will only need to use one of these. Select your chosen method using the index on the right.
 
-<code>
+Many distributions offer EFL as an installable package from their default repositories. In this case you only need to use your distribution's software management system to install. However most versions of EFL in default repositories are out of date and will not compile more recent Enlightenment applications. If this is not an issue for you, read through the ["From  Distribution Repositories"](#From_Distribution_Repositories) section below.
 
-sudo apt-get install automake autopoint build-essential ccache check \
-doxygen faenza-icon-theme git imagemagick libasound2-dev libblkid-dev \
-libbluetooth-dev libbullet-dev libcogl-gles2-dev libfontconfig1-dev \
-libfreetype6-dev libfribidi-dev libgeoclue-2-dev libgif-dev libgstreamer1.0-dev \
-libgstreamer-plugins-base1.0-dev libharfbuzz-dev libibus-1.0-dev \
-libiconv-hook-dev libinput-dev libjpeg-dev libblkid-dev libluajit-5.1-dev \
-liblz4-dev libmount-dev libopenjp2-7-dev libpam0g-dev libpoppler-cpp-dev \
-libpoppler-dev libpoppler-private-dev libproxy-dev libpulse-dev \
-libraw-dev librsvg2-dev libscim-dev libsndfile1-dev libspectre-dev \
-libssl-dev libsystemd-dev libtiff5-dev libtool libudev-dev \
-libudisks2-dev libunibreak-dev libunwind-dev libvlc-dev libwebp-dev \
-libxcb-keysyms1-dev libxcursor-dev libxine2-dev libxinerama-dev \
-libxkbfile-dev libxrandr-dev libxss-dev libxtst-dev \
-linux-tools-common texlive-base unity-greeter-badges \
-valgrind xserver-xephyr
+Distributions often provide a special repository maintained by users or a method of integrating a bleeding edge version of EFL with your software management system. This means that once installed you can keep EFL current just by running system updates. If your distribution offers this, take a look at the section ["Installing from a Special Repository"](#Installing_from_a_Special_Repository).
 
-</code>
+The Enlightenment developers provide a pre-packaged source of EFL. Although not bleeding edge it is up to date and considered stable for production environments. You can download, compile and install it yourself by following the instructions in ["Installing from Packaged Source"](#Installing_from_Packaged_Source).
 
-Note that a number of Enlightenment programs have transitioned to the [[http://mesonbuild.com/|Meson build system]].
-To install Meson in Ubuntu, you can issue the following commands:
-<code>
-sudo apt-get install ninja-build python3-pip
-</code>
-Then (without sudo):
-<code>
-pip3 install --user meson
-</code>
-If necessary, add:
-<code>
-export PATH=$HOME/.local/bin:$PATH
-</code>
-at the bottom of your ~/.bashrc file.
+You can also download the source code for the most recent version from the EFL git repositories. This will provide you with the latest code, which is updated on a nightly basis. To get started, read the section ["Installing from Git"](#Installing_from_Git).
 
-If you ever need to uninstall meson, simply run:
-<code>
-pip3 uninstall meson
-</code>
+Whichever installation method you use, visit ["Compiling EFL Applications"](#Compiling_EFL_Applications) to discover how to compile your Enlightenment applications.
 
-Meson [[https://git.enlightenment.org/core/enlightenment.git/tree/INSTALL|quick help]].
+## From  Distribution repos ##
 
-Then go to [[/docs/distros/]] to learn how to install the whole thing ;-)
+EFL is not available in Ubuntu's official repositories, but you can install all the items you need from a special PPA repository. [See below for instructions on how to do that](#Installing_from_a_Special_Repository).
 
-<note tip>
-Alternatively, if you do not want to delve into the many subtleties of the compilation process — while retaining a fully functional Ubuntu system after the build has finished — check out [[http://build-enlightenment.monsite-orange.fr/|batden's script]]: Covering Ubuntu 16.04 LTS and 17.10 with Wayland.</note>
+## Installing from a Special Repository ##
 
-== Wayland Support ==
+To install the latest EFL available from a special Ubuntu PPA repository, add the new repository with:
 
-Since Ubuntu has switched to using Wayland by default, building support for this new display system in Enlightenment is now easier.
-Please refer to this [[https://git.enlightenment.org/core/enlightenment.git/tree/README.wayland|README]] for more information.
-
-==== Binary Packages ====
-
-The available packages in the official Ubuntu repositories are outdated.
-The [[https://help.ubuntu.com/community/PPA|PPA]] below provides the latest stable version of E22.
-
-To add this PPA to your system,
-open a terminal and enter:
-
-<code>
+```bash
 sudo add-apt-repository ppa:niko2040/e19
-</code>
+```
+Refresh your repositories:
 
-To install Enlightenment and Terminology (recommended):
-
-<code>
+```bash
 sudo apt-get update
-sudo apt-get install e20 terminology
-</code>
+```
 
+And then install EFL and its development libraries:
 
-Then log out (or restart your computer), select Enlightenment on the login screen and the configuration wizard will appear.
+```bash
+sudo apt-get install libefl-dev
+```
 
+Ubuntu does not install by default the *gcc* compiler, so, before you can [compile any apps](#Compiling_EFL_Applications), you will need to install that too:
+
+```bash
+sudo apt-get install gcc
+```
+
+Also note that, due to EFL's fast development rate, it is unlikely the PPA will provide by default the latest version of EFL. This means that many of the examples in this documentation will probably need tweaking to work. If you would like to install an up to date version of EFL, see the [Installing from Source](#Installing_from_Source) section below or the instructions for [Installing from Git](#Installing_from_Git), also available below.
+
+## Installing from Packaged Source ##
+
+There are two versions available form the Enlightenment website. One is a packaged and available from the [EFL's download site](https://download.enlightenment.org/rel/libs/efl/). The other is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). This section deals with installing with the packaged version available from the [EFL's download site](https://download.enlightenment.org/rel/libs/efl/).
+
+### Step 1: Downloading Stable Version ###
+
+[Download the latest version of EFL](https://download.enlightenment.org/rel/libs/efl/) and check it against its SHA256 hash:
+
+```bash
+wget https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz
+wget https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz.sha256
+cat efl-X.XX.X.tar.xz.sha256; sha256sum efl-X.XX.X.tar.xz
+```
+
+Note that you will have to change ``X.XX.X`` for the actual version of EFL.
+
+### Step 2: Unpacking ###
+
+Once you have the archive file containing EFL in your hard disk, unpack it with:
+
+```bash
+tar xvf efl-X.XX.X.tar.xz
+```
+
+This will produce a folder called *efl-X.XX.X*.
+
+### Step 3: Installing Dependencies ###
+
+Before you can compile and install EFL, you will have to install some software packages EFL needs:
+
+```bash
+sudo apt install  check libssl-dev libsystemd-dev libjpeg-dev libglib2.0-dev libgstreamer1.0-dev libluajit-5.1-dev libfreetype6-dev libfontconfig1-dev libfribidi-dev libx11-dev libxext-dev libxrender-dev libgl1-mesa-dev libgif-dev libtiff5-dev libpoppler-dev libpoppler-cpp-dev libspectre-dev libraw-dev librsvg2-dev libudev-dev libmount-dev libdbus-1-dev libpulse-dev libsndfile1-dev libxcursor-dev libxcomposite-dev libxinerama-dev libxrandr-dev libxtst-dev libxss-dev libbullet-dev libgstreamer-plugins-base1.0-dev doxygen
+```
+
+### Step 4: Building and Installing ###
+
+Once you have installed all the packages EFL needs, ``cd`` into the *efl-X.XX.X* folder and run 
+
+```bash
+./configure
+make
+sudo make install
+```
+
+This will configure the files needed for compiling, actually compile the software, and then install it.
+
+### Step 5: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, you will have to ensure that some files are visible to *dbus*:
+
+```bash
+sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+sudo ldconfig
+```
+
+## Installing from Git ##
+
+You can also get the bleeding edge version of EFL by cloning it from the git repository.
+
+### Step 1: Installing git and Cloning ###
+
+By default, *git* is not installed in Ubuntu, so the first step is to install it:
+
+```bash
+sudo apt install git 
+```
+
+Next clone EFL's source code:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a a directory called *efl/*.
+
+### Step 2: Installing Dependencies ###
+
+You will need to install some tools to build the configuration file:
+
+```bash
+sudo apt install autoconf autopoint libtool
+```
+
+As well as the dependencies specific for EFL:
+
+```bash
+sudo apt install  check libssl-dev libsystemd-dev libjpeg-dev libglib2.0-dev libgstreamer1.0-dev libluajit-5.1-dev libfreetype6-dev libfontconfig1-dev libfribidi-dev libx11-dev libxext-dev libxrender-dev libgl1-mesa-dev libgif-dev libtiff5-dev libpoppler-dev libpoppler-cpp-dev libspectre-dev libraw-dev librsvg2-dev libudev-dev libmount-dev libdbus-1-dev libpulse-dev libsndfile1-dev libxcursor-dev libxcomposite-dev libxinerama-dev libxrandr-dev libxtst-dev libxss-dev libbullet-dev libgstreamer-plugins-base1.0-dev doxygen
+```
+
+### Step 3: Configuring the Software ###
+
+Now you can ``cd`` into the *efl\* directory and run the *autoreconf* script to create and configure the software ready for compilation:
+
+```bash
+./autogen.sh
+```
+
+Once configured, you can compile the software with:
+
+```bash
+make
+sudo make install
+```
+
+### Step 4: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, you will have to ensure that some files are visible to *dbus*:
+
+```bash
+sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+sudo ldconfig
+```
+
+## Troubleshooting ##
+
+If you are having problems compiling and installing EFL, you can come and seek advice on the [any of our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
+
+## Installing on Other Operating Systems ##
+
+If you would like to install EFL on a different operating system visit the [Setting up a C Development Environment page](start.md).
