@@ -1,0 +1,221 @@
+---
+~~Title: Installing EFL on Arch~~
+~~NOCACHE~~
+---
+
+# Installing EFL on Arch #
+
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You'll need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
+
+This tutorial describes several ways to install EFL on your system. You will only need to use one of these. Select your chosen method using the index on the right.
+
+Many distributions offer EFL as an installable package from their default repositories. In this case you only need to use your distribution's software management system to install. However most versions of EFL in default repositories are out of date and will not support more recent Enlightenment applications. If this is not an issue for you, read through the ["From  Distribution Repositories"](#From_Distribution_Repositories) section below.
+
+Distributions often provide a special repository maintained by users or a method of integrating a bleeding edge version of EFL with your software management system. This means that once installed you can keep EFL current just by running system updates. If your distribution offers this, take a look at the section ["Installing from a Special Repository"](#Installing_from_a_Special_Repository).
+
+The Enlightenment developers provide a pre-packaged source of EFL. Although not bleeding edge it is up to date and considered stable for production environments. You can download, compile and install it yourself by following the instructions in ["Installing from Packaged Source"](#Installing_from_Packaged_Source).
+
+You can also download the source code for the most recent version from the EFL git repositories. This will provide you with the latest code, which is usually of stable quality. To get started, read the section ["Installing from Git"](#Installing_from_Git).
+
+Whichever installation method you use, visit ["Compiling EFL Applications"](#Compiling_EFL_Applications) to discover how to compile your Enlightenment applications.
+
+## From  Distribution Repositories ##
+
+Arch contains an instance of the EFL package in its official repositories. To install, run the following command as root:
+
+```bash
+pacman -S efl
+```
+
+This will give you a working EFL installation.
+
+The version in Arch's official repositories may lag behind the latest version of EFL. This may cause problems when trying to compile examples from tutorials in this guide. If this happens, install a more recent version of EFL using one of the methods listed below.
+
+## Installing from a Special Repository ##
+
+You can use Arch's package management system to install an up-to-date version of EFL from the *Arch User Repository (AUR)* named *elf-git*. Using the *elf-git*  AUR is relatively simple and makes your EFL package easey to maintain using Arch's package management system, *pacman*. 
+
+### Step 1: Download Meta Package ###
+
+Download the files containing the required meta-information to install EFL from the AUR:
+
+```bash
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/efl-git.tar.gz
+```
+
+### Step 2: Install Build Tools and Dependencies ###
+
+In order to build EFL from source, you'll need some tools:
+
+```bash
+pacman -S gcc fakeroot binutils autoconf automake pkg-config make
+```
+
+The *makepkg* script in the following step will handle most dependencies however you need to install *wayland-protocols* manually too:
+
+```bash
+pacman -S wayland-protocols
+```
+
+### Step 3: Make Package ###
+
+Unpack the file you downloaded in Step 1 with ``tar xvf efl-git.tar.gz``. Next, ``cd`` into the new *efl-git/* directory and build the package with:
+
+```bash
+makepkg -s
+```
+
+This process will download EFL from the Enlightenment git repositories, run the configuration and download and install the remaining dependencies. It will also compile and install the software (locally) then build a viable and installable package for your system. None of these steps need to be run as root.
+
+### Step 4: Install the package ###
+
+When *makepkg* is finished you'll find a file in your directory with a name like *efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz*. This is the actual package you can install. Switch to root and run:
+
+```bash
+pacman -U efl-git-X.XX.XX.XXXXX.XXXXXXXXX-X-x86-64.pkg.tar.xz
+```
+
+*pacman* will now install EFL for you.
+
+## Installing from Packaged Source ##
+
+There are two versions available from the Enlightenment website. One is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). The other is packaged and available from the [EFL download site](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
+
+### Step 1: Downloading Stable Version ###
+
+[Download the latest version of EFL](https://download.enlightenment.org/rel/libs/efl/) and check it against its SHA256 hash:
+
+```bash
+wget https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz
+wget https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz.sha256
+cat efl-X.XX.X.tar.xz.sha256; sha256sum efl-X.XX.X.tar.xz
+```
+
+Note that you will have to change ``X.XX.X`` to the actual version of EFL.
+
+### Step 2: Unpacking ###
+
+Once you have the archive file containing EFL on your hard disk unpack it with:
+
+```bash
+tar xvf efl-X.XX.X.tar.xz
+```
+
+This will produce a folder named *efl-X.XX.X*.
+
+### Step 3: Installing Dependencies ###
+
+Before you can compile and install EFL you need to install the required software packages and tools:
+
+```bash 
+pacman -S gcc make pkg-config luajit libjpeg gstreamer freetype2 fontconfig fribidi libx11 xorg-server-devel libxrender giflib libtiff poppler libspectre libraw librsvg libpulse libxcursor libxcomposite libxinerama libxrandr libxss bullet gst-plugins-base-libs
+```
+
+### Step 4: Building and Installing ###
+
+Once you have installed all the required packages, ``cd`` into the *efl-X.XX.X* folder and run 
+
+```bash
+./configure
+make
+su -c "make install"
+```
+
+This will configure the files needed for compiling, compile the software, then install it.
+
+### Step 5: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local* you'll have to ensure that some files are visible to *dbus*:
+
+```bash
+sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You also have to make some files visible to *pkgconfig*. To do this open */etc/profile* in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
+
+```bash
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+sudo ldconfig
+```
+
+## Installing from Git ##
+
+You can also download the bleeding edge version of EFL by cloning it from the git repository.
+
+### Step 1: Installing git and Cloning ###
+
+By default, *git* is not installed in Arch, so first install it:
+
+```bash
+pacman -S git
+```
+
+Next clone EFL's source code:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a a directory named *efl/*.
+
+### Step 2: Installing Dependencies ###
+
+You'll need to install some tools to build the configuration file:
+
+```bash
+pacman -S gcc binutils autoconf automake pkg-config make
+```
+
+You also must install the dependencies specific to EFL:
+
+```bash
+pacman -S luajit libjpeg gstreamer freetype2 fontconfig fribidi libx11 xorg-server-devel libxrender giflib libtiff poppler libspectre libraw librsvg libpulse libxcursor libxcomposite libxinerama libxrandr libxss bullet gst-plugins-base-libs doxygen check
+```
+
+### Step 3: Configuring the Software ###
+
+You can now ``cd`` into the *efl\* directory and run the *autoreconf* script to create and configure the software, ready for compilation:
+
+```bash
+./autogen.sh
+```
+
+Once configured, compile the software with:
+
+```bash
+make
+su -c "make install"
+```
+
+### Step 4: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local* you'll have to ensure that some files are visible to *dbus*:
+
+```bash
+sudo ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+You also have to make some files visible to *pkgconfig*. To do this open */etc/profile* in a text editor as root (using for example ``sudo nano /etc/profile``) and add the following line to the end:
+
+```bash
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+```
+
+You may also need to refresh your library path to make sure your apps can find the EFL libraries:
+
+```bash
+sudo ldconfig
+```
+
+## Troubleshooting ##
+
+If you are having problems compiling and installing EFL you can find help on [our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
+
+## Installing on Other Operating Systems ##
+
+If you would like to install EFL on a different operating system visit the [Setting up a C Development Environment page](start.md).
