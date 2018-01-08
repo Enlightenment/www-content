@@ -492,8 +492,8 @@ Thus in the following EBNF you'll see:
   property ::= '@property' name { '@protected' | '@class'  | '@pure_virtual' | '@part' } '{' { property_body } '}'
 
   (* property body - get/set accessors, keys, values *)
-  property_body ::= 'get' [ '@pure_virtual' ] '{' [ comment ] { return | legacy } '}'
-                  | 'set' [ '@pure_virtual' ] '{' [ comment ] { return | legacy } '}'
+  property_body ::= 'get' [ '@pure_virtual' ] '{' [ comment ] { return | legacy | 'keys' '{' { param_nodir } '}' | 'values' '{' { param_nodir } '}' } '}'
+                  | 'set' [ '@pure_virtual' ] '{' [ comment ] { return | legacy | 'keys' '{' { param_nodir } '}' | 'values' '{' { param_nodir } '}' } '}'
                   | 'keys'   '{' { param_nodir } '}'
                   | 'values' '{' { param_nodir } '}'
 
