@@ -394,7 +394,7 @@ Thus in the following EBNF you'll see:
          | 'struct' (name_ns | '{' [ comment ] { struct_field } '}')
          | 'enum' name_ns
          | type '*' { '*' }
-         | type_complex '<' type { type } '>'
+         | type_complex '<' type { ',' type } '>'
          | name_ns
 
   (* attributes for structs and typedefs *)
@@ -489,7 +489,7 @@ Thus in the following EBNF you'll see:
   method_body ::= return | legacy | 'params' '{' { param } '}'
 
   (* property, has accessors *)
-  property ::= '@property' name { '@protected' | '@class'  | '@pure_virtual' } '{' { property_body } '}'
+  property ::= '@property' name { '@protected' | '@class'  | '@pure_virtual' | '@part' } '{' { property_body } '}'
 
   (* property body - get/set accessors, keys, values *)
   property_body ::= 'get' [ '@pure_virtual' ] '{' [ comment ] { return | legacy } '}'
