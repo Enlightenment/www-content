@@ -49,10 +49,33 @@ For every library or application simply go into the source directory where you f
 
 <code bash>
 ./autogen.sh
+
+# If compiling EFL and Wayland support is needed then use ./autogen.sh --enable-wayland instead.
+
 make
 sudo make install
 sudo ldconfig # needed on Linux to update linker library database
 </code>
+
+If you are in a library that doesn't have a configure.ac, it is likely using meson.  For meson based libraries and applications run this in the project's top level directory:
+
+<code bash>
+meson build
+cd build
+
+# If compiling Enlightenment and Wayland support is needed then run meson configure -Dwayland=true after the cd build command.
+
+ninja
+sudo ninja install
+sudo ldconfig
+
+*If compiling EFL and Wayland support is needed the use ./autogen.sh --enable-wayland instead.
+
+make
+sudo make install
+sudo ldconfig # needed on Linux to update linker library database
+</code>
+
 
 If configure (which autogen.sh will run for you) fails, you are likely missing a dependency - provide it. It should tell you what that dependency is. **NOTE** that you can provide configure arguments to autogen.sh such as ''--prefix=/opt/e'' or similar. 
 
