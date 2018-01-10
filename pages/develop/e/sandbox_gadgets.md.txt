@@ -1,0 +1,620 @@
+---
+~~Title: Creating Enlightenment Gadgets~~
+---
+
+# Creating Enlightenment Gadgets #
+ 
+*Gadgets* are standalone applications that Enlightenment can use as extensions to its desktop. They are similar to modules in that they can be placed in containers, called *gadget sites*; they differ in that they are not internal to Enlightenment and do not run in the same process.
+
+This process separation occurs through Enlightenment placing gadgets into a sandbox. This sandbox is a gadget visual that manages the necessary gadget requirements, in place of the application handling this. Sandboxing is beneficial to the user desktop experience as it encourages the creation of gadgets through a much easier development path while also protecting the user desktop experience from being interrupted by faulty extensions.
+
+This guide demonstrates how to develop these gadgets.
+ 
+## Prerequisites ##
+
+* Install and configure Enlightenment and the EFL with Wayland support: [Get Enlightenment](docs/distros/start).
+* Create the Hello World program: [Get started with EFL](develop/efl/start).
+ 
+## Gadget Advantages and Limitations ##
+ 
+Creating gadgets directly, rather than as modules, reduces the need to call upon additional application programming interfaces (APIs). Gadgets are also more robust: as gadgets run in a separate process from Enlightenment they will not crash the desktop when encountering an error, instead gracefully recovering from their own crashes.
+
+There are, however, a few limitations for gadgets. It is not recommended to use forced sizes or size hints in the gadget application. The sandbox will manage sizing for the application; setting minimum or maximum sizes, resizing or moving objects will clash with how the sandbox is managing sizes. Simply setting the desired aspect for the application will tell the sandbox how it needs to prioritize the size of the application.
+
+Running additional applications from within the gadget application will also bring unintended results. The gadget lives in a sandbox and is bound by the size and space that the sandbox provides. If the gadget tries to open further windows or applications on its own these windows and applications will be restricted to the gadget visual. Fortunately, the sandbox provides smart callbacks than can be called to run external applications and also provides a method for opening further windows or popups within the gadget application.
+ 
+## Gadget Basics ##
+
+Enlightenment populates its list of gadgets by looking for ``.desktop`` files installed to the directory ``enlightenment/gadgets`` under Enlightenment's library directory, which can be found using ``pkg-config --variable=libdir enlightenment``. This gadget list is then made available for use through each gadget site's "Add Gadgets" popup. These popups display either a live view of the gadget or a still image.
+
+When Enlightenment executes the gadget application it sets the environment variable ``E_GADGET_ID``. This environmental variable is how the gadget application will determine if it is being run as a gadget, if it is being displayed in the "Add Gadget" popup or if it has been added to a gadget site and has a unique gadget ID.
+
+To demonstrate this, a modified version of the Hello World app referenced in the Prerequisites section of this guide is used. Note the following important change: in the original version the window is created using ``elm_win_util_standard_add()``, but in order to achieve transparency on the window for use as a gadget this is changed to ``elm_win_add()`` in this guide.
+
+In the ``elm_main()`` function the application can check for the ``E_GADGET_ID`` with the following code:
+
+```c
+EAPI_MAIN int
+elm_main(int argc, char **argv)
+{
+   Evas_Object *win, *btn;
+   int gadget =0, id_num = 0;
+   char buf[16];
+
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+ 
+   if (getenv("E_GADGET_ID"))
+     {
+        gadget = 1;
+        snprintf(buf, sizeof(buf), "%s", getenv("E_GADGET_ID"));
+        id_num = atoi(buf);
+     }
+
+   win = elm_win_add(NULL, "Main", ELM_WIN_BASIC);
+   elm_win_title_set(win, "Hello, World!");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   if (gadget) elm_win_alpha_set(win, EINA_TRUE);
+
+   if (gadget && id_num == -1)
+     {
+        icon = elm_icon_add(win);
+        elm_icon_standard_set(icon, "start-here");
+        evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
+        elm_win_resize_object_add(win, icon);
+        evas_object_show(icon);
+     }
+   else
+     {
+        btn = elm_button_add(win);
+        elm_object_text_set(btn, "Goodbye Cruel World");
+        elm_win_resize_object_add(win, btn);
+        evas_object_smart_callback_add(btn, "clicked", on_click, win);
+        evas_object_show(btn);
+     }
+   evas_object_show(win);
+ 
+   elm_run();
+ 
+   return 0;
+}
+```
+
+The variable ``gadget`` is used to determine if the application is running as a gadget or as a standalone application. The variable ``id_num`` is used to identify the ID of the gadget, if the application is indeed running as a gadget. If the application is running as a gadget, the window is set to alpha so that the background of the window does not show up. This is for aesthetics purposes so that gadgets on gadget sites don't all have a background.
+
+If the id of the gadget is ``-1`` the application is being run in the "Add Gadget" popup. In this case the application displays an icon. If the ID of the gadget is not ``-1`` the application is being run as a gadget in a gadget site and the ID will be unique to this gadget. This is important for complex gadgets where the application would like to save settings or configurations and have them loaded after restarts. This unique ID is how the application will identify which settings to load.
+
+## Gadget Events and Smart Callbacks ##
+
+Gadget applications will receive the following smart callbacks on their main window using ``evas_object_smart_callback_add(application_window, smart_callback_type, function, data)``:
+
+* ``gadget_action`` - There was an error with the gadget action.
+* ``gadget_action_deleted`` - The gadget action has been deleted.
+* ``gadget_action_end`` - The gadget action has ended.
+* ``gadget_configure`` - The configure menu item of the gadget has been clicked.
+* ``gadget_site_anchor`` - The position of the gadget has changed.
+* ``gadget_site_gravity`` - The gravity of the gadget has changed.
+* ``gadget_site_orient`` - The orientation of the gadget has changed.
+
+Gadget applications can call the following smart callbacks on their main window using ``evas_object_smart_callback_call(application_window, smart_callback_type, data)``:
+
+* ``gadget_action_request`` - This requests that the gadget sets up an action. The data on this call should be the action name.
+* ``gadget_open_uri`` - This requests the gadget to open an application that handles a uri. The data on this call should be the uri.
+
+You can call actions you set up via the ``evas_object_smart_callback_call(application_window, action, action_data)`` function.
+
+For the purpose of the Hello World gadget, a label detailing the anchor position and orientation of the gadget can be displayed using the following code:
+
+```c
+#include <Elementary.h>
+#include <e_gadget_types.h>
+
+static E_Gadget_Site_Orient gorient;
+static E_Gadget_Site_Anchor ganchor;
+
+static void
+update_anchor_orient(void *data, E_Gadget_Site_Orient orient, E_Gadget_Site_Anchor anchor)
+{
+   char buf[4096];
+   const char *s = "float";
+   Evas_Object *lbl = data;
+
+   if (anchor & E_GADGET_SITE_ANCHOR_LEFT)
+     {
+        if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "top_left";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "left_top";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "left_top";
+                  break;
+               }
+          }
+        else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "bottom_left";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "left_bottom";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "left_bottom";
+                  break;
+               }
+          }
+        else
+          s = "left";
+     }
+   else if (anchor & E_GADGET_SITE_ANCHOR_RIGHT)
+     {
+        if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "top_right";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "right_top";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "right_top";
+                  break;
+               }
+          }
+        else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "bottom_right";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "right_bottom";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "right_bottom";
+                  break;
+               }
+          }
+        else
+          s = "right";
+     }
+   else if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+     s = "top";
+   else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+     s = "bottom";
+   else
+     {
+        switch (orient)
+          {
+           case E_GADGET_SITE_ORIENT_HORIZONTAL:
+             s = "horizontal";
+             break;
+           case E_GADGET_SITE_ORIENT_VERTICAL:
+             s = "vertical";
+             break;
+           default: break;
+          }
+     }
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", s);
+   elm_object_text_set(lbl, buf);
+}
+
+static void
+anchor_change(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+   ganchor = (uintptr_t)event_info;
+   update_anchor_orient(data, gorient, ganchor);
+}
+
+static void
+orient_change(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+   gorient = (uintptr_t)event_info;
+   update_anchor_orient(data, gorient, ganchor);
+}
+
+EAPI_MAIN int
+elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+{
+   Evas_Object *win, *box, *lbl, *icon, *btn;
+   int gadget =0, id_num = 0;
+   char buf[16];
+
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+ 
+   if (getenv("E_GADGET_ID"))
+     {
+        gadget = 1;
+        snprintf(buf, sizeof(buf), "%s", getenv("E_GADGET_ID"));
+        id_num = atoi(buf);
+     }
+
+   win = elm_win_add(NULL, "Main", ELM_WIN_BASIC);
+   elm_win_title_set(win, "Hello, World!");
+   elm_win_autodel_set(win, EINA_TRUE);
+
+   if (gadget) elm_win_alpha_set(win, EINA_TRUE);
+   
+   box = elm_box_add(win);
+   elm_box_horizontal_set(box, EINA_FALSE);
+   evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_win_resize_object_add(win, box);
+   evas_object_show(box);
+   
+   if (gadget && id_num == -1)
+     {
+        icon = elm_icon_add(box);
+        elm_icon_standard_set(icon, "start-here");
+        evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
+        elm_box_pack_end(box, icon);
+        evas_object_show(icon);
+     }
+   else
+     {
+        lbl = elm_label_add(box);
+        evas_object_size_hint_weight_set(lbl, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+        elm_box_pack_end(box, lbl);
+        evas_object_show(lbl);
+     
+        btn = elm_button_add(box);
+        elm_object_text_set(btn, "Goodbye Cruel World");
+        elm_box_pack_end(box, btn);
+        evas_object_smart_callback_add(btn, "clicked", on_click, win);
+        evas_object_show(btn);
+     }
+   if (gadget && id_num > -1)
+     {
+        evas_object_smart_callback_add(win, "gadget_site_anchor", anchor_change, lbl);
+        evas_object_smart_callback_add(win, "gadget_site_orient", orient_change, lbl);
+     }
+   evas_object_show(win);
+ 
+   elm_run();
+ 
+   return 0;
+}
+ELM_MAIN()
+```
+
+Two smart callbacks are added if the application is in gadget mode, and a new ``#include`` was added for ``e_gadget_types.h``. This header gives the anchor and orientation enumerations that are needed to describe the position of the gadget. These enumerations consist of ``E_GADGET_SITE_ANCHOR_*`` and ``E_GADGET_SITE_ORIENT_*``. The anchor sites are ``TOP``, ``BOTTOM``, ``LEFT``, and ``RIGHT`` and describe the position on the screen edge where the gadget is to be located.
+
+The orientation of the site is ``HORIZONTAL``, ``VERTICAL`` or ``NONE`` and describe the layout of the gadget site. Since gadget sites can have multiple gadgets this is important for noting that gadgets are going to be stacked horizontally or vertically. The ``NONE`` orientation is used when the gadget site is the desktop, which doesn't have a defined orientation.
+
+## Displaying Popups and Additional Windows in Gadgets ##
+
+In the limitations section of this guide the problem with spawning popups and windows directly from the gadget were outlined. The sandbox, however, will take new windows that are spawned and show them as popups or ``ctxpopups`` based on the window type. If the window type is set to ``ELM_WIN_BASIC`` an ``elm_popup`` will be used. If the window type is set to ``ELM_WIN_POPUP_MENU`` a ``ctxpopup`` will be used. These windows will then be rendered outside of the gadget's visual.
+
+In the original Hello World application a callback exists to close the window when the button is clicked. Gadgets, however, are designed to be persistent and not close in that manner. For the purposes of this example, the callback is changed to create a popup.
+
+```c
+#include <Elementary.h>
+#include <e_gadget_types.h>
+ 
+static E_Gadget_Site_Orient gorient;
+static E_Gadget_Site_Anchor ganchor;
+static Evas_Object *popup;
+ 
+static void
+on_click(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+   Evas_Object *win = data, *box, *lbl;
+ 
+   if (popup)
+     {
+        evas_object_del(popup);
+        popup = NULL;
+        return;
+     }
+   popup = elm_win_add(win, "Popup", ELM_WIN_BASIC);
+   elm_win_alpha_set(popup, 1);
+ 
+   box = elm_box_add(popup);
+   elm_box_horizontal_set(box, EINA_FALSE);
+   evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_win_resize_object_add(popup, box);
+   evas_object_show(box);
+ 
+   lbl = elm_label_add(box);
+   elm_object_text_set(lbl, "Goodbye Cruel World!");
+   evas_object_size_hint_weight_set(lbl, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+   elm_box_pack_end(box, lbl);
+   evas_object_show(lbl);
+ 
+   evas_object_show(popup);
+}
+ 
+static void
+update_anchor_orient(void *data, E_Gadget_Site_Orient orient, E_Gadget_Site_Anchor anchor)
+{
+   char buf[4096];
+   const char *s = "float";
+   Evas_Object *lbl = data;
+ 
+   if (anchor & E_GADGET_SITE_ANCHOR_LEFT)
+     {
+        if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "top_left";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "left_top";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "left_top";
+                  break;
+               }
+          }
+        else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "bottom_left";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "left_bottom";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "left_bottom";
+                  break;
+               }
+          }
+        else
+          s = "left";
+     }
+   else if (anchor & E_GADGET_SITE_ANCHOR_RIGHT)
+     {
+        if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "top_right";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "right_top";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "right_top";
+                  break;
+               }
+          }
+        else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+          {
+             switch (orient)
+               {
+                case E_GADGET_SITE_ORIENT_HORIZONTAL:
+                  s = "bottom_right";
+                  break;
+                case E_GADGET_SITE_ORIENT_VERTICAL:
+                  s = "right_bottom";
+                  break;
+                case E_GADGET_SITE_ORIENT_NONE:
+                  s = "right_bottom";
+                  break;
+               }          }
+        else
+          s = "right";
+     }
+   else if (anchor & E_GADGET_SITE_ANCHOR_TOP)
+     s = "top";
+   else if (anchor & E_GADGET_SITE_ANCHOR_BOTTOM)
+     s = "bottom";
+   else
+     {
+        switch (orient)
+          {
+           case E_GADGET_SITE_ORIENT_HORIZONTAL:
+             s = "horizontal";
+             break;
+           case E_GADGET_SITE_ORIENT_VERTICAL:
+             s = "vertical";
+             break;
+           default: break;
+          }
+     }
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", s);
+   elm_object_text_set(lbl, buf);
+}
+ 
+static void
+anchor_change(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+   ganchor = (uintptr_t)event_info;
+   update_anchor_orient(data, gorient, ganchor);
+}
+ 
+static void
+orient_change(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
+{
+   gorient = (uintptr_t)event_info;
+   update_anchor_orient(data, gorient, ganchor);
+}
+ 
+EAPI_MAIN int
+elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+{
+   Evas_Object *win, *box, *lbl, *icon, *btn;
+   int gadget = 0, id_num = 0;
+   char buf[16];
+ 
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+ 
+   if (getenv("E_GADGET_ID"))
+     {
+        gadget = 1;
+        snprintf(buf, sizeof(buf), "%s", getenv("E_GADGET_ID"));
+        id_num = atoi(buf);
+     }
+ 
+   win = elm_win_add(NULL, "Main", ELM_WIN_BASIC);
+   elm_win_title_set(win, "Hello, World!");
+   elm_win_autodel_set(win, EINA_TRUE);
+ 
+   if (gadget) elm_win_alpha_set(win, EINA_TRUE);
+ 
+   box = elm_box_add(win);
+   elm_box_horizontal_set(box, EINA_FALSE);
+   evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_win_resize_object_add(win, box);
+   evas_object_show(box);
+ 
+   if (gadget && id_num == -1)
+     {
+        icon = elm_icon_add(box);
+        elm_icon_standard_set(icon, "start-here");
+        evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
+        elm_box_pack_end(box, icon);
+        evas_object_show(icon);
+     }
+   else
+     {
+        lbl = elm_label_add(box);
+        evas_object_size_hint_weight_set(lbl, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+        elm_box_pack_end(box, lbl);
+        evas_object_show(lbl);
+ 
+        btn = elm_button_add(box);
+        elm_object_text_set(btn, "This is a popup");
+        elm_box_pack_end(box, btn);
+        evas_object_smart_callback_add(btn, "clicked", on_click, win);
+        evas_object_show(btn);
+     }
+   if (gadget && id_num > -1)
+     {
+        evas_object_smart_callback_add(win, "gadget_site_anchor", anchor_change, lbl);
+        evas_object_smart_callback_add(win, "gadget_site_orient", orient_change, lbl);
+     }
+   evas_object_show(win);
+ 
+   elm_run();
+ 
+   return 0;
+}
+ELM_MAIN()
+```
+
+The ``on_clicked`` function has been changed from the original Hello World application to show a popup that says "This is a popup". If the popup already exists, clicking the gadget closes the popup.
+
+## Installing Gadgets ##
+
+Create the following three files, all in the same directory:
+
+* meson.build
+* helloworld.desktop.in
+* helloworld.c
+
+"helloworld.c" must contain the example code provided earlier in this guide.
+
+Create "helloworld.desktop.in" with the following contents:
+
+```
+[Desktop Entry]
+Type=Application
+Name=helloworld
+Exec=@GADGET_DIR@/helloworld/e_gadget_helloworld
+Icon=start-here
+```
+
+Create "meson.build" with the following contents:
+
+```
+project('helloworld', 'c',
+        version: '1',
+        license: 'BSD 2 clause',
+        default_options: [ 'c_std=gnu99', 'warning_level=2' ],
+        meson_version: '>= 0.40.0')
+pkgconfig = import('pkgconfig')
+cc = meson.get_compiler('c')
+
+dep_e = dependency('enlightenment')
+deps = [
+        dep_e,
+        dependency('elementary')
+]
+release = dep_e.get_pkgconfig_variable('release')
+host_os = host_machine.system()
+if host_os == 'linux'
+        if cc.has_header_symbol('features.h', '__UCLIBC__')
+                host_os = 'linux-uclibc'
+        elif cc.has_header_symbol('features.h', '__dietlibc__')
+                host_os = 'linux-dietlibc'
+        else
+                host_os = 'linux-gnu'
+        endif
+endif
+module_arch = '@0@-@1@-@2@'.format(host_os, host_machine.cpu_family(), release)
+dir_prefix = get_option('prefix')
+dir_lib = join_paths(dir_prefix, get_option('libdir'))
+dir_gadgets = join_paths([dir_lib, 'enlightenment/gadgets', module_arch])
+build_files = [
+        'helloworld.c'
+]
+executable('e_gadget_helloworld',
+        build_files,
+        dependencies: deps,
+        install_dir: join_paths([dir_gadgets, 'helloworld']),
+        install: true)
+
+desktop_data = configuration_data()
+        desktop_data.set('GADGET_DIR', dir_gadgets)
+configure_file(input: 'helloworld.desktop.in',
+        output: 'helloworld.desktop',
+        install: true,
+        install_dir: join_paths([dir_gadgets, 'helloworld']),
+        configuration: desktop_data)
+```
+
+This "meson.build" file determines the location Enlightenment will look for gadgets. This location is Enlightenment's library folder, followed by a sub directory string consisting of "gadgets/os-processor-enlightenmentversion". Once the location is determined, the meson file will install the "helloworld" binary and "helloworld.desktop" files to that location. Keep in mind when installing the ".desktop" file to Enlightenment's gadget directory that the file must have the same name as the directory to which it is being installed. In this case that is "helloworld/helloworld.desktop". Remember that the desktop is the crucial part of sandbox gadgets, as it is the means by which Enlightenment determines available gadgets. Enlightenment can only determine the location of gadgets by looking in its library directory.
+
+Run the following commands in order, from the directory where you placed the three files, to install the gadget:
+
+```bash
+meson build && cd build
+ninja
+sudo ninja install
+```
+
+## Conclusion ##
+The "helloworld" gadget is now installed and can be placed on a gadget site. To place it on a Bryce, hold the Alt key and right-click the Bryce then click "Gadgets". To place it on the desktop, left-click the desktop, click "Desktop" then click "Add Gadgets to Desktop".
+
+Remember that gadgets are standalone, so the "helloworld" gadget can be run as a standalone application simply by directly executing the installed binary.
+
+The essentials for Enlightenment gadgets are follows:
+
+* Enlightenment sets an environment variable with a unique ID for gadgets.
+* Enlightenment determines available gadgets based on identified ".desktop" files in the Enlightenment gadget folder.
+* Gadget communication with the application is two-way and occurs through the use of smart callbacks.
+ 
+## Further Reading ##
+[Ephoto](http://git.enlightenment.org/apps/ephoto)
+:    Ephoto, an application used as both a standalone app and a gadget.
+
+[Wireless Gadget](http://git.enlightenment.org/enlightenment/gadgets/wireless)
+:    Source code for the Enlightenment Wireless Gadget.
+
+[Meson](http://mesonbuild.com/Reference-manual.html)
+:    Meson documentation.
+
+[FDO Desktop Entry](https://standards.freedesktop.org/desktop-entry-spec/latest/)
+:    Documentation for the ".desktop" file specification.
