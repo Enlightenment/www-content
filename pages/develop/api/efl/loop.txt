@@ -50,12 +50,6 @@ void efl_destructor(Eo *obj);
 const Efl_Version *efl_loop_efl_version_get(const Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:loop:property:future_scheduler|future_scheduler]]** //**(get)**//\\
-> %%The future scheduler for the current loop.%%
-<code c>
-Eina_Future_Scheduler *efl_loop_future_scheduler_get(const Eo *obj);
-</code>
-\\
 **[[:develop:api:efl:loop:method:idle|idle]]**\\
 > %%A future promise that will be resolved from a clean main loop context as soon as the main loop is idle.%%
 <code c>
@@ -95,7 +89,7 @@ Efl_Loop_Message_Handler *efl_loop_message_handler_get(Efl_Class *klass, Efl_Loo
 **[[:develop:api:efl:loop:method:provider_find|provider_find]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
 > %%Searches upwards in the object tree for a provider which knows the given class/interface.%%
 <code c>
-Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+Efl_Object *efl_provider_find(const Eo *obj, const Efl_Object *klass);
 </code>
 \\
 **[[:develop:api:efl:loop:method:quit|quit]]**\\
@@ -210,6 +204,21 @@ EFL_LOOP_EVENT_POLL_MEDIUM(void)
 <code c>
 EFL_LOOP_EVENT_RESUME(void)
 </code>
+\\ **[[:develop:api:efl:loop:event:signal_hup|signal,hup]]**\\
+> %%System specific, but on unix maps to SIGHUP signal to the process - only called on main loop object%%
+<code c>
+EFL_LOOP_EVENT_SIGNAL_HUP(void)
+</code>
+\\ **[[:develop:api:efl:loop:event:signal_usr1|signal,usr1]]**\\
+> %%System specific, but on unix maps to SIGUSR1 signal to the process - only called on main loop object%%
+<code c>
+EFL_LOOP_EVENT_SIGNAL_USR1(void)
+</code>
+\\ **[[:develop:api:efl:loop:event:signal_usr2|signal,usr2]]**\\
+> %%System specific, but on unix maps to SIGUSR2 signal to the process - only called on main loop object%%
+<code c>
+EFL_LOOP_EVENT_SIGNAL_USR2(void)
+</code>
 \\ **[[:develop:api:efl:loop:event:terminate|terminate]]**\\
 > %%Called before starting the shutdown of Elementary%%
 <code c>
@@ -221,3 +230,4 @@ EFL_LOOP_EVENT_TERMINATE(void)
 |  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
 |  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
 |  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
+|  | **[[:develop:api:efl:object:event:destruct|destruct]]** | %%Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any dangling pointer.%% |

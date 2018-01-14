@@ -1,0 +1,39 @@
+~~Title: Efl.Selection: selection,changed~~
+===== Description =====
+
+%%Called when display server's selection has changed%%
+{{page>:develop:api-include:efl:selection:event:selection_changed:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+selection,changed;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_SELECTION_EVENT_SELECTION_CHANGED(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_selection_event_selection_changed(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_SELECTION_EVENT_SELECTION_CHANGED, on_efl_selection_event_selection_changed, d);
+}
+
+</code>
+

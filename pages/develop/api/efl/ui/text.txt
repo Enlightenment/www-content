@@ -9,11 +9,11 @@
 
 ===== Inheritance =====
 
- => [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] //(class)// => [[:develop:api:elm:widget|Elm.Widget]] //(class)// => [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)// => [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
+ => [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] //(class)// => [[:develop:api:efl:ui:widget|Efl.Ui.Widget]] //(class)// => [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)// => [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)// => [[:develop:api:efl:object|Efl.Object]] //(class)//
 ++++ Full hierarchy |
 
   * [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] //(class)//
-    * [[:develop:api:elm:widget|Elm.Widget]] //(class)//
+    * [[:develop:api:efl:ui:widget|Efl.Ui.Widget]] //(class)//
       * [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)//
         * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
@@ -40,6 +40,8 @@
       * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
       * [[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]] //(interface)//
       * [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] //(interface)//
+      * [[:develop:api:efl:selection|Efl.Selection]] //(mixin)//
+      * [[:develop:api:efl:ui:dnd|Efl.Ui.Dnd]] //(mixin)//
     * [[:develop:api:efl:part|Efl.Part]] //(interface)//
     * [[:develop:api:efl:container|Efl.Container]] //(interface)//
     * [[:develop:api:efl:file|Efl.File]] //(mixin)//
@@ -55,7 +57,7 @@
       * [[:develop:api:efl:interface|Efl.Interface]] //(interface)//
       * [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] //(interface)//
       * [[:develop:api:efl:object|Efl.Object]] //(class)//
-    * [[:develop:api:elm:widget|Elm.Widget]] //(class)//
+    * [[:develop:api:efl:ui:widget|Efl.Ui.Widget]] //(class)//
       * [[:develop:api:efl:canvas:group|Efl.Canvas.Group]] //(class)//
         * [[:develop:api:efl:canvas:object|Efl.Canvas.Object]] //(class)//
           * [[:develop:api:efl:object|Efl.Object]] //(class)//
@@ -82,6 +84,8 @@
       * [[:develop:api:efl:ui:base|Efl.Ui.Base]] //(interface)//
       * [[:develop:api:efl:ui:cursor|Efl.Ui.Cursor]] //(interface)//
       * [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] //(interface)//
+      * [[:develop:api:efl:selection|Efl.Selection]] //(mixin)//
+      * [[:develop:api:efl:ui:dnd|Efl.Ui.Dnd]] //(mixin)//
   * [[:develop:api:efl:ui:clickable|Efl.Ui.Clickable]] //(interface)//
   * [[:develop:api:efl:access:text|Efl.Access.Text]] //(interface)//
   * [[:develop:api:efl:access:editable:text|Efl.Access.Editable.Text]] //(interface)//
@@ -256,7 +260,7 @@ void efl_ui_text_input_panel_return_key_type_set(Eo *obj, Elm_Input_Panel_Return
 </code>
 \\
 **[[:develop:api:efl:ui:text:method:input_panel_show|input_panel_show]]**\\
-> %%Show the input panel (virtual keyboard) based on the input panel property of entry such as layout, autocapital types, and so on.%%
+> %%Show the input panel (virtual keyboard) based on the input panel property of entry such as layout, autocapital types and so on.%%
 <code c>
 void efl_ui_text_input_panel_show(Eo *obj);
 </code>
@@ -464,7 +468,7 @@ Eina_Bool efl_access_editable_text_delete(Eo *obj, int start, int end);
 Eina_Bool efl_access_editable_text_insert(Eo *obj, const char *string, int position);
 </code>
 \\
-**[[:develop:api:efl:ui:text:property:interest_region|interest_region]]** //**(get)**// ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:property:interest_region|interest_region]]** //**(get)**// ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Region of interest inside this widget, that should be given priority to be visible inside a scroller.%%
 <code c>
 Eina_Rect efl_ui_widget_interest_region_get(const Eo *obj);
@@ -476,19 +480,19 @@ Eina_Rect efl_ui_widget_interest_region_get(const Eo *obj);
 int efl_access_text_offset_at_point_get(const Eo *obj, Eina_Bool screen_coords, int x, int y);
 </code>
 \\
-**[[:develop:api:efl:ui:text:method:on_access_activate|on_access_activate]]** ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:method:on_access_activate|on_access_activate]]** ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Hook function called when widget is activated through accessibility.%%
 <code c>
 Eina_Bool efl_ui_widget_on_access_activate(Eo *obj, Efl_Ui_Activate act);
 </code>
 \\
-**[[:develop:api:efl:ui:text:method:on_disabled_update|on_disabled_update]]** ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:method:on_disabled_update|on_disabled_update]]** ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Virtual function called when the widget becomes disabled.%%
 <code c>
 Eina_Bool efl_ui_widget_on_disabled_update(Eo *obj, Eina_Bool disabled);
 </code>
 \\
-**[[:develop:api:efl:ui:text:method:on_focus_update|on_focus_update]]** ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:method:on_focus_update|on_focus_update]]** ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Virtual function handling focus in/out events on the widget%%
 <code c>
 Eina_Bool efl_ui_widget_on_focus_update(Eo *obj, Elm_Widget_Item *item);
@@ -549,13 +553,13 @@ char *efl_access_text_string_get(const Eo *obj, Efl_Access_Text_Granularity gran
 char *efl_access_text_get(const Eo *obj, int start_offset, int end_offset);
 </code>
 \\
-**[[:develop:api:efl:ui:text:method:theme_apply|theme_apply]]** ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:method:theme_apply|theme_apply]]** ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Virtual function called when the widget needs to re-apply its theme.%%
 <code c>
 Efl_Ui_Theme_Apply efl_ui_widget_theme_apply(Eo *obj);
 </code>
 \\
-**[[:develop:api:efl:ui:text:method:widget_sub_object_del|widget_sub_object_del]]** ''protected''// [Overridden from [[:develop:api:elm:widget|Elm.Widget]]]//\\
+**[[:develop:api:efl:ui:text:method:widget_sub_object_del|widget_sub_object_del]]** ''protected''// [Overridden from [[:develop:api:efl:ui:widget|Efl.Ui.Widget]]]//\\
 > %%Virtual function handling sub objects being removed.%%
 <code c>
 Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
@@ -698,6 +702,11 @@ Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
 |  | **[[:develop:api:efl:object:property:name|name]]** //**(get, set)**// | %%The name of the object.%% |
 |  | **[[:develop:api:efl:object:method:name_find|name_find]]** | %%Find a child object with the given name and return it.%% |
 |  | **[[:develop:api:efl:object:property:parent|parent]]** //**(get, set)**// | %%The parent of an object.%% |
+^ [[:develop:api:efl:selection|Efl.Selection]] ^^^
+|  | **[[:develop:api:efl:selection:method:has_owner|has_owner]]** | %%Determine whether the selection data has owner%% |
+|  | **[[:develop:api:efl:selection:method:selection_clear|selection_clear]]** | %%Clear the selection data from the object%% |
+|  | **[[:develop:api:efl:selection:method:selection_get|selection_get]]** | %%Get the data from the object that has selection%% |
+|  | **[[:develop:api:efl:selection:method:selection_set|selection_set]]** | %%Set the selection data to the object%% |
 ^ [[:develop:api:efl:text|Efl.Text]] ^^^
 |  | **[[:develop:api:efl:text:property:text|text]]** //**(get, set)**// |  |
 ^ [[:develop:api:efl:text:font|Efl.Text.Font]] ^^^
@@ -744,6 +753,12 @@ Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
 |  | **[[:develop:api:efl:text:style:property:underline_type|underline_type]]** //**(get, set)**// | %%Sets an underline style on the text%% |
 ^ [[:develop:api:efl:ui:base|Efl.Ui.Base]] ^^^
 |  | **[[:develop:api:efl:ui:base:property:language|language]]** //**(get, set)**// | %%The (human) language for this object.%% |
+^ [[:develop:api:efl:ui:dnd|Efl.Ui.Dnd]] ^^^
+|  | **[[:develop:api:efl:ui:dnd:method:drag_action_set|drag_action_set]]** | %%Set the action for the drag%% |
+|  | **[[:develop:api:efl:ui:dnd:method:drag_cancel|drag_cancel]]** | %%Cancel the on-going drag%% |
+|  | **[[:develop:api:efl:ui:dnd:method:drag_start|drag_start]]** | %%Start a drag and drop process at the drag side. During dragging, there are three events emitted as belows: - EFL_UI_DND_EVENT_DRAG_POS - EFL_UI_DND_EVENT_DRAG_ACCEPT - EFL_UI_DND_EVENT_DRAG_DONE%% |
+|  | **[[:develop:api:efl:ui:dnd:method:drop_target_add|drop_target_add]]** | %%Make the current object as drop targert. There are four events emitted: - EFL_UI_DND_EVENT_DRAG_ENTER - EFL_UI_DND_EVENT_DRAG_LEAVE - EFL_UI_DND_EVENT_DRAG_POS - EFL_UI_DND_EVENT_DRAG_DROP.%% |
+|  | **[[:develop:api:efl:ui:dnd:method:drop_target_del|drop_target_del]]** | %%Delete the dropable status from object%% |
 ^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
 |  | **[[:develop:api:efl:ui:focus:manager:method:fetch|fetch]]** | %%This will fetch the data from a registered node.%% |
 |  | **[[:develop:api:efl:ui:focus:manager:method:logical_end|logical_end]]** | %%Return the last logical object.%% |
@@ -757,7 +772,7 @@ Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
 |  | **[[:develop:api:efl:ui:focus:manager:property:root|root]]** //**(get, set)**// | %%Root node for all logical subtrees.%% |
 |  | **[[:develop:api:efl:ui:focus:manager:method:setup_on_first_touch|setup_on_first_touch]]** | %%Called when this manager is set as redirect%% |
 ^ [[:develop:api:efl:ui:focus:object|Efl.Ui.Focus.Object]] ^^^
-|  | **[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]** | %%Tells the object that the children of it will be queried soon by the given manager.%% |
+|  | **[[:develop:api:efl:ui:focus:object:method:prepare_logical|prepare_logical]]** | %%Tells the object that its children will be queried soon by the given manager.%% |
 ^ [[:develop:api:efl:ui:layout|Efl.Ui.Layout]] ^^^
 |  | **[[:develop:api:efl:ui:layout:method:calc_freeze|calc_freeze]]** | %%Freezes the layout object.%% |
 |  | **[[:develop:api:efl:ui:layout:method:calc_thaw|calc_thaw]]** | %%Thaws the layout object.%% |
@@ -783,6 +798,56 @@ Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
 |  | **[[:develop:api:efl:ui:text:interactive:property:selection_cursors|selection_cursors]]** //**(get)**// | %%The cursors used for selection handling.%% |
 ^ [[:develop:api:efl:ui:translatable|Efl.Ui.Translatable]] ^^^
 |  | **[[:develop:api:efl:ui:translatable:property:translatable_text|translatable_text]]** //**(get, set)**// | %%A unique string to be translated.%% |
+^ [[:develop:api:efl:ui:widget|Efl.Ui.Widget]] ^^^
+|  | **[[:develop:api:efl:ui:widget:property:access_info|access_info]]** //**(get, set)**// | %%Accessibility information.%% |
+|  | **[[:develop:api:efl:ui:widget:property:clip|clip]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:ui:widget:property:color|color]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:ui:widget:property:cursor|cursor]]** //**(get, set)**// | %%The cursor to be shown when mouse is over the object%% |
+|  | **[[:develop:api:efl:ui:widget:property:cursor_style|cursor_style]]** //**(get, set)**// | %%A different style for the cursor.%% |
+|  | **[[:develop:api:efl:ui:widget:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**// | %%Whether the cursor may be looked in the theme or not.%% |
+|  | **[[:develop:api:efl:ui:widget:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
+|  | **[[:develop:api:efl:ui:widget:property:disabled|disabled]]** //**(get, set)**// | %%Whether the widget is enabled (accepts and reacts to user inputs).%% |
+|  ''protected set'' | **[[:develop:api:efl:ui:widget:property:focus|focus]]** //**(get, set)**// | %%This is called by the manager and should never be called by anyone else.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_allow|focus_allow]]** //**(get, set)**// | %%The ability for a widget to be focused.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_geometry|focus_geometry]]** //**(get)**// | %%The geometry used to calculate relationships between other objects.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_highlight_animate|focus_highlight_animate]]** //**(get, set)**// | %%Whether focus highlight should animate or not.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_highlight_enabled|focus_highlight_enabled]]** //**(get, set)**// | %%Whether focus highlight is enabled or not.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_highlight_style|focus_highlight_style]]** //**(get, set)**// | %%Control the widget focus highlight style.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_manager|focus_manager]]** //**(get)**// | %%Describes which manager is used to register.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_move_policy|focus_move_policy]]** //**(get, set)**// | %%The widget's focus move policy.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]]** //**(get, set)**// | %%Control the widget's focus_move_policy mode setting.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focus_parent|focus_parent]]** //**(get)**// | %%Describes which logical parent is used by this object.%% |
+|  | **[[:develop:api:efl:ui:widget:property:focused_item|focused_item]]** //**(get)**// | %%Get the focused widget item.%% |
+|  | **[[:develop:api:efl:ui:widget:method:group_member_del|group_member_del]]** | %%Removes a member object from a given smart object.%% |
+|  | **[[:develop:api:efl:ui:widget:property:interest_region_mode|interest_region_mode]]** //**(get, set)**// | %%Defines how %%[[:develop:api:efl:ui:widget:property:show_region|Efl.Ui.Widget.show_region]]%% should be calculated.%% |
+|  | **[[:develop:api:efl:ui:widget:property:is_frame_object|is_frame_object]]** //**(get, set)**// | %%If %%''true''%% the object belongs to the window border decorations.%% |
+|  | **[[:develop:api:efl:ui:widget:property:mirrored|mirrored]]** //**(get, set)**// | %%Whether this object should be mirrored.%% |
+|  | **[[:develop:api:efl:ui:widget:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**// | %%Whether the property %%[[:develop:api:efl:ui:base:property:mirrored|Efl.Ui.Base.mirrored]]%% should be set automatically.%% |
+|  | **[[:develop:api:efl:ui:widget:property:no_render|no_render]]** //**(get, set)**// |  |
+|  | **[[:develop:api:efl:ui:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**// | %%Whether the widget's automatic orientation is disabled or not.%% |
+|  | **[[:develop:api:efl:ui:widget:property:parent|parent]]** //**(get, set)**// | %%Object's accessible parent.%% |
+|  | **[[:develop:api:efl:ui:widget:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
+|  | **[[:develop:api:efl:ui:widget:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
+|  | **[[:develop:api:efl:ui:widget:method:scroll_freeze_pop|scroll_freeze_pop]]** | %%Pop scroller freeze%% |
+|  | **[[:develop:api:efl:ui:widget:method:scroll_freeze_push|scroll_freeze_push]]** | %%Push scroller freeze%% |
+|  | **[[:develop:api:efl:ui:widget:method:scroll_hold_pop|scroll_hold_pop]]** | %%Pop scroller hold%% |
+|  | **[[:develop:api:efl:ui:widget:method:scroll_hold_push|scroll_hold_push]]** | %%Push scroll hold%% |
+|  ''protected set'' | **[[:develop:api:efl:ui:widget:property:style|style]]** //**(get, set)**// | %%The widget style to use.%% |
+|  | **[[:develop:api:efl:ui:widget:property:widget_top|widget_top]]** //**(get)**// | %%Root widget in the widget hierarchy.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:attributes|attributes]]** //**(get)**// | %%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:children|children]]** //**(get)**// | %%Gets object's accessible children.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:focus_grab|focus_grab]]** | %%Focuses accessible widget.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:focus_highlight_geometry|focus_highlight_geometry]]** //**(get)**// | %%The rectangle region to be highlighted on focus.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:focus_manager_create|focus_manager_create]]** | %%If the widget needs a focus manager, this function will be called.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:focus_state_apply|focus_state_apply]]** | %%Register focus with the given configuration.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:on_access_update|on_access_update]]** | %%Hook function called when accessibility is changed on the widget.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:on_orientation_update|on_orientation_update]]** | %%Virtual function handling canvas orientation changes.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:on_show_region_hook|on_show_region_hook]]** //**(set)**// | %%Hook function called when the %%[[:develop:api:efl:ui:widget:property:show_region|Efl.Ui.Widget.show_region]]%% is changed.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:resize_object|resize_object]]** //**(set)**// | %%This is the internal canvas object managed by a widget.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:show_region|show_region]]** //**(get, set)**// | %%Region inside the widget to show.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:translation_update|translation_update]]** | %%This implements the calls to %%''gettext''%%() and %%''text_set''%%().%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:method:widget_event|widget_event]]** | %%Virtual function handling input events on the widget.%% |
+|  ''protected'' | **[[:develop:api:efl:ui:widget:property:widget_parent|widget_parent]]** //**(get, set)**// | %%The internal parent of this widget.%% |
 ^ [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]] ^^^
 |  | **[[:develop:api:elm:interface_scrollable:property:animate_start_cb|animate_start_cb]]** //**(set)**// | %%Set the callback to run when the scrolling animation has started.%% |
 |  | **[[:develop:api:elm:interface_scrollable:property:animate_stop_cb|animate_stop_cb]]** //**(set)**// | %%Set the callback to run when the scrolling animation has stopped.%% |
@@ -840,71 +905,21 @@ Eina_Bool efl_ui_widget_sub_object_del(Eo *obj, Efl_Canvas_Object *sub_obj);
 |  | **[[:develop:api:elm:interface_scrollable:property:vbar_press_cb|vbar_press_cb]]** //**(set)**// | %%Set the callback to run when the vertical scrollbar is pressed.%% |
 |  | **[[:develop:api:elm:interface_scrollable:property:vbar_unpress_cb|vbar_unpress_cb]]** //**(set)**// | %%Set the callback to run when the horizontal scrollbar is unpressed.%% |
 |  | **[[:develop:api:elm:interface_scrollable:property:wheel_disabled|wheel_disabled]]** //**(get, set)**// | %%Control Wheel disable Enable or disable mouse wheel to be used to scroll the scroller content. heel is enabled by default.%% |
-^ [[:develop:api:elm:widget|Elm.Widget]] ^^^
-|  | **[[:develop:api:elm:widget:property:access_info|access_info]]** //**(get, set)**// | %%Accessibility information.%% |
-|  | **[[:develop:api:elm:widget:property:clip|clip]]** //**(get, set)**// |  |
-|  | **[[:develop:api:elm:widget:property:color|color]]** //**(get, set)**// |  |
-|  | **[[:develop:api:elm:widget:property:cursor|cursor]]** //**(get, set)**// | %%The cursor to be shown when mouse is over the object%% |
-|  | **[[:develop:api:elm:widget:property:cursor_style|cursor_style]]** //**(get, set)**// | %%A different style for the cursor.%% |
-|  | **[[:develop:api:elm:widget:property:cursor_theme_search_enabled|cursor_theme_search_enabled]]** //**(get, set)**// | %%Whether the cursor may be looked in the theme or not.%% |
-|  | **[[:develop:api:elm:widget:method:debug_name_override|debug_name_override]]** | %%Build a read-only name for this object used for debugging.%% |
-|  | **[[:develop:api:elm:widget:property:disabled|disabled]]** //**(get, set)**// | %%Whether the widget is enabled (accepts and reacts to user inputs).%% |
-|  ''protected set'' | **[[:develop:api:elm:widget:property:focus|focus]]** //**(get, set)**// | %%This gets called by the manager and should never be called by someone else.%% |
-|  | **[[:develop:api:elm:widget:property:focus_allow|focus_allow]]** //**(get, set)**// | %%The ability for a widget to be focused.%% |
-|  | **[[:develop:api:elm:widget:property:focus_geometry|focus_geometry]]** //**(get)**// | %%The geometry to use to calculate the relations to other objects.%% |
-|  | **[[:develop:api:elm:widget:property:focus_highlight_animate|focus_highlight_animate]]** //**(get, set)**// | %%Whether focus highlight should animate or not.%% |
-|  | **[[:develop:api:elm:widget:property:focus_highlight_enabled|focus_highlight_enabled]]** //**(get, set)**// | %%Whether focus highlight is enabled or not.%% |
-|  | **[[:develop:api:elm:widget:property:focus_highlight_style|focus_highlight_style]]** //**(get, set)**// | %%Control the widget focus highlight style.%% |
-|  | **[[:develop:api:elm:widget:property:focus_manager|focus_manager]]** //**(get)**// | %%Describes which manager is used to register.%% |
-|  | **[[:develop:api:elm:widget:property:focus_move_policy|focus_move_policy]]** //**(get, set)**// | %%The widget's focus move policy.%% |
-|  | **[[:develop:api:elm:widget:property:focus_move_policy_automatic|focus_move_policy_automatic]]** //**(get, set)**// | %%Control the widget's focus_move_policy mode setting.%% |
-|  | **[[:develop:api:elm:widget:property:focus_parent|focus_parent]]** //**(get)**// | %%Describes which logical parent is used by this object.%% |
-|  | **[[:develop:api:elm:widget:property:focused_item|focused_item]]** //**(get)**// | %%Get the focused widget item.%% |
-|  | **[[:develop:api:elm:widget:method:group_member_del|group_member_del]]** | %%Removes a member object from a given smart object.%% |
-|  | **[[:develop:api:elm:widget:property:interest_region_mode|interest_region_mode]]** //**(get, set)**// | %%Defines how %%[[:develop:api:elm:widget:property:show_region|Elm.Widget.show_region]]%% should be calculated.%% |
-|  | **[[:develop:api:elm:widget:property:is_frame_object|is_frame_object]]** //**(get, set)**// | %%If %%''true''%% the object belongs to the window border decorations.%% |
-|  | **[[:develop:api:elm:widget:property:mirrored|mirrored]]** //**(get, set)**// | %%Whether this object should be mirrored.%% |
-|  | **[[:develop:api:elm:widget:property:mirrored_automatic|mirrored_automatic]]** //**(get, set)**// | %%Whether the property %%[[:develop:api:efl:ui:base:property:mirrored|Efl.Ui.Base.mirrored]]%% should be set automatically.%% |
-|  | **[[:develop:api:elm:widget:property:no_render|no_render]]** //**(get, set)**// |  |
-|  | **[[:develop:api:elm:widget:property:orientation_mode_disabled|orientation_mode_disabled]]** //**(get, set)**// | %%Whether the widget's automatic orientation is disabled or not.%% |
-|  | **[[:develop:api:elm:widget:property:parent|parent]]** //**(get, set)**// | %%Object's accessible parent.%% |
-|  | **[[:develop:api:elm:widget:method:provider_find|provider_find]]** | %%Searches upwards in the object tree for a provider which knows the given class/interface.%% |
-|  | **[[:develop:api:elm:widget:property:scale|scale]]** //**(get, set)**// | %%The scaling factor of an object.%% |
-|  | **[[:develop:api:elm:widget:method:scroll_freeze_pop|scroll_freeze_pop]]** | %%Pop scroller freeze%% |
-|  | **[[:develop:api:elm:widget:method:scroll_freeze_push|scroll_freeze_push]]** | %%Push scroller freeze%% |
-|  | **[[:develop:api:elm:widget:method:scroll_hold_pop|scroll_hold_pop]]** | %%Pop scroller hold%% |
-|  | **[[:develop:api:elm:widget:method:scroll_hold_push|scroll_hold_push]]** | %%Push scroll hold%% |
-|  ''protected set'' | **[[:develop:api:elm:widget:property:style|style]]** //**(get, set)**// | %%The widget style to use.%% |
-|  | **[[:develop:api:elm:widget:property:widget_top|widget_top]]** //**(get)**// | %%Root widget in the widget hierarchy.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:attributes|attributes]]** //**(get)**// | %%Gets key-value pairs indentifying object extra attributes. Must be free by a user.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:children|children]]** //**(get)**// | %%Gets object's accessible children.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:focus_grab|focus_grab]]** | %%Focuses accessible widget.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:focus_highlight_geometry|focus_highlight_geometry]]** //**(get)**// | %%The rectangle region to be highlighted on focus.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:focus_manager_create|focus_manager_create]]** | %%If the widget needs a focus manager, this function will be called.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:focus_state_apply|focus_state_apply]]** | %%Register focus with the given configuration.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:on_access_update|on_access_update]]** | %%Hook function called when accessibility is changed on the widget.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:on_orientation_update|on_orientation_update]]** | %%Virtual function handling canvas orientation changes.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:on_show_region_hook|on_show_region_hook]]** //**(set)**// | %%Hook function called when the %%[[:develop:api:elm:widget:property:show_region|Elm.Widget.show_region]]%% is changed.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:resize_object|resize_object]]** //**(set)**// | %%This is the internal canvas object managed by a widget.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:show_region|show_region]]** //**(get, set)**// | %%Region inside the widget to show.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:translation_update|translation_update]]** | %%This implements the calls to %%''gettext''%%() and %%''text_set''%%().%% |
-|  ''protected'' | **[[:develop:api:elm:widget:method:widget_event|widget_event]]** | %%Virtual function handling input events on the widget.%% |
-|  ''protected'' | **[[:develop:api:elm:widget:property:widget_parent|widget_parent]]** //**(get, set)**// | %%The internal parent of this widget.%% |
 
 ===== Events =====
 
 **[[:develop:api:efl:ui:text:event:aborted|aborted]]**\\
-> %%Called when entry was aborted%%
+> %%Called when entry is aborted%%
 <code c>
 EFL_UI_TEXT_EVENT_ABORTED(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:activated|activated]]**\\
-> %%Called when entry got activated%%
+> %%Called when entry is activated%%
 <code c>
 EFL_UI_TEXT_EVENT_ACTIVATED(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:anchor_clicked|anchor,clicked]]**\\
-> %%Called when anchor was clicked%%
+> %%Called when anchor is clicked%%
 <code c>
 EFL_UI_TEXT_EVENT_ANCHOR_CLICKED(void)
 </code>
@@ -934,7 +949,7 @@ EFL_UI_TEXT_EVENT_ANCHOR_OUT(void)
 EFL_UI_TEXT_EVENT_ANCHOR_UP(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:changed|changed]]**\\
-> %%Called when entry changed%%
+> %%Called when entry changes%%
 <code c>
 EFL_UI_TEXT_EVENT_CHANGED(void)
 </code>
@@ -974,12 +989,12 @@ EFL_UI_TEXT_EVENT_PREEDIT_CHANGED(void)
 EFL_UI_TEXT_EVENT_PRESS(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:redo_request|redo,request]]**\\
-> %%Called when redo was requested%%
+> %%Called when redo is requested%%
 <code c>
 EFL_UI_TEXT_EVENT_REDO_REQUEST(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:rejected|rejected]]**\\
-> %%Called when entry was rejected%%
+> %%Called when entry is rejected%%
 <code c>
 EFL_UI_TEXT_EVENT_REJECTED(void)
 </code>
@@ -989,7 +1004,7 @@ EFL_UI_TEXT_EVENT_REJECTED(void)
 EFL_UI_TEXT_EVENT_TEXT_SET_DONE(void)
 </code>
 \\ **[[:develop:api:efl:ui:text:event:undo_request|undo,request]]**\\
-> %%Called when undo was requested%%
+> %%Called when undo is requested%%
 <code c>
 EFL_UI_TEXT_EVENT_UNDO_REQUEST(void)
 </code>
@@ -1002,12 +1017,12 @@ EFL_UI_TEXT_EVENT_VALIDATE(void)
 
 ^ [[:develop:api:efl:access|Efl.Access]] ^^^
 |  | **[[:develop:api:efl:access:event:active_descendant_changed|active,descendant,changed]]** | %%Called when active state of descendant has changed%% |
-|  | **[[:develop:api:efl:access:event:added|added]]** | %%Called when item was added%% |
-|  | **[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]** | %%Called when bounds have changed%% |
+|  | **[[:develop:api:efl:access:event:added|added]]** | %%Called when item is added%% |
+|  | **[[:develop:api:efl:access:event:bounds_changed|bounds,changed]]** | %%Called when boundaries have changed%% |
 |  | **[[:develop:api:efl:access:event:children_changed|children,changed]]** | %%Called when children have changed%% |
-|  | **[[:develop:api:efl:access:event:property_changed|property,changed]]** | %%Called when roperty has changed%% |
-|  | **[[:develop:api:efl:access:event:removed|removed]]** | %%Called when item was removed%% |
-|  | **[[:develop:api:efl:access:event:state_changed|state,changed]]** | %%Called when tate has changed%% |
+|  | **[[:develop:api:efl:access:event:property_changed|property,changed]]** | %%Called when property has changed%% |
+|  | **[[:develop:api:efl:access:event:removed|removed]]** | %%Called when item is removed%% |
+|  | **[[:develop:api:efl:access:event:state_changed|state,changed]]** | %%Called when state has changed%% |
 |  | **[[:develop:api:efl:access:event:visible_data_changed|visible,data,changed]]** | %%Called when visibility has changed%% |
 ^ [[:develop:api:efl:access:text|Efl.Access.Text]] ^^^
 |  | **[[:develop:api:efl:access:text:event:access_text_attributes_changed|access,text,attributes,changed]]** | %%Text attributes have changed%% |
@@ -1054,6 +1069,9 @@ EFL_UI_TEXT_EVENT_VALIDATE(void)
 |  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
 |  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
 |  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
+|  | **[[:develop:api:efl:object:event:destruct|destruct]]** | %%Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any dangling pointer.%% |
+^ [[:develop:api:efl:selection|Efl.Selection]] ^^^
+|  | **[[:develop:api:efl:selection:event:selection_changed|selection,changed]]** | %%Called when display server's selection has changed%% |
 ^ [[:develop:api:efl:ui:clickable|Efl.Ui.Clickable]] ^^^
 |  | **[[:develop:api:efl:ui:clickable:event:clicked|clicked]]** | %%Called when object iss clicked%% |
 |  | **[[:develop:api:efl:ui:clickable:event:clicked_double|clicked,double]]** | %%Called when object receives a double click%% |
@@ -1063,6 +1081,13 @@ EFL_UI_TEXT_EVENT_VALIDATE(void)
 |  | **[[:develop:api:efl:ui:clickable:event:pressed|pressed]]** | %%Called when the object is pressed%% |
 |  | **[[:develop:api:efl:ui:clickable:event:repeated|repeated]]** | %%Called when the object receives repeated presses/clicks%% |
 |  | **[[:develop:api:efl:ui:clickable:event:unpressed|unpressed]]** | %%Called when the object is no longer pressed%% |
+^ [[:develop:api:efl:ui:dnd|Efl.Ui.Dnd]] ^^^
+|  | **[[:develop:api:efl:ui:dnd:event:drag_accept|drag,accept]]** | %%accept drag data%% |
+|  | **[[:develop:api:efl:ui:dnd:event:drag_done|drag,done]]** | %%drag is done (mouse up)%% |
+|  | **[[:develop:api:efl:ui:dnd:event:drag_drop|drag,drop]]** | %%called when the drag object dropped on this object%% |
+|  | **[[:develop:api:efl:ui:dnd:event:drag_enter|drag,enter]]** | %%called when the drag object enters this object%% |
+|  | **[[:develop:api:efl:ui:dnd:event:drag_leave|drag,leave]]** | %%called when the drag object leaves this object%% |
+|  | **[[:develop:api:efl:ui:dnd:event:drag_pos|drag,pos]]** | %%called when the drag object changes drag position%% |
 ^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
 |  | **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]** | %%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%% |
 |  | **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]** | %%Emitted once the graph calculationg will be performed%% |
@@ -1093,16 +1118,15 @@ EFL_UI_TEXT_EVENT_VALIDATE(void)
 |  | **[[:develop:api:efl:ui:scrollable:event:scroll_up|scroll,up]]** | %%Called when scrolling upwards%% |
 ^ [[:develop:api:efl:ui:selectable|Efl.Ui.Selectable]] ^^^
 |  | **[[:develop:api:efl:ui:selectable:event:selected|selected]]** | %%Called when selected%% |
-|  | **[[:develop:api:efl:ui:selectable:event:selection_changed|selection,changed]]** | %%Called when selection is changed%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_cleared|selection,cleared]]** | %%Called when selection is cleared%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_copy|selection,copy]]** | %%Called when selection is copied%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_cut|selection,cut]]** | %%Called when selection is cut%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_paste|selection,paste]]** | %%Called when selection is pasted%% |
 |  | **[[:develop:api:efl:ui:selectable:event:selection_start|selection,start]]** | %%Called at selection start%% |
 |  | **[[:develop:api:efl:ui:selectable:event:unselected|unselected]]** | %%Called when no longer selected%% |
+^ [[:develop:api:efl:ui:widget|Efl.Ui.Widget]] ^^^
+|  | **[[:develop:api:efl:ui:widget:event:access_changed|access,changed]]** | %%Called when accessibility changed%% |
+|  | **[[:develop:api:efl:ui:widget:event:language_changed|language,changed]]** | %%Called when widget language changed%% |
+|  | **[[:develop:api:efl:ui:widget:event:moved|moved]]** | %%Called when widget moved%% |
 ^ [[:develop:api:elm:interface_scrollable|Elm.Interface_Scrollable]] ^^^
 |  | **[[:develop:api:elm:interface_scrollable:event:changed|changed]]** | %%Called when content changed%% |
-^ [[:develop:api:elm:widget|Elm.Widget]] ^^^
-|  | **[[:develop:api:elm:widget:event:access_changed|access,changed]]** | %%Called when accessibility changed%% |
-|  | **[[:develop:api:elm:widget:event:language_changed|language,changed]]** | %%Called when widget language changed%% |
-|  | **[[:develop:api:elm:widget:event:moved|moved]]** | %%Called when widget moved%% |

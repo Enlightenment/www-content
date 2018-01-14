@@ -5,7 +5,7 @@
 
 %%Calculates the directions of Efl.Ui.Focus.Direction%%
 
-%%Each registered item will get a other registered object into each direction, you can get those items for the currently focused item if you call request move.%%
+%%Each registered item will get an other registered object in each direction. You can get items for the currently focused item if you call request move.%%
 
 //Since 1.20//
 
@@ -81,7 +81,7 @@ void efl_ui_focus_manager_pop_history_stack(Eo *obj);
 **[[:develop:api:efl:ui:focus:manager:calc:method:provider_find|provider_find]]**// [Overridden from [[:develop:api:efl:object|Efl.Object]]]//\\
 > %%Searches upwards in the object tree for a provider which knows the given class/interface.%%
 <code c>
-Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+Efl_Object *efl_provider_find(const Eo *obj, const Efl_Object *klass);
 </code>
 \\
 **[[:develop:api:efl:ui:focus:manager:calc:property:redirect|redirect]]** //**(get, set)**//// [Overridden from [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]]]//\\
@@ -98,7 +98,7 @@ Eina_Bool efl_ui_focus_manager_calc_register(Eo *obj, Efl_Ui_Focus_Object *child
 </code>
 \\
 **[[:develop:api:efl:ui:focus:manager:calc:method:register_logical|register_logical]]**\\
-> %%Register a new item just for the logical parent.%%
+> %%Register a new item only for the logical parent.%%
 <code c>
 Eina_Bool efl_ui_focus_manager_calc_register_logical(Eo *obj, Efl_Ui_Focus_Object *child, Efl_Ui_Focus_Object *parent, Efl_Ui_Focus_Manager *redirect);
 </code>
@@ -198,6 +198,7 @@ Eina_Bool efl_ui_focus_manager_calc_update_redirect(Eo *obj, Efl_Ui_Focus_Object
 |  | **[[:develop:api:efl:object:event:callback_add|callback,add]]** | %%A callback was added.%% |
 |  | **[[:develop:api:efl:object:event:callback_del|callback,del]]** | %%A callback was deleted.%% |
 |  | **[[:develop:api:efl:object:event:del|del]]** | %%Object is being deleted.%% |
+|  | **[[:develop:api:efl:object:event:destruct|destruct]]** | %%Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any dangling pointer.%% |
 ^ [[:develop:api:efl:ui:focus:manager|Efl.Ui.Focus.Manager]] ^^^
 |  | **[[:develop:api:efl:ui:focus:manager:event:coords_dirty|coords,dirty]]** | %%Emitted once the graph is dirty, this means there are potential changes in border_elements you want to know about%% |
 |  | **[[:develop:api:efl:ui:focus:manager:event:flush_pre|flush,pre]]** | %%Emitted once the graph calculationg will be performed%% |

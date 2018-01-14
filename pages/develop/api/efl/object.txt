@@ -160,7 +160,7 @@ void efl_parent_set(Eo *obj, Efl_Object *parent);
 **[[:develop:api:efl:object:method:provider_find|provider_find]]**\\
 > %%Searches upwards in the object tree for a provider which knows the given class/interface.%%
 <code c>
-Efl_Object *efl_provider_find(Eo *obj, const Efl_Object *klass);
+Efl_Object *efl_provider_find(const Eo *obj, const Efl_Object *klass);
 </code>
 \\
 
@@ -180,5 +180,10 @@ EFL_EVENT_CALLBACK_DEL(void, @hot)
 > %%Object is being deleted.%%
 <code c>
 EFL_EVENT_DEL(void, @hot)
+</code>
+\\ **[[:develop:api:efl:object:event:destruct|destruct]]**\\
+> %%Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any dangling pointer.%%
+<code c>
+EFL_EVENT_DESTRUCT(void, @hot)
 </code>
 \\ 

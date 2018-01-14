@@ -1,0 +1,40 @@
+~~Title: Efl.Ui.Widget.on_orientation_update~~
+===== Description =====
+
+%%Virtual function handling canvas orientation changes.%%
+
+%%This method will be called recursively from the top widget (the window) to all the children objects whenever the window rotation is changed. The given %%''rotation''%% will be one of 0, 90, 180, 270 or the special value -1 if %%[[:develop:api:efl:ui:widget:property:orientation_mode_disabled|Efl.Ui.Widget.orientation_mode_disabled]]%% is %%''true''%%.%%
+
+%%If %%[[:develop:api:efl:ui:widget:property:orientation_mode_disabled|Efl.Ui.Widget.orientation_mode_disabled]]%% is %%''false''%%, the default implementation will emit the signal "elm,state,orient,%%''R''%%" will be emitted (where %%''R''%% is the rotation angle in degrees).%%
+
+<note>
+%%This function may be called even if the orientation has not actually changed, like when a widget needs to be reconfigured.%%
+</note>
+
+%%See also %%[[:develop:api:efl:orientation:property:orientation|Efl.Orientation.orientation.set]]%%.%%
+{{page>:develop:api-include:efl:ui:widget:method:on_orientation_update:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+on_orientation_update @protected {
+    params {
+        @in rotation: int;
+    }
+}
+</code>
+
+===== C signature =====
+
+<code c>
+void efl_ui_widget_on_orientation_update(Eo *obj, int rotation);
+</code>
+
+===== Parameters =====
+
+  * **rotation** //(in)// - %%Orientation in degrees: 0, 90, 180, 270 or -1 if %%[[:develop:api:efl:ui:widget:property:orientation_mode_disabled|Efl.Ui.Widget.orientation_mode_disabled]]%% is %%''true''%%.%%
+
+===== Implemented by =====
+
+  * **Efl.Ui.Widget.on_orientation_update**
+

@@ -1,0 +1,39 @@
+~~Title: Efl.Loop: signal,usr1~~
+===== Description =====
+
+%%System specific, but on unix maps to SIGUSR1 signal to the process - only called on main loop object%%
+{{page>:develop:api-include:efl:loop:event:signal_usr1:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+signal,usr1;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_LOOP_EVENT_SIGNAL_USR1(void)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_loop_event_signal_usr1(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_LOOP_EVENT_SIGNAL_USR1, on_efl_loop_event_signal_usr1, d);
+}
+
+</code>
+

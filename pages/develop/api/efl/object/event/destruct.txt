@@ -1,0 +1,39 @@
+~~Title: Efl.Object: destruct~~
+===== Description =====
+
+%%Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any dangling pointer.%%
+{{page>:develop:api-include:efl:object:event:destruct:description&nouser&nolink&nodate}}
+
+===== Signature =====
+
+<code>
+destruct @hot;
+</code>
+
+===== C information =====
+
+<code c>
+EFL_EVENT_DESTRUCT(void, @hot)
+</code>
+
+===== C usage =====
+
+<code c>
+static void
+on_efl_event_destruct(void *data, const Efl_Event *event)
+{
+    void info = event->info;
+    Eo *obj = event->object;
+    Data *d = data;
+
+    /* event hander code */
+}
+
+static void
+setup_event_handler(Eo *obj, Data *d)
+{
+    efl_event_callback_add(obj, EFL_EVENT_DESTRUCT, on_efl_event_destruct, d);
+}
+
+</code>
+

@@ -1,0 +1,75 @@
+~~Title: Efl.Ui.Dnd~~
+====== Efl.Ui.Dnd (mixin) ======
+
+===== Description =====
+
+No description supplied.
+
+{{page>:develop:api-include:efl:ui:dnd:description&nouser&nolink&nodate}}
+
+===== Members =====
+
+**[[:develop:api:efl:ui:dnd:method:drag_action_set|drag_action_set]]**\\
+> %%Set the action for the drag%%
+<code c>
+void efl_ui_dnd_drag_action_set(Eo *obj, Efl_Selection_Action action, unsigned int seat);
+</code>
+\\
+**[[:develop:api:efl:ui:dnd:method:drag_cancel|drag_cancel]]**\\
+> %%Cancel the on-going drag%%
+<code c>
+void efl_ui_dnd_drag_cancel(Eo *obj, unsigned int seat);
+</code>
+\\
+**[[:develop:api:efl:ui:dnd:method:drag_start|drag_start]]**\\
+> %%Start a drag and drop process at the drag side. During dragging, there are three events emitted as belows: - EFL_UI_DND_EVENT_DRAG_POS - EFL_UI_DND_EVENT_DRAG_ACCEPT - EFL_UI_DND_EVENT_DRAG_DONE%%
+<code c>
+void efl_ui_dnd_drag_start(Eo *obj, Efl_Selection_Format format, Eina_Slice data, Efl_Selection_Action action, Efl_Dnd_Drag_Icon_Create icon_func, unsigned int seat);
+</code>
+\\
+**[[:develop:api:efl:ui:dnd:method:drop_target_add|drop_target_add]]**\\
+> %%Make the current object as drop targert. There are four events emitted: - EFL_UI_DND_EVENT_DRAG_ENTER - EFL_UI_DND_EVENT_DRAG_LEAVE - EFL_UI_DND_EVENT_DRAG_POS - EFL_UI_DND_EVENT_DRAG_DROP.%%
+<code c>
+void efl_ui_dnd_drop_target_add(Eo *obj, Efl_Selection_Format format, unsigned int seat);
+</code>
+\\
+**[[:develop:api:efl:ui:dnd:method:drop_target_del|drop_target_del]]**\\
+> %%Delete the dropable status from object%%
+<code c>
+void efl_ui_dnd_drop_target_del(Eo *obj, Efl_Selection_Format format, unsigned int seat);
+</code>
+\\
+
+===== Events =====
+
+**[[:develop:api:efl:ui:dnd:event:drag_accept|drag,accept]]**\\
+> %%accept drag data%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_ACCEPT(void)
+</code>
+\\ **[[:develop:api:efl:ui:dnd:event:drag_done|drag,done]]**\\
+> %%drag is done (mouse up)%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_DONE(void)
+</code>
+\\ **[[:develop:api:efl:ui:dnd:event:drag_drop|drag,drop]]**\\
+> %%called when the drag object dropped on this object%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_DROP(void)
+</code>
+\\ **[[:develop:api:efl:ui:dnd:event:drag_enter|drag,enter]]**\\
+> %%called when the drag object enters this object%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_ENTER(void)
+</code>
+\\ **[[:develop:api:efl:ui:dnd:event:drag_leave|drag,leave]]**\\
+> %%called when the drag object leaves this object%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_LEAVE(void)
+</code>
+\\ **[[:develop:api:efl:ui:dnd:event:drag_pos|drag,pos]]**\\
+> %%called when the drag object changes drag position%%
+<code c>
+EFL_UI_DND_EVENT_DRAG_POS(void)
+</code>
+\\ 
