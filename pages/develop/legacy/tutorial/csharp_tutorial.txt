@@ -1,8 +1,6 @@
 ~~Title: C# Tutorial~~
 ===== C# Tutorial =====
 
-WIP
-
 <note important>
 The C# bindings are currently in BETA state.
 </note>
@@ -22,7 +20,7 @@ Before you start you may want to read about how to compile the EFL:
 You will need a compatible version of [[http://www.mono-project.com|Mono]] (4.0 or higher).
 The paths to the ''mcs'' compiler and to the ''mono'' application must be in the ''PATH'' environment variable before compiling.
 
-Once all conditions are met proceed to [[#Compilation|Compilation]].
+Once all conditions are met proceed to [[#Compilation]].
 
 == Windows ==
 
@@ -32,16 +30,173 @@ You will need a compatible version of [[http://www.mono-project.com|Mono]] (4.0 
 You can use Mono binaries installed directly to your Windows system (i.e. outside the MSYS2 environment), you will just need to make sure that the paths to the ''mcs.exe'' compiler and to the ''mono.exe'' application are in the ''PATH'' environment variable in your MSYS2 terminal.
 Using the default installation path, Mono binaries normally goes in ''C:\Program Files\Mono''; so in MSYS2 you can point to the binaries using the path ''/c/Program Files/Mono/bin''.
 You can also permanently set this in your ''/etc/profile'' in MSYS2 adding something like this at the end of the file:
-<code>
+<code bash>
 export PATH="$PATH:/c/Program Files/Mono/bin"
 </code>
 If you used another installation path to Mono just adjust the paths used.
 
+Now you can use the MSYS2 console to compile, install and run EFL and your applications.
 Once all conditions are met proceed to [[#Compilation]].
 
 === Compilation ===
 
-In both Windows and Linux environments just
+In order to compile EFL with C# binding support, in both Windows and Linux just compile the EFL like the respective guide suggests, only add the argument ''--enable-csharp-bindings'' to the ''autogen.sh'' or ''configure'' command.
+Like:
+<code bash>
+./autogen.sh --enable-csharp-bindings #other arguments
+make -j4
+sudo make install
+</code>
 
 
-==== Example ====
+==== Examples ====
+
+Now that you can compile and install EFL with the C# bindings lets see some code examples.
+
+=== Button Example ===
+
+Lets star with a very simple example that just creates a window with a button and show how to compile it.
+After we will explain the code.
+
+<note tip>
+You can find this example in ''<efl_source>/src/examples/elementary/button_example_00.cs''
+</note>
+
+The code:
+<code csharp>
+using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        efl.All.Init(efl.Components.Ui);
+
+        efl.ui.Win win = new efl.ui.WinConcrete(null);
+        win.SetText("Hello, World!");
+        win.SetAutohide(true);
+        win.SetSize(240, 60);
+        win.SetVisible(true);
+
+        efl.ui.Button btn = new efl.ui.ButtonConcrete(win);
+        btn.SetText("Good-Bye, World!");
+        btn.SetSize(120, 30);
+        eina.Position2D pos;
+        pos.X = 60;
+        pos.Y = 15;
+        btn.SetPosition(pos);
+        btn.SetVisible(true);
+        btn.CLICKED += (object sender, EventArgs e) => {
+                           efl.ui.Config.Exit();
+                       };
+
+        efl.ui.Config.Run();
+
+        efl.All.Shutdown();
+    }
+}
+</code>
+
+== Compiling and running ==
+
+If you have EFL installed you can compile the example using ''pkg-config'' to get the proper flags for using the C# binding:
+<code bash>
+mcs button_example_00.cs -out:button_example_00.exe `pkg-config --libs efl-mono`
+</code>
+
+Otherwise, you will have to point the library location manually, like:
+<code bash>
+mcs button_example_00.cs -out:button_example_00.exe -r:/home/my_user/efl/build/src/lib/efl_mono/libefl_mono.dll
+</code>
+
+To run the application you can either copy the EFL C# binding library to your folder or set the ''MONO_PATH'' environment variable, them execute it using ''mono''.
+In both cases you can use ''pkg-config'' to get the right paths.
+
+Example coping the library:
+<code bash>
+cp `pkg-config --variable=Libraries efl-mono` .
+mono button_example_00.exe
+</code>
+
+Example setting ''MONO_PATH'':
+<code bash>
+export MONO_PATH=`pkg-config --variable=assemblies_dir efl-mono`
+mono button_example_00.exe
+</code>
+
+Note that if you installed EFL in a path that is not directly accessible to ''pkg-config'' or to your application you will have to manually make it accessible someway,
+for example setting proper environment variables:
+<code bash>
+export PKG_CONFIG_PATH=/opt/my_install_prefix/lib/pkgconfig
+export LD_LIBRARY_PATH=/opt/my_install_prefix/lib
+</code>
+
+== Explaining the code ==
+
+First we start with s basic class structure to define our ''Main'' entry point:
+<code csharp>
+using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        // <code goes here>
+    }
+}
+</code>
+<note important>
+The ''STAThreadAttribute'' is currently necessary in Windows systems because of limitations in ''ecore_win32''.
+You can compile passing ''-define:WIN32'' to ''mcs'' to flag when you are compiling on a Windows system.
+</note>
+
+Then we initialize EFL with Ui components enabled:
+<code csharp>
+        efl.All.Init(efl.Components.Ui);
+<code>
+
+Create a new Window with auto hide (the window is automatically hidden when the close button is clicked), set its title, give it a dimension and turn it visible:
+<code csharp>
+        efl.ui.Win win = new efl.ui.WinConcrete(null);
+        win.SetText("Hello, World!");
+        win.SetAutohide(true);
+        win.SetSize(240, 60);
+        win.SetVisible(true);
+<code>
+
+Create a new Button (passing the newly created window as parent), set new label text to the button, give it a dimension and position and turn it visible:
+<code csharp>
+        efl.ui.Button btn = new efl.ui.ButtonConcrete(win);
+        btn.SetText("Good-Bye, World!");
+        btn.SetSize(120, 30);
+        eina.Position2D pos;
+        pos.X = 60;
+        pos.Y = 15;
+        btn.SetPosition(pos);
+        btn.SetVisible(true);
+</code>
+
+Register a function to the button ''CLICKED'' event:
+<code csharp>
+        btn.CLICKED += (object sender, EventArgs e) => {
+                           efl.ui.Config.Exit();
+                       };
+</code>
+We use a simple lambda that calls a function to end the event loop, exiting ''efl.ui.Config.Run()'' and finishing the application.
+
+Once the setup is finished, we call:
+<code csharp>
+        efl.ui.Config.Run();
+</code>
+It will start the event loop and display the application main window.
+
+After the event loop is finished (when closing the last window or by calling ''efl.ui.Config.Exit()'') we shutdown the EFL components and let the application end:
+<code csharp>
+        efl.All.Shutdown();
+</code>
