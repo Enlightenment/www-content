@@ -1,5 +1,8 @@
+---
 ~~Title: C# Tutorial~~
-===== C# Tutorial =====
+---
+
+# C# Tutorial #
 
 <note important>
 The C# bindings are currently in BETA state.
@@ -34,6 +37,11 @@ You can also permanently set this in your ''/etc/profile'' in MSYS2 adding somet
 export PATH="$PATH:/c/Program Files/Mono/bin"
 </code>
 If you used another installation path to Mono just adjust the paths used.
+
+<note warning>
+It is advisable to add the Mono path at the *end* of the ''PATH'' environment variable, like in the example above.
+Mono has its own version of some applications (like ''pkg-config'') which can take priority over the ones from MSYS2 and cause things to fail.
+</note>
 
 Now you can use the MSYS2 console to compile, install and run EFL and your applications.
 Once all conditions are met proceed to [[#Compilation]].
@@ -136,7 +144,7 @@ export LD_LIBRARY_PATH=/opt/my_install_prefix/lib
 
 == Explaining the code ==
 
-First we start with s basic class structure to define our ''Main'' entry point:
+First we start with a basic class structure to define our ''Main'' entry point:
 <code csharp>
 using System;
 
@@ -200,4 +208,3 @@ After the event loop is finished (when closing the last window or by calling ''e
 <code csharp>
         efl.All.Shutdown();
 </code>
-
