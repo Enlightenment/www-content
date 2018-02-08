@@ -573,6 +573,8 @@ build_files = [
 executable('e_gadget_helloworld',
         build_files,
         dependencies: deps,
+        c_args : ['-fPIE', '-fPIC'],
+        link_args : ['-rdynamic', '-pie'],
         install_dir: join_paths([dir_gadgets, 'helloworld']),
         install: true)
 
@@ -584,8 +586,11 @@ configure_file(input: 'helloworld.desktop.in',
         install_dir: join_paths([dir_gadgets, 'helloworld']),
         configuration: desktop_data)
 ```
-
-This "meson.build" file determines the location Enlightenment will look for gadgets. This location is Enlightenment's library folder, followed by a sub directory string consisting of "gadgets/os-processor-enlightenmentversion". Once the location is determined, the meson file will install the "helloworld" binary and "helloworld.desktop" files to that location. Keep in mind when installing the ".desktop" file to Enlightenment's gadget directory that the file must have the same name as the directory to which it is being installed. In this case that is "helloworld/helloworld.desktop". Remember that the desktop is the crucial part of sandbox gadgets, as it is the means by which Enlightenment determines available gadgets. Enlightenment can only determine the location of gadgets by looking in its library directory.
+This "meson.build" file determines the location Enlightenment will look for gadgets. This location is Enlightenment's library folder, followed by a sub directory string consisting of "gadgets/os-processor-enlightenmentversion". Once the location is determined, the meson file will install the "helloworld" binary and "helloworld.desktop" files to that location. Keep in mind when installing the ".desktop" file to Enlightenment's gadget directory that the file must have the same name as the directory to which it is being installed. In this case that is "helloworld/helloworld.desktop". Remember that the desktop is the crucial part of sandbox gadgets, as it is the means by which Enlightenment determines available gadgets. Enlightenment can only determine the location of gadgets by looking in its library directory.  Note these two lines in the executable section of the meson.build are required:
+```
+        c_args : ['-fPIE', '-fPIC'],
+        link_args : ['-rdynamic', '-pie'],
+```
 
 Run the following commands in order, from the directory where you placed the three files, to install the gadget:
 
