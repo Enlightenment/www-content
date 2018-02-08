@@ -307,6 +307,12 @@ In the original Hello World application a callback exists to close the window wh
 static E_Gadget_Site_Orient gorient;
 static E_Gadget_Site_Anchor ganchor;
 static Evas_Object *popup;
+
+static void
+popup_focus_out(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, void *event_info EINA_UNUSED)
+{
+   evas_object_del(obj);
+}
  
 static void
 on_click(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
@@ -321,6 +327,7 @@ on_click(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
      }
    popup = elm_win_add(win, "Popup", ELM_WIN_BASIC);
    elm_win_alpha_set(popup, 1);
+   evas_object_event_callback_add(popup, EVAS_CALLBACK_FOCUS_OUT, popup_focus_out, NULL);
  
    box = elm_box_add(popup);
    elm_box_horizontal_set(box, EINA_FALSE);
@@ -515,6 +522,8 @@ ELM_MAIN()
 ```
 
 The ``on_clicked`` function has been changed from the original Hello World application to show a popup that says "This is a popup". If the popup already exists, clicking the gadget closes the popup.
+
+The ``popup_focus_out`` function has been added to make sure when the gadget popup is unfocused it is properly destroyed.
 
 ## Installing Gadgets ##
 
