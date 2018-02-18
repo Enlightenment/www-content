@@ -24,13 +24,20 @@ There is a large [[http://themes.effx.us/e16|collection of themes]], which can b
 
 ==== Compilation ====
 
-For every tarball you download untar it with ''tar zxf file.tar.gz'' and then go into the directory created. Please see the README file in this directory for each project for information on dependencies, configuration etc. Just remember that all our release tarballs come with configure set up so to compile you just need to do this in the source directory:
+Before compilation you need to have proper dependencies installed, mainly the imlib2 library. 
+On Debian (stretch) the following deps will be helpful before the compilation:
+''libimlib2-dev
+libxft-dev
+libxinerama-dev
+libxrandr-dev
+libxcomposite-dev''
+
+Untar downloaded e16 tarball ''tar zxf downloaded.file.tar.gz'' and then go into the directory created. Please see the README file in this directory for each project for additional information on dependencies, configuration etc. Just remember that all our release tarballs come with configure set up so to compile you just need to do this in the source directory:
 
 <code bash>
 ./configure
 make
 sudo make install
-sudo ldconfig # needed on Linux to update linker library database
 </code>
 
 If ''configure'' fails, you are likely missing a dependency - provide it. It should tell you what that dependency is. **NOTE** that you can provide arguments to ''configure'' such as ''--prefix=/opt/e'' or similar. 
