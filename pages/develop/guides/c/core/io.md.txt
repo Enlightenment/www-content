@@ -105,11 +105,11 @@ Here's an example from the EFL examples repository: [reference/c/core/src/core_i
    Eina_Slice content = EINA_SLICE_STR("### This is a sample string for the file io test ###");
    Efl_Io_File *file;                        
    
-   file = efl_add(EFL_IO_FILE_CLASS, NULL,
-                  efl_file_set(efl_added, filename, NULL),
-                  efl_io_file_flags_set(efl_added, O_WRONLY | O_CREAT),
-                  efl_io_file_mode_set(efl_added, 0644),
-                  efl_io_closer_close_on_destructor_set(efl_added, EINA_TRUE));
+   file = efl_add_ref(EFL_IO_FILE_CLASS, NULL,
+                      efl_file_set(efl_added, filename, NULL),
+                      efl_io_file_flags_set(efl_added, O_WRONLY | O_CREAT),
+                      efl_io_file_mode_set(efl_added, 0644),
+                      efl_io_closer_close_on_destructor_set(efl_added, EINA_TRUE));
 
    if (efl_io_writer_write(file, &content, NULL) != EINA_ERROR_NO_ERROR)
      fprintf(stderr, "  Failed to write test file\n");
@@ -120,7 +120,7 @@ Here's an example from the EFL examples repository: [reference/c/core/src/core_i
         free(string);
      }
    
-   efl_del(file);
+   efl_unref(file);
 ```
 
 ### ``Efl.Io.Queue`` ###
@@ -148,15 +148,15 @@ The most representative methods of the ``Efl.Io.Queue`` are:
 Example:
 ```c
 Eo *send_queue;
-send_queue = efl_add(EFL_IO_QUEUE_CLASS, NULL,
-                     efl_name_set(efl_added, "send_queue"),
-                     efl_io_queue_limit_set(efl_added, buffer_limit));
+send_queue = efl_add_ref(EFL_IO_QUEUE_CLASS, NULL,
+                         efl_name_set(efl_added, "send_queue"),
+                         efl_io_queue_limit_set(efl_added, buffer_limit));
 efl_io_writer_write(send_queue, &slice, NULL);
 efl_io_queue_eos_mark(send_queue);
 [...]
 efl_io_reader_read(send_queue, &slice);
 efl_io_closer_close(send_queue);
-efl_del(send_queue);
+efl_unref(send_queue);
 ```
 
 More usage examples can be found in the EFL examples repository: [reference/c/net/src/net_io.c](https://git.enlightenment.org/tools/examples.git/tree/reference/c/net/src/net_io.c)
