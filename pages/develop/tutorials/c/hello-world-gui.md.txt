@@ -103,7 +103,7 @@ So far ``_gui_setup`` is empty. Create a window by adding the following lines wi
 [...]
    Eo *win;
 
-   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+   win = efl_add(EFL_UI_WIN_CLASS, efl_main_loop_get(),
                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
                  efl_text_set(efl_added, "Hello World"),
                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
@@ -112,7 +112,7 @@ So far ``_gui_setup`` is empty. Create a window by adding the following lines wi
 
 As far as EFL is concerned, a window is just another object. You can declare it with ``Eo *win;``. The ``Eo`` type is the base object system for EFL. Most graphical elements such as windows, text boxes, buttons, sliders, etc. are ``Eo`` objects. You can give your window any name you wish but for now call it ``win``for simplicity's sake.
 
-The next part of the code defines the window itself. The ``efl_add()`` method creates a new object of the class specified in the first parameter and puts it inside the already existing object specified in the second parameter. In an EFL graphical application widgets are inserted inside other objects. For example, you can place a text object inside a text box inside a window and so on. In this case we want to create a window (``EFL_UI_WIN _CLASS``) and don't need to put it inside any other object, so we pass ``NULL`` as the second parameter. The ``EFL_UI_WIN_CLASS``parameter is actually a macro.
+The next part of the code defines the window itself. The ``efl_add()`` method creates a new object of the class specified in the first parameter and puts it inside the already existing object specified in the second parameter. In an EFL graphical application widgets are inserted inside other objects. For example, you can place a text object inside a text box inside a window and so on. In this case we want to create a window (``EFL_UI_WIN _CLASS``) which must be a child of the application's main loop, so it can receive application events (see the [Main Loop programming guide](/develop/guides/c/core/main-loop.md)). You can always retrieve the application's main loop using ``efl_main_loop_get()``.
 
 The rest of the parameters of ``efl_add()`` are a list of methods that will be called in order, normally to configure the object we have just created. You can add as many configuration methods as you want in this list and can use the special symbol ``efl_added`` to refer to the created object if you need to.
 
@@ -134,7 +134,7 @@ _gui_setup()
 {
    Eo *win;
 
-   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+   win = efl_add(EFL_UI_WIN_CLASS, efl_main_loop_get(),
                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
                  efl_text_set(efl_added, "Hello World"),
                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
@@ -221,7 +221,7 @@ _gui_setup()
 {
    Eo *win, *box;
 
-   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+   win = efl_add(EFL_UI_WIN_CLASS, efl_main_loop_get(),
                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
                  efl_text_set(efl_added, "Hello World"),
                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
@@ -370,7 +370,7 @@ _gui_setup()
 {
    Eo *win, *box;
 
-   win = efl_add(EFL_UI_WIN_CLASS, NULL,
+   win = efl_add(EFL_UI_WIN_CLASS, efl_main_loop_get(),
                  efl_ui_win_type_set(efl_added, EFL_UI_WIN_BASIC),
                  efl_text_set(efl_added, "Hello World"),
                  efl_ui_win_autodel_set(efl_added, EINA_TRUE));
