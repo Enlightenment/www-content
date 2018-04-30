@@ -19,16 +19,16 @@ To create the hash table, use the ``eina_hash_new()`` function:
 * The fourth parameter is the function called on each value when the hash table is freed, or when an item is deleted from it. ``NULL`` can be passed as the callback.
 * The last parameter is the size of the buckets.
 
-When you create an ``Eina_Hash`` instance, you have to create four potentially long callback functions. ``Eina_Hash`` has some predefined functions to make these shorter. These are used to create various types ofof hash tables:
+When you create an ``Eina_Hash`` instance, you have to create four potentially long callback functions. ``Eina_Hash`` has some predefined functions to make these shorter. These are used to create various types of hash tables:
 
-* ``eina_hash_string_djb2_new()`` creates a new hash table using the djb2 algorithm for strings.
+* ``eina_hash_string_djb2_new()`` creates a new hash table using the [djb2](https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions) algorithm for strings.
 * ``eina_hash_string_superfast_new()`` creates a new hash table for use with strings. This is best for long strings.
 * ``eina_hash_string_small_new()`` creates a new hash table for use with strings with a small bucket size.
 * ``eina_hash_int32_new()`` and ``eina_hash_int64_new()`` create a new hash table for use with 32-bit and 64-bit integers.
 * ``eina_hash_pointer_new()`` creates a new hash table for use with pointers.
 * ``eina_hash_stringshared_new()`` creates a new hash table for use with shared strings.
 
-All these predefined functions require only one parameter : the function to free the data you've stored in the hash table.
+All these predefined functions require only one parameter: the function to free the data you've stored in the hash table.
 
 The following example shows how to manage a small phone book using the ``eina_hash_string_superfast_new()`` function to create a hash table.
 
