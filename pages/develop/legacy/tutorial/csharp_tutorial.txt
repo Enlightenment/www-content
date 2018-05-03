@@ -67,7 +67,7 @@ Now that you can compile and install EFL with C# bindings lets see some code exa
 
 === Button Example ===
 
-Lets star with a very simple example that just creates a window with a button and show how to compile it.
+Lets start with a very simple example that just creates a window with a button and show how to compile it.
 After, the code will be explained.
 
 <note tip>
@@ -87,13 +87,13 @@ public class Example
     {
         efl.All.Init(efl.Components.Ui);
 
-        efl.ui.Win win = new efl.ui.WinConcrete(null);
+        efl.ui.IWin win = new efl.ui.Win(null);
         win.SetText("Hello, World!");
         win.SetAutohide(true);
         win.SetSize(240, 60);
         win.SetVisible(true);
 
-        efl.ui.Button btn = new efl.ui.ButtonConcrete(win);
+        efl.ui.IButton btn = new efl.ui.Button(win);
         btn.SetText("Good-Bye, World!");
         btn.SetSize(120, 30);
         eina.Position2D pos;
@@ -101,7 +101,7 @@ public class Example
         pos.Y = 15;
         btn.SetPosition(pos);
         btn.SetVisible(true);
-        btn.CLICKED += (object sender, EventArgs e) => {
+        btn.ClickedEvt += (object sender, EventArgs e) => {
                            efl.ui.Config.Exit();
                        };
 
@@ -125,7 +125,7 @@ mcs button_example_00.cs -out:button_example_00.exe -r:/home/my_user/efl/build/s
 </code>
 
 To run the application you can either copy the EFL C# binding library to your folder or set the ''MONO_PATH'' environment variable, them execute it using ''mono''.
-In both cases you can use ''pkg-config'' to get the right paths.
+In both cases, you can use ''pkg-config'' to get the right paths.
 
 Example coping the library:
 <code bash>
@@ -148,7 +148,7 @@ export LD_LIBRARY_PATH=/opt/my_install_prefix/lib
 
 == Explaining the code ==
 
-First we start with a basic class structure to define our ''Main'' entry point:
+First, we start with a basic class structure to define our ''Main'' entry point:
 <code csharp>
 using System;
 
@@ -173,18 +173,18 @@ Then we initialize EFL with Ui components enabled:
         efl.All.Init(efl.Components.Ui);
 </code>
 
-And create a new Window with auto hide (the window is automatically hidden when the close button is clicked), set its title, give it a dimension and turn it visible:
+And create a new Window with auto-hide (the window is automatically hidden when the close button is clicked), set its title, give it a dimension and turn it visible:
 <code csharp>
-        efl.ui.Win win = new efl.ui.WinConcrete(null);
+        efl.ui.IWin win = new efl.ui.Win(null);
         win.SetText("Hello, World!");
         win.SetAutohide(true);
         win.SetSize(240, 60);
         win.SetVisible(true);
 </code>
 
-Create a new Button (passing the newly created window as parent), set new label text to the button, give it a dimension and position and turn it visible:
+Create a new Button (passing the newly created window as the parent), set new label text to the button, give it a dimension and position and turn it visible:
 <code csharp>
-        efl.ui.Button btn = new efl.ui.ButtonConcrete(win);
+        efl.ui.IButton btn = new efl.ui.Button(win);
         btn.SetText("Good-Bye, World!");
         btn.SetSize(120, 30);
         eina.Position2D pos;
@@ -196,7 +196,7 @@ Create a new Button (passing the newly created window as parent), set new label 
 
 And then register a function to the button ''CLICKED'' event:
 <code csharp>
-        btn.CLICKED += (object sender, EventArgs e) => {
+        btn.ClickedEvt += (object sender, EventArgs e) => {
                            efl.ui.Config.Exit();
                        };
 </code>
@@ -208,7 +208,7 @@ Once the setup is finished, we call:
 </code>
 It starts the event loop and display the application main window.
 
-After the event loop is finished (when closing the last window or by calling ''efl.ui.Config.Exit()'') we shutdown the EFL components and let the application end:
+After the event loop is finished (when closing the last window or by calling ''efl.ui.Config.Exit()'') we shut down the EFL components and let the application end:
 <code csharp>
         efl.All.Shutdown();
 </code>
