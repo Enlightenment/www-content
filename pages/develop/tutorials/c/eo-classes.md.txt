@@ -4,7 +4,7 @@
 
 # Creating New Classes with Eolian #
 
-The [Introduction to Eo](eo-intro.md) tutorial showed you how to instantiate Eo objects of a given class using ``efl_add()``. This tutorial demonstrates how to create new classes so new kinds of objects can be instantiated.
+The [Introduction to Eo](eo-intro.md) tutorial showed you how to instantiate Eo objects of a given class using ``efl_new()``. This tutorial demonstrates how to create new classes so new kinds of objects can be instantiated.
 
 You'll learn how to describe classes using the Eolian language and then further customize them with class-specific code. You will also master the basics of class inheritance with Eolian.
 
@@ -29,11 +29,11 @@ eolian_gen -gchi my_new_class.eo
 
 This generates three files:
 
-* ``my_new_class.eo.h``: **Header file** including all the method signatures related to your class. In particular, it contains the class symbol you need to pass to ``efl_add()``, so always include this file if you want to use your class.
+* ``my_new_class.eo.h``: **Header file** including all the method signatures related to your class. In particular, it contains the class symbol you need to pass to ``efl_new()``, so this is the header file you need to include if you want to use your class.
 * ``my_new_class.eo.c``: Boilerplate code you don't usually need to worry about. It is automatically included from the implementation file (next one).
 * ``my_new_class.c``: The **implementation file**. It initially contains the empty bodies for all the methods you need to implement in your class. This is the only file you need to modify and include in your builds, as you will see in this tutorial.
 
-The ``-gchi`` parameter tells ``eolian_gen`` to generate the Source file, the Header file and the Implementation file.
+The ``-gchi`` parameter tells ``eolian_gen`` to generate the Header file, the Boilerplate file and the Implementation file.
 
 In summary, for each new class you create you must:
 
@@ -49,9 +49,9 @@ The rest of the tutorial shows a practical example which will illustrate this pr
 
 ## Step One: Creating a Simple Class Description ##
 
-You will now create an Eolian file for a class named ``Example.Rectangle``. The file **must** be called ``examples_rectangle.eo``.
+You will now create an Eolian file for a class named ``Example.Rectangle``. The file **must** be called ``example_rectangle.eo``.
 
-This class will represent a rectangle shape, so it will have two properties, the ``width`` and ``height`` of the rectangle, which can be read and written.
+This class will represent a rectangle shape, so it will have two properties, the ``width`` and ``height`` of the rectangle, which can be both read and written.
 
 Start with the class name and the list of its parent classes in parentheses:
 
@@ -171,7 +171,7 @@ These are the setters and getters for your properties and method. Examine one of
 
 ```c
 EOLIAN static int
-_example_rectangle_width_get(Eo *obj, Example_Rectangle_Data *pd)
+_example_rectangle_width_get(const Eo *obj, Example_Rectangle_Data *pd)
 ```
 
 This getter receives the ``Eo *`` object whose property is being retrieved and an ``Example_Rectangle_Data *`` pointer to its private data. It returns an integer, as that's what you specified as the value for this property in the Eolian file.
@@ -195,7 +195,7 @@ _example_rectangle_width_set(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd, in
 }
 
 EOLIAN static int
-_example_rectangle_width_get(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
+_example_rectangle_width_get(const Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 {
    return pd->width;
 }
@@ -207,7 +207,7 @@ _example_rectangle_height_set(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd, i
 }
 
 EOLIAN static int
-_example_rectangle_height_get(Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
+_example_rectangle_height_get(const Eo *obj EINA_UNUSED, Example_Rectangle_Data *pd)
 {
    return pd->height;
 }
@@ -276,7 +276,7 @@ Finally, instantiate a new object of your shiny new class from within ``_rect_cr
 ```c
    Example_Rectangle *rectangle;
 
-   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+   rectangle = efl_new(EXAMPLE_RECTANGLE_CLASS,
                        efl_name_set(efl_added, "Rectangle"),
                        example_rectangle_width_set(efl_added, 5),
                        example_rectangle_height_set(efl_added, 10));
@@ -316,7 +316,7 @@ _rect_create()
 {
    Example_Rectangle *rectangle;
 
-   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+   rectangle = efl_new(EXAMPLE_RECTANGLE_CLASS,
                        efl_name_set(efl_added, "Rectangle"),
                        example_rectangle_width_set(efl_added, 5),
                        example_rectangle_height_set(efl_added, 10));
