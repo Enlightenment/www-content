@@ -6,7 +6,7 @@
 
 The previous tutorial ([Introduction to Eo](eo-intro.md)) explained how you should create and destroy Eo objects in order to avoid *memory leaks*. The present tutorial shows graphically the inner workings of the reference counting mechanism.
 
-To do so, some new *instrumentation* techniques are introduced. These techniques allow collecting information about the state of your program, and, although not frequently used in normal applications, they can be useful for debugging purposes.
+To do so, some new *instrumentation* techniques are introduced. These techniques allow collecting information about the state of your program, and, although not frequently used in normal applications, they can be useful for debugging (and tutorial) purposes.
 
 ## Prerequisites ##
 
@@ -36,7 +36,7 @@ static void
 _obj_create()
 {
    // First create a root element
-   _root = efl_add(EFL_MODEL_ITEM_CLASS, NULL,
+   _root = efl_new(EFL_MODEL_ITEM_CLASS,
                    efl_name_set(efl_added, "Root"));
 
    // Create the first child element
@@ -120,7 +120,7 @@ The expected behavior is *undefined*, which usually means your program will abor
 
 You can always ask an object for its internal reference count... as long as the object still exists. The problem with the above code is that when a reference count reaches 0, the object is destroyed. If you still hold a pointer to that object (like ``_root`` or ``_child1``) that pointer is *invalid*, and trying to use it as a parameter to any EFL call will result in an *undefined behavior*.
 
-In summary, the first call to ``_status_print()`` succeeded because the objects where alive, but the second one, after calling ``_obj_destroy()``, crashed because all the objects had been destroyed, and hence their pointers where invalid.
+**In summary:** the first call to ``_status_print()`` succeeded because the objects where alive, but the second one, after calling ``_obj_destroy()``, crashed because all the objects had been destroyed, and hence their pointers where **invalid**.
 
 In your applications, you should not try to use an object after you returned the reference you had to it, so you should not encounter this problem. In some rare cases, though, for debugging or didactic purposes, you might want to examine the state of an object, even after it has been destroyed.
 
@@ -142,7 +142,7 @@ Eo *_root_ref, *_child1_ref, *_child2_ref;
 
 As you can see, wrefs are also regular ``Eo`` pointers; you can use them anywhere you would use an object pointer.
 
-In fact, you could get rid of the previous plain object pointers (``_root``, ``_child1`` and ``_child2``) and only use the wrefs from now on. This tutorial keeps them separate to highlight that plain object pointers will become invalid, whereas wrefs will become NULL.
+In fact, you could get rid of the previous plain object pointers (``_root``, ``_child1`` and ``_child2``) and only use the wrefs from now on. This tutorial keeps them separate to highlight that plain object pointers will become invalid, whereas wrefs will become ``NULL``.
 
 Now, replace the previous usage of the plain object pointers in the ``printf()`` call in ``_status_print()`` with the wrefs:
 
@@ -155,7 +155,7 @@ Now, replace the previous usage of the plain object pointers in the ``printf()``
    [...]
 ```
 
-Finally, create the wrefs by adding a call to ``efl_wref_add()`` after each call to ``efl_add()`` in the ``_obj_create()`` method. It should look like this:
+Finally, create the wrefs by adding a call to ``efl_wref_add()`` after each object is created in the ``_obj_create()`` method. It should look like this:
 
 ```c
 [...]
@@ -163,7 +163,7 @@ static void
 _obj_create()
 {
    // First create a root element
-   _root = efl_add(EFL_MODEL_ITEM_CLASS, NULL,
+   _root = efl_new(EFL_MODEL_ITEM_CLASS,
                    efl_name_set(efl_added, "Root"));
    // Add a weak reference so we can keep track of its state
    efl_wref_add(_root, &_root_ref);
@@ -254,7 +254,7 @@ _parent_name_get(Eo *obj)
 
 Remember you will be calling this method in situations where some of the objects might have already been destroyed. Therefore, the first thing this method does is check whether the reference count is 0 with ``efl_ref_count()``. In that case it returns a simple dash "-".
 
-Remember also that you can do this, because you are using weak references. Passing an invalid pointer to ``efl_ref_count()`` would result in undefined behavior.
+Remember also that you can do this, because you are using weak references: Passing an invalid pointer to ``efl_ref_count()`` would result in undefined behavior but passing in ``NULL`` is OK.
 
 The second thing the method does is check whether the object has a parent or not by calling ``efl_parent_get()``. If it has no parent, it returns "none".
 
@@ -307,7 +307,7 @@ static void
 _obj_create()
 {
    // First create a root element
-   _root = efl_add(EFL_MODEL_ITEM_CLASS, NULL,
+   _root = efl_new(EFL_MODEL_ITEM_CLASS,
                    efl_name_set(efl_added, "Root"));
    // Add a weak reference so we can keep track of its state
    efl_wref_add(_root, &_root_ref);
@@ -401,7 +401,7 @@ Use it to be notified of the destruction of each object. ``_obj_create()`` shoul
 ```c
 [...]
    // First create a root element
-   _root = efl_add(EFL_MODEL_ITEM_CLASS, NULL,
+   _root = efl_new(EFL_MODEL_ITEM_CLASS,
                    efl_name_set(efl_added, "Root"));
    // Add a weak reference so we can keep track of its state
    efl_wref_add(_root, &_root_ref);
@@ -505,7 +505,7 @@ static void
 _obj_create()
 {
    // First create a root element
-   _root = efl_add(EFL_MODEL_ITEM_CLASS, NULL,
+   _root = efl_new(EFL_MODEL_ITEM_CLASS,
                    efl_name_set(efl_added, "Root"));
    // Add a weak reference so we can keep track of its state
    efl_wref_add(_root, &_root_ref);
