@@ -5,7 +5,7 @@
 
 # Class Inheritance with Eolian #
 
-The [Creating New Classes](eo-classes.md) tutorial explained how to define new classes using Eolian. New classes don't need to start from scratch however. In fact, it is common practice in *Object Oriented Programming (OOP)* to extend the functionality of an existing class by *inheriting* from it and creating a new one.
+The [Creating New Classes](eo-classes.md) tutorial explained how to define new classes using Eolian. New classes don't need to start from scratch however. In fact, it is common practice in [Object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming) (OOP) to extend the functionality of an existing class by *inheriting* from it and creating a new one.
 
 This tutorial shows how to inherit from a class in Eolian. It also describes how derived classes can access their parent's public and private data.
 
@@ -31,7 +31,7 @@ class Example.Square (Example.Rectangle) {
 }
 ```
 
-As you can see this is derived from ``Example.Rectangle``. Regular classes must be derived from ``Efl.Object`` but in this case you get that automatically, since ``Example.Rectangle`` already is already derived from ``Efl.Object``.
+As you can see this is derived from ``Example.Rectangle``. Regular classes must be derived from ``Efl.Object`` but in this case you get that automatically, since ``Example.Rectangle`` is already derived from ``Efl.Object``.
 
 You can also notice that this class does not provide any new method or property (there is no ``methods`` block). It only implements two properties, which currently belong to its parent class (``Example.Rectangle.width`` and ``Example.Rectangle.height``). Furthermore only the setters for these properties are implemented: Reads of these properties will be routed to the getter in the parent class.
 
@@ -59,7 +59,9 @@ The implementation of these methods requires calling the parent class, therefore
 #include "example_rectangle.eo.h"
 ```
 
-You now need to focus on implementating these setters. They both need to set the ``width`` and ``height`` internal variables to the same value. These variables are private to ``Example.Rectangle``, so ``Example.Square`` has no direct access to them. These can be accessed through the setters from ``Example.Rectangle`` however. The setter has not been called from the ``Example.Square`` currently being implemented, as this would create an infinite loop. 
+You now need to focus on implementing these setters. They both need to set the ``width`` and ``height`` internal variables to the same value. These variables are private to ``Example.Rectangle``, so ``Example.Square`` has no direct access to them. However, they can be modified through the setters from ``Example.Rectangle``.
+
+A small caveat, though: The parent's setters are being overridden by the derived class, so if you try to call them directly from the overridden code, you will end up in an infinite loop! Keep reading. 
 
 In EFL when you need to call a method from your parent instead of your overridden version you can use ``efl_super()``. Its first parameter is the object and the second is *the class whose parent you want to call*. Write these implementations for the setters and all will become clear:
 
@@ -106,7 +108,7 @@ _square_create()
 {
    Example_Square *square;
 
-   square = efl_add(EXAMPLE_SQUARE_CLASS, NULL,
+   square = efl_new(EXAMPLE_SQUARE_CLASS,
                     efl_name_set(efl_added, "Square"),
                     example_rectangle_width_set(efl_added, 7));
 
@@ -137,7 +139,7 @@ Next call ``_square_create()`` and print some information, immediately after doi
 
 Notice how you only used ``Example.Rectangle`` methods here because ``Example.Square`` inherits from it. All methods that work on a rectangle also work on a square.
 
-Remember to dispose of your objects using ``efl_unref()`` if you do not give them a parent in ``efl_add()``.
+Remember to dispose of your objects using ``efl_unref()``. Alternatively, you could give them a parent using ``efl_add()`` instead of ``efl_new()`` and let the parent handle object disposal.
 
 The main program (``eo_inherit_main.c``) should now look like this:
 
@@ -155,7 +157,7 @@ _rect_create()
 {
    Example_Rectangle *rectangle;
 
-   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+   rectangle = efl_new(EXAMPLE_RECTANGLE_CLASS,
                        efl_name_set(efl_added, "Rectangle"),
                        example_rectangle_width_set(efl_added, 5),
                        example_rectangle_height_set(efl_added, 10));
@@ -168,7 +170,7 @@ _square_create()
 {
    Example_Square *square;
 
-   square = efl_add(EXAMPLE_SQUARE_CLASS, NULL,
+   square = efl_new(EXAMPLE_SQUARE_CLASS,
                     efl_name_set(efl_added, "Square"),
                     example_rectangle_width_set(efl_added, 7));
 
@@ -233,7 +235,7 @@ In ``example_rectangle.c``, replace the structure with an include :
 #include "example_rectangle_private.h"
 ```
 
-Finally include the header from ``example_square.c`` too. At this point the implementation for ``Example.Square`` can interpret its parent's private data ``Example.Rectangle``. You only need to retrieve a pointer to that data using ``efl_data_scope_get()``. This is how your square setters should look now:
+Finally include the header from ``example_square.c`` too. At this point the implementation for ``Example.Square`` can interpret its parent's private data ``Example_Rectangle_Data``. You only need to retrieve a pointer to that data using ``efl_data_scope_get()``. This is how your square setters should look now:
 
 ```c
 EOLIAN static void
