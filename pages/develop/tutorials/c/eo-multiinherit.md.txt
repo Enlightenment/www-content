@@ -19,7 +19,7 @@ Allowing a class to have more than one parent has some caveats, such as the well
 
 C++, for example, allows you to create such hierarchies but forces you to specify which implementation you want to use in ambiguous cases. Most languages however solve the diamond problem by imposing restrictions on the classes from which you can inherit. These restrictions remove the possibility of ambiguous hierarchies and result in arguably cleaner code.
 
-Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin)) define two new kinds of classes, *interfaces* and *mixins* and imposes inheritance rules:
+Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin#Programming_languages_that_use_mixins)) defines two new kinds of classes, *interfaces* and *mixins* and imposes some inheritance rules:
 
 1. You can only *inherit* from one *regular* class, which must be the first one in the inheritance list.
  
@@ -29,7 +29,7 @@ Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin)) define two n
 
 *Inherit*, *implement* and *include* all mean *use functionality from a parent class*. Using a different word for each kind of parent class helps keep ambiguity to a minimum.
 
-Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations but they cannot be inherited from, only included. Neither is instantiable on its own : they are meant to be implemented or included.
+Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations but they cannot be inherited from, only included. Neither is instantiable on its own: they are meant to be implemented or included.
 
 The following steps will clarify these concepts.
 
@@ -158,9 +158,9 @@ Pay careful attention to the ``-I`` switch so it can find the new class you are 
 
 This means that in the implementation file you will now find:
 
-*An empty method where you must put the implementation for ``Example.Shape.area()``: ``_example_rectangle_example_shape_area()``.
+* An empty method where you must put the implementation for ``Example.Shape.area()``: ``_example_rectangle_example_shape_area()``.
 
-*Your previous implementation of the ``Example.Rectangle.area()`` method: ``_example_rectangle_area()``.
+* Your previous implementation of the ``Example.Rectangle.area()`` method: ``_example_rectangle_area()``.
 
 Simply move the one-line implementation (``return pd->width * pd->height;``) from the old method to the new one, then completely remove the old one.
 
@@ -258,7 +258,7 @@ _example_circle_radius_set(Eo *obj EINA_UNUSED, Example_Circle_Data *pd, int rad
 }
 
 EOLIAN static int
-_example_circle_radius_get(Eo *obj EINA_UNUSED , Example_Circle_Data *pd)
+_example_circle_radius_get(const Eo *obj EINA_UNUSED , Example_Circle_Data *pd)
 {
    return pd->radius;
 }
@@ -284,7 +284,7 @@ _circle_create()
 {
    Example_Circle *circle;
 
-   circle = efl_add(EXAMPLE_CIRCLE_CLASS, NULL,
+   circle = efl_new(EXAMPLE_CIRCLE_CLASS,
                     efl_name_set(efl_added, "Circle"),
                     example_circle_radius_set(efl_added, 5));
 
@@ -421,7 +421,7 @@ _example_colored_color_set(Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
 }
 
 EOLIAN static void
-_example_colored_color_get(Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
+_example_colored_color_get(const Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
                            int *red, int *green, int *blue)
 {
    if (red)
@@ -435,14 +435,29 @@ _example_colored_color_get(Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
 #include "example_colored.eo.c"
 ```
 
-## Step Ten: Using the Mixin ##
+## Step Ten: Including the Mixin ##
+
+Modify ``example_rectangle.eo`` to include the ``Example.Colored`` Mixin. There's nothing to do beyond adding the Mixin name in the inheritance list:
+
+```
+class Example.Rectangle (Efl.Object, Example.Shape, Example.Colored) {
+    [...]
+}
+```
+The Mixin provides a new property to the class, and takes care of its implementation. ``Example.Rectangle`` (and its derived class ``Example.Square``) can start using this new property without further work. You can now generate the C files as usual:
+
+```bash
+eolian_gen -gchi example_circle.eo -I .
+```
+
+## Step 11: Using the Mixin ##
 
 Modify ``eo_multiinherit_main.c`` to make use of this new functionality. There's little to change.
 
 Add a new configuration call to ``example_colored_color_set()`` in the creation of the rectangle:
 
 ```c
-   rectangle = efl_add(EXAMPLE_RECTANGLE_CLASS, NULL,
+   rectangle = efl_new(EXAMPLE_RECTANGLE_CLASS,
                        efl_name_set(efl_added, "Rectangle"),
                        example_rectangle_width_set(efl_added, 5),
                        example_rectangle_height_set(efl_added, 10),
@@ -452,7 +467,7 @@ Add a new configuration call to ``example_colored_color_set()`` in the creation 
 Do the same for for the creation of the square:
 
 ```c
-   square = efl_add(EXAMPLE_SQUARE_CLASS, NULL,
+   square = efl_new(EXAMPLE_SQUARE_CLASS,
                     efl_name_set(efl_added, "Square"),
                     example_rectangle_width_set(efl_added, 7),
                     example_colored_color_set(efl_added, 64, 64, 64));
