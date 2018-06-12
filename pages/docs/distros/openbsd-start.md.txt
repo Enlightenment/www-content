@@ -1,0 +1,191 @@
+---
+~~Title: Installing EFL on OpenBSD~~
+~~NOCACHE~~
+---
+
+# Installing EFL on OpenBSD #
+
+[The *Enlightenment Foundation Libraries (EFL)*](/about-efl.md) power millions of systems from mobile phones to set-top boxes, desktops, laptops, game systems and more. You'll need EFL if you want to develop apps for Enlightenment and for any of the devices that use Enlightenment for its visual interface. 
+
+This tutorial describes several ways to install EFL on your system. You will only need to use one of these. Select your chosen method using the index on the right.
+
+The Enlightenment developers provide a pre-packaged source of EFL. Although not bleeding edge it is up to date and considered stable for production environments. You can download, compile and install it yourself by following the instructions in ["Installing from Packaged Source"](#Installing_from_Packaged_Source).
+
+You can also download the source code for the most recent version from the EFL git repositories. This will provide you with the latest code, which is updated on a nightly basis. To get started, read the section ["Installing from Git"](#Installing_from_Git).
+
+Finally, there's an installer available for OpenBSD + Enlightenment in the last section ["Enlightenment for OpenBSD Installer"](#Enlightenment_for_OpenBSD_Installer).
+
+Whichever installation method you use, visit ["Compiling EFL Applications"](#Compiling_EFL_Applications) to discover how to compile your Enlightenment applications.
+
+## Installing from Packaged Source ##
+
+There are two versions of EFL available from the Enlightenment website. One is the nightly bleeding edge version which you can [download using git](#Installing_from_Git). The other is packaged and available from the [EFL download page](https://download.enlightenment.org/rel/libs/efl/), which is the focus of this section. 
+
+### Step 1: Downloading Stable Version ###
+
+[Download the latest version of EFL](https://download.enlightenment.org/rel/libs/efl/) and check it against its SHA256 hash:
+
+```bash
+wget --no-check-certificate https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz
+wget --no-check-certificate https://download.enlightenment.org/rel/libs/efl/efl-X.XX.X.tar.xz.sha256
+cat efl-X.XX.X.tar.xz.sha256; sha256sum efl-X.XX.X.tar.xz
+```
+
+Note that you'll need to change ``X.XX.X`` to the actual version of EFL e.g. efl-1.20.6.tar.xz
+
+### Step 2: Unpacking ###
+
+Once you've downloaded the archive file containing EFL to your hard drive unpack it with:
+
+```bash
+tar xvf efl-X.XX.X.tar.xz
+```
+
+This will produce a folder named *efl-X.XX.X*.
+
+### Step 3: Installing Dependencies ###
+
+```bash
+su
+pkg_add autoconf automake bullet check fribidi gettext-tools giflib gmake gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plugins-bad gstreamer1-plugins-ugly gstreamer1-plugins-libav poppler libraw librsvg libspectre libtool libXp luajit m4 png pulseaudio tiff xprintproto
+```
+
+### Step 4: Building and Installing ###
+
+Set up these environment variables before building.
+
+```bash
+su
+ulimit -n unlimited;
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig"
+export AUTOCONF_VERSION=2.69
+export AUTOMAKE_VERSION=1.15
+export LDFLAGS="-lc++abi -lpthread -L/usr/lib -L/usr/X11R6/lib -L/usr/local/lib -L/usr/local/lib/pulseaudio"
+export CC=clang
+export CXX=clang++
+export CFLAGS="-femulated-tls"
+```
+
+Once you have installed all the required packages and setup the build environment ``cd`` into the *efl-X.XX.X* folder and run:
+
+```bash
+./configure
+gmake
+su
+gmake install
+```
+
+This will configure the files needed for compiling, compile the software itself and then install it.
+
+### Step 5: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local* you need to ensure that some files are visible to *dbus*:
+
+```bash
+su
+ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+Due to differing library `soname` versioning you also need to create necessary symbolic links ensuring full compatibility and working EFL on OpenBSD. These are subsequent to change, the important factor is that a valid symbolic link points to the destination as shown below:
+
+```bash
+su
+ln -s /usr/local/lib/libcurl.so.25.14 /usr/local/libcurl.so.4
+ln -s /usr/local/lib/libpulse.so.6.3 /usr/local/lib/libpulse.so.0
+ln -s /usr/local/lib/libsndfile.so.5.0 /usr/local/lib/libsndfile.so.1
+```
+
+## Installing from Git ##
+
+You can also install the bleeding edge version of EFL by cloning it from the git repository.
+
+### Step 1: Installing git and Cloning ###
+
+By default, *git* is not installed on OpenBSD, so the first step is to install it:
+
+```bash
+pkg_add git
+```
+
+Next clone EFL's source code:
+
+```bash
+git clone https://git.enlightenment.org/core/efl.git
+```
+
+This will create a directory named *efl/*.
+
+### Step 2: Installing Dependencies ###
+
+As with packaged install, you'll need the following dependencies:
+
+```bash
+su
+pkg_add autoconf automake bullet check fribidi gettext-tools giflib gmake gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plugins-bad gstreamer1-plugins-ugly gstreamer1-plugins-libav poppler libraw librsvg libspectre libtool libXp luajit m4 png pulseaudio tiff xprintproto
+```
+
+### Step 3: Configuring the Software ###
+
+Set up these environment variables before building.
+
+```bash
+su
+ulimit -n unlimited;
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/X11R6/lib/pkgconfig"
+export AUTOCONF_VERSION=2.69
+export AUTOMAKE_VERSION=1.15
+export LDFLAGS="-lc++abi -lpthread -L/usr/lib -L/usr/X11R6/lib -L/usr/local/lib -L/usr/local/lib/pulseaudio"
+export CC=clang
+export CXX=clang++
+export CFLAGS="-femulated-tls"
+```
+
+Once you have installed all the required packages and setup the build environment ``cd`` into the *efl-X.XX.X* folder and run:
+
+```bash
+./autogen.sh
+```
+
+Once configured, compile the software with:
+
+```bash
+gmake
+su
+gmake install
+```
+
+### Step 4: Carrying out Post Installation Tasks ###
+
+As you are not installing to */usr* but to */usr/local*, you need to ensure that some files are visible to *dbus*:
+
+```bash
+su
+ln -s /usr/local/share/dbus-1/services/org.enlightenment.Ethumb.service /usr/share/dbus-1/services/org.enlightenment.Ethumb.service
+```
+
+Due to differing library `soname` versioning you also need to create necessary symbolic links ensuring full compatibility and working EFL on OpenBSD. These are subsequent to change, the important factor is that a valid symbolic link points to the destination as shown below:
+
+```bash
+ln -s /usr/local/lib/libcurl.so.25.14 /usr/local/libcurl.so.4
+ln -s /usr/local/lib/libpulse.so.6.3 /usr/local/lib/libpulse.so.0
+ln -s /usr/local/lib/libsndfile.so.5.0 /usr/local/lib/libsndfile.so.1
+```
+
+## Enlightenment for OpenBSD Installer ##
+
+There is also a stable release of OpenBSD, EFL and Enlightenment called *Enlightened*, distributed at:
+
+[http://bogosys.org/openbsd.html](http://bogosys.org/openbsd.html)
+
+You can download an `amd64` image for BIOS/EFI systems including lots of OpenBSD and Enlightenment software. The plan is to create one Enlightened release per OpenBSD release.
+
+The current version is an OpenBSD 6.3 installer and includes EFL 1.20.7 and Enlightenment 0.22.3.
+
+This is maintained by [Bogosys](http://bogosys.org), a software company doing Enlightenment work and is not an official Enlightenment project.
+
+## Troubleshooting ##
+
+If you are having problems compiling and installing EFL you can find help on any of [our IRC channels](https://www.enlightenment.org/contact) or [post a ticket to our Phabricator](https://phab.enlightenment.org).
+
+## Installing on Other Operating Systems ##
+
+If you would like to install EFL on a different operating system visit the [Installing EFL](start) page.
