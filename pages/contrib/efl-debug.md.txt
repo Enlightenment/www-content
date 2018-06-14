@@ -127,13 +127,17 @@ EINA_LOG_LEVEL=3 EINA_LOG_LEVELS_GLOB=eina_*:0 myapp
 
 This will prevent ``eina_log`` from outputting internal ``eina`` code, thus allowing you to see your own domain messages more easily.
 
-You may also want to enforce crashes when errors occur: ``EINA_ERROR_ABORT` will do this:
+You may also want to enforce crashes when errors occur: `EINA_LOG_ABORT` will do this:
 
 ```bash
-EINA_ERROR_ABORT=1 gdb myapp
+EINA_LOG_ABORT=1 gdb myapp
 ```
 
-This will now cause the program to abort when it encounters an error of the set level or above, allowing you to poke around with GDB and see why this is happening.
+This will now cause the program to abort when it encounters a CRITICAL, allowing you to poke around with `gdb` and see why this is happening. To abort on other error levels use `EINA_LOG_ABORT_LEVEL`. For instance, to abort on all WARNINGS and above (this is, ERRORS and CRITICALS) use:
+
+```bash
+EINA_LOG_ABORT=1 EINA_LOG_ABORT_LEVEL=2 gdb myapp
+```
 
 ## Debugging Tools ##
 
