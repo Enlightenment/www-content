@@ -110,7 +110,7 @@ For the purpose of the Hello World gadget, a label detailing the anchor position
 
 ```c
 #include <Elementary.h>
-#include <e_gadget_types.h>
+#include <enlightenment/e_gadget_types.h>
 
 static E_Gadget_Site_Orient gorient;
 static E_Gadget_Site_Anchor ganchor;
@@ -225,6 +225,12 @@ orient_change(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
    gorient = (uintptr_t)event_info;
    update_anchor_orient(data, gorient, ganchor);
+}
+
+static void 
+on_click(void *data, Evas_Object *obj, void *event_info) 
+{
+    evas_object_del(data);
 }
 
 EAPI_MAIN int
