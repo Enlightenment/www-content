@@ -1,0 +1,147 @@
+=== Enlightenment Foundation Libraries 1.21 Release ===
+  * //2018-08-17 - by Stefan Schmidt//
+
+After 12 months of development work we are proud to announce the release of
+version 1.21 of the Enlightenment Foundation Libraries. In these 12 months we got
+almost 5000 commits from 96 authors. Great job everyone! Some highlights are listed below.
+
+== Download ==
+
+| LINK | SHA256 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.21.tar.xz  | efl-1.21.tar.xz ]] | 7e65be78a537aa67e447b945f01f4ecf9ddfa14d509bf6bbf53a60253ecbae4b |
+
+----
+
+== What's New ==
+
+We only cover some highlights here. For the full list please look at the NEWS file,
+if you are interested in the details. As usual we have been working on fixing bugs,
+optimising our code for speed and memory footprint and adding new features.
+
+== Wayland, DRM and Input ==
+The wayland protocol implementations still remains a highly active area in EFL. This cycle we have
+seen the addition of an EFL specific hints protocol for setting aspect on surfaces and the support of
+xdg-shell vfinal. Our drm2 and libinput usage gained support for setting pointer acceleration speed.
+
+== Edje ==
+To aid the, sometimes very hard, debugging of edje files an embryo echo command was added.
+It is now also possible to reference images from other edje files. The biggest change however is the
+possibility to have edje_cc verify namespace usage during compilation . This also has been enabled in
+tree (with the whitelisting of some exceptions we can not change). We hope this will help to avoid
+these kind of problems for the future.
+
+== Evas ==
+The Eavs subsystem added async canvas text layout functionality and improvements on font
+handling. A scale feature for embedded bitmap fonts and support for different H/V font DPI
+has been aded. Last but not least we added align=end in textblock for putting a text at the
+opposite side of LTR/RTL.
+
+== Elementary ==
+A new text on patch widget was introduced this cycle together with a item pin feature in genlist.
+Additionally elm_entry was enhanced with a prediction hints API.
+
+== Eolian ==
+Eolian improved its parsing in various areas. One being deferred parsing of inherits as well
+as better static checks of the given eo files. New API's have been added for part
+enumeration and to query information about objects. 
+
+----
+
+== Statistics ==
+
+(git log --pretty=oneline v1.20.1..v1.21.0 | wc -l) \\ 
+Number of commits in 1.21: 4954 \\ 
+Number of commits in 1.20: 1665 \\ 
+
+(git shortlog -ns v1.20.1..v1.21.0 | wc -l) \\ 
+Number of authors in 1.21: 96 \\ 
+Number of authors in 1.20: 64 \\ 
+
+(git diff --stat v1.20.1..v1.21.0 | tail -1) \\ 
+3217 files changed, 281935 insertions(+), 137611 deletions(-) in 1.21 \\ 
+1298 files changed, 69378 insertions(+), 31364 deletions(-) in 1.20 \\ 
+
+----
+
+==Building and Dependencies==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please refer to the README for a full list of dependencies, explanations on configure flags and other relevant information. Default dependencies are:
+
+  * bullet
+  * libpng
+  * libjpeg
+  * gstreamer (1.x, 0.10 support optional. Ensure all codecs you want are installed.)
+  * zlib
+  * luajit (lua 5.1 or 5.2 support optional)
+  * libtiff
+  * openssl
+  * curl
+  * dbus
+  * libc
+  * fontconfig
+  * freetype2
+  * fribidi
+  * libpulse
+  * libsndfile
+  * libx11
+  * libxau
+  * libxcomposite
+  * libxdamage
+  * libxdmcp
+  * libxext
+  * libxfixes
+  * libxinerama
+  * libxrandr
+  * libxrender
+  * libxss
+  * libxtst
+  * libxcursor
+  * libxp
+  * libxi (2.2 or newer)
+  * libgl (opengl/glx or opengl-es2/egl)
+  * giflib
+  * util-linux (limbount + libblkid)
+  * systemd / libudev
+  * poppler / poppler-cpp
+  * libraw
+  * libspectre
+  * librsvg
+
+Recommended requirements (highly recommended):
+
+  * harfbuzz
+  * libwebp
+  * libunwind (where available)
+
+Enable these with configure options:
+
+<file>
+--enable-xinput22 \
+--enable-systemd \
+--enable-image-loader-webp \
+--enable-harfbuzz \
+--enable-multisense \
+--enable-liblz4
+</file>
+
+On linux to get framebuffer support you may want to also do:
+
+<file>
+--enable-fb
+--disable-tslib
+</file>
+
+If you want wayland support also add:
+
+<file>
+--enable-wayland \
+--enable-elput \
+--enable-drm
+</file>
+ 
+At runtime if you want thumbnailing for DOC/PPT/XLS etc. files also provide:
+libreoffice
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
