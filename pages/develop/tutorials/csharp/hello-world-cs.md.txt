@@ -33,7 +33,7 @@ public class Example
         efl.All.Init(efl.Components.Ui);
 
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(null, (efl.ui.IWin ewin) => {
+        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
             // Set the window's title
             ewin.SetText("Hello World");
             // Request that the window is automatically hidden when the "close"
@@ -113,7 +113,7 @@ In the tutorial code:
 
 ```csharp
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(null, (efl.ui.IWin ewin) => {
+        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
             // Set the window's title
             ewin.SetText("Hello World");
             // Request that the window is automatically hidden when the "close"
@@ -122,7 +122,9 @@ In the tutorial code:
         });
 ```
 
-Observe how the window is created with a `null` parent and the initialization method is a lambda function which:
+Observe how the window is created as a child of `efl.App.GetLoopMain()`, the application's main loop. This ensures that the window will receive all messages coming from the application.
+
+Also, note the initialization method, a lambda function which:
 
 * Sets the window title to `Hello World`.
 * Sets the `autohide` flag to true. This means that the window will automatically be hidden when the user closes it. The default behavior for an app when all its windows are hidden is to quit.
