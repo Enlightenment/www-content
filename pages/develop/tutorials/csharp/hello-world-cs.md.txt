@@ -1,0 +1,185 @@
+---
+~~Title: "Hello World" in C#~~
+~~NOCACHE~~
+---
+
+# "Hello World" in C# #
+
+This first tutorial ensures that your EFL installation is ready to produce C# applications and demonstrates the first basic EFL concepts.
+
+|     | WARNING |     |
+| --- | ------- | --- |
+| ![NOTE](/_media/note-important.png) | **The C# bindings are currently in BETA state**<br>They should only be used for experimenting and **NOT** for any product development.<br>The source code for the tutorials is subject to change in the future. | ![NOTE](/_media/note-important.png) |
+
+## Prerequisites ##
+
+* Read the [Setting Up a C# Development Environment](/develop/setup/csharp/) guide so you have a working EFL installation with C# support.
+
+## Hello World ##
+
+Copy the code below into a file named ``hello-world.cs`` (The walkthrough is in the following section).
+
+```csharp
+using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        efl.All.Init(efl.Components.Ui);
+
+        // Create a window and initialize it
+        efl.ui.IWin win = new efl.ui.Win(null, (efl.ui.IWin ewin) => {
+            // Set the window's title
+            ewin.SetText("Hello World");
+            // Request that the window is automatically hidden when the "close"
+            // button is pressed
+            ewin.SetAutohide(true);
+        });
+        // Window size must be explicitly set, otherwise it will be invisible
+        // due to its lack of content.
+        win.SetSize(new eina.Size2D(360, 240));
+
+        // Start the EFL main loop
+        efl.ui.Config.Run();
+
+        // Shutdown EFL
+        efl.All.Shutdown();
+    }
+}
+```
+
+Compile it as explained in the [Setting Up a C# Development Environment](/develop/setup/csharp/) guide and run the executable. If everything worked according to plan, you should see an empty window like this:
+
+![Full application with text box and button](https://www.enlightenment.org/_media/playground/03-hello-world-gui/image02.png)
+
+## Walkthrough ##
+
+### Main ###
+
+The program starts with a simple class structure to define the ``Main`` entry point:
+
+```csharp
+using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        [...]
+    }
+}
+```
+
+> **NOTE**:
+> The ``STAThreadAttribute`` is currently necessary in Windows systems because of limitations in the ``ecore_win32`` internal library of EFL. You can compile passing ``-define:WIN32`` to ``mcs`` to indicate that you are compiling on a Windows system.
+
+### EFL Initialization  ###
+
+EFL is initialized with the `efl.All.Init()` method:
+
+```csharp
+        // Initialize EFL and all UI components
+        efl.All.Init(efl.Components.Ui);
+```
+
+It accepts a parameter specifying which EFL components your app will require. This enables faster boot times and better resource usage by not loading and starting unnecessary components.
+
+The only currently available options are `efl.Components.Basic` and `efl.Components.Ui`. When not specified, `Basic` is assumed.
+
+### Creating the Window ###
+
+All EFL objects, like Windows, Widgets or Timers, are created using the standard `new` operator, for example:
+
+```csharp
+var win = new efl.ui.Win();
+```
+
+However, EFL object constructors have two optional parameters which are worth knowing:
+
+* `parent`: Any EFL object can be the child of another EFL object (its parent). Parents will take care of disposing of all their children upon destruction, greatly simplifying object lifecycle management.
+* `initialization method`: This is a delegate method accepting an object of the class being instantiated (see the example below). This method will be called during construction to allow you to customize the EFL object being created.
+
+  The advantage over first creating and then customizing the object is that, in most cases, you won't even need to keep the object in a variable: just create it with a parent, customize it, and forget about it.
+
+In the tutorial code:
+
+```csharp
+        // Create a window and initialize it
+        efl.ui.IWin win = new efl.ui.Win(null, (efl.ui.IWin ewin) => {
+            // Set the window's title
+            ewin.SetText("Hello World");
+            // Request that the window is automatically hidden when the "close"
+            // button is pressed
+            ewin.SetAutohide(true);
+        });
+```
+
+Observe how the window is created with a `null` parent and the initialization method is a lambda function which:
+
+* Sets the window title to `Hello World`.
+* Sets the `autohide` flag to true. This means that the window will automatically be hidden when the user closes it. The default behavior for an app when all its windows are hidden is to quit.
+
+### The Window Size ###
+
+By default, windows adjust themselves to have the minimum size that allows displaying all their content. In this tutorial the window has no content at all, so its size will be 0 pixels wide and 0 pixels tall.
+
+The next tutorial adds some content to the window, but meanwhile, you can manually set the size of a window:
+
+```csharp
+        // Window size must be explicitly set, otherwise it will be invisible
+        // due to its lack of content.
+        win.SetSize(new eina.Size2D(360, 240));
+```
+
+> **NOTE:**
+> You could have done this in the initialization method described above, but setting the size of a window during its construction has some issues at this moment (See [T7343](https://phab.enlightenment.org/T7343)).
+
+### Starting Up the User Interface ###
+
+Now that all the required EFL objects have been created (only a window, actually), it's time to relinquish control to EFL.
+
+```csharp
+        // Start the EFL main loop
+        efl.ui.Config.Run();
+```
+
+This method does not return until EFL exits. In any application you will set callback methods that EFL will use to inform you of some events, and you will plug more code on those methods.
+ 
+The following tutorials show how to do that. For this one, the only remaining thing is:
+
+### Shutting Down ###
+
+```csharp
+        // Shutdown EFL
+        efl.All.Shutdown();
+```
+
+Always remember to shut down EFL to close windows, network connections and free resources.
+
+## Summary
+
+In this tutorial you have learned:
+
+* How to properly initialize and shutdown the EFL library with `efl.All.Init()` and `efl.All.Shutdown()`.
+* How to create and initialize EFL objects using `new` and `initialization methods`.
+* How to instantiate an EFL window and customize it using the `efl.ui.Win` class.
+* How to start the UI by giving control to EFL with `efl.ui.Config.Run()`.
+
+The following tutorial adds some text and a button to the UI, and shows how to react to a button press.
+
+
+## Resources ##
+
+[Setting Up a C# Development Environment](/develop/setup/csharp/)
+:    Instructions for having EFL ready to work from C#.
+
+[Tutorial Code Examples](https://git.enlightenment.org/tools/examples.git/tree/tutorial/csharp)
+:    C# Source code for the tutorials.
