@@ -1,0 +1,74 @@
+=== Enlightenment DR 0.22.4 Release ===
+  * //2018-08-28 by Simon Lees//
+
+This is a bugfix and stability release for the Enlightenment 22 Release series.
+
+== Tickets Addressed ==
+| [[ https://phab.enlightenment.org/T5076|T5076 ]] |Incorrect desktop files |
+| [[ https://phab.enlightenment.org/T5203|T5203 ]] |alt+esc sometimes crash |
+| [[ https://phab.enlightenment.org/T6787|T6787 ]] |Exec-keys in some .desktop files are failing to be recognized by Enlightenment |
+| [[ https://phab.enlightenment.org/T7030|T7030 ]] |efl internals pass null objects to functions which should not be passed null |
+
+== Changes ==
+Alastair Poole (1):
+  * AUTHORS: use netstar's real name.
+  * e_ckpasswd_main: Fix build on OpenBSD.
+
+Carsten Haitzler (17):
+  * e menus - when filtering for exe handle quotes, escapes etc.
+  * e mouse bindings - fix wheel conflict check to check only dir 0
+  * edge flip while dragging with alt - fix to work again
+  * efm - fill in some media icon blanks which lead to generic icons
+  * startup - fix management of timer pointer for startup timeout
+  * efm - dont add null icons to list ... fixes segv
+  * e pan/scrollframe - fix garbage pan values that happen temporarily
+  * e thumb - be consistent and use safe run for restarting thumbnailer
+  * compile again after efl change interface names...
+  * input method conf dialog - fix filtering of imc's to search path
+  * meson - fix dir_sysconf to be under the prefix as it was not
+  * emxier desktop - fix categories to match well known cat names
+  * mixer - fix exe handler del and handle to stop crashes after mixer run
+  * e randr - fix crash when no zones found
+  * e randr screen setup - fix disabling of scale checkbox
+  * e wl - fix e pixmap tracking to remove from both aliases and pixmaps
+  * e pixmap - follow on from previous commit to finally fix pixmap tracking
+
+Christopher Michael (2):
+  * conf_randr: Use eina_stringshare_replace
+  * enlightenment: Ensure we have a valid menu comp object before calling
+
+Daniel Zaoui (1):
+  * Battery: fix the battery status when some battery devices are not valid
+
+Derek Foreman (5):
+  * Remove useless pixels_dirty_set from mirror_pixels_get
+  * Move alpha set for mirrors out of pixels_get callback
+  * Fix single frame broken render on wayland client opaque region change
+  * Fix recent typo in mirror object alpha setting
+  * compile against stable EFL again
+
+Massimo Maiurana (1):
+  * Updating all po files
+
+Mike Blumenkrantz (3):
+  * update arcconfig key:values for new phabricator api
+  * move config/ to data/config/
+  * avoid adding render updates for deleted clients after animation completes
+
+== Download ==
+
+^ ** LINK ** ^ ** SHA256 ** ^
+| [[ http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-0.22.4.tar.xz | Enlightenment DR 0.22.4 XZ]]  | ''59f4997c8b59457142870e40f137bc08c9735c84368d32213dacf09c4342fe79'' |
+
+//Roll a 2d10 segfault check//
+
+== Building and Dependencies ==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please compile the dependencies in the following order (click for README):
+
+  - [[https://git.enlightenment.org/core/efl.git/tree/README  *   *   *    | EFL]]
+
+**Note:** E22 depends on EFL **v1.20.5** or newer.
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
