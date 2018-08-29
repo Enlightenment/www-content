@@ -196,14 +196,15 @@ This instantiates an `efl.ui.Text` object, as a child of the box container. Quit
 
 * `SetText()`: Specifies the text string to display in the widget.
 * `SetSelectionAllowed()`: This disables selecting the text (by dragging over it with the mouse, for example). Just to showcase a bit the EFL's capabilities.
-* `SetHintWeight()`: This one controls the widget's size, but, instead of setting it explicitly as `SetHintMin()` did, it does so indirectly by giving the widget a **weight**. The container holding this widget decides the size for all its held widgets according to their relative weights (If all widgets have the same weight, they all have the same size. If you double the weight of one of the widgets, its size will be double that of the other widgets). This is a complex topic explained in its own tutorial (coming soon).
+* `SetHintWeight()`: This one controls the widget's size, but, instead of setting it explicitly as `SetHintMin()` did, it does so indirectly by giving the widget a **weight**. The container holding this widget decides the size for all its held widgets according to their relative weights (If all widgets have the same weight, they all have the same size. If you double the weight of one of the widgets, its size will be double that of the other widgets). This is a complex topic explained in its own tutorial (*coming soon*).
 
   In the code above, the text widget is given a weight of `1.0` in the horizontal direction and `0.9` in the vertical direction (both directions are treated separately). The effect of this on the final widget size depends on the other widgets' weights, so it is explained in the next section.
 
 * `SetHintAlign()`: Once the container has allocated space for each widget according to its weight, if the actual widget is smaller, it has room to be aligned. This command controls horizontal and vertical alignment in this way: `0` means left (or top), `1` means right (or bottom), and intermediate values are possible, meaning intermediate positions. For example, `0.5` means centered, as used in the code.
 
-  > **NOTE**:
-  > There is currently an issue in EFL preventing correct vertical alignment of widgets inside vertical boxes (and horizontal alignment inside horizontal boxes). You can follow the resolution progress in ticket [T7352](https://phab.enlightenment.org/T7352).
+  > **NOTE**: A vertical box fixes the vertical size of all its contained widgets (and likewise an horizontal box). This means that they cannot be vertically aligned using `SetHintAlign()` (only horizontally), because there is no room for movement in the vertical direction.
+  >
+  > If you want to vertically align the text inside a vertical box, you have to align the text **inside** the text widget using `SetValign(0.5)` (or `SetHalign(0.5)`). This is a complex topic explained in it own tutorial (*coming soon*).
 
 * `Efl.ui.Box.DoPack()`: This adds the text widget to the box container. The order in which widgets are added to a container dictates the order in which they are placed on the screen.
 
