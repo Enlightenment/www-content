@@ -1,0 +1,165 @@
+---
+~~Title: Events Programming Guide in C#~~
+~~NOCACHE~~
+---
+
+# Events Programming Guide in C# #
+
+EFL is event-driven. This means that execution usually takes place within an internal EFL *Main Loop*. The application receives notifications through function callbacks. These can apply to virtually any event which occurs on a computer. 
+
+Events play a central role in EFL. In this guide, you'll learn more about the required methods to handle them.
+
+You can also find usage examples in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/tree/).
+
+## Listening to Events from Objects ##
+
+All EFL objects can emit events. You can discover more about them in the **Events** section of their respective [API Reference documentation](/develop/api/) (only in C, C# *coming soon*).
+
+In C# you register a callback method to be called when an object emits a given event using the `+=` operator:
+
+```csharp
+object.event += callback;
+```
+
+Substitute *object* for any EFL object and *event* for the identifier of the event (such as ``PollHighEvt`` or ``TickEvt``). Set *callback* to the method to be called when the event occurs.
+
+The method signature for the callback is:
+
+```csharp
+void callback(object sender, EventArgs e);
+```
+
+*sender* is the object that emitted the event and *e* contains any additional information that the event sent, after casting it to the required type (for example, `efl.input.Interface.KeyDownEvt_Args` when connecting to the `efl.input.Interface.KeyDownEvt` event).
+
+> **NOTE:**
+> The [API Reference documentation](/develop/api/) for each event tells you what type to cast *e* to (*Not available for C# yet*).
+> See [EFL_EVENT_POINTER_DOWN](/develop/api/efl/input/interface/event/pointer_down) for example.
+
+To stop receiving notifications for a particular event, unregister the callback using the `-=` operator:
+
+```csharp
+object.event -= callback;
+```
+
+Note that in order to unregister the callback you have to provide the callback method again. This is because you can register different callback methods to the same event.
+
+## Pausing and Resuming Event Notifications ##
+
+All event emissions from a given object can be paused (*frozen*) using `FreezeEvent()` and resumed with `ThawEvent()`:
+
+```csharp
+   object.FreezeEvent();
+   object.ThawEvent();
+```
+
+While an object is frozen only high-priority events (marked as *hot* in the documentation) will be emitted. Hot events cannot be stopped.
+
+Remember that ALL events emitting from a object are stopped if it's frozen, except for hot events. If you need to stop individual events you can unregister their callback temporarily and then re-register later.
+
+## Example ##
+
+Below is the `core_event.cs` example taken from [the examples repository](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_event.cs):
+
+```csharp
+public class Example
+{
+    // Polling callback
+    private static void PollCb(object sender, EventArgs e)
+    {
+        Console.WriteLine("  Poll from {0}", ((efl.IObject)sender).GetName());
+    }
+
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        efl.All.Init();
+
+        // Retrieve the application's main loop
+        var mainloop = efl.App.GetLoopMain();
+        mainloop.SetName("Mainloop");
+
+        // This event gets triggered continuously
+        mainloop.PollHighEvt += PollCb;
+
+        // This timer will control events fired by the main loop
+        new efl.Loop_Timer(mainloop, (efl.ILoop_Timer etimer) => {
+            etimer.SetName("Timer");
+            // Trigger every 100ms
+            etimer.SetInterval(0.1);
+            // To count number of timer triggers
+            int tick_count = 0;
+            etimer.TickEvt += (object sender, EventArgs e) => {
+                string message = "Tick {0} from {1}: ";
+                // Depending on the number of timer ticks, it does a different thing
+                switch (tick_count) {
+                    case 0:
+                        message += "Freezing Mainloop events";
+                        mainloop.FreezeEvent();
+                        break;
+                    case 1:
+                        message += "Thawing Mainloop events";
+                        mainloop.ThawEvent();
+                        break;
+                    default:
+                        message += "Quitting";
+                        mainloop.Quit(new eina.Value(0));
+                        break;
+                }
+                Console.WriteLine(message, tick_count, ((efl.IObject)sender).GetName());
+                tick_count++;
+            };
+        });
+
+        Console.WriteLine("Waiting for Timer to call back...");
+
+        // Start the EFL main loop (and the experiment)
+        mainloop.Begin();
+
+        // Shutdown EFL
+        efl.All.Shutdown();
+
+        Console.WriteLine("Application is over");
+    }
+}
+```
+
+A handler is connected to the `PollHighEvt` event of the application's main loop, which triggers continuously, at an undefined frequency of several shots per second (See the Main Loop Programming Guide, *coming soon*). At every shot, a line is printed on the console.
+
+At the same time, a timer is instantiated, firing every 100ms, which does a different thing at every shot:
+
+* First it freezes (pauses) all main loop events (except hot ones).
+* Then it thaws (resumes) all main loop events.
+* Finally, it quits the application.
+
+When you run the application, it should produce something like this on the console:
+
+```
+Waiting for Timer to call back...
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+Tick 0 from Timer: Freezing Mainloop events
+Tick 1 from Timer: Thawing Mainloop events
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+Tick 2 from Timer: Quitting
+```
+
+As you can see, the line `Poll from Mainloop` is printed continuously except in the period between Tick 0 and Tick 1 of the Timer, where main loop events are frozen.
+
+The exact amount of `Poll from Mainloop` messages you get depends on the frequency of the `PollHighEvt` event, which is chosen by EFL. The important thing is that there should be no such messages in between timer ticks 0 and 1, since main loop events are frozen,
+
+## Further Reading ##
+
+[`core_event.cs` example](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_event.cs)
+:    C# Source code for this example.
+
+[`Efl.Object` API Reference](https://www.enlightenment.org/develop/api/efl/object)
+:    Detailed documentation for the EFL object, which implements the events mechanism.
