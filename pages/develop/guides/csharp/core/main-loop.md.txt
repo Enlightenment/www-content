@@ -1,0 +1,145 @@
+---
+~~Title: Main Loop Programming Guide in C#~~
+~~NOCACHE~~
+---
+
+# Main Loop Programming Guide in C# #
+
+The EFL is event-driven. This means that execution usually takes place within an internal EFL *Main Loop*. The application is notified through function callbacks of virtually any event happening on the computer. This is typically more efficient than *polling* for events, whereby the application has to repeatedly ask if a certain event has occurred. When nothing is happening (no events are pending) the main loop enters the *idle state* during which the CPU consumes very little power.
+
+EFL manages timers and user interface events amongst many other things and even provides a simple mechanism for applications to perform conventional data polling if required.
+
+## Prerequisites ##
+
+* Read the [Hello World in C#](/develop/tutorials/csharp/hello-world.md) tutorial to learn how to instantiate EFL objects.
+* Read the [Events Programming Guide](events.md) to learn how to register callbacks, which can be triggered by events.
+
+## The Application Main Loop ##
+
+For convenience, when your application starts, EFL creates one Main Loop for you, called the *Application Main Loop*. You can use it as the parent for any object you create that requires a main loop (Like [Promises and Futures](/develop/guides/c/eina/futures.md), for example).
+
+In the [Hello World](/develop/tutorials/csharp/hello-world.md) tutorial you learned that you can retrieve the Application Main Loop like this:
+
+```csharp
+var mainloop = efl.App.GetLoopMain();
+```
+
+This guide will put the application's main loop to a variety of uses.
+
+## Timers ##
+
+Timers allow events to be triggered periodically after the given time has elapsed. After an event callback has been registered with the timer, it will be called at regular intervals.
+
+You can find usage examples in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git): [`reference/csharp/core/src/core_idler.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_idler.cs) and [`reference/csharp/core/src/core_poll.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_poll.cs).
+
+### Creating and Destroying Timers ###
+
+Timers are EFL objects. You can create them with the `new` operator as all other EFL objects, with an optional parent and initialization method (as seen in the [Hello World in C#](/develop/tutorials/csharp/hello-world.md) tutorial):
+
+```c
+var timer_object = new efl.Loop_Timer(mainloop, (efl.ILoop_Timer etimer) => {
+    // Timer configuration
+});
+```
+
+Timers do not need to have a parent. However it is convenient to create them under the application Main Loop, so the parent can manage destroying the timer.
+
+### The Timer Callback ###
+
+Register the callback using the `+=` operator as explained in the [Events Programming Guide](events.md), and the `TickEvt` event.
+
+```csharp
+timer_object.TickEvt += (object sender, EventArgs e) => {
+  Console.WriteLine("TIMER: timer callback called");
+};
+```
+
+The callback has the usual event handler signature:
+
+```csharp
+void callback(object sender, EventArgs e);
+```
+
+This callback will be continuously triggered in the configured time intervals.
+
+### Configuring a Timer ###
+
+The `Interval` property controls the amount of time between callback triggers in **seconds**:
+
+```csharp
+timer_object.SetInterval(0.01); // In seconds
+timer_object.GetInterval();
+```
+
+The **time left** before the next trigger of the timer can be retrieved through the `Pending` read-only property:
+
+```csharp
+timer_object.GetPending();
+```
+
+The current interval can be `Reset` with:
+
+```csharp
+timer_object.Reset();
+```
+
+The current interval can also be extended using `Delay()`, effectively delaying all future triggers of the timer by a given number of **seconds**:
+
+```csharp
+timer_object.Delay(1); // In seconds
+```
+
+### Pausing a Timer ###
+
+Timers are paused by preventing them from emitting any events, as explained in the [Events Programming Guide](events.md).
+
+Pause a timer with:
+
+```csharp
+timer_object.FreezeEvent();
+```
+
+Resume from the previous time index:
+
+```csharp
+timer_object.ThawEvent();
+```
+
+## Idlers ##
+
+When there are no events to process the EFL main loop enters the Idle state, consuming very little CPU power. You can receive a notification when the Idle state starts or stops.
+
+EFL defines three different events you can use to be notified of the above conditions:
+
+* `IdleEnterEvt`: Main loop enters the idle state.
+
+* `IdleExitEvt`: Main loop exits the idle state. 
+
+* `IdleEvt`: Main loop is in the idle state, meaning that it has nothing else to do.
+
+  > **NOTE:**
+  > This callback will be invoked frequently consuming a significant amount of CPU resources. This also defeats the point of an event-driven application: heavy calculations should be performed on a separate thread or they will block the main loop. This can lead to an unresponsive user interface and other issues.
+
+Register a callback to be notified of these events using the `+=` operator, as described in the [Events Programming Guide](events.md).
+
+You can also view the example in the EFL examples repository: [`reference/csharp/core/src/core_idler.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_idler.cs).
+
+## Polling ##
+
+In the rare case where EFL does not provide the event you want, you can resort to conventional application-driven polling. EFL can still manage the scheduling of the periodic polling, calling you back when it is time to perform the poll.
+
+You can choose from among the predefined polling priorities depending on which event you use to register your callback on the application's Main Loop object:
+
+* `PollHighEvt`: For events that may happen multiple times per second.
+
+* `PollMediumEvt`: For events that may happen multiple times per minute.
+
+* `PollLowEvt`: For events that may happen multiple times every 15 minutes.
+
+The actual polling period is controlled by EFL and can be changed system-wide.
+
+You can find usage examples in the EFL examples repository: [`reference/csharp/core/src/core_poll.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_poll.cs)
+
+## Further Reading ##
+[`Efl.Loop` API Reference](/develop/api/efl/loop)
+:    Detailed documentation for the Loop object (in C)
