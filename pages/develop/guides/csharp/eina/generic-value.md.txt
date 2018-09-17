@@ -1,0 +1,256 @@
+---
+~~Title: Eina Generic Values in C#~~
+---
+
+# Eina Generic Values in C# #
+
+The `eina` namespace provides data types and useful tools which are not available in plain C. The C# runtime though, already provides most of `eina`'s functionality so you will rarely need to use it. The `Eina Programming Guides` are still useful for those EFL methods which use `eina` types as parameters or return types.
+
+The `eina.Value` class provides storage of and access to generic data, allowing you to store whatever you want in a single `eina.Value` type. It is meant for simple data types, providing uniform access and release functions for the exchange of data while preserving their types. `eina.Value` supports a number of predefined types, can be extended with additional user-provided types and can convert between differing data types including strings.
+
+Examples of `eina.Value` usage can be found in the [EFL examples git repository](https://git.enlightenment.org/tools/examples.git/) in the file [`reference/csharp/eina/src/eina_value.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/eina/src/eina_value.cs).
+
+## Value Types ##
+
+`eina.Value` can handle the following common *simple* types (found inside the `eina.ValueType` enum):
+
+| `eina.ValueType`    | C# type        | Content                                  |
+| ------------------- | -------------- | ---------------------------------------- |
+| `SByte`             | `sbyte`        | Signed char (8-bit integer)              |
+| `Byte`              | `byte`         | Unsigned char (8-bit integer)            |
+| `Short`             | `short`        | Signed short (16-bit integer)            |
+| `UShort`            | `ushort`       | Unsigned short (16-bit integer)          |
+| `Int32`             | `int`          | Signed integer (32-bit)                  |
+| `UInt32`            | `uint`         | Unsigned integer (32-bit)                |
+| `Long`, `Int64`     | `long`         | Signed long (64-bit integer)             |
+| `ULong`, `UInt64`   | `ulong`        | Unsigned long (64-bit integer)           |
+| `Float`             | `float`        | Single precision (32-bit) floating point |
+| `Double`            | `double`       | Double precision (64-bit) floating point |
+| `String`            | `string`       | Unicode text string                      |
+
+In addition `eina.Value` has a number of specializations to handle the following *aggregate* types:
+
+| `eina.ValueType` | Content                                             |
+| ---------------- | --------------------------------------------------- |
+| `Array`          | Manages arrays of elements using `Eina_Value_Array` |
+| `List`           | Manages lists of elements using `Eina_Value_List`   |
+| `Hash`           | Manages hash tables using `Eina_Value_Hash`         |
+
+## Simple Values ##
+
+### Creating Simple Values ###
+
+New values can be allocated with the standard `new()` operator passing in the desired type as an `eina.ValueType`:
+
+```csharp
+var int_val = new eina.Value(eina.ValueType.Int32);
+```
+
+When the `int_val` variable goes out of scope any memory allocated internally by the `eina.Value` will be freed as expected.
+
+### Changing the Type of Simple Values ###
+
+The type of an `eina.Value` can be changed at any time using `Setup()` and passing in the desired new type:
+
+```csharp
+var val = new eina.Value(eina.ValueType.Int32);
+val.Setup(eina.ValueType.Float);
+```
+
+The content of the `eina.Value` will be destroyed, but **not** the `eina.Value` variable.
+
+### Accessing the Content of Simple Values ###
+
+The contents of a simple `eina.Value` can be set with `Set()` and retrieved with `Get()`. Note that the types provided must match the type used when creating the `eina.Value`.
+
+For instance, for integers:
+```csharp
+var val = new eina.Value(eina.ValueType.Int32);
+val.Set(123);
+
+int i;
+val.Get(out i);
+```
+
+Strings are also easily handled:
+```csharp
+var val = new eina.Value(eina.ValueType.String);
+val.Set("My string");
+
+string str;
+val.Get(out str);
+```
+
+### Copying the Content of a Value ###
+
+`eina.Value`s are **referenced types**, which means that when you make a copy of an `eina.Value` variable, the underlaying value is not copied: both variables point to the same value.
+
+```csharp
+var src = new eina.Value(eina.ValueType.Int32);
+src.Set(100);
+var dst = src;
+src.Set(200);
+// Now both src and dst contain the integer 200
+```
+
+If you need to create a separated `eina.Value` variable containing the same value, use `new` and initialize it:
+
+```csharp
+var src = new eina.Value(eina.ValueType.Int32);
+src.Set(100);
+var dst = new eina.Value(src);
+src.Set(200);
+// Now src=200 and dst=100
+```
+
+### Comparing Two Values ###
+
+Two `eina.Value`s of the same type can be compared with the standard comparison operators `<`, `==`, `!=` and `>`. The exact meaning of the comparison depends on the value type.
+
+```csharp
+var v1 = new eina. Value(eina.ValueType.Float);
+var v2 = new eina. Value(eina.ValueType.Float);
+v1.Set(7.0f);
+v2.Set(7.5f);
+if (v1 > v2) { ... }
+```
+
+The internal method `v1.Compare(v2)` is also available. The exact meaning of the comparison depends again on the value type. The method returns a negative integer if `v1 < v2`, a positive integer if `v1 > v2` and 0 if both values are equal.
+
+### Converting Between Values ###
+
+Most `eina.Value`s allow conversion from one type to another using the `ConvertTo()` function. The result of the conversion depends on the types in use. This function returns `true` if the conversion is successful. The conversion is typically very strict, meaning that conversion of negative values into unsigned types will fail and values which will not fit in the target type - i.e. conversions that would result in an overflow - will also fail.
+
+```csharp
+var v1 = new eina.Value(eina.ValueType.Int);
+var v2 = new eina.Value(eina.ValueType.Float);
+v1.Set(7);
+v1.ConvertTo(v2);
+Console.WriteLine(v2);
+```
+
+The above code should output `7.0000` on the screen because `v2` is of floating type.
+
+### Converting to Strings ###
+
+All `eina.Value`s allow for conversion into a string, and, for convenience, there is a dedicated conversion method: `ToString()`.
+
+```csharp
+var v1 = new eina.Value(eina.ValueType.Int);
+v1.Set(7);
+string str = v1.ToString();
+```
+
+## Aggregate Values ##
+
+`eina.Value` supports handling collections of simple values through the aggregate types `eina.ValueType.Array`, `eina.ValueType.List` and: `eina.ValueType.Hash`.
+
+All aggregate types allow the operations for simple types described above as well as some specific methods, typically involving construction and access to particular elements within the collection.
+
+### Arrays ###
+
+An array is a contiguous block of memory which holds a collection of elements of the same type. Accessing and appending new elements at the end is typically very fast, but removing elements from the beginning or the middle is not.
+
+**Create** a new array with `new(eina.ValueType.Array, subtype, step)`, or re-configure an existing one with `Setup(eina.ValueType.Array, subtype, step)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the array. The `step` parameter indicates how many elements are added to the end of the array every time it needs to be expanded, since it is typically more efficient to enlarge the array by chunks rather than element by element. Its default value is 0 meaning that EFL will chose a value for you.
+
+```csharp
+var varray = new eina.Value(eina.ValueType.Array, eina.ValueType.Int32);
+```
+
+**Retrieve the number of elements** in an array with `Count()`.
+
+```csharp
+int count = varray.Count();
+```
+
+**Append an element** at the end of the array with `Append()`.
+
+```csharp
+varray.Append(100);
+varray.Append(200);
+```
+
+**Retrieve or set the contents** of the value at a given position with the `[]` operator.
+
+```csharp
+varray[1] = 100;
+int old_val = varray[1];
+```
+
+**Retrieve the type of the elements** of an array (the `subtype`) with `GetValueSubType()`:
+
+```csharp
+eina.ValueType subtype = varray.GetValueSubType();
+```
+
+> **NOTE:**
+> Elements cannot be removed from an array as of now, due to current limitations in the C# bindings.
+
+### Lists ###
+
+A list is a linked collection of `eina.Value`s in which each element contains a pointer to the next element. Insertions and deletions anywhere in the list are typically very fast, but accesses to a given position can be slow since it requires traveling through the list.
+
+**Create** a new list with `new(eina.ValueType.Array, subtype)`, or configure an existing one with `Setup(subtype)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the list.
+
+```csharp
+var vlist = new eina.Value(eina.ValueType.List, eina.ValueType.Int32);
+```
+
+**Retrieve the number of elements** in a list with `Count()`.
+
+```csharp
+int count = vlist.Count();
+```
+
+**Append an element** at the end of the list with `Append()`.
+
+```csharp
+vlist.Append(100);
+vlist.Append(200);
+```
+
+> **NOTE:**
+> Elements can only be added at the end as of now, due to current limitations in the C# bindings.
+
+**Retrieve or set the contents** of the value at a given position with the `[]` operator.
+
+```csharp
+vlist[1] = 100;
+int old_val = vlist[1];
+```
+
+**Retrieve the type of the elements** of a list (the `subtype`) with `GetValueSubType()`:
+
+```csharp
+eina.ValueType subtype = vlist.GetValueSubType();
+```
+
+> **NOTE:**
+> Elements cannot be removed from a list as of now, due to current limitations in the C# bindings.
+
+### Hash Tables ###
+
+A hash table stores `einva.Value`s indexed by a string key rather than an integer. Insertions, deletions and searches are typically very fast, at the cost of increased memory consumption.
+
+> **NOTE:**
+> Implementation of Hash tables inside `eina.Value`s is not complete at this moment.
+
+**Create** a new hash table with `new(eina.ValueTYpe.Hash, subtype, bucket_size)`, or configure an existing one with `Setup(subtype, bucket_size)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the hash table. The `bucket_size` parameter indicates how the table is to be expanded as new elements are added; use 0 and a sane default will be chosen automatically.
+
+```csharp
+var vhash = new (eina.ValueType.Hash, eina.ValueType.Int32);
+```
+
+**Retrieve the number of elements** in a hash table with `Count()`.
+
+```csharp
+int count = vhash.Count();
+```
+
+## Further Reading ##
+
+[Eina Value example](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/eina/src/eina_value.cs)
+:    Miscellaneous usage example for the `eina.Value` type.
+
+[Generic Value API](/develop/legacy/api/c/start#group__Eina__Value__Group.html)
+:    Reference Guide for the Generic Value API (in C).
