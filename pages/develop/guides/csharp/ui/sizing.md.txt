@@ -1,0 +1,43 @@
+---
+~~Title:UI Sizing Programming Guide in C#~~
+---
+
+# User Interface Sizing Programming Guide in C# #
+
+Sometimes when building a *user interface (UI)* you need to set the size of some elements to non-default values. A common pitfall is to explicitly set these sizes to values that look OK in a development environment but then fail for other users when the UI size changes.
+
+A better approach is to set **minimum** and **maximum** values for the size of these elements. This means they can be customized while still allowing for some flexibility.
+
+You can find an usage example in the [EFL examples repository](https://git.enlightenment.org/tools/examples.git/) in [`reference/csharp/ui/src/ui_sizing.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/ui_sizing.cs).
+
+## Prerequisites ##
+
+* Read the [Graphical Hello world Tutorial in C#](/develop/tutorials/csharp/hello-world-gui-cs.md) to learn how to build a simple EFL application with a Graphical User Interface.
+
+## Setting a Widget's Minimum Size ##
+
+When a widget's **minimum** size is defined with `SetHintMin()`, resizing the rest of the UI will not shrink the widget below the size you set. You can use it to create elements which are bigger than normal, as well as prevent the UI from becoming too small:
+
+```csharp
+new efl.ui.Button(win, (efl.ui.IButton ebutton) => {
+  ebutton.SetText("Big button");
+  ebutton.SetHintMin(new eina.Size2D(100,100));
+  box.DoPack(ebutton);
+});
+```
+
+## Setting a Widget's Maximum Size ##
+
+When a widget's **maximum** size is defined with `SetHintMax()`, resizing the rest of the UI will not expand the widget above the size you set. Use it to create elements  which are smaller than normal or that will not expand past a given point when the UI enlarges.
+
+```csharp
+new efl.ui.Button(win, (efl.ui.IButton ebutton) => {
+  ebutton.SetText("Small");
+  ebutton.SetHintMax(new eina.Size2D(50,50));
+  box.DoPack(ebutton);
+});
+```
+
+## Further Reading ##
+[Graphical Hello world Tutorial in C#](/develop/tutorials/csharp/hello-world-gui-cs.md)
+:    Basic tutorial explaining how to build a simple EFL application with a Graphical User Interface.
