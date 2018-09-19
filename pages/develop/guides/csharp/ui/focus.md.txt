@@ -1,0 +1,114 @@
+---
+~~Title: User Interface Focus Programming Guide in C#~~
+---
+
+# User Interface Focus Programming Guide in C# #
+
+When using a keyboard instead of a mouse or a touch screen, you need to understand the concept of **Focus**: a graphical indicator of the widget currently selected, which you can move around using the cursor keys, for example.
+
+EFL handles the focus of your application in a way which works in most situations. This guide shows you how focus is handled in EFL and how to tweak it to your needs in those rare circumstances where this isn't the case.
+
+|     | WARNING |     |
+| --- | ------- | --- |
+| ![NOTE](/_media/note-important.png) | **The C# bindings are currently in BETA state**<br>They should only be used for experimenting and **NOT** for any product development.<br>The source code for the tutorials is subject to change in the future. | ![NOTE](/_media/note-important.png) |
+
+## Prerequisites ##
+
+* Make sure you know the basics of creating a graphical application with the EFL by following the [Graphical Hello world in C#](/develop/tutorials/csharp/hello-world-gui-cs.md) tutorial.
+
+* Make sure you also read the [Events Programming Guide](/develop/guides/csharp/core/events.md) to learn about event emission and registration in EFL.
+
+## Understanding the Focus ##
+
+Graphical User Interfaces (**GUI**s) are typically made of widgets arranged on a window. Some widgets are meant to convey information to the user, like text labels or progress bars. Some are meant to receive information from the user such as input boxes or sliders and some are meant to execute commands, like buttons.
+
+To act on a widget, you first need to **select** it and then **activate** it. Pointer devices like mice or touch screens perform both actions simultaneously: When using a mouse the widget under the mouse pointer is first selected and then activated when you click on it. Similarly, when using a touch screen, the widget under your finger is first selected and then activated when you press it.
+
+Things are not so straightforward when you use a keyboard, though, because both actions are separated. You have some keys that change the selected widget (typically the <kbd>Tab</kbd> and <kbd>Cursor</kbd> keys) and some keys which activate it (typically <kbd>Enter</kbd> or the <kbd>Space bar</kbd>).
+
+The selected widget is said to have the **Focus** and is shown with some sort of highlight to distinguish it from other widgets (EFL's default focus highlight is a glowing blue rectangle around the selected widget). Changing the focus from one widget to another using the keyboard is called **Focus Navigation**.
+
+## Focus Management in EFL ##
+
+When developing applications with EFL, you normally don't have to worry about focus management. You can just build your GUI by adding and arranging widgets and focus works out of the box. It is worth understanding how EFL does this though, in case you aren't satisfied with the focus navigation it provides.
+
+There are 6 commands for Focus navigation: 4 **directional** (Up, Down, Left, Right) and 2 **ordinal** (Previous and Next).
+
+When EFL receives a directional focus navigation command (typically through a cursor key) it does its best to move the focus to the widget closest to the currently selected one, moving in the requested direction as it appears on the screen.
+
+When EFL receives an ordinal focus navigation command (typically though the <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> keys) it moves the focus to the next (or previous) widget in the **focus hierarchy**. This hierarchy is built as you add widgets to your GUI, so **the order in which you add the widgets matters**.
+
+As you add widgets to your GUI, the **focusable** ones are added to a list (not all widgets can be selected, like text labels, so not all widgets can receive the focus). Ordinal commands then move the focus through this list. If a widget is a container for other widgets (like a `Box`), focus will move through its children **before** moving out of the container and onto its siblings (depth-first traversal).
+
+The bottom line is that you must **add widgets to your GUI in the same order in which you want the user to navigate them**. The order in which the widgets are added has no other impact, so it is worth paying attention to this to make your GUI more keyboard-friendly.
+
+## Setting the Focus on a Widget ##
+
+Sometimes you may want to bypass EFL's default behavior and programmatically set the focus to a particular widget, for example, on an `OK` button once enough information has been added to a form.
+
+To achieve this use the `efl.ui.focus.Util` class. It has a single method called `Focus()` which receives as a parameter the widget to which you want to move the focus.
+
+When using this method the widget currently selected will lose the focus and the one you passed will gain the focus. During this process, all focus-related events will be emitted (see the next section).
+
+This method can only be used on widgets implementing the `efl.ui.focus.IObject` interface but most widgets inherit from `efl.ui.Widget` which already does this, so you don't typically have to worry.
+
+Here's an usage example taken from the EFL examples repository [`reference/csharp/ui/src/focus_main.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs):
+
+```csharp
+// Manually transfer focus to the first check box
+efl.ui.focus.Util.Focus(first_checkbox);
+```
+
+## Reacting to Focus Changes ##
+
+Every time a widget gains or loses the focus, it emits the event `FocusChangedEvt`. You can then retrieve the current focused state of the widget through the `GetFocus()` method.
+
+Here's an usage example taken from the EFL examples repository [`reference/csharp/ui/src/focus_main.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs):
+
+```csharp
+public static void FocusChangedCb(object sender, EventArgs e)
+{
+    Console.WriteLine($"Focus for object {((efl.IText)sender).GetText()} changed to {((efl.ui.IWidget)sender).GetFocus()}");
+}
+
+[...]
+
+new efl.ui.Check(vbox, (efl.ui.ICheck echeck) => {
+  echeck.SetText("Check " + i);
+  echeck.SetHintAlign(0.5, 0.5);
+  echeck.FocusChangedEvt += FocusChangedCb;
+  vbox.DoPack(echeck);
+});
+```
+
+## Showing and Hiding the Focus Highlight ##
+
+There's always a selected widget, but it is not always marked with the **focus highlight** since the visual cue is not needed unless the user plans to use the keyboard. For this reason EFL applications start with a hidden focus highlight and it is not shown until the user presses a key.
+
+If you need to manually hide or show the focus highlight you can use the `SetFocusHighlightEnabled()` method on your window:
+
+```csharp
+// Show the focus highlight
+win.SetFocusHighlightEnabled(true);
+```
+
+## Summary ##
+
+* Add widgets to your GUI in the same order in which you want your users to navigate them.
+* Manually set the focus to a widget using `efl.ui.focus.Util.Focus()`.
+* Track focus changes by listening to the `FocusChangedEvt` event emitted by widgets.
+* Control whether the focus highlight is shown or not using `SetFocusHighlightEnabled()`.
+
+## Further Reading ##
+
+[Graphical Hello world in C#](/develop/tutorials/csharp/hello-world-gui-cs.md)
+:    EFL graphical application programming basics.
+
+[Events Programming Guide](/develop/guides/csharp/core/events.md)
+:    Explains how events and event callbacks are handled in EFL.
+
+[EFL API Reference guide](/develop/api/)
+:    Detailed documentation on the EFL API.
+
+[EFL Examples Repository](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs)
+:    Usage example of the focus API.
