@@ -19,13 +19,13 @@ You can also find usage examples in the [EFL examples repository](https://git.en
 
 All EFL objects can emit events. You can discover more about them in the **Events** section of their respective [API Reference documentation](/develop/api/) (only in C, C# *coming soon*).
 
-In C# you register a callback method to be called when an object emits a given event using the `+=` operator:
+In C#, you register a callback method for a given event by using the `+=` operator:
 
 ```csharp
 object.event += callback;
 ```
 
-Substitute *object* for any EFL object and *event* for the identifier of the event (such as ``PollHighEvt`` or ``TickEvt``). Set *callback* to the method to be called when the event occurs.
+Substitute *object* with any EFL object and *event* with the identifier of the event (such as ``PollHighEvt`` or ``TickEvt``). Set *callback* to the method to be invoked when the event occurs.
 
 The method signature for the callback is:
 
@@ -45,7 +45,7 @@ To stop receiving notifications for a particular event, unregister the callback 
 object.event -= callback;
 ```
 
-Note that in order to unregister the callback you have to provide the callback method again. This is because you can register different callback methods to the same event.
+Note that in order to unregister the callback you have to provide the callback method again. This is because you can register different callback methods for the same event.
 
 ## Pausing and Resuming Event Notifications ##
 
@@ -56,7 +56,7 @@ All event emissions from a given object can be paused (*frozen*) using `FreezeEv
    object.ThawEvent();
 ```
 
-While an object is frozen only high-priority events (marked as *hot* in the documentation) will be emitted. Hot events cannot be stopped.
+While an object is frozen, only high-priority events (marked as *hot* in the documentation) will be emitted. Hot events cannot be stopped.
 
 Remember that ALL events emitting from a object are stopped if it's frozen, except for hot events. If you need to stop individual events you can unregister their callback temporarily and then re-register later.
 
