@@ -32,7 +32,7 @@ Examples of `eina.Value` usage can be found in the [EFL examples git repository]
 | `Double`            | `double`       | Double precision (64-bit) floating point |
 | `String`            | `string`       | Unicode text string                      |
 
-In addition `eina.Value` has a number of specializations to handle the following *aggregate* types:
+In addition, `eina.Value` supports the following *aggregate* types:
 
 | `eina.ValueType` | Content                                             |
 | ---------------- | --------------------------------------------------- |
@@ -87,7 +87,7 @@ val.Get(out str);
 
 ### Copying the Content of a Value ###
 
-`eina.Value`s are **referenced types**, which means that when you make a copy of an `eina.Value` variable, the underlaying value is not copied: both variables point to the same value.
+`eina.Value`s are **referenced types**, which means that when you make a copy of an `eina.Value` variable, the underlying value is not copied: both variables point to the same value.
 
 ```csharp
 var src = new eina.Value(eina.ValueType.Int32);
@@ -97,7 +97,7 @@ src.Set(200);
 // Now both src and dst contain the integer 200
 ```
 
-If you need to create a separated `eina.Value` variable containing the same value, use `new` and initialize it:
+If you need to create a separate `eina.Value` variable containing the same value, use `new` and initialize it:
 
 ```csharp
 var src = new eina.Value(eina.ValueType.Int32);
@@ -109,7 +109,7 @@ src.Set(200);
 
 ### Comparing Two Values ###
 
-Two `eina.Value`s of the same type can be compared with the standard comparison operators `<`, `==`, `!=` and `>`. The exact meaning of the comparison depends on the value type.
+Two `eina.Value`s of the same type can be compared with the standard operators `<`, `==`, `!=` and `>`. The exact meaning of the comparison depends on the value type.
 
 ```csharp
 var v1 = new eina. Value(eina.ValueType.Float);
@@ -133,7 +133,7 @@ v1.ConvertTo(v2);
 Console.WriteLine(v2);
 ```
 
-The above code should output `7.0000` on the screen because `v2` is of floating type.
+The above code should output `7.0000` on the screen because `v2` is a floating type.
 
 ### Converting to Strings ###
 
@@ -155,7 +155,7 @@ All aggregate types allow the operations for simple types described above as wel
 
 An array is a contiguous block of memory which holds a collection of elements of the same type. Accessing and appending new elements at the end is typically very fast, but removing elements from the beginning or the middle is not.
 
-**Create** a new array with `new(eina.ValueType.Array, subtype, step)`, or re-configure an existing one with `Setup(eina.ValueType.Array, subtype, step)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the array. The `step` parameter indicates how many elements are added to the end of the array every time it needs to be expanded, since it is typically more efficient to enlarge the array by chunks rather than element by element. Its default value is 0 meaning that EFL will chose a value for you.
+**Create** a new array with `new(eina.ValueType.Array, subtype, step)`, or re-configure an existing one with `Setup(eina.ValueType.Array, subtype, step)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the array. The `step` parameter indicates how many elements are added to the end of the array every time it needs to be expanded, since it is typically more efficient to enlarge the array by chunks rather than element by element. Its default value is 0 meaning that EFL will choose a value for you.
 
 ```csharp
 var varray = new eina.Value(eina.ValueType.Array, eina.ValueType.Int32);
@@ -188,11 +188,11 @@ eina.ValueType subtype = varray.GetValueSubType();
 ```
 
 > **NOTE:**
-> Elements cannot be removed from an array as of now, due to current limitations in the C# bindings.
+> Elements cannot be removed from an array as of now, due to limitations in the current C# bindings.
 
 ### Lists ###
 
-A list is a linked collection of `eina.Value`s in which each element contains a pointer to the next element. Insertions and deletions anywhere in the list are typically very fast, but accesses to a given position can be slow since it requires traveling through the list.
+A list is a linked collection of `eina.Value`s in which each element contains a pointer to the next element. Insertions and deletions anywhere in the list are typically very fast, but accessing a given position can be slow since it requires traveling through the list.
 
 **Create** a new list with `new(eina.ValueType.Array, subtype)`, or configure an existing one with `Setup(subtype)`. The `subtype` parameter is the type of the `eina.Value`s that will be stored in the list.
 
@@ -214,7 +214,7 @@ vlist.Append(200);
 ```
 
 > **NOTE:**
-> Elements can only be added at the end as of now, due to current limitations in the C# bindings.
+> Elements can only be added at the end as of now, due to limitations in the current C# bindings.
 
 **Retrieve or set the contents** of the value at a given position with the `[]` operator.
 
@@ -230,7 +230,7 @@ eina.ValueType subtype = vlist.GetValueSubType();
 ```
 
 > **NOTE:**
-> Elements cannot be removed from a list as of now, due to current limitations in the C# bindings.
+> Elements cannot be removed from a list as of now, due to limitations in the current C# bindings.
 
 ### Hash Tables ###
 
