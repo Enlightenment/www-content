@@ -70,7 +70,7 @@ public class TextEditor
     {
         // "New" is enabled if there is text in the text box
         toolbarButtonNew.SetDisabled(string.IsNullOrEmpty(editorTextBox.GetText()));
-        // "Save" is enabled if the text has been modified since last save, load or new
+        // "Save" is enabled if the text has been modified since last save or load
         toolbarButtonSave.SetDisabled(!edited);
         // "Load" is enabled if there is a file to load
         toolbarButtonLoad.SetDisabled(!System.IO.File.Exists(filename));
@@ -367,9 +367,9 @@ Furthermore, handlers are installed for two events: `ChangedUserEvt` is triggere
 
 This example uses the same handler for both events (`EditorChangedCb()`), which only records the fact that the text has been edited in an internal variable and refreshes the toolbar.
 
-Note how only two objects have been added to the vertical box: the toolbar and the text area. If no further configuration is done these two object will share the vertical space in the box at 50% each, creating a very tall toolbar. The configuration of the toolbar prevents this, as shown later.
+Note how only two objects have been added to the vertical box: the toolbar and the text area. If no further configuration is done these two objects will share the vertical space in the box at 50% each, creating a very tall toolbar. The configuration of the toolbar prevents this, as shown in the next section.
 
-The last step when building the User Interface is to refresh the toolbar, so the buttons reflect their initial states (explained in a later section):
+The last step when building the User Interface is to refresh the toolbar, so the buttons reflect their initial states (explained in the [Refreshing the Toolbar](#Refreshing_the_Toolbar) section):
 
 ```csharp
         // Initial refresh of the toolbar buttons
@@ -399,7 +399,7 @@ This is done in the `GUIToolbarSetup()` method:
     }
 ```
 
-As it can be seen, the toolbar is just a regular horizontal box container. Please note the `SetHintWeight(1, 0)` line: Giving a widget a 0 weight means that its container will allocate only the minimum room to fit it. The rest of the space will be used by the other children of the container, in this case, the text area.
+As it can be seen, the toolbar is just a regular horizontal box container. Please note the `SetHintWeight(1, 0)` line: Giving a widget a 0 weight means that its parent container will allocate only the minimum room to fit it. The rest of the space will be used by the other children of the container, in this case, the text area.
 
 The rest of this method adds the different buttons by using the helper function `GUIToolbarButtonAdd()` described below.
 
@@ -583,7 +583,7 @@ Command buttons do not need to be always available. When a certain action cannot
     {
         // "New" is enabled if there is text in the text box
         toolbarButtonNew.SetDisabled(string.IsNullOrEmpty(editorTextBox.GetText()));
-        // "Save" is enabled if the text has been modified since last save, load or new
+        // "Save" is enabled if the text has been modified since last save or load
         toolbarButtonSave.SetDisabled(!edited);
         // "Load" is enabled if there is a file to load
         toolbarButtonLoad.SetDisabled(!System.IO.File.Exists(filename));
@@ -594,7 +594,7 @@ Command buttons do not need to be always available. When a certain action cannot
 
 * The "Save" button is only enabled when the content of the editor has been changed. The internal variable `edited` is set to `true` in the `EditorChangedCb` event handler and to `false` whenever the file is saved or loaded.
 
-* The "Load" button is only available when the file to load, which is always the same on in this example, exists.
+* The "Load" button is only available when the file to load, which is always the same in this example, exists.
 
 `GUIToolbarRefresh()` is called whenever the internal state of the editor changes to ensure that the user interface reflects it.
 
