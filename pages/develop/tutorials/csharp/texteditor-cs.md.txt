@@ -121,7 +121,7 @@ public class TextEditor
     // Creates a new toolbar, with all its buttons
     private void GUIToolbarSetup(efl.ui.IBox parent)
     {
-        // Create an horizontal box container for the buttons
+        // Create a horizontal box container for the buttons
         efl.ui.IBox bar = new efl.ui.Box(parent, (efl.ui.IBox ebox) => {
           // 0 vertical weight means that the toolbar will have the minimum height
           // to accommodate all its buttons and not a pixel more. The rest of the
@@ -171,7 +171,7 @@ public class TextEditor
 
         // Spacer box to use all available space not required by buttons
         // (It has a default horizontal weight of 1, whereas all buttons have
-        // an horizontal weight of 0).
+        // a horizontal weight of 0).
         // As a result, it pushes the "Quit" button to the right margin and
         // the rest to the left.
         efl.ui.IBox box = new efl.ui.Box(parent);
@@ -274,7 +274,7 @@ A rough sketch of the application's user interface structure is depicted in the 
 
 The main widget is a vertical container box (`vbox`) with two children: the toolbar and the main text entry.
 
-The toolbar is an horizontal container box (`hbox`) full of buttons. If you are looking at the final image above, bear in mind that the toolbar itself is invisible (as are all box containers); only the buttons are visible.
+The toolbar is a horizontal container box (`hbox`) full of buttons. If you are looking at the final image above, bear in mind that the toolbar itself is invisible (as are all box containers); only the buttons are visible.
 
 In between the toolbar buttons there's an empty container box (also invisible) to act as a separator: it uses up all available space, effectively pushing buttons on either side to the far ends of the container. See [The Space Box](#The_Spacer_Box) section for details.
 
@@ -306,7 +306,7 @@ This structure is not strictly necessary for such a brief example, but it mimics
 
 ### Building the Text Editor ###
 
-The constructor for the `TextEditor` class builds the User Interface sketched above. The process is split in this tutorial in different sections for clarity.
+The constructor for the `TextEditor` class builds the User Interface sketched above. The process is split in this tutorial into different sections for clarity.
 
 First, a window is created as explained in previous tutorials:
 
@@ -359,11 +359,11 @@ Finally, the text entry area is added. This is the main feature of the text edit
 
 * `efl.ui.Text.SetEditable()` sets whether the text can be modified by the user or it is only meant for output. If set to `true` all editing facilities (like keyboard input handling and caret positioning) will be enabled.
 
-* `efl.ui.SetScrollable()` selects whether the text area should automatically use scroll bars to accommodate text bigger than the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing off the borders you won't see the new characters.
+* `efl.ui.SetScrollable()` selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.
 
 * `efl.ui.SetHintMin()` sets a minimum size for the text area, as seen in previous tutorials.
 
-Furthermore, handlers are installed for two events: `ChangedUserEvt` is triggered when the text content changes in response to user actions (for example, a key has been pressed). `ChangedEvt` is triggered when the text content changes for any other reason.
+Furthermore, handlers are installed for two events: `ChangedUserEvt` is triggered when the text content changes in response to user actions (for example, a key has been pressed). `ChangedEvt` is triggered when the text content changes for any other reason (both events are never triggered together).
 
 This example uses the same handler for both events (`EditorChangedCb()`), which only records the fact that the text has been edited in an internal variable and refreshes the toolbar.
 
@@ -379,7 +379,7 @@ The last step when building the User Interface is to refresh the toolbar, so the
 
 The user interface has now been built and is ready to be shown once the EFL main loop is executed (by calling `efl.ui.Config.Run()` in `TextEditor.Run()`).
 
-The following sections describe in more detail each part of the user interface.
+The following sections describe each part of the user interface in more detail .
 
 ### Building the Toolbar ###
 
@@ -388,7 +388,7 @@ This is done in the `GUIToolbarSetup()` method:
 ```csharp
     private void GUIToolbarSetup(efl.ui.IBox parent)
     {
-        // Create an horizontal box container for the buttons
+        // Create a horizontal box container for the buttons
         efl.ui.IBox bar = new efl.ui.Box(parent, (efl.ui.IBox ebox) => {
           ebox.SetHintWeight(1, 0);
           ebox.SetDirection(efl.ui.Dir.Horizontal);
@@ -399,7 +399,7 @@ This is done in the `GUIToolbarSetup()` method:
     }
 ```
 
-As it can be seen, the toolbar is just a regular horizontal box container. Please note the `SetHintWeight(1, 0)` line: Giving a widget a 0 weight means that its parent container will allocate only the minimum room to fit it. The rest of the space will be used by the other children of the container, in this case, the text area.
+As it can be seen, the toolbar is just a regular horizontal box container. Please note the `SetHintWeight(1, 0)` line: Giving a widget a weight of 0 means that its parent container will allocate only the minimum room to fit it. The rest of the space will be used by the other children of the container, in this case, the text area.
 
 The rest of this method adds the different buttons by using the helper function `GUIToolbarButtonAdd()` described below.
 
@@ -436,13 +436,13 @@ The rest of the work is done in the initialization method:
 
 * The method to call when the button is clicked is set by installing an event handler for the `ClickedEvt` event.
 
-* The button is given an horizontal weight of 0, so its parent (the toolbar) will allocate for it the minimum space.
+* The button is given a horizontal weight of 0, so its parent (the toolbar) will allocate for it the minimum space.
 
 * The button is added to the toolbar with `DoPack()`.
 
-* Finally, the requested icon is added to the button. Like many other EFL widgets, Buttons are very flexible when it comes to customizing some of its parts. In fact, this example uses an image but any other widget (or combination of widgets) could be put inside the Button.
+* Finally, the requested icon is added to the button. Like many other EFL widgets, Buttons are highly customizable. In fact, this example uses an image but any widget (or combination of widgets) could be put inside the Button.
 
-  The price for this flexibility is a bit more involved setup of the widgets. Please read the [Parts tutorial](parts.md) to learn more about this topic (*coming soon*).
+  The price for this flexibility is a bit more setup work. Please read the [Parts tutorial](parts.md) to learn more about this topic (*coming soon*).
 
 ### The "New" Button ###
 
@@ -516,7 +516,7 @@ The "Load" button is very similar to the "Save" one:
           });
 ```
 
-The operation is the opposite to that of the "Save" button: the text is read from the file and set as the content of the `editorTextBox` with `SetText()`.
+The operation is the opposite of the "Save" button: the text is read from the file and set as the content of the `editorTextBox` with `SetText()`.
 
 The `edited` flag is also updated, the toolbar refreshed and a popup message is shown.
 
@@ -533,7 +533,7 @@ Any widget can act as an spacer, the only thing required of it is that it uses u
         bar.DoPack(box);
 ```
 
-To ensure that all available space is given to the spacer and not distributed evenly among all sibling buttons, the spacer is given an horizontal weight of 1 (it's the default value, so there is no need to use `SetHintWeight()`) whereas the rest of the buttons have an horizontal weight of 0 (as seen in the [Adding a Button to the Toolbar](#Adding_a_Button_to_the_Toolbar) section).
+To ensure that all available space is given to the spacer and not distributed evenly among all sibling buttons, the spacer is given a horizontal weight of 1 (it's the default value, so there is no need to use `SetHintWeight()`) whereas the rest of the buttons have a horizontal weight of 0 (as seen in the [Adding a Button to the Toolbar](#Adding_a_Button_to_the_Toolbar) section).
 
 How a container widget distributes available space among its children is a complex topic explained in more detail in a different tutorial (*coming soon*).
 
@@ -543,7 +543,7 @@ Applications typically convey important informational or error messages through 
 
 ![Popup message](/_media/playground/texteditor-app/image02.png)
 
-To achieve this EFL uses the `efl.ui.Popup` class and its derivatives, for instance, the `efl.ui.Popup_Alert_Text` used in this tutorial. This class implements a popup which contains text and optional configurable buttons.
+To achieve this EFL uses the `efl.ui.Popup` class and its derivatives, for instance, the `efl.ui.Popup_Alert_Text` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
 
 This is how it's used in this tutorial, in the `ShowMessage()` method:
 
@@ -568,11 +568,11 @@ This is how it's used in this tutorial, in the `ShowMessage()` method:
 
 * By default the popup has the width required to display all buttons and a fixed height. If the text does not fit in that area a vertical scroll bar is shown, which can be inconvenient when there's room enough in the window to make a bigger popup dialog. `SetExpandable()` allows extending the popup size beyond its default size if required, so that no scroll bars are needed when the text is large.
 
-* `SetButton()` customizes the optional buttons of the popup. Alert popups can have 3 buttons: one for Positive answers, one for Negative answers and a user-defined one. `SetButton()` changes the text and icon of each of these buttons, which are invisible by default until `SetButton()` is called.
+* `SetButton()` customizes the optional buttons of the popup. Alert popups can have 3 buttons: one for Positive answers, one for Negative answers and one that is user-defined. `SetButton()` changes the text and icon of each of these buttons, which are invisible by default until `SetButton()` is called.
 
-* When any of the buttons is pressed, the `ButtonClickedEvt` event is emitted. The event argument specifies which button has been pressed, in case there's more than one button enabled (in this example there is no need to check the event argument because there is only one button).
+* When any of the buttons are pressed, the `ButtonClickedEvt` event is emitted. The event argument specifies which button has been pressed, in case there's more than one button enabled (in this example there is no need to check the event argument because there is only one button).
 
-* In this tutorial pressing the "OK" button dismisses the popup, which is done by removing the widget in the `ButtonClickedEvt` event handler. To delete a widget, the reference hold by its parent must be removed using `SetParent(null)`.
+* In this tutorial pressing the "OK" button dismisses the popup, which is done by removing the widget in the `ButtonClickedEvt` event handler. To delete a widget, the reference held by its parent must be removed using `SetParent(null)`.
 
 ### Refreshing the Toolbar ###
 
