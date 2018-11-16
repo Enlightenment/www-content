@@ -86,14 +86,14 @@ public class TextEditor
     // Shows a modal message popup with an "OK" button
     private void ShowMessage(string message)
     {
-        new efl.ui.Popup_Alert_Text (win, (efl.ui.IPopup_Alert_Text epopup) => {
+        new efl.ui.Text_Alert_Popup (win, (efl.ui.IText_Alert_Popup epopup) => {
           epopup.SetText(message);
           epopup.SetExpandable(new eina.Size2D(200,200));
-          epopup.SetButton(efl.ui.Popup_Alert_Button.Positive, "OK", null);
+          epopup.SetButton(efl.ui.Alert_Popup_Button.Positive, "OK", null);
           epopup.ButtonClickedEvt +=
-              (object sender, efl.ui.Popup_Alert.ButtonClickedEvt_Args ea) => {
+              (object sender, efl.ui.Alert_Popup.ButtonClickedEvt_Args ea) => {
             // Dismiss popup when the button is clicked
-            ((efl.ui.IPopup_Alert_Text)sender).SetParent(null);
+            ((efl.ui.IText_Alert_Popup)sender).SetParent(null);
           };
         });
     }
@@ -543,7 +543,7 @@ Applications typically convey important informational or error messages through 
 
 ![Popup message](/_media/playground/texteditor-app/image02.png)
 
-To achieve this EFL uses the `efl.ui.Popup` class and its derivatives, for instance, the `efl.ui.Popup_Alert_Text` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
+To achieve this EFL uses the `efl.ui.Popup` class and its derivatives, for instance, the `efl.ui.Text_Alert_Popup` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
 
 This is how it's used in this tutorial, in the `ShowMessage()` method:
 
@@ -551,14 +551,14 @@ This is how it's used in this tutorial, in the `ShowMessage()` method:
     // Shows a modal message popup with an "OK" button
     private void ShowMessage(string message)
     {
-        new efl.ui.Popup_Alert_Text (win, (efl.ui.IPopup_Alert_Text epopup) => {
+        new efl.ui.Text_Alert_Popup (win, (efl.ui.IText_Alert_Popup epopup) => {
           epopup.SetText(message);
           epopup.SetExpandable(new eina.Size2D(200,200));
-          epopup.SetButton(efl.ui.Popup_Alert_Button.Positive, "OK", null);
+          epopup.SetButton(efl.ui.Alert_Popup_Button.Positive, "OK", null);
           epopup.ButtonClickedEvt +=
-              (object sender, efl.ui.Popup_Alert.ButtonClickedEvt_Args ea) => {
+              (object sender, efl.ui.Alert_Popup.ButtonClickedEvt_Args ea) => {
             // Dismiss popup when the button is clicked
-            ((efl.ui.IPopup_Alert_Text)sender).SetParent(null);
+            ((efl.ui.IText_Alert_Popup)sender).SetParent(null);
           };
         });
     }
