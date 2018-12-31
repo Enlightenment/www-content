@@ -145,9 +145,24 @@ v1.Set(7);
 string str = v1.ToString();
 ```
 
+### Implicit Conversions ###
+
+For convenience, implicit conversion operators also exist between an `eina.Value` and the actual stored type, so operations like these are possible:
+
+```csharp
+eina.Value int_val = 123;
+eina.Value str_val = "My string";
+int i = int_val;
+string str = str_val;
+```
+These conversions allow directly providing native values to EFL methods expecting an `eina.Value`, for example.
+
+> **NOTE:**
+> As with all implicit conversions, use with caution to make sure the compiler is actually choosing the types you expect.
+
 ## Aggregate Values ##
 
-`eina.Value` supports handling collections of simple values through the aggregate types `eina.ValueType.Array`, `eina.ValueType.List` and: `eina.ValueType.Hash`.
+`eina.Value` supports handling collections of simple values through the aggregate types `eina.ValueType.Array`, `eina.ValueType.List` and `eina.ValueType.Hash`.
 
 All aggregate types allow the operations for simple types described above as well as some specific methods, typically involving construction and access to particular elements within the collection.
 
