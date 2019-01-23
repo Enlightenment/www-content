@@ -47,11 +47,11 @@ using System;
 
 public class TextEditor
 {
-    private efl.ui.IWin win;                  // The main window
-    private efl.ui.IText editorTextBox;       // The main text entry
-    private efl.ui.IButton toolbarButtonNew;  // The "New" button in the toolbar
-    private efl.ui.IButton toolbarButtonSave; // The "Save" button in the toolbar
-    private efl.ui.IButton toolbarButtonLoad; // The "Load" button in the toolbar
+    private Efl.Ui.Win win;                  // The main window
+    private Efl.Ui.Text editorTextBox;       // The main text entry
+    private Efl.Ui.Button toolbarButtonNew;  // The "New" button in the toolbar
+    private Efl.Ui.Button toolbarButtonSave; // The "Save" button in the toolbar
+    private Efl.Ui.Button toolbarButtonLoad; // The "Load" button in the toolbar
 
     private bool edited = false;              // Document was edited since last save
 
@@ -62,7 +62,7 @@ public class TextEditor
     // Quits the application
     private void GUIQuitCb(object sender, EventArgs ea)
     {
-        efl.ui.Config.Exit();
+        Efl.Ui.Config.Exit();
     }
 
     // Enables or disables buttons on the toolbar as required
@@ -86,50 +86,46 @@ public class TextEditor
     // Shows a modal message popup with an "OK" button
     private void ShowMessage(string message)
     {
-        new efl.ui.Text_Alert_Popup (win, (efl.ui.IText_Alert_Popup epopup) => {
-          epopup.SetText(message);
-          epopup.SetExpandable(new eina.Size2D(200,200));
-          epopup.SetButton(efl.ui.Alert_Popup_Button.Positive, "OK", null);
-          epopup.ButtonClickedEvt +=
-              (object sender, efl.ui.Alert_Popup.ButtonClickedEvt_Args ea) => {
-            // Dismiss popup when the button is clicked
-            ((efl.ui.IText_Alert_Popup)sender).SetParent(null);
-          };
-        });
+        var popup = new Efl.Ui.TextAlertPopup (win);
+        popup.SetText(message);
+        popup.SetExpandable(new Eina.Size2D(200, 200));
+        popup.SetButton(Efl.Ui.AlertPopupButton.Positive, "OK", null);
+        popup.ButtonClickedEvt +=
+            (object sender, Efl.Ui.AlertPopupButtonClickedEvt_Args ea) => {
+          // Dismiss popup when the button is clicked
+          ((Efl.Ui.TextAlertPopup)sender).SetParent(null);
+        };
     }
 
     // Adds a button to the toolbar, with the given text, icon and click event handler
-    private efl.ui.IButton GUIToolbarButtonAdd(efl.ui.IBox toolbar, string name,
-                                               string iconName, EventHandler func)
+    private Efl.Ui.Button GUIToolbarButtonAdd(Efl.Ui.Box toolbar, string name,
+                                              string iconName, EventHandler func)
     {
-        return new efl.ui.Button(toolbar, (efl.ui.IButton ebutton) => {
-          ebutton.SetText(name);
-          ebutton.ClickedEvt += func;
-          ebutton.SetHintWeight(0, 1);
-          toolbar.DoPack(ebutton);
+        var button = new Efl.Ui.Button(toolbar);
+        button.SetText(name);
+        button.ClickedEvt += func;
+        button.SetHintWeight(0, 1);
 
-          // Set the content of the button
-          efl.Content.static_cast(ebutton.GetPart("efl.content")).SetContent(
-            // Which is an image
-            new efl.ui.Image(toolbar, (efl.ui.IImage eimage) => {
-              eimage.SetIcon(iconName);
-            })
-          );
-        });
+        // Set the content of the button, which is an image
+        var image = new Efl.Ui.Image(toolbar);
+        image.SetIcon(iconName);
+        button.SetContent(image);
+
+        toolbar.DoPack(button);
+        return button;
     }
 
     // Creates a new toolbar, with all its buttons
-    private void GUIToolbarSetup(efl.ui.IBox parent)
+    private void GUIToolbarSetup(Efl.Ui.Box parent)
     {
         // Create a horizontal box container for the buttons
-        efl.ui.IBox bar = new efl.ui.Box(parent, (efl.ui.IBox ebox) => {
-          // 0 vertical weight means that the toolbar will have the minimum height
-          // to accommodate all its buttons and not a pixel more. The rest of the
-          // space will be given to the other object in the parent container.
-          ebox.SetHintWeight(1, 0);
-          ebox.SetDirection(efl.ui.Dir.Horizontal);
-          parent.DoPack(ebox);
-        });
+        var bar = new Efl.Ui.Box(parent);
+        // 0 vertical weight means that the toolbar will have the minimum height
+        // to accommodate all its buttons and not a pixel more. The rest of the
+        // space will be given to the other object in the parent container.
+        bar.SetHintWeight(1, 0);
+        bar.SetDirection(Efl.Ui.Dir.Horizontal);
+        parent.DoPack(bar);
 
         // "New" button
         toolbarButtonNew = GUIToolbarButtonAdd(bar, "New", "document-new",
@@ -174,7 +170,7 @@ public class TextEditor
         // a horizontal weight of 0).
         // As a result, it pushes the "Quit" button to the right margin and
         // the rest to the left.
-        efl.ui.IBox box = new efl.ui.Box(parent);
+        Efl.Ui.Box box = new Efl.Ui.Box(parent);
         bar.DoPack(box);
 
         // "Quit" button
@@ -185,30 +181,28 @@ public class TextEditor
     public TextEditor()
     {
         // Create a window and initialize it
-        win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            ewin.SetText("Text Editor");
-            ewin.SetAutohide(true);
-            ewin.HideEvt += GUIQuitCb;
-        });
+        win = new Efl.Ui.Win(Efl.App.AppMain);
+        win.SetText("Text Editor");
+        win.SetAutohide(true);
+        win.HideEvt += GUIQuitCb;
 
         // Create a vertical box container
-        efl.ui.IBox box = new efl.ui.Box(win);
+        Efl.Ui.Box box = new Efl.Ui.Box(win);
         win.SetContent(box);
 
         // Create the toolbar and add it to the box
         GUIToolbarSetup(box);
 
         // Create the main text entry
-        editorTextBox = new efl.ui.Text(box, (efl.ui.IText etext) => {
-          etext.SetFont("Mono", 14);
-          etext.SetMultiline(true);
-          etext.SetEditable(true);
-          etext.SetScrollable(true);
-          etext.SetHintMin(new eina.Size2D(360, 240));
-          etext.ChangedEvt += EditorChangedCb;
-          etext.ChangedUserEvt += EditorChangedCb;
-          box.DoPack(etext);
-        });
+        editorTextBox = new Efl.Ui.Text(box);
+        editorTextBox.SetFont("Mono", 14);
+        editorTextBox.SetMultiline(true);
+        editorTextBox.SetEditable(true);
+        editorTextBox.SetScrollable(true);
+        editorTextBox.SetHintMin(new Eina.Size2D(360, 240));
+        editorTextBox.ChangedEvt += EditorChangedCb;
+        editorTextBox.ChangedUserEvt += EditorChangedCb;
+        box.DoPack(editorTextBox);
 
         // Initial refresh of the toolbar buttons
         GUIToolbarRefresh();
@@ -218,7 +212,7 @@ public class TextEditor
     public void Run()
     {
         // Start the EFL main loop
-        efl.ui.Config.Run();
+        Efl.Ui.Config.Run();
     }
 }
 
@@ -230,13 +224,13 @@ public class Example
     public static void Main()
     {
         // Initialize EFL and all UI components
-        efl.All.Init(efl.Components.Ui);
+        Efl.All.Init(Efl.Components.Ui);
 
         var textEditor = new TextEditor();
         textEditor.Run();
 
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
     }
 }
 ```
@@ -288,19 +282,19 @@ To keep this example simple a file selection dialog has not been used. Therefore
     public static void Main()
     {
         // Initialize EFL and all UI components
-        efl.All.Init(efl.Components.Ui);
+        Efl.All.Init(Efl.Components.Ui);
 
         var textEditor = new TextEditor();
         textEditor.Run();
 
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
     }
 ```
 
 The Main method simply initializes EFL, instantiates a `TextEditor` object and relinquishes control to it. The bulk of the work is done by the `TextEditor` class defined in the example. When `texteditor.Run()` returns EFL is shut down and the application finishes.
 
-`texteditor.Run()` contains the call to `efl.ui.Config.Run()` which will block until EFL is instructed to quit using `efl.ui.Config.Exit()`, as seen in the [Graphical "Hello World" in C#](hello-world-gui-cs.md) tutorial.
+`texteditor.Run()` contains the call to `Efl.Ui.Config.Run()` which will block until EFL is instructed to quit using `Efl.Ui.Config.Exit()`, as seen in the [Graphical "Hello World" in C#](hello-world-gui-cs.md) tutorial.
 
 This structure is not strictly necessary for such a brief example, but it mimics what a more complex application would normally do.
 
@@ -314,11 +308,10 @@ First, a window is created as explained in previous tutorials:
     public TextEditor()
     {
         // Create a window and initialize it
-        win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            ewin.SetText("Text Editor");
-            ewin.SetAutohide(true);
-            ewin.HideEvt += GUIQuitCb;
-        });
+        win = new Efl.Ui.Win(Efl.App.AppMain);
+        win.SetText("Text Editor");
+        win.SetAutohide(true);
+        win.HideEvt += GUIQuitCb;
 ```
 
 Then the vertical container box is created and set as the content for the window:
@@ -326,7 +319,7 @@ Then the vertical container box is created and set as the content for the window
 
 ```csharp
         // Create a vertical box container
-        efl.ui.IBox box = new efl.ui.Box(win);
+        Efl.Ui.IBox box = new Efl.Ui.Box(win);
         win.SetContent(box);
 ```
 
@@ -341,27 +334,26 @@ Finally, the text entry area is added. This is the main feature of the text edit
 
 ```csharp
         // Create the main text entry
-        editorTextBox = new efl.ui.Text(box, (efl.ui.IText etext) => {
-          etext.SetFont("Mono", 14);
-          etext.SetMultiline(true);
-          etext.SetEditable(true);
-          etext.SetScrollable(true);
-          etext.SetHintMin(new eina.Size2D(360, 240));
-          etext.ChangedEvt += EditorChangedCb;
-          etext.ChangedUserEvt += EditorChangedCb;
-          box.DoPack(etext);
-        });
+        editorTextBox = new Efl.Ui.Text(box);
+        editorTextBox.SetFont("Mono", 14);
+        editorTextBox.SetMultiline(true);
+        editorTextBox.SetEditable(true);
+        editorTextBox.SetScrollable(true);
+        editorTextBox.SetHintMin(new Eina.Size2D(360, 240));
+        editorTextBox.ChangedEvt += EditorChangedCb;
+        editorTextBox.ChangedUserEvt += EditorChangedCb;
+        box.DoPack(editorTextBox);
 ```
 
-* `efl.ui.Text.SetFont()` sets the font family and size for the text area. The font string has to follow `fontconfig`'s convention for naming fonts, as it is the underlying library used to query system fonts (see the output of the `fc-list` command). Alternatively, you can use the full path to a font file.
+* `Efl.Ui.Text.SetFont()` sets the font family and size for the text area. The font string has to follow `fontconfig`'s convention for naming fonts, as it is the underlying library used to query system fonts (see the output of the `fc-list` command). Alternatively, you can use the full path to a font file.
 
-* `efl.ui.Text.SetMultiline()` selects whether the text area will support more than one line of text (`true` is customary for a text editor).
+* `Efl.Ui.Text.SetMultiline()` selects whether the text area will support more than one line of text (`true` is customary for a text editor).
 
-* `efl.ui.Text.SetEditable()` sets whether the text can be modified by the user or it is only meant for output. If set to `true` all editing facilities (like keyboard input handling and caret positioning) will be enabled.
+* `Efl.Ui.Text.SetEditable()` sets whether the text can be modified by the user or it is only meant for output. If set to `true` all editing facilities (like keyboard input handling and caret positioning) will be enabled.
 
-* `efl.ui.SetScrollable()` selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.
+* `Efl.Ui.SetScrollable()` selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.
 
-* `efl.ui.SetHintMin()` sets a minimum size for the text area, as seen in previous tutorials.
+* `Efl.Ui.SetHintMin()` sets a minimum size for the text area, as seen in previous tutorials.
 
 Furthermore, handlers are installed for two events: `ChangedUserEvt` is triggered when the text content changes in response to user actions (for example, a key has been pressed). `ChangedEvt` is triggered when the text content changes for any other reason (both events are never triggered together).
 
@@ -377,7 +369,7 @@ The last step when building the User Interface is to refresh the toolbar, so the
     }
 ```
 
-The user interface has now been built and is ready to be shown once the EFL main loop is executed (by calling `efl.ui.Config.Run()` in `TextEditor.Run()`).
+The user interface has now been built and is ready to be shown once the EFL main loop is executed (by calling `Efl.Ui.Config.Run()` in `TextEditor.Run()`).
 
 The following sections describe each part of the user interface in more detail .
 
@@ -386,14 +378,13 @@ The following sections describe each part of the user interface in more detail .
 This is done in the `GUIToolbarSetup()` method:
 
 ```csharp
-    private void GUIToolbarSetup(efl.ui.IBox parent)
+    private void GUIToolbarSetup(Efl.Ui.IBox parent)
     {
         // Create a horizontal box container for the buttons
-        efl.ui.IBox bar = new efl.ui.Box(parent, (efl.ui.IBox ebox) => {
-          ebox.SetHintWeight(1, 0);
-          ebox.SetDirection(efl.ui.Dir.Horizontal);
-          parent.DoPack(ebox);
-        });
+        var bar = new Efl.Ui.Box(parent);
+        bar.SetHintWeight(1, 0);
+        bar.SetDirection(Efl.Ui.Dir.Horizontal);
+        parent.DoPack(bar);
 
         [... Buttons are added to the toolbar ...]
     }
@@ -405,32 +396,28 @@ The rest of this method adds the different buttons by using the helper function 
 
 ### Adding a Button to the Toolbar ###
 
-Let's examine this very compact method to create and customize a button, while adding it to a parent container:
+Let's examine this helper method to create and customize a button, while adding it to a parent container:
 
 ```csharp
-    private efl.ui.IButton GUIToolbarButtonAdd(efl.ui.IBox toolbar, string name,
-                                               string iconName, EventHandler func)
+    private Efl.Ui.Button GUIToolbarButtonAdd(Efl.Ui.Box toolbar, string name,
+                                              string iconName, EventHandler func)
     {
-        return new efl.ui.Button(toolbar, (efl.ui.IButton ebutton) => {
-          ebutton.SetText(name);
-          ebutton.ClickedEvt += func;
-          ebutton.SetHintWeight(0, 1);
-          toolbar.DoPack(ebutton);
+        var button = new Efl.Ui.Button(toolbar);
+        button.SetText(name);
+        button.ClickedEvt += func;
+        button.SetHintWeight(0, 1);
 
-          // Set the content of the button
-          efl.Content.static_cast(ebutton.GetPart("efl.content")).SetContent(
-            // Which is an image
-            new efl.ui.Image(toolbar, (efl.ui.IImage eimage) => {
-              eimage.SetIcon(iconName);
-            })
-          );
-        });
+        // Set the content of the button, which is an image
+        var image = new Efl.Ui.Image(toolbar);
+        image.SetIcon(iconName);
+        button.SetContent(image);
+
+        toolbar.DoPack(button);
+        return button;
     }
 ```
 
-The function contains a single statement, which instantiates an `efl.ui.Button` (as a child of the toolbar) and returns it.
-
-The rest of the work is done in the initialization method:
+The function instantiates an `Efl.Ui.Button` (as a child of the toolbar) and returns it after configuration:
 
 * The button's label is set with `SetText()`
 
@@ -529,7 +516,7 @@ A simple mechanism to achieve this in EFL is to insert a **spacer** widget betwe
 Any widget can act as an spacer, the only thing required of it is that it uses up space. To reduce complexity and unwanted side effects, an empty container widget is ideal for the job. For example, a `Box`:
 
 ```csharp
-        efl.ui.IBox box = new efl.ui.Box(parent);
+        Efl.Ui.Box box = new Efl.Ui.Box(parent);
         bar.DoPack(box);
 ```
 
@@ -543,7 +530,7 @@ Applications typically convey important informational or error messages through 
 
 ![Popup message](/_media/playground/texteditor-app/image02.png)
 
-To achieve this EFL uses the `efl.ui.Popup` class and its derivatives, for instance, the `efl.ui.Text_Alert_Popup` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
+To achieve this EFL uses the `Efl.Ui.Popup` class and its derivatives, for instance, the `Efl.Ui.Text_Alert_Popup` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
 
 This is how it's used in this tutorial, in the `ShowMessage()` method:
 
@@ -551,16 +538,15 @@ This is how it's used in this tutorial, in the `ShowMessage()` method:
     // Shows a modal message popup with an "OK" button
     private void ShowMessage(string message)
     {
-        new efl.ui.Text_Alert_Popup (win, (efl.ui.IText_Alert_Popup epopup) => {
-          epopup.SetText(message);
-          epopup.SetExpandable(new eina.Size2D(200,200));
-          epopup.SetButton(efl.ui.Alert_Popup_Button.Positive, "OK", null);
-          epopup.ButtonClickedEvt +=
-              (object sender, efl.ui.Alert_Popup.ButtonClickedEvt_Args ea) => {
-            // Dismiss popup when the button is clicked
-            ((efl.ui.IText_Alert_Popup)sender).SetParent(null);
-          };
-        });
+        var popup = new Efl.Ui.TextAlertPopup (win);
+        popup.SetText(message);
+        popup.SetExpandable(new Eina.Size2D(200, 200));
+        popup.SetButton(Efl.Ui.AlertPopupButton.Positive, "OK", null);
+        popup.ButtonClickedEvt +=
+            (object sender, Efl.Ui.AlertPopupButtonClickedEvt_Args ea) => {
+          // Dismiss popup when the button is clicked
+          ((Efl.Ui.TextAlertPopup)sender).SetParent(null);
+        };
     }
 ```
 
