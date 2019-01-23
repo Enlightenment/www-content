@@ -21,15 +21,15 @@ C++, for example, allows you to create such hierarchies but forces you to specif
 
 Eolian (and [other languages](https://en.wikipedia.org/wiki/Mixin#Programming_languages_that_use_mixins)) defines two new kinds of classes, *interfaces* and *mixins* and imposes some inheritance rules:
 
-1. You can only *inherit* from one *regular* class, which must be the first one in the inheritance list.
+1. You can only *inherit* from one *regular* class, which is indicated with the ``extends`` keyword.
  
-2. You can *implement* as many *interfaces* as you want.
+2. You can *implement* as many *interfaces* as you want, listing them after the ``implements`` keyword.
 
-3. You can *include* as many *mixins* as you want.
+3. You can *include* as many *mixins* as you want, listing them after the ``implements`` keyword.
 
 *Inherit*, *implement* and *include* all mean *use functionality from a parent class*. Using a different word for each kind of parent class helps keep ambiguity to a minimum.
 
-Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations but they cannot be inherited from, only included. Neither is instantiable on its own: they are meant to be implemented or included.
+Interfaces are like classes but they only define methods and contain no implementation. Mixins are classes which contain implementations but they cannot be inherited from, only included. Neither one can instantiated on its own: they are meant to be implemented or included.
 
 The following steps will clarify these concepts.
 
@@ -102,7 +102,7 @@ Now edit the includes file ``eo_multiinherit.h`` and add the newly generated ``e
 
 Tell ``Example.Rectangle`` that it will be implementing the new ``Example.Shape`` interface. Open the ``example_rectangle.eo`` file, then:
 
-* Add ``Example.Shape`` after ``Efl.Object`` (separated with a comma) in the list of parents at the top of the file.
+* Add ``implements Example.Shape`` after ``extends Efl.Object`` at the top of the file.
 
 * Remove all lines in the ``area { ... }`` block.
 
@@ -119,7 +119,7 @@ This tells Eolian that the ``Example.Rectangle`` class is going to implement the
 The completed file should look like this:
 
 ```
-class Example.Rectangle (Efl.Object, Example.Shape) {
+class Example.Rectangle extends Efl.Object implements Example.Shape {
    methods {
       @property width {
          set {
@@ -195,7 +195,7 @@ In order to demonstrate the usefulness of the interface once and for all, you'll
 Start by creating a new Eolian file called ``example_circle.eo``:
 
 ```
-class Example.Circle (Efl.Object, Example.Shape) {
+class Example.Circle extends Efl.Object implements Example.Shape {
    methods {
       @property radius {
          set {
@@ -347,7 +347,7 @@ This concludes the part regarding interfaces. The next steps demonstrate usage o
 
 Mixins are meant to provide units of functionality. They're ideally small and independent of any other class. You can add new functionality to your class by including different mixins.
 
-You cannot inherit from a mixin however, meaning that they cannot be the first element in the inheritance list of a class (the list in the parentheses after the class name in an Eolian file). This ensures that the ambiguous diamond pattern described in the introduction to this tutorial does not happen.
+You cannot inherit from a mixin however, meaning that they cannot appear after the ``extends`` keyword, only after ``implements``. This ensures that the ambiguous diamond pattern described in the introduction to this tutorial does not happen.
 
 You're now going to create a mixin called ``Example.Colored`` providing coloring facilities to your classes. Any class including this mixin will have a ``color`` property added to it complete with setter and getter. Your class won't be modified since the mixin provides all the implementation.
 
@@ -440,7 +440,7 @@ _example_colored_color_get(const Eo *obj EINA_UNUSED, Example_Colored_Data *pd,
 Modify ``example_rectangle.eo`` to include the ``Example.Colored`` Mixin. There's nothing to do beyond adding the Mixin name in the inheritance list:
 
 ```
-class Example.Rectangle (Efl.Object, Example.Shape, Example.Colored) {
+class Example.Rectangle extends Efl.Object implements Example.Shape, Example.Colored {
     [...]
 }
 ```
