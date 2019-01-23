@@ -30,25 +30,24 @@ public class Example
     public static void Main()
     {
         // Initialize EFL and all UI components
-        efl.All.Init(efl.Components.Ui);
+        Efl.All.Init(Efl.Components.Ui);
 
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            // Set the window's title
-            ewin.SetText("Hello World");
-            // Request that the window is automatically hidden when the "close"
-            // button is pressed
-            ewin.SetAutohide(true);
-        });
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText("Hello World");
+        // Request that the window is automatically hidden when the "close"
+        // button is pressed
+        win.SetAutohide(true);
         // Window size must be explicitly set, otherwise it will be invisible
         // due to its lack of content.
-        win.SetSize(new eina.Size2D(360, 240));
+        win.SetSize(new Eina.Size2D(360, 240));
 
         // Start the EFL main loop
-        efl.ui.Config.Run();
+        Efl.Ui.Config.Run();
 
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
     }
 }
 ```
@@ -83,51 +82,45 @@ public class Example
 
 ### EFL Initialization  ###
 
-EFL is initialized with the `efl.All.Init()` method:
+EFL is initialized with the `Efl.All.Init()` method:
 
 ```csharp
         // Initialize EFL and all UI components
-        efl.All.Init(efl.Components.Ui);
+        Efl.All.Init(Efl.Components.Ui);
 ```
 
 It accepts a parameter specifying which EFL components your app will require. This enables faster boot times and better resource usage by not loading and starting unnecessary components.
 
-The only currently available options are `efl.Components.Basic` and `efl.Components.Ui`. When not specified, `Basic` is assumed.
+The only currently available options are `Efl.Components.Basic` and `Efl.Components.Ui`. When not specified, `Basic` is assumed.
 
 ### Creating the Window ###
 
 All EFL objects, like Windows, Widgets or Timers, are created using the standard `new` operator, for example:
 
 ```csharp
-var win = new efl.ui.Win();
+Efl.Ui.Win win = new Efl.Ui.Win();
 ```
 
-However, EFL object constructors have two optional parameters which are worth knowing:
-
-* `parent`: Any EFL object can be the child of another EFL object (its parent). Parents will take care of disposing of all their children upon destruction, greatly simplifying object lifecycle management.
-* `initialization method`: This is a delegate method accepting an object of the class being instantiated (see the example below). This method will be called during construction to allow you to customize the EFL object being created.
-
-  The advantage over first creating and then customizing the object is that, in most cases, you won't even need to keep the object in a variable: just create it with a parent, customize it, and forget about it.
+However, EFL object constructors may have additional optional parameters. The first one, `parent`, is always available: Any EFL object can be the child of another EFL object (its parent). Parents will take care of disposing of all their children upon destruction, greatly simplifying object life-cycle management.
 
 In the tutorial code:
 
 ```csharp
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            // Set the window's title
-            ewin.SetText("Hello World");
-            // Request that the window is automatically hidden when the "close"
-            // button is pressed
-            ewin.SetAutohide(true);
-        });
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText("Hello World");
+        // Request that the window is automatically hidden when the "close"
+        // button is pressed
+        win.SetAutohide(true);
 ```
 
-Observe how the window is created as a child of `efl.App.GetLoopMain()`, the application's main loop. This ensures that the window will receive all messages coming from the application.
+Observe how the window is created as a child of `Efl.App.AppMain`, the application's main loop. This ensures that the window will receive all messages coming from the application.
 
-Also, note the initialization method, a lambda function which:
+Also, note the further customization of the Window object:
 
-* Sets the window title to `Hello World`.
-* Sets the `autohide` flag to true. This means that the window will automatically be hidden when the user closes it. The default behavior for an app when all its windows are hidden is to quit.
+* The window title is set to `Hello World`.
+* The `autohide` flag is set to true. This means that the window will automatically be hidden when the user closes it. The default behavior for an app when all its windows are hidden is to quit.
 
 ### The Window Size ###
 
@@ -138,11 +131,8 @@ The next tutorial adds some content to the window, but meanwhile, you can manual
 ```csharp
         // Window size must be explicitly set, otherwise it will be invisible
         // due to its lack of content.
-        win.SetSize(new eina.Size2D(360, 240));
+        win.SetSize(new Eina.Size2D(360, 240));
 ```
-
-> **NOTE:**
-> You could have done this in the initialization method described above, but setting the size of a window during its construction has some issues at this moment (See [T7343](https://phab.enlightenment.org/T7343)).
 
 ### Starting Up the User Interface ###
 
@@ -150,7 +140,7 @@ Now that all the required EFL objects have been created (only a window, actually
 
 ```csharp
         // Start the EFL main loop
-        efl.ui.Config.Run();
+        Efl.Ui.Config.Run();
 ```
 
 This method does not return until EFL exits. In any application you will set callback methods that EFL will use to inform you of some events, and you will plug more code on those methods.
@@ -161,7 +151,7 @@ The following tutorials show how to do that. For this one, the only remaining th
 
 ```csharp
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
 ```
 
 Always remember to shut down EFL to close windows, network connections and free resources.
@@ -170,10 +160,10 @@ Always remember to shut down EFL to close windows, network connections and free 
 
 In this tutorial you have learned:
 
-* How to properly initialize and shutdown the EFL library with `efl.All.Init()` and `efl.All.Shutdown()`.
-* How to create and initialize EFL objects using `new` and `initialization methods`.
-* How to instantiate an EFL window and customize it using the `efl.ui.Win` class.
-* How to start the UI by giving control to EFL with `efl.ui.Config.Run()`.
+* How to properly initialize and shutdown the EFL library with `Efl.All.Init()` and `Efl.All.Shutdown()`.
+* How to create and initialize EFL objects using `new`.
+* How to instantiate an EFL window and customize it using the `Efl.Ui.Win` class.
+* How to start the UI by giving control to EFL with `Efl.Ui.Config.Run()`.
 
 The following tutorial adds some text and a button to the UI, and shows how to react to a button press.
 
