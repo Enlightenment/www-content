@@ -29,7 +29,7 @@ public class Example
     public static void QuitCb(object sender, EventArgs e)
     {
         // Exit the EFL main loop
-        efl.ui.Config.Exit();
+        Efl.Ui.Config.Exit();
     }
 
 #if WIN32
@@ -38,55 +38,51 @@ public class Example
     public static void Main()
     {
         // Initialize EFL and all UI components
-        efl.All.Init(efl.Components.Ui);
+        Efl.All.Init(Efl.Components.Ui);
 
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            // Set the window's title
-            ewin.SetText("Hello World");
-            // Request that the window is automatically hidden when the "close"
-            // button is pressed
-            ewin.SetAutohide(true);
-            // Hook to the Hide event
-            ewin.HideEvt += QuitCb;
-        });
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText("Hello World");
+        // Request that the window is automatically hidden when the "close"
+        // button is pressed
+        win.SetAutohide(true);
+        // Hook to the Hide event
+        win.HideEvt += QuitCb;
 
         // Create a box container
-        efl.ui.IBox box = new efl.ui.Box(win, (efl.ui.IBox ebox) => {
-            // Set its minimum size
-            ebox.SetHintMin(new eina.Size2D(360, 240));
-            // Set the box as the content for the window
-            // The window size will adapt to the box size
-            win.SetContent(ebox);
-        });
+        var box = new Efl.Ui.Box(win);
+        // Set its minimum size
+        box.SetHintMin(new Eina.Size2D(360, 240));
+        // Set the box as the content for the window
+        // The window size will adapt to the box size
+        win.SetContent(box);
 
         // Create a text label widget
-        new efl.ui.Text(box, (efl.ui.IText etext) => {
-            // Set its content and customize it
-            etext.SetText("Hello World. This is an Efl.Ui application!");
-            etext.SetSelectionAllowed(false);
-            etext.SetHintWeight(1.0, 0.9);
-            etext.SetHintAlign(0.5, 0.5);
-            // Add the text to the box container
-            box.DoPack(etext);
-        });
+        var label = new Efl.Ui.Text(box);
+        // Set its content and customize it
+        label.SetText("Hello World. This is an Efl.Ui application!");
+        label.SetSelectionAllowed(false);
+        label.SetHintWeight(1.0, 0.9);
+        label.SetHintAlign(0.5, 0.5);
+        // Add the text to the box container
+        box.DoPack(label);
 
         // Create a button widget
-        new efl.ui.Button(box, (efl.ui.IButton ebutton) => {
-            // Customize it
-            ebutton.SetText("Quit");
-            ebutton.SetHintWeight(1.0, 0.1);
-            // Set the method to be called when the button is pressed
-            ebutton.ClickedEvt += QuitCb;
-            // Add the button to the box container
-            box.DoPack(ebutton);
-        });
+        var button = new Efl.Ui.Button(box);
+        // Customize it
+        button.SetText("Quit");
+        button.SetHintWeight(1.0, 0.1);
+        // Set the method to be called when the button is pressed
+        button.ClickedEvt += QuitCb;
+        // Add the button to the box container
+        box.DoPack(button);
 
         // Start the EFL main loop
-        efl.ui.Config.Run();
+        Efl.Ui.Config.Run();
 
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
     }
 }
 ```
@@ -105,18 +101,17 @@ Take a look at the window instantiation:
 
 ```csharp
         // Create a window and initialize it
-        efl.ui.IWin win = new efl.ui.Win(efl.App.GetLoopMain(), (efl.ui.IWin ewin) => {
-            // Set the window's title
-            ewin.SetText("Hello World");
-            // Request that the window is automatically hidden when the "close"
-            // button is pressed
-            ewin.SetAutohide(true);
-            // Hook to the Hide event
-            ewin.HideEvt += QuitCb;
-        });
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText("Hello World");
+        // Request that the window is automatically hidden when the "close"
+        // button is pressed
+        win.SetAutohide(true);
+        // Hook to the Hide event
+        win.HideEvt += QuitCb;
 ```
 
-This creates a new window, making it a child of the application's Main Loop, and customizing it with an initialization method. In this case, the initialization method is a lambda function which:
+This creates a new window, making it a child of the application's Main Loop, and customizes it:
 
 * Sets the window title to `Hello World`.
 * Sets the `autohide` flag to `true` (see the [previous tutorial](hello-world-cs.md)).
@@ -131,7 +126,11 @@ All event handlers in EFL have the same signature:
 Where `sender` is the object that emitted the event, and `e` contains any additional information, which depends on the type of the event.
 
 > **NOTE:**
-> `e` must be cast to the correct type to be able to extract this information. For example, when connecting to the `efl.input.Interface.KeyDownEvt` to be informed of key presses, you must cast `e` to `efl.input.Interface.KeyDownEvt_Args` to retrieve the actual key.
+> `e` must be typed correctly to be able to extract this information. For example, when connecting to the `Efl.Input.Interface.KeyDownEvt` to be informed of key presses, the event handler signature is:
+> ```csharp
+>     public static void Handler(object sender, Efl.Input.InterfaceKeyDownEvt_Args e);
+> ```
+> And you can retrieve the pressed key using `e.arg.GetKey()`.
 
 This tutorial simply quits the application whenever the window is closed:
 
@@ -140,7 +139,7 @@ This tutorial simply quits the application whenever the window is closed:
     public static void QuitCb(object sender, EventArgs e)
     {
         // Exit the EFL main loop
-        efl.ui.Config.Exit();
+        Efl.Ui.Config.Exit();
     }
 ```
 
@@ -158,13 +157,12 @@ This tutorial uses a *box* container:
 
 ```csharp
         // Create a box container
-        efl.ui.IBox box = new efl.ui.Box(win, (efl.ui.IBox ebox) => {
-            // Set its minimum size
-            ebox.SetHintMin(new eina.Size2D(360, 240));
-            // Set the box as the content for the window
-            // The window size will adapt to the box size
-            win.SetContent(ebox);
-        });
+        var box = new Efl.Ui.Box(win);
+        // Set its minimum size
+        box.SetHintMin(new Eina.Size2D(360, 240));
+        // Set the box as the content for the window
+        // The window size will adapt to the box size
+        win.SetContent(box);
 ```
 
 A box container can be vertical or horizontal, and by default it is vertical. All widgets inside a vertical box container will have the same width as the container, and their heights will be automatically chosen so that they cover the whole surface of the container from top to bottom (Imagine a stack of pizza boxes neatly fitting inside your oven). By default, all widgets will have the same height, but that can be customized as you will see in a moment.
@@ -181,18 +179,17 @@ So far the tutorial has created a window and an invisible container, it is about
 
 ```csharp
         // Create a text label widget
-        new efl.ui.Text(box, (efl.ui.IText etext) => {
-            // Set its content and customize it
-            etext.SetText("Hello World. This is an Efl.Ui application!");
-            etext.SetSelectionAllowed(false);
-            etext.SetHintWeight(1.0, 0.9);
-            etext.SetHintAlign(0.5, 0.5);
-            // Add the text to the box container
-            box.DoPack(etext);
-        });
+        var label = new Efl.Ui.Text(box);
+        // Set its content and customize it
+        label.SetText("Hello World. This is an Efl.Ui application!");
+        label.SetSelectionAllowed(false);
+        label.SetHintWeight(1.0, 0.9);
+        label.SetHintAlign(0.5, 0.5);
+        // Add the text to the box container
+        box.DoPack(label);
 ```
 
-This instantiates an `efl.ui.Text` object, as a child of the box container. Quite sensibly, this is the widget used to display text on screen. The initialization above is worth a careful look:
+This instantiates an `Efl.Ui.Text` object, as a child of the box container. Quite sensibly, this is the widget used to display text on screen. The initialization above is worth a careful look:
 
 * `SetText()`: Specifies the text string to display in the widget.
 * `SetSelectionAllowed()`: This disables selecting the text (by dragging over it with the mouse, for example). Just to showcase a bit the EFL's capabilities.
@@ -206,7 +203,7 @@ This instantiates an `efl.ui.Text` object, as a child of the box container. Quit
   >
   > If you want to vertically align the text inside a vertical box, you have to align the text **inside** the text widget using `SetValign(0.5)` (or `SetHalign(0.5)`). This is a complex topic explained in it own tutorial (*coming soon*).
 
-* `Efl.ui.Box.DoPack()`: This adds the text widget to the box container. The order in which widgets are added to a container dictates the order in which they are placed on the screen.
+* `Efl.Ui.Box.DoPack()`: This adds the text widget to the box container. The order in which widgets are added to a container dictates the order in which they are placed on the screen.
 
   Besides being a child of the box object, the text widget also needs to be *packed* into the box with `DoPack()`.
 
@@ -218,15 +215,14 @@ Let's now add a button below the text label:
 
 ```csharp
         // Create a button widget
-        new efl.ui.Button(box, (efl.ui.IButton ebutton) => {
-            // Customize it
-            ebutton.SetText("Quit");
-            ebutton.SetHintWeight(1.0, 0.1);
-            // Set the method to be called when the button is pressed
-            ebutton.ClickedEvt += QuitCb;
-            // Add the button to the box container
-            box.DoPack(ebutton);
-        });
+        var button = new Efl.Ui.Button(box);
+        // Customize it
+        button.SetText("Quit");
+        button.SetHintWeight(1.0, 0.1);
+        // Set the method to be called when the button is pressed
+        button.ClickedEvt += QuitCb;
+        // Add the button to the box container
+        box.DoPack(button);
 ```
 
 This instantiates a button as a child of the box and initializes it so:
