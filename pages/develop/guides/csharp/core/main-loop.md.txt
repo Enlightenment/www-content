@@ -25,7 +25,7 @@ For convenience, when your application starts, EFL creates one Main Loop for you
 In the [Hello World](/develop/tutorials/csharp/hello-world-cs.md) tutorial you learned that you can retrieve the Application Main Loop like this:
 
 ```csharp
-var mainloop = efl.App.GetLoopMain();
+var mainloop = Efl.App.GetLoopMain();
 ```
 
 This guide will put the application's main loop to a variety of uses.
@@ -40,8 +40,8 @@ You can find usage examples in the [EFL examples repository](https://git.enlight
 
 Timers are EFL objects. You can create them with the `new` operator as all other EFL objects, with an optional parent and initialization method (as seen in the [Hello World in C#](/develop/tutorials/csharp/hello-world-cs.md) tutorial):
 
-```c
-var timer_object = new efl.Loop_Timer(mainloop, (efl.ILoop_Timer etimer) => {
+```csharp
+var timer_object = new Efl.LoopTimer(mainloop, (Efl.LoopTimer etimer) => {
     // Timer configuration
 });
 ```
@@ -73,6 +73,7 @@ The `Interval` property controls the amount of time between callback triggers in
 ```csharp
 timer_object.SetInterval(0.01); // In seconds
 timer_object.GetInterval();
+timer_object.Interval = 0.01;
 ```
 
 The **time left** before the next trigger of the timer can be retrieved through the `Pending` read-only property:
