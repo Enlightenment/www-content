@@ -33,7 +33,7 @@ The method signature for the callback is:
 void callback(object sender, EventArgs e);
 ```
 
-*sender* is the object that emitted the event and *e* contains any additional information that the event sent, after casting it to the required type (for example, `efl.input.Interface.KeyDownEvt_Args` when connecting to the `efl.input.Interface.KeyDownEvt` event).
+*sender* is the object that emitted the event and *e* contains any additional information that the event sent. Events emitting additional information require that you use their own *EventArgs* class, for example, `Efl.Input.InterfaceKeyDownEvt_Args` when connecting to the `Efl.Input.Interface.KeyDownEvt` event.
 
 > **NOTE:**
 > The [API Reference documentation](/develop/api/) for each event tells you what type to cast *e* to (*Not available for C# yet*).
@@ -70,49 +70,49 @@ public class Example
     // Polling callback
     private static void PollCb(object sender, EventArgs e)
     {
-        Console.WriteLine("  Poll from {0}", ((efl.IObject)sender).GetName());
+        Console.WriteLine("  Poll from {0}", ((Efl.Object)sender).GetName());
     }
 
     public static void Main()
     {
         // Initialize EFL and all UI components
-        efl.All.Init();
+        Efl.All.Init();
 
         // Retrieve the application's main loop
-        var mainloop = efl.App.GetLoopMain();
+        var mainloop = Efl.App.AppMain;
         mainloop.SetName("Mainloop");
 
         // This event gets triggered continuously
         mainloop.PollHighEvt += PollCb;
 
         // This timer will control events fired by the main loop
-        new efl.Loop_Timer(mainloop, (efl.ILoop_Timer etimer) => {
-            etimer.SetName("Timer");
+        var timer = new Efl.LoopTimer(mainloop, (Efl.LoopTimer etimer) => {
             // Trigger every 100ms
             etimer.SetInterval(0.1);
-            // To count number of timer triggers
-            int tick_count = 0;
-            etimer.TickEvt += (object sender, EventArgs e) => {
-                string message = "Tick {0} from {1}: ";
-                // Depending on the number of timer ticks, it does a different thing
-                switch (tick_count) {
-                    case 0:
-                        message += "Freezing Mainloop events";
-                        mainloop.FreezeEvent();
-                        break;
-                    case 1:
-                        message += "Thawing Mainloop events";
-                        mainloop.ThawEvent();
-                        break;
-                    default:
-                        message += "Quitting";
-                        mainloop.Quit(new eina.Value(0));
-                        break;
-                }
-                Console.WriteLine(message, tick_count, ((efl.IObject)sender).GetName());
-                tick_count++;
-            };
         });
+        timer.SetName("Timer");
+        // To count number of timer triggers
+        int tick_count = 0;
+        timer.TickEvt += (object sender, EventArgs e) => {
+            string message = "Tick {0} from {1}: ";
+            // Depending on the number of timer ticks, it does a different thing
+            switch (tick_count) {
+                case 0:
+                    message += "Freezing Mainloop events";
+                    mainloop.FreezeEvent();
+                    break;
+                case 1:
+                    message += "Thawing Mainloop events";
+                    mainloop.ThawEvent();
+                    break;
+                default:
+                    message += "Quitting";
+                    mainloop.Quit(new Eina.Value(0));
+                    break;
+            }
+            Console.WriteLine(message, tick_count, ((Efl.Object)sender).GetName());
+            tick_count++;
+        };
 
         Console.WriteLine("Waiting for Timer to call back...");
 
@@ -120,14 +120,14 @@ public class Example
         mainloop.Begin();
 
         // Shutdown EFL
-        efl.All.Shutdown();
+        Efl.All.Shutdown();
 
         Console.WriteLine("Application is over");
     }
 }
 ```
 
-A handler is connected to the `PollHighEvt` event of the application's main loop, which triggers continuously, at an undefined frequency of several shots per second (See the Main Loop Programming Guide, *coming soon*). At every shot, a line is printed on the console.
+A handler is connected to the `PollHighEvt` event of the application's main loop, which triggers continuously, at an undefined frequency of several shots per second (See the [Main Loop Programming Guide](main-loop.md)). At every shot, a line is printed on the console.
 
 At the same time, a timer is instantiated, firing every 100ms, which does a different thing at every shot:
 
@@ -158,7 +158,7 @@ Tick 2 from Timer: Quitting
 
 As you can see, the line `Poll from Mainloop` is printed continuously except in the period between Tick 0 and Tick 1 of the Timer, where main loop events are frozen.
 
-The exact amount of `Poll from Mainloop` messages you get depends on the frequency of the `PollHighEvt` event, which is chosen by EFL. The important thing is that there should be no such messages in between timer ticks 0 and 1, since main loop events are frozen,
+The exact amount of `Poll from Mainloop` messages you get depends on the frequency of the `PollHighEvt` event, which is chosen by EFL. The important thing is that there should be no such messages in between timer ticks 0 and 1, since main loop events are frozen.
 
 ## Further Reading ##
 
