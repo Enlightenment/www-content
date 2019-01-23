@@ -46,17 +46,17 @@ The bottom line is that you must **add widgets to your GUI in the same order in 
 
 Sometimes you may want to bypass EFL's default behavior and programmatically set the focus to a particular widget, for example, on an `OK` button once enough information has been added to a form.
 
-To achieve this use the `efl.ui.focus.Util` class. It has a single method called `Focus()` which receives as a parameter the widget to which you want to move the focus.
+To achieve this use the `Efl.Ui.Focus.Util` class. It has a single method called `Focus()` which receives as a parameter the widget to which you want to move the focus.
 
 When using this method the widget currently selected will lose the focus and the one you passed will gain the focus. During this process, all focus-related events will be emitted (see the next section).
 
-This method can only be used on widgets implementing the `efl.ui.focus.IObject` interface but most widgets inherit from `efl.ui.Widget` which already does this, so you don't typically have to worry.
+This method can only be used on widgets implementing the `Efl.Ui.Focus.Object` interface but most widgets inherit from `Efl.Ui.Widget` which already does this, so you don't typically have to worry.
 
 Here's an usage example taken from the EFL examples repository [`reference/csharp/ui/src/focus_main.cs`](https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs):
 
 ```csharp
 // Manually transfer focus to the first check box
-efl.ui.focus.Util.Focus(first_checkbox);
+Efl.Ui.Focus.Util.Focus(first_checkbox);
 ```
 
 ## Reacting to Focus Changes ##
@@ -68,17 +68,16 @@ Here's an usage example taken from the EFL examples repository [`reference/cshar
 ```csharp
 public static void FocusChangedCb(object sender, EventArgs e)
 {
-    Console.WriteLine($"Focus for object {((efl.IText)sender).GetText()} changed to {((efl.ui.IWidget)sender).GetFocus()}");
+    Console.WriteLine($"Focus for object {((Efl.Text)sender).GetText()} changed to {((Efl.Ui.Widget)sender).GetFocus()}");
 }
 
 [...]
 
-new efl.ui.Check(vbox, (efl.ui.ICheck echeck) => {
-  echeck.SetText("Check " + i);
-  echeck.SetHintAlign(0.5, 0.5);
-  echeck.FocusChangedEvt += FocusChangedCb;
-  vbox.DoPack(echeck);
-});
+var checkbox = new Efl.Ui.Check(vbox);
+checkbox.SetText("Check " + i);
+checkbox.SetHintAlign(0.5, 0.5);
+checkbox.FocusChangedEvt += FocusChangedCb;
+vbox.DoPack(checkbox);
 ```
 
 ## Showing and Hiding the Focus Highlight ##
@@ -95,7 +94,7 @@ win.SetFocusHighlightEnabled(true);
 ## Summary ##
 
 * Add widgets to your GUI in the same order in which you want your users to navigate them.
-* Manually set the focus to a widget using `efl.ui.focus.Util.Focus()`.
+* Manually set the focus to a widget using `Efl.Ui.Focus.Util.Focus()`.
 * Track focus changes by listening to the `FocusChangedEvt` event emitted by widgets.
 * Control whether the focus highlight is shown or not using `SetFocusHighlightEnabled()`.
 
