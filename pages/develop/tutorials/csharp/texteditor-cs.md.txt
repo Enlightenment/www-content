@@ -60,9 +60,10 @@ public class TextEditor
                                                               "texteditor_example.txt");
 
     // Quits the application
-    private void GUIQuitCb(object sender, EventArgs ea)
+    private void GUIQuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args ea)
     {
-        Efl.Ui.Config.Exit();
+        if (ea.arg == false)
+            Efl.Ui.Config.Exit();
     }
 
     // Enables or disables buttons on the toolbar as required
@@ -174,17 +175,17 @@ public class TextEditor
         bar.DoPack(box);
 
         // "Quit" button
-        GUIToolbarButtonAdd(bar, "Quit", "application-exit", GUIQuitCb);
+        GUIToolbarButtonAdd(bar, "Quit", "application-exit", (object sender, EventArgs e) => { Efl.Ui.Config.Exit(); } );
     }
 
     // Builds the user interface for the text editor
     public TextEditor()
     {
         // Create a window and initialize it
-        win = new Efl.Ui.Win(Efl.App.AppMain);
+        win = new Efl.Ui.Win(parent: Efl.App.AppMain);
         win.SetText("Text Editor");
         win.SetAutohide(true);
-        win.HideEvt += GUIQuitCb;
+        win.VisibilityChangedEvt += GUIQuitCb;
 
         // Create a vertical box container
         Efl.Ui.Box box = new Efl.Ui.Box(win);
@@ -196,10 +197,10 @@ public class TextEditor
         // Create the main text entry
         editorTextBox = new Efl.Ui.Text(box);
         editorTextBox.SetFont("Mono", 14);
-        editorTextBox.SetMultiline(true);
-        editorTextBox.SetEditable(true);
-        editorTextBox.SetScrollable(true);
-        editorTextBox.SetHintMin(new Eina.Size2D(360, 240));
+        editorTextBox.Multiline = true;
+        editorTextBox.Editable = true;
+        editorTextBox.Scrollable = true;
+        editorTextBox.SetHintSizeMin(new Eina.Size2D(360, 240));
         editorTextBox.ChangedEvt += EditorChangedCb;
         editorTextBox.ChangedUserEvt += EditorChangedCb;
         box.DoPack(editorTextBox);
@@ -308,18 +309,19 @@ First, a window is created as explained in previous tutorials:
     public TextEditor()
     {
         // Create a window and initialize it
-        win = new Efl.Ui.Win(Efl.App.AppMain);
+        win = new Efl.Ui.Win(parent: Efl.App.AppMain);
         win.SetText("Text Editor");
         win.SetAutohide(true);
-        win.HideEvt += GUIQuitCb;
+        win.VisibilityChangedEvt += GUIQuitCb;
 ```
+
+The `parent` parameter is named explicitly in the argument list to `new Efl.Ui.Win()` just for example purposes. Some widgets accept multiple parameters in their constructors so sometimes it is handy to name them explicitly.
 
 Then the vertical container box is created and set as the content for the window:
 
-
 ```csharp
         // Create a vertical box container
-        Efl.Ui.IBox box = new Efl.Ui.Box(win);
+        Efl.Ui.Box box = new Efl.Ui.Box(win);
         win.SetContent(box);
 ```
 
@@ -336,24 +338,28 @@ Finally, the text entry area is added. This is the main feature of the text edit
         // Create the main text entry
         editorTextBox = new Efl.Ui.Text(box);
         editorTextBox.SetFont("Mono", 14);
-        editorTextBox.SetMultiline(true);
-        editorTextBox.SetEditable(true);
-        editorTextBox.SetScrollable(true);
-        editorTextBox.SetHintMin(new Eina.Size2D(360, 240));
+        editorTextBox.Multiline = true;
+        editorTextBox.Editable = true;
+        editorTextBox.Scrollable = true;
+        editorTextBox.SetHintSizeMin(new Eina.Size2D(360, 240));
         editorTextBox.ChangedEvt += EditorChangedCb;
         editorTextBox.ChangedUserEvt += EditorChangedCb;
         box.DoPack(editorTextBox);
 ```
 
+For convenience, some widget's properties can be accessed through regular C# properties besides the `Set()` and `Get()` methods used so far. For instance, the `Editable` flag (explained below) can be manipulated through the `Efl.Ui.Text.Editable` property besides the `Efl.Ui.Text.SetEditable()` and `Efl.Ui.Text.GetEditable()` methods.
+
+Let's take a closer look:
+
 * `Efl.Ui.Text.SetFont()` sets the font family and size for the text area. The font string has to follow `fontconfig`'s convention for naming fonts, as it is the underlying library used to query system fonts (see the output of the `fc-list` command). Alternatively, you can use the full path to a font file.
 
-* `Efl.Ui.Text.SetMultiline()` selects whether the text area will support more than one line of text (`true` is customary for a text editor).
+* `Efl.Ui.Text.Multiline` selects whether the text area will support more than one line of text (`true` is customary for a text editor).
 
-* `Efl.Ui.Text.SetEditable()` sets whether the text can be modified by the user or it is only meant for output. If set to `true` all editing facilities (like keyboard input handling and caret positioning) will be enabled.
+* `Efl.Ui.Text.Editable` sets whether the text can be modified by the user or it is only meant for output. If set to `true` all editing facilities (like keyboard input handling and caret positioning) will be enabled.
 
-* `Efl.Ui.SetScrollable()` selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.
+* `Efl.Ui.Scrollable` selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.
 
-* `Efl.Ui.SetHintMin()` sets a minimum size for the text area, as seen in previous tutorials.
+* `Efl.Ui.SetHintSizeMin()` sets a minimum size for the text area, as seen in previous tutorials.
 
 Furthermore, handlers are installed for two events: `ChangedUserEvt` is triggered when the text content changes in response to user actions (for example, a key has been pressed). `ChangedEvt` is triggered when the text content changes for any other reason (both events are never triggered together).
 
@@ -378,7 +384,7 @@ The following sections describe each part of the user interface in more detail .
 This is done in the `GUIToolbarSetup()` method:
 
 ```csharp
-    private void GUIToolbarSetup(Efl.Ui.IBox parent)
+    private void GUIToolbarSetup(Efl.Ui.Box parent)
     {
         // Create a horizontal box container for the buttons
         var bar = new Efl.Ui.Box(parent);
@@ -530,7 +536,7 @@ Applications typically convey important informational or error messages through 
 
 ![Popup message](/_media/playground/texteditor-app/image02.png)
 
-To achieve this EFL uses the `Efl.Ui.Popup` class and its derivatives, for instance, the `Efl.Ui.Text_Alert_Popup` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
+To achieve this EFL uses the `Efl.Ui.Popup` class and its derivatives, for instance, the `Efl.Ui.TextAlertPopup` used in this tutorial. This class implements a popup that contains text and optional configurable buttons.
 
 This is how it's used in this tutorial, in the `ShowMessage()` method:
 
