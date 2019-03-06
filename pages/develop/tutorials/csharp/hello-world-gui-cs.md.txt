@@ -26,10 +26,11 @@ using System;
 public class Example
 {
     // Callback to quit the application
-    public static void QuitCb(object sender, EventArgs e)
+    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e)
     {
         // Exit the EFL main loop
-        Efl.Ui.Config.Exit();
+        if (e.arg == false)
+          Efl.Ui.Config.Exit();
     }
 
 #if WIN32
@@ -48,12 +49,12 @@ public class Example
         // button is pressed
         win.SetAutohide(true);
         // Hook to the Hide event
-        win.HideEvt += QuitCb;
+        win.VisibilityChangedEvt += QuitCb;
 
         // Create a box container
         var box = new Efl.Ui.Box(win);
         // Set its minimum size
-        box.SetHintMin(new Eina.Size2D(360, 240));
+        box.SetHintSizeMin(new Eina.Size2D(360, 240));
         // Set the box as the content for the window
         // The window size will adapt to the box size
         win.SetContent(box);
@@ -74,7 +75,7 @@ public class Example
         button.SetText("Quit");
         button.SetHintWeight(1.0, 0.1);
         // Set the method to be called when the button is pressed
-        button.ClickedEvt += QuitCb;
+        button.ClickedEvt += (object sender, EventArgs e) => { Efl.Ui.Config.Exit(); };
         // Add the button to the box container
         box.DoPack(button);
 
@@ -108,16 +109,16 @@ Take a look at the window instantiation:
         // button is pressed
         win.SetAutohide(true);
         // Hook to the Hide event
-        win.HideEvt += QuitCb;
+        win.VisibilityChangedEvt += QuitCb;
 ```
 
 This creates a new window, making it a child of the application's Main Loop, and customizes it:
 
 * Sets the window title to `Hello World`.
-* Sets the `autohide` flag to `true` (see the [previous tutorial](hello-world-cs.md)).
-* Connects an event handler to the window's `Hide Event`. This event will be emitted whenever the window is closed, because of the `autohide` flag above.
+* Sets the `Autohide` flag to `true` (see the [previous tutorial](hello-world-cs.md)).
+* Connects an event handler to the window's `Visibility Changed Event`. This event will be emitted every time the window is shown or hidden. In particular, it will be emitted when the window is closed due to the `Autohide` flag above.
 
-All event handlers in EFL have the same signature:
+All event handlers in EFL have a common signature:
 
 ```csharp
     public static void Handler(object sender, EventArgs e);
@@ -125,21 +126,21 @@ All event handlers in EFL have the same signature:
 
 Where `sender` is the object that emitted the event, and `e` contains any additional information, which depends on the type of the event.
 
-> **NOTE:**
-> `e` must be typed correctly to be able to extract this information. For example, when connecting to the `Efl.Input.Interface.KeyDownEvt` to be informed of key presses, the event handler signature is:
-> ```csharp
->     public static void Handler(object sender, Efl.Input.InterfaceKeyDownEvt_Args e);
-> ```
-> And you can retrieve the pressed key using `e.arg.GetKey()`.
+If you want to retrieve any additional information, though, you have to use the appropriate `EventArgs` subclass. For instance, in this tutorial:
+```csharp
+    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e);
+```
+where you can retrieve the new visibility status of the window in the `e.arg` parameter (`true` for window shown or `false` for window hidden).
 
-This tutorial simply quits the application whenever the window is closed:
+This tutorial simply quits the application whenever the window is hidden:
 
 ```csharp
     // Callback to quit the application
-    public static void QuitCb(object sender, EventArgs e)
+    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e)
     {
         // Exit the EFL main loop
-        Efl.Ui.Config.Exit();
+        if (e.arg == false)
+          Efl.Ui.Config.Exit();
     }
 ```
 
@@ -159,7 +160,7 @@ This tutorial uses a *box* container:
         // Create a box container
         var box = new Efl.Ui.Box(win);
         // Set its minimum size
-        box.SetHintMin(new Eina.Size2D(360, 240));
+        box.SetHintSizeMin(new Eina.Size2D(360, 240));
         // Set the box as the content for the window
         // The window size will adapt to the box size
         win.SetContent(box);
@@ -167,9 +168,9 @@ This tutorial uses a *box* container:
 
 A box container can be vertical or horizontal, and by default it is vertical. All widgets inside a vertical box container will have the same width as the container, and their heights will be automatically chosen so that they cover the whole surface of the container from top to bottom (Imagine a stack of pizza boxes neatly fitting inside your oven). By default, all widgets will have the same height, but that can be customized as you will see in a moment.
 
-In the initialization method of the box above you can see calls to:
+In the snippet above you can see calls to:
 
-* `SetHintMin()`: This sets the **minimum** size for the box. You can resize the window and the box will grow or shrink as needed, but it will never go below this size.
+* `SetHintSizeMin()`: This sets the **minimum** size for the box. You can resize the window and the box will grow or shrink as needed, but it will never go below this size.
 
 * `SetContent()`: This method specifies the **one** widget which will be the content of the window (Windows can only have one content set at any given time). If you want to have more than one widget in your window, you will need to wrap them in a container and set that as the content of the window. As shown above, the box container is set as the content of the window.
 
@@ -189,13 +190,13 @@ So far the tutorial has created a window and an invisible container, it is about
         box.DoPack(label);
 ```
 
-This instantiates an `Efl.Ui.Text` object, as a child of the box container. Quite sensibly, this is the widget used to display text on screen. The initialization above is worth a careful look:
+This instantiates an `Efl.Ui.Text` object, as a child of the box container. Quite sensibly, this is the widget used to display text on screen. The snippet above is worth a careful look:
 
 * `SetText()`: Specifies the text string to display in the widget.
 * `SetSelectionAllowed()`: This disables selecting the text (by dragging over it with the mouse, for example). Just to showcase a bit the EFL's capabilities.
-* `SetHintWeight()`: This one controls the widget's size, but, instead of setting it explicitly as `SetHintMin()` did, it does so indirectly by giving the widget a **weight**. The container holding this widget decides the size for all its held widgets according to their relative weights (If all widgets have the same weight, they all have the same size. If you double the weight of one of the widgets, its size will be double that of the other widgets). This is a complex topic explained in its own tutorial (*coming soon*).
+* `SetHintWeight()`: This one controls the widget's size, but, instead of setting it explicitly as `SetHintSizeMin()` did, it does so indirectly by giving the widget a **weight**. The container holding this widget decides the size for all its held widgets according to their relative weights (If all widgets have the same weight, they all have the same size. If you double the weight of one of the widgets, its size will be double that of the other widgets). This is a complex topic explained in its own tutorial (*coming soon*).
 
-  In the code above, the text widget is given a weight of `1.0` in the horizontal direction and `0.9` in the vertical direction (both directions are treated separately). The effect of this on the final widget size depends on the other widgets' weights, so it is explained in the next section.
+  In the code above, the text widget is given a weight of `1.0` in the horizontal direction and `0.9` in the vertical direction (both directions are treated separately). The effect of this on the final widget size depends on the other widgets' weights, so it is explained in the next section after all widgets have been created.
 
 * `SetHintAlign()`: Once the container has allocated space for each widget according to its weight, if the actual widget is smaller, it has room to be aligned. This command controls horizontal and vertical alignment in this way: `0` means left (or top), `1` means right (or bottom), and intermediate values are possible, meaning intermediate positions. For example, `0.5` means centered, as used in the code.
 
@@ -206,8 +207,6 @@ This instantiates an `Efl.Ui.Text` object, as a child of the box container. Quit
 * `Efl.Ui.Box.DoPack()`: This adds the text widget to the box container. The order in which widgets are added to a container dictates the order in which they are placed on the screen.
 
   Besides being a child of the box object, the text widget also needs to be *packed* into the box with `DoPack()`.
-
-It is worth noting that, as hinted in the [previous tutorial](hello-world-cs.md), no variable is needed to store the widget: after its construction, it is already fully initialized (customized) and a reference has been handled to a parent which will take care of its destruction. This results in a very compact way to build user interfaces!
 
 ### Adding a Button ###
 
@@ -220,7 +219,7 @@ Let's now add a button below the text label:
         button.SetText("Quit");
         button.SetHintWeight(1.0, 0.1);
         // Set the method to be called when the button is pressed
-        button.ClickedEvt += QuitCb;
+        button.ClickedEvt += (object sender, EventArgs e) => { Efl.Ui.Config.Exit(); };
         // Add the button to the box container
         box.DoPack(button);
 ```
@@ -232,7 +231,7 @@ This instantiates a button as a child of the box and initializes it so:
 
   > **NOTE**: You could also use `1` and `9` for the weights, or `10` and `90`, to achieve the same results. Remember that the weights are relative.
 
-* It connects the `QuitCb()` event handler to the `Clicked` event. In this way, when the button is pressed, the application will exit.
+* It defines a lambda function to be used as event handler for the `Clicked` event. In this way, when the button is pressed, the application will exit.
 * Adds the button to the box (besides being a child of the box object, the button also needs to be *packed* into the box with `DoPack()`).
 
 ## Summary ##
@@ -241,7 +240,7 @@ At the end of this tutorial you have learned:
 
 * How to react to **events** like window a being closed or a button being clicked.
 * How to use **container** widgets to take care of other widget's position and size.
-* How to further customize a widget's position and size using **weight** and **alignment** hints.
+* How to further customize a widget's position and size using **size**, **weight** and **alignment** hints.
 
 ## Further Reading ##
 
