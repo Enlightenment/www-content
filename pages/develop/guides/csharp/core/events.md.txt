@@ -86,10 +86,7 @@ public class Example
         mainloop.PollHighEvt += PollCb;
 
         // This timer will control events fired by the main loop
-        var timer = new Efl.LoopTimer(mainloop, (Efl.LoopTimer etimer) => {
-            // Trigger every 100ms
-            etimer.SetInterval(0.1);
-        });
+        var timer = new Efl.LoopTimer(mainloop, 0.1);
         timer.SetName("Timer");
         // To count number of timer triggers
         int tick_count = 0;
