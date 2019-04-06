@@ -1,0 +1,120 @@
+=== Enlightenment Foundation Libraries 1.22 Release ===
+  * //2019-04-05 - by Mike Blumenkrantz //
+
+This is version 1.22 of the Enlightenment Foundation Libraries, featuring over 2000 patches from developers around the world.
+
+== Download ==
+
+| LINK | SHA256 |
+| [[http://download.enlightenment.org/rel/libs/efl/efl-1.22.0.tar.xz  | efl-1.22.tar.xz ]] | 6ac87450cb55a5948c550dbeb05464f5fc1b0616c52dcb1cb2efbda73999c8ef |
+
+----
+
+== What's New ==
+
+The primary focus of this release has been stabilizing the EO library as well
+as an initial set of unified API which is based on it. This release also includes
+work on language bindings for EFL in C# and C++.
+
+Please see the NEWS file for more details.
+
+----
+
+== Statistics ==
+
+(git log --pretty=oneline v1.21.0..v1.22.0 | wc -l) \\ 
+Number of commits in 1.22: 2152 \\ 
+Number of commits in 1.21: 4954 \\ 
+
+(git shortlog -ns v1.21.0..v1.22.0 | wc -l) \\ 
+Number of authors in 1.22: 55 \\ 
+Number of authors in 1.21: 96 \\ 
+
+(git diff --stat v1.20.1..v1.21.0 | tail -1) \\ 
+3154 files changed, 169564 insertions(+), 79861 deletions(-)
+3217 files changed, 281935 insertions(+), 137611 deletions(-) in 1.21 \\ 
+
+----
+
+==Building and Dependencies==
+
+If you have an existing EFL or Elementary install, you may wish to delete its header files and libraries before compiling and installing to avoid possible conflicts during compilation. Please refer to the README for a full list of dependencies, explanations on configure flags and other relevant information. Default dependencies are:
+
+  * bullet
+  * libpng
+  * libjpeg
+  * gstreamer (1.x, 0.10 support optional. Ensure all codecs you want are installed.)
+  * zlib
+  * luajit (lua 5.1 or 5.2 support optional)
+  * libtiff
+  * openssl
+  * curl
+  * dbus
+  * libc
+  * fontconfig
+  * freetype2
+  * fribidi
+  * libpulse
+  * libsndfile
+  * libx11
+  * libxau
+  * libxcomposite
+  * libxdamage
+  * libxdmcp
+  * libxext
+  * libxfixes
+  * libxinerama
+  * libxrandr
+  * libxrender
+  * libxss
+  * libxtst
+  * libxcursor
+  * libxp
+  * libxi (2.2 or newer)
+  * libgl (opengl/glx or opengl-es2/egl)
+  * giflib
+  * util-linux (limbount + libblkid)
+  * systemd / libudev
+  * poppler / poppler-cpp
+  * libraw
+  * libspectre
+  * librsvg
+
+Recommended requirements (highly recommended):
+
+  * harfbuzz
+  * libwebp
+  * libunwind (where available)
+
+Enable these with configure options:
+
+<file>
+--enable-xinput22 \
+--enable-systemd \
+--enable-image-loader-webp \
+--enable-harfbuzz \
+--enable-multisense \
+--enable-liblz4
+</file>
+
+On linux to get framebuffer support you may want to also do:
+
+<file>
+--enable-fb
+--disable-tslib
+</file>
+
+If you want wayland support also add:
+
+<file>
+--enable-wayland \
+--enable-elput \
+--enable-drm
+</file>
+ 
+At runtime if you want thumbnailing for DOC/PPT/XLS etc. files also provide:
+libreoffice
+
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
+
