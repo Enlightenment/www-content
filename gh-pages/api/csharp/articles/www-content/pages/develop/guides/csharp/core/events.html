@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Events Programming Guide in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Events Programming Guide in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="events-programming-guide-in-c">Events Programming Guide in C#</h1>
+
+<p>EFL is event-driven. This means that execution usually takes place within an internal EFL <em>Main Loop</em>. The application receives notifications through function callbacks. These can apply to virtually any event which occurs on a computer.</p>
+<p>Events play a central role in EFL. In this guide, you'll learn more about the required methods to handle them.</p>
+<p>You can also find usage examples in the <a href="https://git.enlightenment.org/tools/examples.git/tree/">EFL examples repository</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="listening-to-events-from-objects">Listening to Events from Objects</h2>
+<p>All EFL objects can emit events. You can discover more about them in the <strong>Events</strong> section of their respective <a class="xref" href="../../../../../../../api/index.html">API Reference documentation</a> (only in C, C# <em>coming soon</em>).</p>
+<p>In C#, you register a callback method for a given event by using the <code>+=</code> operator:</p>
+<pre><code class="lang-csharp">object.event += callback;
+</code></pre>
+<p>Substitute <em>object</em> with any EFL object and <em>event</em> with the identifier of the event (such as <code>PollHighEvt</code> or <code>TickEvt</code>). Set <em>callback</em> to the method to be invoked when the event occurs.</p>
+<p>The method signature for the callback is:</p>
+<pre><code class="lang-csharp">void callback(object sender, EventArgs e);
+</code></pre>
+<p><em>sender</em> is the object that emitted the event and <em>e</em> contains any additional information that the event sent. Events emitting additional information require that you use their own <em>EventArgs</em> class, for example, <code>Efl.Input.InterfaceKeyDownEvt_Args</code> when connecting to the <code>Efl.Input.Interface.KeyDownEvt</code> event.</p>
+<blockquote>
+<p><strong>NOTE:</strong>
+The <a class="xref" href="../../../../../../../api/index.html">API Reference documentation</a> for each event tells you what type to cast <em>e</em> to (<em>Not available for C# yet</em>).
+See <a class="xref" href="../../../../../../../api/index.html">EFL_EVENT_POINTER_DOWN</a> for example.</p>
+</blockquote>
+<p>To stop receiving notifications for a particular event, unregister the callback using the <code>-=</code> operator:</p>
+<pre><code class="lang-csharp">object.event -= callback;
+</code></pre>
+<p>Note that in order to unregister the callback you have to provide the callback method again. This is because you can register different callback methods for the same event.</p>
+<h2 id="pausing-and-resuming-event-notifications">Pausing and Resuming Event Notifications</h2>
+<p>All event emissions from a given object can be paused (<em>frozen</em>) using <code>FreezeEvent()</code> and resumed with <code>ThawEvent()</code>:</p>
+<pre><code class="lang-csharp">   object.FreezeEvent();
+   object.ThawEvent();
+</code></pre>
+<p>While an object is frozen, only high-priority events (marked as <em>hot</em> in the documentation) will be emitted. Hot events cannot be stopped.</p>
+<p>Remember that ALL events emitting from a object are stopped if it's frozen, except for hot events. If you need to stop individual events you can unregister their callback temporarily and then re-register later.</p>
+<h2 id="example">Example</h2>
+<p>Below is the <code>core_event.cs</code> example taken from <a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_event.cs">the examples repository</a>:</p>
+<pre><code class="lang-csharp">public class Example
+{
+    // Polling callback
+    private static void PollCb(object sender, EventArgs e)
+    {
+        Console.WriteLine(&quot;  Poll from {0}&quot;, ((Efl.Object)sender).GetName());
+    }
+
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        Efl.All.Init();
+
+        // Retrieve the application's main loop
+        var mainloop = Efl.App.AppMain;
+        mainloop.SetName(&quot;Mainloop&quot;);
+
+        // This event gets triggered continuously
+        mainloop.PollHighEvt += PollCb;
+
+        // This timer will control events fired by the main loop
+        var timer = new Efl.LoopTimer(mainloop, 0.1);
+        timer.SetName(&quot;Timer&quot;);
+        // To count number of timer triggers
+        int tick_count = 0;
+        timer.TickEvt += (object sender, EventArgs e) =&gt; {
+            string message = &quot;Tick {0} from {1}: &quot;;
+            // Depending on the number of timer ticks, it does a different thing
+            switch (tick_count) {
+                case 0:
+                    message += &quot;Freezing Mainloop events&quot;;
+                    mainloop.FreezeEvent();
+                    break;
+                case 1:
+                    message += &quot;Thawing Mainloop events&quot;;
+                    mainloop.ThawEvent();
+                    break;
+                default:
+                    message += &quot;Quitting&quot;;
+                    mainloop.Quit(new Eina.Value(0));
+                    break;
+            }
+            Console.WriteLine(message, tick_count, ((Efl.Object)sender).GetName());
+            tick_count++;
+        };
+
+        Console.WriteLine(&quot;Waiting for Timer to call back...&quot;);
+
+        // Start the EFL main loop (and the experiment)
+        mainloop.Begin();
+
+        // Shutdown EFL
+        Efl.All.Shutdown();
+
+        Console.WriteLine(&quot;Application is over&quot;);
+    }
+}
+</code></pre>
+<p>A handler is connected to the <code>PollHighEvt</code> event of the application's main loop, which triggers continuously, at an undefined frequency of several shots per second (See the <a href="main-loop.html">Main Loop Programming Guide</a>). At every shot, a line is printed on the console.</p>
+<p>At the same time, a timer is instantiated, firing every 100ms, which does a different thing at every shot:</p>
+<ul>
+<li>First it freezes (pauses) all main loop events (except hot ones).</li>
+<li>Then it thaws (resumes) all main loop events.</li>
+<li>Finally, it quits the application.</li>
+</ul>
+<p>When you run the application, it should produce something like this on the console:</p>
+<pre><code>Waiting for Timer to call back...
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+Tick 0 from Timer: Freezing Mainloop events
+Tick 1 from Timer: Thawing Mainloop events
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+  Poll from Mainloop
+Tick 2 from Timer: Quitting
+</code></pre>
+<p>As you can see, the line <code>Poll from Mainloop</code> is printed continuously except in the period between Tick 0 and Tick 1 of the Timer, where main loop events are frozen.</p>
+<p>The exact amount of <code>Poll from Mainloop</code> messages you get depends on the frequency of the <code>PollHighEvt</code> event, which is chosen by EFL. The important thing is that there should be no such messages in between timer ticks 0 and 1, since main loop events are frozen.</p>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/core/src/core_event.cs"><code>core_event.cs</code> example</a>
+:    C# Source code for this example.</p>
+<p><a class="xref" href="../../../../../../../api/Efl.Object.html"><code>Efl.Object</code> API Reference</a>
+:    Detailed documentation for the EFL object, which implements the events mechanism.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/main.js"></script>
+  </body>
+</html>

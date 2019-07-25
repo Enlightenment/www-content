@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface Efl.Layout.ISignal
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface Efl.Layout.ISignal
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Layout.ISignal">
+  
+  
+  <h1 id="Efl_Layout_ISignal" data-uid="Efl.Layout.ISignal" class="text-break">Interface Efl.Layout.ISignal
+  </h1>
+  <div class="markdown level0 summary"><p>Layouts asynchronous messaging and signaling interface.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  
+  <h5 id="Efl_Layout_ISignal_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ISignal : IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Layout_ISignal_AddSignalCallback_" data-uid="Efl.Layout.ISignal.AddSignalCallback*"></a>
+  <h4 id="Efl_Layout_ISignal_AddSignalCallback_System_String_System_String_EflLayoutSignalCb_" data-uid="Efl.Layout.ISignal.AddSignalCallback(System.String,System.String,EflLayoutSignalCb)">AddSignalCallback(String, String, EflLayoutSignalCb)</h4>
+  <div class="markdown level1 summary"><p>Adds a callback for an arriving Edje signal, emitted by a given Edje object.
+Edje signals are one of the communication interfaces between code and a given Edje object's theme. With signals, one can communicate two string values at a time, which are: - &quot;emission&quot; value: the name of the signal, in general - &quot;source&quot; value: a name for the signal's context, in general</p>
+<p>Signals can go both ways, from code to theme, or theme to code.</p>
+<p>Though there are those common uses for the two strings, one is free to use them however they like.</p>
+<p>Signal callback registration is powerful, in the way that blobs may be used to match multiple signals at once. All the &quot;*?[&quot; set of <code>fnmatch</code>() operators can be used, both for emission and source.</p>
+<p>Edje has internal signals it will emit, automatically, on various actions taking place on group parts. For example, the mouse cursor being moved, pressed, released, etc., over a given part's area, all generate individual signals.</p>
+<p>With something like emission = &quot;mouse,down,<em>&quot;, source = &quot;button.</em>&quot; where &quot;button.*&quot; is the pattern for the names of parts implementing buttons on an interface, you'd be registering for notifications on events of mouse buttons being pressed down on either of those parts (those events all have the &quot;mouse,down,&quot; common prefix on their names, with a suffix giving the button number). The actual emission and source strings of an event will be passed in as the emission and source parameters of the callback function (e.g. &quot;mouse,down,2&quot; and &quot;button.close&quot;), for each of those events.</p>
+<p>See also the Edje Data Collection Reference for EDC files.</p>
+<p>See <a class="xref" href="Efl.Layout.ISignal.html#Efl_Layout_ISignal_EmitSignal_System_String_System_String_">Efl.Layout.ISignal.EmitSignal(System.String, System.String)</a> on how to emit signals from code to a an object See <a class="xref" href="Efl.Layout.ISignal.html#Efl_Layout_ISignal_DelSignalCallback_System_String_System_String_EflLayoutSignalCb_">Efl.Layout.ISignal.DelSignalCallback(System.String, System.String, EflLayoutSignalCb)</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool AddSignalCallback(string emission, string source, EflLayoutSignalCb func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emission</span></td>
+        <td><p>The signal's &quot;emission&quot; string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The signal's &quot;source&quot; string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EflLayoutSignalCb</span></td>
+        <td><span class="parametername">func</span></td>
+        <td><p>The callback function to be executed when the signal is emitted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> in case of success, <code>false</code> in case of error.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ISignal_DelSignalCallback_" data-uid="Efl.Layout.ISignal.DelSignalCallback*"></a>
+  <h4 id="Efl_Layout_ISignal_DelSignalCallback_System_String_System_String_EflLayoutSignalCb_" data-uid="Efl.Layout.ISignal.DelSignalCallback(System.String,System.String,EflLayoutSignalCb)">DelSignalCallback(String, String, EflLayoutSignalCb)</h4>
+  <div class="markdown level1 summary"><p>Removes a signal-triggered callback from an object.
+This function removes a callback, previously attached to the emission of a signal, from the object  obj. The parameters emission, source and func must match exactly those passed to a previous call to <a class="xref" href="Efl.Layout.ISignal.html#Efl_Layout_ISignal_AddSignalCallback_System_String_System_String_EflLayoutSignalCb_">Efl.Layout.ISignal.AddSignalCallback(System.String, System.String, EflLayoutSignalCb)</a>.</p>
+<p>See <a class="xref" href="Efl.Layout.ISignal.html#Efl_Layout_ISignal_AddSignalCallback_System_String_System_String_EflLayoutSignalCb_">Efl.Layout.ISignal.AddSignalCallback(System.String, System.String, EflLayoutSignalCb)</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool DelSignalCallback(string emission, string source, EflLayoutSignalCb func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emission</span></td>
+        <td><p>The signal's &quot;emission&quot; string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The signal's &quot;source&quot; string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EflLayoutSignalCb</span></td>
+        <td><span class="parametername">func</span></td>
+        <td><p>The callback function to be executed when the signal is emitted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> in case of success, <code>false</code> in case of error.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ISignal_EmitSignal_" data-uid="Efl.Layout.ISignal.EmitSignal*"></a>
+  <h4 id="Efl_Layout_ISignal_EmitSignal_System_String_System_String_" data-uid="Efl.Layout.ISignal.EmitSignal(System.String,System.String)">EmitSignal(String, String)</h4>
+  <div class="markdown level1 summary"><p>Sends/emits an Edje signal to this layout.
+This function sends a signal to the object. An Edje program, at the EDC specification level, can respond to a signal by having declared matching &quot;signal&quot; and &quot;source&quot; fields on its block.</p>
+<p>See also the Edje Data Collection Reference for EDC files.</p>
+<p>See <a class="xref" href="Efl.Layout.ISignal.html#Efl_Layout_ISignal_AddSignalCallback_System_String_System_String_EflLayoutSignalCb_">Efl.Layout.ISignal.AddSignalCallback(System.String, System.String, EflLayoutSignalCb)</a> for more on Edje signals.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void EmitSignal(string emission, string source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emission</span></td>
+        <td><p>The signal's &quot;emission&quot; string</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The signal's &quot;source&quot; string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ISignal_MessageSend_" data-uid="Efl.Layout.ISignal.MessageSend*"></a>
+  <h4 id="Efl_Layout_ISignal_MessageSend_System_Int32_Eina_Value_" data-uid="Efl.Layout.ISignal.MessageSend(System.Int32,Eina.Value)">MessageSend(Int32, Value)</h4>
+  <div class="markdown level1 summary"><p>Sends an (Edje) message to a given Edje object
+This function sends an Edje message to obj and to all of its child objects, if it has any (swallowed objects are one kind of child object). Only a few types are supported: - int, - float/double, - string/stringshare, - arrays of int, float, double or strings.</p>
+<p>Messages can go both ways, from code to theme, or theme to code.</p>
+<p>The id argument as a form of code and theme defining a common interface on message communication. One should define the same IDs on both code and EDC declaration, to individualize messages (binding them to a given context).
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MessageSend(int id, Value msg)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>A identification number for the message to be sent</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Eina.Value.html">Eina.Value</a></td>
+        <td><span class="parametername">msg</span></td>
+        <td><p>The message's payload</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ISignal_SignalProcess_" data-uid="Efl.Layout.ISignal.SignalProcess*"></a>
+  <h4 id="Efl_Layout_ISignal_SignalProcess_System_Boolean_" data-uid="Efl.Layout.ISignal.SignalProcess(System.Boolean)">SignalProcess(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Processes an object's messages and signals queue.
+This function goes through the object message queue processing the pending messages for this specific Edje object. Normally they'd be processed only at idle time.</p>
+<p>If <code>recurse</code> is <code>true</code>, this function will be called recursively on all subobjects.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SignalProcess(bool recurse)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recurse</span></td>
+        <td><p>Whether to process messages on children objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

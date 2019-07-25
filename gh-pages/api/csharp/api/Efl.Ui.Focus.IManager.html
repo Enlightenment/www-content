@@ -1,0 +1,963 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface Efl.Ui.Focus.IManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface Efl.Ui.Focus.IManager
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Ui.Focus.IManager">
+  
+  
+  <h1 id="Efl_Ui_Focus_IManager" data-uid="Efl.Ui.Focus.IManager" class="text-break">Interface Efl.Ui.Focus.IManager
+  </h1>
+  <div class="markdown level0 summary"><p>Interface for managing focus objects
+This interface is built in order to support movement of the focus property in a set of widgets. The movement of the focus property can happen in a tree manner, or a graph manner. The movement is also keeping track of the history of focused elements. The tree interpretation differentiates between logical and non-logical widgets, a logical widget cannot receive focus whereas a non-logical one can.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  
+  <h5 id="Efl_Ui_Focus_IManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IManager : IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_BorderElements_" data-uid="Efl.Ui.Focus.IManager.BorderElements*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_BorderElements" data-uid="Efl.Ui.Focus.IManager.BorderElements">BorderElements</h4>
+  <div class="markdown level1 summary"><p>The list of elements which are at the border of the graph.
+This means one of the relations right,left or down,up are not set. This call flushes all changes. See <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a>
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Iterator&lt;IObject&gt; BorderElements { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
+        <td><p>An iterator over the border objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_ManagerFocus_" data-uid="Efl.Ui.Focus.IManager.ManagerFocus*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_ManagerFocus" data-uid="Efl.Ui.Focus.IManager.ManagerFocus">ManagerFocus</h4>
+  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
+Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject ManagerFocus { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Currently focused element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_Redirect_" data-uid="Efl.Ui.Focus.IManager.Redirect*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_Redirect" data-uid="Efl.Ui.Focus.IManager.Redirect">Redirect</h4>
+  <div class="markdown level1 summary"><p>Add another manager to serve the move requests.
+If this value is set, all move requests are redirected to this manager object. Set it to <code>null</code> once nothing should be redirected anymore.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IManager Redirect { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
+        <td><p>The redirect manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_Root_" data-uid="Efl.Ui.Focus.IManager.Root*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_Root" data-uid="Efl.Ui.Focus.IManager.Root">Root</h4>
+  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
+This property can only be set once.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject Root { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Will be registered into this manager object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_DirtyLogicUnfreeze_" data-uid="Efl.Ui.Focus.IManager.DirtyLogicUnfreeze*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_DirtyLogicUnfreeze" data-uid="Efl.Ui.Focus.IManager.DirtyLogicUnfreeze">DirtyLogicUnfreeze()</h4>
+  <div class="markdown level1 summary"><p>This enables the cache invalidation when an object is moved.
+This is the counterpart to <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_FreezeDirtyLogic">Efl.Ui.Focus.IManager.FreezeDirtyLogic()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DirtyLogicUnfreeze()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_Fetch_" data-uid="Efl.Ui.Focus.IManager.Fetch*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_Fetch_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Focus.IManager.Fetch(Efl.Ui.Focus.IObject)">Fetch(IObject)</h4>
+  <div class="markdown level1 summary"><p>This will fetch the data from a registered node.
+Be aware this function will trigger a computation of all dirty nodes.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Relations Fetch(IObject child)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">child</span></td>
+        <td><p>The child object to inspect.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.Relations.html">Efl.Ui.Focus.Relations</a></td>
+        <td><p>The list of relations starting from <code>child</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_FreezeDirtyLogic_" data-uid="Efl.Ui.Focus.IManager.FreezeDirtyLogic*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_FreezeDirtyLogic" data-uid="Efl.Ui.Focus.IManager.FreezeDirtyLogic">FreezeDirtyLogic()</h4>
+  <div class="markdown level1 summary"><p>This disables the cache invalidation when an object is moved.
+Even if an object is moved, the focus manager will not recalculate its relations. This can be used when you know that the set of widgets in the focus manager is moved the same way, so the relations between the widets in the set do not change and the complex calculations can be avoided. Use <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_DirtyLogicUnfreeze">Efl.Ui.Focus.IManager.DirtyLogicUnfreeze()</a> to re-enable relationship calculation.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void FreezeDirtyLogic()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_GetBorderElements_" data-uid="Efl.Ui.Focus.IManager.GetBorderElements*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_GetBorderElements" data-uid="Efl.Ui.Focus.IManager.GetBorderElements">GetBorderElements()</h4>
+  <div class="markdown level1 summary"><p>The list of elements which are at the border of the graph.
+This means one of the relations right,left or down,up are not set. This call flushes all changes. See <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a>
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Iterator&lt;IObject&gt; GetBorderElements()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
+        <td><p>An iterator over the border objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_GetManagerFocus_" data-uid="Efl.Ui.Focus.IManager.GetManagerFocus*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_GetManagerFocus" data-uid="Efl.Ui.Focus.IManager.GetManagerFocus">GetManagerFocus()</h4>
+  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
+Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject GetManagerFocus()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Currently focused element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_GetRedirect_" data-uid="Efl.Ui.Focus.IManager.GetRedirect*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_GetRedirect" data-uid="Efl.Ui.Focus.IManager.GetRedirect">GetRedirect()</h4>
+  <div class="markdown level1 summary"><p>Add another manager to serve the move requests.
+If this value is set, all move requests are redirected to this manager object. Set it to <code>null</code> once nothing should be redirected anymore.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IManager GetRedirect()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
+        <td><p>The redirect manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_GetRoot_" data-uid="Efl.Ui.Focus.IManager.GetRoot*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_GetRoot" data-uid="Efl.Ui.Focus.IManager.GetRoot">GetRoot()</h4>
+  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
+This property can only be set once.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject GetRoot()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Will be registered into this manager object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_GetViewportElements_" data-uid="Efl.Ui.Focus.IManager.GetViewportElements*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_GetViewportElements_Eina_Rect_" data-uid="Efl.Ui.Focus.IManager.GetViewportElements(Eina.Rect)">GetViewportElements(Rect)</h4>
+  <div class="markdown level1 summary"><p>Get all elements that are at the border of the viewport
+Every element returned by this is located inside the viewport rectangle, but has a right, left, down or up neighbor outside the viewport.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Iterator&lt;IObject&gt; GetViewportElements(Rect viewport)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
+        <td><span class="parametername">viewport</span></td>
+        <td><p>The rectangle defining the viewport.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
+        <td><p>The list of border objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_LogicalEnd_" data-uid="Efl.Ui.Focus.IManager.LogicalEnd*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_LogicalEnd" data-uid="Efl.Ui.Focus.IManager.LogicalEnd">LogicalEnd()</h4>
+  <div class="markdown level1 summary"><p>Return the last logical object.
+The returned object is the last object that would be returned if you start at the root and move the direction into next.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ManagerLogicalEndDetail LogicalEnd()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.ManagerLogicalEndDetail.html">Efl.Ui.Focus.ManagerLogicalEndDetail</a></td>
+        <td><p>Last object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_Move_" data-uid="Efl.Ui.Focus.IManager.Move*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_" data-uid="Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)">Move(Direction)</h4>
+  <div class="markdown level1 summary"><p>Move the focus in the given direction.
+This call flushes all changes. This means all changes between the last flush and now are computed.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject Move(Direction direction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.Direction.html">Efl.Ui.Focus.Direction</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td><p>The direction to move to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>The element which is now focused.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_MoveRequest_" data-uid="Efl.Ui.Focus.IManager.MoveRequest*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_MoveRequest_Efl_Ui_Focus_Direction_Efl_Ui_Focus_IObject_System_Boolean_" data-uid="Efl.Ui.Focus.IManager.MoveRequest(Efl.Ui.Focus.Direction,Efl.Ui.Focus.IObject,System.Boolean)">MoveRequest(Direction, IObject, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Return the object in the <code>direction</code> from <code>child</code>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject MoveRequest(Direction direction, IObject child, bool logical)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.Direction.html">Efl.Ui.Focus.Direction</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td><p>Direction to move focus.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">child</span></td>
+        <td><p>The child to move from. Pass <code>null</code> to indicate the currently focused child.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">logical</span></td>
+        <td><p>Wether you want to have a logical node as result or a non-logical. Note, in a <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a> call no logical node will get focus.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Object that would receive focus if moved in the given direction.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_PopHistoryStack_" data-uid="Efl.Ui.Focus.IManager.PopHistoryStack*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_PopHistoryStack" data-uid="Efl.Ui.Focus.IManager.PopHistoryStack">PopHistoryStack()</h4>
+  <div class="markdown level1 summary"><p>Remove the uppermost history element, and focus the previous one.
+If there is an element that was focused before, it will be used. Otherwise, the best fitting element from the registered elements will be focused.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void PopHistoryStack()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_RequestSubchild_" data-uid="Efl.Ui.Focus.IManager.RequestSubchild*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_RequestSubchild_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Focus.IManager.RequestSubchild(Efl.Ui.Focus.IObject)">RequestSubchild(IObject)</h4>
+  <div class="markdown level1 summary"><p>Return the widget in the direction next.
+The returned widget is a child of <code>root</code>. It's guaranteed that child will not be prepared once again, so you can call this function inside a <a class="xref" href="Efl.Ui.Focus.IObject.html#Efl_Ui_Focus_IObject_SetupOrder">Efl.Ui.Focus.IObject.SetupOrder()</a> call.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObject RequestSubchild(IObject root)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">root</span></td>
+        <td><p>Parent for returned child.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><p>Child of passed parameter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_ResetHistory_" data-uid="Efl.Ui.Focus.IManager.ResetHistory*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_ResetHistory" data-uid="Efl.Ui.Focus.IManager.ResetHistory">ResetHistory()</h4>
+  <div class="markdown level1 summary"><p>Reset the history stack of this manager object. This means the uppermost element will be unfocused, and all other elements will be removed from the remembered list.
+You should focus another element immediately after calling this, in order to always have a focused object.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ResetHistory()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_SetManagerFocus_" data-uid="Efl.Ui.Focus.IManager.SetManagerFocus*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_SetManagerFocus_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Focus.IManager.SetManagerFocus(Efl.Ui.Focus.IObject)">SetManagerFocus(IObject)</h4>
+  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
+Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetManagerFocus(IObject focus)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">focus</span></td>
+        <td><p>Currently focused element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_SetRedirect_" data-uid="Efl.Ui.Focus.IManager.SetRedirect*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_SetRedirect_Efl_Ui_Focus_IManager_" data-uid="Efl.Ui.Focus.IManager.SetRedirect(Efl.Ui.Focus.IManager)">SetRedirect(IManager)</h4>
+  <div class="markdown level1 summary"><p>Add another manager to serve the move requests.
+If this value is set, all move requests are redirected to this manager object. Set it to <code>null</code> once nothing should be redirected anymore.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetRedirect(IManager redirect)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
+        <td><span class="parametername">redirect</span></td>
+        <td><p>The redirect manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_SetRoot_" data-uid="Efl.Ui.Focus.IManager.SetRoot*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_SetRoot_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Focus.IManager.SetRoot(Efl.Ui.Focus.IObject)">SetRoot(IObject)</h4>
+  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
+This property can only be set once.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SetRoot(IObject root)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">root</span></td>
+        <td><p>Will be registered into this manager object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>If <code>true</code>, this is the root node</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Focus_IManager_SetupOnFirstTouch_" data-uid="Efl.Ui.Focus.IManager.SetupOnFirstTouch*"></a>
+  <h4 id="Efl_Ui_Focus_IManager_SetupOnFirstTouch_Efl_Ui_Focus_Direction_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Focus.IManager.SetupOnFirstTouch(Efl.Ui.Focus.Direction,Efl.Ui.Focus.IObject)">SetupOnFirstTouch(Direction, IObject)</h4>
+  <div class="markdown level1 summary"><p>Called when this manager is set as redirect.
+In case that this is called as an result of a move call, <code>direction</code> and <code>entry</code> will be set to the direction of the move call, and the <code>entry</code> object will be set to the object that had this manager as redirect property.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetupOnFirstTouch(Direction direction, IObject entry)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.Direction.html">Efl.Ui.Focus.Direction</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td><p>The direction in which this should be setup.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
+        <td><span class="parametername">entry</span></td>
+        <td><p>The object that caused this manager to be redirect.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Ui_Focus_IManager_CoordsDirtyEvt" data-uid="Efl.Ui.Focus.IManager.CoordsDirtyEvt">CoordsDirtyEvt</h4>
+  <div class="markdown level1 summary"><p>Cached relationship calculation results have been invalidated.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler CoordsDirtyEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_Focus_IManager_DirtyLogicFreezeChangedEvt" data-uid="Efl.Ui.Focus.IManager.DirtyLogicFreezeChangedEvt">DirtyLogicFreezeChangedEvt</h4>
+  <div class="markdown level1 summary"><p>Called when this focus manager is frozen or thawed, even_info being <code>true</code> indicates that it is now frozen, <code>false</code> indicates that it is thawed.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;IManagerDirtyLogicFreezeChangedEvt_Args&gt; DirtyLogicFreezeChangedEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerDirtyLogicFreezeChangedEvt_Args&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_Focus_IManager_FlushPreEvt" data-uid="Efl.Ui.Focus.IManager.FlushPreEvt">FlushPreEvt</h4>
+  <div class="markdown level1 summary"><p>After this event, the manager object will calculate relations in the graph. Can be used to add / remove children in a lazy fashion.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler FlushPreEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_Focus_IManager_ManagerFocusChangedEvt" data-uid="Efl.Ui.Focus.IManager.ManagerFocusChangedEvt">ManagerFocusChangedEvt</h4>
+  <div class="markdown level1 summary"><p>The manager_focus property has changed. The previously focused object is passed as an event argument.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;IManagerManagerFocusChangedEvt_Args&gt; ManagerFocusChangedEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerManagerFocusChangedEvt_Args&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_Focus_IManager_RedirectChangedEvt" data-uid="Efl.Ui.Focus.IManager.RedirectChangedEvt">RedirectChangedEvt</h4>
+  <div class="markdown level1 summary"><p>Redirect object has changed, the old manager is passed as an event argument.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;IManagerRedirectChangedEvt_Args&gt; RedirectChangedEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerRedirectChangedEvt_Args&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

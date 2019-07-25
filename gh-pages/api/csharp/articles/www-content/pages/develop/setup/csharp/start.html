@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Setting Up a C# Development Environment </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Setting Up a C# Development Environment ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="setting-up-a-c-development-environment">Setting Up a C# Development Environment</h1>
+
+<p>This page shows how to compile and install the Enlightenment Foundation Libraries (EFL) with C# bindings support, and explains how to build and run applications using them.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.</td>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Before you start you may want to read about <a href="https://www.enlightenment.org/docs/distros/start">how to compile the EFL</a>.</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="on-linux">On Linux</h3>
+<p>You need a compatible version of <a href="http://www.mono-project.com/download/stable">Mono</a> (5.0 or higher).</p>
+<blockquote>
+<p><strong>NOTE:</strong>
+Currently the C# bindings do <strong>NOT</strong> work with Mono 4.x.</p>
+</blockquote>
+<p>The paths to the <code>mcs</code> compiler and to the <code>mono</code> application must be in the <code>PATH</code> environment variable before compiling.</p>
+<h3 id="on-windows">On Windows</h3>
+<p>In order to have EFL on a Windows environment we highly recommend following <a href="https://phab.enlightenment.org/w/windows/">this guide</a> which accomplishes that using <a href="http://win-builds.org">win-builds</a> and <a href="http://www.msys2.org">MSYS2</a>.</p>
+<p>You need a compatible version of <a href="http://www.mono-project.com">Mono</a> (5.0 or higher).
+You can use Mono binaries installed directly to your Windows system (i.e. outside the MSYS2 environment), you just need to make sure that the paths to the <code>mcs.exe</code> compiler and to the <code>mono.exe</code> application are in the <code>PATH</code> environment variable in your MSYS2 terminal.
+Using the default installation path, Mono binaries normally go in <code>C:\Program Files\Mono</code> so in MSYS2 you can point to the binaries using the path <code>/c/Program Files/Mono/bin</code>.
+You can also permanently set this in your <code>/etc/profile</code> in MSYS2 adding something like this at the end of the file:</p>
+<pre><code class="lang-bash">export PATH=&quot;$PATH:/c/Program Files/Mono/bin&quot;
+</code></pre>
+<p>If you used another installation path to Mono just adjust the paths used.</p>
+<blockquote>
+<p><strong>NOTE:</strong>
+It is advisable to add the Mono path at the <strong>end</strong> of the <code>PATH</code> environment variable, like in the example above.
+Mono has its own version of some applications (like <code>pkg-config</code>) which can take priority over the ones from MSYS2 and cause things to fail.</p>
+</blockquote>
+<p>Now you can use the MSYS2 console to compile, install and run EFL and your applications.</p>
+<h2 id="compiling-and-installing-efl-with-c-support">Compiling and Installing EFL With C# Support</h2>
+<p>In order to compile and install EFL with C# binding support, on both Windows and Linux, just compile the EFL like the respective guides explain, and add the argument <code>--enable-csharp-bindings</code> to the <code>autogen.sh</code> or <code>configure</code> command:</p>
+<pre><code class="lang-bash">./autogen.sh --enable-csharp-bindings #other arguments
+make -j4
+sudo make install
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong>
+It is known that some portions of the code (typically the examples) can get a bit outdated from time to time, causing the building process to fail. The leading cause for this is a missing dependency.
+Usually, reading the error message and installing the missing package solves the problem.
+If you cannot solve the problem by yourself, try <a href="/contact">contacting the community</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE</strong>
+If you are using Visual Studio to write EFL C# applications, you should copy to the build directory or have them in the <code>PATH</code> environment libraries: <code>libeflcustomexportsmono.dll</code>, <code>libefl_mono.dll</code> and if you want to use Intellisense also <code>libefl_mono.xml</code>. These libraries and XML file will be found at lib sub-directory of the prefix you install the library.</p>
+</blockquote>
+<h2 id="building-efl-c-applications">Building EFL C# Applications</h2>
+<p>With EFL installed, you can compile EFL applications using <code>pkg-config</code> to get the proper flags to use the C# bindings:</p>
+<pre><code class="lang-bash">mcs your_app.cs -out:your_app.exe `pkg-config --libs efl-mono`
+</code></pre>
+<p>Otherwise, you have to manually point the compiler to the location of the EFL C# bindings library <code>libefl_mono.dll</code>, like this:</p>
+<pre><code class="lang-bash">mcs your_app.cs -out:your_app.exe -r:/home/my_user/efl/build/src/lib/efl_mono/libefl_mono.dll
+</code></pre>
+<h2 id="running-efl-c-applications">Running EFL C# Applications</h2>
+<p>To run your application you can either copy the EFL C# bindings library <code>libefl_mono.dll</code> to your application folder or set the <code>MONO_PATH</code> environment variable and then execute it using <code>mono</code>. In both cases, you can use <code>pkg-config</code> to get the right paths.</p>
+<p>Example copying the library:</p>
+<pre><code class="lang-bash">cp `pkg-config --variable=Libraries efl-mono` .
+mono button_example_00.exe
+</code></pre>
+<p>Example setting <code>MONO_PATH</code>:</p>
+<pre><code class="lang-bash">export MONO_PATH=`pkg-config --variable=assemblies_dir efl-mono`
+mono button_example_00.exe
+</code></pre>
+<p>Note that if you installed EFL in a path that is not directly accessible to <code>pkg-config</code> or to your application you have to manually make it accessible somehow, for example, setting proper environment variables before compiling and running:</p>
+<pre><code class="lang-bash">export PKG_CONFIG_PATH=/opt/my_install_prefix/lib/pkgconfig
+export LD_LIBRARY_PATH=/opt/my_install_prefix/lib
+</code></pre>
+<p>Try the <a href="../../tutorials/csharp/hello-world-cs.html">Hello World</a> tutorial now to verify that everything works as expected.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,526 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface Efl.Gfx.IFilter
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface Efl.Gfx.IFilter
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Gfx.IFilter">
+  
+  
+  <h1 id="Efl_Gfx_IFilter" data-uid="Efl.Gfx.IFilter" class="text-break">Interface Efl.Gfx.IFilter
+  </h1>
+  <div class="markdown level0 summary"><p>Graphical filters can be applied to any object implementing this interface.
+Filters are programmable effects that run whenever the object is rendered on its canvas. The program language is Lua and a complete reference can be found under &quot;EFL Graphics Filters&quot;.</p>
+<p>This was a beta feature since 1.15.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="remarks">
+  <h5 id="Efl_Gfx_IFilter_remarks"><strong>Remarks</strong></h5>
+  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
+
+  </div>
+  
+  <h5 id="Efl_Gfx_IFilter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IFilter : IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Gfx_IFilter_GetFilterData_" data-uid="Efl.Gfx.IFilter.GetFilterData*"></a>
+  <h4 id="Efl_Gfx_IFilter_GetFilterData_System_String_System_String__System_Boolean__" data-uid="Efl.Gfx.IFilter.GetFilterData(System.String,System.String@,System.Boolean@)">GetFilterData(String, out String, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Extra data used by the filter program.
+Each data element is a string (<code>value</code>) stored as a global variable <code>name</code>. The program is then responsible for conversion to numbers, tables, etc...</p>
+<p>If the <code>execute</code> flag is set, then the <code>value</code> can be complex and run, as if the original Lua program contained a line 'name = value'. This can be used to pass in tables.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetFilterData(string name, out string value, out bool execute)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the global variable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>String value to use as data</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">execute</span></td>
+        <td><p>If <code>true</code>, execute 'name = value'</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_GetFilterPadding_" data-uid="Efl.Gfx.IFilter.GetFilterPadding*"></a>
+  <h4 id="Efl_Gfx_IFilter_GetFilterPadding_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="Efl.Gfx.IFilter.GetFilterPadding(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">GetFilterPadding(out Int32, out Int32, out Int32, out Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the padding required to apply this filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetFilterPadding(out int l, out int r, out int t, out int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">l</span></td>
+        <td><p>Padding on the left</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">r</span></td>
+        <td><p>Padding on the right</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">t</span></td>
+        <td><p>Padding on the top</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Padding on the bottom</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_GetFilterProgram_" data-uid="Efl.Gfx.IFilter.GetFilterProgram*"></a>
+  <h4 id="Efl_Gfx_IFilter_GetFilterProgram_System_String__System_String__" data-uid="Efl.Gfx.IFilter.GetFilterProgram(System.String@,System.String@)">GetFilterProgram(out String, out String)</h4>
+  <div class="markdown level1 summary"><p>Gets the code of the filter program set on this object. May be <code>null</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetFilterProgram(out string code, out string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">code</span></td>
+        <td><p>The Lua program source code.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this filter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_GetFilterSource_" data-uid="Efl.Gfx.IFilter.GetFilterSource*"></a>
+  <h4 id="Efl_Gfx_IFilter_GetFilterSource_System_String_" data-uid="Efl.Gfx.IFilter.GetFilterSource(System.String)">GetFilterSource(String)</h4>
+  <div class="markdown level1 summary"><p>Bind an object to use as a mask or texture in a filter program.
+This will create automatically a new RGBA buffer containing the source object's pixels (as it is rendered).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEntity GetFilterSource(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Buffer name as used in the program.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
+        <td><p>Object to use as a source of pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_GetFilterState_" data-uid="Efl.Gfx.IFilter.GetFilterState*"></a>
+  <h4 id="Efl_Gfx_IFilter_GetFilterState_System_String__System_Double__System_String__System_Double__System_Double__" data-uid="Efl.Gfx.IFilter.GetFilterState(System.String@,System.Double@,System.String@,System.Double@,System.Double@)">GetFilterState(out String, out Double, out String, out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Set the current state of the filter.
+This should be used by Edje (EFL's internal layout engine), but could also be used when implementing animations programmatically.</p>
+<p>A full state is defined by two states (name + value): origin state and target state of an ongoing animation, as well as the <code>pos</code> progress (from 0 to 1) of that animation timeline. The second state can be omitted if there is no ongoing animation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetFilterState(out string cur_state, out double cur_val, out string next_state, out double next_val, out double pos)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">cur_state</span></td>
+        <td><p>Current state of the filter</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">cur_val</span></td>
+        <td><p>Current value</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">next_state</span></td>
+        <td><p>Next filter state, optional</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">next_val</span></td>
+        <td><p>Next value, optional</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">pos</span></td>
+        <td><p>Position, optional</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_SetFilterData_" data-uid="Efl.Gfx.IFilter.SetFilterData*"></a>
+  <h4 id="Efl_Gfx_IFilter_SetFilterData_System_String_System_String_System_Boolean_" data-uid="Efl.Gfx.IFilter.SetFilterData(System.String,System.String,System.Boolean)">SetFilterData(String, String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Extra data used by the filter program.
+Each data element is a string (<code>value</code>) stored as a global variable <code>name</code>. The program is then responsible for conversion to numbers, tables, etc...</p>
+<p>If the <code>execute</code> flag is set, then the <code>value</code> can be complex and run, as if the original Lua program contained a line 'name = value'. This can be used to pass in tables.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFilterData(string name, string value, bool execute)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the global variable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>String value to use as data</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">execute</span></td>
+        <td><p>If <code>true</code>, execute 'name = value'</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_SetFilterProgram_" data-uid="Efl.Gfx.IFilter.SetFilterProgram*"></a>
+  <h4 id="Efl_Gfx_IFilter_SetFilterProgram_System_String_System_String_" data-uid="Efl.Gfx.IFilter.SetFilterProgram(System.String,System.String)">SetFilterProgram(String, String)</h4>
+  <div class="markdown level1 summary"><p>Set a graphical filter program on this object.
+Valid for Text and Image objects at the moment.</p>
+<p>The argument passed to this function is a string containing a valid Lua program based on the filters API as described in the &quot;EFL Graphics Filters&quot; reference page.</p>
+<p>Set to <code>null</code> to disable filtering.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFilterProgram(string code, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">code</span></td>
+        <td><p>The Lua program source code.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this filter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_SetFilterSource_" data-uid="Efl.Gfx.IFilter.SetFilterSource*"></a>
+  <h4 id="Efl_Gfx_IFilter_SetFilterSource_System_String_Efl_Gfx_IEntity_" data-uid="Efl.Gfx.IFilter.SetFilterSource(System.String,Efl.Gfx.IEntity)">SetFilterSource(String, IEntity)</h4>
+  <div class="markdown level1 summary"><p>Bind an object to use as a mask or texture in a filter program.
+This will create automatically a new RGBA buffer containing the source object's pixels (as it is rendered).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFilterSource(string name, IEntity source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Buffer name as used in the program.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Object to use as a source of pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IFilter_SetFilterState_" data-uid="Efl.Gfx.IFilter.SetFilterState*"></a>
+  <h4 id="Efl_Gfx_IFilter_SetFilterState_System_String_System_Double_System_String_System_Double_System_Double_" data-uid="Efl.Gfx.IFilter.SetFilterState(System.String,System.Double,System.String,System.Double,System.Double)">SetFilterState(String, Double, String, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Set the current state of the filter.
+This should be used by Edje (EFL's internal layout engine), but could also be used when implementing animations programmatically.</p>
+<p>A full state is defined by two states (name + value): origin state and target state of an ongoing animation, as well as the <code>pos</code> progress (from 0 to 1) of that animation timeline. The second state can be omitted if there is no ongoing animation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetFilterState(string cur_state, double cur_val, string next_state, double next_val, double pos)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">cur_state</span></td>
+        <td><p>Current state of the filter</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">cur_val</span></td>
+        <td><p>Current value</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">next_state</span></td>
+        <td><p>Next filter state, optional</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">next_val</span></td>
+        <td><p>Next value, optional</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">pos</span></td>
+        <td><p>Position, optional</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

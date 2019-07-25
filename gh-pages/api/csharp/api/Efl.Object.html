@@ -1,0 +1,1765 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Efl.Object
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Efl.Object
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Object">
+  
+  
+  <h1 id="Efl_Object" data-uid="Efl.Object" class="text-break">Class Efl.Object
+  </h1>
+  <div class="markdown level0 summary"><p>Abstract EFL object class.
+All EFL objects inherit from this class, which provides basic functionality like naming, debugging, hierarchy traversal, event emission and life cycle management.</p>
+<p>Life Cycle Objects are created with efl_add() and mostly disposed of with efl_del(). As an optimization, efl_add() accepts a list of initialization functions which the programmer can use to further customize the object before it is fully constructed. Also, objects can have a parent which will keep them alive as long as the parent is alive, so the programmer does not need to keep track of references. (See the <a class="xref" href="Efl.Object.html#Efl_Object_Parent">Efl.Object.Parent</a> property for details). Due to the above characteristics, EFL objects undergo the following phases during their Life Cycle: - Construction: The Efl.Object.constructor method is called. Afterwards, any user-supplied initialization methods are called. - Finalization: The <a class="xref" href="Efl.Object.html#Efl_Object_FinalizeAdd">Efl.Object.FinalizeAdd()</a> method is called and <a class="xref" href="Efl.Object.html#Efl_Object_GetFinalized">Efl.Object.GetFinalized()</a> is set to <code>true</code> when it returns. Object is usable at this point. - Invalidation: The object has lost its parent. The <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a> method is called so all the object's relationships can be terminated. <a class="xref" href="Efl.Object.html#Efl_Object_GetInvalidated">Efl.Object.GetInvalidated()</a> is set to <code>true</code>. - Destruction: The object has no parent and it can be destroyed. The <a class="xref" href="Efl.Object.html#Efl_Object_Destructor">Efl.Object.Destructor()</a> method is called, use it to return any resources the object might have gathered during its life.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
+    <div class="level2"><span class="xref"><b>Efl.Object</b></span></div>
+      <div class="level3"><a class="xref" href="Efl.AccelerateInterpolator.html">Efl.AccelerateInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.BounceInterpolator.html">Efl.BounceInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.Animation.html">Efl.Canvas.Animation</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.AnimationPlayer.html">Efl.Canvas.AnimationPlayer</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.Gesture.html">Efl.Canvas.Gesture</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.GestureManager.html">Efl.Canvas.GestureManager</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.GestureRecognizer.html">Efl.Canvas.GestureRecognizer</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.GestureTouch.html">Efl.Canvas.GestureTouch</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.LayoutPart.html">Efl.Canvas.LayoutPart</a></div>
+      <div class="level3"><a class="xref" href="Efl.Canvas.Vg.Node.html">Efl.Canvas.Vg.Node</a></div>
+      <div class="level3"><a class="xref" href="Efl.ConfigGlobal.html">Efl.ConfigGlobal</a></div>
+      <div class="level3"><a class="xref" href="Efl.Core.Env.html">Efl.Core.Env</a></div>
+      <div class="level3"><a class="xref" href="Efl.CubicBezierInterpolator.html">Efl.CubicBezierInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.DecelerateInterpolator.html">Efl.DecelerateInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.DivisorInterpolator.html">Efl.DivisorInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.Input.Device.html">Efl.Input.Device</a></div>
+      <div class="level3"><a class="xref" href="Efl.Input.Focus.html">Efl.Input.Focus</a></div>
+      <div class="level3"><a class="xref" href="Efl.Input.Hold.html">Efl.Input.Hold</a></div>
+      <div class="level3"><a class="xref" href="Efl.Input.Key.html">Efl.Input.Key</a></div>
+      <div class="level3"><a class="xref" href="Efl.Input.Pointer.html">Efl.Input.Pointer</a></div>
+      <div class="level3"><a class="xref" href="Efl.LinearInterpolator.html">Efl.LinearInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
+      <div class="level3"><a class="xref" href="Efl.LoopHandler.html">Efl.LoopHandler</a></div>
+      <div class="level3"><a class="xref" href="Efl.LoopMessage.html">Efl.LoopMessage</a></div>
+      <div class="level3"><a class="xref" href="Efl.LoopMessageHandler.html">Efl.LoopMessageHandler</a></div>
+      <div class="level3"><a class="xref" href="Efl.ModelProvider.html">Efl.ModelProvider</a></div>
+      <div class="level3"><a class="xref" href="Efl.Observable.html">Efl.Observable</a></div>
+      <div class="level3"><a class="xref" href="Efl.SinusoidalInterpolator.html">Efl.SinusoidalInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.SpringInterpolator.html">Efl.SpringInterpolator</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.CalendarItem.html">Efl.Ui.CalendarItem</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Focus.ManagerCalc.html">Efl.Ui.Focus.ManagerCalc</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Focus.Util.html">Efl.Ui.Focus.Util</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.GridPositionManager.html">Efl.Ui.GridPositionManager</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.LayoutPartBox.html">Efl.Ui.LayoutPartBox</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.LayoutPartTable.html">Efl.Ui.LayoutPartTable</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.ListPositionManager.html">Efl.Ui.ListPositionManager</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.RadioGroupImpl.html">Efl.Ui.RadioGroupImpl</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Scroll.Manager.html">Efl.Ui.Scroll.Manager</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Spotlight.Indicator.html">Efl.Ui.Spotlight.Indicator</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Spotlight.Manager.html">Efl.Ui.Spotlight.Manager</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.TextFactory.Emoticons.html">Efl.Ui.TextFactory.Emoticons</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.TextFactory.Fallback.html">Efl.Ui.TextFactory.Fallback</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.TextFactory.Images.html">Efl.Ui.TextFactory.Images</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.Theme.html">Efl.Ui.Theme</a></div>
+      <div class="level3"><a class="xref" href="Efl.Ui.WidgetPart.html">Efl.Ui.WidgetPart</a></div>
+  </div>
+  
+  <h5 id="Efl_Object_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class Object : EoWrapper, IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Efl_Object__ctor_" data-uid="Efl.Object.#ctor*"></a>
+  <h4 id="Efl_Object__ctor_Efl_Object_" data-uid="Efl.Object.#ctor(Efl.Object)">Object(Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Object.html">Efl.Object</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Object(Object parent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>Parent instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Object_AllowParentUnref_" data-uid="Efl.Object.AllowParentUnref*"></a>
+  <h4 id="Efl_Object_AllowParentUnref" data-uid="Efl.Object.AllowParentUnref">AllowParentUnref</h4>
+  <div class="markdown level1 summary"><p>Allow an object to be deleted by unref even if it has a parent.
+This simply hides the error message warning that an object being destroyed still has a parent. This property is false by default.</p>
+<p>In a normal object use case, when ownership of an object is given to a caller, said ownership should be released with efl_unref(). If the object has a parent, this will print error messages, as efl_unref() is stealing the ref from the parent.</p>
+<p>Warning: Use this function very carefully, unless you're absolutely sure of what you are doing.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA property</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowParentUnref { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether to allow efl_unref() to zero even if <a class="xref" href="Efl.Object.html#Efl_Object_Parent">Efl.Object.Parent</a> is not <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Comment_" data-uid="Efl.Object.Comment*"></a>
+  <h4 id="Efl_Object_Comment" data-uid="Efl.Object.Comment">Comment</h4>
+  <div class="markdown level1 summary"><p>A human readable comment for the object.
+Every EFL object can have a comment. This is intended for developers and debugging. An empty string is considered the same as a <code>NULL</code> string or no string for the comment.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Comment { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The comment.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_EventFreezeCount_" data-uid="Efl.Object.EventFreezeCount*"></a>
+  <h4 id="Efl_Object_EventFreezeCount" data-uid="Efl.Object.EventFreezeCount">EventFreezeCount</h4>
+  <div class="markdown level1 summary"><p>Return the count of freeze events for this object.
+This is the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEvent">Efl.Object.FreezeEvent()</a> minus the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_ThawEvent">Efl.Object.ThawEvent()</a>. This object will not emit any event while this count is &gt; 0 (Except events marked <code>hot</code>).
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int EventFreezeCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The event freeze count of this object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_EventGlobalFreezeCount_" data-uid="Efl.Object.EventGlobalFreezeCount*"></a>
+  <h4 id="Efl_Object_EventGlobalFreezeCount" data-uid="Efl.Object.EventGlobalFreezeCount">EventGlobalFreezeCount</h4>
+  <div class="markdown level1 summary"><p>Return the global count of freeze events.
+This is the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEventGlobal">Efl.Object.FreezeEventGlobal()</a> minus the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_ThawEventGlobal">Efl.Object.ThawEventGlobal()</a>. EFL will not emit any event while this count is &gt; 0 (Except events marked <code>hot</code>).
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int EventGlobalFreezeCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The global event freeze count.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Finalized_" data-uid="Efl.Object.Finalized*"></a>
+  <h4 id="Efl_Object_Finalized" data-uid="Efl.Object.Finalized">Finalized</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has been finalized, i.e. construction has finished. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Finalized { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is finalized, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Invalidated_" data-uid="Efl.Object.Invalidated*"></a>
+  <h4 id="Efl_Object_Invalidated" data-uid="Efl.Object.Invalidated">Invalidated</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has been invalidated, i.e. it has no parent. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Invalidated { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is invalidated, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Invalidating_" data-uid="Efl.Object.Invalidating*"></a>
+  <h4 id="Efl_Object_Invalidating" data-uid="Efl.Object.Invalidating">Invalidating</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has started the invalidation phase, but has not finished it yet. Note: This might become <code>true</code> before <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a> is called. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Invalidating { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is invalidating, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Name_" data-uid="Efl.Object.Name*"></a>
+  <h4 id="Efl_Object_Name" data-uid="Efl.Object.Name">Name</h4>
+  <div class="markdown level1 summary"><p>The name of the object.
+Every EFL object can have a name. Names may not contain the following characters: / ? * [ ] !  : Using any of these in a name will result in undefined behavior later on. An empty string is considered the same as a <code>NULL</code> string or no string for the name.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_NativeClass_" data-uid="Efl.Object.NativeClass*"></a>
+  <h4 id="Efl_Object_NativeClass" data-uid="Efl.Object.NativeClass">NativeClass</h4>
+  <div class="markdown level1 summary"><p>Pointer to the native class description.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IntPtr NativeClass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Efl.Eo.EoWrapper.html#Efl_Eo_EoWrapper_NativeClass">EoWrapper.NativeClass</a></div>
+  
+  
+  <a id="Efl_Object_Parent_" data-uid="Efl.Object.Parent*"></a>
+  <h4 id="Efl_Object_Parent" data-uid="Efl.Object.Parent">Parent</h4>
+  <div class="markdown level1 summary"><p>The parent of an object.
+Parents keep references to their children and will release these references when destroyed. In this way, objects can be assigned to a parent upon creation, tying their life cycle so the programmer does not need to worry about destroying the child object. In order to destroy an object before its parent, set the parent to <code>NULL</code> and use efl_unref(), or use efl_del() directly.</p>
+<p>The Eo parent is conceptually user set. That means that a parent should not be changed behind the scenes in an unexpected way.</p>
+<p>For example: If you have a widget which can swallow objects into an internal box, the parent of the swallowed objects should be the widget, not the internal box. The user is not even aware of the existence of the internal box.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Object Parent { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><p>The new parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Object_AttachComposite_" data-uid="Efl.Object.AttachComposite*"></a>
+  <h4 id="Efl_Object_AttachComposite_Efl_Object_" data-uid="Efl.Object.AttachComposite(Efl.Object)">AttachComposite(Object)</h4>
+  <div class="markdown level1 summary"><p>Make an object a composite object of another.
+The class of comp_obj must be part of the extensions of the class of the parent. It isn't possible to attach more then 1 composite of the same class. This function also sets the parent of comp_obj to parent.</p>
+<p>See <a class="xref" href="Efl.Object.html#Efl_Object_CompositeDetach_Efl_Object_">Efl.Object.CompositeDetach(Efl.Object)</a>, <a class="xref" href="Efl.Object.html#Efl_Object_IsCompositePart">Efl.Object.IsCompositePart()</a>.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool AttachComposite(Object comp_obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">comp_obj</span></td>
+        <td><p>the object that will be used to composite the parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if successful. <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_CompositeDetach_" data-uid="Efl.Object.CompositeDetach*"></a>
+  <h4 id="Efl_Object_CompositeDetach_Efl_Object_" data-uid="Efl.Object.CompositeDetach(Efl.Object)">CompositeDetach(Object)</h4>
+  <div class="markdown level1 summary"><p>Detach a composite object from another object.
+This functions also sets the parent of comp_obj to <code>null</code>.</p>
+<p>See <a class="xref" href="Efl.Object.html#Efl_Object_AttachComposite_Efl_Object_">Efl.Object.AttachComposite(Efl.Object)</a>, <a class="xref" href="Efl.Object.html#Efl_Object_IsCompositePart">Efl.Object.IsCompositePart()</a>.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool CompositeDetach(Object comp_obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">comp_obj</span></td>
+        <td><p>The object that will be removed from the parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if successful. <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_DebugNameOverride_" data-uid="Efl.Object.DebugNameOverride*"></a>
+  <h4 id="Efl_Object_DebugNameOverride_Eina_Strbuf_" data-uid="Efl.Object.DebugNameOverride(Eina.Strbuf)">DebugNameOverride(Strbuf)</h4>
+  <div class="markdown level1 summary"><p>Build a read-only name for this object used for debugging.
+Multiple calls using efl_super() can be chained in order to build the entire debug name, from parent to child classes. In C the usual way to build the string is as follows:</p>
+<p>efl_debug_name_override(efl_super(obj, MY_CLASS), sb); eina_strbuf_append_printf(sb, &quot;new_information&quot;);</p>
+<p>Usually more debug information should be added to <code>sb</code> after calling the super function.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void DebugNameOverride(Strbuf sb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Strbuf.html">Eina.Strbuf</a></td>
+        <td><span class="parametername">sb</span></td>
+        <td><p>A string buffer, must not be <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_DelEventCallbackForwarder_" data-uid="Efl.Object.DelEventCallbackForwarder*"></a>
+  <h4 id="Efl_Object_DelEventCallbackForwarder_Efl_EventDescription_Efl_Object_" data-uid="Efl.Object.DelEventCallbackForwarder(Efl.EventDescription,Efl.Object)">DelEventCallbackForwarder(EventDescription, Object)</h4>
+  <div class="markdown level1 summary"><p>Remove an event callback forwarder for a specified event and object.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void DelEventCallbackForwarder(EventDescription desc, Object new_obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.EventDescription.html">Efl.EventDescription</a></td>
+        <td><span class="parametername">desc</span></td>
+        <td><p>The description of the event to listen to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">new_obj</span></td>
+        <td><p>The object to emit events from</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Destructor_" data-uid="Efl.Object.Destructor*"></a>
+  <h4 id="Efl_Object_Destructor" data-uid="Efl.Object.Destructor">Destructor()</h4>
+  <div class="markdown level1 summary"><p>Implement this method to provide deinitialization code for your object if you need it.
+Will be called once <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a> has returned. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Destructor()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_EventCallbackStop_" data-uid="Efl.Object.EventCallbackStop*"></a>
+  <h4 id="Efl_Object_EventCallbackStop" data-uid="Efl.Object.EventCallbackStop">EventCallbackStop()</h4>
+  <div class="markdown level1 summary"><p>Stop the current callback call.
+This stops the current callback call. Any other callbacks for the current event will not be called. This is useful when you want to filter out events. Just add higher priority events and call this under certain conditions to block a certain event.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void EventCallbackStop()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_FinalizeAdd_" data-uid="Efl.Object.FinalizeAdd*"></a>
+  <h4 id="Efl_Object_FinalizeAdd" data-uid="Efl.Object.FinalizeAdd">FinalizeAdd()</h4>
+  <div class="markdown level1 summary"><p>Implement this method to finish the initialization of your object after all (if any) user-provided configuration methods have been executed.
+Use this method to delay expensive operations until user configuration has finished, to avoid building the object in a &quot;default&quot; state in the constructor, just to have to throw it all away because a user configuration (a property being set, for example) requires a different state. This is the last call inside efl_add() and will set <a class="xref" href="Efl.Object.html#Efl_Object_GetFinalized">Efl.Object.GetFinalized()</a> to <code>true</code> once it returns. This is an optimization and implementing this method is optional if you already perform all your initialization in the Efl.Object.constructor method. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Object FinalizeAdd()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><p>The new object. Return <code>NULL</code> to abort object creation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_FindName_" data-uid="Efl.Object.FindName*"></a>
+  <h4 id="Efl_Object_FindName_System_String_" data-uid="Efl.Object.FindName(System.String)">FindName(String)</h4>
+  <div class="markdown level1 summary"><p>Find a child object with the given name and return it.
+The search string can be a glob (shell style, using *). It can also specify class name in the format of &quot;class:name&quot; where &quot;:&quot; separates class and name. Both class and name can be globs. If the class is specified but the name is empty like &quot;class:&quot; then the search will match any object of that class.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Object FindName(string search)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">search</span></td>
+        <td><p>The name search string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><p>The first object found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_FindProvider_" data-uid="Efl.Object.FindProvider*"></a>
+  <h4 id="Efl_Object_FindProvider_Type_" data-uid="Efl.Object.FindProvider(Type)">FindProvider(Type)</h4>
+  <div class="markdown level1 summary"><p>Searches upwards in the object tree for a provider which knows the given class/interface.
+The object from the provider will then be returned. The base implementation calls the provider_find function on the object parent, and returns its result. If no parent is present NULL is returned. Each implementation has to support this function by overriding it and returning itself if the interface matches the parameter. If this is not done the class cannot be found up in the object tree.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Object FindProvider(Type klass)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">klass</span></td>
+        <td><p>The class identifier to search for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><p>Object from the provider list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_FreezeEvent_" data-uid="Efl.Object.FreezeEvent*"></a>
+  <h4 id="Efl_Object_FreezeEvent" data-uid="Efl.Object.FreezeEvent">FreezeEvent()</h4>
+  <div class="markdown level1 summary"><p>Freeze events of this object.
+Prevents event callbacks from being called for this object. Enable events again using <a class="xref" href="Efl.Object.html#Efl_Object_ThawEvent">Efl.Object.ThawEvent()</a>. Events marked <code>hot</code> cannot be stopped.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void FreezeEvent()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_FreezeEventGlobal_" data-uid="Efl.Object.FreezeEventGlobal*"></a>
+  <h4 id="Efl_Object_FreezeEventGlobal" data-uid="Efl.Object.FreezeEventGlobal">FreezeEventGlobal()</h4>
+  <div class="markdown level1 summary"><p>Globally freeze events for ALL EFL OBJECTS.
+Prevents event callbacks from being called for all EFL objects. Enable events again using <a class="xref" href="Efl.Object.html#Efl_Object_ThawEventGlobal">Efl.Object.ThawEventGlobal()</a>. Events marked <code>hot</code> cannot be stopped.</p>
+<p>Note: USE WITH CAUTION.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void FreezeEventGlobal()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_GetAllowParentUnref_" data-uid="Efl.Object.GetAllowParentUnref*"></a>
+  <h4 id="Efl_Object_GetAllowParentUnref" data-uid="Efl.Object.GetAllowParentUnref">GetAllowParentUnref()</h4>
+  <div class="markdown level1 summary"><p>Allow an object to be deleted by unref even if it has a parent.
+This simply hides the error message warning that an object being destroyed still has a parent. This property is false by default.</p>
+<p>In a normal object use case, when ownership of an object is given to a caller, said ownership should be released with efl_unref(). If the object has a parent, this will print error messages, as efl_unref() is stealing the ref from the parent.</p>
+<p>Warning: Use this function very carefully, unless you're absolutely sure of what you are doing.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetAllowParentUnref()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether to allow efl_unref() to zero even if <a class="xref" href="Efl.Object.html#Efl_Object_Parent">Efl.Object.Parent</a> is not <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetComment_" data-uid="Efl.Object.GetComment*"></a>
+  <h4 id="Efl_Object_GetComment" data-uid="Efl.Object.GetComment">GetComment()</h4>
+  <div class="markdown level1 summary"><p>A human readable comment for the object.
+Every EFL object can have a comment. This is intended for developers and debugging. An empty string is considered the same as a <code>NULL</code> string or no string for the comment.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string GetComment()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The comment.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetEventFreezeCount_" data-uid="Efl.Object.GetEventFreezeCount*"></a>
+  <h4 id="Efl_Object_GetEventFreezeCount" data-uid="Efl.Object.GetEventFreezeCount">GetEventFreezeCount()</h4>
+  <div class="markdown level1 summary"><p>Return the count of freeze events for this object.
+This is the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEvent">Efl.Object.FreezeEvent()</a> minus the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_ThawEvent">Efl.Object.ThawEvent()</a>. This object will not emit any event while this count is &gt; 0 (Except events marked <code>hot</code>).
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual int GetEventFreezeCount()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The event freeze count of this object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetEventGlobalFreezeCount_" data-uid="Efl.Object.GetEventGlobalFreezeCount*"></a>
+  <h4 id="Efl_Object_GetEventGlobalFreezeCount" data-uid="Efl.Object.GetEventGlobalFreezeCount">GetEventGlobalFreezeCount()</h4>
+  <div class="markdown level1 summary"><p>Return the global count of freeze events.
+This is the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEventGlobal">Efl.Object.FreezeEventGlobal()</a> minus the amount of calls to <a class="xref" href="Efl.Object.html#Efl_Object_ThawEventGlobal">Efl.Object.ThawEventGlobal()</a>. EFL will not emit any event while this count is &gt; 0 (Except events marked <code>hot</code>).
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int GetEventGlobalFreezeCount()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The global event freeze count.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetFinalized_" data-uid="Efl.Object.GetFinalized*"></a>
+  <h4 id="Efl_Object_GetFinalized" data-uid="Efl.Object.GetFinalized">GetFinalized()</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has been finalized, i.e. construction has finished. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetFinalized()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is finalized, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetInvalidated_" data-uid="Efl.Object.GetInvalidated*"></a>
+  <h4 id="Efl_Object_GetInvalidated" data-uid="Efl.Object.GetInvalidated">GetInvalidated()</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has been invalidated, i.e. it has no parent. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetInvalidated()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is invalidated, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetInvalidating_" data-uid="Efl.Object.GetInvalidating*"></a>
+  <h4 id="Efl_Object_GetInvalidating" data-uid="Efl.Object.GetInvalidating">GetInvalidating()</h4>
+  <div class="markdown level1 summary"><p><code>true</code> if the object has started the invalidation phase, but has not finished it yet. Note: This might become <code>true</code> before <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a> is called. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetInvalidating()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the object is invalidating, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetName_" data-uid="Efl.Object.GetName*"></a>
+  <h4 id="Efl_Object_GetName" data-uid="Efl.Object.GetName">GetName()</h4>
+  <div class="markdown level1 summary"><p>The name of the object.
+Every EFL object can have a name. Names may not contain the following characters: / ? * [ ] !  : Using any of these in a name will result in undefined behavior later on. An empty string is considered the same as a <code>NULL</code> string or no string for the name.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string GetName()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_GetParent_" data-uid="Efl.Object.GetParent*"></a>
+  <h4 id="Efl_Object_GetParent" data-uid="Efl.Object.GetParent">GetParent()</h4>
+  <div class="markdown level1 summary"><p>The parent of an object.
+Parents keep references to their children and will release these references when destroyed. In this way, objects can be assigned to a parent upon creation, tying their life cycle so the programmer does not need to worry about destroying the child object. In order to destroy an object before its parent, set the parent to <code>NULL</code> and use efl_unref(), or use efl_del() directly.</p>
+<p>The Eo parent is conceptually user set. That means that a parent should not be changed behind the scenes in an unexpected way.</p>
+<p>For example: If you have a widget which can swallow objects into an internal box, the parent of the swallowed objects should be the widget, not the internal box. The user is not even aware of the existence of the internal box.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Object GetParent()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><p>The new parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_Invalidate_" data-uid="Efl.Object.Invalidate*"></a>
+  <h4 id="Efl_Object_Invalidate" data-uid="Efl.Object.Invalidate">Invalidate()</h4>
+  <div class="markdown level1 summary"><p>Implement this method to perform special actions when your object loses its parent, if you need to.
+It is called when the parent reference is lost or set to <code>NULL</code>. After this call returns, <a class="xref" href="Efl.Object.html#Efl_Object_GetInvalidated">Efl.Object.GetInvalidated()</a> is set to <code>true</code>. This allows a simpler tear down of complex hierarchies, by performing object destruction in two steps, first all object relationships are broken and then the isolated objects are destroyed. Performing everything in the <a class="xref" href="Efl.Object.html#Efl_Object_Destructor">Efl.Object.Destructor()</a> can sometimes lead to deadlocks, but implementing this method is optional if this is not your case. When an object with a parent is destroyed, it first receives a call to <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a> and then to <a class="xref" href="Efl.Object.html#Efl_Object_Destructor">Efl.Object.Destructor()</a>. See the Life Cycle section in this class' description.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Invalidate()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_IsCompositePart_" data-uid="Efl.Object.IsCompositePart*"></a>
+  <h4 id="Efl_Object_IsCompositePart" data-uid="Efl.Object.IsCompositePart">IsCompositePart()</h4>
+  <div class="markdown level1 summary"><p>Check if an object is part of a composite object.
+See <a class="xref" href="Efl.Object.html#Efl_Object_AttachComposite_Efl_Object_">Efl.Object.AttachComposite(Efl.Object)</a>, <a class="xref" href="Efl.Object.html#Efl_Object_IsCompositePart">Efl.Object.IsCompositePart()</a>.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool IsCompositePart()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if it is. <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_NewChildrenIterator_" data-uid="Efl.Object.NewChildrenIterator*"></a>
+  <h4 id="Efl_Object_NewChildrenIterator" data-uid="Efl.Object.NewChildrenIterator">NewChildrenIterator()</h4>
+  <div class="markdown level1 summary"><p>Get an iterator on all childrens
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Iterator&lt;Object&gt; NewChildrenIterator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Object&gt;</span></td>
+        <td><p>Children iterator</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnDelEvt_" data-uid="Efl.Object.OnDelEvt*"></a>
+  <h4 id="Efl_Object_OnDelEvt_EventArgs_" data-uid="Efl.Object.OnDelEvt(EventArgs)">OnDelEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event DelEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnDelEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnDestructEvt_" data-uid="Efl.Object.OnDestructEvt*"></a>
+  <h4 id="Efl_Object_OnDestructEvt_EventArgs_" data-uid="Efl.Object.OnDestructEvt(EventArgs)">OnDestructEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event DestructEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnDestructEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnInvalidateEvt_" data-uid="Efl.Object.OnInvalidateEvt*"></a>
+  <h4 id="Efl_Object_OnInvalidateEvt_EventArgs_" data-uid="Efl.Object.OnInvalidateEvt(EventArgs)">OnInvalidateEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event InvalidateEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnInvalidateEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnNorefEvt_" data-uid="Efl.Object.OnNorefEvt*"></a>
+  <h4 id="Efl_Object_OnNorefEvt_EventArgs_" data-uid="Efl.Object.OnNorefEvt(EventArgs)">OnNorefEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event NorefEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnNorefEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnOwnershipSharedEvt_" data-uid="Efl.Object.OnOwnershipSharedEvt*"></a>
+  <h4 id="Efl_Object_OnOwnershipSharedEvt_EventArgs_" data-uid="Efl.Object.OnOwnershipSharedEvt(EventArgs)">OnOwnershipSharedEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event OwnershipSharedEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnOwnershipSharedEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_OnOwnershipUniqueEvt_" data-uid="Efl.Object.OnOwnershipUniqueEvt*"></a>
+  <h4 id="Efl_Object_OnOwnershipUniqueEvt_EventArgs_" data-uid="Efl.Object.OnOwnershipUniqueEvt(EventArgs)">OnOwnershipUniqueEvt(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event OwnershipUniqueEvt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnOwnershipUniqueEvt(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_ProviderRegister_" data-uid="Efl.Object.ProviderRegister*"></a>
+  <h4 id="Efl_Object_ProviderRegister_Type_Efl_Object_" data-uid="Efl.Object.ProviderRegister(Type,Efl.Object)">ProviderRegister(Type, Object)</h4>
+  <div class="markdown level1 summary"><p>Will register a manager of a specific class to be answered by eo.provider_find.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool ProviderRegister(Type klass, Object provider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">klass</span></td>
+        <td><p>The class provided by the registered provider.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">provider</span></td>
+        <td><p>The provider for the newly registered class that has to provide that said Efl.Class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if successfully register, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_ProviderUnregister_" data-uid="Efl.Object.ProviderUnregister*"></a>
+  <h4 id="Efl_Object_ProviderUnregister_Type_Efl_Object_" data-uid="Efl.Object.ProviderUnregister(Type,Efl.Object)">ProviderUnregister(Type, Object)</h4>
+  <div class="markdown level1 summary"><p>Will unregister a manager of a specific class that was previously registered and answered by eo.provider_find.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool ProviderUnregister(Type klass, Object provider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">klass</span></td>
+        <td><p>The class provided by the provider to unregister for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">provider</span></td>
+        <td><p>The provider for the registered class to unregister.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if successfully unregistered, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_SetAllowParentUnref_" data-uid="Efl.Object.SetAllowParentUnref*"></a>
+  <h4 id="Efl_Object_SetAllowParentUnref_System_Boolean_" data-uid="Efl.Object.SetAllowParentUnref(System.Boolean)">SetAllowParentUnref(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Allow an object to be deleted by unref even if it has a parent.
+This simply hides the error message warning that an object being destroyed still has a parent. This property is false by default.</p>
+<p>In a normal object use case, when ownership of an object is given to a caller, said ownership should be released with efl_unref(). If the object has a parent, this will print error messages, as efl_unref() is stealing the ref from the parent.</p>
+<p>Warning: Use this function very carefully, unless you're absolutely sure of what you are doing.
+(Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetAllowParentUnref(bool allow)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allow</span></td>
+        <td><p>Whether to allow efl_unref() to zero even if <a class="xref" href="Efl.Object.html#Efl_Object_Parent">Efl.Object.Parent</a> is not <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_SetComment_" data-uid="Efl.Object.SetComment*"></a>
+  <h4 id="Efl_Object_SetComment_System_String_" data-uid="Efl.Object.SetComment(System.String)">SetComment(String)</h4>
+  <div class="markdown level1 summary"><p>A human readable comment for the object.
+Every EFL object can have a comment. This is intended for developers and debugging. An empty string is considered the same as a <code>NULL</code> string or no string for the comment.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetComment(string comment)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">comment</span></td>
+        <td><p>The comment.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_SetName_" data-uid="Efl.Object.SetName*"></a>
+  <h4 id="Efl_Object_SetName_System_String_" data-uid="Efl.Object.SetName(System.String)">SetName(String)</h4>
+  <div class="markdown level1 summary"><p>The name of the object.
+Every EFL object can have a name. Names may not contain the following characters: / ? * [ ] !  : Using any of these in a name will result in undefined behavior later on. An empty string is considered the same as a <code>NULL</code> string or no string for the name.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetName(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_SetParent_" data-uid="Efl.Object.SetParent*"></a>
+  <h4 id="Efl_Object_SetParent_Efl_Object_" data-uid="Efl.Object.SetParent(Efl.Object)">SetParent(Object)</h4>
+  <div class="markdown level1 summary"><p>The parent of an object.
+Parents keep references to their children and will release these references when destroyed. In this way, objects can be assigned to a parent upon creation, tying their life cycle so the programmer does not need to worry about destroying the child object. In order to destroy an object before its parent, set the parent to <code>NULL</code> and use efl_unref(), or use efl_del() directly.</p>
+<p>The Eo parent is conceptually user set. That means that a parent should not be changed behind the scenes in an unexpected way.</p>
+<p>For example: If you have a widget which can swallow objects into an internal box, the parent of the swallowed objects should be the widget, not the internal box. The user is not even aware of the existence of the internal box.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetParent(Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The new parent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Object_ThawEvent_" data-uid="Efl.Object.ThawEvent*"></a>
+  <h4 id="Efl_Object_ThawEvent" data-uid="Efl.Object.ThawEvent">ThawEvent()</h4>
+  <div class="markdown level1 summary"><p>Thaw events of object.
+Allows event callbacks to be called again for this object after a call to <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEvent">Efl.Object.FreezeEvent()</a>. The amount of thaws must match the amount of freezes for events to be re-enabled.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void ThawEvent()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Object_ThawEventGlobal_" data-uid="Efl.Object.ThawEventGlobal*"></a>
+  <h4 id="Efl_Object_ThawEventGlobal" data-uid="Efl.Object.ThawEventGlobal">ThawEventGlobal()</h4>
+  <div class="markdown level1 summary"><p>Gobally thaw events for ALL EFL OBJECTS.
+Allows event callbacks to be called for all EFL objects after they have been disabled by <a class="xref" href="Efl.Object.html#Efl_Object_FreezeEventGlobal">Efl.Object.FreezeEventGlobal()</a>. The amount of thaws must match the amount of freezes for events to be re-enabled.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ThawEventGlobal()</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Object_DelEvt" data-uid="Efl.Object.DelEvt">DelEvt</h4>
+  <div class="markdown level1 summary"><p>Object is being deleted. See <a class="xref" href="Efl.Object.html#Efl_Object_Destructor">Efl.Object.Destructor()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler DelEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Object_DestructEvt" data-uid="Efl.Object.DestructEvt">DestructEvt</h4>
+  <div class="markdown level1 summary"><p>Object has been fully destroyed. It can not be used beyond this point. This event should only serve to clean up any reference you keep to the object.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler DestructEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Object_InvalidateEvt" data-uid="Efl.Object.InvalidateEvt">InvalidateEvt</h4>
+  <div class="markdown level1 summary"><p>Object is being invalidated and losing its parent. See <a class="xref" href="Efl.Object.html#Efl_Object_Invalidate">Efl.Object.Invalidate()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler InvalidateEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Object_NorefEvt" data-uid="Efl.Object.NorefEvt">NorefEvt</h4>
+  <div class="markdown level1 summary"><p>Object has lost its last reference, only parent relationship is keeping it alive. Advanced usage.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler NorefEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Object_OwnershipSharedEvt" data-uid="Efl.Object.OwnershipSharedEvt">OwnershipSharedEvt</h4>
+  <div class="markdown level1 summary"><p>Object has acquired a second reference. It has multiple owners now. Triggered whenever increasing the refcount from one to two, it will not trigger by further increasing the refcount beyond two.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler OwnershipSharedEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Object_OwnershipUniqueEvt" data-uid="Efl.Object.OwnershipUniqueEvt">OwnershipUniqueEvt</h4>
+  <div class="markdown level1 summary"><p>Object has lost a reference and only one is left. It has just one owner now. Triggered whenever the refcount goes from two to one.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler OwnershipUniqueEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

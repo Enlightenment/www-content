@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>User Interface Sizing Programming Guide in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="User Interface Sizing Programming Guide in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="user-interface-sizing-programming-guide-in-c">User Interface Sizing Programming Guide in C#</h1>
+
+<p>Sometimes when building a <em>user interface (UI)</em> you need to set the size of some elements to non-default values. A common pitfall is to explicitly set these sizes to values that look OK in a development environment but then fail for other users when the UI size changes.</p>
+<p>A better approach is to set <strong>minimum</strong> and <strong>maximum</strong> values for the size of these elements. This means they can be customized while still allowing for some flexibility.</p>
+<p>You can find an usage example in the <a href="https://git.enlightenment.org/tools/examples.git/">EFL examples repository</a> in <a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/ui_sizing.cs"><code>reference/csharp/ui/src/ui_sizing.cs</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Read the <a href="../../../tutorials/csharp/hello-world-gui-cs.html">Graphical Hello world Tutorial in C#</a> to learn how to build a simple EFL application with a Graphical User Interface.</li>
+</ul>
+<h2 id="setting-a-widgets-minimum-size">Setting a Widget's Minimum Size</h2>
+<p>When a widget's <strong>minimum</strong> size is defined with <code>SetHintSizeMin()</code>, resizing the rest of the UI will not shrink the widget below the size you set. You can use it to create elements which are bigger than normal, as well as prevent the UI from becoming too small:</p>
+<pre><code class="lang-csharp">button = new Efl.Ui.Button(win);
+button.SetText(&quot;Big button&quot;);
+button.SetHintSizeMin(new Eina.Size2D(100,100));
+box.DoPack(button);
+</code></pre>
+<h2 id="setting-a-widgets-maximum-size">Setting a Widget's Maximum Size</h2>
+<p>When a widget's <strong>maximum</strong> size is defined with <code>SetHintSizeMax()</code>, resizing the rest of the UI will not expand the widget beyond the size you set. Use it to create elements that are smaller than normal or that will not expand past a given point when the UI grows.</p>
+<pre><code class="lang-csharp">button = new Efl.Ui.Button(win);
+button.SetText(&quot;Small&quot;);
+button.SetHintSizeMax(new Eina.Size2D(50,50));
+box.DoPack(button);
+</code></pre>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="../../../tutorials/csharp/hello-world-gui-cs.html">Graphical Hello world Tutorial in C#</a>
+:    Basic tutorial explaining how to build a simple EFL application with a Graphical User Interface.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/main.js"></script>
+  </body>
+</html>

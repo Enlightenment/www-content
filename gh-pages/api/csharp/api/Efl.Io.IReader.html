@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface Efl.Io.IReader
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface Efl.Io.IReader
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Io.IReader">
+  
+  
+  <h1 id="Efl_Io_IReader" data-uid="Efl.Io.IReader" class="text-break">Interface Efl.Io.IReader
+  </h1>
+  <div class="markdown level0 summary"><p>Generic interface for objects that can read data into a provided memory.
+This interface allows external objects to transparently monitor for new data and as it to be read into a provided memory slice.</p>
+<p>Calls to <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> may or may not block, that's not up to this interface to specify. The user can check based on <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Eos">Efl.Io.IReader.Eos</a> property and signal if the stream reached an end, with event &quot;can_read,changed&quot; or property <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_CanRead">Efl.Io.IReader.CanRead</a> to known whenever a read would have data to return.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  
+  <h5 id="Efl_Io_IReader_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IReader : IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Io_IReader_CanRead_" data-uid="Efl.Io.IReader.CanRead*"></a>
+  <h4 id="Efl_Io_IReader_CanRead" data-uid="Efl.Io.IReader.CanRead">CanRead</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> can be called without blocking or failing.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanRead { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if it can be read without blocking or failing, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Io_IReader_Eos_" data-uid="Efl.Io.IReader.Eos*"></a>
+  <h4 id="Efl_Io_IReader_Eos" data-uid="Efl.Io.IReader.Eos">Eos</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify end of stream.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Eos { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if end of stream, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Io_IReader_GetCanRead_" data-uid="Efl.Io.IReader.GetCanRead*"></a>
+  <h4 id="Efl_Io_IReader_GetCanRead" data-uid="Efl.Io.IReader.GetCanRead">GetCanRead()</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> can be called without blocking or failing.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetCanRead()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if it can be read without blocking or failing, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Io_IReader_GetEos_" data-uid="Efl.Io.IReader.GetEos*"></a>
+  <h4 id="Efl_Io_IReader_GetEos" data-uid="Efl.Io.IReader.GetEos">GetEos()</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify end of stream.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetEos()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if end of stream, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Io_IReader_Read_" data-uid="Efl.Io.IReader.Read*"></a>
+  <h4 id="Efl_Io_IReader_Read_Eina_RwSlice__" data-uid="Efl.Io.IReader.Read(Eina.RwSlice@)">Read(ref RwSlice)</h4>
+  <div class="markdown level1 summary"><p>Reads data into a pre-allocated buffer.
+This operation will be executed immediately and may or may not block the caller thread for some time. The details of blocking behavior is to be defined by the implementation and may be subject to other parameters such as non-blocking flags, maximum timeout or even retry attempts.</p>
+<p>You can understand this method as read(2) libc function.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Error Read(ref RwSlice rw_slice)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.RwSlice.html">Eina.RwSlice</a></td>
+        <td><span class="parametername">rw_slice</span></td>
+        <td><p>Provides a pre-allocated memory to be filled up to rw_slice.len. It will be populated and the length will be set to the actually used amount of bytes, which can be smaller than the request.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Error.html">Eina.Error</a></td>
+        <td><p>0 on succeed, a mapping of errno otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Io_IReader_SetCanRead_" data-uid="Efl.Io.IReader.SetCanRead*"></a>
+  <h4 id="Efl_Io_IReader_SetCanRead_System_Boolean_" data-uid="Efl.Io.IReader.SetCanRead(System.Boolean)">SetCanRead(Boolean)</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> can be called without blocking or failing.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetCanRead(bool can_read)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">can_read</span></td>
+        <td><p><code>true</code> if it can be read without blocking or failing, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Io_IReader_SetEos_" data-uid="Efl.Io.IReader.SetEos*"></a>
+  <h4 id="Efl_Io_IReader_SetEos_System_Boolean_" data-uid="Efl.Io.IReader.SetEos(System.Boolean)">SetEos(Boolean)</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code> will notify end of stream.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetEos(bool is_eos)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">is_eos</span></td>
+        <td><p><code>true</code> if end of stream, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Io_IReader_CanReadChangedEvt" data-uid="Efl.Io.IReader.CanReadChangedEvt">CanReadChangedEvt</h4>
+  <div class="markdown level1 summary"><p>Notifies can_read property changed.
+If <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_CanRead">Efl.Io.IReader.CanRead</a> is <code>true</code> there is data to <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> without blocking/error. If <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_CanRead">Efl.Io.IReader.CanRead</a> is <code>false</code>, <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a> would either block or fail.</p>
+<p>Note that usually this event is dispatched from inside <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_Read_Eina_RwSlice__">Efl.Io.IReader.Read(ref Eina.RwSlice)</a>, thus before it returns.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;IReaderCanReadChangedEvt_Args&gt; CanReadChangedEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler&lt;Efl.Io.IReaderCanReadChangedEvt_Args&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Io_IReader_EosEvt" data-uid="Efl.Io.IReader.EosEvt">EosEvt</h4>
+  <div class="markdown level1 summary"><p>Notifies end of stream, when property is marked as true.
+If this is used alongside with an <a class="xref" href="Efl.Io.ICloser.html">Efl.Io.ICloser</a>, then it should be emitted before that call.</p>
+<p>It should be emitted only once for an object unless it implements <a class="xref" href="Efl.Io.IPositioner.html#Efl_Io_IPositioner_Seek_System_Int64_Efl_Io_PositionerWhence_">Efl.Io.IPositioner.Seek(System.Int64, Efl.Io.PositionerWhence)</a>.</p>
+<p>The property <a class="xref" href="Efl.Io.IReader.html#Efl_Io_IReader_CanRead">Efl.Io.IReader.CanRead</a> should change to <code>false</code> before this event is dispatched.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler EosEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>User Interface Focus Programming Guide in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="User Interface Focus Programming Guide in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="user-interface-focus-programming-guide-in-c">User Interface Focus Programming Guide in C#</h1>
+
+<p>When using a keyboard instead of a mouse or a touch screen, you need to understand the concept of <strong>Focus</strong>: a graphical indicator of the widget currently selected, which you can move around using the cursor keys, for example.</p>
+<p>EFL handles the focus of your application in a way which works in most situations. This guide shows you how focus is handled in EFL and how to tweak it to your needs in those rare circumstances where this isn't the case.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><p>Make sure you know the basics of creating a graphical application with the EFL by following the <a href="../../../tutorials/csharp/hello-world-gui-cs.html">Graphical Hello world in C#</a> tutorial.</p>
+</li>
+<li><p>Make sure you also read the <a href="../core/events.html">Events Programming Guide</a> to learn about event emission and registration in EFL.</p>
+</li>
+</ul>
+<h2 id="understanding-the-focus">Understanding the Focus</h2>
+<p>Graphical User Interfaces (<strong>GUI</strong>s) are typically made of widgets arranged on a window. Some widgets are meant to convey information to the user, like text labels or progress bars. Some are meant to receive information from the user such as input boxes or sliders and some are meant to execute commands, like buttons.</p>
+<p>To act on a widget, you first need to <strong>select</strong> it and then <strong>activate</strong> it. Pointer devices like mice or touch screens perform both actions simultaneously: When using a mouse the widget under the mouse pointer is first selected and then activated when you click on it. Similarly, when using a touch screen, the widget under your finger is first selected and then activated when you press it.</p>
+<p>Things are not so straightforward when you use a keyboard, though, because both actions are separated. You have some keys that change the selected widget (typically the <kbd>Tab</kbd> and <kbd>Cursor</kbd> keys) and some keys which activate it (typically <kbd>Enter</kbd> or the <kbd>Space bar</kbd>).</p>
+<p>The selected widget is said to have the <strong>Focus</strong> and is shown with some sort of highlight to distinguish it from other widgets (EFL's default focus highlight is a glowing blue rectangle around the selected widget). Changing the focus from one widget to another using the keyboard is called <strong>Focus Navigation</strong>.</p>
+<h2 id="focus-management-in-efl">Focus Management in EFL</h2>
+<p>When developing applications with EFL, you normally don't have to worry about focus management. You can just build your GUI by adding and arranging widgets and focus works out of the box. It is worth understanding how EFL does this though, in case you aren't satisfied with the focus navigation it provides.</p>
+<p>There are 6 commands for Focus navigation: 4 <strong>directional</strong> (Up, Down, Left, Right) and 2 <strong>ordinal</strong> (Previous and Next).</p>
+<p>When EFL receives a directional focus navigation command (typically through a cursor key) it does its best to move the focus to the widget closest to the currently selected one, moving in the requested direction as it appears on the screen.</p>
+<p>When EFL receives an ordinal focus navigation command (typically though the <kbd>Tab</kbd> or <kbd>Shift</kbd>+<kbd>Tab</kbd> keys) it moves the focus to the next (or previous) widget in the <strong>focus hierarchy</strong>. This hierarchy is built as you add widgets to your GUI, so <strong>the order in which you add the widgets matters</strong>.</p>
+<p>As you add widgets to your GUI, the <strong>focusable</strong> ones are added to a list (not all widgets can be selected, like text labels, so not all widgets can receive the focus). Ordinal commands then move the focus through this list. If a widget is a container for other widgets (like a <code>Box</code>), focus will move through its children <strong>before</strong> moving out of the container and onto its siblings (depth-first traversal).</p>
+<p>The bottom line is that you must <strong>add widgets to your GUI in the same order in which you want the user to navigate them</strong>. The order in which the widgets are added has no other impact, so it is worth paying attention to this to make your GUI more keyboard-friendly.</p>
+<h2 id="setting-the-focus-on-a-widget">Setting the Focus on a Widget</h2>
+<p>Sometimes you may want to bypass EFL's default behavior and programmatically set the focus to a particular widget, for example, on an <code>OK</code> button once enough information has been added to a form.</p>
+<p>To achieve this use the <code>Efl.Ui.Focus.Util</code> class. It has a single method called <code>Focus()</code> which receives as a parameter the widget to which you want to move the focus.</p>
+<p>When using this method the widget currently selected will lose the focus and the one you passed will gain the focus. During this process, all focus-related events will be emitted (see the next section).</p>
+<p>This method can only be used on widgets implementing the <code>Efl.Ui.Focus.Object</code> interface but most widgets inherit from <code>Efl.Ui.Widget</code> which already does this, so you don't typically have to worry.</p>
+<p>Here's an usage example taken from the EFL examples repository <a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs"><code>reference/csharp/ui/src/focus_main.cs</code></a>:</p>
+<pre><code class="lang-csharp">// Manually transfer focus to the first check box
+Efl.Ui.Focus.Util.Focus(first_checkbox);
+</code></pre>
+<h2 id="reacting-to-focus-changes">Reacting to Focus Changes</h2>
+<p>Every time a widget gains or loses the focus, it emits the event <code>FocusChangedEvt</code>. You can then retrieve the current focused state of the widget through the <code>GetFocus()</code> method.</p>
+<p>Here's an usage example taken from the EFL examples repository <a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs"><code>reference/csharp/ui/src/focus_main.cs</code></a>:</p>
+<pre><code class="lang-csharp">public static void FocusChangedCb(object sender, EventArgs e)
+{
+    Console.WriteLine($&quot;Focus for object {((Efl.Text)sender).GetText()} changed to {((Efl.Ui.Widget)sender).GetFocus()}&quot;);
+}
+
+[...]
+
+var checkbox = new Efl.Ui.Check(vbox);
+checkbox.SetText(&quot;Check &quot; + i);
+checkbox.SetHintAlign(0.5, 0.5);
+checkbox.FocusChangedEvt += FocusChangedCb;
+vbox.DoPack(checkbox);
+</code></pre>
+<h2 id="showing-and-hiding-the-focus-highlight">Showing and Hiding the Focus Highlight</h2>
+<p>There's always a selected widget, but it is not always marked with the <strong>focus highlight</strong> since the visual cue is not needed unless the user plans to use the keyboard. For this reason EFL applications start with a hidden focus highlight and it is not shown until the user presses a key.</p>
+<p>If you need to manually hide or show the focus highlight you can use the <code>SetFocusHighlightEnabled()</code> method on your window:</p>
+<pre><code class="lang-csharp">// Show the focus highlight
+win.SetFocusHighlightEnabled(true);
+</code></pre>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>Add widgets to your GUI in the same order in which you want your users to navigate them.</li>
+<li>Manually set the focus to a widget using <code>Efl.Ui.Focus.Util.Focus()</code>.</li>
+<li>Track focus changes by listening to the <code>FocusChangedEvt</code> event emitted by widgets.</li>
+<li>Control whether the focus highlight is shown or not using <code>SetFocusHighlightEnabled()</code>.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="../../../tutorials/csharp/hello-world-gui-cs.html">Graphical Hello world in C#</a>
+:    EFL graphical application programming basics.</p>
+<p><a href="../core/events.html">Events Programming Guide</a>
+:    Explains how events and event callbacks are handled in EFL.</p>
+<p><a class="xref" href="../../../../../../../api/index.html">EFL API Reference guide</a>
+:    Detailed documentation on the EFL API.</p>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/ui/src/focus_main.cs">EFL Examples Repository</a>
+:    Usage example of the focus API.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/main.js"></script>
+  </body>
+</html>

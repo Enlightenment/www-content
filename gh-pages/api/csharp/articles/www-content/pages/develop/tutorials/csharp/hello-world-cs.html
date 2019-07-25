@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&quot;Hello World&quot; in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&quot;Hello World&quot; in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="hello-world-in-c">&quot;Hello World&quot; in C#</h1>
+
+<p>This first tutorial ensures that your EFL installation is ready to produce C# applications and demonstrates the first basic EFL concepts.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Read the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide so you have a working EFL installation with C# support.</li>
+</ul>
+<h2 id="hello-world">Hello World</h2>
+<p>Copy the code below into a file named <code>hello-world.cs</code> (The walkthrough is in the following section).</p>
+<pre><code class="lang-csharp">using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        Efl.All.Init(Efl.Components.Ui);
+
+        // Create a window and initialize it
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText(&quot;Hello World&quot;);
+        // Request that the window is automatically hidden when the &quot;close&quot;
+        // button is pressed
+        win.SetAutohide(true);
+        // Window size must be explicitly set, otherwise it will be invisible
+        // due to its lack of content.
+        win.SetSize(new Eina.Size2D(360, 240));
+
+        // Start the EFL main loop
+        Efl.Ui.Config.Run();
+
+        // Shutdown EFL
+        Efl.All.Shutdown();
+    }
+}
+</code></pre>
+<p>Compile it as explained in the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide and run the executable. If everything worked according to plan, you should see an empty window like this:</p>
+<p><img src="../../../../../../images/playground/03-hello-world-gui/image02.png" alt="Full application with text box and button"></p>
+<h2 id="walkthrough">Walkthrough</h2>
+<h3 id="main">Main</h3>
+<p>The program starts with a simple class structure to define the <code>Main</code> entry point:</p>
+<pre><code class="lang-csharp">using System;
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        [...]
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>:
+The <code>STAThreadAttribute</code> is currently necessary in Windows systems because of limitations in the <code>ecore_win32</code> internal library of EFL. You can compile passing <code>-define:WIN32</code> to <code>mcs</code> to indicate that you are compiling on a Windows system.</p>
+</blockquote>
+<h3 id="efl-initialization">EFL Initialization</h3>
+<p>EFL is initialized with the <code>Efl.All.Init()</code> method:</p>
+<pre><code class="lang-csharp">        // Initialize EFL and all UI components
+        Efl.All.Init(Efl.Components.Ui);
+</code></pre>
+<p>It accepts a parameter specifying which EFL components your app will require. This enables faster boot times and better resource usage by not loading and starting unnecessary components.</p>
+<p>The only currently available options are <code>Efl.Components.Basic</code> and <code>Efl.Components.Ui</code>. When not specified, <code>Basic</code> is assumed.</p>
+<h3 id="creating-the-window">Creating the Window</h3>
+<p>All EFL objects, like Windows, Widgets or Timers, are created using the standard <code>new</code> operator, for example:</p>
+<pre><code class="lang-csharp">Efl.Ui.Win win = new Efl.Ui.Win();
+</code></pre>
+<p>However, EFL object constructors may have additional optional parameters. The first one, <code>parent</code>, is always available: Any EFL object can be the child of another EFL object (its parent). Parents will take care of disposing of all their children upon destruction, greatly simplifying object life-cycle management.</p>
+<p>In the tutorial code:</p>
+<pre><code class="lang-csharp">        // Create a window and initialize it
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText(&quot;Hello World&quot;);
+        // Request that the window is automatically hidden when the &quot;close&quot;
+        // button is pressed
+        win.SetAutohide(true);
+</code></pre>
+<p>Observe how the window is created as a child of <code>Efl.App.AppMain</code>, the application's main loop. This ensures that the window will receive all messages coming from the application.</p>
+<p>Also, note the further customization of the Window object:</p>
+<ul>
+<li>The window title is set to <code>Hello World</code>.</li>
+<li>The <code>Autohide</code> flag is set to true. This means that the window will automatically be hidden when the user closes it. The default behavior for an app when all its windows are hidden is to quit.</li>
+</ul>
+<h3 id="the-window-size">The Window Size</h3>
+<p>By default, windows adjust themselves to have the minimum size that allows displaying all their content. In this tutorial the window has no content at all, so its size will be 0 pixels wide and 0 pixels tall.</p>
+<p>The next tutorial adds some content to the window, but meanwhile, you can manually set the size of a window:</p>
+<pre><code class="lang-csharp">        // Window size must be explicitly set, otherwise it will be invisible
+        // due to its lack of content.
+        win.SetSize(new Eina.Size2D(360, 240));
+</code></pre>
+<h3 id="starting-up-the-user-interface">Starting Up the User Interface</h3>
+<p>Now that all the required EFL objects have been created (only a window, actually), it's time to relinquish control to EFL.</p>
+<pre><code class="lang-csharp">        // Start the EFL main loop
+        Efl.Ui.Config.Run();
+</code></pre>
+<p>This method does not return until EFL exits. In any application you will set callback methods that EFL will use to inform you of some events, and you will plug more code on those methods.</p>
+<p>The following tutorials show how to do that. For this one, the only remaining thing is:</p>
+<h3 id="shutting-down">Shutting Down</h3>
+<pre><code class="lang-csharp">        // Shutdown EFL
+        Efl.All.Shutdown();
+</code></pre>
+<p>Always remember to shut down EFL to close windows, network connections and free resources.</p>
+<h2 id="summary">Summary</h2>
+<p>In this tutorial you have learned:</p>
+<ul>
+<li>How to properly initialize and shutdown the EFL library with <code>Efl.All.Init()</code> and <code>Efl.All.Shutdown()</code>.</li>
+<li>How to create and initialize EFL objects using <code>new</code>.</li>
+<li>How to instantiate an EFL window and customize it using the <code>Efl.Ui.Win</code> class.</li>
+<li>How to start the UI by giving control to EFL with <code>Efl.Ui.Config.Run()</code>.</li>
+</ul>
+<p>The following tutorial adds some text and a button to the UI, and shows how to react to a button press.</p>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a>
+:    Instructions for having EFL ready to work from C#.</p>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/tutorial/csharp">Tutorial Code Examples</a>
+:    C# Source code for the tutorials.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/main.js"></script>
+  </body>
+</html>

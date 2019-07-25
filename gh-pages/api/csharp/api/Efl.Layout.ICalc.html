@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface Efl.Layout.ICalc
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface Efl.Layout.ICalc
+   ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../e-logo-title.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Efl.Layout.ICalc">
+  
+  
+  <h1 id="Efl_Layout_ICalc" data-uid="Efl.Layout.ICalc" class="text-break">Interface Efl.Layout.ICalc
+  </h1>
+  <div class="markdown level0 summary"><p>This interface defines a common set of APIs used to trigger calculations with layout objects.
+This defines all the APIs supported by legacy &quot;Edje&quot; object, known in EO API as Efl.Canvas.Layout.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  
+  <h5 id="Efl_Layout_ICalc_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ICalc : IWrapper, IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Layout_ICalc_CalcAutoUpdateHints_" data-uid="Efl.Layout.ICalc.CalcAutoUpdateHints*"></a>
+  <h4 id="Efl_Layout_ICalc_CalcAutoUpdateHints" data-uid="Efl.Layout.ICalc.CalcAutoUpdateHints">CalcAutoUpdateHints</h4>
+  <div class="markdown level1 summary"><p>Whether this object updates its size hints automatically.
+By default edje doesn't set size hints on itself. If this property is set to <code>true</code>, size hints will be updated after recalculation. Be careful, as recalculation may happen often, enabling this property may have a considerable performance impact as other widgets will be notified of the size hints changes.</p>
+<p>A layout recalculation can be triggered by <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_CalcSizeMin_Eina_Size2D_">Efl.Layout.ICalc.CalcSizeMin(Eina.Size2D)</a>, <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_CalcSizeMin_Eina_Size2D_">Efl.Layout.ICalc.CalcSizeMin(Eina.Size2D)</a>, <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_CalcPartsExtends">Efl.Layout.ICalc.CalcPartsExtends()</a> or even any other internal event.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CalcAutoUpdateHints { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not update the size hints.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Layout_ICalc_CalcForce_" data-uid="Efl.Layout.ICalc.CalcForce*"></a>
+  <h4 id="Efl_Layout_ICalc_CalcForce" data-uid="Efl.Layout.ICalc.CalcForce">CalcForce()</h4>
+  <div class="markdown level1 summary"><p>Forces a Size/Geometry calculation.
+Forces the object to recalculate its layout regardless of freeze/thaw. This API should be used carefully.</p>
+<p>See also <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_FreezeCalc">Efl.Layout.ICalc.FreezeCalc()</a> and <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_ThawCalc">Efl.Layout.ICalc.ThawCalc()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CalcForce()</code></pre>
+  </div>
+  
+  
+  <a id="Efl_Layout_ICalc_CalcPartsExtends_" data-uid="Efl.Layout.ICalc.CalcPartsExtends*"></a>
+  <h4 id="Efl_Layout_ICalc_CalcPartsExtends" data-uid="Efl.Layout.ICalc.CalcPartsExtends">CalcPartsExtends()</h4>
+  <div class="markdown level1 summary"><p>Calculates the geometry of the region, relative to a given layout object's area, occupied by all parts in the object.
+This function gets the geometry of the rectangle equal to the area required to group all parts in obj's group/collection. The x and y coordinates are relative to the top left corner of the whole obj object's area. Parts placed out of the group's boundaries will also be taken in account, so that x and y may be negative.</p>
+<p>Note: On failure, this function will make all non-<code>null</code> geometry pointers' pointed variables be set to zero.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rect CalcPartsExtends()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
+        <td><p>The calculated region.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ICalc_CalcSizeMin_" data-uid="Efl.Layout.ICalc.CalcSizeMin*"></a>
+  <h4 id="Efl_Layout_ICalc_CalcSizeMin_Eina_Size2D_" data-uid="Efl.Layout.ICalc.CalcSizeMin(Eina.Size2D)">CalcSizeMin(Size2D)</h4>
+  <div class="markdown level1 summary"><p>Calculates the minimum required size for a given layout object.
+This call will trigger an internal recalculation of all parts of the object, in order to return its minimum required dimensions for width and height. The user might choose to impose those minimum sizes, making the resulting calculation to get to values greater or equal than <code>restricted</code> in both directions.</p>
+<p>Note: At the end of this call, the object won't be automatically resized to the new dimensions, but just return the calculated sizes. The caller is the one up to change its geometry or not.</p>
+<p>Warning: Be advised that invisible parts in the object will be taken into account in this calculation.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Size2D CalcSizeMin(Size2D restricted)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
+        <td><span class="parametername">restricted</span></td>
+        <td><p>The minimum size constraint as input, the returned size can not be lower than this (in both directions).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
+        <td><p>The minimum required size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ICalc_FreezeCalc_" data-uid="Efl.Layout.ICalc.FreezeCalc*"></a>
+  <h4 id="Efl_Layout_ICalc_FreezeCalc" data-uid="Efl.Layout.ICalc.FreezeCalc">FreezeCalc()</h4>
+  <div class="markdown level1 summary"><p>Freezes the layout object.
+This function puts all changes on hold. Successive freezes will nest, requiring an equal number of thaws.</p>
+<p>See also <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_ThawCalc">Efl.Layout.ICalc.ThawCalc()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int FreezeCalc()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The frozen state or 0 on error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ICalc_GetCalcAutoUpdateHints_" data-uid="Efl.Layout.ICalc.GetCalcAutoUpdateHints*"></a>
+  <h4 id="Efl_Layout_ICalc_GetCalcAutoUpdateHints" data-uid="Efl.Layout.ICalc.GetCalcAutoUpdateHints">GetCalcAutoUpdateHints()</h4>
+  <div class="markdown level1 summary"><p>Whether this object updates its size hints automatically.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetCalcAutoUpdateHints()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not update the size hints.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ICalc_SetCalcAutoUpdateHints_" data-uid="Efl.Layout.ICalc.SetCalcAutoUpdateHints*"></a>
+  <h4 id="Efl_Layout_ICalc_SetCalcAutoUpdateHints_System_Boolean_" data-uid="Efl.Layout.ICalc.SetCalcAutoUpdateHints(System.Boolean)">SetCalcAutoUpdateHints(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Enable or disable auto-update of size hints.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetCalcAutoUpdateHints(bool update)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">update</span></td>
+        <td><p>Whether or not update the size hints.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Layout_ICalc_ThawCalc_" data-uid="Efl.Layout.ICalc.ThawCalc*"></a>
+  <h4 id="Efl_Layout_ICalc_ThawCalc" data-uid="Efl.Layout.ICalc.ThawCalc">ThawCalc()</h4>
+  <div class="markdown level1 summary"><p>Thaws the layout object.
+This function thaws (in other words &quot;unfreezes&quot;) the given layout object.</p>
+<p>Note: If successive freezes were done, an equal number of thaws will be required.</p>
+<p>See also <a class="xref" href="Efl.Layout.ICalc.html#Efl_Layout_ICalc_FreezeCalc">Efl.Layout.ICalc.FreezeCalc()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ThawCalc()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The frozen state or 0 if the object is not frozen or on error.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Layout_ICalc_CircularDependencyEvt" data-uid="Efl.Layout.ICalc.CircularDependencyEvt">CircularDependencyEvt</h4>
+  <div class="markdown level1 summary"><p>A circular dependency between parts of the object was found.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ICalcCircularDependencyEvt_Args&gt; CircularDependencyEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler&lt;Efl.Layout.ICalcCircularDependencyEvt_Args&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Layout_ICalc_RecalcEvt" data-uid="Efl.Layout.ICalc.RecalcEvt">RecalcEvt</h4>
+  <div class="markdown level1 summary"><p>The layout was recalculated.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler RecalcEvt</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,631 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>A Simple Text Editor in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="A Simple Text Editor in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="a-simple-text-editor-in-c">A Simple Text Editor in C#</h1>
+
+<p>In this tutorial you will learn how to build a simple text editor application, including:</p>
+<ul>
+<li>A toolbar with buttons</li>
+<li>A text entry area</li>
+<li>File saving and loading capabilities</li>
+<li>Message popups</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Read the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide so you are able to build and run EFL C# applications.</li>
+<li>This tutorial builds on top of the previous one, <a href="hello-world-gui-cs.html">Graphical &quot;Hello World&quot; in C#</a>, so you should have read that one first.</li>
+</ul>
+<h2 id="the-code">The Code</h2>
+<p>Copy the code below into a file and build it as instructed in the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide. You can also find this file in the <a href="https://git.enlightenment.org/tools/examples.git/">EFL examples repository</a> in <a href="https://git.enlightenment.org/tools/examples.git/tree/apps/csharp/texteditor"><code>apps/csharp/texteditor</code></a>.</p>
+<pre><code class="lang-csharp">/* Simple text editor with a main text box and a toolbar on top:
+   +vbox----------------------------------------+
+   | +hbox------------------------------------+ |
+   | | +btn-+ +btn-+ +btn-+ +box-----+ +btn-+ | |
+   | | |NEW | |SAVE| |LOAD| | spacer | |QUIT| | |
+   | | +----+ +----+ +----+ +--------+ +----+ | |
+   | +----------------------------------------+ |
+   | +text------------------------------------+ |
+   | |                                        | |
+   | |                                        | |
+   | |         Main text box                  | |
+   | |                                        | |
+   | |                                        | |
+   | +----------------------------------------+ |
+   +--------------------------------------------+
+*/
+
+using System;
+
+public class TextEditor
+{
+    private Efl.Ui.Win win;                  // The main window
+    private Efl.Ui.Text editorTextBox;       // The main text entry
+    private Efl.Ui.Button toolbarButtonNew;  // The &quot;New&quot; button in the toolbar
+    private Efl.Ui.Button toolbarButtonSave; // The &quot;Save&quot; button in the toolbar
+    private Efl.Ui.Button toolbarButtonLoad; // The &quot;Load&quot; button in the toolbar
+
+    private bool edited = false;              // Document was edited since last save
+
+    // File to load and save is fixed since we do not use a file selection dialog
+    private readonly string filename = System.IO.Path.Combine(System.IO.Path.GetTempPath(),
+                                                              &quot;texteditor_example.txt&quot;);
+
+    // Quits the application
+    private void GUIQuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args ea)
+    {
+        if (ea.arg == false)
+            Efl.Ui.Config.Exit();
+    }
+
+    // Enables or disables buttons on the toolbar as required
+    private void GUIToolbarRefresh()
+    {
+        // &quot;New&quot; is enabled if there is text in the text box
+        toolbarButtonNew.SetDisabled(string.IsNullOrEmpty(editorTextBox.GetText()));
+        // &quot;Save&quot; is enabled if the text has been modified since last save or load
+        toolbarButtonSave.SetDisabled(!edited);
+        // &quot;Load&quot; is enabled if there is a file to load
+        toolbarButtonLoad.SetDisabled(!System.IO.File.Exists(filename));
+    }
+
+    // Called when the text in the editor has changed
+    private void EditorChangedCb(object sender, EventArgs ea)
+    {
+        edited = true;
+        GUIToolbarRefresh();
+    }
+
+    // Shows a modal message popup with an &quot;OK&quot; button
+    private void ShowMessage(string message)
+    {
+        var popup = new Efl.Ui.TextAlertPopup (win);
+        popup.SetText(message);
+        popup.SetExpandable(new Eina.Size2D(200, 200));
+        popup.SetButton(Efl.Ui.AlertPopupButton.Positive, &quot;OK&quot;, null);
+        popup.ButtonClickedEvt +=
+            (object sender, Efl.Ui.AlertPopupButtonClickedEvt_Args ea) =&gt; {
+          // Dismiss popup when the button is clicked
+          ((Efl.Ui.TextAlertPopup)sender).SetParent(null);
+        };
+    }
+
+    // Adds a button to the toolbar, with the given text, icon and click event handler
+    private Efl.Ui.Button GUIToolbarButtonAdd(Efl.Ui.Box toolbar, string name,
+                                              string iconName, EventHandler func)
+    {
+        var button = new Efl.Ui.Button(toolbar);
+        button.SetText(name);
+        button.ClickedEvt += func;
+        button.SetHintWeight(0, 1);
+
+        // Set the content of the button, which is an image
+        var image = new Efl.Ui.Image(toolbar);
+        image.SetIcon(iconName);
+        button.SetContent(image);
+
+        toolbar.DoPack(button);
+        return button;
+    }
+
+    // Creates a new toolbar, with all its buttons
+    private void GUIToolbarSetup(Efl.Ui.Box parent)
+    {
+        // Create a horizontal box container for the buttons
+        var bar = new Efl.Ui.Box(parent);
+        // 0 vertical weight means that the toolbar will have the minimum height
+        // to accommodate all its buttons and not a pixel more. The rest of the
+        // space will be given to the other object in the parent container.
+        bar.SetHintWeight(1, 0);
+        bar.SetDirection(Efl.Ui.Dir.Horizontal);
+        parent.DoPack(bar);
+
+        // &quot;New&quot; button
+        toolbarButtonNew = GUIToolbarButtonAdd(bar, &quot;New&quot;, &quot;document-new&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, remove content and refresh toolbar
+              editorTextBox.SetText(&quot;&quot;);
+              GUIToolbarRefresh();
+          });
+
+        // &quot;Save&quot; button
+        toolbarButtonSave = GUIToolbarButtonAdd(bar, &quot;Save&quot;, &quot;document-save&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, try to save content and refresh toolbar
+              try {
+                System.IO.File.WriteAllText(filename, editorTextBox.GetText());
+                edited = false;
+                GUIToolbarRefresh();
+                ShowMessage(&quot;Saved!&quot;);
+              } catch (Exception e) {
+                // If something fails, show the error message
+                ShowMessage(e.Message);
+              }
+          });
+
+        // &quot;Load&quot; button
+        toolbarButtonLoad = GUIToolbarButtonAdd(bar, &quot;Load&quot;, &quot;document-open&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, try to load content and refresh toolbar
+              try {
+                editorTextBox.SetText(System.IO.File.ReadAllText(filename));
+                edited = false;
+                GUIToolbarRefresh();
+                ShowMessage(&quot;Loaded!&quot;);
+              } catch (Exception e) {
+                // If something fails, show the error message
+                ShowMessage(e.Message);
+              }
+          });
+
+        // Spacer box to use all available space not required by buttons
+        // (It has a default horizontal weight of 1, whereas all buttons have
+        // a horizontal weight of 0).
+        // As a result, it pushes the &quot;Quit&quot; button to the right margin and
+        // the rest to the left.
+        Efl.Ui.Box box = new Efl.Ui.Box(parent);
+        bar.DoPack(box);
+
+        // &quot;Quit&quot; button
+        GUIToolbarButtonAdd(bar, &quot;Quit&quot;, &quot;application-exit&quot;, (object sender, EventArgs e) =&gt; { Efl.Ui.Config.Exit(); } );
+    }
+
+    // Builds the user interface for the text editor
+    public TextEditor()
+    {
+        // Create a window and initialize it
+        win = new Efl.Ui.Win(parent: Efl.App.AppMain);
+        win.SetText(&quot;Text Editor&quot;);
+        win.SetAutohide(true);
+        win.VisibilityChangedEvt += GUIQuitCb;
+
+        // Create a vertical box container
+        Efl.Ui.Box box = new Efl.Ui.Box(win);
+        win.SetContent(box);
+
+        // Create the toolbar and add it to the box
+        GUIToolbarSetup(box);
+
+        // Create the main text entry
+        editorTextBox = new Efl.Ui.Text(box);
+        editorTextBox.SetFont(&quot;Mono&quot;, 14);
+        editorTextBox.Multiline = true;
+        editorTextBox.Editable = true;
+        editorTextBox.Scrollable = true;
+        editorTextBox.SetHintSizeMin(new Eina.Size2D(360, 240));
+        editorTextBox.ChangedEvt += EditorChangedCb;
+        editorTextBox.ChangedUserEvt += EditorChangedCb;
+        box.DoPack(editorTextBox);
+
+        // Initial refresh of the toolbar buttons
+        GUIToolbarRefresh();
+    }
+
+    // This method won't return until the application quits
+    public void Run()
+    {
+        // Start the EFL main loop
+        Efl.Ui.Config.Run();
+    }
+}
+
+public class Example
+{
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        Efl.All.Init(Efl.Components.Ui);
+
+        var textEditor = new TextEditor();
+        textEditor.Run();
+
+        // Shutdown EFL
+        Efl.All.Shutdown();
+    }
+}
+</code></pre>
+<p>When you run the application, it should look something like this:</p>
+<p><img src="../../../../../../images/playground/texteditor-app/image01.png" alt="Text Editor application"></p>
+<h2 id="walkthrough">Walkthrough</h2>
+<p>This tutorial builds on top of the previous one, <a href="hello-world-gui-cs.html">Graphical &quot;Hello World&quot; in C#</a>, so you should be familiar with the basics of creating an EFL application and adding widgets to it. The following sections explain how to build this particular user interface and how to react to the different events.</p>
+<p>You can use the navigation menu on the side to jump to the section you are most interested in.</p>
+<h3 id="the-user-interface-structure">The User Interface Structure</h3>
+<p>A rough sketch of the application's user interface structure is depicted in the code's opening comment:</p>
+<pre><code>   +vbox----------------------------------------+
+   | +hbox------------------------------------+ |
+   | | +btn-+ +btn-+ +btn-+ +box-----+ +btn-+ | |
+   | | |NEW | |SAVE| |LOAD| | spacer | |QUIT| | |
+   | | +----+ +----+ +----+ +--------+ +----+ | |
+   | +----------------------------------------+ |
+   | +text------------------------------------+ |
+   | |                                        | |
+   | |                                        | |
+   | |         Main text box                  | |
+   | |                                        | |
+   | |                                        | |
+   | +----------------------------------------+ |
+   +--------------------------------------------+
+</code></pre>
+<p>The main widget is a vertical container box (<code>vbox</code>) with two children: the toolbar and the main text entry.</p>
+<p>The toolbar is a horizontal container box (<code>hbox</code>) full of buttons. If you are looking at the final image above, bear in mind that the toolbar itself is invisible (as are all box containers); only the buttons are visible.</p>
+<p>In between the toolbar buttons there's an empty container box (also invisible) to act as a separator: it uses up all available space, effectively pushing buttons on either side to the far ends of the container. See <a href="#the-spacer-box">The Space box</a> section for details.</p>
+<p>Each time the content of the text box changes, the toolbar is refreshed to enable or disable some of the buttons. For example, the Save button is only enabled (clickable) if there is text to save (i.e. the text box is not empty). See the <a href="#refreshing-the-toolbar">Refreshing the toolbar</a> section for details.</p>
+<p>To keep this example simple a file selection dialog has not been used. Therefore, file saving and loading actions always act on the same file, located in the system's temporary folder. For example: <code>/tmp/texteditor_example.txt</code>.</p>
+<h3 id="the-main-method">The Main Method</h3>
+<pre><code class="lang-csharp">    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        Efl.All.Init(Efl.Components.Ui);
+
+        var textEditor = new TextEditor();
+        textEditor.Run();
+
+        // Shutdown EFL
+        Efl.All.Shutdown();
+    }
+</code></pre>
+<p>The Main method simply initializes EFL, instantiates a <code>TextEditor</code> object and relinquishes control to it. The bulk of the work is done by the <code>TextEditor</code> class defined in the example. When <code>texteditor.Run()</code> returns EFL is shut down and the application finishes.</p>
+<p><code>texteditor.Run()</code> contains the call to <code>Efl.Ui.Config.Run()</code> which will block until EFL is instructed to quit using <code>Efl.Ui.Config.Exit()</code>, as seen in the <a href="hello-world-gui-cs.html">Graphical &quot;Hello World&quot; in C#</a> tutorial.</p>
+<p>This structure is not strictly necessary for such a brief example, but it mimics what a more complex application would normally do.</p>
+<h3 id="building-the-text-editor">Building the Text Editor</h3>
+<p>The constructor for the <code>TextEditor</code> class builds the User Interface sketched above. The process is split in this tutorial into different sections for clarity.</p>
+<p>First, a window is created as explained in previous tutorials:</p>
+<pre><code class="lang-csharp">    public TextEditor()
+    {
+        // Create a window and initialize it
+        win = new Efl.Ui.Win(parent: Efl.App.AppMain);
+        win.SetText(&quot;Text Editor&quot;);
+        win.SetAutohide(true);
+        win.VisibilityChangedEvt += GUIQuitCb;
+</code></pre>
+<p>The <code>parent</code> parameter is named explicitly in the argument list to <code>new Efl.Ui.Win()</code> just for example purposes. Some widgets accept multiple parameters in their constructors so sometimes it is handy to name them explicitly.</p>
+<p>Then the vertical container box is created and set as the content for the window:</p>
+<pre><code class="lang-csharp">        // Create a vertical box container
+        Efl.Ui.Box box = new Efl.Ui.Box(win);
+        win.SetContent(box);
+</code></pre>
+<p>The toolbar containing all the buttons is created and added to the box (explained in the next section):</p>
+<pre><code class="lang-csharp">        // Create the toolbar and add it to the box
+        GUIToolbarSetup(box);
+</code></pre>
+<p>Finally, the text entry area is added. This is the main feature of the text editor, so it is worth describing in more detail:</p>
+<pre><code class="lang-csharp">        // Create the main text entry
+        editorTextBox = new Efl.Ui.Text(box);
+        editorTextBox.SetFont(&quot;Mono&quot;, 14);
+        editorTextBox.Multiline = true;
+        editorTextBox.Editable = true;
+        editorTextBox.Scrollable = true;
+        editorTextBox.SetHintSizeMin(new Eina.Size2D(360, 240));
+        editorTextBox.ChangedEvt += EditorChangedCb;
+        editorTextBox.ChangedUserEvt += EditorChangedCb;
+        box.DoPack(editorTextBox);
+</code></pre>
+<p>For convenience, some widget's properties can be accessed through regular C# properties besides the <code>Set()</code> and <code>Get()</code> methods used so far. For instance, the <code>Editable</code> flag (explained below) can be manipulated through the <code>Efl.Ui.Text.Editable</code> property besides the <code>Efl.Ui.Text.SetEditable()</code> and <code>Efl.Ui.Text.GetEditable()</code> methods.</p>
+<p>Let's take a closer look:</p>
+<ul>
+<li><p><code>Efl.Ui.Text.SetFont()</code> sets the font family and size for the text area. The font string has to follow <code>fontconfig</code>'s convention for naming fonts, as it is the underlying library used to query system fonts (see the output of the <code>fc-list</code> command). Alternatively, you can use the full path to a font file.</p>
+</li>
+<li><p><code>Efl.Ui.Text.Multiline</code> selects whether the text area will support more than one line of text (<code>true</code> is customary for a text editor).</p>
+</li>
+<li><p><code>Efl.Ui.Text.Editable</code> sets whether the text can be modified by the user or it is only meant for output. If set to <code>true</code> all editing facilities (like keyboard input handling and caret positioning) will be enabled.</p>
+</li>
+<li><p><code>Efl.Ui.Scrollable</code> selects whether the text area should automatically use scroll bars to accommodate text longer than can be shown in the window. If enabled, the caret will always be kept visible when typing. If disabled, when typing beyond the edge of the window you won't see the new characters.</p>
+</li>
+<li><p><code>Efl.Ui.SetHintSizeMin()</code> sets a minimum size for the text area, as seen in previous tutorials.</p>
+</li>
+</ul>
+<p>Furthermore, handlers are installed for two events: <code>ChangedUserEvt</code> is triggered when the text content changes in response to user actions (for example, a key has been pressed). <code>ChangedEvt</code> is triggered when the text content changes for any other reason (both events are never triggered together).</p>
+<p>This example uses the same handler for both events (<code>EditorChangedCb()</code>), which only records the fact that the text has been edited in an internal variable and refreshes the toolbar.</p>
+<p>Note how only two objects have been added to the vertical box: the toolbar and the text area. If no further configuration is done these two objects will share the vertical space in the box at 50% each, creating a very tall toolbar. The configuration of the toolbar prevents this, as shown in the next section.</p>
+<p>The last step when building the User Interface is to refresh the toolbar, so the buttons reflect their initial states (explained in the <a href="#refreshing-the-toolbar">Refreshing the toolbar</a> section):</p>
+<pre><code class="lang-csharp">        // Initial refresh of the toolbar buttons
+        GUIToolbarRefresh();
+    }
+</code></pre>
+<p>The user interface has now been built and is ready to be shown once the EFL main loop is executed (by calling <code>Efl.Ui.Config.Run()</code> in <code>TextEditor.Run()</code>).</p>
+<p>The following sections describe each part of the user interface in more detail .</p>
+<h3 id="building-the-toolbar">Building the Toolbar</h3>
+<p>This is done in the <code>GUIToolbarSetup()</code> method:</p>
+<pre><code class="lang-csharp">    private void GUIToolbarSetup(Efl.Ui.Box parent)
+    {
+        // Create a horizontal box container for the buttons
+        var bar = new Efl.Ui.Box(parent);
+        bar.SetHintWeight(1, 0);
+        bar.SetDirection(Efl.Ui.Dir.Horizontal);
+        parent.DoPack(bar);
+
+        [... Buttons are added to the toolbar ...]
+    }
+</code></pre>
+<p>As it can be seen, the toolbar is just a regular horizontal box container. Please note the <code>SetHintWeight(1, 0)</code> line: Giving a widget a weight of 0 means that its parent container will allocate only the minimum room to fit it. The rest of the space will be used by the other children of the container, in this case, the text area.</p>
+<p>The rest of this method adds the different buttons by using the helper function <code>GUIToolbarButtonAdd()</code> described below.</p>
+<h3 id="adding-a-button-to-the-toolbar">Adding a Button to the Toolbar</h3>
+<p>Let's examine this helper method to create and customize a button, while adding it to a parent container:</p>
+<pre><code class="lang-csharp">    private Efl.Ui.Button GUIToolbarButtonAdd(Efl.Ui.Box toolbar, string name,
+                                              string iconName, EventHandler func)
+    {
+        var button = new Efl.Ui.Button(toolbar);
+        button.SetText(name);
+        button.ClickedEvt += func;
+        button.SetHintWeight(0, 1);
+
+        // Set the content of the button, which is an image
+        var image = new Efl.Ui.Image(toolbar);
+        image.SetIcon(iconName);
+        button.SetContent(image);
+
+        toolbar.DoPack(button);
+        return button;
+    }
+</code></pre>
+<p>The function instantiates an <code>Efl.Ui.Button</code> (as a child of the toolbar) and returns it after configuration:</p>
+<ul>
+<li><p>The button's label is set with <code>SetText()</code></p>
+</li>
+<li><p>The method to call when the button is clicked is set by installing an event handler for the <code>ClickedEvt</code> event.</p>
+</li>
+<li><p>The button is given a horizontal weight of 0, so its parent (the toolbar) will allocate for it the minimum space.</p>
+</li>
+<li><p>The button is added to the toolbar with <code>DoPack()</code>.</p>
+</li>
+<li><p>Finally, the requested icon is added to the button. Like many other EFL widgets, Buttons are highly customizable. In fact, this example uses an image but any widget (or combination of widgets) could be put inside the Button.</p>
+<p>The price for this flexibility is a bit more setup work. Please read the <a href="parts.md">Parts tutorial</a> to learn more about this topic (<em>coming soon</em>).</p>
+</li>
+</ul>
+<h3 id="the-new-button">The &quot;New&quot; Button</h3>
+<p>This is how the &quot;New&quot; button is created in the <code>GUIToolbarSetup()</code> method:</p>
+<pre><code class="lang-csharp">        // &quot;New&quot; button
+        toolbarButtonNew = GUIToolbarButtonAdd(bar, &quot;New&quot;, &quot;document-new&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, remove content and refresh toolbar
+              editorTextBox.SetText(&quot;&quot;);
+              GUIToolbarRefresh();
+          });
+</code></pre>
+<p>Its label is <code>&quot;New&quot;</code> and it uses the icon named <code>&quot;document-new&quot;</code>. When clicked, it will simply empty the <code>editorTextBox</code> and refresh the toolbar.</p>
+<h3 id="the-save-button">The &quot;Save&quot; Button</h3>
+<p>The &quot;Save&quot; button instantiation is similar to that of the &quot;New&quot; button:</p>
+<pre><code class="lang-csharp">        // &quot;Save&quot; button
+        toolbarButtonSave = GUIToolbarButtonAdd(bar, &quot;Save&quot;, &quot;document-save&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, try to save content and refresh toolbar
+              try {
+                System.IO.File.WriteAllText(filename, editorTextBox.GetText());
+                edited = false;
+                GUIToolbarRefresh();
+                ShowMessage(&quot;Saved!&quot;);
+              } catch (Exception e) {
+                // If something fails, show the error message
+                ShowMessage(e.Message);
+              }
+          });
+</code></pre>
+<p>The clicked event handler does a bit more work, though:</p>
+<ul>
+<li><p>It performs file operations, so the body of the handler is enclosed in a <code>try {} catch</code> clause. In case an exception is thrown its error message is shown using a popup (see the <a href="#showing-a-popup-message">Showing a Popup message</a> section).</p>
+</li>
+<li><p>The whole content of the <code>editorTextBox</code> is retrieved with <code>GetText()</code> and written to a file:</p>
+<pre><code class="lang-csharp">System.IO.File.WriteAllText(filename, editorTextBox.GetText());
+</code></pre>
+<p><code>filename</code> is a read-only variable in this example, for simplicity.</p>
+</li>
+<li><p>Once the file has been written, the <code>edited</code> flag is set to <code>false</code> to indicate that there are no pending changes to commit to disk. This has the effect to disable the &quot;Save&quot; button as shown in the <a href="#refreshing-the-toolbar">Refreshing the toolbar</a> section. The toolbar is manually refreshed by calling <code>GUIToolbarRefresh()</code> so this change is visible immediately.</p>
+</li>
+<li><p>A popup is shown to indicate that the operation succeeded (see the <a href="#showing-a-popup-message">Showing a Popup message</a> section).</p>
+</li>
+</ul>
+<h3 id="the-load-button">The &quot;Load&quot; Button</h3>
+<p>The &quot;Load&quot; button is very similar to the &quot;Save&quot; one:</p>
+<pre><code class="lang-csharp">        // &quot;Load&quot; button
+        toolbarButtonLoad = GUIToolbarButtonAdd(bar, &quot;Load&quot;, &quot;document-open&quot;,
+          (object sender, EventArgs ea) =&gt; {
+              // When this button is clicked, try to load content and refresh toolbar
+              try {
+                editorTextBox.SetText(System.IO.File.ReadAllText(filename));
+                edited = false;
+                GUIToolbarRefresh();
+                ShowMessage(&quot;Loaded!&quot;);
+              } catch (Exception e) {
+                // If something fails, show the error message
+                ShowMessage(e.Message);
+              }
+          });
+</code></pre>
+<p>The operation is the opposite of the &quot;Save&quot; button: the text is read from the file and set as the content of the <code>editorTextBox</code> with <code>SetText()</code>.</p>
+<p>The <code>edited</code> flag is also updated, the toolbar refreshed and a popup message is shown.</p>
+<h3 id="the-spacer-box">The Spacer Box</h3>
+<p>It is more or less traditional that the &quot;Quit&quot; button is located on the right-hand side of the window (think of the <code>X</code> button on the top-right corner of every window on most desktops) whereas the rest of the buttons (the &quot;Command&quot; buttons) are stacked on the left side.</p>
+<p>A simple mechanism to achieve this in EFL is to insert a <strong>spacer</strong> widget between the command and the quit buttons which uses up all available space, pushing all buttons to either side of the spacer as far as they can go.</p>
+<p>Any widget can act as an spacer, the only thing required of it is that it uses up space. To reduce complexity and unwanted side effects, an empty container widget is ideal for the job. For example, a <code>Box</code>:</p>
+<pre><code class="lang-csharp">        Efl.Ui.Box box = new Efl.Ui.Box(parent);
+        bar.DoPack(box);
+</code></pre>
+<p>To ensure that all available space is given to the spacer and not distributed evenly among all sibling buttons, the spacer is given a horizontal weight of 1 (it's the default value, so there is no need to use <code>SetHintWeight()</code>) whereas the rest of the buttons have a horizontal weight of 0 (as seen in the <a href="#adding-a-button-to-the-toolbar">Adding a Button to the toolbar</a> section).</p>
+<p>How a container widget distributes available space among its children is a complex topic explained in more detail in a different tutorial (<em>coming soon</em>).</p>
+<h3 id="showing-a-popup-message">Showing a Popup Message</h3>
+<p>Applications typically convey important informational or error messages through &quot;modal&quot; popup dialogs, which block the application until acknowledged by the user. This would be an example:</p>
+<p><img src="../../../../../../images/playground/texteditor-app/image02.png" alt="Popup message"></p>
+<p>To achieve this EFL uses the <code>Efl.Ui.Popup</code> class and its derivatives, for instance, the <code>Efl.Ui.TextAlertPopup</code> used in this tutorial. This class implements a popup that contains text and optional configurable buttons.</p>
+<p>This is how it's used in this tutorial, in the <code>ShowMessage()</code> method:</p>
+<pre><code class="lang-csharp">    // Shows a modal message popup with an &quot;OK&quot; button
+    private void ShowMessage(string message)
+    {
+        var popup = new Efl.Ui.TextAlertPopup (win);
+        popup.SetText(message);
+        popup.SetExpandable(new Eina.Size2D(200, 200));
+        popup.SetButton(Efl.Ui.AlertPopupButton.Positive, &quot;OK&quot;, null);
+        popup.ButtonClickedEvt +=
+            (object sender, Efl.Ui.AlertPopupButtonClickedEvt_Args ea) =&gt; {
+          // Dismiss popup when the button is clicked
+          ((Efl.Ui.TextAlertPopup)sender).SetParent(null);
+        };
+    }
+</code></pre>
+<ul>
+<li><p>The main text is set with <code>SetText()</code>.</p>
+</li>
+<li><p>By default the popup has the width required to display all buttons and a fixed height. If the text does not fit in that area a vertical scroll bar is shown, which can be inconvenient when there's room enough in the window to make a bigger popup dialog. <code>SetExpandable()</code> allows extending the popup size beyond its default size if required, so that no scroll bars are needed when the text is large.</p>
+</li>
+<li><p><code>SetButton()</code> customizes the optional buttons of the popup. Alert popups can have 3 buttons: one for Positive answers, one for Negative answers and one that is user-defined. <code>SetButton()</code> changes the text and icon of each of these buttons, which are invisible by default until <code>SetButton()</code> is called.</p>
+</li>
+<li><p>When any of the buttons are pressed, the <code>ButtonClickedEvt</code> event is emitted. The event argument specifies which button has been pressed, in case there's more than one button enabled (in this example there is no need to check the event argument because there is only one button).</p>
+</li>
+<li><p>In this tutorial pressing the &quot;OK&quot; button dismisses the popup, which is done by removing the widget in the <code>ButtonClickedEvt</code> event handler. To delete a widget, the reference held by its parent must be removed using <code>SetParent(null)</code>.</p>
+</li>
+</ul>
+<h3 id="refreshing-the-toolbar">Refreshing the Toolbar</h3>
+<p>Command buttons do not need to be always available. When a certain action cannot be performed its button can be disabled with <code>SetDisabled()</code>, graying it out and making it un-clickable. The <code>GUIToolbarRefresh()</code> enables or disables each command button based on the internal state of the editor:</p>
+<pre><code class="lang-csharp">    private void GUIToolbarRefresh()
+    {
+        // &quot;New&quot; is enabled if there is text in the text box
+        toolbarButtonNew.SetDisabled(string.IsNullOrEmpty(editorTextBox.GetText()));
+        // &quot;Save&quot; is enabled if the text has been modified since last save or load
+        toolbarButtonSave.SetDisabled(!edited);
+        // &quot;Load&quot; is enabled if there is a file to load
+        toolbarButtonLoad.SetDisabled(!System.IO.File.Exists(filename));
+    }
+</code></pre>
+<ul>
+<li><p>The &quot;New&quot; button clears the content of the editor, therefore, it only makes sense when the editor is not already empty.</p>
+</li>
+<li><p>The &quot;Save&quot; button is only enabled when the content of the editor has been changed. The internal variable <code>edited</code> is set to <code>true</code> in the <code>EditorChangedCb</code> event handler and to <code>false</code> whenever the file is saved or loaded.</p>
+</li>
+<li><p>The &quot;Load&quot; button is only available when the file to load, which is always the same in this example, exists.</p>
+</li>
+</ul>
+<p><code>GUIToolbarRefresh()</code> is called whenever the internal state of the editor changes to ensure that the user interface reflects it.</p>
+<h2 id="summary">Summary</h2>
+<p>At the end of this tutorial you have learned:</p>
+<ul>
+<li>How to create <strong>complex user interfaces</strong> by nesting widget containers.</li>
+<li>How to create a <strong>toolbar</strong> with buttons located in specific positions.</li>
+<li>How to <strong>set and retrieve</strong> the content of a text entry, for example, to save and load it from a file.</li>
+<li>How to use <strong>message popups</strong>.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="../../setup/csharp/start.html">Setting up a C# Development Environment</a>
+:    Read this before trying to develop with the EFL and C#</p>
+<p><a href="hello-world-gui-cs.html">Graphical &quot;Hello World&quot; in C#</a>
+:    Explains the basics of creating an EFL application and its user interface.</p>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/apps/csharp/texteditor">Tutorial Code Examples</a>
+:    C# Source code for this tutorial.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Eina Generic Values in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Eina Generic Values in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="eina-generic-values-in-c">Eina Generic Values in C#</h1>
+
+<p>The <code>Eina</code> namespace provides data types and useful tools which are not available in plain C. The C# runtime though, already provides most of <code>Eina</code>'s functionality so you will rarely need to use it. The <code>Eina Programming Guides</code> are still useful for those EFL methods which use <code>Eina</code> types as parameters or return types.</p>
+<p>The <code>Eina.Value</code> class provides storage of and access to generic data, allowing you to store whatever you want in a single <code>Eina.Value</code> type. It is meant for simple data types, providing uniform access and release functions for the exchange of data while preserving their types. <code>Eina.Value</code> supports a number of predefined types, can be extended with additional user-provided types and can convert between differing data types including strings.</p>
+<p>Examples of <code>Eina.Value</code> usage can be found in the <a href="https://git.enlightenment.org/tools/examples.git/">EFL examples git repository</a> in the file <a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/eina/src/eina_value.cs"><code>reference/csharp/eina/src/eina_value.cs</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="value-types">Value Types</h2>
+<p><code>Eina.Value</code> can handle the following common <em>simple</em> types (found inside the <code>Eina.ValueType</code> enum):</p>
+<table>
+<thead>
+<tr>
+<th><code>Eina.ValueType</code></th>
+<th>C# type</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SByte</code></td>
+<td><code>sbyte</code></td>
+<td>Signed char (8-bit integer)</td>
+</tr>
+<tr>
+<td><code>Byte</code></td>
+<td><code>byte</code></td>
+<td>Unsigned char (8-bit integer)</td>
+</tr>
+<tr>
+<td><code>Short</code></td>
+<td><code>short</code></td>
+<td>Signed short (16-bit integer)</td>
+</tr>
+<tr>
+<td><code>UShort</code></td>
+<td><code>ushort</code></td>
+<td>Unsigned short (16-bit integer)</td>
+</tr>
+<tr>
+<td><code>Int32</code></td>
+<td><code>int</code></td>
+<td>Signed integer (32-bit)</td>
+</tr>
+<tr>
+<td><code>UInt32</code></td>
+<td><code>uint</code></td>
+<td>Unsigned integer (32-bit)</td>
+</tr>
+<tr>
+<td><code>Long</code>, <code>Int64</code></td>
+<td><code>long</code></td>
+<td>Signed long (64-bit integer)</td>
+</tr>
+<tr>
+<td><code>ULong</code>, <code>UInt64</code></td>
+<td><code>ulong</code></td>
+<td>Unsigned long (64-bit integer)</td>
+</tr>
+<tr>
+<td><code>Float</code></td>
+<td><code>float</code></td>
+<td>Single precision (32-bit) floating point</td>
+</tr>
+<tr>
+<td><code>Double</code></td>
+<td><code>double</code></td>
+<td>Double precision (64-bit) floating point</td>
+</tr>
+<tr>
+<td><code>String</code></td>
+<td><code>string</code></td>
+<td>Unicode text string</td>
+</tr>
+</tbody>
+</table>
+<p>In addition, <code>Eina.Value</code> supports the following <em>aggregate</em> types:</p>
+<table>
+<thead>
+<tr>
+<th><code>Eina.ValueType</code></th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Array</code></td>
+<td>Manages arrays of elements</td>
+</tr>
+<tr>
+<td><code>List</code></td>
+<td>Manages lists of elements</td>
+</tr>
+<tr>
+<td><code>Hash</code></td>
+<td>Manages hash tables</td>
+</tr>
+</tbody>
+</table>
+<h2 id="simple-values">Simple Values</h2>
+<h3 id="creating-simple-values">Creating Simple Values</h3>
+<p>New values can be allocated with the standard <code>new()</code> operator passing in the desired type as an <code>Eina.ValueType</code>:</p>
+<pre><code class="lang-csharp">var int_val = new Eina.Value(Eina.ValueType.Int32);
+</code></pre>
+<p>When the <code>int_val</code> variable goes out of scope any memory allocated internally by the <code>Eina.Value</code> will be freed as expected.</p>
+<h3 id="changing-the-type-of-simple-values">Changing the Type of Simple Values</h3>
+<p>The type of an <code>Eina.Value</code> can be changed at any time using <code>Setup()</code> and passing in the desired new type:</p>
+<pre><code class="lang-csharp">var val = new Eina.Value(Eina.ValueType.Int32);
+val.Setup(Eina.ValueType.Float);
+</code></pre>
+<p>The content of the <code>Eina.Value</code> will be destroyed, but <strong>not</strong> the <code>Eina.Value</code> variable.</p>
+<h3 id="accessing-the-content-of-simple-values">Accessing the Content of Simple Values</h3>
+<p>The contents of a simple <code>Eina.Value</code> can be set with <code>Set()</code> and retrieved with <code>Get()</code>. Note that the types provided must match the type used when creating the <code>Eina.Value</code>.</p>
+<p>For instance, for integers:</p>
+<pre><code class="lang-csharp">var val = new Eina.Value(Eina.ValueType.Int32);
+val.Set(123);
+
+int i;
+val.Get(out i);
+</code></pre>
+<p>Strings are also easily handled:</p>
+<pre><code class="lang-csharp">var val = new Eina.Value(Eina.ValueType.String);
+val.Set(&quot;My string&quot;);
+
+string str;
+val.Get(out str);
+</code></pre>
+<h3 id="copying-the-content-of-a-value">Copying the Content of a Value</h3>
+<p><code>Eina.Value</code>s are <strong>referenced types</strong>, which means that when you make a copy of an <code>Eina.Value</code> variable, the underlying value is not copied: both variables point to the same value.</p>
+<pre><code class="lang-csharp">var src = new Eina.Value(Eina.ValueType.Int32);
+src.Set(100);
+var dst = src;
+src.Set(200);
+// Now both src and dst contain the integer 200
+</code></pre>
+<p>If you need to create a separate <code>Eina.Value</code> variable containing the same value, use <code>new</code> and initialize it:</p>
+<pre><code class="lang-csharp">var src = new Eina.Value(Eina.ValueType.Int32);
+src.Set(100);
+var dst = new Eina.Value(src);
+src.Set(200);
+// Now src=200 and dst=100
+</code></pre>
+<h3 id="comparing-two-values">Comparing Two Values</h3>
+<p>Two <code>Eina.Value</code>s of the same type can be compared with the standard operators <code>&lt;</code>, <code>==</code>, <code>!=</code> and <code>&gt;</code>. The exact meaning of the comparison depends on the value type.</p>
+<pre><code class="lang-csharp">var v1 = new Eina. Value(Eina.ValueType.Float);
+var v2 = new Eina. Value(Eina.ValueType.Float);
+v1.Set(7.0f);
+v2.Set(7.5f);
+if (v1 &gt; v2) { ... }
+</code></pre>
+<p>The internal method <code>v1.Compare(v2)</code> is also available. The exact meaning of the comparison depends again on the value type. The method returns: a negative integer if <strong>v1 &lt; v2</strong>, a positive integer if <strong>v1 &gt; v2</strong> and <strong>0</strong> if both values are equal.</p>
+<h3 id="converting-between-values">Converting Between Values</h3>
+<p>Most <code>Eina.Value</code>s allow conversion from one type to another using the <code>ConvertTo()</code> function. The result of the conversion depends on the types in use. This function returns <code>true</code> if the conversion is successful. The conversion is typically very strict, meaning that conversion of negative values into unsigned types will fail and values which will not fit in the target type - i.e. conversions that would result in an overflow - will also fail.</p>
+<pre><code class="lang-csharp">var v1 = new Eina.Value(Eina.ValueType.Int);
+var v2 = new Eina.Value(Eina.ValueType.Float);
+v1.Set(7);
+v1.ConvertTo(v2);
+Console.WriteLine(v2);
+</code></pre>
+<p>The above code should output <code>7.0000</code> on the screen because <code>v2</code> is a floating type.</p>
+<h3 id="converting-to-strings">Converting to Strings</h3>
+<p>All <code>Eina.Value</code>s allow for conversion into a string, and, for convenience, there is a dedicated conversion method: <code>ToString()</code>.</p>
+<pre><code class="lang-csharp">var v1 = new Eina.Value(Eina.ValueType.Int);
+v1.Set(7);
+string str = v1.ToString();
+</code></pre>
+<h3 id="implicit-conversions">Implicit Conversions</h3>
+<p>For convenience, implicit conversion operators also exist between an <code>Eina.Value</code> and the actual stored type, so operations like these are possible:</p>
+<pre><code class="lang-csharp">Eina.Value int_val = 123;
+Eina.Value str_val = &quot;My string&quot;;
+int i = int_val;
+string str = str_val;
+</code></pre>
+<p>These conversions allow directly providing native values to EFL methods expecting an <code>Eina.Value</code>, for example.</p>
+<blockquote>
+<p><strong>NOTE:</strong>
+As with all implicit conversions, use with caution to make sure the compiler is actually choosing the types you expect.</p>
+</blockquote>
+<h2 id="aggregate-values">Aggregate Values</h2>
+<p><code>Eina.Value</code> supports handling collections of simple values through the aggregate types <code>Eina.ValueType.Array</code>, <code>Eina.ValueType.List</code> and <code>Eina.ValueType.Hash</code>.</p>
+<p>All aggregate types allow the operations for simple types described above as well as some specific methods, typically involving construction and access to particular elements within the collection.</p>
+<h3 id="arrays">Arrays</h3>
+<p>An array is a contiguous block of memory which holds a collection of elements of the same type. Accessing and appending new elements at the end is typically very fast, but removing elements from the beginning or the middle is not.</p>
+<p><strong>Create</strong> a new array with <code>new(Eina.ValueType.Array, subtype, step)</code>, or re-configure an existing one with <code>Setup(Eina.ValueType.Array, subtype, step)</code>. The <code>subtype</code> parameter is the type of the <code>Eina.Value</code>s that will be stored in the array. The <code>step</code> parameter indicates how many elements are added to the end of the array every time it needs to be expanded, since it is typically more efficient to enlarge the array by chunks rather than element by element. Its default value is 0 meaning that EFL will choose a value for you.</p>
+<pre><code class="lang-csharp">var varray = new Eina.Value(Eina.ValueType.Array, Eina.ValueType.Int32);
+</code></pre>
+<p><strong>Retrieve the number of elements</strong> in an array with <code>Count()</code>.</p>
+<pre><code class="lang-csharp">int count = varray.Count();
+</code></pre>
+<p><strong>Append an element</strong> at the end of the array with <code>Append()</code>.</p>
+<pre><code class="lang-csharp">varray.Append(100);
+varray.Append(200);
+</code></pre>
+<p><strong>Retrieve or set the contents</strong> of the value at a given position with the <code>[]</code> operator.</p>
+<pre><code class="lang-csharp">varray[1] = 100;
+int old_val = varray[1];
+</code></pre>
+<p><strong>Retrieve the type of the elements</strong> of an array (the <code>subtype</code>) with <code>GetValueSubType()</code>:</p>
+<pre><code class="lang-csharp">Eina.ValueType subtype = varray.GetValueSubType();
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong>
+Elements cannot be removed from an array as of now, due to limitations in the current C# bindings.</p>
+</blockquote>
+<h3 id="lists">Lists</h3>
+<p>A list is a linked collection of <code>Eina.Value</code>s in which each element contains a pointer to the next element. Insertions and deletions anywhere in the list are typically very fast, but accessing a given position can be slow since it requires traveling through the list.</p>
+<p><strong>Create</strong> a new list with <code>new(Eina.ValueType.Array, subtype)</code>, or configure an existing one with <code>Setup(subtype)</code>. The <code>subtype</code> parameter is the type of the <code>Eina.Value</code>s that will be stored in the list.</p>
+<pre><code class="lang-csharp">var vlist = new Eina.Value(Eina.ValueType.List, Eina.ValueType.Int32);
+</code></pre>
+<p><strong>Retrieve the number of elements</strong> in a list with <code>Count()</code>.</p>
+<pre><code class="lang-csharp">int count = vlist.Count();
+</code></pre>
+<p><strong>Append an element</strong> at the end of the list with <code>Append()</code>.</p>
+<pre><code class="lang-csharp">vlist.Append(100);
+vlist.Append(200);
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong>
+Elements can only be added at the end as of now, due to limitations in the current C# bindings.</p>
+</blockquote>
+<p><strong>Retrieve or set the contents</strong> of the value at a given position with the <code>[]</code> operator.</p>
+<pre><code class="lang-csharp">vlist[1] = 100;
+int old_val = vlist[1];
+</code></pre>
+<p><strong>Retrieve the type of the elements</strong> of a list (the <code>subtype</code>) with <code>GetValueSubType()</code>:</p>
+<pre><code class="lang-csharp">Eina.ValueType subtype = vlist.GetValueSubType();
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong>
+Elements cannot be removed from a list as of now, due to limitations in the current C# bindings.</p>
+</blockquote>
+<h3 id="hash-tables">Hash Tables</h3>
+<p>A hash table stores <code>Eina.Value</code>s indexed by a string key rather than an integer. Insertions, deletions and searches are typically very fast, at the cost of increased memory consumption.</p>
+<blockquote>
+<p><strong>NOTE:</strong>
+Implementation of Hash tables inside <code>Eina.Value</code>s is not complete at this moment.</p>
+</blockquote>
+<p><strong>Create</strong> a new hash table with <code>new(Eina.ValueType.Hash, subtype, bucket_size)</code>, or configure an existing one with <code>Setup(subtype, bucket_size)</code>. The <code>subtype</code> parameter is the type of the <code>Eina.Value</code>s that will be stored in the hash table. The <code>bucket_size</code> parameter indicates how the table is to be expanded as new elements are added; use 0 and a sane default will be chosen automatically.</p>
+<pre><code class="lang-csharp">var vhash = new (Eina.ValueType.Hash, Eina.ValueType.Int32);
+</code></pre>
+<p><strong>Retrieve the number of elements</strong> in a hash table with <code>Count()</code>.</p>
+<pre><code class="lang-csharp">int count = vhash.Count();
+</code></pre>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/reference/csharp/eina/src/eina_value.cs">Eina Value example</a>
+:    Miscellaneous usage example for the <code>Eina.Value</code> type.</p>
+<p><a href="https://www.enlightenment.org/develop/legacy/api/c/start#group__Eina__Value__Group.html">Generic Value API</a>
+:    Reference Guide for the Generic Value API (in C).</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../../styles/main.js"></script>
+  </body>
+</html>

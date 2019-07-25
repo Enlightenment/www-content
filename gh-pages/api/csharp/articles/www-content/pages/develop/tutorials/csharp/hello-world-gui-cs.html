@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Graphical &quot;Hello World&quot; in C# </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Graphical &quot;Hello World&quot; in C# ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../../../../../e-logo-title.png">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../../../toc.html">
+    <meta property="docfx:tocrel" content="../../../../../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../../../index.html">
+                <img id="logo" class="svg" src="../../../../../../e-logo-title.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="graphical-hello-world-in-c">Graphical &quot;Hello World&quot; in C#</h1>
+
+<p>In this guide you will learn how to build a complete graphical application, with a window and typical elements like a text box and a button.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>WARNING</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+<td><strong>Some C# classes are currently in BETA state</strong><br>They should only be used for experimenting and <strong>NOT</strong> for any product development.<br>These classes are marked as <strong>BETA</strong> in the reference documentation.<br>The source code for the tutorials is subject to change in the future.</td>
+<td><img src="../../../../../../images/note-important.png" alt="NOTE"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Read the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide so you are able to build and run EFL C# applications.</li>
+<li>This tutorial builds on top of the previous one, <a href="hello-world-cs.html">&quot;Hello World&quot; in C#</a>, so you should have read that one first.</li>
+</ul>
+<h2 id="graphical-hello-world">Graphical Hello World</h2>
+<p>Copy the code below into a file and build as instructed in the <a href="../../setup/csharp/start.html">Setting Up a C# Development Environment</a> guide.</p>
+<pre><code class="lang-csharp">using System;
+
+public class Example
+{
+    // Callback to quit the application
+    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e)
+    {
+        // Exit the EFL main loop
+        if (e.arg == false)
+          Efl.Ui.Config.Exit();
+    }
+
+#if WIN32
+    [STAThreadAttribute()]
+#endif
+    public static void Main()
+    {
+        // Initialize EFL and all UI components
+        Efl.All.Init(Efl.Components.Ui);
+
+        // Create a window and initialize it
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText(&quot;Hello World&quot;);
+        // Request that the window is automatically hidden when the &quot;close&quot;
+        // button is pressed
+        win.SetAutohide(true);
+        // Hook to the Hide event
+        win.VisibilityChangedEvt += QuitCb;
+
+        // Create a box container
+        var box = new Efl.Ui.Box(win);
+        // Set its minimum size
+        box.SetHintSizeMin(new Eina.Size2D(360, 240));
+        // Set the box as the content for the window
+        // The window size will adapt to the box size
+        win.SetContent(box);
+
+        // Create a text label widget
+        var label = new Efl.Ui.Text(box);
+        // Set its content and customize it
+        label.SetText(&quot;Hello World. This is an Efl.Ui application!&quot;);
+        label.SetSelectionAllowed(false);
+        label.SetHintWeight(1.0, 0.9);
+        label.SetHintAlign(0.5, 0.5);
+        // Add the text to the box container
+        box.DoPack(label);
+
+        // Create a button widget
+        var button = new Efl.Ui.Button(box);
+        // Customize it
+        button.SetText(&quot;Quit&quot;);
+        button.SetHintWeight(1.0, 0.1);
+        // Set the method to be called when the button is pressed
+        button.ClickedEvt += (object sender, EventArgs e) =&gt; { Efl.Ui.Config.Exit(); };
+        // Add the button to the box container
+        box.DoPack(button);
+
+        // Start the EFL main loop
+        Efl.Ui.Config.Run();
+
+        // Shutdown EFL
+        Efl.All.Shutdown();
+    }
+}
+</code></pre>
+<p>When you run the application, it should look something like this:</p>
+<p><img src="../../../../../../images/playground/03-hello-world-gui/image01.png" alt="Full application with text box and button"></p>
+<h2 id="walkthrough">Walkthrough</h2>
+<p>This tutorial builds on top of the previous one, <a href="hello-world-cs.html">&quot;Hello World&quot; in C#</a>, so the basic structure, including EFL initialization and shutdown, are the same. The following steps explain how to further customize the window and add the different widgets to it.</p>
+<h3 id="registering-for-window-events">Registering for Window Events</h3>
+<p>Take a look at the window instantiation:</p>
+<pre><code class="lang-csharp">        // Create a window and initialize it
+        Efl.Ui.Win win = new Efl.Ui.Win(Efl.App.AppMain);
+        // Set the window's title
+        win.SetText(&quot;Hello World&quot;);
+        // Request that the window is automatically hidden when the &quot;close&quot;
+        // button is pressed
+        win.SetAutohide(true);
+        // Hook to the Hide event
+        win.VisibilityChangedEvt += QuitCb;
+</code></pre>
+<p>This creates a new window, making it a child of the application's Main Loop, and customizes it:</p>
+<ul>
+<li>Sets the window title to <code>Hello World</code>.</li>
+<li>Sets the <code>Autohide</code> flag to <code>true</code> (see the <a href="hello-world-cs.html">previous tutorial</a>).</li>
+<li>Connects an event handler to the window's <code>Visibility Changed Event</code>. This event will be emitted every time the window is shown or hidden. In particular, it will be emitted when the window is closed due to the <code>Autohide</code> flag above.</li>
+</ul>
+<p>All event handlers in EFL have a common signature:</p>
+<pre><code class="lang-csharp">    public static void Handler(object sender, EventArgs e);
+</code></pre>
+<p>Where <code>sender</code> is the object that emitted the event, and <code>e</code> contains any additional information, which depends on the type of the event.</p>
+<p>If you want to retrieve any additional information, though, you have to use the appropriate <code>EventArgs</code> subclass. For instance, in this tutorial:</p>
+<pre><code class="lang-csharp">    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e);
+</code></pre>
+<p>where you can retrieve the new visibility status of the window in the <code>e.arg</code> parameter (<code>true</code> for window shown or <code>false</code> for window hidden).</p>
+<p>This tutorial simply quits the application whenever the window is hidden:</p>
+<pre><code class="lang-csharp">    // Callback to quit the application
+    public static void QuitCb(object sender, Efl.Gfx.EntityVisibilityChangedEvt_Args e)
+    {
+        // Exit the EFL main loop
+        if (e.arg == false)
+          Efl.Ui.Config.Exit();
+    }
+</code></pre>
+<p>This is already the default behavior for EFL applications, so this event is connected here just for demonstration purposes.</p>
+<h3 id="adding-a-container-box">Adding a Container Box</h3>
+<p>Now you could start adding widgets directly to your window, but you would need to manually give them a position and a size. If later on you decide to make your window bigger, or if you want your window to be resizable by the user, you'll need to change the position and size of every widget.</p>
+<p>It is easier to put your widgets inside a <em>container</em> which takes care of positioning and sizing them, according to available space and other widgets. There's a variety of containers available, which allow you to stack your widgets vertically or horizontally, or align them on a square grid, for example.</p>
+<p>Although invisible themselves, containers are regular widgets too, so you can size and position them, and even nest them under other containers.</p>
+<p>This tutorial uses a <em>box</em> container:</p>
+<pre><code class="lang-csharp">        // Create a box container
+        var box = new Efl.Ui.Box(win);
+        // Set its minimum size
+        box.SetHintSizeMin(new Eina.Size2D(360, 240));
+        // Set the box as the content for the window
+        // The window size will adapt to the box size
+        win.SetContent(box);
+</code></pre>
+<p>A box container can be vertical or horizontal, and by default it is vertical. All widgets inside a vertical box container will have the same width as the container, and their heights will be automatically chosen so that they cover the whole surface of the container from top to bottom (Imagine a stack of pizza boxes neatly fitting inside your oven). By default, all widgets will have the same height, but that can be customized as you will see in a moment.</p>
+<p>In the snippet above you can see calls to:</p>
+<ul>
+<li><p><code>SetHintSizeMin()</code>: This sets the <strong>minimum</strong> size for the box. You can resize the window and the box will grow or shrink as needed, but it will never go below this size.</p>
+</li>
+<li><p><code>SetContent()</code>: This method specifies the <strong>one</strong> widget which will be the content of the window (Windows can only have one content set at any given time). If you want to have more than one widget in your window, you will need to wrap them in a container and set that as the content of the window. As shown above, the box container is set as the content of the window.</p>
+</li>
+</ul>
+<h3 id="adding-a-text-label">Adding a Text Label</h3>
+<p>So far the tutorial has created a window and an invisible container, it is about time it adds something which can actually be seen:</p>
+<pre><code class="lang-csharp">        // Create a text label widget
+        var label = new Efl.Ui.Text(box);
+        // Set its content and customize it
+        label.SetText(&quot;Hello World. This is an Efl.Ui application!&quot;);
+        label.SetSelectionAllowed(false);
+        label.SetHintWeight(1.0, 0.9);
+        label.SetHintAlign(0.5, 0.5);
+        // Add the text to the box container
+        box.DoPack(label);
+</code></pre>
+<p>This instantiates an <code>Efl.Ui.Text</code> object, as a child of the box container. Quite sensibly, this is the widget used to display text on screen. The snippet above is worth a careful look:</p>
+<ul>
+<li><p><code>SetText()</code>: Specifies the text string to display in the widget.</p>
+</li>
+<li><p><code>SetSelectionAllowed()</code>: This disables selecting the text (by dragging over it with the mouse, for example). Just to showcase a bit the EFL's capabilities.</p>
+</li>
+<li><p><code>SetHintWeight()</code>: This one controls the widget's size, but, instead of setting it explicitly as <code>SetHintSizeMin()</code> did, it does so indirectly by giving the widget a <strong>weight</strong>. The container holding this widget decides the size for all its held widgets according to their relative weights (If all widgets have the same weight, they all have the same size. If you double the weight of one of the widgets, its size will be double that of the other widgets). This is a complex topic explained in its own tutorial (<em>coming soon</em>).</p>
+<p>In the code above, the text widget is given a weight of <code>1.0</code> in the horizontal direction and <code>0.9</code> in the vertical direction (both directions are treated separately). The effect of this on the final widget size depends on the other widgets' weights, so it is explained in the next section after all widgets have been created.</p>
+</li>
+<li><p><code>SetHintAlign()</code>: Once the container has allocated space for each widget according to its weight, if the actual widget is smaller, it has room to be aligned. This command controls horizontal and vertical alignment in this way: <code>0</code> means left (or top), <code>1</code> means right (or bottom), and intermediate values are possible, meaning intermediate positions. For example, <code>0.5</code> means centered, as used in the code.</p>
+<blockquote>
+<p><strong>NOTE</strong>: A vertical box fixes the vertical size of all its contained widgets (and likewise an horizontal box). This means that they cannot be vertically aligned using <code>SetHintAlign()</code> (only horizontally), because there is no room for movement in the vertical direction.</p>
+<p>If you want to vertically align the text inside a vertical box, you have to align the text <strong>inside</strong> the text widget using <code>SetValign(0.5)</code> (or <code>SetHalign(0.5)</code>). This is a complex topic explained in it own tutorial (<em>coming soon</em>).</p>
+</blockquote>
+</li>
+<li><p><code>Efl.Ui.Box.DoPack()</code>: This adds the text widget to the box container. The order in which widgets are added to a container dictates the order in which they are placed on the screen.</p>
+<p>Besides being a child of the box object, the text widget also needs to be <em>packed</em> into the box with <code>DoPack()</code>.</p>
+</li>
+</ul>
+<h3 id="adding-a-button">Adding a Button</h3>
+<p>Let's now add a button below the text label:</p>
+<pre><code class="lang-csharp">        // Create a button widget
+        var button = new Efl.Ui.Button(box);
+        // Customize it
+        button.SetText(&quot;Quit&quot;);
+        button.SetHintWeight(1.0, 0.1);
+        // Set the method to be called when the button is pressed
+        button.ClickedEvt += (object sender, EventArgs e) =&gt; { Efl.Ui.Config.Exit(); };
+        // Add the button to the box container
+        box.DoPack(button);
+</code></pre>
+<p>This instantiates a button as a child of the box and initializes it so:</p>
+<ul>
+<li><p>Its label is set to <code>Quit</code>.</p>
+</li>
+<li><p>Its vertical weight is set to <code>0.1</code>. The only other widget inside the box container is the text label created in the previous section, with a weight of <code>0.9</code>, so these two widgets will share the total height of the window at a 90% - 10% ratio.</p>
+<blockquote>
+<p><strong>NOTE</strong>: You could also use <code>1</code> and <code>9</code> for the weights, or <code>10</code> and <code>90</code>, to achieve the same results. Remember that the weights are relative.</p>
+</blockquote>
+</li>
+<li><p>It defines a lambda function to be used as event handler for the <code>Clicked</code> event. In this way, when the button is pressed, the application will exit.</p>
+</li>
+<li><p>Adds the button to the box (besides being a child of the box object, the button also needs to be <em>packed</em> into the box with <code>DoPack()</code>).</p>
+</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>At the end of this tutorial you have learned:</p>
+<ul>
+<li>How to react to <strong>events</strong> like window a being closed or a button being clicked.</li>
+<li>How to use <strong>container</strong> widgets to take care of other widget's position and size.</li>
+<li>How to further customize a widget's position and size using <strong>size</strong>, <strong>weight</strong> and <strong>alignment</strong> hints.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="../../setup/csharp/start.html">Setting up a C# Development Environment</a>
+:    Read this before trying to develop with the EFL and C#</p>
+<p><a href="hello-world-cs.html">&quot;Hello World&quot; in C#</a>
+:    First tutorial in the series, explaining the basics.</p>
+<p><a href="https://git.enlightenment.org/tools/examples.git/tree/tutorial/csharp">Tutorial Code Examples</a>
+:    C# Source code for the tutorials.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../../../styles/main.js"></script>
+  </body>
+</html>
