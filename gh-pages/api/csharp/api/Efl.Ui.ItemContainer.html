@@ -73,10 +73,15 @@
   
   <h1 id="Efl_Ui_ItemContainer" data-uid="Efl.Ui.ItemContainer" class="text-break">Class Efl.Ui.ItemContainer
   </h1>
-  <div class="markdown level0 summary"><p>This widget can be used to define a set of items that needs to be displayed.
-The policy for selecting items can be controlled via <code>select_mode</code>. The selected items can be received by <code>selected_items_get</code>. The concrete placement of the items depends on the <code>position_manager</code> object.</p>
+  <div class="markdown level0 summary"><p>This widget displays a list of items in an arrangement controlled by an external <code>position_manager</code> object. By using different <code>position_manager</code> objects this widget can show lists of items or two-dimensional grids of items, for example.
+Items inside this widget can be selected according to the <code>select_mode</code> policy, and retrieved with <code>selected_items_get</code>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
+  <div class="remarks">
+  <h5 id="Efl_Ui_ItemContainer_remarks"><strong>Remarks</strong></h5>
+  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
+
+  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
@@ -88,6 +93,8 @@ The policy for selecting items can be controlled via <code>select_mode</code>. T
     <div class="level6"><a class="xref" href="Efl.Ui.Widget.html">Efl.Ui.Widget</a></div>
     <div class="level7"><a class="xref" href="Efl.Ui.LayoutBase.html">Efl.Ui.LayoutBase</a></div>
     <div class="level8"><span class="xref"><b>Efl.Ui.ItemContainer</b></span></div>
+      <div class="level9"><a class="xref" href="Efl.Ui.Grid.html">Efl.Ui.Grid</a></div>
+      <div class="level9"><a class="xref" href="Efl.Ui.List.html">Efl.Ui.List</a></div>
   </div>
   
   <h5 id="Efl_Ui_ItemContainer_syntax">Syntax</h5>
@@ -96,6 +103,36 @@ The policy for selecting items can be controlled via <code>select_mode</code>. T
   </div>
   <h3 id="constructors">Constructors
   </h3>
+  
+  
+  <a id="Efl_Ui_ItemContainer__ctor_" data-uid="Efl.Ui.ItemContainer.#ctor*"></a>
+  <h4 id="Efl_Ui_ItemContainer__ctor_Efl_Eo_EoWrapper_ConstructingHandle_" data-uid="Efl.Ui.ItemContainer.#ctor(Efl.Eo.EoWrapper.ConstructingHandle)">ItemContainer(EoWrapper.ConstructingHandle)</h4>
+  <div class="markdown level1 summary"><p>Subclasses should override this constructor if they are expected to be instantiated from native code.
+Do not call this constructor directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ItemContainer(EoWrapper.ConstructingHandle ch)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Eo.EoWrapper.ConstructingHandle.html">Efl.Eo.EoWrapper.ConstructingHandle</a></td>
+        <td><span class="parametername">ch</span></td>
+        <td><p>Tag struct storing the native handle of the object being constructed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   
   
   <a id="Efl_Ui_ItemContainer__ctor_" data-uid="Efl.Ui.ItemContainer.#ctor*"></a>
@@ -220,7 +257,7 @@ This means one of the relations right,left or down,up are not set. This call flu
   
   <a id="Efl_Ui_ItemContainer_LastSelectedItem_" data-uid="Efl.Ui.ItemContainer.LastSelectedItem*"></a>
   <h4 id="Efl_Ui_ItemContainer_LastSelectedItem" data-uid="Efl.Ui.ItemContainer.LastSelectedItem">LastSelectedItem</h4>
-  <div class="markdown level1 summary"><p>The item that was selected the most recent. No other item has been selected while this one was selected.</p>
+  <div class="markdown level1 summary"><p>The item that was selected most recently.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -302,34 +339,6 @@ This function will block scrolling movement (by input of a user) in a given dire
   </table>
   
   
-  <a id="Efl_Ui_ItemContainer_NativeClass_" data-uid="Efl.Ui.ItemContainer.NativeClass*"></a>
-  <h4 id="Efl_Ui_ItemContainer_NativeClass" data-uid="Efl.Ui.ItemContainer.NativeClass">NativeClass</h4>
-  <div class="markdown level1 summary"><p>Pointer to the native class description.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override IntPtr NativeClass { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.IntPtr</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Efl.Ui.LayoutBase.html#Efl_Ui_LayoutBase_NativeClass">LayoutBase.NativeClass</a></div>
-  
-  
   <a id="Efl_Ui_ItemContainer_Orientation_" data-uid="Efl.Ui.ItemContainer.Orientation*"></a>
   <h4 id="Efl_Ui_ItemContainer_Orientation" data-uid="Efl.Ui.ItemContainer.Orientation">Orientation</h4>
   <div class="markdown level1 summary"><p>Control the direction of a given widget.
@@ -361,12 +370,12 @@ Use this function to change how your widget is to be disposed: vertically or hor
   
   <a id="Efl_Ui_ItemContainer_PositionManager_" data-uid="Efl.Ui.ItemContainer.PositionManager*"></a>
   <h4 id="Efl_Ui_ItemContainer_PositionManager" data-uid="Efl.Ui.ItemContainer.PositionManager">PositionManager</h4>
-  <div class="markdown level1 summary"><p>The position manager that handes the placement of items of this object.</p>
+  <div class="markdown level1 summary"><p>Position manager object that handles placement of items.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IItemPositionManager PositionManager { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IEntity PositionManager { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -378,7 +387,7 @@ Use this function to change how your widget is to be disposed: vertically or hor
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IItemPositionManager.html">Efl.Ui.IItemPositionManager</a></td>
+        <td><a class="xref" href="Efl.Ui.PositionManager.IEntity.html">Efl.Ui.PositionManager.IEntity</a></td>
         <td><p>The objects ownership is passed to the item container.</p>
 </td>
       </tr>
@@ -627,6 +636,7 @@ This is the counterpart to <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_
   <div class="markdown level1 summary"><p>This will fetch the data from a registered node.
 Be aware this function will trigger a computation of all dirty nodes.
 (Since EFL 1.22)</p>
+<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -994,7 +1004,7 @@ The gravity defines how the scroller will adjust its view when the size of the s
   
   <a id="Efl_Ui_ItemContainer_GetLastSelectedItem_" data-uid="Efl.Ui.ItemContainer.GetLastSelectedItem*"></a>
   <h4 id="Efl_Ui_ItemContainer_GetLastSelectedItem" data-uid="Efl.Ui.ItemContainer.GetLastSelectedItem">GetLastSelectedItem()</h4>
-  <div class="markdown level1 summary"><p>The item that was selected the most recent. No other item has been selected while this one was selected.</p>
+  <div class="markdown level1 summary"><p>The item that was selected most recently.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1234,12 +1244,12 @@ Use this function to change how your widget is to be disposed: vertically or hor
   
   <a id="Efl_Ui_ItemContainer_GetPositionManager_" data-uid="Efl.Ui.ItemContainer.GetPositionManager*"></a>
   <h4 id="Efl_Ui_ItemContainer_GetPositionManager" data-uid="Efl.Ui.ItemContainer.GetPositionManager">GetPositionManager()</h4>
-  <div class="markdown level1 summary"><p>The position manager that handes the placement of items of this object.</p>
+  <div class="markdown level1 summary"><p>Position manager object that handles placement of items.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual IItemPositionManager GetPositionManager()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual IEntity GetPositionManager()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1251,7 +1261,7 @@ Use this function to change how your widget is to be disposed: vertically or hor
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IItemPositionManager.html">Efl.Ui.IItemPositionManager</a></td>
+        <td><a class="xref" href="Efl.Ui.PositionManager.IEntity.html">Efl.Ui.PositionManager.IEntity</a></td>
         <td><p>The objects ownership is passed to the item container.</p>
 </td>
       </tr>
@@ -1391,7 +1401,7 @@ This property can only be set once.
     <tbody>
       <tr>
         <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Item&gt;</span></td>
-        <td><p>Iterator covered by selected items list. user have to free the iterator after used.</p>
+        <td><p>User has to free the iterator after usage.</p>
 </td>
       </tr>
     </tbody>
@@ -1564,7 +1574,8 @@ Every element returned by this is located inside the viewport rectangle, but has
   
   <a id="Efl_Ui_ItemContainer_ItemScrollAlign_" data-uid="Efl.Ui.ItemContainer.ItemScrollAlign*"></a>
   <h4 id="Efl_Ui_ItemContainer_ItemScrollAlign_Efl_Ui_Item_System_Double_System_Boolean_" data-uid="Efl.Ui.ItemContainer.ItemScrollAlign(Efl.Ui.Item,System.Double,System.Boolean)">ItemScrollAlign(Item, Double, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Bring the passed item into the viewport, place the item accordingly to align in the viewport</p>
+  <div class="markdown level1 summary"><p>Bring the passed item into the viewport, place the item accordingly to align in the viewport.
+<code>align</code> selects the final position of the object inside the viewport. 0.0 will move the object to the first visible position inside the viewport, 1.0 will move it to the last visible position, and values in between will move it accordingly to positions in between, along the scrolling axis.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -3690,13 +3701,13 @@ Use this function to change how your widget is to be disposed: vertically or hor
   
   
   <a id="Efl_Ui_ItemContainer_SetPositionManager_" data-uid="Efl.Ui.ItemContainer.SetPositionManager*"></a>
-  <h4 id="Efl_Ui_ItemContainer_SetPositionManager_Efl_Ui_IItemPositionManager_" data-uid="Efl.Ui.ItemContainer.SetPositionManager(Efl.Ui.IItemPositionManager)">SetPositionManager(IItemPositionManager)</h4>
-  <div class="markdown level1 summary"><p>The position manager that handes the placement of items of this object.</p>
+  <h4 id="Efl_Ui_ItemContainer_SetPositionManager_Efl_Ui_PositionManager_IEntity_" data-uid="Efl.Ui.ItemContainer.SetPositionManager(Efl.Ui.PositionManager.IEntity)">SetPositionManager(IEntity)</h4>
+  <div class="markdown level1 summary"><p>Position manager object that handles placement of items.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetPositionManager(IItemPositionManager position_manager)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetPositionManager(IEntity position_manager)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3709,7 +3720,7 @@ Use this function to change how your widget is to be disposed: vertically or hor
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IItemPositionManager.html">Efl.Ui.IItemPositionManager</a></td>
+        <td><a class="xref" href="Efl.Ui.PositionManager.IEntity.html">Efl.Ui.PositionManager.IEntity</a></td>
         <td><span class="parametername">position_manager</span></td>
         <td><p>The objects ownership is passed to the item container.</p>
 </td>
@@ -4404,7 +4415,7 @@ EFL will call this function whenever the contents of this container need to be r
   
   
   <h4 id="Efl_Ui_ItemContainer_ItemClickedAnyEvt" data-uid="Efl.Ui.ItemContainer.ItemClickedAnyEvt">ItemClickedAnyEvt</h4>
-  <div class="markdown level1 summary"><p>A item was clicked</p>
+  <div class="markdown level1 summary"><p>A <code>clicked</code>,any event occurred over an item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -4429,7 +4440,7 @@ EFL will call this function whenever the contents of this container need to be r
   
   
   <h4 id="Efl_Ui_ItemContainer_ItemClickedEvt" data-uid="Efl.Ui.ItemContainer.ItemClickedEvt">ItemClickedEvt</h4>
-  <div class="markdown level1 summary"><p>A item was clicked with the primary mouse button</p>
+  <div class="markdown level1 summary"><p>A <code>clicked</code> event occurred over an item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -4454,7 +4465,7 @@ EFL will call this function whenever the contents of this container need to be r
   
   
   <h4 id="Efl_Ui_ItemContainer_ItemLongpressedEvt" data-uid="Efl.Ui.ItemContainer.ItemLongpressedEvt">ItemLongpressedEvt</h4>
-  <div class="markdown level1 summary"><p>A item was longpressed</p>
+  <div class="markdown level1 summary"><p>A <code>longpressed</code> event occurred over an item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -4479,7 +4490,7 @@ EFL will call this function whenever the contents of this container need to be r
   
   
   <h4 id="Efl_Ui_ItemContainer_ItemPressedEvt" data-uid="Efl.Ui.ItemContainer.ItemPressedEvt">ItemPressedEvt</h4>
-  <div class="markdown level1 summary"><p>A item was pressed</p>
+  <div class="markdown level1 summary"><p>A <code>press</code> event occurred over an item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -4529,7 +4540,7 @@ EFL will call this function whenever the contents of this container need to be r
   
   
   <h4 id="Efl_Ui_ItemContainer_ItemUnpressedEvt" data-uid="Efl.Ui.ItemContainer.ItemUnpressedEvt">ItemUnpressedEvt</h4>
-  <div class="markdown level1 summary"><p>A item was unpressed</p>
+  <div class="markdown level1 summary"><p>A <code>unpress</code> event occurred over an item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

@@ -88,6 +88,45 @@ binding classes that inherit from it.</p>
       <div class="level2"><a class="xref" href="Efl.Ui.Spotlight.Util.html">Efl.Ui.Spotlight.Util</a></div>
   </div>
   
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Efl_Eo_EoWrapper__ctor_" data-uid="Efl.Eo.EoWrapper.#ctor*"></a>
+  <h4 id="Efl_Eo_EoWrapper__ctor_Efl_Eo_EoWrapper_ConstructingHandle_" data-uid="Efl.Eo.EoWrapper.#ctor(Efl.Eo.EoWrapper.ConstructingHandle)">EoWrapper(EoWrapper.ConstructingHandle)</h4>
+  <div class="markdown level1 summary"><p>Constructor to be used when objects are expected to be constructed from native code.
+For a class that inherited from an EFL# class to be properly constructed from native code
+one must create a constructor with this signature and calls this base constructor from it.
+This constructor will take care of calling base constructors of the native classes and
+perform additional setup so objects are ready to use.
+It is advisable to check for the <a class="xref" href="Efl.Eo.EoWrapper.html#Efl_Eo_EoWrapper_NativeHandle">Efl.Eo.EoWrapper.NativeHandle</a> property in the top level
+constructor and signal an error when it has a value of IntPtr.Zero after this
+constructor completion.
+Warning: Do not use this constructor directly from a <code>new</code> statement.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EoWrapper(EoWrapper.ConstructingHandle ch)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Eo.EoWrapper.ConstructingHandle.html">Efl.Eo.EoWrapper.ConstructingHandle</a></td>
+        <td><span class="parametername">ch</span></td>
+        <td><p>Tag struct storing the native handle of the object being constructed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="fields">Fields
   </h3>
   
@@ -144,32 +183,6 @@ class defined by the user and that inherit from one of the generated ones.</p>
 false if it is class that is manually defined and that inherits from
 one of the generated ones, including user defined classes.</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Eo_EoWrapper_NativeClass_" data-uid="Efl.Eo.EoWrapper.NativeClass*"></a>
-  <h4 id="Efl_Eo_EoWrapper_NativeClass" data-uid="Efl.Eo.EoWrapper.NativeClass">NativeClass</h4>
-  <div class="markdown level1 summary"><p>Pointer to the native class description.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract IntPtr NativeClass { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.IntPtr</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
