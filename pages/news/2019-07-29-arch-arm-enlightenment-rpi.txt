@@ -1,0 +1,43 @@
+=== Arch Linux + Enlightenment for Raspberry Pi ===
+  * //2019-07-29 - by Carsten Haitzler//
+
+{{ :arch-linux-e-pi-setup.jpg | Arch Linux + Enlightenment for Raspberry Pi Setup Screen }}
+
+This is a first cut at a pre-built Arch Linux disk image for the
+Raspberry Pi with Enlightenment, EFL, Terminology and Rage all
+installed from git (as AUR packages). It includes a setup tool to
+configure the system to your liking in basic ways. It sets up a
+repository for updates of the overlayed/added AUR packages used as
+well as regular Arch Linux ARM (alarm).
+
+This should work on the Raspberry Pi 2 and 3. It will not work on the
+Raspberry Pi 4 as Arch Linux ARM still is missing full support at the
+base. It also will not work on the Rapsberry Pi 1 or Zero as these are
+ARMv6 based. In future I imagine the Raspberry Pi 4 will work, but not
+at this point. It is a 32bit ARMv7 image, not 64bit (aarch64).
+
+You can download the pre-made disk image here:
+
+[[ https://download.enlightenment.org/distros/arch/alarm/images/ArchLinuxARM-Rpi-ARMv7-Enlightenment-Wayland.img.xz | Arch Linux ARMv7 32bit for Raspberry Pi disk image XZ]]
+
+To install this on a MicroSD card, simply plug one into some card
+reader you have and do the following, simply replacing ''/dev/sdX'' with
+the correct device for your MicroSD card. You will need at least a 4GB
+card for this to work, but larger cards will give you more room to
+install packages and user files later on.
+
+<code>
+xz -d ArchLinuxARM-Rpi-ARMv7-Enlightenment-Wayland.img.xz
+dd if=ArchLinuxARM-Rpi-ARMv7-Enlightenment-Wayland.img of=/dev/sdX bs=4M status=progress conv=fdatasync oflag=sync
+</code>
+
+Once the above ''dd'' command complete, unpower your Raspbery Pi, plug
+the card in, then power it up and wait for the desktop to come up.
+Double-click on the "Install & Setup" icon on the desktop to begin the
+setup process. Please forgive the roughness of this tool as it's a
+first-cut shell script to be replaced in future by a proper GUI tool.
+
+^ ** LINK ** ^
+| [[ https://download.enlightenment.org/distros/arch/alarm/images/ArchLinuxARM-Rpi-ARMv7-Enlightenment-Wayland.img.xz | Arch Linux ARMv7 32bit for Raspberry Pi disk image XZ]] |
+{{:blank.png?nolink&100|}}
+~~DISCUSSIONS~~
