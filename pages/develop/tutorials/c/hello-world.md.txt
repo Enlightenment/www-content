@@ -15,13 +15,12 @@ Using your favorite text editor, create a text file and save it as ``hello-world
 ```c
 #define EFL_BETA_API_SUPPORT 1
 
-#include <Eina.h>
 #include <Efl_Core.h>
 ```
 
 The new EFL API has been in Beta stage for a while, and some libraries still need that you define the ``EFL_BETA_API_SUPPORT`` symbols before including any EFL library. Don't worry, though, they should not be required any more in the near future.
 
-The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial you will be calling methods from the ``Eina`` and ``Efl`` libraries, therefore you need to include the ``Eina.h`` and ``Efl_Core.h`` headers.
+The EFL is split into several libraries. You only need to include the ones you actually want to use. In this tutorial you will be calling methods from the ``Eina`` and ``Efl`` libraries, therefore you just need to include the ``Efl_Core.h`` header which includes ``Eina.h`` and ``Efl.h``.
 
 You will explore the EFL libraries in greater depth in later tutorials. Other examples are ``Efl_Net.h`` for network operations and ``Efl_Ui.h`` to create *User Interface* elements like windows and buttons.
 
@@ -43,7 +42,7 @@ efl_main(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 
 EFL takes care of all initialization tasks and calls your ``efl_main()`` method when everything is ready.
 
-At this point the parameters to ``efl_main()`` are not being used, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having.
+At this point the parameters to ``efl_main()`` are not being used, hence the ``EINA_UNUSED`` macro. This is optional but it gets rid of warnings regarding unused parameters so it's worth having. Moreover, the ``data`` argument will always be NULL in this tutorials.
 
 ## Step Three: Print "Hello World" ##
 
@@ -84,7 +83,8 @@ This is not mandatory but it simplifies the setup and shutdown processes conside
 
 Your program should now look something like this:
 ```c
-#include <Eina.h>
+#define EFL_BETA_API_SUPPORT 1
+
 #include <Efl_Core.h>
 
 void
@@ -100,7 +100,7 @@ EFL_MAIN()
 Save the program then build it as outlined in [Setting up the Development Environment](/develop/setup/c/#Building). As a reminder, if you are using the ``gcc`` compiler, run:
 
 ```bash
-gcc -o hello-world hello-world.c `pkg-config --cflags --libs eina efl elementary`
+gcc -o hello-world hello-world.c `pkg-config --cflags --libs ecore`
 ```
 
 If the systems displays no errors, your program should be ready. Test it by typing:
@@ -158,7 +158,7 @@ In the above example, if no parameters are passed to your program (``eina_array_
 
 At the end of this tutorial you have learned:
 
-* **Header files** must be included for any EFL libraries you intend to use. Typically, these are ``Eina.h`` and ``Efl.h``.
+* **Header files** must be included for any EFL libraries you intend to use. Typically, these are ``Efl_Core.h`` or ``Efl_Ui.h``.
 * Your **main method** should be ``efl_main()``.
 * Your EFL programs should **always call ``efl_exit()``** at some stage.
 * Your EFL programs should **include the ``EFL_MAIN()`` macro** at the end so EFL can insert its own start-up and shutdown code.
