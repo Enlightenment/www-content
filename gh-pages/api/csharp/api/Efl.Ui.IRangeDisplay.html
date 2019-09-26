@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IRangeDisplay
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,14 +73,10 @@
   
   <h1 id="Efl_Ui_IRangeDisplay" data-uid="Efl.Ui.IRangeDisplay" class="text-break">Interface Efl.Ui.IRangeDisplay
   </h1>
-  <div class="markdown level0 summary"><p>Interface that contains properties regarding the displaying of a range.</p>
+  <div class="markdown level0 summary"><p>Interface that contains properties regarding the displaying of a value within a range.
+A value range contains a value restricted between specified minimum and maximum limits at all times. This can be used for progressbars, sliders or spinners, for example.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IRangeDisplay_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IRangeDisplay_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,11 +86,40 @@
   </h3>
   
   
+  <a id="Efl_Ui_IRangeDisplay_RangeLimits_" data-uid="Efl.Ui.IRangeDisplay.RangeLimits*"></a>
+  <h4 id="Efl_Ui_IRangeDisplay_RangeLimits" data-uid="Efl.Ui.IRangeDisplay.RangeLimits">RangeLimits</h4>
+  <div class="markdown level1 summary"><p>Set the minimum and maximum values for given range widget.
+If the current value is less than <code>min</code>, it will be updated to <code>min</code>. If it is bigger then <code>max</code>, will be updated to <code>max</code>. The resulting value can be obtained with <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeValue">Efl.Ui.IRangeDisplay.GetRangeValue()</a>.</p>
+<p>The default minimum and maximum values may be different for each class.</p>
+<p>Note: maximum must be greater than minimum, otherwise behavior is undefined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(double, double)RangeLimits { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Double, System.Double&gt;</span></td>
+        <td><p>The minimum value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Efl_Ui_IRangeDisplay_RangeValue_" data-uid="Efl.Ui.IRangeDisplay.RangeValue*"></a>
   <h4 id="Efl_Ui_IRangeDisplay_RangeValue" data-uid="Efl.Ui.IRangeDisplay.RangeValue">RangeValue</h4>
-  <div class="markdown level1 summary"><p>Control the range value (in percentage) on a given range widget
-Use this call to set range levels.</p>
-<p>Note: If you pass a value out of the specified interval for <code>val</code>, it will be interpreted as the closest of the boundary values in the interval.</p>
+  <div class="markdown level1 summary"><p>Control the value (position) of the widget within its valid range.
+Values outside the limits defined in <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a> are ignored and an error is printed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -111,8 +136,8 @@ Use this call to set range levels.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The range value (must be between $0.0 and 1.0)</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>The range value (must be within the bounds of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a>).</p>
 </td>
       </tr>
     </tbody>
@@ -123,8 +148,10 @@ Use this call to set range levels.</p>
   
   <a id="Efl_Ui_IRangeDisplay_GetRangeLimits_" data-uid="Efl.Ui.IRangeDisplay.GetRangeLimits*"></a>
   <h4 id="Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__" data-uid="Efl.Ui.IRangeDisplay.GetRangeLimits(System.Double@,System.Double@)">GetRangeLimits(out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>Get the minimum and maximum values of the given range widget.
-Note: If only one value is needed, the other pointer can be passed as <code>null</code>.</p>
+  <div class="markdown level1 summary"><p>Set the minimum and maximum values for given range widget.
+If the current value is less than <code>min</code>, it will be updated to <code>min</code>. If it is bigger then <code>max</code>, will be updated to <code>max</code>. The resulting value can be obtained with <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeValue">Efl.Ui.IRangeDisplay.GetRangeValue()</a>.</p>
+<p>The default minimum and maximum values may be different for each class.</p>
+<p>Note: maximum must be greater than minimum, otherwise behavior is undefined.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -142,13 +169,13 @@ Note: If only one value is needed, the other pointer can be passed as <code>null
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">min</span></td>
         <td><p>The minimum value.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">max</span></td>
         <td><p>The maximum value.</p>
 </td>
@@ -159,9 +186,8 @@ Note: If only one value is needed, the other pointer can be passed as <code>null
   
   <a id="Efl_Ui_IRangeDisplay_GetRangeValue_" data-uid="Efl.Ui.IRangeDisplay.GetRangeValue*"></a>
   <h4 id="Efl_Ui_IRangeDisplay_GetRangeValue" data-uid="Efl.Ui.IRangeDisplay.GetRangeValue">GetRangeValue()</h4>
-  <div class="markdown level1 summary"><p>Control the range value (in percentage) on a given range widget
-Use this call to set range levels.</p>
-<p>Note: If you pass a value out of the specified interval for <code>val</code>, it will be interpreted as the closest of the boundary values in the interval.</p>
+  <div class="markdown level1 summary"><p>Control the value (position) of the widget within its valid range.
+Values outside the limits defined in <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a> are ignored and an error is printed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -178,8 +204,8 @@ Use this call to set range levels.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The range value (must be between $0.0 and 1.0)</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>The range value (must be within the bounds of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a>).</p>
 </td>
       </tr>
     </tbody>
@@ -189,10 +215,9 @@ Use this call to set range levels.</p>
   <a id="Efl_Ui_IRangeDisplay_SetRangeLimits_" data-uid="Efl.Ui.IRangeDisplay.SetRangeLimits*"></a>
   <h4 id="Efl_Ui_IRangeDisplay_SetRangeLimits_System_Double_System_Double_" data-uid="Efl.Ui.IRangeDisplay.SetRangeLimits(System.Double,System.Double)">SetRangeLimits(Double, Double)</h4>
   <div class="markdown level1 summary"><p>Set the minimum and maximum values for given range widget.
-Define the allowed range of values to be selected by the user.</p>
-<p>If actual value is less than <code>min</code>, it will be updated to <code>min</code>. If it is bigger then <code>max</code>, will be updated to <code>max</code>. The actual value can be obtained with <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeValue">Efl.Ui.IRangeDisplay.GetRangeValue()</a></p>
-<p>The minimum and maximum values may be different for each class.</p>
-<p>Warning: maximum must be greater than minimum, otherwise behavior is undefined.</p>
+If the current value is less than <code>min</code>, it will be updated to <code>min</code>. If it is bigger then <code>max</code>, will be updated to <code>max</code>. The resulting value can be obtained with <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeValue">Efl.Ui.IRangeDisplay.GetRangeValue()</a>.</p>
+<p>The default minimum and maximum values may be different for each class.</p>
+<p>Note: maximum must be greater than minimum, otherwise behavior is undefined.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -210,13 +235,13 @@ Define the allowed range of values to be selected by the user.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">min</span></td>
         <td><p>The minimum value.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">max</span></td>
         <td><p>The maximum value.</p>
 </td>
@@ -227,9 +252,8 @@ Define the allowed range of values to be selected by the user.</p>
   
   <a id="Efl_Ui_IRangeDisplay_SetRangeValue_" data-uid="Efl.Ui.IRangeDisplay.SetRangeValue*"></a>
   <h4 id="Efl_Ui_IRangeDisplay_SetRangeValue_System_Double_" data-uid="Efl.Ui.IRangeDisplay.SetRangeValue(System.Double)">SetRangeValue(Double)</h4>
-  <div class="markdown level1 summary"><p>Control the range value (in percentage) on a given range widget
-Use this call to set range levels.</p>
-<p>Note: If you pass a value out of the specified interval for <code>val</code>, it will be interpreted as the closest of the boundary values in the interval.</p>
+  <div class="markdown level1 summary"><p>Control the value (position) of the widget within its valid range.
+Values outside the limits defined in <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a> are ignored and an error is printed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -247,10 +271,87 @@ Use this call to set range levels.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">val</span></td>
-        <td><p>The range value (must be between $0.0 and 1.0)</p>
+        <td><p>The range value (must be within the bounds of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a>).</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Ui_IRangeDisplay_ChangedEvent" data-uid="Efl.Ui.IRangeDisplay.ChangedEvent">ChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when the <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_RangeValue">Efl.Ui.IRangeDisplay.RangeValue</a> is getting changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ChangedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IRangeDisplay_MaxReachedEvent" data-uid="Efl.Ui.IRangeDisplay.MaxReachedEvent">MaxReachedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when the <code>range_value</code> has reached the maximum of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler MaxReachedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IRangeDisplay_MinReachedEvent" data-uid="Efl.Ui.IRangeDisplay.MinReachedEvent">MinReachedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when the <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_RangeValue">Efl.Ui.IRangeDisplay.RangeValue</a> has reached the minimum of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_GetRangeLimits_System_Double__System_Double__">Efl.Ui.IRangeDisplay.GetRangeLimits(out System.Double, out System.Double)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler MinReachedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

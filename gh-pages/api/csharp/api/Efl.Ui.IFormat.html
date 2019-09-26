@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IFormat
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -74,16 +74,11 @@
   <h1 id="Efl_Ui_IFormat" data-uid="Efl.Ui.IFormat" class="text-break">Interface Efl.Ui.IFormat
   </h1>
   <div class="markdown level0 summary"><p>Helper mixin that simplifies converting numerical values to text.
-A number of widgets represent a numerical value but display a text representation. For example, an <a class="xref" href="Efl.Ui.Progressbar.html">Efl.Ui.Progressbar</a> can hold the number 0.75 but display the string &quot;75%&quot;, or an <a class="xref" href="Efl.Ui.Spin.html">Efl.Ui.Spin</a> can hold numbers 1 to 7, but display the strings &quot;Monday&quot; thru &quot;Sunday&quot;.</p>
+A number of widgets represent a numerical value but display a text representation. For example, an <span class="text-muted">Efl.Ui.Progressbar (object still in beta stage)</span> can hold the number 0.75 but display the string &quot;75%&quot;, or an <a class="xref" href="Efl.Ui.Spin.html">Efl.Ui.Spin</a> can hold numbers 1 to 7, but display the strings &quot;Monday&quot; thru &quot;Sunday&quot;.</p>
 <p>This conversion can be controlled through the <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_FormatFunc">Efl.Ui.IFormat.FormatFunc</a>, <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_FormatValues">Efl.Ui.IFormat.FormatValues</a> and <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_GetFormatString_System_String__Efl_Ui_FormatStringType__">Efl.Ui.IFormat.GetFormatString(out System.String, out Efl.Ui.FormatStringType)</a> properties. Only one of them needs to be set. When more than one is set <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_FormatValues">Efl.Ui.IFormat.FormatValues</a> has the highest priority, followed by <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_FormatFunc">Efl.Ui.IFormat.FormatFunc</a> and then <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_GetFormatString_System_String__Efl_Ui_FormatStringType__">Efl.Ui.IFormat.GetFormatString(out System.String, out Efl.Ui.FormatStringType)</a>. If one mechanism fails to produce a valid string the others will be tried (if provided) in descending order of priority. If no user-provided mechanism works, a fallback is used that just displays the value.</p>
-<p>Widgets including this mixin offer their users different properties to control how <a class="xref" href="Eina.Value.html">Eina.Value</a>'s are converted to text.</p>
+<p>Widgets including this mixin offer their users different properties to control how <span class="text-muted">Eina.Value (object still in beta stage)</span>'s are converted to text.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IFormat_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IFormat_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -95,7 +90,7 @@ A number of widgets represent a numerical value but display a text representatio
   
   <a id="Efl_Ui_IFormat_FormatFunc_" data-uid="Efl.Ui.IFormat.FormatFunc*"></a>
   <h4 id="Efl_Ui_IFormat_FormatFunc" data-uid="Efl.Ui.IFormat.FormatFunc">FormatFunc</h4>
-  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <a class="xref" href="Eina.Value.html">Eina.Value</a> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
+  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <span class="text-muted">Eina.Value (object still in beta stage)</span> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -114,6 +109,37 @@ A number of widgets represent a numerical value but display a text representatio
       <tr>
         <td><a class="xref" href="Efl.Ui.FormatFunc.html">Efl.Ui.FormatFunc</a></td>
         <td><p>User-provided formatting function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IFormat_FormatString_" data-uid="Efl.Ui.IFormat.FormatString*"></a>
+  <h4 id="Efl_Ui_IFormat_FormatString" data-uid="Efl.Ui.IFormat.FormatString">FormatString</h4>
+  <div class="markdown level1 summary"><p>A user-provided, string used to format the numerical value.
+For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;.</p>
+<p>This is the simplest formatting mechanism, working pretty much like <code>printf</code>.</p>
+<p>Different format specifiers (the character after the %) are available, depending on the <code>type</code> used. Use <a class="xref" href="Efl.Ui.FormatStringType.html#Efl_Ui_FormatStringType_Simple">Efl.Ui.FormatStringType.Simple</a> for simple numerical values and <a class="xref" href="Efl.Ui.FormatStringType.html#Efl_Ui_FormatStringType_Time">Efl.Ui.FormatStringType.Time</a> for time and date values. For instance, %d means &quot;integer&quot; when the first type is used, but it means &quot;day of the month as a decimal number&quot; in the second.</p>
+<p>Pass <code>NULL</code> to disable this mechanism.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(string, FormatStringType)FormatString { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.String, Efl.Ui.FormatStringType&gt;</span></td>
+        <td><p>Formatting string containing regular characters and format specifiers.</p>
 </td>
       </tr>
     </tbody>
@@ -149,49 +175,9 @@ A number of widgets represent a numerical value but display a text representatio
   </h3>
   
   
-  <a id="Efl_Ui_IFormat_ApplyFormattedValue_" data-uid="Efl.Ui.IFormat.ApplyFormattedValue*"></a>
-  <h4 id="Efl_Ui_IFormat_ApplyFormattedValue" data-uid="Efl.Ui.IFormat.ApplyFormattedValue">ApplyFormattedValue()</h4>
-  <div class="markdown level1 summary"><p>Internal method to be implemented by widgets including this mixin.
-The mixin will call this method to signal the widget that the formatting has changed and therefore the current value should be converted and rendered again. Widgets must typically call <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_GetFormattedValue_Eina_Strbuf_Eina_Value_">Efl.Ui.IFormat.GetFormattedValue(Eina.Strbuf, Eina.Value)</a> and display the returned string. This is something they are already doing (whenever the value changes, for example) so there should be no extra code written to implement this method.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void ApplyFormattedValue()</code></pre>
-  </div>
-  
-  
-  <a id="Efl_Ui_IFormat_GetDecimalPlaces_" data-uid="Efl.Ui.IFormat.GetDecimalPlaces*"></a>
-  <h4 id="Efl_Ui_IFormat_GetDecimalPlaces" data-uid="Efl.Ui.IFormat.GetDecimalPlaces">GetDecimalPlaces()</h4>
-  <div class="markdown level1 summary"><p>Internal method to be used by widgets including this mixin. It can only be used when a <a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_GetFormatString_System_String__Efl_Ui_FormatStringType__">Efl.Ui.IFormat.GetFormatString(out System.String, out Efl.Ui.FormatStringType)</a> has been supplied, and it returns the number of decimal places that the format string will produce for floating point values.
-For example, &quot;%.2f&quot; returns 2, and &quot;%d&quot; returns 0;</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int GetDecimalPlaces()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><p>Number of decimal places, or 0 for non-floating point types.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_Ui_IFormat_GetFormatFunc_" data-uid="Efl.Ui.IFormat.GetFormatFunc*"></a>
   <h4 id="Efl_Ui_IFormat_GetFormatFunc" data-uid="Efl.Ui.IFormat.GetFormatFunc">GetFormatFunc()</h4>
-  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <a class="xref" href="Eina.Value.html">Eina.Value</a> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
+  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <span class="text-muted">Eina.Value (object still in beta stage)</span> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -240,7 +226,7 @@ For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">kw_string</span></td>
         <td><p>Formatting string containing regular characters and format specifiers.</p>
 </td>
@@ -248,43 +234,7 @@ For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;
       <tr>
         <td><a class="xref" href="Efl.Ui.FormatStringType.html">Efl.Ui.FormatStringType</a></td>
         <td><span class="parametername">type</span></td>
-        <td><p>Type of formatting string, which controls how the different format specifiers are to be traslated.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_IFormat_GetFormattedValue_" data-uid="Efl.Ui.IFormat.GetFormattedValue*"></a>
-  <h4 id="Efl_Ui_IFormat_GetFormattedValue_Eina_Strbuf_Eina_Value_" data-uid="Efl.Ui.IFormat.GetFormattedValue(Eina.Strbuf,Eina.Value)">GetFormattedValue(Strbuf, Value)</h4>
-  <div class="markdown level1 summary"><p>Internal method to be used by widgets including this mixin to perform the conversion from the internal numerical value into the text representation (Users of these widgets do not need to call this method).
-<a class="xref" href="Efl.Ui.IFormat.html#Efl_Ui_IFormat_GetFormattedValue_Eina_Strbuf_Eina_Value_">Efl.Ui.IFormat.GetFormattedValue(Eina.Strbuf, Eina.Value)</a> uses any user-provided mechanism to perform the conversion, according to their priorities, and implements a simple fallback if all mechanisms fail.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void GetFormattedValue(Strbuf str, Value value)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Eina.Strbuf.html">Eina.Strbuf</a></td>
-        <td><span class="parametername">str</span></td>
-        <td><p>Output formatted string. Its contents will be overwritten by this method.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Eina.Value.html">Eina.Value</a></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>The <a class="xref" href="Eina.Value.html">Eina.Value</a> to convert to text.</p>
+        <td><p>Type of formatting string, which controls how the different format specifiers are to be translated.<br>The default value is <a class="xref" href="Efl.Ui.FormatStringType.html#Efl_Ui_FormatStringType_Simple">Efl.Ui.FormatStringType.Simple</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -320,7 +270,7 @@ For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;
   
   <a id="Efl_Ui_IFormat_SetFormatFunc_" data-uid="Efl.Ui.IFormat.SetFormatFunc*"></a>
   <h4 id="Efl_Ui_IFormat_SetFormatFunc_Efl_Ui_FormatFunc_" data-uid="Efl.Ui.IFormat.SetFormatFunc(Efl.Ui.FormatFunc)">SetFormatFunc(FormatFunc)</h4>
-  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <a class="xref" href="Eina.Value.html">Eina.Value</a> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
+  <div class="markdown level1 summary"><p>User-provided function which takes care of converting an <span class="text-muted">Eina.Value (object still in beta stage)</span> into a text string. The user is then completely in control of how the string is generated, but it is the most cumbersome method to use. If the conversion fails the other mechanisms will be tried, according to their priorities.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -371,7 +321,7 @@ For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">kw_string</span></td>
         <td><p>Formatting string containing regular characters and format specifiers.</p>
 </td>
@@ -379,7 +329,7 @@ For example, &quot;%1.2f meters&quot;, &quot;%.0%%&quot; or &quot;%d items&quot;
       <tr>
         <td><a class="xref" href="Efl.Ui.FormatStringType.html">Efl.Ui.FormatStringType</a></td>
         <td><span class="parametername">type</span></td>
-        <td><p>Type of formatting string, which controls how the different format specifiers are to be traslated.</p>
+        <td><p>Type of formatting string, which controls how the different format specifiers are to be translated.<br>The default value is <a class="xref" href="Efl.Ui.FormatStringType.html#Efl_Ui_FormatStringType_Simple">Efl.Ui.FormatStringType.Simple</a>.</p>
 </td>
       </tr>
     </tbody>

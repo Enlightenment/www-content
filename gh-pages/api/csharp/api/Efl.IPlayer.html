@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.IPlayer
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -76,11 +76,6 @@
   <div class="markdown level0 summary"><p>Efl media player interface</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_IPlayer_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_IPlayer_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,14 +85,16 @@
   </h3>
   
   
-  <a id="Efl_IPlayer_Length_" data-uid="Efl.IPlayer.Length*"></a>
-  <h4 id="Efl_IPlayer_Length" data-uid="Efl.IPlayer.Length">Length</h4>
-  <div class="markdown level1 summary"><p>Get the length of play for the media file.</p>
+  <a id="Efl_IPlayer_Paused_" data-uid="Efl.IPlayer.Paused*"></a>
+  <h4 id="Efl_IPlayer_Paused" data-uid="Efl.IPlayer.Paused">Paused</h4>
+  <div class="markdown level1 summary"><p>Pause state of the media file.
+This property sets the pause state of the media.  Re-setting the current pause state has no effect.</p>
+<p>If <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is set to <code>true</code>, this property can be used to pause and resume playback of the media without changing its <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property. This property cannot be changed if <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is <code>false</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double Length { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">bool Paused { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -109,160 +106,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The length of the stream in seconds.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if paused, <code>false</code> otherwise.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_IPlayer_Mute_" data-uid="Efl.IPlayer.Mute*"></a>
-  <h4 id="Efl_IPlayer_Mute" data-uid="Efl.IPlayer.Mute">Mute</h4>
-  <div class="markdown level1 summary"><p>This property controls the audio mute state.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool Mute { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>The mute state. <code>true</code> or <code>false</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_Play_" data-uid="Efl.IPlayer.Play*"></a>
-  <h4 id="Efl_IPlayer_Play" data-uid="Efl.IPlayer.Play">Play</h4>
-  <div class="markdown level1 summary"><p>Get play/pause state of the media file.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool Play { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_Playable_" data-uid="Efl.IPlayer.Playable*"></a>
-  <h4 id="Efl_IPlayer_Playable" data-uid="Efl.IPlayer.Playable">Playable</h4>
-  <div class="markdown level1 summary"><p>Whether or not the playable can be played.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool Playable { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if the object have playable data, <code>false</code> otherwise</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_PlaySpeed_" data-uid="Efl.IPlayer.PlaySpeed*"></a>
-  <h4 id="Efl_IPlayer_PlaySpeed" data-uid="Efl.IPlayer.PlaySpeed">PlaySpeed</h4>
-  <div class="markdown level1 summary"><p>Control the play speed of the media file.
-This function control the speed with which the media file will be played. 1.0 represents the normal speed, 2 double speed, 0.5 half speed and so on.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double PlaySpeed { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The play speed in the [0, infinity) range.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_Pos_" data-uid="Efl.IPlayer.Pos*"></a>
-  <h4 id="Efl_IPlayer_Pos" data-uid="Efl.IPlayer.Pos">Pos</h4>
-  <div class="markdown level1 summary"><p>Get the position in the media file.
-The position is returned as the number of seconds since the beginning of the media file.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double Pos { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The position (in seconds).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_Progress_" data-uid="Efl.IPlayer.Progress*"></a>
-  <h4 id="Efl_IPlayer_Progress" data-uid="Efl.IPlayer.Progress">Progress</h4>
-  <div class="markdown level1 summary"><p>Get how much of the file has been played.
+  <a id="Efl_IPlayer_PlaybackProgress_" data-uid="Efl.IPlayer.PlaybackProgress*"></a>
+  <h4 id="Efl_IPlayer_PlaybackProgress" data-uid="Efl.IPlayer.PlaybackProgress">PlaybackProgress</h4>
+  <div class="markdown level1 summary"><p>How much of the file has been played.
 This function gets the progress in playing the file, the return value is in the [0, 1] range.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double Progress { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">double PlaybackProgress { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -274,7 +134,7 @@ This function gets the progress in playing the file, the return value is in the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The progress within the [0, 1] range.</p>
 </td>
       </tr>
@@ -282,14 +142,15 @@ This function gets the progress in playing the file, the return value is in the 
   </table>
   
   
-  <a id="Efl_IPlayer_Seekable_" data-uid="Efl.IPlayer.Seekable*"></a>
-  <h4 id="Efl_IPlayer_Seekable" data-uid="Efl.IPlayer.Seekable">Seekable</h4>
-  <div class="markdown level1 summary"><p>Get whether the media file is seekable.</p>
+  <a id="Efl_IPlayer_PlaybackSpeed_" data-uid="Efl.IPlayer.PlaybackSpeed*"></a>
+  <h4 id="Efl_IPlayer_PlaybackSpeed" data-uid="Efl.IPlayer.PlaybackSpeed">PlaybackSpeed</h4>
+  <div class="markdown level1 summary"><p>Control the playback speed of the media file.
+This function control the speed with which the media file will be played. 1.0 represents the normal speed, 2 double speed, 0.5 half speed and so on.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool Seekable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">double PlaybackSpeed { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -301,23 +162,25 @@ This function gets the progress in playing the file, the return value is in the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if seekable.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>The play speed in the [0, infinity) range.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_IPlayer_Volume_" data-uid="Efl.IPlayer.Volume*"></a>
-  <h4 id="Efl_IPlayer_Volume" data-uid="Efl.IPlayer.Volume">Volume</h4>
-  <div class="markdown level1 summary"><p>Control the audio volume.
-Controls the audio volume of the stream being played. This has nothing to do with the system volume. This volume will be multiplied by the system volume. e.g.: if the current volume level is 0.5, and the system volume is 50%, it will be 0.5 * 0.5 = 0.25.</p>
+  <a id="Efl_IPlayer_Playing_" data-uid="Efl.IPlayer.Playing*"></a>
+  <h4 id="Efl_IPlayer_Playing" data-uid="Efl.IPlayer.Playing">Playing</h4>
+  <div class="markdown level1 summary"><p>Playback state of the media file.
+This property sets the playback state of the object. Re-setting the current playback state has no effect.</p>
+<p>If set to <code>false</code>, the object's <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property is, by default, reset to <code>0.0</code>. A class may alter this behavior, and it will be stated in the documentation for a class if such behavior changes should be expected.</p>
+<p>Applying the <code>false</code> playing state also has the same effect as the player object reaching the end of its playback, which may invoke additional behavior based on a class's implementation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double Volume { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">bool Playing { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -329,8 +192,8 @@ Controls the audio volume of the stream being played. This has nothing to do wit
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The volume level</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -339,14 +202,16 @@ Controls the audio volume of the stream being played. This has nothing to do wit
   </h3>
   
   
-  <a id="Efl_IPlayer_GetLength_" data-uid="Efl.IPlayer.GetLength*"></a>
-  <h4 id="Efl_IPlayer_GetLength" data-uid="Efl.IPlayer.GetLength">GetLength()</h4>
-  <div class="markdown level1 summary"><p>Get the length of play for the media file.</p>
+  <a id="Efl_IPlayer_GetPaused_" data-uid="Efl.IPlayer.GetPaused*"></a>
+  <h4 id="Efl_IPlayer_GetPaused" data-uid="Efl.IPlayer.GetPaused">GetPaused()</h4>
+  <div class="markdown level1 summary"><p>Pause state of the media file.
+This property sets the pause state of the media.  Re-setting the current pause state has no effect.</p>
+<p>If <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is set to <code>true</code>, this property can be used to pause and resume playback of the media without changing its <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property. This property cannot be changed if <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is <code>false</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetLength()</code></pre>
+    <pre><code class="lang-csharp hljs">bool GetPaused()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -358,160 +223,23 @@ Controls the audio volume of the stream being played. This has nothing to do wit
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The length of the stream in seconds.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if paused, <code>false</code> otherwise.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_IPlayer_GetMute_" data-uid="Efl.IPlayer.GetMute*"></a>
-  <h4 id="Efl_IPlayer_GetMute" data-uid="Efl.IPlayer.GetMute">GetMute()</h4>
-  <div class="markdown level1 summary"><p>This property controls the audio mute state.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool GetMute()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>The mute state. <code>true</code> or <code>false</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetPlay_" data-uid="Efl.IPlayer.GetPlay*"></a>
-  <h4 id="Efl_IPlayer_GetPlay" data-uid="Efl.IPlayer.GetPlay">GetPlay()</h4>
-  <div class="markdown level1 summary"><p>Get play/pause state of the media file.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool GetPlay()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetPlayable_" data-uid="Efl.IPlayer.GetPlayable*"></a>
-  <h4 id="Efl_IPlayer_GetPlayable" data-uid="Efl.IPlayer.GetPlayable">GetPlayable()</h4>
-  <div class="markdown level1 summary"><p>Whether or not the playable can be played.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool GetPlayable()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if the object have playable data, <code>false</code> otherwise</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetPlaySpeed_" data-uid="Efl.IPlayer.GetPlaySpeed*"></a>
-  <h4 id="Efl_IPlayer_GetPlaySpeed" data-uid="Efl.IPlayer.GetPlaySpeed">GetPlaySpeed()</h4>
-  <div class="markdown level1 summary"><p>Control the play speed of the media file.
-This function control the speed with which the media file will be played. 1.0 represents the normal speed, 2 double speed, 0.5 half speed and so on.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetPlaySpeed()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The play speed in the [0, infinity) range.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetPos_" data-uid="Efl.IPlayer.GetPos*"></a>
-  <h4 id="Efl_IPlayer_GetPos" data-uid="Efl.IPlayer.GetPos">GetPos()</h4>
-  <div class="markdown level1 summary"><p>Get the position in the media file.
-The position is returned as the number of seconds since the beginning of the media file.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetPos()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The position (in seconds).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetProgress_" data-uid="Efl.IPlayer.GetProgress*"></a>
-  <h4 id="Efl_IPlayer_GetProgress" data-uid="Efl.IPlayer.GetProgress">GetProgress()</h4>
-  <div class="markdown level1 summary"><p>Get how much of the file has been played.
+  <a id="Efl_IPlayer_GetPlaybackProgress_" data-uid="Efl.IPlayer.GetPlaybackProgress*"></a>
+  <h4 id="Efl_IPlayer_GetPlaybackProgress" data-uid="Efl.IPlayer.GetPlaybackProgress">GetPlaybackProgress()</h4>
+  <div class="markdown level1 summary"><p>How much of the file has been played.
 This function gets the progress in playing the file, the return value is in the [0, 1] range.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetProgress()</code></pre>
+    <pre><code class="lang-csharp hljs">double GetPlaybackProgress()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -523,7 +251,7 @@ This function gets the progress in playing the file, the return value is in the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The progress within the [0, 1] range.</p>
 </td>
       </tr>
@@ -531,143 +259,27 @@ This function gets the progress in playing the file, the return value is in the 
   </table>
   
   
-  <a id="Efl_IPlayer_GetSeekable_" data-uid="Efl.IPlayer.GetSeekable*"></a>
-  <h4 id="Efl_IPlayer_GetSeekable" data-uid="Efl.IPlayer.GetSeekable">GetSeekable()</h4>
-  <div class="markdown level1 summary"><p>Get whether the media file is seekable.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool GetSeekable()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if seekable.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_GetVolume_" data-uid="Efl.IPlayer.GetVolume*"></a>
-  <h4 id="Efl_IPlayer_GetVolume" data-uid="Efl.IPlayer.GetVolume">GetVolume()</h4>
-  <div class="markdown level1 summary"><p>Control the audio volume.
-Controls the audio volume of the stream being played. This has nothing to do with the system volume. This volume will be multiplied by the system volume. e.g.: if the current volume level is 0.5, and the system volume is 50%, it will be 0.5 * 0.5 = 0.25.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetVolume()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>The volume level</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_SetMute_" data-uid="Efl.IPlayer.SetMute*"></a>
-  <h4 id="Efl_IPlayer_SetMute_System_Boolean_" data-uid="Efl.IPlayer.SetMute(System.Boolean)">SetMute(Boolean)</h4>
-  <div class="markdown level1 summary"><p>This property controls the audio mute state.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetMute(bool mute)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">mute</span></td>
-        <td><p>The mute state. <code>true</code> or <code>false</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_SetPlay_" data-uid="Efl.IPlayer.SetPlay*"></a>
-  <h4 id="Efl_IPlayer_SetPlay_System_Boolean_" data-uid="Efl.IPlayer.SetPlay(System.Boolean)">SetPlay(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Set play/pause state of the media file.
-This functions sets the currently playing status of the video. Using this function to play or pause the video doesn't alter it's current position.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetPlay(bool play)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">play</span></td>
-        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_IPlayer_SetPlaySpeed_" data-uid="Efl.IPlayer.SetPlaySpeed*"></a>
-  <h4 id="Efl_IPlayer_SetPlaySpeed_System_Double_" data-uid="Efl.IPlayer.SetPlaySpeed(System.Double)">SetPlaySpeed(Double)</h4>
-  <div class="markdown level1 summary"><p>Control the play speed of the media file.
+  <a id="Efl_IPlayer_GetPlaybackSpeed_" data-uid="Efl.IPlayer.GetPlaybackSpeed*"></a>
+  <h4 id="Efl_IPlayer_GetPlaybackSpeed" data-uid="Efl.IPlayer.GetPlaybackSpeed">GetPlaybackSpeed()</h4>
+  <div class="markdown level1 summary"><p>Control the playback speed of the media file.
 This function control the speed with which the media file will be played. 1.0 represents the normal speed, 2 double speed, 0.5 half speed and so on.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetPlaySpeed(double speed)</code></pre>
+    <pre><code class="lang-csharp hljs">double GetPlaybackSpeed()</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">speed</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The play speed in the [0, infinity) range.</p>
 </td>
       </tr>
@@ -675,15 +287,46 @@ This function control the speed with which the media file will be played. 1.0 re
   </table>
   
   
-  <a id="Efl_IPlayer_SetPos_" data-uid="Efl.IPlayer.SetPos*"></a>
-  <h4 id="Efl_IPlayer_SetPos_System_Double_" data-uid="Efl.IPlayer.SetPos(System.Double)">SetPos(Double)</h4>
-  <div class="markdown level1 summary"><p>Set the position in the media file.
-This functions sets the current position of the media file to &quot;sec&quot;, this only works on seekable streams. Setting the position doesn't change the playing state of the media file.</p>
+  <a id="Efl_IPlayer_GetPlaying_" data-uid="Efl.IPlayer.GetPlaying*"></a>
+  <h4 id="Efl_IPlayer_GetPlaying" data-uid="Efl.IPlayer.GetPlaying">GetPlaying()</h4>
+  <div class="markdown level1 summary"><p>Playback state of the media file.
+This property sets the playback state of the object. Re-setting the current playback state has no effect.</p>
+<p>If set to <code>false</code>, the object's <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property is, by default, reset to <code>0.0</code>. A class may alter this behavior, and it will be stated in the documentation for a class if such behavior changes should be expected.</p>
+<p>Applying the <code>false</code> playing state also has the same effect as the player object reaching the end of its playback, which may invoke additional behavior based on a class's implementation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetPos(double sec)</code></pre>
+    <pre><code class="lang-csharp hljs">bool GetPlaying()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_IPlayer_SetPaused_" data-uid="Efl.IPlayer.SetPaused*"></a>
+  <h4 id="Efl_IPlayer_SetPaused_System_Boolean_" data-uid="Efl.IPlayer.SetPaused(System.Boolean)">SetPaused(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Pause state of the media file.
+This property sets the pause state of the media.  Re-setting the current pause state has no effect.</p>
+<p>If <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is set to <code>true</code>, this property can be used to pause and resume playback of the media without changing its <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property. This property cannot be changed if <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> is <code>false</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SetPaused(bool paused)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -696,7 +339,53 @@ This functions sets the current position of the media file to &quot;sec&quot;, t
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">paused</span></td>
+        <td><p><code>true</code> if paused, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>If <code>true</code>, the property change has succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_IPlayer_SetPlaybackPosition_" data-uid="Efl.IPlayer.SetPlaybackPosition*"></a>
+  <h4 id="Efl_IPlayer_SetPlaybackPosition_System_Double_" data-uid="Efl.IPlayer.SetPlaybackPosition(System.Double)">SetPlaybackPosition(Double)</h4>
+  <div class="markdown level1 summary"><p>Position in the media file.
+This property sets the current position of the media file to <code>sec</code> seconds since the beginning of the media file. This only works on seekable streams. Setting the position doesn't change the <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Playing">Efl.IPlayer.Playing</a> or <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_Paused">Efl.IPlayer.Paused</a> states of the media file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetPlaybackPosition(double sec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">sec</span></td>
         <td><p>The position (in seconds).</p>
 </td>
@@ -705,15 +394,15 @@ This functions sets the current position of the media file to &quot;sec&quot;, t
   </table>
   
   
-  <a id="Efl_IPlayer_SetVolume_" data-uid="Efl.IPlayer.SetVolume*"></a>
-  <h4 id="Efl_IPlayer_SetVolume_System_Double_" data-uid="Efl.IPlayer.SetVolume(System.Double)">SetVolume(Double)</h4>
-  <div class="markdown level1 summary"><p>Control the audio volume.
-Controls the audio volume of the stream being played. This has nothing to do with the system volume. This volume will be multiplied by the system volume. e.g.: if the current volume level is 0.5, and the system volume is 50%, it will be 0.5 * 0.5 = 0.25.</p>
+  <a id="Efl_IPlayer_SetPlaybackSpeed_" data-uid="Efl.IPlayer.SetPlaybackSpeed*"></a>
+  <h4 id="Efl_IPlayer_SetPlaybackSpeed_System_Double_" data-uid="Efl.IPlayer.SetPlaybackSpeed(System.Double)">SetPlaybackSpeed(Double)</h4>
+  <div class="markdown level1 summary"><p>Control the playback speed of the media file.
+This function control the speed with which the media file will be played. 1.0 represents the normal speed, 2 double speed, 0.5 half speed and so on.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetVolume(double volume)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetPlaybackSpeed(double speed)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -726,35 +415,61 @@ Controls the audio volume of the stream being played. This has nothing to do wit
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">volume</span></td>
-        <td><p>The volume level</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">speed</span></td>
+        <td><p>The play speed in the [0, infinity) range.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_IPlayer_Start_" data-uid="Efl.IPlayer.Start*"></a>
-  <h4 id="Efl_IPlayer_Start" data-uid="Efl.IPlayer.Start">Start()</h4>
-  <div class="markdown level1 summary"><p>Start a playing playable object.</p>
+  <a id="Efl_IPlayer_SetPlaying_" data-uid="Efl.IPlayer.SetPlaying*"></a>
+  <h4 id="Efl_IPlayer_SetPlaying_System_Boolean_" data-uid="Efl.IPlayer.SetPlaying(System.Boolean)">SetPlaying(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Playback state of the media file.
+This property sets the playback state of the object. Re-setting the current playback state has no effect.</p>
+<p>If set to <code>false</code>, the object's <a class="xref" href="Efl.IPlayer.html#Efl_IPlayer_GetPlaybackProgress">Efl.IPlayer.GetPlaybackProgress()</a> property is, by default, reset to <code>0.0</code>. A class may alter this behavior, and it will be stated in the documentation for a class if such behavior changes should be expected.</p>
+<p>Applying the <code>false</code> playing state also has the same effect as the player object reaching the end of its playback, which may invoke additional behavior based on a class's implementation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void Start()</code></pre>
+    <pre><code class="lang-csharp hljs">bool SetPlaying(bool playing)</code></pre>
   </div>
-  
-  
-  <a id="Efl_IPlayer_Stop_" data-uid="Efl.IPlayer.Stop*"></a>
-  <h4 id="Efl_IPlayer_Stop" data-uid="Efl.IPlayer.Stop">Stop()</h4>
-  <div class="markdown level1 summary"><p>Stop playable object.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void Stop()</code></pre>
-  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">playing</span></td>
+        <td><p><code>true</code> if playing, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>If <code>true</code>, the property change has succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           

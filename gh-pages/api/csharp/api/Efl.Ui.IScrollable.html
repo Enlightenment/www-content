@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IScrollable
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -76,27 +76,955 @@
   <div class="markdown level0 summary"><p>Efl UI scrollable interface</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IScrollable_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IScrollable_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public interface IScrollable : IWrapper, IDisposable</code></pre>
   </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Ui_IScrollable_BounceEnabled_" data-uid="Efl.Ui.IScrollable.BounceEnabled*"></a>
+  <h4 id="Efl_Ui_IScrollable_BounceEnabled" data-uid="Efl.Ui.IScrollable.BounceEnabled">BounceEnabled</h4>
+  <div class="markdown level1 summary"><p>Bouncing behavior
+When scrolling, the scroller may &quot;bounce&quot; when reaching the edge of the content object. This is a visual way to indicate the end has been reached. This is enabled by default for both axes. This API will determine if it's enabled for the given axis with the boolean parameters for each one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(bool, bool)BounceEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Boolean, System.Boolean&gt;</span></td>
+        <td><p>Horizontal bounce policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_ContentPos_" data-uid="Efl.Ui.IScrollable.ContentPos*"></a>
+  <h4 id="Efl_Ui_IScrollable_ContentPos" data-uid="Efl.Ui.IScrollable.ContentPos">ContentPos</h4>
+  <div class="markdown level1 summary"><p>The content position</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position2D ContentPos { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><p>The position is virtual value, (0, 0) starting at the top-left.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_ContentSize_" data-uid="Efl.Ui.IScrollable.ContentSize*"></a>
+  <h4 id="Efl_Ui_IScrollable_ContentSize" data-uid="Efl.Ui.IScrollable.ContentSize">ContentSize</h4>
+  <div class="markdown level1 summary"><p>The content size</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Size2D ContentSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
+        <td><p>The content size in pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_Gravity_" data-uid="Efl.Ui.IScrollable.Gravity*"></a>
+  <h4 id="Efl_Ui_IScrollable_Gravity" data-uid="Efl.Ui.IScrollable.Gravity">Gravity</h4>
+  <div class="markdown level1 summary"><p>Control scrolling gravity on the scrollable
+The gravity defines how the scroller will adjust its view when the size of the scroller contents increases.</p>
+<p>The scroller will adjust the view to glue itself as follows: <code>x=0.0</code> to stay where it is relative to the left edge of the content. <code>x=1.0</code> to stay where it is relative to the right edge of the content. <code>y=0.0</code> to stay where it is relative to the top edge of the content. <code>y=1.0</code> to stay where it is relative to the bottom edge of the content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(double, double)Gravity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Double, System.Double&gt;</span></td>
+        <td><p>Horizontal scrolling gravity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_Looping_" data-uid="Efl.Ui.IScrollable.Looping*"></a>
+  <h4 id="Efl_Ui_IScrollable_Looping" data-uid="Efl.Ui.IScrollable.Looping">Looping</h4>
+  <div class="markdown level1 summary"><p>Controls an infinite loop for a scroller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(bool, bool)Looping { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Boolean, System.Boolean&gt;</span></td>
+        <td><p>The scrolling horizontal loop</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_MatchContent_" data-uid="Efl.Ui.IScrollable.MatchContent*"></a>
+  <h4 id="Efl_Ui_IScrollable_MatchContent" data-uid="Efl.Ui.IScrollable.MatchContent">MatchContent</h4>
+  <div class="markdown level1 summary"><p>Prevent the scrollable from being smaller than the minimum size of the content.
+By default the scroller will be as small as its design allows, irrespective of its content. This will make the scroller minimum size the right size horizontally and/or vertically to perfectly fit its content in that direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(bool, bool)MatchContent { set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Boolean, System.Boolean&gt;</span></td>
+        <td><p>Whether to limit the minimum horizontal size</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_MovementBlock_" data-uid="Efl.Ui.IScrollable.MovementBlock*"></a>
+  <h4 id="Efl_Ui_IScrollable_MovementBlock" data-uid="Efl.Ui.IScrollable.MovementBlock">MovementBlock</h4>
+  <div class="markdown level1 summary"><p>Blocking of scrolling (per axis).
+This function will block scrolling movement (by input of a user) in a given direction. You can disable movements in the X axis, the Y axis or both. The default value is <a class="xref" href="Efl.Ui.LayoutOrientation.html#Efl_Ui_LayoutOrientation_Default">Efl.Ui.LayoutOrientation.Default</a> meaning that movements are allowed in both directions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">LayoutOrientation MovementBlock { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.LayoutOrientation.html">Efl.Ui.LayoutOrientation</a></td>
+        <td><p>Which axis (or axes) to block</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_ScrollFreeze_" data-uid="Efl.Ui.IScrollable.ScrollFreeze*"></a>
+  <h4 id="Efl_Ui_IScrollable_ScrollFreeze" data-uid="Efl.Ui.IScrollable.ScrollFreeze">ScrollFreeze</h4>
+  <div class="markdown level1 summary"><p>Freeze property This function will freeze scrolling movement (by input of a user). Unlike <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_MovementBlock">Efl.Ui.IScrollable.MovementBlock</a>, this function freezes bidirectionally. If you want to freeze in only one direction, see <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_SetMovementBlock_Efl_Ui_LayoutOrientation_">Efl.Ui.IScrollable.SetMovementBlock(Efl.Ui.LayoutOrientation)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ScrollFreeze { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if freeze, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_ScrollHold_" data-uid="Efl.Ui.IScrollable.ScrollHold*"></a>
+  <h4 id="Efl_Ui_IScrollable_ScrollHold" data-uid="Efl.Ui.IScrollable.ScrollHold">ScrollHold</h4>
+  <div class="markdown level1 summary"><p>Hold property When hold turns on, it only scrolls by holding action.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ScrollHold { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if hold, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_StepSize_" data-uid="Efl.Ui.IScrollable.StepSize*"></a>
+  <h4 id="Efl_Ui_IScrollable_StepSize" data-uid="Efl.Ui.IScrollable.StepSize">StepSize</h4>
+  <div class="markdown level1 summary"><p>Control the step size
+Use this call to set step size. This value is used when scroller scroll by arrow key event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position2D StepSize { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><p>The step size in pixels</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_ViewportGeometry_" data-uid="Efl.Ui.IScrollable.ViewportGeometry*"></a>
+  <h4 id="Efl_Ui_IScrollable_ViewportGeometry" data-uid="Efl.Ui.IScrollable.ViewportGeometry">ViewportGeometry</h4>
+  <div class="markdown level1 summary"><p>The viewport geometry</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rect ViewportGeometry { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
+        <td><p>It is absolute geometry.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetBounceEnabled_" data-uid="Efl.Ui.IScrollable.GetBounceEnabled*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetBounceEnabled_System_Boolean__System_Boolean__" data-uid="Efl.Ui.IScrollable.GetBounceEnabled(System.Boolean@,System.Boolean@)">GetBounceEnabled(out Boolean, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Bouncing behavior
+When scrolling, the scroller may &quot;bounce&quot; when reaching the edge of the content object. This is a visual way to indicate the end has been reached. This is enabled by default for both axes. This API will determine if it's enabled for the given axis with the boolean parameters for each one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetBounceEnabled(out bool horiz, out bool vert)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">horiz</span></td>
+        <td><p>Horizontal bounce policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">vert</span></td>
+        <td><p>Vertical bounce policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetContentPos_" data-uid="Efl.Ui.IScrollable.GetContentPos*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetContentPos" data-uid="Efl.Ui.IScrollable.GetContentPos">GetContentPos()</h4>
+  <div class="markdown level1 summary"><p>The content position</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position2D GetContentPos()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><p>The position is virtual value, (0, 0) starting at the top-left.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetContentSize_" data-uid="Efl.Ui.IScrollable.GetContentSize*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetContentSize" data-uid="Efl.Ui.IScrollable.GetContentSize">GetContentSize()</h4>
+  <div class="markdown level1 summary"><p>The content size</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Size2D GetContentSize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
+        <td><p>The content size in pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetGravity_" data-uid="Efl.Ui.IScrollable.GetGravity*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetGravity_System_Double__System_Double__" data-uid="Efl.Ui.IScrollable.GetGravity(System.Double@,System.Double@)">GetGravity(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Control scrolling gravity on the scrollable
+The gravity defines how the scroller will adjust its view when the size of the scroller contents increases.</p>
+<p>The scroller will adjust the view to glue itself as follows: <code>x=0.0</code> to stay where it is relative to the left edge of the content. <code>x=1.0</code> to stay where it is relative to the right edge of the content. <code>y=0.0</code> to stay where it is relative to the top edge of the content. <code>y=1.0</code> to stay where it is relative to the bottom edge of the content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetGravity(out double x, out double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Horizontal scrolling gravity.<br>The default value is <code>0.000000</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Vertical scrolling gravity.<br>The default value is <code>0.000000</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetLooping_" data-uid="Efl.Ui.IScrollable.GetLooping*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetLooping_System_Boolean__System_Boolean__" data-uid="Efl.Ui.IScrollable.GetLooping(System.Boolean@,System.Boolean@)">GetLooping(out Boolean, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Controls an infinite loop for a scroller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetLooping(out bool loop_h, out bool loop_v)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">loop_h</span></td>
+        <td><p>The scrolling horizontal loop</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">loop_v</span></td>
+        <td><p>The Scrolling vertical loop</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetMovementBlock_" data-uid="Efl.Ui.IScrollable.GetMovementBlock*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetMovementBlock" data-uid="Efl.Ui.IScrollable.GetMovementBlock">GetMovementBlock()</h4>
+  <div class="markdown level1 summary"><p>Blocking of scrolling (per axis).
+This function will block scrolling movement (by input of a user) in a given direction. You can disable movements in the X axis, the Y axis or both. The default value is <a class="xref" href="Efl.Ui.LayoutOrientation.html#Efl_Ui_LayoutOrientation_Default">Efl.Ui.LayoutOrientation.Default</a> meaning that movements are allowed in both directions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">LayoutOrientation GetMovementBlock()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.LayoutOrientation.html">Efl.Ui.LayoutOrientation</a></td>
+        <td><p>Which axis (or axes) to block</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetScrollFreeze_" data-uid="Efl.Ui.IScrollable.GetScrollFreeze*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetScrollFreeze" data-uid="Efl.Ui.IScrollable.GetScrollFreeze">GetScrollFreeze()</h4>
+  <div class="markdown level1 summary"><p>Freeze property This function will freeze scrolling movement (by input of a user). Unlike <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_MovementBlock">Efl.Ui.IScrollable.MovementBlock</a>, this function freezes bidirectionally. If you want to freeze in only one direction, see <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_SetMovementBlock_Efl_Ui_LayoutOrientation_">Efl.Ui.IScrollable.SetMovementBlock(Efl.Ui.LayoutOrientation)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetScrollFreeze()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if freeze, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetScrollHold_" data-uid="Efl.Ui.IScrollable.GetScrollHold*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetScrollHold" data-uid="Efl.Ui.IScrollable.GetScrollHold">GetScrollHold()</h4>
+  <div class="markdown level1 summary"><p>Hold property When hold turns on, it only scrolls by holding action.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetScrollHold()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if hold, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetStepSize_" data-uid="Efl.Ui.IScrollable.GetStepSize*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetStepSize" data-uid="Efl.Ui.IScrollable.GetStepSize">GetStepSize()</h4>
+  <div class="markdown level1 summary"><p>Control the step size
+Use this call to set step size. This value is used when scroller scroll by arrow key event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Position2D GetStepSize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><p>The step size in pixels</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_GetViewportGeometry_" data-uid="Efl.Ui.IScrollable.GetViewportGeometry*"></a>
+  <h4 id="Efl_Ui_IScrollable_GetViewportGeometry" data-uid="Efl.Ui.IScrollable.GetViewportGeometry">GetViewportGeometry()</h4>
+  <div class="markdown level1 summary"><p>The viewport geometry</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Rect GetViewportGeometry()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
+        <td><p>It is absolute geometry.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_Scroll_" data-uid="Efl.Ui.IScrollable.Scroll*"></a>
+  <h4 id="Efl_Ui_IScrollable_Scroll_Eina_Rect_System_Boolean_" data-uid="Efl.Ui.IScrollable.Scroll(Eina.Rect,System.Boolean)">Scroll(Rect, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Show a specific virtual region within the scroller content object.
+This will ensure all (or part if it does not fit) of the designated region in the virtual content object (0, 0 starting at the top-left of the virtual content object) is shown within the scroller. This allows the scroller to &quot;smoothly slide&quot; to this location (if configuration in general calls for transitions). It may not jump immediately to the new location and make take a while and show other content along the way.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Scroll(Rect rect, bool animation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
+        <td><span class="parametername">rect</span></td>
+        <td><p>The position where to scroll. and The size user want to see</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">animation</span></td>
+        <td><p>Whether to scroll with animation or not</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetBounceEnabled_" data-uid="Efl.Ui.IScrollable.SetBounceEnabled*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetBounceEnabled_System_Boolean_System_Boolean_" data-uid="Efl.Ui.IScrollable.SetBounceEnabled(System.Boolean,System.Boolean)">SetBounceEnabled(Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Bouncing behavior
+When scrolling, the scroller may &quot;bounce&quot; when reaching the edge of the content object. This is a visual way to indicate the end has been reached. This is enabled by default for both axes. This API will determine if it's enabled for the given axis with the boolean parameters for each one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetBounceEnabled(bool horiz, bool vert)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">horiz</span></td>
+        <td><p>Horizontal bounce policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">vert</span></td>
+        <td><p>Vertical bounce policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetContentPos_" data-uid="Efl.Ui.IScrollable.SetContentPos*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetContentPos_Eina_Position2D_" data-uid="Efl.Ui.IScrollable.SetContentPos(Eina.Position2D)">SetContentPos(Position2D)</h4>
+  <div class="markdown level1 summary"><p>The content position</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetContentPos(Position2D pos)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><span class="parametername">pos</span></td>
+        <td><p>The position is virtual value, (0, 0) starting at the top-left.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetGravity_" data-uid="Efl.Ui.IScrollable.SetGravity*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetGravity_System_Double_System_Double_" data-uid="Efl.Ui.IScrollable.SetGravity(System.Double,System.Double)">SetGravity(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Control scrolling gravity on the scrollable
+The gravity defines how the scroller will adjust its view when the size of the scroller contents increases.</p>
+<p>The scroller will adjust the view to glue itself as follows: <code>x=0.0</code> to stay where it is relative to the left edge of the content. <code>x=1.0</code> to stay where it is relative to the right edge of the content. <code>y=0.0</code> to stay where it is relative to the top edge of the content. <code>y=1.0</code> to stay where it is relative to the bottom edge of the content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetGravity(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Horizontal scrolling gravity.<br>The default value is <code>0.000000</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Vertical scrolling gravity.<br>The default value is <code>0.000000</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetLooping_" data-uid="Efl.Ui.IScrollable.SetLooping*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetLooping_System_Boolean_System_Boolean_" data-uid="Efl.Ui.IScrollable.SetLooping(System.Boolean,System.Boolean)">SetLooping(Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Controls an infinite loop for a scroller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetLooping(bool loop_h, bool loop_v)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">loop_h</span></td>
+        <td><p>The scrolling horizontal loop</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">loop_v</span></td>
+        <td><p>The Scrolling vertical loop</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetMatchContent_" data-uid="Efl.Ui.IScrollable.SetMatchContent*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetMatchContent_System_Boolean_System_Boolean_" data-uid="Efl.Ui.IScrollable.SetMatchContent(System.Boolean,System.Boolean)">SetMatchContent(Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Prevent the scrollable from being smaller than the minimum size of the content.
+By default the scroller will be as small as its design allows, irrespective of its content. This will make the scroller minimum size the right size horizontally and/or vertically to perfectly fit its content in that direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetMatchContent(bool w, bool h)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">w</span></td>
+        <td><p>Whether to limit the minimum horizontal size</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">h</span></td>
+        <td><p>Whether to limit the minimum vertical size</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetMovementBlock_" data-uid="Efl.Ui.IScrollable.SetMovementBlock*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetMovementBlock_Efl_Ui_LayoutOrientation_" data-uid="Efl.Ui.IScrollable.SetMovementBlock(Efl.Ui.LayoutOrientation)">SetMovementBlock(LayoutOrientation)</h4>
+  <div class="markdown level1 summary"><p>Blocking of scrolling (per axis).
+This function will block scrolling movement (by input of a user) in a given direction. You can disable movements in the X axis, the Y axis or both. The default value is <a class="xref" href="Efl.Ui.LayoutOrientation.html#Efl_Ui_LayoutOrientation_Default">Efl.Ui.LayoutOrientation.Default</a> meaning that movements are allowed in both directions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetMovementBlock(LayoutOrientation block)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.LayoutOrientation.html">Efl.Ui.LayoutOrientation</a></td>
+        <td><span class="parametername">block</span></td>
+        <td><p>Which axis (or axes) to block<br>The default value is <a class="xref" href="Efl.Ui.LayoutOrientation.html#Efl_Ui_LayoutOrientation_Default">Efl.Ui.LayoutOrientation.Default</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetScrollFreeze_" data-uid="Efl.Ui.IScrollable.SetScrollFreeze*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetScrollFreeze_System_Boolean_" data-uid="Efl.Ui.IScrollable.SetScrollFreeze(System.Boolean)">SetScrollFreeze(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Freeze property This function will freeze scrolling movement (by input of a user). Unlike <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_MovementBlock">Efl.Ui.IScrollable.MovementBlock</a>, this function freezes bidirectionally. If you want to freeze in only one direction, see <a class="xref" href="Efl.Ui.IScrollable.html#Efl_Ui_IScrollable_SetMovementBlock_Efl_Ui_LayoutOrientation_">Efl.Ui.IScrollable.SetMovementBlock(Efl.Ui.LayoutOrientation)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetScrollFreeze(bool freeze)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">freeze</span></td>
+        <td><p><code>true</code> if freeze, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetScrollHold_" data-uid="Efl.Ui.IScrollable.SetScrollHold*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetScrollHold_System_Boolean_" data-uid="Efl.Ui.IScrollable.SetScrollHold(System.Boolean)">SetScrollHold(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Hold property When hold turns on, it only scrolls by holding action.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetScrollHold(bool hold)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">hold</span></td>
+        <td><p><code>true</code> if hold, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollable_SetStepSize_" data-uid="Efl.Ui.IScrollable.SetStepSize*"></a>
+  <h4 id="Efl_Ui_IScrollable_SetStepSize_Eina_Position2D_" data-uid="Efl.Ui.IScrollable.SetStepSize(Eina.Position2D)">SetStepSize(Position2D)</h4>
+  <div class="markdown level1 summary"><p>Control the step size
+Use this call to set step size. This value is used when scroller scroll by arrow key event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetStepSize(Position2D step)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Position2D.html">Eina.Position2D</a></td>
+        <td><span class="parametername">step</span></td>
+        <td><p>The step size in pixels</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="events">Events
   </h3>
   
   
-  <h4 id="Efl_Ui_IScrollable_EdgeDownEvt" data-uid="Efl.Ui.IScrollable.EdgeDownEvt">EdgeDownEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_EdgeDownEvent" data-uid="Efl.Ui.IScrollable.EdgeDownEvent">EdgeDownEvent</h4>
   <div class="markdown level1 summary"><p>Called when hitting the bottom edge</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler EdgeDownEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler EdgeDownEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -108,20 +1036,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_EdgeLeftEvt" data-uid="Efl.Ui.IScrollable.EdgeLeftEvt">EdgeLeftEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_EdgeLeftEvent" data-uid="Efl.Ui.IScrollable.EdgeLeftEvent">EdgeLeftEvent</h4>
   <div class="markdown level1 summary"><p>Called when hitting the left edge</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler EdgeLeftEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler EdgeLeftEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -133,20 +1061,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_EdgeRightEvt" data-uid="Efl.Ui.IScrollable.EdgeRightEvt">EdgeRightEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_EdgeRightEvent" data-uid="Efl.Ui.IScrollable.EdgeRightEvent">EdgeRightEvent</h4>
   <div class="markdown level1 summary"><p>Called when hitting the right edge</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler EdgeRightEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler EdgeRightEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -158,20 +1086,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_EdgeUpEvt" data-uid="Efl.Ui.IScrollable.EdgeUpEvt">EdgeUpEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_EdgeUpEvent" data-uid="Efl.Ui.IScrollable.EdgeUpEvent">EdgeUpEvent</h4>
   <div class="markdown level1 summary"><p>Called when hitting the top edge</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler EdgeUpEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler EdgeUpEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -183,20 +1111,45 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollAnimStartEvt" data-uid="Efl.Ui.IScrollable.ScrollAnimStartEvt">ScrollAnimStartEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollAnimFinishedEvent" data-uid="Efl.Ui.IScrollable.ScrollAnimFinishedEvent">ScrollAnimFinishedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when scroll animation finishes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollAnimFinishedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollable_ScrollAnimStartedEvent" data-uid="Efl.Ui.IScrollable.ScrollAnimStartedEvent">ScrollAnimStartedEvent</h4>
   <div class="markdown level1 summary"><p>Called when scroll animation starts</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollAnimStartEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollAnimStartedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -208,120 +1161,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollAnimStopEvt" data-uid="Efl.Ui.IScrollable.ScrollAnimStopEvt">ScrollAnimStopEvt</h4>
-  <div class="markdown level1 summary"><p>Called when scroll animation stopps</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollAnimStopEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollable_ScrollDownEvt" data-uid="Efl.Ui.IScrollable.ScrollDownEvt">ScrollDownEvt</h4>
-  <div class="markdown level1 summary"><p>Called when scrolling downwards</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollDownEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollable_ScrollDragStartEvt" data-uid="Efl.Ui.IScrollable.ScrollDragStartEvt">ScrollDragStartEvt</h4>
-  <div class="markdown level1 summary"><p>Called when scroll drag starts</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollDragStartEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollable_ScrollDragStopEvt" data-uid="Efl.Ui.IScrollable.ScrollDragStopEvt">ScrollDragStopEvt</h4>
-  <div class="markdown level1 summary"><p>Called when scroll drag stops</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollDragStopEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollable_ScrollEvt" data-uid="Efl.Ui.IScrollable.ScrollEvt">ScrollEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollChangedEvent" data-uid="Efl.Ui.IScrollable.ScrollChangedEvent">ScrollChangedEvent</h4>
   <div class="markdown level1 summary"><p>Called when scrolling</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -333,20 +1186,120 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollLeftEvt" data-uid="Efl.Ui.IScrollable.ScrollLeftEvt">ScrollLeftEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollDownEvent" data-uid="Efl.Ui.IScrollable.ScrollDownEvent">ScrollDownEvent</h4>
+  <div class="markdown level1 summary"><p>Called when scrolling downwards</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollDownEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollable_ScrollDragFinishedEvent" data-uid="Efl.Ui.IScrollable.ScrollDragFinishedEvent">ScrollDragFinishedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when scroll drag finishes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollDragFinishedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollable_ScrollDragStartedEvent" data-uid="Efl.Ui.IScrollable.ScrollDragStartedEvent">ScrollDragStartedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when scroll drag starts</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollDragStartedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollable_ScrollFinishedEvent" data-uid="Efl.Ui.IScrollable.ScrollFinishedEvent">ScrollFinishedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when scroll operation finishes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollFinishedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollable_ScrollLeftEvent" data-uid="Efl.Ui.IScrollable.ScrollLeftEvent">ScrollLeftEvent</h4>
   <div class="markdown level1 summary"><p>Called when scrolling left</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollLeftEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollLeftEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -358,20 +1311,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollRightEvt" data-uid="Efl.Ui.IScrollable.ScrollRightEvt">ScrollRightEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollRightEvent" data-uid="Efl.Ui.IScrollable.ScrollRightEvent">ScrollRightEvent</h4>
   <div class="markdown level1 summary"><p>Called when scrolling right</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollRightEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollRightEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -383,20 +1336,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollStartEvt" data-uid="Efl.Ui.IScrollable.ScrollStartEvt">ScrollStartEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollStartedEvent" data-uid="Efl.Ui.IScrollable.ScrollStartedEvent">ScrollStartedEvent</h4>
   <div class="markdown level1 summary"><p>Called when scroll operation starts</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollStartEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollStartedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -408,45 +1361,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollable_ScrollStopEvt" data-uid="Efl.Ui.IScrollable.ScrollStopEvt">ScrollStopEvt</h4>
-  <div class="markdown level1 summary"><p>Called when scroll operation stops</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollStopEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollable_ScrollUpEvt" data-uid="Efl.Ui.IScrollable.ScrollUpEvt">ScrollUpEvt</h4>
+  <h4 id="Efl_Ui_IScrollable_ScrollUpEvent" data-uid="Efl.Ui.IScrollable.ScrollUpEvent">ScrollUpEvent</h4>
   <div class="markdown level1 summary"><p>Called when scrolling upwards</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ScrollUpEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ScrollUpEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -458,7 +1386,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.Item
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,17 +73,17 @@
   
   <h1 id="Efl_Ui_Item" data-uid="Efl.Ui.Item" class="text-break">Class Efl.Ui.Item
   </h1>
-  <div class="markdown level0 summary"><p>Item abstract class for pack widget. All item have to be inherited from this class.</p>
+  <div class="markdown level0 summary"><p>Selectable Item abstraction.
+This class serves as the basis to create widgets acting as selectable items inside containers like <a class="xref" href="Efl.Ui.List.html">Efl.Ui.List</a> or <a class="xref" href="Efl.Ui.Grid.html">Efl.Ui.Grid</a>, for example.</p>
+<p><a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a> provides user interaction through the <a class="xref" href="Efl.Input.IClickable.html">Efl.Input.IClickable</a> mixin. Items can be pressed, long-pressed, etc, and appropriate events are generated. <a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a> also implements the <a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a> interface, meaning that &quot;selected&quot; and &quot;unselected&quot; events are automatically generated.</p>
+<p>Classes inheriting from this one only need to deal with the visual representation of the widget. See for example <a class="xref" href="Efl.Ui.GridDefaultItem.html">Efl.Ui.GridDefaultItem</a> and <a class="xref" href="Efl.Ui.ListDefaultItem.html">Efl.Ui.ListDefaultItem</a>.</p>
+<p>Some events are converted to edje signals so the theme can react to them: <a class="xref" href="Efl.Input.IClickable.html#Efl_Input_IClickable_PressedEvent">Efl.Input.IClickable.PressedEvent</a> -&gt; &quot;efl,state,pressed&quot;, <a class="xref" href="Efl.Input.IClickable.html#Efl_Input_IClickable_UnpressedEvent">Efl.Input.IClickable.UnpressedEvent</a> -&gt; &quot;efl,state,unpressed&quot;, <a class="xref" href="Efl.Ui.ISelectable.html#Efl_Ui_ISelectable_SelectedChangedEvent">Efl.Ui.ISelectable.SelectedChangedEvent</a> (true) -&gt; &quot;efl,state,selected&quot;, <a class="xref" href="Efl.Ui.ISelectable.html#Efl_Ui_ISelectable_SelectedChangedEvent">Efl.Ui.ISelectable.SelectedChangedEvent</a> (false) -&gt; &quot;efl,state,unselected&quot;.</p>
+<p>Item grouping inside containers is handled through the <span class="text-muted">Efl.Ui.GroupItem (object still in beta stage)</span> class.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_Item_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
@@ -92,13 +92,12 @@
     <div class="level6"><a class="xref" href="Efl.Ui.Widget.html">Efl.Ui.Widget</a></div>
     <div class="level7"><a class="xref" href="Efl.Ui.LayoutBase.html">Efl.Ui.LayoutBase</a></div>
     <div class="level8"><span class="xref"><b>Efl.Ui.Item</b></span></div>
-      <div class="level9"><a class="xref" href="Efl.Ui.GridItem.html">Efl.Ui.GridItem</a></div>
-      <div class="level9"><a class="xref" href="Efl.Ui.ListItem.html">Efl.Ui.ListItem</a></div>
+      <div class="level9"><a class="xref" href="Efl.Ui.DefaultItem.html">Efl.Ui.DefaultItem</a></div>
   </div>
   
   <h5 id="Efl_Ui_Item_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class Item : LayoutBase, IPointer, IEvents, IColor, IHint, IMapping, IInterface, II18n, IPart, IComponent, IEntity, IStack, IObject, IDnd, IL10n, IPropertyBind, ISelection, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IClickable, ISelectable, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class Item : LayoutBase, IPointer, IColor, IEntity, IHint, IMapping, IStack, IInterface, IPart, IPropertyBind, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IClickable, ISelectable, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -160,9 +159,45 @@ Do not call this constructor directly.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">style</span></td>
         <td><p>The widget style to use. See <a class="xref" href="Efl.Ui.Widget.html#Efl_Ui_Widget_SetStyle_System_String_">Efl.Ui.Widget.SetStyle(System.String)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item__ctor_" data-uid="Efl.Ui.Item.#ctor*"></a>
+  <h4 id="Efl_Ui_Item__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.Item.#ctor(System.IntPtr,Efl.Object)">Item(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Item(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
 </td>
       </tr>
     </tbody>
@@ -171,10 +206,38 @@ Do not call this constructor directly.</p>
   </h3>
   
   
+  <a id="Efl_Ui_Item_CalcLocked_" data-uid="Efl.Ui.Item.CalcLocked*"></a>
+  <h4 id="Efl_Ui_Item_CalcLocked" data-uid="Efl.Ui.Item.CalcLocked">CalcLocked</h4>
+  <div class="markdown level1 summary"><p>If the item has its calc locked it will not trigger <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a> done.
+This is done automatically by <a class="xref" href="Efl.Ui.WidgetFactory.html">Efl.Ui.WidgetFactory</a>, but you can use this information to meaningfully set the hint when items are not <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_CalcLocked">Efl.Ui.Item.CalcLocked</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CalcLocked { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>If set to <code>true</code>, no more <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Efl_Ui_Item_Container_" data-uid="Efl.Ui.Item.Container*"></a>
   <h4 id="Efl_Ui_Item_Container" data-uid="Efl.Ui.Item.Container">Container</h4>
   <div class="markdown level1 summary"><p>The container this object is part of.
-You should never use this property yourself, the container will set it. Unsetting this while the item is packed into a container does not have an impact on its state in the container.</p>
+You should never use this property directly, the container will set it when the item is added. Unsetting this while the item is packed inside a container does not remove the item from the container.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -201,7 +264,8 @@ You should never use this property yourself, the container will set it. Unsettin
   
   <a id="Efl_Ui_Item_Index_" data-uid="Efl.Ui.Item.Index*"></a>
   <h4 id="Efl_Ui_Item_Index" data-uid="Efl.Ui.Item.Index">Index</h4>
-  <div class="markdown level1 summary"><p>index number of item from their parent object.</p>
+  <div class="markdown level1 summary"><p>The index of this item inside its container.
+The container must be set through the <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_Container">Efl.Ui.Item.Container</a> property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -218,7 +282,61 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
+        <td><p>The index where to find this item in its <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_Container">Efl.Ui.Item.Container</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_Interaction_" data-uid="Efl.Ui.Item.Interaction*"></a>
+  <h4 id="Efl_Ui_Item_Interaction" data-uid="Efl.Ui.Item.Interaction">Interaction</h4>
+  <div class="markdown level1 summary"><p>This returns true if the given object is currently in event emission</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Interaction { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_ItemParent_" data-uid="Efl.Ui.Item.ItemParent*"></a>
+  <h4 id="Efl_Ui_Item_ItemParent" data-uid="Efl.Ui.Item.ItemParent">ItemParent</h4>
+  <div class="markdown level1 summary"><p>The parent of the item.
+This property expresses a tree structure of items. If the parent is <code>NULL</code> the item is added to the root level of the content. The item parent can only be set once. When the object is invalidated, the item parent is set to <code>NULL</code> and still cannot be reset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Item ItemParent { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -227,7 +345,8 @@ You should never use this property yourself, the container will set it. Unsettin
   
   <a id="Efl_Ui_Item_Selected_" data-uid="Efl.Ui.Item.Selected*"></a>
   <h4 id="Efl_Ui_Item_Selected" data-uid="Efl.Ui.Item.Selected">Selected</h4>
-  <div class="markdown level1 summary"><p>Select property for item object. Item can be selected by user mouse/key input also</p>
+  <div class="markdown level1 summary"><p>The selected state of this object
+A change to this property emits the changed event.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -244,8 +363,9 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>The selected state of this object.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -253,10 +373,38 @@ You should never use this property yourself, the container will set it. Unsettin
   </h3>
   
   
+  <a id="Efl_Ui_Item_GetCalcLocked_" data-uid="Efl.Ui.Item.GetCalcLocked*"></a>
+  <h4 id="Efl_Ui_Item_GetCalcLocked" data-uid="Efl.Ui.Item.GetCalcLocked">GetCalcLocked()</h4>
+  <div class="markdown level1 summary"><p>If the item has its calc locked it will not trigger <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a> done.
+This is done automatically by <a class="xref" href="Efl.Ui.WidgetFactory.html">Efl.Ui.WidgetFactory</a>, but you can use this information to meaningfully set the hint when items are not <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_CalcLocked">Efl.Ui.Item.CalcLocked</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetCalcLocked()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>If set to <code>true</code>, no more <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Efl_Ui_Item_GetContainer_" data-uid="Efl.Ui.Item.GetContainer*"></a>
   <h4 id="Efl_Ui_Item_GetContainer" data-uid="Efl.Ui.Item.GetContainer">GetContainer()</h4>
   <div class="markdown level1 summary"><p>The container this object is part of.
-You should never use this property yourself, the container will set it. Unsetting this while the item is packed into a container does not have an impact on its state in the container.</p>
+You should never use this property directly, the container will set it when the item is added. Unsetting this while the item is packed inside a container does not remove the item from the container.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -283,7 +431,8 @@ You should never use this property yourself, the container will set it. Unsettin
   
   <a id="Efl_Ui_Item_GetIndex_" data-uid="Efl.Ui.Item.GetIndex*"></a>
   <h4 id="Efl_Ui_Item_GetIndex" data-uid="Efl.Ui.Item.GetIndex">GetIndex()</h4>
-  <div class="markdown level1 summary"><p>index number of item from their parent object.</p>
+  <div class="markdown level1 summary"><p>The index of this item inside its container.
+The container must be set through the <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_Container">Efl.Ui.Item.Container</a> property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -300,7 +449,61 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
+        <td><p>The index where to find this item in its <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_Container">Efl.Ui.Item.Container</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_GetInteraction_" data-uid="Efl.Ui.Item.GetInteraction*"></a>
+  <h4 id="Efl_Ui_Item_GetInteraction" data-uid="Efl.Ui.Item.GetInteraction">GetInteraction()</h4>
+  <div class="markdown level1 summary"><p>This returns true if the given object is currently in event emission</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool GetInteraction()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_GetItemParent_" data-uid="Efl.Ui.Item.GetItemParent*"></a>
+  <h4 id="Efl_Ui_Item_GetItemParent" data-uid="Efl.Ui.Item.GetItemParent">GetItemParent()</h4>
+  <div class="markdown level1 summary"><p>The parent of the item.
+This property expresses a tree structure of items. If the parent is <code>NULL</code> the item is added to the root level of the content. The item parent can only be set once. When the object is invalidated, the item parent is set to <code>NULL</code> and still cannot be reset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Item GetItemParent()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -309,7 +512,8 @@ You should never use this property yourself, the container will set it. Unsettin
   
   <a id="Efl_Ui_Item_GetSelected_" data-uid="Efl.Ui.Item.GetSelected*"></a>
   <h4 id="Efl_Ui_Item_GetSelected" data-uid="Efl.Ui.Item.GetSelected">GetSelected()</h4>
-  <div class="markdown level1 summary"><p>Select property for item object. Item can be selected by user mouse/key input also</p>
+  <div class="markdown level1 summary"><p>The selected state of this object
+A change to this property emits the changed event.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -326,21 +530,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>The selected state of this object.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnClickedAnyEvt_" data-uid="Efl.Ui.Item.OnClickedAnyEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnClickedAnyEvt_Efl_Ui_IClickableClickedAnyEvt_Args_" data-uid="Efl.Ui.Item.OnClickedAnyEvt(Efl.Ui.IClickableClickedAnyEvt_Args)">OnClickedAnyEvt(IClickableClickedAnyEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ClickedAnyEvt.</p>
+  <a id="Efl_Ui_Item_LongpressAbort_" data-uid="Efl.Ui.Item.LongpressAbort*"></a>
+  <h4 id="Efl_Ui_Item_LongpressAbort_System_UInt32_" data-uid="Efl.Ui.Item.LongpressAbort(System.UInt32)">LongpressAbort(UInt32)</h4>
+  <div class="markdown level1 summary"><p>This aborts ongoing longpress event.
+That is, this will stop the timer for longpress.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnClickedAnyEvt(IClickableClickedAnyEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual void LongpressAbort(uint button)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -353,22 +559,22 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IClickableClickedAnyEvt_Args.html">Efl.Ui.IClickableClickedAnyEvt_Args</a></td>
-        <td><span class="parametername">e</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
+        <td><span class="parametername">button</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnClickedEvt_" data-uid="Efl.Ui.Item.OnClickedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnClickedEvt_Efl_Ui_IClickableClickedEvt_Args_" data-uid="Efl.Ui.Item.OnClickedEvt(Efl.Ui.IClickableClickedEvt_Args)">OnClickedEvt(IClickableClickedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ClickedEvt.</p>
+  <a id="Efl_Ui_Item_OnClickedAnyEvent_" data-uid="Efl.Ui.Item.OnClickedAnyEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnClickedAnyEvent_Efl_Input_ClickableClickedAnyEventArgs_" data-uid="Efl.Ui.Item.OnClickedAnyEvent(Efl.Input.ClickableClickedAnyEventArgs)">OnClickedAnyEvent(ClickableClickedAnyEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ClickedAnyEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnClickedEvt(IClickableClickedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnClickedAnyEvent(ClickableClickedAnyEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -381,22 +587,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IClickableClickedEvt_Args.html">Efl.Ui.IClickableClickedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Input.ClickableClickedAnyEventArgs.html">Efl.Input.ClickableClickedAnyEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnItemSelectedEvt_" data-uid="Efl.Ui.Item.OnItemSelectedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnItemSelectedEvt_Efl_Ui_ISelectableItemSelectedEvt_Args_" data-uid="Efl.Ui.Item.OnItemSelectedEvt(Efl.Ui.ISelectableItemSelectedEvt_Args)">OnItemSelectedEvt(ISelectableItemSelectedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ItemSelectedEvt.</p>
+  <a id="Efl_Ui_Item_OnClickedEvent_" data-uid="Efl.Ui.Item.OnClickedEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnClickedEvent_Efl_Input_ClickableClickedEventArgs_" data-uid="Efl.Ui.Item.OnClickedEvent(Efl.Input.ClickableClickedEventArgs)">OnClickedEvent(ClickableClickedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ClickedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnItemSelectedEvt(ISelectableItemSelectedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnClickedEvent(ClickableClickedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -409,22 +616,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.ISelectableItemSelectedEvt_Args.html">Efl.Ui.ISelectableItemSelectedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Input.ClickableClickedEventArgs.html">Efl.Input.ClickableClickedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnItemUnselectedEvt_" data-uid="Efl.Ui.Item.OnItemUnselectedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnItemUnselectedEvt_Efl_Ui_ISelectableItemUnselectedEvt_Args_" data-uid="Efl.Ui.Item.OnItemUnselectedEvt(Efl.Ui.ISelectableItemUnselectedEvt_Args)">OnItemUnselectedEvt(ISelectableItemUnselectedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ItemUnselectedEvt.</p>
+  <a id="Efl_Ui_Item_OnLongpressedEvent_" data-uid="Efl.Ui.Item.OnLongpressedEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnLongpressedEvent_Efl_Input_ClickableLongpressedEventArgs_" data-uid="Efl.Ui.Item.OnLongpressedEvent(Efl.Input.ClickableLongpressedEventArgs)">OnLongpressedEvent(ClickableLongpressedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event LongpressedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnItemUnselectedEvt(ISelectableItemUnselectedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnLongpressedEvent(ClickableLongpressedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -437,22 +645,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.ISelectableItemUnselectedEvt_Args.html">Efl.Ui.ISelectableItemUnselectedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Input.ClickableLongpressedEventArgs.html">Efl.Input.ClickableLongpressedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnLongpressedEvt_" data-uid="Efl.Ui.Item.OnLongpressedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnLongpressedEvt_Efl_Ui_IClickableLongpressedEvt_Args_" data-uid="Efl.Ui.Item.OnLongpressedEvt(Efl.Ui.IClickableLongpressedEvt_Args)">OnLongpressedEvt(IClickableLongpressedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event LongpressedEvt.</p>
+  <a id="Efl_Ui_Item_OnPressedEvent_" data-uid="Efl.Ui.Item.OnPressedEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnPressedEvent_Efl_Input_ClickablePressedEventArgs_" data-uid="Efl.Ui.Item.OnPressedEvent(Efl.Input.ClickablePressedEventArgs)">OnPressedEvent(ClickablePressedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event PressedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnLongpressedEvt(IClickableLongpressedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnPressedEvent(ClickablePressedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -465,22 +674,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IClickableLongpressedEvt_Args.html">Efl.Ui.IClickableLongpressedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Input.ClickablePressedEventArgs.html">Efl.Input.ClickablePressedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnPressedEvt_" data-uid="Efl.Ui.Item.OnPressedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnPressedEvt_Efl_Ui_IClickablePressedEvt_Args_" data-uid="Efl.Ui.Item.OnPressedEvt(Efl.Ui.IClickablePressedEvt_Args)">OnPressedEvt(IClickablePressedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event PressedEvt.</p>
+  <a id="Efl_Ui_Item_OnSelectedChangedEvent_" data-uid="Efl.Ui.Item.OnSelectedChangedEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnSelectedChangedEvent_Efl_Ui_SelectableSelectedChangedEventArgs_" data-uid="Efl.Ui.Item.OnSelectedChangedEvent(Efl.Ui.SelectableSelectedChangedEventArgs)">OnSelectedChangedEvent(SelectableSelectedChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SelectedChangedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnPressedEvt(IClickablePressedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnSelectedChangedEvent(SelectableSelectedChangedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -493,22 +703,23 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IClickablePressedEvt_Args.html">Efl.Ui.IClickablePressedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Ui.SelectableSelectedChangedEventArgs.html">Efl.Ui.SelectableSelectedChangedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Item_OnSelectionChangedEvt_" data-uid="Efl.Ui.Item.OnSelectionChangedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionChangedEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionChangedEvt(EventArgs)">OnSelectionChangedEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionChangedEvt.</p>
+  <a id="Efl_Ui_Item_OnUnpressedEvent_" data-uid="Efl.Ui.Item.OnUnpressedEvent*"></a>
+  <h4 id="Efl_Ui_Item_OnUnpressedEvent_Efl_Input_ClickableUnpressedEventArgs_" data-uid="Efl.Ui.Item.OnUnpressedEvent(Efl.Input.ClickableUnpressedEventArgs)">OnUnpressedEvent(ClickableUnpressedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event UnpressedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionChangedEvt(EventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnUnpressedEvent(ClickableUnpressedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -521,177 +732,10 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventArgs</span></td>
+        <td><a class="xref" href="Efl.Input.ClickableUnpressedEventArgs.html">Efl.Input.ClickableUnpressedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnSelectionClearedEvt_" data-uid="Efl.Ui.Item.OnSelectionClearedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionClearedEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionClearedEvt(EventArgs)">OnSelectionClearedEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionClearedEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionClearedEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnSelectionCopyEvt_" data-uid="Efl.Ui.Item.OnSelectionCopyEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionCopyEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionCopyEvt(EventArgs)">OnSelectionCopyEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionCopyEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionCopyEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnSelectionCutEvt_" data-uid="Efl.Ui.Item.OnSelectionCutEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionCutEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionCutEvt(EventArgs)">OnSelectionCutEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionCutEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionCutEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnSelectionPasteEvt_" data-uid="Efl.Ui.Item.OnSelectionPasteEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionPasteEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionPasteEvt(EventArgs)">OnSelectionPasteEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionPasteEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionPasteEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnSelectionStartEvt_" data-uid="Efl.Ui.Item.OnSelectionStartEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnSelectionStartEvt_EventArgs_" data-uid="Efl.Ui.Item.OnSelectionStartEvt(EventArgs)">OnSelectionStartEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SelectionStartEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSelectionStartEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Item_OnUnpressedEvt_" data-uid="Efl.Ui.Item.OnUnpressedEvt*"></a>
-  <h4 id="Efl_Ui_Item_OnUnpressedEvt_Efl_Ui_IClickableUnpressedEvt_Args_" data-uid="Efl.Ui.Item.OnUnpressedEvt(Efl.Ui.IClickableUnpressedEvt_Args)">OnUnpressedEvt(IClickableUnpressedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event UnpressedEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnUnpressedEvt(IClickableUnpressedEvt_Args e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.IClickableUnpressedEvt_Args.html">Efl.Ui.IClickableUnpressedEvt_Args</a></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -705,7 +749,7 @@ When the button is already pressed, this is silently ignored.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void Press(uint button)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual void Press(uint button)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -718,7 +762,7 @@ When the button is already pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">button</span></td>
         <td><p>The number of the button. FIXME ensure to have the right interval of possible input</p>
 </td>
@@ -730,12 +774,12 @@ When the button is already pressed, this is silently ignored.</p>
   <a id="Efl_Ui_Item_ResetButtonState_" data-uid="Efl.Ui.Item.ResetButtonState*"></a>
   <h4 id="Efl_Ui_Item_ResetButtonState_System_UInt32_" data-uid="Efl.Ui.Item.ResetButtonState(System.UInt32)">ResetButtonState(UInt32)</h4>
   <div class="markdown level1 summary"><p>This aborts the internal state after a press call.
-This will stop the timer for longpress. And set the state of the clickable mixin back into the unpressed state.</p>
+This will stop the timer for longpress and set the state of the clickable mixin back into the unpressed state.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void ResetButtonState(uint button)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual void ResetButtonState(uint button)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -748,9 +792,39 @@ This will stop the timer for longpress. And set the state of the clickable mixin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">button</span></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_SetCalcLocked_" data-uid="Efl.Ui.Item.SetCalcLocked*"></a>
+  <h4 id="Efl_Ui_Item_SetCalcLocked_System_Boolean_" data-uid="Efl.Ui.Item.SetCalcLocked(System.Boolean)">SetCalcLocked(Boolean)</h4>
+  <div class="markdown level1 summary"><p>If the item has its calc locked it will not trigger <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a> done.
+This is done automatically by <a class="xref" href="Efl.Ui.WidgetFactory.html">Efl.Ui.WidgetFactory</a>, but you can use this information to meaningfully set the hint when items are not <a class="xref" href="Efl.Ui.Item.html#Efl_Ui_Item_CalcLocked">Efl.Ui.Item.CalcLocked</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetCalcLocked(bool locked)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">locked</span></td>
+        <td><p>If set to <code>true</code>, no more <a class="xref" href="Efl.Canvas.Group.html#Efl_Canvas_Group_SetGroupNeedRecalculate_System_Boolean_">Efl.Canvas.Group.SetGroupNeedRecalculate(System.Boolean)</a></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -759,7 +833,7 @@ This will stop the timer for longpress. And set the state of the clickable mixin
   <a id="Efl_Ui_Item_SetContainer_" data-uid="Efl.Ui.Item.SetContainer*"></a>
   <h4 id="Efl_Ui_Item_SetContainer_Efl_Ui_Widget_" data-uid="Efl.Ui.Item.SetContainer(Efl.Ui.Widget)">SetContainer(Widget)</h4>
   <div class="markdown level1 summary"><p>The container this object is part of.
-You should never use this property yourself, the container will set it. Unsetting this while the item is packed into a container does not have an impact on its state in the container.</p>
+You should never use this property directly, the container will set it when the item is added. Unsetting this while the item is packed inside a container does not remove the item from the container.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -786,14 +860,15 @@ You should never use this property yourself, the container will set it. Unsettin
   </table>
   
   
-  <a id="Efl_Ui_Item_SetSelected_" data-uid="Efl.Ui.Item.SetSelected*"></a>
-  <h4 id="Efl_Ui_Item_SetSelected_System_Boolean_" data-uid="Efl.Ui.Item.SetSelected(System.Boolean)">SetSelected(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Select property for item object. Item can be selected by user mouse/key input also</p>
+  <a id="Efl_Ui_Item_SetItemParent_" data-uid="Efl.Ui.Item.SetItemParent*"></a>
+  <h4 id="Efl_Ui_Item_SetItemParent_Efl_Ui_Item_" data-uid="Efl.Ui.Item.SetItemParent(Efl.Ui.Item)">SetItemParent(Item)</h4>
+  <div class="markdown level1 summary"><p>The parent of the item.
+This property expresses a tree structure of items. If the parent is <code>NULL</code> the item is added to the root level of the content. The item parent can only be set once. When the object is invalidated, the item parent is set to <code>NULL</code> and still cannot be reset.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetSelected(bool select)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetItemParent(Item parent)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -806,9 +881,39 @@ You should never use this property yourself, the container will set it. Unsettin
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">select</span></td>
+        <td><a class="xref" href="Efl.Ui.Item.html">Efl.Ui.Item</a></td>
+        <td><span class="parametername">parent</span></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Item_SetSelected_" data-uid="Efl.Ui.Item.SetSelected*"></a>
+  <h4 id="Efl_Ui_Item_SetSelected_System_Boolean_" data-uid="Efl.Ui.Item.SetSelected(System.Boolean)">SetSelected(Boolean)</h4>
+  <div class="markdown level1 summary"><p>The selected state of this object
+A change to this property emits the changed event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetSelected(bool selected)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">selected</span></td>
+        <td><p>The selected state of this object.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -822,7 +927,7 @@ When the button is not pressed, this is silently ignored.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void Unpress(uint button)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual void Unpress(uint button)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -835,7 +940,7 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">button</span></td>
         <td><p>The number of the button. FIXME ensure to have the right interval of possible input</p>
 </td>
@@ -846,13 +951,13 @@ When the button is not pressed, this is silently ignored.</p>
   </h3>
   
   
-  <h4 id="Efl_Ui_Item_ClickedAnyEvt" data-uid="Efl.Ui.Item.ClickedAnyEvt">ClickedAnyEvt</h4>
+  <h4 id="Efl_Ui_Item_ClickedAnyEvent" data-uid="Efl.Ui.Item.ClickedAnyEvent">ClickedAnyEvent</h4>
   <div class="markdown level1 summary"><p>Called when object is in sequence pressed and unpressed by any button. The button that triggered the event can be found in the event information.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IClickableClickedAnyEvt_Args&gt; ClickedAnyEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ClickableClickedAnyEventArgs&gt; ClickedAnyEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -864,20 +969,21 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IClickableClickedAnyEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Input.ClickableClickedAnyEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Input.ClickableClickedAnyEventArgs.html">Efl.Input.ClickableClickedAnyEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Item_ClickedEvt" data-uid="Efl.Ui.Item.ClickedEvt">ClickedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when object is in sequence pressed and unpressed, by the primary button</p>
+  <h4 id="Efl_Ui_Item_ClickedEvent" data-uid="Efl.Ui.Item.ClickedEvent">ClickedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when object is in sequence pressed and unpressed by the primary button</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IClickableClickedEvt_Args&gt; ClickedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ClickableClickedEventArgs&gt; ClickedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -889,70 +995,21 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IClickableClickedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Input.ClickableClickedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Input.ClickableClickedEventArgs.html">Efl.Input.ClickableClickedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Item_ItemSelectedEvt" data-uid="Efl.Ui.Item.ItemSelectedEvt">ItemSelectedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selected</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ISelectableItemSelectedEvt_Args&gt; ItemSelectedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.ISelectableItemSelectedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_ItemUnselectedEvt" data-uid="Efl.Ui.Item.ItemUnselectedEvt">ItemUnselectedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when no longer selected</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ISelectableItemUnselectedEvt_Args&gt; ItemUnselectedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.ISelectableItemUnselectedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_LongpressedEvt" data-uid="Efl.Ui.Item.LongpressedEvt">LongpressedEvt</h4>
+  <h4 id="Efl_Ui_Item_LongpressedEvent" data-uid="Efl.Ui.Item.LongpressedEvent">LongpressedEvent</h4>
   <div class="markdown level1 summary"><p>Called when the object receives a long press, event_info is the button that got pressed</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IClickableLongpressedEvt_Args&gt; LongpressedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ClickableLongpressedEventArgs&gt; LongpressedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -964,20 +1021,21 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IClickableLongpressedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Input.ClickableLongpressedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Input.ClickableLongpressedEventArgs.html">Efl.Input.ClickableLongpressedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Item_PressedEvt" data-uid="Efl.Ui.Item.PressedEvt">PressedEvt</h4>
+  <h4 id="Efl_Ui_Item_PressedEvent" data-uid="Efl.Ui.Item.PressedEvent">PressedEvent</h4>
   <div class="markdown level1 summary"><p>Called when the object is pressed, event_info is the button that got pressed</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IClickablePressedEvt_Args&gt; PressedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ClickablePressedEventArgs&gt; PressedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -989,20 +1047,21 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IClickablePressedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Input.ClickablePressedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Input.ClickablePressedEventArgs.html">Efl.Input.ClickablePressedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Item_SelectionChangedEvt" data-uid="Efl.Ui.Item.SelectionChangedEvt">SelectionChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selection is changed</p>
+  <h4 id="Efl_Ui_Item_SelectedChangedEvent" data-uid="Efl.Ui.Item.SelectedChangedEvent">SelectedChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Called when the selected state has changed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;SelectableSelectedChangedEventArgs&gt; SelectedChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1014,145 +1073,21 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.SelectableSelectedChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.SelectableSelectedChangedEventArgs.html">Efl.Ui.SelectableSelectedChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Item_SelectionClearedEvt" data-uid="Efl.Ui.Item.SelectionClearedEvt">SelectionClearedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selection is cleared</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionClearedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_SelectionCopyEvt" data-uid="Efl.Ui.Item.SelectionCopyEvt">SelectionCopyEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selection is copied</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionCopyEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_SelectionCutEvt" data-uid="Efl.Ui.Item.SelectionCutEvt">SelectionCutEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selection is cut</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionCutEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_SelectionPasteEvt" data-uid="Efl.Ui.Item.SelectionPasteEvt">SelectionPasteEvt</h4>
-  <div class="markdown level1 summary"><p>Called when selection is pasted</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionPasteEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_SelectionStartEvt" data-uid="Efl.Ui.Item.SelectionStartEvt">SelectionStartEvt</h4>
-  <div class="markdown level1 summary"><p>Called at selection start</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SelectionStartEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Item_UnpressedEvt" data-uid="Efl.Ui.Item.UnpressedEvt">UnpressedEvt</h4>
+  <h4 id="Efl_Ui_Item_UnpressedEvent" data-uid="Efl.Ui.Item.UnpressedEvent">UnpressedEvent</h4>
   <div class="markdown level1 summary"><p>Called when the object is no longer pressed, event_info is the button that got pressed</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IClickableUnpressedEvt_Args&gt; UnpressedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ClickableUnpressedEventArgs&gt; UnpressedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1164,8 +1099,9 @@ When the button is not pressed, this is silently ignored.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IClickableUnpressedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Input.ClickableUnpressedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Input.ClickableUnpressedEventArgs.html">Efl.Input.ClickableUnpressedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1174,10 +1110,10 @@ When the button is not pressed, this is silently ignored.</p>
       <a class="xref" href="Efl.Canvas.IPointer.html">Efl.Canvas.IPointer</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gesture.IEvents.html">Efl.Gesture.IEvents</a>
+      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
+      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
   </div>
   <div>
       <a class="xref" href="Efl.Gfx.IHint.html">Efl.Gfx.IHint</a>
@@ -1186,37 +1122,16 @@ When the button is not pressed, this is silently ignored.</p>
       <a class="xref" href="Efl.Gfx.IMapping.html">Efl.Gfx.IMapping</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
+      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a>
+      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
   </div>
   <div>
       <a class="xref" href="Efl.IPart.html">Efl.IPart</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Access.IComponent.html">Efl.Access.IComponent</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.IObject.html">Efl.Access.IObject</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IDnd.html">Efl.Ui.IDnd</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IL10n.html">Efl.Ui.IL10n</a>
-  </div>
-  <div>
       <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.ISelection.html">Efl.Ui.ISelection</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a>
@@ -1240,7 +1155,7 @@ When the button is not pressed, this is silently ignored.</p>
       <a class="xref" href="Efl.Ui.IFactoryBind.html">Efl.Ui.IFactoryBind</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Ui.IClickable.html">Efl.Ui.IClickable</a>
+      <a class="xref" href="Efl.Input.IClickable.html">Efl.Input.IClickable</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a>

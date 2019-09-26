@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IScrollbar
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,26 +73,103 @@
   
   <h1 id="Efl_Ui_IScrollbar" data-uid="Efl.Ui.IScrollbar" class="text-break">Interface Efl.Ui.IScrollbar
   </h1>
-  <div class="markdown level0 summary"><p>Interface used by widgets which can display scrollbars, enabling them to contain more content than actually fits inside them.</p>
+  <div class="markdown level0 summary"><p>Interface used by widgets which can display scrollbars, enabling them to hold more content than actually visible through the viewport. A scrollbar contains a draggable part (thumb) which allows the user to move the viewport around the content. The size of the thumb relates to the size of the viewport compared to the whole content.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IScrollbar_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IScrollbar_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public interface IScrollbar : IWrapper, IDisposable</code></pre>
   </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Ui_IScrollbar_BarMode_" data-uid="Efl.Ui.IScrollbar.BarMode*"></a>
+  <h4 id="Efl_Ui_IScrollbar_BarMode" data-uid="Efl.Ui.IScrollbar.BarMode">BarMode</h4>
+  <div class="markdown level1 summary"><p>Scrollbar visibility mode, for each of the scrollbars.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(ScrollbarMode, ScrollbarMode)BarMode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;Efl.Ui.ScrollbarMode, Efl.Ui.ScrollbarMode&gt;</span></td>
+        <td><p>Horizontal scrollbar mode.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollbar_BarPosition_" data-uid="Efl.Ui.IScrollbar.BarPosition*"></a>
+  <h4 id="Efl_Ui_IScrollbar_BarPosition" data-uid="Efl.Ui.IScrollbar.BarPosition">BarPosition</h4>
+  <div class="markdown level1 summary"><p>Position of the thumb (the draggable zone) inside the scrollbar. It is calculated based on current position of the viewport inside the total content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(double, double)BarPosition { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Double, System.Double&gt;</span></td>
+        <td><p>Value between <code>0.0</code> (the left side of the thumb is touching the left edge of the widget) and <code>1.0</code> (the right side of the thumb is touching the right edge of the widget).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_IScrollbar_BarSize_" data-uid="Efl.Ui.IScrollbar.BarSize*"></a>
+  <h4 id="Efl_Ui_IScrollbar_BarSize" data-uid="Efl.Ui.IScrollbar.BarSize">BarSize</h4>
+  <div class="markdown level1 summary"><p>This returns the relative size the thumb should have, given the current size of the viewport and the content. <code>0.0</code> means the viewport is much smaller than the content: the thumb will have its minimum size. <code>1.0</code> means the viewport has the same size as the content (or bigger): the thumb will have the same size as the scrollbar and cannot move.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(double, double)BarSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Double, System.Double&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   
   <a id="Efl_Ui_IScrollbar_GetBarMode_" data-uid="Efl.Ui.IScrollbar.GetBarMode*"></a>
   <h4 id="Efl_Ui_IScrollbar_GetBarMode_Efl_Ui_ScrollbarMode__Efl_Ui_ScrollbarMode__" data-uid="Efl.Ui.IScrollbar.GetBarMode(Efl.Ui.ScrollbarMode@,Efl.Ui.ScrollbarMode@)">GetBarMode(out ScrollbarMode, out ScrollbarMode)</h4>
-  <div class="markdown level1 summary"><p>Scrollbar visibility policy</p>
+  <div class="markdown level1 summary"><p>Scrollbar visibility mode, for each of the scrollbars.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -112,13 +189,13 @@
       <tr>
         <td><a class="xref" href="Efl.Ui.ScrollbarMode.html">Efl.Ui.ScrollbarMode</a></td>
         <td><span class="parametername">hbar</span></td>
-        <td><p>Horizontal scrollbar.</p>
+        <td><p>Horizontal scrollbar mode.<br>The default value is <a class="xref" href="Efl.Ui.ScrollbarMode.html#Efl_Ui_ScrollbarMode_Auto">Efl.Ui.ScrollbarMode.Auto</a>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Efl.Ui.ScrollbarMode.html">Efl.Ui.ScrollbarMode</a></td>
         <td><span class="parametername">vbar</span></td>
-        <td><p>Vertical scrollbar.</p>
+        <td><p>Vertical scrollbar mode.<br>The default value is <a class="xref" href="Efl.Ui.ScrollbarMode.html#Efl_Ui_ScrollbarMode_Auto">Efl.Ui.ScrollbarMode.Auto</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -127,7 +204,7 @@
   
   <a id="Efl_Ui_IScrollbar_GetBarPosition_" data-uid="Efl.Ui.IScrollbar.GetBarPosition*"></a>
   <h4 id="Efl_Ui_IScrollbar_GetBarPosition_System_Double__System_Double__" data-uid="Efl.Ui.IScrollbar.GetBarPosition(System.Double@,System.Double@)">GetBarPosition(out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>Scrollbar position. It is calculated based on current position-maximum positions.</p>
+  <div class="markdown level1 summary"><p>Position of the thumb (the draggable zone) inside the scrollbar. It is calculated based on current position of the viewport inside the total content.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -145,15 +222,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">posx</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> (the left side of the thumb is touching the left edge of the widget) and <code>1.0</code> (the right side of the thumb is touching the right edge of the widget).</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">posy</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> (the top side of the thumb is touching the top edge of the widget) and <code>1.0</code> (the bottom side of the thumb is touching the bottom edge of the widget).</p>
 </td>
       </tr>
     </tbody>
@@ -162,7 +239,7 @@
   
   <a id="Efl_Ui_IScrollbar_GetBarSize_" data-uid="Efl.Ui.IScrollbar.GetBarSize*"></a>
   <h4 id="Efl_Ui_IScrollbar_GetBarSize_System_Double__System_Double__" data-uid="Efl.Ui.IScrollbar.GetBarSize(System.Double@,System.Double@)">GetBarSize(out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>Scrollbar size. It is calculated based on viewport size-content sizes.</p>
+  <div class="markdown level1 summary"><p>This returns the relative size the thumb should have, given the current size of the viewport and the content. <code>0.0</code> means the viewport is much smaller than the content: the thumb will have its minimum size. <code>1.0</code> means the viewport has the same size as the content (or bigger): the thumb will have the same size as the scrollbar and cannot move.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -180,15 +257,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">width</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> and <code>1.0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">height</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> and <code>1.0</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -197,7 +274,7 @@
   
   <a id="Efl_Ui_IScrollbar_SetBarMode_" data-uid="Efl.Ui.IScrollbar.SetBarMode*"></a>
   <h4 id="Efl_Ui_IScrollbar_SetBarMode_Efl_Ui_ScrollbarMode_Efl_Ui_ScrollbarMode_" data-uid="Efl.Ui.IScrollbar.SetBarMode(Efl.Ui.ScrollbarMode,Efl.Ui.ScrollbarMode)">SetBarMode(ScrollbarMode, ScrollbarMode)</h4>
-  <div class="markdown level1 summary"><p>Scrollbar visibility policy</p>
+  <div class="markdown level1 summary"><p>Scrollbar visibility mode, for each of the scrollbars.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -217,13 +294,13 @@
       <tr>
         <td><a class="xref" href="Efl.Ui.ScrollbarMode.html">Efl.Ui.ScrollbarMode</a></td>
         <td><span class="parametername">hbar</span></td>
-        <td><p>Horizontal scrollbar.</p>
+        <td><p>Horizontal scrollbar mode.<br>The default value is <a class="xref" href="Efl.Ui.ScrollbarMode.html#Efl_Ui_ScrollbarMode_Auto">Efl.Ui.ScrollbarMode.Auto</a>.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Efl.Ui.ScrollbarMode.html">Efl.Ui.ScrollbarMode</a></td>
         <td><span class="parametername">vbar</span></td>
-        <td><p>Vertical scrollbar.</p>
+        <td><p>Vertical scrollbar mode.<br>The default value is <a class="xref" href="Efl.Ui.ScrollbarMode.html#Efl_Ui_ScrollbarMode_Auto">Efl.Ui.ScrollbarMode.Auto</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -232,7 +309,7 @@
   
   <a id="Efl_Ui_IScrollbar_SetBarPosition_" data-uid="Efl.Ui.IScrollbar.SetBarPosition*"></a>
   <h4 id="Efl_Ui_IScrollbar_SetBarPosition_System_Double_System_Double_" data-uid="Efl.Ui.IScrollbar.SetBarPosition(System.Double,System.Double)">SetBarPosition(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Scrollbar position. It is calculated based on current position-maximum positions.</p>
+  <div class="markdown level1 summary"><p>Position of the thumb (the draggable zone) inside the scrollbar. It is calculated based on current position of the viewport inside the total content.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -250,42 +327,30 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">posx</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> (the left side of the thumb is touching the left edge of the widget) and <code>1.0</code> (the right side of the thumb is touching the right edge of the widget).</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">posy</span></td>
-        <td><p>Value between 0.0 and 1.0.</p>
+        <td><p>Value between <code>0.0</code> (the top side of the thumb is touching the top edge of the widget) and <code>1.0</code> (the bottom side of the thumb is touching the bottom edge of the widget).</p>
 </td>
       </tr>
     </tbody>
   </table>
-  
-  
-  <a id="Efl_Ui_IScrollbar_UpdateBarVisibility_" data-uid="Efl.Ui.IScrollbar.UpdateBarVisibility*"></a>
-  <h4 id="Efl_Ui_IScrollbar_UpdateBarVisibility" data-uid="Efl.Ui.IScrollbar.UpdateBarVisibility">UpdateBarVisibility()</h4>
-  <div class="markdown level1 summary"><p>Update bar visibility.
-The object will call this function whenever the bar needs to be shown or hidden.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void UpdateBarVisibility()</code></pre>
-  </div>
   <h3 id="events">Events
   </h3>
   
   
-  <h4 id="Efl_Ui_IScrollbar_BarDragEvt" data-uid="Efl.Ui.IScrollbar.BarDragEvt">BarDragEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar is dragged.</p>
+  <h4 id="Efl_Ui_IScrollbar_BarDraggedEvent" data-uid="Efl.Ui.IScrollbar.BarDraggedEvent">BarDraggedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when thumb is dragged.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IScrollbarBarDragEvt_Args&gt; BarDragEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ScrollbarBarDraggedEventArgs&gt; BarDraggedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,20 +362,72 @@ The object will call this function whenever the bar needs to be shown or hidden.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IScrollbarBarDragEvt_Args&gt;</span></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ScrollbarBarDraggedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ScrollbarBarDraggedEventArgs.html">Efl.Ui.ScrollbarBarDraggedEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollbar_BarHideEvent" data-uid="Efl.Ui.IScrollbar.BarHideEvent">BarHideEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when scrollbar is hidden.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ScrollbarBarHideEventArgs&gt; BarHideEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ScrollbarBarHideEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ScrollbarBarHideEventArgs.html">Efl.Ui.ScrollbarBarHideEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollbar_BarPosChangedEvent" data-uid="Efl.Ui.IScrollbar.BarPosChangedEvent">BarPosChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when thumb position has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler BarPosChangedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollbar_BarHideEvt" data-uid="Efl.Ui.IScrollbar.BarHideEvt">BarHideEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar is hidden.</p>
+  <h4 id="Efl_Ui_IScrollbar_BarPressedEvent" data-uid="Efl.Ui.IScrollbar.BarPressedEvent">BarPressedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when thumb is pressed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IScrollbarBarHideEvt_Args&gt; BarHideEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ScrollbarBarPressedEventArgs&gt; BarPressedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -322,20 +439,72 @@ The object will call this function whenever the bar needs to be shown or hidden.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IScrollbarBarHideEvt_Args&gt;</span></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ScrollbarBarPressedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ScrollbarBarPressedEventArgs.html">Efl.Ui.ScrollbarBarPressedEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollbar_BarShowEvent" data-uid="Efl.Ui.IScrollbar.BarShowEvent">BarShowEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when scrollbar is shown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ScrollbarBarShowEventArgs&gt; BarShowEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ScrollbarBarShowEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ScrollbarBarShowEventArgs.html">Efl.Ui.ScrollbarBarShowEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IScrollbar_BarSizeChangedEvent" data-uid="Efl.Ui.IScrollbar.BarSizeChangedEvent">BarSizeChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when thumb size has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler BarSizeChangedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IScrollbar_BarPosChangedEvt" data-uid="Efl.Ui.IScrollbar.BarPosChangedEvt">BarPosChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar position is changed.</p>
+  <h4 id="Efl_Ui_IScrollbar_BarUnpressedEvent" data-uid="Efl.Ui.IScrollbar.BarUnpressedEvent">BarUnpressedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when thumb is unpressed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler BarPosChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ScrollbarBarUnpressedEventArgs&gt; BarUnpressedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -347,108 +516,9 @@ The object will call this function whenever the bar needs to be shown or hidden.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollbar_BarPressEvt" data-uid="Efl.Ui.IScrollbar.BarPressEvt">BarPressEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar is pressed.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IScrollbarBarPressEvt_Args&gt; BarPressEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IScrollbarBarPressEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollbar_BarShowEvt" data-uid="Efl.Ui.IScrollbar.BarShowEvt">BarShowEvt</h4>
-  <div class="markdown level1 summary"><p>Callend when bar is shown.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IScrollbarBarShowEvt_Args&gt; BarShowEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IScrollbarBarShowEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollbar_BarSizeChangedEvt" data-uid="Efl.Ui.IScrollbar.BarSizeChangedEvt">BarSizeChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar size is changed.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler BarSizeChangedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_IScrollbar_BarUnpressEvt" data-uid="Efl.Ui.IScrollbar.BarUnpressEvt">BarUnpressEvt</h4>
-  <div class="markdown level1 summary"><p>Called when bar is unpressed.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IScrollbarBarUnpressEvt_Args&gt; BarUnpressEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IScrollbarBarUnpressEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ScrollbarBarUnpressedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ScrollbarBarUnpressedEventArgs.html">Efl.Ui.ScrollbarBarUnpressedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>

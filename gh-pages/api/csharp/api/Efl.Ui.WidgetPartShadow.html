@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.WidgetPartShadow
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -77,17 +77,12 @@
 A simple drop-shadow effect can be applied to any widget by setting the color and blur radius on this part.</p>
 <p>For instance, a blue glow can be achieved with: obj.shadow().color_set(0, 128, 255, 255); obj.shadow().grow_set(2); obj.shadow().radius_set(3, 3);</p>
 <p>As another example, here's a black drop-shadow: obj.shadow().color_set(0, 0, 0, 255); obj.shadow().grow_set(1); obj.shadow().radius_set(5, 5); obj.shadow().offset_set(5, 5);</p>
-<p>It is also possible to manually specify which <a class="xref" href="Efl.Gfx.IFilter.html">Efl.Gfx.IFilter</a> program to use.</p>
+<p>It is also possible to manually specify which <span class="text-muted">Efl.Gfx.IFilter (object still in beta stage)</span> program to use.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_WidgetPartShadow_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.Ui.WidgetPart.html">Efl.Ui.WidgetPart</a></div>
@@ -96,7 +91,7 @@ A simple drop-shadow effect can be applied to any widget by setting the color an
   
   <h5 id="Efl_Ui_WidgetPartShadow_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class WidgetPartShadow : WidgetPart, IBlur, IColor, IFilter, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class WidgetPartShadow : WidgetPart, IPropertyBind, IColor, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -159,13 +154,80 @@ Do not call this constructor directly.</p>
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Efl_Ui_WidgetPartShadow__ctor_" data-uid="Efl.Ui.WidgetPartShadow.#ctor*"></a>
+  <h4 id="Efl_Ui_WidgetPartShadow__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.WidgetPartShadow.#ctor(System.IntPtr,Efl.Object)">WidgetPartShadow(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.WidgetPartShadow.html">Efl.Ui.WidgetPartShadow</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected WidgetPartShadow(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   
   
+  <a id="Efl_Ui_WidgetPartShadow_Color_" data-uid="Efl.Ui.WidgetPartShadow.Color*"></a>
+  <h4 id="Efl_Ui_WidgetPartShadow_Color" data-uid="Efl.Ui.WidgetPartShadow.Color">Color</h4>
+  <div class="markdown level1 summary"><p>The general/main color of the given Evas object.
+Represents the main color's RGB component (and alpha channel) values, which range from 0 to 255. For the alpha channel, which defines the object's transparency level, 0 means totally transparent, while 255 means opaque. These color values are premultiplied by the alpha value.</p>
+<p>Usually you'll use this attribute for text and rectangle objects, where the main color is the only color. If set for objects which themselves have colors, like the images one, those colors get modulated by this one.</p>
+<p>All newly created Evas rectangles get the default color values of 255 255 255 255 (opaque white).</p>
+<p>When reading this property, use <code>NULL</code> pointers on the components you're not interested in and they'll be ignored by the function.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (int, int, int, int)Color { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;System.Int32, System.Int32, System.Int32, System.Int32&gt;</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Efl_Ui_WidgetPartShadow_ColorCode_" data-uid="Efl.Ui.WidgetPartShadow.ColorCode*"></a>
   <h4 id="Efl_Ui_WidgetPartShadow_ColorCode" data-uid="Efl.Ui.WidgetPartShadow.ColorCode">ColorCode</h4>
-  <div class="markdown level1 summary"><p>Get hex color code of given Evas object. This returns a short lived hex color code string.
+  <div class="markdown level1 summary"><p>Hexadecimal color code of given Evas object (#RRGGBBAA).
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -183,37 +245,8 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>the hex color code.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_Grow_" data-uid="Efl.Ui.WidgetPartShadow.Grow*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_Grow" data-uid="Efl.Ui.WidgetPartShadow.Grow">Grow</h4>
-  <div class="markdown level1 summary"><p>How much the original image should be &quot;grown&quot; before blurring.
-Growing is a combination of blur &amp; color levels adjustment. If the value of grow is positive, the pixels will appear more &quot;fat&quot; or &quot;bold&quot; than the original. If the value is negative, a shrink effect happens instead.</p>
-<p>This is can be used efficiently to create glow effects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Grow { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>How much to grow the original pixel data.</p>
 </td>
       </tr>
     </tbody>
@@ -224,11 +257,11 @@ Growing is a combination of blur &amp; color levels adjustment. If the value of 
   
   <a id="Efl_Ui_WidgetPartShadow_GetColor_" data-uid="Efl.Ui.WidgetPartShadow.GetColor*"></a>
   <h4 id="Efl_Ui_WidgetPartShadow_GetColor_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="Efl.Ui.WidgetPartShadow.GetColor(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">GetColor(out Int32, out Int32, out Int32, out Int32)</h4>
-  <div class="markdown level1 summary"><p>Retrieves the general/main color of the given Evas object.
-Retrieves the main color's RGB component (and alpha channel) values, which range from 0 to 255. For the alpha channel, which defines the object's transparency level, 0 means totally transparent, while 255 means opaque. These color values are premultiplied by the alpha value.</p>
-<p>Usually youll use this attribute for text and rectangle objects, where the main color is their unique one. If set for objects which themselves have colors, like the images one, those colors get modulated by this one.</p>
+  <div class="markdown level1 summary"><p>The general/main color of the given Evas object.
+Represents the main color's RGB component (and alpha channel) values, which range from 0 to 255. For the alpha channel, which defines the object's transparency level, 0 means totally transparent, while 255 means opaque. These color values are premultiplied by the alpha value.</p>
+<p>Usually you'll use this attribute for text and rectangle objects, where the main color is the only color. If set for objects which themselves have colors, like the images one, those colors get modulated by this one.</p>
 <p>All newly created Evas rectangles get the default color values of 255 255 255 255 (opaque white).</p>
-<p>Use null pointers on the components you're not interested in: they'll be ignored by the function.
+<p>When reading this property, use <code>NULL</code> pointers on the components you're not interested in and they'll be ignored by the function.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -247,22 +280,22 @@ Retrieves the main color's RGB component (and alpha channel) values, which range
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">r</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">g</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">a</span></td>
         <td></td>
       </tr>
@@ -272,7 +305,7 @@ Retrieves the main color's RGB component (and alpha channel) values, which range
   
   <a id="Efl_Ui_WidgetPartShadow_GetColorCode_" data-uid="Efl.Ui.WidgetPartShadow.GetColorCode*"></a>
   <h4 id="Efl_Ui_WidgetPartShadow_GetColorCode" data-uid="Efl.Ui.WidgetPartShadow.GetColorCode">GetColorCode()</h4>
-  <div class="markdown level1 summary"><p>Get hex color code of given Evas object. This returns a short lived hex color code string.
+  <div class="markdown level1 summary"><p>Hexadecimal color code of given Evas object (#RRGGBBAA).
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -290,334 +323,8 @@ Retrieves the main color's RGB component (and alpha channel) values, which range
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>the hex color code.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetFilterData_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterData*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetFilterData_System_String_System_String__System_Boolean__" data-uid="Efl.Ui.WidgetPartShadow.GetFilterData(System.String,System.String@,System.Boolean@)">GetFilterData(String, out String, out Boolean)</h4>
-  <div class="markdown level1 summary"><p>Extra data used by the filter program.
-Each data element is a string (<code>value</code>) stored as a global variable <code>name</code>. The program is then responsible for conversion to numbers, tables, etc...</p>
-<p>If the <code>execute</code> flag is set, then the <code>value</code> can be complex and run, as if the original Lua program contained a line 'name = value'. This can be used to pass in tables.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetFilterData(string name, out string value, out bool execute)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>Name of the global variable</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>String value to use as data</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">execute</span></td>
-        <td><p>If <code>true</code>, execute 'name = value'</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetFilterPadding_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterPadding*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetFilterPadding_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="Efl.Ui.WidgetPartShadow.GetFilterPadding(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">GetFilterPadding(out Int32, out Int32, out Int32, out Int32)</h4>
-  <div class="markdown level1 summary"><p>Gets the padding required to apply this filter.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetFilterPadding(out int l, out int r, out int t, out int b)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">l</span></td>
-        <td><p>Padding on the left</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">r</span></td>
-        <td><p>Padding on the right</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">t</span></td>
-        <td><p>Padding on the top</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">b</span></td>
-        <td><p>Padding on the bottom</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetFilterProgram_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterProgram*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetFilterProgram_System_String__System_String__" data-uid="Efl.Ui.WidgetPartShadow.GetFilterProgram(System.String@,System.String@)">GetFilterProgram(out String, out String)</h4>
-  <div class="markdown level1 summary"><p>Gets the code of the filter program set on this object. May be <code>null</code>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetFilterProgram(out string code, out string name)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">code</span></td>
-        <td><p>The Lua program source code.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>An optional name for this filter.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetFilterSource_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterSource*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetFilterSource_System_String_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterSource(System.String)">GetFilterSource(String)</h4>
-  <div class="markdown level1 summary"><p>Bind an object to use as a mask or texture in a filter program.
-This will create automatically a new RGBA buffer containing the source object's pixels (as it is rendered).</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual IEntity GetFilterSource(string name)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>Buffer name as used in the program.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
-        <td><p>Object to use as a source of pixels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetFilterState_" data-uid="Efl.Ui.WidgetPartShadow.GetFilterState*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetFilterState_System_String__System_Double__System_String__System_Double__System_Double__" data-uid="Efl.Ui.WidgetPartShadow.GetFilterState(System.String@,System.Double@,System.String@,System.Double@,System.Double@)">GetFilterState(out String, out Double, out String, out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>Set the current state of the filter.
-This should be used by Edje (EFL's internal layout engine), but could also be used when implementing animations programmatically.</p>
-<p>A full state is defined by two states (name + value): origin state and target state of an ongoing animation, as well as the <code>pos</code> progress (from 0 to 1) of that animation timeline. The second state can be omitted if there is no ongoing animation.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetFilterState(out string cur_state, out double cur_val, out string next_state, out double next_val, out double pos)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">cur_state</span></td>
-        <td><p>Current state of the filter</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">cur_val</span></td>
-        <td><p>Current value</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">next_state</span></td>
-        <td><p>Next filter state, optional</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">next_val</span></td>
-        <td><p>Next value, optional</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">pos</span></td>
-        <td><p>Position, optional</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetGrow_" data-uid="Efl.Ui.WidgetPartShadow.GetGrow*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetGrow" data-uid="Efl.Ui.WidgetPartShadow.GetGrow">GetGrow()</h4>
-  <div class="markdown level1 summary"><p>How much the original image should be &quot;grown&quot; before blurring.
-Growing is a combination of blur &amp; color levels adjustment. If the value of grow is positive, the pixels will appear more &quot;fat&quot; or &quot;bold&quot; than the original. If the value is negative, a shrink effect happens instead.</p>
-<p>This is can be used efficiently to create glow effects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual double GetGrow()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>How much to grow the original pixel data.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetOffset_" data-uid="Efl.Ui.WidgetPartShadow.GetOffset*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetOffset_System_Double__System_Double__" data-uid="Efl.Ui.WidgetPartShadow.GetOffset(System.Double@,System.Double@)">GetOffset(out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>An offset relative to the original pixels.
-This property allows for drop shadow effects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetOffset(out double ox, out double oy)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">ox</span></td>
-        <td><p>Horizontal offset in pixels.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">oy</span></td>
-        <td><p>Vertical offset in pixels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_GetRadius_" data-uid="Efl.Ui.WidgetPartShadow.GetRadius*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_GetRadius_System_Double__System_Double__" data-uid="Efl.Ui.WidgetPartShadow.GetRadius(System.Double@,System.Double@)">GetRadius(out Double, out Double)</h4>
-  <div class="markdown level1 summary"><p>The blur radius in pixels.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetRadius(out double rx, out double ry)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">rx</span></td>
-        <td><p>The horizontal blur radius.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">ry</span></td>
-        <td><p>The vertical blur radius.</p>
 </td>
       </tr>
     </tbody>
@@ -626,9 +333,11 @@ This property allows for drop shadow effects.</p>
   
   <a id="Efl_Ui_WidgetPartShadow_SetColor_" data-uid="Efl.Ui.WidgetPartShadow.SetColor*"></a>
   <h4 id="Efl_Ui_WidgetPartShadow_SetColor_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Efl.Ui.WidgetPartShadow.SetColor(System.Int32,System.Int32,System.Int32,System.Int32)">SetColor(Int32, Int32, Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Sets the general/main color of the given Evas object to the given one.
-See also <a class="xref" href="Efl.Gfx.IColor.html#Efl_Gfx_IColor_GetColor_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IColor.GetColor(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> (for an example)</p>
-<p>These color values are expected to be premultiplied by alpha.
+  <div class="markdown level1 summary"><p>The general/main color of the given Evas object.
+Represents the main color's RGB component (and alpha channel) values, which range from 0 to 255. For the alpha channel, which defines the object's transparency level, 0 means totally transparent, while 255 means opaque. These color values are premultiplied by the alpha value.</p>
+<p>Usually you'll use this attribute for text and rectangle objects, where the main color is the only color. If set for objects which themselves have colors, like the images one, those colors get modulated by this one.</p>
+<p>All newly created Evas rectangles get the default color values of 255 255 255 255 (opaque white).</p>
+<p>When reading this property, use <code>NULL</code> pointers on the components you're not interested in and they'll be ignored by the function.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -647,22 +356,22 @@ See also <a class="xref" href="Efl.Gfx.IColor.html#Efl_Gfx_IColor_GetColor_Syste
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">r</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">g</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">a</span></td>
         <td></td>
       </tr>
@@ -672,7 +381,7 @@ See also <a class="xref" href="Efl.Gfx.IColor.html#Efl_Gfx_IColor_GetColor_Syste
   
   <a id="Efl_Ui_WidgetPartShadow_SetColorCode_" data-uid="Efl.Ui.WidgetPartShadow.SetColorCode*"></a>
   <h4 id="Efl_Ui_WidgetPartShadow_SetColorCode_System_String_" data-uid="Efl.Ui.WidgetPartShadow.SetColorCode(System.String)">SetColorCode(String)</h4>
-  <div class="markdown level1 summary"><p>Set the color of given Evas object to the given hex color code(#RRGGBBAA). e.g. efl_gfx_color_code_set(obj, &quot;#FFCCAACC&quot;);
+  <div class="markdown level1 summary"><p>Hexadecimal color code of given Evas object (#RRGGBBAA).
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -691,296 +400,19 @@ See also <a class="xref" href="Efl.Gfx.IColor.html#Efl_Gfx_IColor_GetColor_Syste
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">colorcode</span></td>
         <td><p>the hex color code.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetFilterData_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterData*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetFilterData_System_String_System_String_System_Boolean_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterData(System.String,System.String,System.Boolean)">SetFilterData(String, String, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Extra data used by the filter program.
-Each data element is a string (<code>value</code>) stored as a global variable <code>name</code>. The program is then responsible for conversion to numbers, tables, etc...</p>
-<p>If the <code>execute</code> flag is set, then the <code>value</code> can be complex and run, as if the original Lua program contained a line 'name = value'. This can be used to pass in tables.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetFilterData(string name, string value, bool execute)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>Name of the global variable</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>String value to use as data</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">execute</span></td>
-        <td><p>If <code>true</code>, execute 'name = value'</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetFilterProgram_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterProgram*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetFilterProgram_System_String_System_String_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterProgram(System.String,System.String)">SetFilterProgram(String, String)</h4>
-  <div class="markdown level1 summary"><p>Set a graphical filter program on this object.
-Valid for Text and Image objects at the moment.</p>
-<p>The argument passed to this function is a string containing a valid Lua program based on the filters API as described in the &quot;EFL Graphics Filters&quot; reference page.</p>
-<p>Set to <code>null</code> to disable filtering.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetFilterProgram(string code, string name)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">code</span></td>
-        <td><p>The Lua program source code.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>An optional name for this filter.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetFilterSource_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterSource*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetFilterSource_System_String_Efl_Gfx_IEntity_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterSource(System.String,Efl.Gfx.IEntity)">SetFilterSource(String, IEntity)</h4>
-  <div class="markdown level1 summary"><p>Bind an object to use as a mask or texture in a filter program.
-This will create automatically a new RGBA buffer containing the source object's pixels (as it is rendered).</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetFilterSource(string name, IEntity source)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>Buffer name as used in the program.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
-        <td><span class="parametername">source</span></td>
-        <td><p>Object to use as a source of pixels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetFilterState_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterState*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetFilterState_System_String_System_Double_System_String_System_Double_System_Double_" data-uid="Efl.Ui.WidgetPartShadow.SetFilterState(System.String,System.Double,System.String,System.Double,System.Double)">SetFilterState(String, Double, String, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Set the current state of the filter.
-This should be used by Edje (EFL's internal layout engine), but could also be used when implementing animations programmatically.</p>
-<p>A full state is defined by two states (name + value): origin state and target state of an ongoing animation, as well as the <code>pos</code> progress (from 0 to 1) of that animation timeline. The second state can be omitted if there is no ongoing animation.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetFilterState(string cur_state, double cur_val, string next_state, double next_val, double pos)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">cur_state</span></td>
-        <td><p>Current state of the filter</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">cur_val</span></td>
-        <td><p>Current value</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">next_state</span></td>
-        <td><p>Next filter state, optional</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">next_val</span></td>
-        <td><p>Next value, optional</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">pos</span></td>
-        <td><p>Position, optional</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetGrow_" data-uid="Efl.Ui.WidgetPartShadow.SetGrow*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetGrow_System_Double_" data-uid="Efl.Ui.WidgetPartShadow.SetGrow(System.Double)">SetGrow(Double)</h4>
-  <div class="markdown level1 summary"><p>How much the original image should be &quot;grown&quot; before blurring.
-Growing is a combination of blur &amp; color levels adjustment. If the value of grow is positive, the pixels will appear more &quot;fat&quot; or &quot;bold&quot; than the original. If the value is negative, a shrink effect happens instead.</p>
-<p>This is can be used efficiently to create glow effects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetGrow(double radius)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">radius</span></td>
-        <td><p>How much to grow the original pixel data.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetOffset_" data-uid="Efl.Ui.WidgetPartShadow.SetOffset*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetOffset_System_Double_System_Double_" data-uid="Efl.Ui.WidgetPartShadow.SetOffset(System.Double,System.Double)">SetOffset(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>An offset relative to the original pixels.
-This property allows for drop shadow effects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetOffset(double ox, double oy)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">ox</span></td>
-        <td><p>Horizontal offset in pixels.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">oy</span></td>
-        <td><p>Vertical offset in pixels.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_WidgetPartShadow_SetRadius_" data-uid="Efl.Ui.WidgetPartShadow.SetRadius*"></a>
-  <h4 id="Efl_Ui_WidgetPartShadow_SetRadius_System_Double_System_Double_" data-uid="Efl.Ui.WidgetPartShadow.SetRadius(System.Double,System.Double)">SetRadius(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>The blur radius in pixels.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetRadius(double rx, double ry)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">rx</span></td>
-        <td><p>The horizontal blur radius.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">ry</span></td>
-        <td><p>The vertical blur radius.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Efl.Gfx.IBlur.html">Efl.Gfx.IBlur</a>
+      <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
   </div>
   <div>
       <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IFilter.html">Efl.Gfx.IFilter</a>
   </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>

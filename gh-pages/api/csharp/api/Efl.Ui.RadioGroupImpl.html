@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.RadioGroupImpl
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -76,14 +76,9 @@
   <div class="markdown level0 summary"><p>Object with the default implementation for <a class="xref" href="Efl.Ui.IRadioGroup.html">Efl.Ui.IRadioGroup</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_RadioGroupImpl_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><span class="xref"><b>Efl.Ui.RadioGroupImpl</b></span></div>
@@ -91,7 +86,7 @@
   
   <h5 id="Efl_Ui_RadioGroupImpl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RadioGroupImpl : Object, IRadioGroup, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class RadioGroupImpl : Object, IRadioGroup, ISingleSelectable, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -154,19 +149,56 @@ Do not call this constructor directly.</p>
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
   
   
-  <a id="Efl_Ui_RadioGroupImpl_SelectedObject_" data-uid="Efl.Ui.RadioGroupImpl.SelectedObject*"></a>
-  <h4 id="Efl_Ui_RadioGroupImpl_SelectedObject" data-uid="Efl.Ui.RadioGroupImpl.SelectedObject">SelectedObject</h4>
-  <div class="markdown level1 summary"><p>Currently selected button in a radio button group, or <code>NULL</code> if no button is selected.
-See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_SelectedValue">Efl.Ui.IRadioGroup.SelectedValue</a>.</p>
+  <a id="Efl_Ui_RadioGroupImpl__ctor_" data-uid="Efl.Ui.RadioGroupImpl.#ctor*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.RadioGroupImpl.#ctor(System.IntPtr,Efl.Object)">RadioGroupImpl(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.RadioGroupImpl.html">Efl.Ui.RadioGroupImpl</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Radio SelectedObject { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected RadioGroupImpl(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Efl_Ui_RadioGroupImpl_FallbackSelection_" data-uid="Efl.Ui.RadioGroupImpl.FallbackSelection*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_FallbackSelection" data-uid="Efl.Ui.RadioGroupImpl.FallbackSelection">FallbackSelection</h4>
+  <div class="markdown level1 summary"><p>A object that will be selected in case nothing is selected
+A object set to this property will be selected instead of no item being selected. Which means, there will be always at least one element selected. If this property is <code>NULL</code>, the state of &quot;no item is selected&quot; can be reached.</p>
+<p>Setting this property as a result of selection events results in undefined behavior.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISelectable FallbackSelection { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,8 +210,34 @@ See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_Select
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.Radio.html">Efl.Ui.Radio</a></td>
-        <td><p>The currently selected radio button in the group, or <code>NULL</code>.</p>
+        <td><a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_RadioGroupImpl_LastSelected_" data-uid="Efl.Ui.RadioGroupImpl.LastSelected*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_LastSelected" data-uid="Efl.Ui.RadioGroupImpl.LastSelected">LastSelected</h4>
+  <div class="markdown level1 summary"><p>The selectable that was selected most recently.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISelectable LastSelected { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a></td>
+        <td><p>The latest selected item.</p>
 </td>
       </tr>
     </tbody>
@@ -206,7 +264,7 @@ A value of -1 means that no button is selected. Only values associated with the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><p>The value of the currently selected radio button, or -1.</p>
 </td>
       </tr>
@@ -216,15 +274,16 @@ A value of -1 means that no button is selected. Only values associated with the 
   </h3>
   
   
-  <a id="Efl_Ui_RadioGroupImpl_GetSelectedObject_" data-uid="Efl.Ui.RadioGroupImpl.GetSelectedObject*"></a>
-  <h4 id="Efl_Ui_RadioGroupImpl_GetSelectedObject" data-uid="Efl.Ui.RadioGroupImpl.GetSelectedObject">GetSelectedObject()</h4>
-  <div class="markdown level1 summary"><p>Currently selected button in a radio button group, or <code>NULL</code> if no button is selected.
-See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_SelectedValue">Efl.Ui.IRadioGroup.SelectedValue</a>.</p>
+  <a id="Efl_Ui_RadioGroupImpl_GetFallbackSelection_" data-uid="Efl.Ui.RadioGroupImpl.GetFallbackSelection*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_GetFallbackSelection" data-uid="Efl.Ui.RadioGroupImpl.GetFallbackSelection">GetFallbackSelection()</h4>
+  <div class="markdown level1 summary"><p>A object that will be selected in case nothing is selected
+A object set to this property will be selected instead of no item being selected. Which means, there will be always at least one element selected. If this property is <code>NULL</code>, the state of &quot;no item is selected&quot; can be reached.</p>
+<p>Setting this property as a result of selection events results in undefined behavior.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Radio GetSelectedObject()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ISelectable GetFallbackSelection()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -236,8 +295,34 @@ See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_Select
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.Radio.html">Efl.Ui.Radio</a></td>
-        <td><p>The currently selected radio button in the group, or <code>NULL</code>.</p>
+        <td><a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_RadioGroupImpl_GetLastSelected_" data-uid="Efl.Ui.RadioGroupImpl.GetLastSelected*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_GetLastSelected" data-uid="Efl.Ui.RadioGroupImpl.GetLastSelected">GetLastSelected()</h4>
+  <div class="markdown level1 summary"><p>The selectable that was selected most recently.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual ISelectable GetLastSelected()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a></td>
+        <td><p>The latest selected item.</p>
 </td>
       </tr>
     </tbody>
@@ -264,7 +349,7 @@ A value of -1 means that no button is selected. Only values associated with the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><p>The value of the currently selected radio button, or -1.</p>
 </td>
       </tr>
@@ -272,14 +357,14 @@ A value of -1 means that no button is selected. Only values associated with the 
   </table>
   
   
-  <a id="Efl_Ui_RadioGroupImpl_OnValueChangedEvt_" data-uid="Efl.Ui.RadioGroupImpl.OnValueChangedEvt*"></a>
-  <h4 id="Efl_Ui_RadioGroupImpl_OnValueChangedEvt_Efl_Ui_IRadioGroupValueChangedEvt_Args_" data-uid="Efl.Ui.RadioGroupImpl.OnValueChangedEvt(Efl.Ui.IRadioGroupValueChangedEvt_Args)">OnValueChangedEvt(IRadioGroupValueChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ValueChangedEvt.</p>
+  <a id="Efl_Ui_RadioGroupImpl_OnSelectionChangedEvent_" data-uid="Efl.Ui.RadioGroupImpl.OnSelectionChangedEvent*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_OnSelectionChangedEvent_System_EventArgs_" data-uid="Efl.Ui.RadioGroupImpl.OnSelectionChangedEvent(System.EventArgs)">OnSelectionChangedEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SelectionChangedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnValueChangedEvt(IRadioGroupValueChangedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnSelectionChangedEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -292,9 +377,39 @@ A value of -1 means that no button is selected. Only values associated with the 
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IRadioGroupValueChangedEvt_Args.html">Efl.Ui.IRadioGroupValueChangedEvt_Args</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_RadioGroupImpl_OnValueChangedEvent_" data-uid="Efl.Ui.RadioGroupImpl.OnValueChangedEvent*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_OnValueChangedEvent_Efl_Ui_RadioGroupValueChangedEventArgs_" data-uid="Efl.Ui.RadioGroupImpl.OnValueChangedEvent(Efl.Ui.RadioGroupValueChangedEventArgs)">OnValueChangedEvent(RadioGroupValueChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ValueChangedEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnValueChangedEvent(RadioGroupValueChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.RadioGroupValueChangedEventArgs.html">Efl.Ui.RadioGroupValueChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -331,15 +446,16 @@ If the <a class="xref" href="Efl.Ui.Radio.html#Efl_Ui_Radio_StateValue">Efl.Ui.R
   </table>
   
   
-  <a id="Efl_Ui_RadioGroupImpl_SetSelectedObject_" data-uid="Efl.Ui.RadioGroupImpl.SetSelectedObject*"></a>
-  <h4 id="Efl_Ui_RadioGroupImpl_SetSelectedObject_Efl_Ui_Radio_" data-uid="Efl.Ui.RadioGroupImpl.SetSelectedObject(Efl.Ui.Radio)">SetSelectedObject(Radio)</h4>
-  <div class="markdown level1 summary"><p>Currently selected button in a radio button group, or <code>NULL</code> if no button is selected.
-See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_SelectedValue">Efl.Ui.IRadioGroup.SelectedValue</a>.</p>
+  <a id="Efl_Ui_RadioGroupImpl_SetFallbackSelection_" data-uid="Efl.Ui.RadioGroupImpl.SetFallbackSelection*"></a>
+  <h4 id="Efl_Ui_RadioGroupImpl_SetFallbackSelection_Efl_Ui_ISelectable_" data-uid="Efl.Ui.RadioGroupImpl.SetFallbackSelection(Efl.Ui.ISelectable)">SetFallbackSelection(ISelectable)</h4>
+  <div class="markdown level1 summary"><p>A object that will be selected in case nothing is selected
+A object set to this property will be selected instead of no item being selected. Which means, there will be always at least one element selected. If this property is <code>NULL</code>, the state of &quot;no item is selected&quot; can be reached.</p>
+<p>Setting this property as a result of selection events results in undefined behavior.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetSelectedObject(Radio selected_object)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetFallbackSelection(ISelectable fallback)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -352,10 +468,9 @@ See also <a class="xref" href="Efl.Ui.IRadioGroup.html#Efl_Ui_IRadioGroup_Select
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.Radio.html">Efl.Ui.Radio</a></td>
-        <td><span class="parametername">selected_object</span></td>
-        <td><p>The currently selected radio button in the group, or <code>NULL</code>.</p>
-</td>
+        <td><a class="xref" href="Efl.Ui.ISelectable.html">Efl.Ui.ISelectable</a></td>
+        <td><span class="parametername">fallback</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -382,7 +497,7 @@ A value of -1 means that no button is selected. Only values associated with the 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">selected_value</span></td>
         <td><p>The value of the currently selected radio button, or -1.</p>
 </td>
@@ -424,13 +539,13 @@ If the button was not registered in the group the call is ignored. If the button
   </h3>
   
   
-  <h4 id="Efl_Ui_RadioGroupImpl_ValueChangedEvt" data-uid="Efl.Ui.RadioGroupImpl.ValueChangedEvt">ValueChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Emitted each time the <code>selected_value</code> changes. The event information contains the <a class="xref" href="Efl.Ui.Radio.html#Efl_Ui_Radio_StateValue">Efl.Ui.Radio.StateValue</a> of the newly selected button or -1 if no button is now selected.</p>
+  <h4 id="Efl_Ui_RadioGroupImpl_SelectionChangedEvent" data-uid="Efl.Ui.RadioGroupImpl.SelectionChangedEvent">SelectionChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted when there is a change in the selection state. This event will collect all the item selection change events that are happening within one loop iteration. This means, you will only get this event once, even if a lot of items have changed. If you are interested in detailed changes, subscribe to the individual <a class="xref" href="Efl.Ui.ISelectable.html#Efl_Ui_ISelectable_SelectedChangedEvent">Efl.Ui.ISelectable.SelectedChangedEvent</a> events of each item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IRadioGroupValueChangedEvt_Args&gt; ValueChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler SelectionChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -442,14 +557,43 @@ If the button was not registered in the group the call is ignored. If the button
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IRadioGroupValueChangedEvt_Args&gt;</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_RadioGroupImpl_ValueChangedEvent" data-uid="Efl.Ui.RadioGroupImpl.ValueChangedEvent">ValueChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Emitted each time the <code>selected_value</code> changes. The event information contains the <a class="xref" href="Efl.Ui.Radio.html#Efl_Ui_Radio_StateValue">Efl.Ui.Radio.StateValue</a> of the newly selected button or -1 if no button is now selected.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;RadioGroupValueChangedEventArgs&gt; ValueChangedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.RadioGroupValueChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.RadioGroupValueChangedEventArgs.html">Efl.Ui.RadioGroupValueChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Efl.Ui.IRadioGroup.html">Efl.Ui.IRadioGroup</a>
+  </div>
+  <div>
+      <a class="xref" href="Efl.Ui.ISingleSelectable.html">Efl.Ui.ISingleSelectable</a>
   </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>

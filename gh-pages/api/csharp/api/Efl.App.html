@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.App
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -79,7 +79,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
@@ -90,7 +90,7 @@
   
   <h5 id="Efl_App_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class App : Loop, ICommandLine, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class App : Loop, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -149,6 +149,42 @@ Do not call this constructor directly.</p>
         <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
         <td><span class="parametername">parent</span></td>
         <td><p>Parent instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_App__ctor_" data-uid="Efl.App.#ctor*"></a>
+  <h4 id="Efl_App__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.App.#ctor(System.IntPtr,Efl.Object)">App(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.App.html">Efl.App</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected App(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
 </td>
       </tr>
     </tbody>
@@ -215,92 +251,6 @@ This might differ from <a class="xref" href="Efl.App.html#Efl_App_GetEflVersion"
   </table>
   
   
-  <a id="Efl_App_Command_" data-uid="Efl.App.Command*"></a>
-  <h4 id="Efl_App_Command" data-uid="Efl.App.Command">Command</h4>
-  <div class="markdown level1 summary"><p>A commandline that encodes arguments in a command string. This command is unix shell-style, thus whitespace separates arguments unless escaped. Also a semi-colon ';', ampersand '&amp;', pipe/bar '|', hash '#', bracket, square brace, brace character ('(', ')', '[', ']', '{', '}'), exclamation mark '!',  backquote '`', greator or less than ('&gt;' '&lt;') character unless escaped or in quotes would cause args_count/value to not be generated properly, because it would force complex shell interpretation which will not be supported in evaluating the arg_count/value information, but the final shell may interpret this if this is executed via a command-line shell. To not be a complex shell command, it should be simple with paths, options and variable expansions, but nothing more complex involving the above unescaped characters.
-&quot;cat -option /path/file&quot; &quot;cat 'quoted argument'&quot; &quot;cat ~/path/escaped argument&quot; &quot;/bin/cat escaped argument <code>VARIABLE</code>&quot; etc.</p>
-<p>It should not try and use &quot;complex shell features&quot; if you want the arg_count and arg_value set to be correct after setting the command string. For example none of:</p>
-<p>&quot;VAR=x /bin/command &amp;&amp; /bin/othercommand &gt;&amp; /dev/null&quot; &quot;VAR=x /bin/command <code>/bin/othercommand</code> | /bin/cmd2 &amp;&amp; cmd3 &amp;&quot; etc.</p>
-<p>If you set the command the arg_count/value property contents can change and be completely re-evaluated by parsing the command string into an argument array set along with interpreting escapes back into individual argument strings.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Command { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_CommandArray_" data-uid="Efl.App.CommandArray*"></a>
-  <h4 id="Efl_App_CommandArray" data-uid="Efl.App.CommandArray">CommandArray</h4>
-  <div class="markdown level1 summary"><p>Use an array to fill this object
-Every element of a string is a argument.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Array&lt;Stringshare&gt; CommandArray { set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Eina.Array&lt;Eina.Stringshare&gt;</span></td>
-        <td><p>An array where every array field is an argument</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_CommandString_" data-uid="Efl.App.CommandString*"></a>
-  <h4 id="Efl_App_CommandString" data-uid="Efl.App.CommandString">CommandString</h4>
-  <div class="markdown level1 summary"><p>Use a string to fill this object
-The string will be split at every unescaped ' ', every resulting substring will be a new argument to the command line.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string CommandString { set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><p>A command in form of a string</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_App_EflVersion_" data-uid="Efl.App.EflVersion*"></a>
   <h4 id="Efl_App_EflVersion" data-uid="Efl.App.EflVersion">EflVersion</h4>
   <div class="markdown level1 summary"><p>Indicates the currently running version of EFL.
@@ -330,32 +280,6 @@ This might differ from <a class="xref" href="Efl.App.html#Efl_App_GetBuildEflVer
   </table>
   <h3 id="methods">Methods
   </h3>
-  
-  
-  <a id="Efl_App_CommandAccess_" data-uid="Efl.App.CommandAccess*"></a>
-  <h4 id="Efl_App_CommandAccess" data-uid="Efl.App.CommandAccess">CommandAccess()</h4>
-  <div class="markdown level1 summary"><p>Get the accessor which enables access to each argument that got passed to this object.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Accessor&lt;Stringshare&gt; CommandAccess()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Eina.Accessor&lt;Eina.Stringshare&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="Efl_App_GetAppMain_" data-uid="Efl.App.GetAppMain*"></a>
@@ -416,36 +340,6 @@ This might differ from <a class="xref" href="Efl.App.html#Efl_App_GetEflVersion"
   </table>
   
   
-  <a id="Efl_App_GetCommand_" data-uid="Efl.App.GetCommand*"></a>
-  <h4 id="Efl_App_GetCommand" data-uid="Efl.App.GetCommand">GetCommand()</h4>
-  <div class="markdown level1 summary"><p>A commandline that encodes arguments in a command string. This command is unix shell-style, thus whitespace separates arguments unless escaped. Also a semi-colon ';', ampersand '&amp;', pipe/bar '|', hash '#', bracket, square brace, brace character ('(', ')', '[', ']', '{', '}'), exclamation mark '!',  backquote '`', greator or less than ('&gt;' '&lt;') character unless escaped or in quotes would cause args_count/value to not be generated properly, because it would force complex shell interpretation which will not be supported in evaluating the arg_count/value information, but the final shell may interpret this if this is executed via a command-line shell. To not be a complex shell command, it should be simple with paths, options and variable expansions, but nothing more complex involving the above unescaped characters.
-&quot;cat -option /path/file&quot; &quot;cat 'quoted argument'&quot; &quot;cat ~/path/escaped argument&quot; &quot;/bin/cat escaped argument <code>VARIABLE</code>&quot; etc.</p>
-<p>It should not try and use &quot;complex shell features&quot; if you want the arg_count and arg_value set to be correct after setting the command string. For example none of:</p>
-<p>&quot;VAR=x /bin/command &amp;&amp; /bin/othercommand &gt;&amp; /dev/null&quot; &quot;VAR=x /bin/command <code>/bin/othercommand</code> | /bin/cmd2 &amp;&amp; cmd3 &amp;&quot; etc.</p>
-<p>If you set the command the arg_count/value property contents can change and be completely re-evaluated by parsing the command string into an argument array set along with interpreting escapes back into individual argument strings.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual string GetCommand()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_App_GetEflVersion_" data-uid="Efl.App.GetEflVersion*"></a>
   <h4 id="Efl_App_GetEflVersion" data-uid="Efl.App.GetEflVersion">GetEflVersion()</h4>
   <div class="markdown level1 summary"><p>Indicates the currently running version of EFL.
@@ -475,14 +369,14 @@ This might differ from <a class="xref" href="Efl.App.html#Efl_App_GetBuildEflVer
   </table>
   
   
-  <a id="Efl_App_OnPauseEvt_" data-uid="Efl.App.OnPauseEvt*"></a>
-  <h4 id="Efl_App_OnPauseEvt_EventArgs_" data-uid="Efl.App.OnPauseEvt(EventArgs)">OnPauseEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event PauseEvt.</p>
+  <a id="Efl_App_OnPauseEvent_" data-uid="Efl.App.OnPauseEvent*"></a>
+  <h4 id="Efl_App_OnPauseEvent_System_EventArgs_" data-uid="Efl.App.OnPauseEvent(System.EventArgs)">OnPauseEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event PauseEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnPauseEvt(EventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnPauseEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -495,237 +389,23 @@ This might differ from <a class="xref" href="Efl.App.html#Efl_App_GetBuildEflVer
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventArgs</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnResumeEvt_" data-uid="Efl.App.OnResumeEvt*"></a>
-  <h4 id="Efl_App_OnResumeEvt_EventArgs_" data-uid="Efl.App.OnResumeEvt(EventArgs)">OnResumeEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ResumeEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnResumeEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnSignalHupEvt_" data-uid="Efl.App.OnSignalHupEvt*"></a>
-  <h4 id="Efl_App_OnSignalHupEvt_EventArgs_" data-uid="Efl.App.OnSignalHupEvt(EventArgs)">OnSignalHupEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SignalHupEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSignalHupEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnSignalUsr1Evt_" data-uid="Efl.App.OnSignalUsr1Evt*"></a>
-  <h4 id="Efl_App_OnSignalUsr1Evt_EventArgs_" data-uid="Efl.App.OnSignalUsr1Evt(EventArgs)">OnSignalUsr1Evt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SignalUsr1Evt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSignalUsr1Evt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnSignalUsr2Evt_" data-uid="Efl.App.OnSignalUsr2Evt*"></a>
-  <h4 id="Efl_App_OnSignalUsr2Evt_EventArgs_" data-uid="Efl.App.OnSignalUsr2Evt(EventArgs)">OnSignalUsr2Evt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event SignalUsr2Evt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnSignalUsr2Evt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnStandbyEvt_" data-uid="Efl.App.OnStandbyEvt*"></a>
-  <h4 id="Efl_App_OnStandbyEvt_EventArgs_" data-uid="Efl.App.OnStandbyEvt(EventArgs)">OnStandbyEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event StandbyEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnStandbyEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_OnTerminateEvt_" data-uid="Efl.App.OnTerminateEvt*"></a>
-  <h4 id="Efl_App_OnTerminateEvt_EventArgs_" data-uid="Efl.App.OnTerminateEvt(EventArgs)">OnTerminateEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event TerminateEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnTerminateEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_App_SetCommandArray_" data-uid="Efl.App.SetCommandArray*"></a>
-  <h4 id="Efl_App_SetCommandArray_Eina_Array_Eina_Stringshare__" data-uid="Efl.App.SetCommandArray(Eina.Array{Eina.Stringshare})">SetCommandArray(Array&lt;Stringshare&gt;)</h4>
-  <div class="markdown level1 summary"><p>Use an array to fill this object
-Every element of a string is a argument.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool SetCommandArray(Array&lt;Stringshare&gt; array)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Eina.Array&lt;Eina.Stringshare&gt;</span></td>
-        <td><span class="parametername">array</span></td>
-        <td><p>An array where every array field is an argument</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>On success <code>true</code>, <code>false</code> otherwise</p>
+        <td><p>Event to raise.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_App_SetCommandString_" data-uid="Efl.App.SetCommandString*"></a>
-  <h4 id="Efl_App_SetCommandString_System_String_" data-uid="Efl.App.SetCommandString(System.String)">SetCommandString(String)</h4>
-  <div class="markdown level1 summary"><p>Use a string to fill this object
-The string will be split at every unescaped ' ', every resulting substring will be a new argument to the command line.</p>
+  <a id="Efl_App_OnResumeEvent_" data-uid="Efl.App.OnResumeEvent*"></a>
+  <h4 id="Efl_App_OnResumeEvent_System_EventArgs_" data-uid="Efl.App.OnResumeEvent(System.EventArgs)">OnResumeEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ResumeEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool SetCommandString(string str)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnResumeEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -738,25 +418,154 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">str</span></td>
-        <td><p>A command in form of a string</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
+  
+  
+  <a id="Efl_App_OnSignalHupEvent_" data-uid="Efl.App.OnSignalHupEvent*"></a>
+  <h4 id="Efl_App_OnSignalHupEvent_System_EventArgs_" data-uid="Efl.App.OnSignalHupEvent(System.EventArgs)">OnSignalHupEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SignalHupEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSignalHupEvent(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
+        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>On success <code>true</code>, <code>false</code> otherwise</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_App_OnSignalUsr1Event_" data-uid="Efl.App.OnSignalUsr1Event*"></a>
+  <h4 id="Efl_App_OnSignalUsr1Event_System_EventArgs_" data-uid="Efl.App.OnSignalUsr1Event(System.EventArgs)">OnSignalUsr1Event(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SignalUsr1Event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSignalUsr1Event(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_App_OnSignalUsr2Event_" data-uid="Efl.App.OnSignalUsr2Event*"></a>
+  <h4 id="Efl_App_OnSignalUsr2Event_System_EventArgs_" data-uid="Efl.App.OnSignalUsr2Event(System.EventArgs)">OnSignalUsr2Event(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SignalUsr2Event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSignalUsr2Event(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_App_OnStandbyEvent_" data-uid="Efl.App.OnStandbyEvent*"></a>
+  <h4 id="Efl_App_OnStandbyEvent_System_EventArgs_" data-uid="Efl.App.OnStandbyEvent(System.EventArgs)">OnStandbyEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event StandbyEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnStandbyEvent(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_App_OnTerminateEvent_" data-uid="Efl.App.OnTerminateEvent*"></a>
+  <h4 id="Efl_App_OnTerminateEvent_System_EventArgs_" data-uid="Efl.App.OnTerminateEvent(System.EventArgs)">OnTerminateEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event TerminateEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnTerminateEvent(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
 </td>
       </tr>
     </tbody>
@@ -765,14 +574,14 @@ The string will be split at every unescaped ' ', every resulting substring will 
   </h3>
   
   
-  <h4 id="Efl_App_PauseEvt" data-uid="Efl.App.PauseEvt">PauseEvt</h4>
+  <h4 id="Efl_App_PauseEvent" data-uid="Efl.App.PauseEvent">PauseEvent</h4>
   <div class="markdown level1 summary"><p>Called when the application is not going be displayed or otherwise used by a user for some time
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler PauseEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler PauseEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -784,21 +593,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_ResumeEvt" data-uid="Efl.App.ResumeEvt">ResumeEvt</h4>
+  <h4 id="Efl_App_ResumeEvent" data-uid="Efl.App.ResumeEvent">ResumeEvent</h4>
   <div class="markdown level1 summary"><p>Called before a window is rendered after a pause event
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler ResumeEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler ResumeEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -810,21 +619,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_SignalHupEvt" data-uid="Efl.App.SignalHupEvt">SignalHupEvt</h4>
+  <h4 id="Efl_App_SignalHupEvent" data-uid="Efl.App.SignalHupEvent">SignalHupEvent</h4>
   <div class="markdown level1 summary"><p>System specific, but on unix maps to SIGHUP signal to the process - only called on main loop object
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SignalHupEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler SignalHupEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -836,21 +645,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_SignalUsr1Evt" data-uid="Efl.App.SignalUsr1Evt">SignalUsr1Evt</h4>
+  <h4 id="Efl_App_SignalUsr1Event" data-uid="Efl.App.SignalUsr1Event">SignalUsr1Event</h4>
   <div class="markdown level1 summary"><p>System specific, but on unix maps to SIGUSR1 signal to the process - only called on main loop object
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SignalUsr1Evt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler SignalUsr1Event</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -862,21 +671,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_SignalUsr2Evt" data-uid="Efl.App.SignalUsr2Evt">SignalUsr2Evt</h4>
+  <h4 id="Efl_App_SignalUsr2Event" data-uid="Efl.App.SignalUsr2Event">SignalUsr2Event</h4>
   <div class="markdown level1 summary"><p>System specific, but on unix maps to SIGUSR2 signal to the process - only called on main loop object
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler SignalUsr2Evt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler SignalUsr2Event</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -888,21 +697,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_StandbyEvt" data-uid="Efl.App.StandbyEvt">StandbyEvt</h4>
+  <h4 id="Efl_App_StandbyEvent" data-uid="Efl.App.StandbyEvent">StandbyEvent</h4>
   <div class="markdown level1 summary"><p>Called when the application's windows are all destroyed
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler StandbyEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler StandbyEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -914,21 +723,21 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_App_TerminateEvt" data-uid="Efl.App.TerminateEvt">TerminateEvt</h4>
+  <h4 id="Efl_App_TerminateEvent" data-uid="Efl.App.TerminateEvent">TerminateEvent</h4>
   <div class="markdown level1 summary"><p>Called before starting the shutdown of the application
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler TerminateEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler TerminateEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -940,15 +749,12 @@ The string will be split at every unescaped ' ', every resulting substring will 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="Efl.Core.ICommandLine.html">Efl.Core.ICommandLine</a>
-  </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>
   </div>

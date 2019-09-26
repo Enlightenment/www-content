@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.CompositeModel
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -74,26 +74,18 @@
   <h1 id="Efl_CompositeModel" data-uid="Efl.CompositeModel" class="text-break">Class Efl.CompositeModel
   </h1>
   <div class="markdown level0 summary"><p>Efl model for all composite class which provide a unified API to set source of data.
-This class also provide an <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a> &quot;<code>child</code>.index&quot; that match the value of <a class="xref" href="Efl.CompositeModel.html#Efl_CompositeModel_Index">Efl.CompositeModel.Index</a>.</p>
+This class also provide an <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a> &quot;child.index&quot; that match the value of <a class="xref" href="Efl.CompositeModel.html#Efl_CompositeModel_Index">Efl.CompositeModel.Index</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_CompositeModel_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
     <div class="level4"><a class="xref" href="Efl.LoopModel.html">Efl.LoopModel</a></div>
     <div class="level5"><span class="xref"><b>Efl.CompositeModel</b></span></div>
-      <div class="level6"><a class="xref" href="Efl.BooleanModel.html">Efl.BooleanModel</a></div>
-      <div class="level6"><a class="xref" href="Efl.ContainerModel.html">Efl.ContainerModel</a></div>
-      <div class="level6"><a class="xref" href="Efl.FilterModel.html">Efl.FilterModel</a></div>
-      <div class="level6"><a class="xref" href="Efl.ViewModel.html">Efl.ViewModel</a></div>
+      <div class="level6"><a class="xref" href="Efl.Ui.ViewModel.html">Efl.Ui.ViewModel</a></div>
   </div>
   
   <h5 id="Efl_CompositeModel_syntax">Syntax</h5>
@@ -173,13 +165,50 @@ Do not call this constructor directly.</p>
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Efl_CompositeModel__ctor_" data-uid="Efl.CompositeModel.#ctor*"></a>
+  <h4 id="Efl_CompositeModel__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.CompositeModel.#ctor(System.IntPtr,Efl.Object)">CompositeModel(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.CompositeModel.html">Efl.CompositeModel</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected CompositeModel(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   
   
   <a id="Efl_CompositeModel_Index_" data-uid="Efl.CompositeModel.Index*"></a>
   <h4 id="Efl_CompositeModel_Index" data-uid="Efl.CompositeModel.Index">Index</h4>
-  <div class="markdown level1 summary"><p>Position of this object in the parent model.</p>
+  <div class="markdown level1 summary"><p>Position of this object in the parent model.
+It can only be set before the object is finalized but after the Model it composes is set (and only if that Model does not provide an index already). It can only be retrieved after the object has been finalized.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -196,8 +225,8 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
-        <td><p>Index of the object in the parent model. The index is uniq and start from zero.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
+        <td><p>Index of the object in the parent model. The index is unique and starts from zero.</p>
 </td>
       </tr>
     </tbody>
@@ -235,7 +264,8 @@ Do not call this constructor directly.</p>
   
   <a id="Efl_CompositeModel_GetIndex_" data-uid="Efl.CompositeModel.GetIndex*"></a>
   <h4 id="Efl_CompositeModel_GetIndex" data-uid="Efl.CompositeModel.GetIndex">GetIndex()</h4>
-  <div class="markdown level1 summary"><p>Get the index. It will only work after the object has been finalized.</p>
+  <div class="markdown level1 summary"><p>Position of this object in the parent model.
+It can only be set before the object is finalized but after the Model it composes is set (and only if that Model does not provide an index already). It can only be retrieved after the object has been finalized.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -252,8 +282,8 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
-        <td><p>Index of the object in the parent model. The index is uniq and start from zero.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
+        <td><p>Index of the object in the parent model. The index is unique and starts from zero.</p>
 </td>
       </tr>
     </tbody>
@@ -287,14 +317,14 @@ Do not call this constructor directly.</p>
   </table>
   
   
-  <a id="Efl_CompositeModel_OnModelChangedEvt_" data-uid="Efl.CompositeModel.OnModelChangedEvt*"></a>
-  <h4 id="Efl_CompositeModel_OnModelChangedEvt_Efl_Ui_IViewModelChangedEvt_Args_" data-uid="Efl.CompositeModel.OnModelChangedEvt(Efl.Ui.IViewModelChangedEvt_Args)">OnModelChangedEvt(IViewModelChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ModelChangedEvt.</p>
+  <a id="Efl_CompositeModel_OnModelChangedEvent_" data-uid="Efl.CompositeModel.OnModelChangedEvent*"></a>
+  <h4 id="Efl_CompositeModel_OnModelChangedEvent_Efl_Ui_ViewModelChangedEventArgs_" data-uid="Efl.CompositeModel.OnModelChangedEvent(Efl.Ui.ViewModelChangedEventArgs)">OnModelChangedEvent(ViewModelChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ModelChangedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnModelChangedEvt(IViewModelChangedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnModelChangedEvent(ViewModelChangedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -307,9 +337,10 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Ui.IViewModelChangedEvt_Args.html">Efl.Ui.IViewModelChangedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.Ui.ViewModelChangedEventArgs.html">Efl.Ui.ViewModelChangedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -317,7 +348,8 @@ Do not call this constructor directly.</p>
   
   <a id="Efl_CompositeModel_SetIndex_" data-uid="Efl.CompositeModel.SetIndex*"></a>
   <h4 id="Efl_CompositeModel_SetIndex_System_UInt32_" data-uid="Efl.CompositeModel.SetIndex(System.UInt32)">SetIndex(UInt32)</h4>
-  <div class="markdown level1 summary"><p>Set the index. It can only be set before the object is finalized, but after the Model it compose is set and only if that Model does not provide an index already.</p>
+  <div class="markdown level1 summary"><p>Position of this object in the parent model.
+It can only be set before the object is finalized but after the Model it composes is set (and only if that Model does not provide an index already). It can only be retrieved after the object has been finalized.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -335,9 +367,9 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">index</span></td>
-        <td><p>Index of the object in the parent model. The index is uniq and start from zero.</p>
+        <td><p>Index of the object in the parent model. The index is unique and starts from zero.</p>
 </td>
       </tr>
     </tbody>
@@ -375,13 +407,13 @@ Do not call this constructor directly.</p>
   </h3>
   
   
-  <h4 id="Efl_CompositeModel_ModelChangedEvt" data-uid="Efl.CompositeModel.ModelChangedEvt">ModelChangedEvt</h4>
+  <h4 id="Efl_CompositeModel_ModelChangedEvent" data-uid="Efl.CompositeModel.ModelChangedEvent">ModelChangedEvent</h4>
   <div class="markdown level1 summary"><p>Event dispatched when a new model is set.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IViewModelChangedEvt_Args&gt; ModelChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ViewModelChangedEventArgs&gt; ModelChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -393,8 +425,9 @@ Do not call this constructor directly.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IViewModelChangedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.ViewModelChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.ViewModelChangedEventArgs.html">Efl.Ui.ViewModelChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>

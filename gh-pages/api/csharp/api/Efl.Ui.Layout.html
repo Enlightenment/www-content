@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.Layout
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,14 +73,15 @@
   
   <h1 id="Efl_Ui_Layout" data-uid="Efl.Ui.Layout" class="text-break">Class Efl.Ui.Layout
   </h1>
-  <div class="markdown level0 summary"><p>Elementary layout class
-When loading layouts from a file, use the <a class="xref" href="Efl.IFile.html#Efl_IFile_Key">Efl.IFile.Key</a> property to specify the group that the data belongs to, in case it's an EET file (including Edje files).
+  <div class="markdown level0 summary"><p>EFL layout widget class.
+When loading layouts from a file, use the <a class="xref" href="Efl.IFile.html#Efl_IFile_Key">Efl.IFile.Key</a> property to specify the group that the data belongs to, in case it's an EET file (including Edje files).</p>
+<p>By default, layouts do not apply the finger_size global configuration value when calculating their geometries.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
@@ -93,7 +94,7 @@ When loading layouts from a file, use the <a class="xref" href="Efl.IFile.html#E
   
   <h5 id="Efl_Ui_Layout_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Layout : LayoutBase, IPointer, IEvents, IColor, IHint, IMapping, IInterface, II18n, IPart, IComponent, IEntity, IStack, IObject, IDnd, IL10n, IPropertyBind, ISelection, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IFile, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Layout : LayoutBase, IPointer, IColor, IEntity, IHint, IMapping, IStack, IInterface, IPart, IPropertyBind, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IFile, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -155,9 +156,45 @@ Do not call this constructor directly.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">style</span></td>
         <td><p>The widget style to use. See <a class="xref" href="Efl.Ui.Widget.html#Efl_Ui_Widget_SetStyle_System_String_">Efl.Ui.Widget.SetStyle(System.String)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Layout__ctor_" data-uid="Efl.Ui.Layout.#ctor*"></a>
+  <h4 id="Efl_Ui_Layout__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.Layout.#ctor(System.IntPtr,Efl.Object)">Layout(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Layout(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
 </td>
       </tr>
     </tbody>
@@ -168,8 +205,9 @@ Do not call this constructor directly.</p>
   
   <a id="Efl_Ui_Layout_File_" data-uid="Efl.Ui.Layout.File*"></a>
   <h4 id="Efl_Ui_Layout_File" data-uid="Efl.Ui.Layout.File">File</h4>
-  <div class="markdown level1 summary"><p>Retrieve the file path from where an object is to fetch the data.
-You must not modify the strings on the returned pointers.
+  <div class="markdown level1 summary"><p>The file path from where an object will fetch the data.
+If file is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.</p>
+<p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -187,7 +225,7 @@ You must not modify the strings on the returned pointers.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>The file path.</p>
 </td>
       </tr>
@@ -197,8 +235,8 @@ You must not modify the strings on the returned pointers.
   
   <a id="Efl_Ui_Layout_Key_" data-uid="Efl.Ui.Layout.Key*"></a>
   <h4 id="Efl_Ui_Layout_Key" data-uid="Efl.Ui.Layout.Key">Key</h4>
-  <div class="markdown level1 summary"><p>Get the previously-set key which corresponds to the target data within a file.
-Some filetypes can contain multiple data streams which are indexed by a key. Use this property for such cases (See for example <a class="xref" href="Efl.Ui.Image.html">Efl.Ui.Image</a> or <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a>).</p>
+  <div class="markdown level1 summary"><p>The key which corresponds to the target data within a file.
+Some file types can contain multiple data streams which are indexed by a key. Use this property for such cases (See for example <a class="xref" href="Efl.Ui.Image.html">Efl.Ui.Image</a> or <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a>).</p>
 <p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
@@ -217,7 +255,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>The group that the data belongs to. See the class documentation for particular implementations of this interface to see how this property is used.</p>
 </td>
       </tr>
@@ -227,7 +265,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_Loaded_" data-uid="Efl.Ui.Layout.Loaded*"></a>
   <h4 id="Efl_Ui_Layout_Loaded" data-uid="Efl.Ui.Layout.Loaded">Loaded</h4>
-  <div class="markdown level1 summary"><p>Get the load state of the object.
+  <div class="markdown level1 summary"><p>The load state of the object.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -245,7 +283,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> if the object is loaded, <code>false</code> otherwise.</p>
 </td>
       </tr>
@@ -255,7 +293,8 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_Mmap_" data-uid="Efl.Ui.Layout.Mmap*"></a>
   <h4 id="Efl_Ui_Layout_Mmap" data-uid="Efl.Ui.Layout.Mmap">Mmap</h4>
-  <div class="markdown level1 summary"><p>Get the mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
+  <div class="markdown level1 summary"><p>The mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
+If mmap is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -285,8 +324,9 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_GetFile_" data-uid="Efl.Ui.Layout.GetFile*"></a>
   <h4 id="Efl_Ui_Layout_GetFile" data-uid="Efl.Ui.Layout.GetFile">GetFile()</h4>
-  <div class="markdown level1 summary"><p>Retrieve the file path from where an object is to fetch the data.
-You must not modify the strings on the returned pointers.
+  <div class="markdown level1 summary"><p>The file path from where an object will fetch the data.
+If file is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.</p>
+<p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -304,7 +344,7 @@ You must not modify the strings on the returned pointers.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>The file path.</p>
 </td>
       </tr>
@@ -314,8 +354,8 @@ You must not modify the strings on the returned pointers.
   
   <a id="Efl_Ui_Layout_GetKey_" data-uid="Efl.Ui.Layout.GetKey*"></a>
   <h4 id="Efl_Ui_Layout_GetKey" data-uid="Efl.Ui.Layout.GetKey">GetKey()</h4>
-  <div class="markdown level1 summary"><p>Get the previously-set key which corresponds to the target data within a file.
-Some filetypes can contain multiple data streams which are indexed by a key. Use this property for such cases (See for example <a class="xref" href="Efl.Ui.Image.html">Efl.Ui.Image</a> or <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a>).</p>
+  <div class="markdown level1 summary"><p>The key which corresponds to the target data within a file.
+Some file types can contain multiple data streams which are indexed by a key. Use this property for such cases (See for example <a class="xref" href="Efl.Ui.Image.html">Efl.Ui.Image</a> or <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a>).</p>
 <p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
@@ -334,7 +374,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><p>The group that the data belongs to. See the class documentation for particular implementations of this interface to see how this property is used.</p>
 </td>
       </tr>
@@ -344,7 +384,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_GetLoaded_" data-uid="Efl.Ui.Layout.GetLoaded*"></a>
   <h4 id="Efl_Ui_Layout_GetLoaded" data-uid="Efl.Ui.Layout.GetLoaded">GetLoaded()</h4>
-  <div class="markdown level1 summary"><p>Get the load state of the object.
+  <div class="markdown level1 summary"><p>The load state of the object.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -362,7 +402,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> if the object is loaded, <code>false</code> otherwise.</p>
 </td>
       </tr>
@@ -372,7 +412,8 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_GetMmap_" data-uid="Efl.Ui.Layout.GetMmap*"></a>
   <h4 id="Efl_Ui_Layout_GetMmap" data-uid="Efl.Ui.Layout.GetMmap">GetMmap()</h4>
-  <div class="markdown level1 summary"><p>Get the mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
+  <div class="markdown level1 summary"><p>The mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
+If mmap is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -430,8 +471,9 @@ In the case where <a class="xref" href="Efl.IFile.html#Efl_IFile_SetFile_System_
   
   <a id="Efl_Ui_Layout_SetFile_" data-uid="Efl.Ui.Layout.SetFile*"></a>
   <h4 id="Efl_Ui_Layout_SetFile_System_String_" data-uid="Efl.Ui.Layout.SetFile(System.String)">SetFile(String)</h4>
-  <div class="markdown level1 summary"><p>Set the file path from where an object will fetch the data.
-If file is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.
+  <div class="markdown level1 summary"><p>The file path from where an object will fetch the data.
+If file is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.</p>
+<p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -450,7 +492,7 @@ If file is set during object construction, the object will automatically call <a
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">file</span></td>
         <td><p>The file path.</p>
 </td>
@@ -477,8 +519,9 @@ If file is set during object construction, the object will automatically call <a
   
   <a id="Efl_Ui_Layout_SetKey_" data-uid="Efl.Ui.Layout.SetKey*"></a>
   <h4 id="Efl_Ui_Layout_SetKey_System_String_" data-uid="Efl.Ui.Layout.SetKey(System.String)">SetKey(String)</h4>
-  <div class="markdown level1 summary"><p>Set the key which corresponds to the target data within a file.
-Some filetypes can contain multiple data streams which are indexed by a key. Use this property for such cases.
+  <div class="markdown level1 summary"><p>The key which corresponds to the target data within a file.
+Some file types can contain multiple data streams which are indexed by a key. Use this property for such cases (See for example <a class="xref" href="Efl.Ui.Image.html">Efl.Ui.Image</a> or <a class="xref" href="Efl.Ui.Layout.html">Efl.Ui.Layout</a>).</p>
+<p>You must not modify the strings on the returned pointers.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -497,7 +540,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">key</span></td>
         <td><p>The group that the data belongs to. See the class documentation for particular implementations of this interface to see how this property is used.</p>
 </td>
@@ -508,7 +551,7 @@ Some filetypes can contain multiple data streams which are indexed by a key. Use
   
   <a id="Efl_Ui_Layout_SetMmap_" data-uid="Efl.Ui.Layout.SetMmap*"></a>
   <h4 id="Efl_Ui_Layout_SetMmap_Eina_File_" data-uid="Efl.Ui.Layout.SetMmap(Eina.File)">SetMmap(File)</h4>
-  <div class="markdown level1 summary"><p>Set the mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
+  <div class="markdown level1 summary"><p>The mmaped file from where an object will fetch the real data (it must be an <a class="xref" href="Eina.File.html">Eina.File</a>).
 If mmap is set during object construction, the object will automatically call <a class="xref" href="Efl.IFile.html#Efl_IFile_Load">Efl.IFile.Load()</a> during the finalize phase of construction.
 (Since EFL 1.22)</p>
 </div>
@@ -570,10 +613,10 @@ In the case where <a class="xref" href="Efl.IFile.html#Efl_IFile_SetMmap_Eina_Fi
       <a class="xref" href="Efl.Canvas.IPointer.html">Efl.Canvas.IPointer</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gesture.IEvents.html">Efl.Gesture.IEvents</a>
+      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
+      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
   </div>
   <div>
       <a class="xref" href="Efl.Gfx.IHint.html">Efl.Gfx.IHint</a>
@@ -582,37 +625,16 @@ In the case where <a class="xref" href="Efl.IFile.html#Efl_IFile_SetMmap_Eina_Fi
       <a class="xref" href="Efl.Gfx.IMapping.html">Efl.Gfx.IMapping</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
+      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a>
+      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
   </div>
   <div>
       <a class="xref" href="Efl.IPart.html">Efl.IPart</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Access.IComponent.html">Efl.Access.IComponent</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.IObject.html">Efl.Access.IObject</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IDnd.html">Efl.Ui.IDnd</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IL10n.html">Efl.Ui.IL10n</a>
-  </div>
-  <div>
       <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.ISelection.html">Efl.Ui.ISelection</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a>

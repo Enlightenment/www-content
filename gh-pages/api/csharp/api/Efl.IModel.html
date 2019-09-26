@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.IModel
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,14 +73,11 @@
   
   <h1 id="Efl_IModel" data-uid="Efl.IModel" class="text-break">Interface Efl.IModel
   </h1>
-  <div class="markdown level0 summary"><p>Efl model interface</p>
+  <div class="markdown level0 summary"><p>Basic Model abstraction.
+A model in EFL can have a set of key-value properties, where key can only be a string. The value can be anything within an Eina_Value. If a property is not yet available EAGAIN is returned.</p>
+<p>Additionally a model can have a list of children. The fetching of the children is asynchronous, this has the advantage of having as few data sets as possible in the memory itself.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_IModel_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_IModel_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -92,8 +89,8 @@
   
   <a id="Efl_IModel_ChildrenCount_" data-uid="Efl.IModel.ChildrenCount*"></a>
   <h4 id="Efl_IModel_ChildrenCount" data-uid="Efl.IModel.ChildrenCount">ChildrenCount</h4>
-  <div class="markdown level1 summary"><p>Get children count.
-When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can be used to get the number of children. <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can also be used before calling <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a> so a valid range is known. Event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildrenCountChangedEvt">Efl.IModel.ChildrenCountChangedEvt</a> is emitted when count is finished.</p>
+  <div class="markdown level1 summary"><p>Number of children.
+After @[.properties,changed] is emitted, <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can be used to get the number of children. <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can also be used before calling <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a> so a valid range is known. Event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildrenCountChangedEvent">Efl.IModel.ChildrenCountChangedEvent</a> is emitted when count is finished.</p>
 <p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -111,7 +108,7 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><p>Current known children count</p>
 </td>
       </tr>
@@ -122,8 +119,8 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
   <a id="Efl_IModel_Properties_" data-uid="Efl.IModel.Properties*"></a>
   <h4 id="Efl_IModel_Properties" data-uid="Efl.IModel.Properties">Properties</h4>
   <div class="markdown level1 summary"><p>Get properties from model.
-properties_get is due to provide callers a way the fetch the current properties implemented/used by the model. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a> will be raised to notify listeners of any modifications in the properties.</p>
-<p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a>.</p>
+Properties_get is due to provide callers a way the fetch the current properties implemented/used by the model. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a> will be raised to notify listeners of any modifications in the properties.</p>
+<p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -153,7 +150,7 @@ properties_get is due to provide callers a way the fetch the current properties 
   <a id="Efl_IModel_AddChild_" data-uid="Efl.IModel.AddChild*"></a>
   <h4 id="Efl_IModel_AddChild" data-uid="Efl.IModel.AddChild">AddChild()</h4>
   <div class="markdown level1 summary"><p>Add a new child.
-Add a new child, possibly dummy, depending on the implementation, of a internal keeping. When the child is effectively added the event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildAddedEvt">Efl.IModel.ChildAddedEvt</a> is then raised and the new child is kept along with other children.</p>
+Add a new child, possibly dummy, depending on the implementation, of a internal keeping. When the child is effectively added the event <span class="text-muted">Efl.IModel.ChildAddedEvent (object still in beta stage)</span> is then raised and the new child is kept along with other children.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -181,7 +178,7 @@ Add a new child, possibly dummy, depending on the implementation, of a internal 
   <a id="Efl_IModel_DelChild_" data-uid="Efl.IModel.DelChild*"></a>
   <h4 id="Efl_IModel_DelChild_Efl_Object_" data-uid="Efl.IModel.DelChild(Efl.Object)">DelChild(Object)</h4>
   <div class="markdown level1 summary"><p>Remove a child.
-Remove a child of a internal keeping. When the child is effectively removed the event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildRemovedEvt">Efl.IModel.ChildRemovedEvt</a> is then raised to give a chance for listeners to perform any cleanup and/or update references.</p>
+Remove a child of a internal keeping. When the child is effectively removed the event <span class="text-muted">Efl.IModel.ChildRemovedEvent (object still in beta stage)</span> is then raised to give a chance for listeners to perform any cleanup and/or update references.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -210,8 +207,8 @@ Remove a child of a internal keeping. When the child is effectively removed the 
   
   <a id="Efl_IModel_GetChildrenCount_" data-uid="Efl.IModel.GetChildrenCount*"></a>
   <h4 id="Efl_IModel_GetChildrenCount" data-uid="Efl.IModel.GetChildrenCount">GetChildrenCount()</h4>
-  <div class="markdown level1 summary"><p>Get children count.
-When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can be used to get the number of children. <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can also be used before calling <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a> so a valid range is known. Event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildrenCountChangedEvt">Efl.IModel.ChildrenCountChangedEvt</a> is emitted when count is finished.</p>
+  <div class="markdown level1 summary"><p>Number of children.
+After @[.properties,changed] is emitted, <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can be used to get the number of children. <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenCount">Efl.IModel.GetChildrenCount()</a> can also be used before calling <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a> so a valid range is known. Event <a class="xref" href="Efl.IModel.html#Efl_IModel_ChildrenCountChangedEvent">Efl.IModel.ChildrenCountChangedEvent</a> is emitted when count is finished.</p>
 <p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_GetChildrenSlice_System_UInt32_System_UInt32_">Efl.IModel.GetChildrenSlice(System.UInt32, System.UInt32)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -229,7 +226,7 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><p>Current known children count</p>
 </td>
       </tr>
@@ -263,13 +260,13 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">start</span></td>
         <td><p>Range begin - start from here.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">count</span></td>
         <td><p>Range size. If count is 0, start is ignored.</p>
 </td>
@@ -314,19 +311,19 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">start</span></td>
         <td><p>Range begin - start from here.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.UInt32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">System.UInt32</a></td>
         <td><span class="parametername">count</span></td>
         <td><p>Range size. If count is 0, start is ignored.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">System.Threading.CancellationToken</a></td>
         <td><span class="parametername">token</span></td>
         <td><p>Token to notify the async operation of external request to cancel.</p>
 </td>
@@ -354,8 +351,8 @@ When efl_model_load is completed <a class="xref" href="Efl.IModel.html#Efl_IMode
   <a id="Efl_IModel_GetProperties_" data-uid="Efl.IModel.GetProperties*"></a>
   <h4 id="Efl_IModel_GetProperties" data-uid="Efl.IModel.GetProperties">GetProperties()</h4>
   <div class="markdown level1 summary"><p>Get properties from model.
-properties_get is due to provide callers a way the fetch the current properties implemented/used by the model. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a> will be raised to notify listeners of any modifications in the properties.</p>
-<p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a>.</p>
+Properties_get is due to provide callers a way the fetch the current properties implemented/used by the model. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a> will be raised to notify listeners of any modifications in the properties.</p>
+<p>See also <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -383,8 +380,8 @@ properties_get is due to provide callers a way the fetch the current properties 
   <a id="Efl_IModel_GetProperty_" data-uid="Efl.IModel.GetProperty*"></a>
   <h4 id="Efl_IModel_GetProperty_System_String_" data-uid="Efl.IModel.GetProperty(System.String)">GetProperty(String)</h4>
   <div class="markdown level1 summary"><p>Retrieve the value of a given property name.
-At this point the caller is free to get values from properties. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a> may be raised to notify listeners of the property/value.</p>
-<p>See <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperties">Efl.IModel.GetProperties()</a>, <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a></p>
+At this point the caller is free to get values from properties. The event <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a> may be raised to notify listeners of the property/value.</p>
+<p>See <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperties">Efl.IModel.GetProperties()</a>, <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a></p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -402,7 +399,7 @@ At this point the caller is free to get values from properties. The event <a cla
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Property name</p>
 </td>
@@ -430,7 +427,7 @@ At this point the caller is free to get values from properties. The event <a cla
   <a id="Efl_IModel_GetPropertyReady_" data-uid="Efl.IModel.GetPropertyReady*"></a>
   <h4 id="Efl_IModel_GetPropertyReady_System_String_" data-uid="Efl.IModel.GetPropertyReady(System.String)">GetPropertyReady(String)</h4>
   <div class="markdown level1 summary"><p>Get a future value when it changes to something that is not error:EAGAIN
-<a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a> can return an error with code EAGAIN when it doesn't have any meaningful value. To make life easier, this future will resolve when the error:EAGAIN disapears. Either into a failed future in case the error code changed to something else or a success with the value of the property whenever the property finally changes.</p>
+<a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a> can return an error with code EAGAIN when it doesn't have any meaningful value. To make life easier, this future will resolve when the error:EAGAIN disappears. Either into a failed future in case the error code changed to something else or a success with the value of the property whenever the property finally changes.</p>
 <p>The future can also be canceled if the model itself gets destroyed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -449,7 +446,7 @@ At this point the caller is free to get values from properties. The event <a cla
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Property name.</p>
 </td>
@@ -494,13 +491,13 @@ At this point the caller is free to get values from properties. The event <a cla
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Property name.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">System.Threading.CancellationToken</a></td>
         <td><span class="parametername">token</span></td>
         <td><p>Token to notify the async operation of external request to cancel.</p>
 </td>
@@ -528,9 +525,9 @@ At this point the caller is free to get values from properties. The event <a cla
   <a id="Efl_IModel_SetProperty_" data-uid="Efl.IModel.SetProperty*"></a>
   <h4 id="Efl_IModel_SetProperty_System_String_Eina_Value_" data-uid="Efl.IModel.SetProperty(System.String,Eina.Value)">SetProperty(String, Value)</h4>
   <div class="markdown level1 summary"><p>Set a property value of a given property name.
-The caller must ensure to call at least efl_model_prop_list before being able to see/set properties. This function sets a new property value into given property name. Once the operation is completed the concrete implementation should raise <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a> event in order to notify listeners of the new value of the property.</p>
+The caller must first read <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperties">Efl.IModel.GetProperties()</a> to obtain the list of available properties before being able to access them through <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a>. This function sets a new property value into given property name. Once the operation is completed the concrete implementation should raise <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a> event in order to notify listeners of the new value of the property.</p>
 <p>If the model doesn't have the property then there are two possibilities, either raise an error or create the new property in model</p>
-<p>See <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a>, <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvt">Efl.IModel.PropertiesChangedEvt</a></p>
+<p>See <a class="xref" href="Efl.IModel.html#Efl_IModel_GetProperty_System_String_">Efl.IModel.GetProperty(System.String)</a>, <a class="xref" href="Efl.IModel.html#Efl_IModel_PropertiesChangedEvent">Efl.IModel.PropertiesChangedEvent</a></p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -548,7 +545,7 @@ The caller must ensure to call at least efl_model_prop_list before being able to
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Property name</p>
 </td>
@@ -572,7 +569,7 @@ The caller must ensure to call at least efl_model_prop_list before being able to
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Future.html">Eina.Future</a></td>
-        <td><p>Return an error in case the property could not be set, the value that was set otherwise.</p>
+        <td><p>Return an error in case the property could not be set, or the value that was set otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -599,7 +596,7 @@ The caller must ensure to call at least efl_model_prop_list before being able to
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Property name</p>
 </td>
@@ -611,7 +608,7 @@ The caller must ensure to call at least efl_model_prop_list before being able to
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">System.Threading.CancellationToken</a></td>
         <td><span class="parametername">token</span></td>
         <td><p>Token to notify the async operation of external request to cancel.</p>
 </td>
@@ -638,63 +635,13 @@ The caller must ensure to call at least efl_model_prop_list before being able to
   </h3>
   
   
-  <h4 id="Efl_IModel_ChildAddedEvt" data-uid="Efl.IModel.ChildAddedEvt">ChildAddedEvt</h4>
-  <div class="markdown level1 summary"><p>Event dispatched when new child is added.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IModelChildAddedEvt_Args&gt; ChildAddedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.IModelChildAddedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_IModel_ChildRemovedEvt" data-uid="Efl.IModel.ChildRemovedEvt">ChildRemovedEvt</h4>
-  <div class="markdown level1 summary"><p>Event dispatched when child is removed.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IModelChildRemovedEvt_Args&gt; ChildRemovedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.IModelChildRemovedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_IModel_ChildrenCountChangedEvt" data-uid="Efl.IModel.ChildrenCountChangedEvt">ChildrenCountChangedEvt</h4>
+  <h4 id="Efl_IModel_ChildrenCountChangedEvent" data-uid="Efl.IModel.ChildrenCountChangedEvent">ChildrenCountChangedEvent</h4>
   <div class="markdown level1 summary"><p>Event dispatched when children count is finished.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ChildrenCountChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler ChildrenCountChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -706,20 +653,20 @@ The caller must ensure to call at least efl_model_prop_list before being able to
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_IModel_PropertiesChangedEvt" data-uid="Efl.IModel.PropertiesChangedEvt">PropertiesChangedEvt</h4>
+  <h4 id="Efl_IModel_PropertiesChangedEvent" data-uid="Efl.IModel.PropertiesChangedEvent">PropertiesChangedEvent</h4>
   <div class="markdown level1 summary"><p>Event dispatched when properties list is available.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IModelPropertiesChangedEvt_Args&gt; PropertiesChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ModelPropertiesChangedEventArgs&gt; PropertiesChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -731,8 +678,9 @@ The caller must ensure to call at least efl_model_prop_list before being able to
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.IModelPropertiesChangedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.ModelPropertiesChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.ModelPropertiesChangedEventArgs.html">Efl.ModelPropertiesChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>

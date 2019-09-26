@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.Popup
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,17 +73,18 @@
   
   <h1 id="Efl_Ui_Popup" data-uid="Efl.Ui.Popup" class="text-break">Class Efl.Ui.Popup
   </h1>
-  <div class="markdown level0 summary"><p>EFL UI popup class</p>
+  <div class="markdown level0 summary"><p>A styled container widget which overlays a window's contents.
+The Popup widget is a theme-capable container which can be used for various purposes. Regular contents can be set using the <a class="xref" href="Efl.IContent.html">Efl.IContent</a> interface, or basic scrollable contents can be set through the <span class="text-muted">Efl.Ui.IWidgetScrollableContent (object still in beta stage)</span> mixin API. For contents which should be scrollable but require more fine-grained tuning, it may be necessary for users to set up and provide their own scroller object such as <a class="xref" href="Efl.Ui.Scroller.html">Efl.Ui.Scroller</a>.</p>
+<p>A Popup widget will create an overlay for the window contents. This overlay is an <a class="xref" href="Efl.Ui.PopupPartBackwall.html">Efl.Ui.PopupPartBackwall</a> object, which provides functionality for passing events through to the main window while the Popup is active as well as the ability to set background images for the Popup.</p>
+<p>By default, a Popup is positioned by the user through the <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Position">Efl.Gfx.IEntity.Position</a> property. This behavior can be altered by using the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> and <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Anchor">Efl.Ui.Popup.Anchor</a> properties. Setting the <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Position">Efl.Gfx.IEntity.Position</a> property directly will unset both the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> and <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Anchor">Efl.Ui.Popup.Anchor</a> properties, and vice versa.</p>
+<p>By default, a Popup will size itself based on the minimum size of its contents through the <a class="xref" href="Efl.Gfx.IHint.html">Efl.Gfx.IHint</a> interface. A Popup will never size itself smaller than the minimum size of its contents, but by manually setting the <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Size">Efl.Gfx.IEntity.Size</a> property or the <a class="xref" href="Efl.Gfx.IHint.html#Efl_Gfx_IHint_HintSizeMin">Efl.Gfx.IHint.HintSizeMin</a> property, a larger size can be specified.</p>
+<p>Users can set a given Popup widget to close automatically after a specified time using the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_ClosingTimeout">Efl.Ui.Popup.ClosingTimeout</a> property.</p>
+<p>For a Popup with a more specialized purpose, see <a class="xref" href="Efl.Ui.AlertPopup.html">Efl.Ui.AlertPopup</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_Popup_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
@@ -93,12 +94,11 @@
     <div class="level7"><a class="xref" href="Efl.Ui.LayoutBase.html">Efl.Ui.LayoutBase</a></div>
     <div class="level8"><span class="xref"><b>Efl.Ui.Popup</b></span></div>
       <div class="level9"><a class="xref" href="Efl.Ui.AlertPopup.html">Efl.Ui.AlertPopup</a></div>
-      <div class="level9"><a class="xref" href="Efl.Ui.AnchorPopup.html">Efl.Ui.AnchorPopup</a></div>
   </div>
   
   <h5 id="Efl_Ui_Popup_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Popup : LayoutBase, IPointer, IEvents, IColor, IHint, IMapping, IInterface, II18n, IPart, IComponent, IEntity, IStack, IObject, IDnd, IL10n, IPropertyBind, ISelection, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IContent, ILayer, IWidgetFocusManager, IManager, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Popup : LayoutBase, IPointer, IColor, IEntity, IHint, IMapping, IStack, IInterface, IPart, IPropertyBind, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IContent, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -160,9 +160,45 @@ Do not call this constructor directly.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">style</span></td>
         <td><p>The widget style to use. See <a class="xref" href="Efl.Ui.Widget.html#Efl_Ui_Widget_SetStyle_System_String_">Efl.Ui.Widget.SetStyle(System.String)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup__ctor_" data-uid="Efl.Ui.Popup.#ctor*"></a>
+  <h4 id="Efl_Ui_Popup__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.Popup.#ctor(System.IntPtr,Efl.Object)">Popup(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.Popup.html">Efl.Ui.Popup</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Popup(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
 </td>
       </tr>
     </tbody>
@@ -173,7 +209,8 @@ Do not call this constructor directly.</p>
   
   <a id="Efl_Ui_Popup_Align_" data-uid="Efl.Ui.Popup.Align*"></a>
   <h4 id="Efl_Ui_Popup_Align" data-uid="Efl.Ui.Popup.Align">Align</h4>
-  <div class="markdown level1 summary"><p>Get the current popup alignment.</p>
+  <div class="markdown level1 summary"><p>The align property specifies a Popup's current positioning relative to its anchor.
+When set, this property will override any user-provided value for the widget's <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Position">Efl.Gfx.IEntity.Position</a> property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -191,7 +228,64 @@ Do not call this constructor directly.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
-        <td><p>Alignment type</p>
+        <td><p>Alignment of the Popup relative to its anchor. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_None">Efl.Ui.PopupAlign.None</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_AlignPriority_" data-uid="Efl.Ui.Popup.AlignPriority*"></a>
+  <h4 id="Efl_Ui_Popup_AlignPriority" data-uid="Efl.Ui.Popup.AlignPriority">AlignPriority</h4>
+  <div class="markdown level1 summary"><p>This is the priority in which alignments will be tested using the anchor object if the value of <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> is determined to be invalid. If a given alignment would result in the popup being partially or fully outside the visible area of the window, it is deemed invalid, and the next alignment is tested until either the priority list is exhausted or a usable alignment is found.
+An alignment will also be deemed invalid if the popup occludes its anchor object, except if <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Center">Efl.Ui.PopupAlign.Center</a> is specified.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (PopupAlign, PopupAlign, PopupAlign, PopupAlign, PopupAlign)AlignPriority { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;Efl.Ui.PopupAlign, Efl.Ui.PopupAlign, Efl.Ui.PopupAlign, Efl.Ui.PopupAlign, Efl.Ui.PopupAlign&gt;</span></td>
+        <td><p>First alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Top">Efl.Ui.PopupAlign.Top</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_Anchor_" data-uid="Efl.Ui.Popup.Anchor*"></a>
+  <h4 id="Efl_Ui_Popup_Anchor" data-uid="Efl.Ui.Popup.Anchor">Anchor</h4>
+  <div class="markdown level1 summary"><p>The anchor object is the reference object for positioning a Popup using the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> and <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAlignPriority_Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__">Efl.Ui.Popup.GetAlignPriority(out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign)</a> properties.
+A Popup will recalculate its alignment relative to its anchor and change its position when: - the anchor object is moved (unless the anchor is a window) - the anchor object is resized - the Popup is resized - the parent window is resized</p>
+<p>If <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAnchor">Efl.Ui.Popup.GetAnchor()</a> returns <code>NULL</code>, the anchor is the parent window of the Popup. If the anchor object is set to <code>NULL</code>, the Popup will no longer recalculate its alignment or change its position under any circumstance. If the Popup is moved by using <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_SetPosition_Eina_Position2D_">Efl.Gfx.IEntity.SetPosition(Eina.Position2D)</a>, <code>anchor</code> is set <code>NULL</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Object Anchor { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Canvas.Object.html">Efl.Canvas.Object</a></td>
+        <td><p>The object which Popup is following. By default this is <code>NULL</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -200,7 +294,7 @@ Do not call this constructor directly.</p>
   
   <a id="Efl_Ui_Popup_BackwallPart_" data-uid="Efl.Ui.Popup.BackwallPart*"></a>
   <h4 id="Efl_Ui_Popup_BackwallPart" data-uid="Efl.Ui.Popup.BackwallPart">BackwallPart</h4>
-  <div class="markdown level1 summary"><p>A backwall behind the popup.</p>
+  <div class="markdown level1 summary"><p>A backwall behind the Popup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -224,16 +318,15 @@ Do not call this constructor directly.</p>
   </table>
   
   
-  <a id="Efl_Ui_Popup_BorderElements_" data-uid="Efl.Ui.Popup.BorderElements*"></a>
-  <h4 id="Efl_Ui_Popup_BorderElements" data-uid="Efl.Ui.Popup.BorderElements">BorderElements</h4>
-  <div class="markdown level1 summary"><p>The list of elements which are at the border of the graph.
-This means one of the relations right,left or down,up are not set. This call flushes all changes. See <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a>
-(Since EFL 1.22)</p>
+  <a id="Efl_Ui_Popup_ClosingTimeout_" data-uid="Efl.Ui.Popup.ClosingTimeout*"></a>
+  <h4 id="Efl_Ui_Popup_ClosingTimeout" data-uid="Efl.Ui.Popup.ClosingTimeout">ClosingTimeout</h4>
+  <div class="markdown level1 summary"><p>The closing_timeout property is the time after which the Popup widget will be automatically deleted.
+The timer is initiated at the time when the popup is shown. If the value is changed prior to the timer expiring, the existing timer will be deleted. If the new value is greater than $0, a new timer will be created.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Iterator&lt;IObject&gt; BorderElements { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double ClosingTimeout { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -245,8 +338,8 @@ This means one of the relations right,left or down,up are not set. This call flu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
-        <td><p>An iterator over the border objects.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>If greater than $0, the Popup will close automatically after the value in seconds. The default is to not automatically delete the Popup.</p>
 </td>
       </tr>
     </tbody>
@@ -280,248 +373,20 @@ If it is set multiple times, previous sub-objects are removed first. Therefore, 
       </tr>
     </tbody>
   </table>
-  
-  
-  <a id="Efl_Ui_Popup_Enable_" data-uid="Efl.Ui.Popup.Enable*"></a>
-  <h4 id="Efl_Ui_Popup_Enable" data-uid="Efl.Ui.Popup.Enable">Enable</h4>
-  <div class="markdown level1 summary"><p>Enable property</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Enable { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> to set enable the layer <code>false</code> to disable it</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_ManagerFocus_" data-uid="Efl.Ui.Popup.ManagerFocus*"></a>
-  <h4 id="Efl_Ui_Popup_ManagerFocus" data-uid="Efl.Ui.Popup.ManagerFocus">ManagerFocus</h4>
-  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
-Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IObject ManagerFocus { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
-        <td><p>Currently focused element.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_PopupSize_" data-uid="Efl.Ui.Popup.PopupSize*"></a>
-  <h4 id="Efl_Ui_Popup_PopupSize" data-uid="Efl.Ui.Popup.PopupSize">PopupSize</h4>
-  <div class="markdown level1 summary"><p>get the current popup size.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Size2D PopupSize { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_Redirect_" data-uid="Efl.Ui.Popup.Redirect*"></a>
-  <h4 id="Efl_Ui_Popup_Redirect" data-uid="Efl.Ui.Popup.Redirect">Redirect</h4>
-  <div class="markdown level1 summary"><p>Add another manager to serve the move requests.
-If this value is set, all move requests are redirected to this manager object. Set it to <code>null</code> once nothing should be redirected anymore.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IManager Redirect { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
-        <td><p>The redirect manager.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_Root_" data-uid="Efl.Ui.Popup.Root*"></a>
-  <h4 id="Efl_Ui_Popup_Root" data-uid="Efl.Ui.Popup.Root">Root</h4>
-  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
-This property can only be set once.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IObject Root { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
-        <td><p>Will be registered into this manager object.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_Timeout_" data-uid="Efl.Ui.Popup.Timeout*"></a>
-  <h4 id="Efl_Ui_Popup_Timeout" data-uid="Efl.Ui.Popup.Timeout">Timeout</h4>
-  <div class="markdown level1 summary"><p>Get the currently set timeout seconds.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Timeout { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>Timeout in seconds</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   
   
-  <a id="Efl_Ui_Popup_DirtyLogicUnfreeze_" data-uid="Efl.Ui.Popup.DirtyLogicUnfreeze*"></a>
-  <h4 id="Efl_Ui_Popup_DirtyLogicUnfreeze" data-uid="Efl.Ui.Popup.DirtyLogicUnfreeze">DirtyLogicUnfreeze()</h4>
-  <div class="markdown level1 summary"><p>This enables the cache invalidation when an object is moved.
-This is the counterpart to <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_FreezeDirtyLogic">Efl.Ui.Focus.IManager.FreezeDirtyLogic()</a>.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void DirtyLogicUnfreeze()</code></pre>
-  </div>
-  
-  
-  <a id="Efl_Ui_Popup_Fetch_" data-uid="Efl.Ui.Popup.Fetch*"></a>
-  <h4 id="Efl_Ui_Popup_Fetch_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.Fetch(Efl.Ui.Focus.IObject)">Fetch(IObject)</h4>
-  <div class="markdown level1 summary"><p>This will fetch the data from a registered node.
-Be aware this function will trigger a computation of all dirty nodes.
-(Since EFL 1.22)</p>
-<p><strong>This is a BETA method</strong>. It can be modified or removed in the future. Do not use it for product development.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Relations Fetch(IObject child)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
-        <td><span class="parametername">child</span></td>
-        <td><p>The child object to inspect.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.Relations.html">Efl.Ui.Focus.Relations</a></td>
-        <td><p>The list of relations starting from <code>child</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_FocusManagerCreate_" data-uid="Efl.Ui.Popup.FocusManagerCreate*"></a>
-  <h4 id="Efl_Ui_Popup_FocusManagerCreate_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.FocusManagerCreate(Efl.Ui.Focus.IObject)">FocusManagerCreate(IObject)</h4>
+  <a id="Efl_Ui_Popup_CreateFocusManager_" data-uid="Efl.Ui.Popup.CreateFocusManager*"></a>
+  <h4 id="Efl_Ui_Popup_CreateFocusManager_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.CreateFocusManager(Efl.Ui.Focus.IObject)">CreateFocusManager(IObject)</h4>
   <div class="markdown level1 summary"><p>If the widget needs a focus manager, this function will be called.
-It can be used and overriden to inject your own manager or set custom options on the focus manager.
+It can be used and overridden to inject your own manager or set custom options on the focus manager.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual IManager FocusManagerCreate(IObject root)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual IManager CreateFocusManager(IObject root)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -559,10 +424,23 @@ It can be used and overriden to inject your own manager or set custom options on
   </table>
   
   
+  <a id="Efl_Ui_Popup_DirtyLogicUnfreeze_" data-uid="Efl.Ui.Popup.DirtyLogicUnfreeze*"></a>
+  <h4 id="Efl_Ui_Popup_DirtyLogicUnfreeze" data-uid="Efl.Ui.Popup.DirtyLogicUnfreeze">DirtyLogicUnfreeze()</h4>
+  <div class="markdown level1 summary"><p>Enables the cache invalidation when an object is moved.
+This is the counterpart to <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_FreezeDirtyLogic">Efl.Ui.Focus.IManager.FreezeDirtyLogic()</a>.
+(Since EFL 1.22)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void DirtyLogicUnfreeze()</code></pre>
+  </div>
+  
+  
   <a id="Efl_Ui_Popup_FreezeDirtyLogic_" data-uid="Efl.Ui.Popup.FreezeDirtyLogic*"></a>
   <h4 id="Efl_Ui_Popup_FreezeDirtyLogic" data-uid="Efl.Ui.Popup.FreezeDirtyLogic">FreezeDirtyLogic()</h4>
-  <div class="markdown level1 summary"><p>This disables the cache invalidation when an object is moved.
-Even if an object is moved, the focus manager will not recalculate its relations. This can be used when you know that the set of widgets in the focus manager is moved the same way, so the relations between the widets in the set do not change and the complex calculations can be avoided. Use <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_DirtyLogicUnfreeze">Efl.Ui.Focus.IManager.DirtyLogicUnfreeze()</a> to re-enable relationship calculation.
+  <div class="markdown level1 summary"><p>Disables the cache invalidation when an object is moved.
+Even if an object is moved, the focus manager will not recalculate its relations. This can be used when you know that the set of widgets in the focus manager is moved the same way, so the relations between the widgets in the set do not change and complex calculations can be avoided. Use <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_DirtyLogicUnfreeze">Efl.Ui.Focus.IManager.DirtyLogicUnfreeze()</a> to re-enable relationship calculation.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -574,7 +452,8 @@ Even if an object is moved, the focus manager will not recalculate its relations
   
   <a id="Efl_Ui_Popup_GetAlign_" data-uid="Efl.Ui.Popup.GetAlign*"></a>
   <h4 id="Efl_Ui_Popup_GetAlign" data-uid="Efl.Ui.Popup.GetAlign">GetAlign()</h4>
-  <div class="markdown level1 summary"><p>Get the current popup alignment.</p>
+  <div class="markdown level1 summary"><p>The align property specifies a Popup's current positioning relative to its anchor.
+When set, this property will override any user-provided value for the widget's <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Position">Efl.Gfx.IEntity.Position</a> property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -592,21 +471,22 @@ Even if an object is moved, the focus manager will not recalculate its relations
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
-        <td><p>Alignment type</p>
+        <td><p>Alignment of the Popup relative to its anchor. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_None">Efl.Ui.PopupAlign.None</a>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Popup_GetBehaviour_" data-uid="Efl.Ui.Popup.GetBehaviour*"></a>
-  <h4 id="Efl_Ui_Popup_GetBehaviour_System_Boolean__System_Boolean__" data-uid="Efl.Ui.Popup.GetBehaviour(System.Boolean@,System.Boolean@)">GetBehaviour(out Boolean, out Boolean)</h4>
-  <div class="markdown level1 summary"><p>Constructor for setting the behaviour of the layer</p>
+  <a id="Efl_Ui_Popup_GetAlignPriority_" data-uid="Efl.Ui.Popup.GetAlignPriority*"></a>
+  <h4 id="Efl_Ui_Popup_GetAlignPriority_Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__" data-uid="Efl.Ui.Popup.GetAlignPriority(Efl.Ui.PopupAlign@,Efl.Ui.PopupAlign@,Efl.Ui.PopupAlign@,Efl.Ui.PopupAlign@,Efl.Ui.PopupAlign@)">GetAlignPriority(out PopupAlign, out PopupAlign, out PopupAlign, out PopupAlign, out PopupAlign)</h4>
+  <div class="markdown level1 summary"><p>This is the priority in which alignments will be tested using the anchor object if the value of <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> is determined to be invalid. If a given alignment would result in the popup being partially or fully outside the visible area of the window, it is deemed invalid, and the next alignment is tested until either the priority list is exhausted or a usable alignment is found.
+An alignment will also be deemed invalid if the popup occludes its anchor object, except if <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Center">Efl.Ui.PopupAlign.Center</a> is specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void GetBehaviour(out bool enable_on_visible, out bool cycle)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void GetAlignPriority(out PopupAlign first, out PopupAlign second, out PopupAlign third, out PopupAlign fourth, out PopupAlign fifth)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -619,15 +499,62 @@ Even if an object is moved, the focus manager will not recalculate its relations
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">enable_on_visible</span></td>
-        <td><p><code>true</code> means layer will set itself once the inheriting widget becomes visible, <code>false</code> means the layer isn't enabled automatically</p>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>First alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Top">Efl.Ui.PopupAlign.Top</a>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">cycle</span></td>
-        <td><p>If <code>true</code> the focus will cycle in the layer, if <code>false</code></p>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Second alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Left">Efl.Ui.PopupAlign.Left</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">third</span></td>
+        <td><p>Third alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Right">Efl.Ui.PopupAlign.Right</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">fourth</span></td>
+        <td><p>Fourth alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Bottom">Efl.Ui.PopupAlign.Bottom</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">fifth</span></td>
+        <td><p>Fifth alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Center">Efl.Ui.PopupAlign.Center</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_GetAnchor_" data-uid="Efl.Ui.Popup.GetAnchor*"></a>
+  <h4 id="Efl_Ui_Popup_GetAnchor" data-uid="Efl.Ui.Popup.GetAnchor">GetAnchor()</h4>
+  <div class="markdown level1 summary"><p>The anchor object is the reference object for positioning a Popup using the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> and <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAlignPriority_Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__">Efl.Ui.Popup.GetAlignPriority(out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign)</a> properties.
+A Popup will recalculate its alignment relative to its anchor and change its position when: - the anchor object is moved (unless the anchor is a window) - the anchor object is resized - the Popup is resized - the parent window is resized</p>
+<p>If <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAnchor">Efl.Ui.Popup.GetAnchor()</a> returns <code>NULL</code>, the anchor is the parent window of the Popup. If the anchor object is set to <code>NULL</code>, the Popup will no longer recalculate its alignment or change its position under any circumstance. If the Popup is moved by using <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_SetPosition_Eina_Position2D_">Efl.Gfx.IEntity.SetPosition(Eina.Position2D)</a>, <code>anchor</code> is set <code>NULL</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Object GetAnchor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Canvas.Object.html">Efl.Canvas.Object</a></td>
+        <td><p>The object which Popup is following. By default this is <code>NULL</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -636,8 +563,8 @@ Even if an object is moved, the focus manager will not recalculate its relations
   
   <a id="Efl_Ui_Popup_GetBorderElements_" data-uid="Efl.Ui.Popup.GetBorderElements*"></a>
   <h4 id="Efl_Ui_Popup_GetBorderElements" data-uid="Efl.Ui.Popup.GetBorderElements">GetBorderElements()</h4>
-  <div class="markdown level1 summary"><p>The list of elements which are at the border of the graph.
-This means one of the relations right,left or down,up are not set. This call flushes all changes. See <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a>
+  <div class="markdown level1 summary"><p>Elements which are at the border of the graph.
+This means one of the relations right,left or down,up are not set. This call flushes all changes. See <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a>.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -657,6 +584,34 @@ This means one of the relations right,left or down,up are not set. This call flu
       <tr>
         <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
         <td><p>An iterator over the border objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_GetClosingTimeout_" data-uid="Efl.Ui.Popup.GetClosingTimeout*"></a>
+  <h4 id="Efl_Ui_Popup_GetClosingTimeout" data-uid="Efl.Ui.Popup.GetClosingTimeout">GetClosingTimeout()</h4>
+  <div class="markdown level1 summary"><p>The closing_timeout property is the time after which the Popup widget will be automatically deleted.
+The timer is initiated at the time when the popup is shown. If the value is changed prior to the timer expiring, the existing timer will be deleted. If the new value is greater than $0, a new timer will be created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual double GetClosingTimeout()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>If greater than $0, the Popup will close automatically after the value in seconds. The default is to not automatically delete the Popup.</p>
 </td>
       </tr>
     </tbody>
@@ -692,37 +647,10 @@ If it is set multiple times, previous sub-objects are removed first. Therefore, 
   </table>
   
   
-  <a id="Efl_Ui_Popup_GetEnable_" data-uid="Efl.Ui.Popup.GetEnable*"></a>
-  <h4 id="Efl_Ui_Popup_GetEnable" data-uid="Efl.Ui.Popup.GetEnable">GetEnable()</h4>
-  <div class="markdown level1 summary"><p>Enable property</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool GetEnable()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> to set enable the layer <code>false</code> to disable it</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_Ui_Popup_GetManagerFocus_" data-uid="Efl.Ui.Popup.GetManagerFocus*"></a>
   <h4 id="Efl_Ui_Popup_GetManagerFocus" data-uid="Efl.Ui.Popup.GetManagerFocus">GetManagerFocus()</h4>
-  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
-Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
+  <div class="markdown level1 summary"><p>The element which is currently focused by this manager.
+Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next regular object is selected instead. If there is no such object, focus does not change.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -743,32 +671,6 @@ Use this property to retrieve the object currently being focused, or to set the 
         <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
         <td><p>Currently focused element.</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_GetPopupSize_" data-uid="Efl.Ui.Popup.GetPopupSize*"></a>
-  <h4 id="Efl_Ui_Popup_GetPopupSize" data-uid="Efl.Ui.Popup.GetPopupSize">GetPopupSize()</h4>
-  <div class="markdown level1 summary"><p>get the current popup size.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Size2D GetPopupSize()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -796,7 +698,7 @@ If this value is set, all move requests are redirected to this manager object. S
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
-        <td><p>The redirect manager.</p>
+        <td><p>The new focus manager.</p>
 </td>
       </tr>
     </tbody>
@@ -805,7 +707,7 @@ If this value is set, all move requests are redirected to this manager object. S
   
   <a id="Efl_Ui_Popup_GetRoot_" data-uid="Efl.Ui.Popup.GetRoot*"></a>
   <h4 id="Efl_Ui_Popup_GetRoot" data-uid="Efl.Ui.Popup.GetRoot">GetRoot()</h4>
-  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
+  <div class="markdown level1 summary"><p>Root node for all logical sub-trees.
 This property can only be set once.
 (Since EFL 1.22)</p>
 </div>
@@ -825,34 +727,7 @@ This property can only be set once.
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
-        <td><p>Will be registered into this manager object.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_GetTimeout_" data-uid="Efl.Ui.Popup.GetTimeout*"></a>
-  <h4 id="Efl_Ui_Popup_GetTimeout" data-uid="Efl.Ui.Popup.GetTimeout">GetTimeout()</h4>
-  <div class="markdown level1 summary"><p>Get the currently set timeout seconds.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual double GetTimeout()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><p>Timeout in seconds</p>
+        <td><p>Object to register as the root of this manager object.</p>
 </td>
       </tr>
     </tbody>
@@ -861,7 +736,7 @@ This property can only be set once.
   
   <a id="Efl_Ui_Popup_GetViewportElements_" data-uid="Efl.Ui.Popup.GetViewportElements*"></a>
   <h4 id="Efl_Ui_Popup_GetViewportElements_Eina_Rect_" data-uid="Efl.Ui.Popup.GetViewportElements(Eina.Rect)">GetViewportElements(Rect)</h4>
-  <div class="markdown level1 summary"><p>Get all elements that are at the border of the viewport
+  <div class="markdown level1 summary"><p>Elements that are at the border of the viewport
 Every element returned by this is located inside the viewport rectangle, but has a right, left, down or up neighbor outside the viewport.
 (Since EFL 1.22)</p>
 </div>
@@ -899,7 +774,7 @@ Every element returned by this is located inside the viewport rectangle, but has
     <tbody>
       <tr>
         <td><span class="xref">Eina.Iterator&lt;Efl.Ui.Focus.IObject&gt;</span></td>
-        <td><p>The list of border objects.</p>
+        <td><p>An iterator over the viewport border objects.</p>
 </td>
       </tr>
     </tbody>
@@ -908,8 +783,8 @@ Every element returned by this is located inside the viewport rectangle, but has
   
   <a id="Efl_Ui_Popup_LogicalEnd_" data-uid="Efl.Ui.Popup.LogicalEnd*"></a>
   <h4 id="Efl_Ui_Popup_LogicalEnd" data-uid="Efl.Ui.Popup.LogicalEnd">LogicalEnd()</h4>
-  <div class="markdown level1 summary"><p>Return the last logical object.
-The returned object is the last object that would be returned if you start at the root and move the direction into next.
+  <div class="markdown level1 summary"><p>Returns the last logical object.
+The returned object is the last object that would be returned if you start at the root and move in the &quot;next&quot; direction.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -937,8 +812,8 @@ The returned object is the last object that would be returned if you start at th
   
   <a id="Efl_Ui_Popup_Move_" data-uid="Efl.Ui.Popup.Move*"></a>
   <h4 id="Efl_Ui_Popup_Move_Efl_Ui_Focus_Direction_" data-uid="Efl.Ui.Popup.Move(Efl.Ui.Focus.Direction)">Move(Direction)</h4>
-  <div class="markdown level1 summary"><p>Move the focus in the given direction.
-This call flushes all changes. This means all changes between the last flush and now are computed.
+  <div class="markdown level1 summary"><p>Moves the focus in the given direction to the next regular widget.
+This call flushes all changes. This means all changes since last flush are computed.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -984,7 +859,7 @@ This call flushes all changes. This means all changes between the last flush and
   
   <a id="Efl_Ui_Popup_MoveRequest_" data-uid="Efl.Ui.Popup.MoveRequest*"></a>
   <h4 id="Efl_Ui_Popup_MoveRequest_Efl_Ui_Focus_Direction_Efl_Ui_Focus_IObject_System_Boolean_" data-uid="Efl.Ui.Popup.MoveRequest(Efl.Ui.Focus.Direction,Efl.Ui.Focus.IObject,System.Boolean)">MoveRequest(Direction, IObject, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Return the object in the <code>direction</code> from <code>child</code>.
+  <div class="markdown level1 summary"><p>Returns the object in the <code>direction</code> from <code>child</code>.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1015,9 +890,9 @@ This call flushes all changes. This means all changes between the last flush and
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><span class="parametername">logical</span></td>
-        <td><p>Wether you want to have a logical node as result or a non-logical. Note, in a <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a> call no logical node will get focus.</p>
+        <td><p>Wether you want to have a logical node as result or a regular. Note that in a <a class="xref" href="Efl.Ui.Focus.IManager.html#Efl_Ui_Focus_IManager_Move_Efl_Ui_Focus_Direction_">Efl.Ui.Focus.IManager.Move(Efl.Ui.Focus.Direction)</a> call logical nodes will not get focus.</p>
 </td>
       </tr>
     </tbody>
@@ -1040,14 +915,14 @@ This call flushes all changes. This means all changes between the last flush and
   </table>
   
   
-  <a id="Efl_Ui_Popup_OnBackwallClickedEvt_" data-uid="Efl.Ui.Popup.OnBackwallClickedEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnBackwallClickedEvt_EventArgs_" data-uid="Efl.Ui.Popup.OnBackwallClickedEvt(EventArgs)">OnBackwallClickedEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event BackwallClickedEvt.</p>
+  <a id="Efl_Ui_Popup_OnBackwallClickedEvent_" data-uid="Efl.Ui.Popup.OnBackwallClickedEvent*"></a>
+  <h4 id="Efl_Ui_Popup_OnBackwallClickedEvent_System_EventArgs_" data-uid="Efl.Ui.Popup.OnBackwallClickedEvent(System.EventArgs)">OnBackwallClickedEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event BackwallClickedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnBackwallClickedEvt(EventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnBackwallClickedEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1060,22 +935,23 @@ This call flushes all changes. This means all changes between the last flush and
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventArgs</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Popup_OnContentChangedEvt_" data-uid="Efl.Ui.Popup.OnContentChangedEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnContentChangedEvt_Efl_IContentContentChangedEvt_Args_" data-uid="Efl.Ui.Popup.OnContentChangedEvt(Efl.IContentContentChangedEvt_Args)">OnContentChangedEvt(IContentContentChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ContentChangedEvt.</p>
+  <a id="Efl_Ui_Popup_OnContentChangedEvent_" data-uid="Efl.Ui.Popup.OnContentChangedEvent*"></a>
+  <h4 id="Efl_Ui_Popup_OnContentChangedEvent_Efl_ContentContentChangedEventArgs_" data-uid="Efl.Ui.Popup.OnContentChangedEvent(Efl.ContentContentChangedEventArgs)">OnContentChangedEvent(ContentContentChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event ContentChangedEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnContentChangedEvt(IContentContentChangedEvt_Args e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnContentChangedEvent(ContentContentChangedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1088,22 +964,23 @@ This call flushes all changes. This means all changes between the last flush and
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.IContentContentChangedEvt_Args.html">Efl.IContentContentChangedEvt_Args</a></td>
+        <td><a class="xref" href="Efl.ContentContentChangedEventArgs.html">Efl.ContentContentChangedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Popup_OnCoordsDirtyEvt_" data-uid="Efl.Ui.Popup.OnCoordsDirtyEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnCoordsDirtyEvt_EventArgs_" data-uid="Efl.Ui.Popup.OnCoordsDirtyEvt(EventArgs)">OnCoordsDirtyEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event CoordsDirtyEvt.</p>
+  <a id="Efl_Ui_Popup_OnTimeoutEvent_" data-uid="Efl.Ui.Popup.OnTimeoutEvent*"></a>
+  <h4 id="Efl_Ui_Popup_OnTimeoutEvent_System_EventArgs_" data-uid="Efl.Ui.Popup.OnTimeoutEvent(System.EventArgs)">OnTimeoutEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event TimeoutEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnCoordsDirtyEvt(EventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnTimeoutEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1116,149 +993,10 @@ This call flushes all changes. This means all changes between the last flush and
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventArgs</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
         <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_OnDirtyLogicFreezeChangedEvt_" data-uid="Efl.Ui.Popup.OnDirtyLogicFreezeChangedEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnDirtyLogicFreezeChangedEvt_Efl_Ui_Focus_IManagerDirtyLogicFreezeChangedEvt_Args_" data-uid="Efl.Ui.Popup.OnDirtyLogicFreezeChangedEvt(Efl.Ui.Focus.IManagerDirtyLogicFreezeChangedEvt_Args)">OnDirtyLogicFreezeChangedEvt(IManagerDirtyLogicFreezeChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event DirtyLogicFreezeChangedEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnDirtyLogicFreezeChangedEvt(IManagerDirtyLogicFreezeChangedEvt_Args e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IManagerDirtyLogicFreezeChangedEvt_Args.html">Efl.Ui.Focus.IManagerDirtyLogicFreezeChangedEvt_Args</a></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_OnFlushPreEvt_" data-uid="Efl.Ui.Popup.OnFlushPreEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnFlushPreEvt_EventArgs_" data-uid="Efl.Ui.Popup.OnFlushPreEvt(EventArgs)">OnFlushPreEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event FlushPreEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnFlushPreEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_OnManagerFocusChangedEvt_" data-uid="Efl.Ui.Popup.OnManagerFocusChangedEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnManagerFocusChangedEvt_Efl_Ui_Focus_IManagerManagerFocusChangedEvt_Args_" data-uid="Efl.Ui.Popup.OnManagerFocusChangedEvt(Efl.Ui.Focus.IManagerManagerFocusChangedEvt_Args)">OnManagerFocusChangedEvt(IManagerManagerFocusChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event ManagerFocusChangedEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnManagerFocusChangedEvt(IManagerManagerFocusChangedEvt_Args e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IManagerManagerFocusChangedEvt_Args.html">Efl.Ui.Focus.IManagerManagerFocusChangedEvt_Args</a></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_OnRedirectChangedEvt_" data-uid="Efl.Ui.Popup.OnRedirectChangedEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnRedirectChangedEvt_Efl_Ui_Focus_IManagerRedirectChangedEvt_Args_" data-uid="Efl.Ui.Popup.OnRedirectChangedEvt(Efl.Ui.Focus.IManagerRedirectChangedEvt_Args)">OnRedirectChangedEvt(IManagerRedirectChangedEvt_Args)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event RedirectChangedEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnRedirectChangedEvt(IManagerRedirectChangedEvt_Args e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Ui.Focus.IManagerRedirectChangedEvt_Args.html">Efl.Ui.Focus.IManagerRedirectChangedEvt_Args</a></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_OnTimeoutEvt_" data-uid="Efl.Ui.Popup.OnTimeoutEvt*"></a>
-  <h4 id="Efl_Ui_Popup_OnTimeoutEvt_EventArgs_" data-uid="Efl.Ui.Popup.OnTimeoutEvt(EventArgs)">OnTimeoutEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event TimeoutEvt.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnTimeoutEvt(EventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><p>Event to raise.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1266,7 +1004,7 @@ This call flushes all changes. This means all changes between the last flush and
   
   <a id="Efl_Ui_Popup_PopHistoryStack_" data-uid="Efl.Ui.Popup.PopHistoryStack*"></a>
   <h4 id="Efl_Ui_Popup_PopHistoryStack" data-uid="Efl.Ui.Popup.PopHistoryStack">PopHistoryStack()</h4>
-  <div class="markdown level1 summary"><p>Remove the uppermost history element, and focus the previous one.
+  <div class="markdown level1 summary"><p>Removes the uppermost history element, and focuses the previous one.
 If there is an element that was focused before, it will be used. Otherwise, the best fitting element from the registered elements will be focused.
 (Since EFL 1.22)</p>
 </div>
@@ -1279,8 +1017,8 @@ If there is an element that was focused before, it will be used. Otherwise, the 
   
   <a id="Efl_Ui_Popup_RequestSubchild_" data-uid="Efl.Ui.Popup.RequestSubchild*"></a>
   <h4 id="Efl_Ui_Popup_RequestSubchild_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.RequestSubchild(Efl.Ui.Focus.IObject)">RequestSubchild(IObject)</h4>
-  <div class="markdown level1 summary"><p>Return the widget in the direction next.
-The returned widget is a child of <code>root</code>. It's guaranteed that child will not be prepared once again, so you can call this function inside a <a class="xref" href="Efl.Ui.Focus.IObject.html#Efl_Ui_Focus_IObject_SetupOrder">Efl.Ui.Focus.IObject.SetupOrder()</a> call.
+  <div class="markdown level1 summary"><p>Returns the widget in the direction next.
+The returned widget is a child of <code>root</code>. It's guaranteed that child will not be prepared again, so you can call this function inside a <a class="xref" href="Efl.Ui.Focus.IObject.html#Efl_Ui_Focus_IObject_SetupOrder">Efl.Ui.Focus.IObject.SetupOrder()</a> call.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1326,7 +1064,7 @@ The returned widget is a child of <code>root</code>. It's guaranteed that child 
   
   <a id="Efl_Ui_Popup_ResetHistory_" data-uid="Efl.Ui.Popup.ResetHistory*"></a>
   <h4 id="Efl_Ui_Popup_ResetHistory" data-uid="Efl.Ui.Popup.ResetHistory">ResetHistory()</h4>
-  <div class="markdown level1 summary"><p>Reset the history stack of this manager object. This means the uppermost element will be unfocused, and all other elements will be removed from the remembered list.
+  <div class="markdown level1 summary"><p>Resets the history stack of this manager object. This means the uppermost element will be unfocused, and all other elements will be removed from the remembered list.
 You should focus another element immediately after calling this, in order to always have a focused object.
 (Since EFL 1.22)</p>
 </div>
@@ -1339,7 +1077,8 @@ You should focus another element immediately after calling this, in order to alw
   
   <a id="Efl_Ui_Popup_SetAlign_" data-uid="Efl.Ui.Popup.SetAlign*"></a>
   <h4 id="Efl_Ui_Popup_SetAlign_Efl_Ui_PopupAlign_" data-uid="Efl.Ui.Popup.SetAlign(Efl.Ui.PopupAlign)">SetAlign(PopupAlign)</h4>
-  <div class="markdown level1 summary"><p>Set the popup alignment.</p>
+  <div class="markdown level1 summary"><p>The align property specifies a Popup's current positioning relative to its anchor.
+When set, this property will override any user-provided value for the widget's <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_Position">Efl.Gfx.IEntity.Position</a> property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1359,21 +1098,22 @@ You should focus another element immediately after calling this, in order to alw
       <tr>
         <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
         <td><span class="parametername">type</span></td>
-        <td><p>Alignment type</p>
+        <td><p>Alignment of the Popup relative to its anchor. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_None">Efl.Ui.PopupAlign.None</a>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_Popup_SetBehaviour_" data-uid="Efl.Ui.Popup.SetBehaviour*"></a>
-  <h4 id="Efl_Ui_Popup_SetBehaviour_System_Boolean_System_Boolean_" data-uid="Efl.Ui.Popup.SetBehaviour(System.Boolean,System.Boolean)">SetBehaviour(Boolean, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Constructor for setting the behaviour of the layer</p>
+  <a id="Efl_Ui_Popup_SetAlignPriority_" data-uid="Efl.Ui.Popup.SetAlignPriority*"></a>
+  <h4 id="Efl_Ui_Popup_SetAlignPriority_Efl_Ui_PopupAlign_Efl_Ui_PopupAlign_Efl_Ui_PopupAlign_Efl_Ui_PopupAlign_Efl_Ui_PopupAlign_" data-uid="Efl.Ui.Popup.SetAlignPriority(Efl.Ui.PopupAlign,Efl.Ui.PopupAlign,Efl.Ui.PopupAlign,Efl.Ui.PopupAlign,Efl.Ui.PopupAlign)">SetAlignPriority(PopupAlign, PopupAlign, PopupAlign, PopupAlign, PopupAlign)</h4>
+  <div class="markdown level1 summary"><p>This is the priority in which alignments will be tested using the anchor object if the value of <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> is determined to be invalid. If a given alignment would result in the popup being partially or fully outside the visible area of the window, it is deemed invalid, and the next alignment is tested until either the priority list is exhausted or a usable alignment is found.
+An alignment will also be deemed invalid if the popup occludes its anchor object, except if <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Center">Efl.Ui.PopupAlign.Center</a> is specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetBehaviour(bool enable_on_visible, bool cycle)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetAlignPriority(PopupAlign first, PopupAlign second, PopupAlign third, PopupAlign fourth, PopupAlign fifth)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1386,15 +1126,94 @@ You should focus another element immediately after calling this, in order to alw
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">enable_on_visible</span></td>
-        <td><p><code>true</code> means layer will set itself once the inheriting widget becomes visible, <code>false</code> means the layer isn't enabled automatically</p>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>First alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Top">Efl.Ui.PopupAlign.Top</a>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">cycle</span></td>
-        <td><p>If <code>true</code> the focus will cycle in the layer, if <code>false</code></p>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Second alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Left">Efl.Ui.PopupAlign.Left</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">third</span></td>
+        <td><p>Third alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Right">Efl.Ui.PopupAlign.Right</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">fourth</span></td>
+        <td><p>Fourth alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Bottom">Efl.Ui.PopupAlign.Bottom</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PopupAlign.html">Efl.Ui.PopupAlign</a></td>
+        <td><span class="parametername">fifth</span></td>
+        <td><p>Fifth alignment. The default is <a class="xref" href="Efl.Ui.PopupAlign.html#Efl_Ui_PopupAlign_Center">Efl.Ui.PopupAlign.Center</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_SetAnchor_" data-uid="Efl.Ui.Popup.SetAnchor*"></a>
+  <h4 id="Efl_Ui_Popup_SetAnchor_Efl_Canvas_Object_" data-uid="Efl.Ui.Popup.SetAnchor(Efl.Canvas.Object)">SetAnchor(Object)</h4>
+  <div class="markdown level1 summary"><p>The anchor object is the reference object for positioning a Popup using the <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_Align">Efl.Ui.Popup.Align</a> and <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAlignPriority_Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__Efl_Ui_PopupAlign__">Efl.Ui.Popup.GetAlignPriority(out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign, out Efl.Ui.PopupAlign)</a> properties.
+A Popup will recalculate its alignment relative to its anchor and change its position when: - the anchor object is moved (unless the anchor is a window) - the anchor object is resized - the Popup is resized - the parent window is resized</p>
+<p>If <a class="xref" href="Efl.Ui.Popup.html#Efl_Ui_Popup_GetAnchor">Efl.Ui.Popup.GetAnchor()</a> returns <code>NULL</code>, the anchor is the parent window of the Popup. If the anchor object is set to <code>NULL</code>, the Popup will no longer recalculate its alignment or change its position under any circumstance. If the Popup is moved by using <a class="xref" href="Efl.Gfx.IEntity.html#Efl_Gfx_IEntity_SetPosition_Eina_Position2D_">Efl.Gfx.IEntity.SetPosition(Eina.Position2D)</a>, <code>anchor</code> is set <code>NULL</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetAnchor(Object anchor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Canvas.Object.html">Efl.Canvas.Object</a></td>
+        <td><span class="parametername">anchor</span></td>
+        <td><p>The object which Popup is following. By default this is <code>NULL</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_Popup_SetClosingTimeout_" data-uid="Efl.Ui.Popup.SetClosingTimeout*"></a>
+  <h4 id="Efl_Ui_Popup_SetClosingTimeout_System_Double_" data-uid="Efl.Ui.Popup.SetClosingTimeout(System.Double)">SetClosingTimeout(Double)</h4>
+  <div class="markdown level1 summary"><p>The closing_timeout property is the time after which the Popup widget will be automatically deleted.
+The timer is initiated at the time when the popup is shown. If the value is changed prior to the timer expiring, the existing timer will be deleted. If the new value is greater than $0, a new timer will be created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetClosingTimeout(double time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>If greater than $0, the Popup will close automatically after the value in seconds. The default is to not automatically delete the Popup.</p>
 </td>
       </tr>
     </tbody>
@@ -1440,37 +1259,8 @@ If it is set multiple times, previous sub-objects are removed first. Therefore, 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> if <code>content</code> was successfully swallowed.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_SetEnable_" data-uid="Efl.Ui.Popup.SetEnable*"></a>
-  <h4 id="Efl_Ui_Popup_SetEnable_System_Boolean_" data-uid="Efl.Ui.Popup.SetEnable(System.Boolean)">SetEnable(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Enable property</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetEnable(bool v)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">v</span></td>
-        <td><p><code>true</code> to set enable the layer <code>false</code> to disable it</p>
 </td>
       </tr>
     </tbody>
@@ -1479,8 +1269,8 @@ If it is set multiple times, previous sub-objects are removed first. Therefore, 
   
   <a id="Efl_Ui_Popup_SetManagerFocus_" data-uid="Efl.Ui.Popup.SetManagerFocus*"></a>
   <h4 id="Efl_Ui_Popup_SetManagerFocus_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.SetManagerFocus(Efl.Ui.Focus.IObject)">SetManagerFocus(IObject)</h4>
-  <div class="markdown level1 summary"><p>The element which is currently focused by this manager
-Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next non-logical object is selected instead. If there is no such object, focus does not change.
+  <div class="markdown level1 summary"><p>The element which is currently focused by this manager.
+Use this property to retrieve the object currently being focused, or to set the focus to a new one. When <code>focus</code> is a logical child (which cannot receive focus), the next regular object is selected instead. If there is no such object, focus does not change.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1503,34 +1293,6 @@ Use this property to retrieve the object currently being focused, or to set the 
         <td><span class="parametername">focus</span></td>
         <td><p>Currently focused element.</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_SetPopupSize_" data-uid="Efl.Ui.Popup.SetPopupSize*"></a>
-  <h4 id="Efl_Ui_Popup_SetPopupSize_Eina_Size2D_" data-uid="Efl.Ui.Popup.SetPopupSize(Eina.Size2D)">SetPopupSize(Size2D)</h4>
-  <div class="markdown level1 summary"><p>Set the popup size.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetPopupSize(Size2D size)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
-        <td><span class="parametername">size</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1560,7 +1322,7 @@ If this value is set, all move requests are redirected to this manager object. S
       <tr>
         <td><a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a></td>
         <td><span class="parametername">redirect</span></td>
-        <td><p>The redirect manager.</p>
+        <td><p>The new focus manager.</p>
 </td>
       </tr>
     </tbody>
@@ -1569,7 +1331,7 @@ If this value is set, all move requests are redirected to this manager object. S
   
   <a id="Efl_Ui_Popup_SetRoot_" data-uid="Efl.Ui.Popup.SetRoot*"></a>
   <h4 id="Efl_Ui_Popup_SetRoot_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.SetRoot(Efl.Ui.Focus.IObject)">SetRoot(IObject)</h4>
-  <div class="markdown level1 summary"><p>Root node for all logical subtrees.
+  <div class="markdown level1 summary"><p>Root node for all logical sub-trees.
 This property can only be set once.
 (Since EFL 1.22)</p>
 </div>
@@ -1591,7 +1353,7 @@ This property can only be set once.
       <tr>
         <td><a class="xref" href="Efl.Ui.Focus.IObject.html">Efl.Ui.Focus.IObject</a></td>
         <td><span class="parametername">root</span></td>
-        <td><p>Will be registered into this manager object.</p>
+        <td><p>Object to register as the root of this manager object.</p>
 </td>
       </tr>
     </tbody>
@@ -1606,37 +1368,8 @@ This property can only be set once.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>If <code>true</code>, this is the root node</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_Popup_SetTimeout_" data-uid="Efl.Ui.Popup.SetTimeout*"></a>
-  <h4 id="Efl_Ui_Popup_SetTimeout_System_Double_" data-uid="Efl.Ui.Popup.SetTimeout(System.Double)">SetTimeout(Double)</h4>
-  <div class="markdown level1 summary"><p>Set the timeout seconds. After timeout seconds, popup will be deleted automatically.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetTimeout(double time)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Double</span></td>
-        <td><span class="parametername">time</span></td>
-        <td><p>Timeout in seconds</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> on success, <code>false</code> if it had already been set.</p>
 </td>
       </tr>
     </tbody>
@@ -1646,7 +1379,7 @@ This property can only be set once.
   <a id="Efl_Ui_Popup_SetupOnFirstTouch_" data-uid="Efl.Ui.Popup.SetupOnFirstTouch*"></a>
   <h4 id="Efl_Ui_Popup_SetupOnFirstTouch_Efl_Ui_Focus_Direction_Efl_Ui_Focus_IObject_" data-uid="Efl.Ui.Popup.SetupOnFirstTouch(Efl.Ui.Focus.Direction,Efl.Ui.Focus.IObject)">SetupOnFirstTouch(Direction, IObject)</h4>
   <div class="markdown level1 summary"><p>Called when this manager is set as redirect.
-In case that this is called as an result of a move call, <code>direction</code> and <code>entry</code> will be set to the direction of the move call, and the <code>entry</code> object will be set to the object that had this manager as redirect property.
+In case that this is called as a result of a move call, <code>direction</code> and <code>entry</code> will be set to the direction of the move call, and the <code>entry</code> object will be set to the object that had this manager as redirect property.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1710,13 +1443,13 @@ In case that this is called as an result of a move call, <code>direction</code> 
   </h3>
   
   
-  <h4 id="Efl_Ui_Popup_BackwallClickedEvt" data-uid="Efl.Ui.Popup.BackwallClickedEvt">BackwallClickedEvt</h4>
-  <div class="markdown level1 summary"><p>This is called whenever the user clicks back wall of popup.</p>
+  <h4 id="Efl_Ui_Popup_BackwallClickedEvent" data-uid="Efl.Ui.Popup.BackwallClickedEvent">BackwallClickedEvent</h4>
+  <div class="markdown level1 summary"><p>This is called whenever the user clicks the backwall part of the Popup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler BackwallClickedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler BackwallClickedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1728,21 +1461,21 @@ In case that this is called as an result of a move call, <code>direction</code> 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Popup_ContentChangedEvt" data-uid="Efl.Ui.Popup.ContentChangedEvt">ContentChangedEvt</h4>
+  <h4 id="Efl_Ui_Popup_ContentChangedEvent" data-uid="Efl.Ui.Popup.ContentChangedEvent">ContentChangedEvent</h4>
   <div class="markdown level1 summary"><p>Sent after the content is set or unset using the current content object.
 (Since EFL 1.22)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IContentContentChangedEvt_Args&gt; ContentChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ContentContentChangedEventArgs&gt; ContentChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1754,21 +1487,21 @@ In case that this is called as an result of a move call, <code>direction</code> 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.IContentContentChangedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.ContentContentChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.ContentContentChangedEventArgs.html">Efl.ContentContentChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_Popup_CoordsDirtyEvt" data-uid="Efl.Ui.Popup.CoordsDirtyEvt">CoordsDirtyEvt</h4>
-  <div class="markdown level1 summary"><p>Cached relationship calculation results have been invalidated.
-(Since EFL 1.22)</p>
+  <h4 id="Efl_Ui_Popup_TimeoutEvent" data-uid="Efl.Ui.Popup.TimeoutEvent">TimeoutEvent</h4>
+  <div class="markdown level1 summary"><p>This is called when Popup times out.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler CoordsDirtyEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public event EventHandler TimeoutEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1780,136 +1513,7 @@ In case that this is called as an result of a move call, <code>direction</code> 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Popup_DirtyLogicFreezeChangedEvt" data-uid="Efl.Ui.Popup.DirtyLogicFreezeChangedEvt">DirtyLogicFreezeChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when this focus manager is frozen or thawed, even_info being <code>true</code> indicates that it is now frozen, <code>false</code> indicates that it is thawed.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IManagerDirtyLogicFreezeChangedEvt_Args&gt; DirtyLogicFreezeChangedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerDirtyLogicFreezeChangedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Popup_FlushPreEvt" data-uid="Efl.Ui.Popup.FlushPreEvt">FlushPreEvt</h4>
-  <div class="markdown level1 summary"><p>After this event, the manager object will calculate relations in the graph. Can be used to add / remove children in a lazy fashion.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler FlushPreEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Popup_ManagerFocusChangedEvt" data-uid="Efl.Ui.Popup.ManagerFocusChangedEvt">ManagerFocusChangedEvt</h4>
-  <div class="markdown level1 summary"><p>The manager_focus property has changed. The previously focused object is passed as an event argument.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IManagerManagerFocusChangedEvt_Args&gt; ManagerFocusChangedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerManagerFocusChangedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Popup_RedirectChangedEvt" data-uid="Efl.Ui.Popup.RedirectChangedEvt">RedirectChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Redirect object has changed, the old manager is passed as an event argument.
-(Since EFL 1.22)</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler&lt;IManagerRedirectChangedEvt_Args&gt; RedirectChangedEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.Focus.IManagerRedirectChangedEvt_Args&gt;</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Ui_Popup_TimeoutEvt" data-uid="Efl.Ui.Popup.TimeoutEvt">TimeoutEvt</h4>
-  <div class="markdown level1 summary"><p>This is called when popup times out.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler TimeoutEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1919,10 +1523,10 @@ In case that this is called as an result of a move call, <code>direction</code> 
       <a class="xref" href="Efl.Canvas.IPointer.html">Efl.Canvas.IPointer</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gesture.IEvents.html">Efl.Gesture.IEvents</a>
+      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
+      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
   </div>
   <div>
       <a class="xref" href="Efl.Gfx.IHint.html">Efl.Gfx.IHint</a>
@@ -1931,37 +1535,16 @@ In case that this is called as an result of a move call, <code>direction</code> 
       <a class="xref" href="Efl.Gfx.IMapping.html">Efl.Gfx.IMapping</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
+      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a>
+      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
   </div>
   <div>
       <a class="xref" href="Efl.IPart.html">Efl.IPart</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Access.IComponent.html">Efl.Access.IComponent</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.IObject.html">Efl.Access.IObject</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IDnd.html">Efl.Ui.IDnd</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IL10n.html">Efl.Ui.IL10n</a>
-  </div>
-  <div>
       <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.ISelection.html">Efl.Ui.ISelection</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a>
@@ -1986,15 +1569,6 @@ In case that this is called as an result of a move call, <code>direction</code> 
   </div>
   <div>
       <a class="xref" href="Efl.IContent.html">Efl.IContent</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.Focus.ILayer.html">Efl.Ui.Focus.ILayer</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IWidgetFocusManager.html">Efl.Ui.IWidgetFocusManager</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.Focus.IManager.html">Efl.Ui.Focus.IManager</a>
   </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>

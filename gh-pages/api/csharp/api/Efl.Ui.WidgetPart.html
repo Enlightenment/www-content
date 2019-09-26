@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.WidgetPart
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -74,30 +74,23 @@
   <h1 id="Efl_Ui_WidgetPart" data-uid="Efl.Ui.WidgetPart" class="text-break">Class Efl.Ui.WidgetPart
   </h1>
   <div class="markdown level0 summary"><p>This is the base class for all &quot;Part&quot; handles in Efl.Ui widgets.
-Since objects of this type are returned by <a class="xref" href="Efl.IPart.html#Efl_IPart_GetPart_System_String_">Efl.IPart.GetPart(System.String)</a>, their lifetime is limited to exactly one function call only. Each widget class should expose more specific types for their API-defined parts.</p>
+Since objects of this type are returned by Efl.Part.part_get, their lifetime is limited to exactly one function call only. Each widget class should expose more specific types for their API-defined parts.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_WidgetPart_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><span class="xref"><b>Efl.Ui.WidgetPart</b></span></div>
-      <div class="level4"><a class="xref" href="Efl.Ui.FlipPart.html">Efl.Ui.FlipPart</a></div>
       <div class="level4"><a class="xref" href="Efl.Ui.LayoutPart.html">Efl.Ui.LayoutPart</a></div>
       <div class="level4"><a class="xref" href="Efl.Ui.WidgetPartBg.html">Efl.Ui.WidgetPartBg</a></div>
       <div class="level4"><a class="xref" href="Efl.Ui.WidgetPartShadow.html">Efl.Ui.WidgetPartShadow</a></div>
-      <div class="level4"><a class="xref" href="Efl.Ui.WinPart.html">Efl.Ui.WinPart</a></div>
   </div>
   
   <h5 id="Efl_Ui_WidgetPart_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class WidgetPart : Object, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class WidgetPart : Object, IPropertyBind, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -160,7 +153,211 @@ Do not call this constructor directly.</p>
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Efl_Ui_WidgetPart__ctor_" data-uid="Efl.Ui.WidgetPart.#ctor*"></a>
+  <h4 id="Efl_Ui_WidgetPart__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.WidgetPart.#ctor(System.IntPtr,Efl.Object)">WidgetPart(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.WidgetPart.html">Efl.Ui.WidgetPart</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected WidgetPart(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Efl_Ui_WidgetPart_BindProperty_" data-uid="Efl.Ui.WidgetPart.BindProperty*"></a>
+  <h4 id="Efl_Ui_WidgetPart_BindProperty_System_String_System_String_" data-uid="Efl.Ui.WidgetPart.BindProperty(System.String,System.String)">BindProperty(String, String)</h4>
+  <div class="markdown level1 summary"><p>bind property data with the given key string. when the data is ready or changed, bind the data to the key action and process promised work.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Error BindProperty(string key, string property)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>key string for bind model property data</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
+        <td><span class="parametername">property</span></td>
+        <td><p>Model property name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Eina.Error.html">Eina.Error</a></td>
+        <td><p>0 when it succeed, an error code otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_WidgetPart_OnPropertiesChangedEvent_" data-uid="Efl.Ui.WidgetPart.OnPropertiesChangedEvent*"></a>
+  <h4 id="Efl_Ui_WidgetPart_OnPropertiesChangedEvent_Efl_Ui_PropertyBindPropertiesChangedEventArgs_" data-uid="Efl.Ui.WidgetPart.OnPropertiesChangedEvent(Efl.Ui.PropertyBindPropertiesChangedEventArgs)">OnPropertiesChangedEvent(PropertyBindPropertiesChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event PropertiesChangedEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnPropertiesChangedEvent(PropertyBindPropertiesChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PropertyBindPropertiesChangedEventArgs.html">Efl.Ui.PropertyBindPropertiesChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_WidgetPart_OnPropertyBoundEvent_" data-uid="Efl.Ui.WidgetPart.OnPropertyBoundEvent*"></a>
+  <h4 id="Efl_Ui_WidgetPart_OnPropertyBoundEvent_Efl_Ui_PropertyBindPropertyBoundEventArgs_" data-uid="Efl.Ui.WidgetPart.OnPropertyBoundEvent(Efl.Ui.PropertyBindPropertyBoundEventArgs)">OnPropertyBoundEvent(PropertyBindPropertyBoundEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event PropertyBoundEvent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnPropertyBoundEvent(PropertyBindPropertyBoundEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Ui.PropertyBindPropertyBoundEventArgs.html">Efl.Ui.PropertyBindPropertyBoundEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Ui_WidgetPart_PropertiesChangedEvent" data-uid="Efl.Ui.WidgetPart.PropertiesChangedEvent">PropertiesChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Event dispatched when a property on the object has changed due to a user interaction on the object that a model could be interested in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;PropertyBindPropertiesChangedEventArgs&gt; PropertiesChangedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.PropertyBindPropertiesChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.PropertyBindPropertiesChangedEventArgs.html">Efl.Ui.PropertyBindPropertiesChangedEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_WidgetPart_PropertyBoundEvent" data-uid="Efl.Ui.WidgetPart.PropertyBoundEvent">PropertyBoundEvent</h4>
+  <div class="markdown level1 summary"><p>Event dispatched when a property on the object is bound to a model. This is useful to avoid generating too many events.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;PropertyBindPropertyBoundEventArgs&gt; PropertyBoundEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.PropertyBindPropertyBoundEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.PropertyBindPropertyBoundEventArgs.html">Efl.Ui.PropertyBindPropertyBoundEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
+  </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>
   </div>

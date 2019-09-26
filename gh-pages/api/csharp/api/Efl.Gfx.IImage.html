@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Gfx.IImage
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,14 +73,10 @@
   
   <h1 id="Efl_Gfx_IImage" data-uid="Efl.Gfx.IImage" class="text-break">Interface Efl.Gfx.IImage
   </h1>
-  <div class="markdown level0 summary"><p>Common APIs for all 2D images that can be rendered on the canvas.</p>
+  <div class="markdown level0 summary"><p>This interface defines a set of common APIs which should be implemented by image objects.
+These APIs provide the ability to manipulate how images will be rendered, e.g., determining whether to allow upscaling and downscaling at render time, as well as functionality for detecting errors during the loading process.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Gfx_IImage_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Gfx_IImage_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,16 +86,19 @@
   </h3>
   
   
-  <a id="Efl_Gfx_IImage_BorderCenterFill_" data-uid="Efl.Gfx.IImage.BorderCenterFill*"></a>
-  <h4 id="Efl_Gfx_IImage_BorderCenterFill" data-uid="Efl.Gfx.IImage.BorderCenterFill">BorderCenterFill</h4>
-  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
-This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <a class="xref" href="Efl.Gfx.IFill.html#Efl_Gfx_IFill_FillAuto">Efl.Gfx.IFill.FillAuto</a>) to use as a frame.</p>
-<p>The default value is <a class="xref" href="Efl.Gfx.BorderFillMode.html#Efl_Gfx_BorderFillMode_Default">Efl.Gfx.BorderFillMode.Default</a>, ie. render and scale the center area, respecting its transparency.</p>
+  <a id="Efl_Gfx_IImage_BorderInsets_" data-uid="Efl.Gfx.IImage.BorderInsets*"></a>
+  <h4 id="Efl_Gfx_IImage_BorderInsets" data-uid="Efl.Gfx.IImage.BorderInsets">BorderInsets</h4>
+  <div class="markdown level1 summary"><p>Dimensions of this image's border, a region that does not scale with the center area.
+When EFL renders an image, its source may be scaled to fit the size of the object. This function sets an area from the borders of the image inwards which is not to be scaled. This function is useful for making frames and for widget theming, where, for example, buttons may be of varying sizes, but their border size must remain constant.</p>
+<p>The units used for <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> are canvas units (pixels).</p>
+<p>Note: The border region itself may be scaled by the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_SetBorderInsetsScale_System_Double_">Efl.Gfx.IImage.SetBorderInsetsScale(System.Double)</a> function.</p>
+<p>Note: By default, image objects have no borders set, i.e. <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> start as 0.</p>
+<p>Note: Similar to the concepts of 9-patch images or cap insets.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">BorderFillMode BorderCenterFill { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">(int, int, int, int)BorderInsets { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,24 +110,23 @@ This function sets how the center part of the image object's source image is to 
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a></td>
-        <td><p>Fill mode of the center region.</p>
+        <td><span class="xref">System.ValueTuple&lt;System.Int32, System.Int32, System.Int32, System.Int32&gt;</span></td>
+        <td><p>The border's left width.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_BorderScale_" data-uid="Efl.Gfx.IImage.BorderScale*"></a>
-  <h4 id="Efl_Gfx_IImage_BorderScale" data-uid="Efl.Gfx.IImage.BorderScale">BorderScale</h4>
+  <a id="Efl_Gfx_IImage_BorderInsetsScale_" data-uid="Efl.Gfx.IImage.BorderInsetsScale*"></a>
+  <h4 id="Efl_Gfx_IImage_BorderInsetsScale" data-uid="Efl.Gfx.IImage.BorderInsetsScale">BorderInsetsScale</h4>
   <div class="markdown level1 summary"><p>Scaling factor applied to the image borders.
-This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
-<p>Default value is 1.0 (no scaling).</p>
+This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double BorderScale { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">double BorderInsetsScale { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,8 +138,90 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The scale factor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_CanDownscale_" data-uid="Efl.Gfx.IImage.CanDownscale*"></a>
+  <h4 id="Efl_Gfx_IImage_CanDownscale" data-uid="Efl.Gfx.IImage.CanDownscale">CanDownscale</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a smaller size. If <code>false</code>, the image will never be resized smaller than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanDownscale { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>Whether to allow image downscaling.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_CanUpscale_" data-uid="Efl.Gfx.IImage.CanUpscale*"></a>
+  <h4 id="Efl_Gfx_IImage_CanUpscale" data-uid="Efl.Gfx.IImage.CanUpscale">CanUpscale</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a larger size. If <code>false</code>, the image will never be resized larger than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CanUpscale { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>Whether to allow image upscaling.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_CenterFillMode_" data-uid="Efl.Gfx.IImage.CenterFillMode*"></a>
+  <h4 id="Efl_Gfx_IImage_CenterFillMode" data-uid="Efl.Gfx.IImage.CenterFillMode">CenterFillMode</h4>
+  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
+This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <span class="text-muted">Efl.Gfx.IFill.FillAuto (object still in beta stage)</span>) to use as a frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">CenterFillMode CenterFillMode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a></td>
+        <td><p>Fill mode of the center region. The default behavior is to render and scale the center area, respecting its transparency.</p>
 </td>
       </tr>
     </tbody>
@@ -150,8 +230,8 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
   
   <a id="Efl_Gfx_IImage_ContentHint_" data-uid="Efl.Gfx.IImage.ContentHint*"></a>
   <h4 id="Efl_Gfx_IImage_ContentHint" data-uid="Efl.Gfx.IImage.ContentHint">ContentHint</h4>
-  <div class="markdown level1 summary"><p>Get the content hint setting of a given image object of the canvas.
-This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
+  <div class="markdown level1 summary"><p>Content hint setting for the image. These hints might be used by EFL to enable optimizations.
+For example, if you're on the GL engine and your driver implementation supports it, setting this hint to <a class="xref" href="Efl.Gfx.ImageContentHint.html#Efl_Gfx_ImageContentHint_Dynamic">Efl.Gfx.ImageContentHint.Dynamic</a> will make it need zero copies at texture upload time, which is an &quot;expensive&quot; operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -169,7 +249,7 @@ This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></td>
-        <td><p>Dynamic or static content hint, see <a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></p>
+        <td><p>Dynamic or static content hint.</p>
 </td>
       </tr>
     </tbody>
@@ -179,7 +259,7 @@ This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
   <a id="Efl_Gfx_IImage_ContentRegion_" data-uid="Efl.Gfx.IImage.ContentRegion*"></a>
   <h4 id="Efl_Gfx_IImage_ContentRegion" data-uid="Efl.Gfx.IImage.ContentRegion">ContentRegion</h4>
   <div class="markdown level1 summary"><p>Return the relative area enclosed inside the image where content is expected.
-We do expect content to be inside the limit defined by the border or inside the stretch region. If a stretch region is provided, the content region will encompass the non strechable area that are surrounded by stretchable area. If no border and no stretch region is set, they are assumed to be zero and the full object geometry is where content can be layout on top. The area size change with the object size.</p>
+We do expect content to be inside the limit defined by the border or inside the stretch region. If a stretch region is provided, the content region will encompass the non-stretchable area that are surrounded by stretchable area. If no border and no stretch region is set, they are assumed to be zero and the full object geometry is where content can be layout on top. The area size change with the object size.</p>
 <p>The geometry of the area is expressed relative to the geometry of the object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -198,7 +278,7 @@ We do expect content to be inside the limit defined by the border or inside the 
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
-        <td><p>A rectangle inside the object boundary that where content is expected.</p>
+        <td><p>A rectangle inside the object boundary where content is expected. The default value is the image object's geometry with the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> values subtracted.</p>
 </td>
       </tr>
     </tbody>
@@ -207,7 +287,7 @@ We do expect content to be inside the limit defined by the border or inside the 
   
   <a id="Efl_Gfx_IImage_ImageLoadError_" data-uid="Efl.Gfx.IImage.ImageLoadError*"></a>
   <h4 id="Efl_Gfx_IImage_ImageLoadError" data-uid="Efl.Gfx.IImage.ImageLoadError">ImageLoadError</h4>
-  <div class="markdown level1 summary"><p>Gets the (last) file loading error for a given object.</p>
+  <div class="markdown level1 summary"><p>The (last) file loading error for a given object. This value is set to a nonzero value if an error has occurred.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -225,7 +305,7 @@ We do expect content to be inside the limit defined by the border or inside the 
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Error.html">Eina.Error</a></td>
-        <td><p>The load error code.</p>
+        <td><p>The load error code. A value of $0 indicates no error.</p>
 </td>
       </tr>
     </tbody>
@@ -236,7 +316,7 @@ We do expect content to be inside the limit defined by the border or inside the 
   <h4 id="Efl_Gfx_IImage_ImageSize" data-uid="Efl.Gfx.IImage.ImageSize">ImageSize</h4>
   <div class="markdown level1 summary"><p>This represents the size of the original image in pixels.
 This may be different from the actual geometry on screen or even the size of the loaded pixel buffer. This is the size of the image as stored in the original file.</p>
-<p>This is a read-only property, and may return 0x0.</p>
+<p>This is a read-only property and may return 0x0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -254,7 +334,7 @@ This may be different from the actual geometry on screen or even the size of the
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
-        <td><p>The size in pixels.</p>
+        <td><p>The size in pixels. The default value is the size of the image's internal buffer.</p>
 </td>
       </tr>
     </tbody>
@@ -263,7 +343,8 @@ This may be different from the actual geometry on screen or even the size of the
   
   <a id="Efl_Gfx_IImage_Ratio_" data-uid="Efl.Gfx.IImage.Ratio*"></a>
   <h4 id="Efl_Gfx_IImage_Ratio" data-uid="Efl.Gfx.IImage.Ratio">Ratio</h4>
-  <div class="markdown level1 summary"><p>The native width/height ratio of the image.</p>
+  <div class="markdown level1 summary"><p>The native width/height ratio of the image.
+The ratio will be 1.0 if it cannot be calculated (e.g. height = 0).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -280,7 +361,7 @@ This may be different from the actual geometry on screen or even the size of the
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The image's ratio.</p>
 </td>
       </tr>
@@ -290,8 +371,8 @@ This may be different from the actual geometry on screen or even the size of the
   
   <a id="Efl_Gfx_IImage_ScaleHint_" data-uid="Efl.Gfx.IImage.ScaleHint*"></a>
   <h4 id="Efl_Gfx_IImage_ScaleHint" data-uid="Efl.Gfx.IImage.ScaleHint">ScaleHint</h4>
-  <div class="markdown level1 summary"><p>Get the scale hint of a given image of the canvas.
-This function returns the scale hint value of the given image object of the canvas.</p>
+  <div class="markdown level1 summary"><p>The scale hint of a given image of the canvas.
+The scale hint affects how EFL is to cache scaled versions of its original source image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -309,21 +390,22 @@ This function returns the scale hint value of the given image object of the canv
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></td>
-        <td><p>Scalable or static size hint, see <a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></p>
+        <td><p>Scalable or static size hint.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_ScaleType_" data-uid="Efl.Gfx.IImage.ScaleType*"></a>
-  <h4 id="Efl_Gfx_IImage_ScaleType" data-uid="Efl.Gfx.IImage.ScaleType">ScaleType</h4>
-  <div class="markdown level1 summary"><p>Control how the image is scaled.</p>
+  <a id="Efl_Gfx_IImage_ScaleMethod_" data-uid="Efl.Gfx.IImage.ScaleMethod*"></a>
+  <h4 id="Efl_Gfx_IImage_ScaleMethod" data-uid="Efl.Gfx.IImage.ScaleMethod">ScaleMethod</h4>
+  <div class="markdown level1 summary"><p>Determine how the image is scaled at render time.
+This allows more granular controls for how an image object should display its internal buffer. The underlying image data will not be modified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ImageScaleType ScaleType { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">ImageScaleMethod ScaleMethod { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -335,8 +417,8 @@ This function returns the scale hint value of the given image object of the canv
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Gfx.ImageScaleType.html">Efl.Gfx.ImageScaleType</a></td>
-        <td><p>Image scale type</p>
+        <td><a class="xref" href="Efl.Gfx.ImageScaleMethod.html">Efl.Gfx.ImageScaleMethod</a></td>
+        <td><p>Image scale type to use.</p>
 </td>
       </tr>
     </tbody>
@@ -347,7 +429,6 @@ This function returns the scale hint value of the given image object of the canv
   <h4 id="Efl_Gfx_IImage_SmoothScale" data-uid="Efl.Gfx.IImage.SmoothScale">SmoothScale</h4>
   <div class="markdown level1 summary"><p>Whether to use high-quality image scaling algorithm for this image.
 When enabled, a higher quality image scaling algorithm is used when scaling images to sizes other than the source image's original one. This gives better results but is more computationally expensive.</p>
-<p><code>true</code> by default</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -364,8 +445,36 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p>Whether to use smooth scale or not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_StretchRegion_" data-uid="Efl.Gfx.IImage.StretchRegion*"></a>
+  <h4 id="Efl_Gfx_IImage_StretchRegion" data-uid="Efl.Gfx.IImage.StretchRegion">StretchRegion</h4>
+  <div class="markdown level1 summary"><p>This property defines the stretchable pixels region of an image.
+When the regions are set by the user, the method will walk the iterators once and then destroy them. When the regions are retrieved by the user, it is his responsibility to destroy the iterators.. It will remember the information for the lifetime of the object. It will ignore all value of <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>, <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderInsetsScale">Efl.Gfx.IImage.BorderInsetsScale</a> and <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_CenterFillMode">Efl.Gfx.IImage.CenterFillMode</a> . To reset the object you can just pass <code>null</code> to both horizontal and vertical at the same time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">(Iterator&lt;ImageStretchRegion&gt;, Iterator&lt;ImageStretchRegion&gt;)StretchRegion { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple&lt;Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;, Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;&gt;</span></td>
+        <td><p>Representation of areas that are stretchable in the image horizontal space.</p>
 </td>
       </tr>
     </tbody>
@@ -374,19 +483,19 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
   </h3>
   
   
-  <a id="Efl_Gfx_IImage_GetBorder_" data-uid="Efl.Gfx.IImage.GetBorder*"></a>
-  <h4 id="Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="Efl.Gfx.IImage.GetBorder(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">GetBorder(out Int32, out Int32, out Int32, out Int32)</h4>
+  <a id="Efl_Gfx_IImage_GetBorderInsets_" data-uid="Efl.Gfx.IImage.GetBorderInsets*"></a>
+  <h4 id="Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="Efl.Gfx.IImage.GetBorderInsets(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">GetBorderInsets(out Int32, out Int32, out Int32, out Int32)</h4>
   <div class="markdown level1 summary"><p>Dimensions of this image's border, a region that does not scale with the center area.
 When EFL renders an image, its source may be scaled to fit the size of the object. This function sets an area from the borders of the image inwards which is not to be scaled. This function is useful for making frames and for widget theming, where, for example, buttons may be of varying sizes, but their border size must remain constant.</p>
 <p>The units used for <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> are canvas units (pixels).</p>
-<p>Note: The border region itself may be scaled by the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_SetBorderScale_System_Double_">Efl.Gfx.IImage.SetBorderScale(System.Double)</a> function.</p>
+<p>Note: The border region itself may be scaled by the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_SetBorderInsetsScale_System_Double_">Efl.Gfx.IImage.SetBorderInsetsScale(System.Double)</a> function.</p>
 <p>Note: By default, image objects have no borders set, i.e. <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> start as 0.</p>
 <p>Note: Similar to the concepts of 9-patch images or cap insets.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void GetBorder(out int l, out int r, out int t, out int b)</code></pre>
+    <pre><code class="lang-csharp hljs">void GetBorderInsets(out int l, out int r, out int t, out int b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -399,72 +508,42 @@ When EFL renders an image, its source may be scaled to fit the size of the objec
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">l</span></td>
-        <td><p>The border's left width.</p>
+        <td><p>The border's left width.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">r</span></td>
-        <td><p>The border's right width.</p>
+        <td><p>The border's right width.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">t</span></td>
-        <td><p>The border's top height.</p>
+        <td><p>The border's top height.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>The border's bottom height.</p>
+        <td><p>The border's bottom height.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_GetBorderCenterFill_" data-uid="Efl.Gfx.IImage.GetBorderCenterFill*"></a>
-  <h4 id="Efl_Gfx_IImage_GetBorderCenterFill" data-uid="Efl.Gfx.IImage.GetBorderCenterFill">GetBorderCenterFill()</h4>
-  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
-This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <a class="xref" href="Efl.Gfx.IFill.html#Efl_Gfx_IFill_FillAuto">Efl.Gfx.IFill.FillAuto</a>) to use as a frame.</p>
-<p>The default value is <a class="xref" href="Efl.Gfx.BorderFillMode.html#Efl_Gfx_BorderFillMode_Default">Efl.Gfx.BorderFillMode.Default</a>, ie. render and scale the center area, respecting its transparency.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">BorderFillMode GetBorderCenterFill()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a></td>
-        <td><p>Fill mode of the center region.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Gfx_IImage_GetBorderScale_" data-uid="Efl.Gfx.IImage.GetBorderScale*"></a>
-  <h4 id="Efl_Gfx_IImage_GetBorderScale" data-uid="Efl.Gfx.IImage.GetBorderScale">GetBorderScale()</h4>
+  <a id="Efl_Gfx_IImage_GetBorderInsetsScale_" data-uid="Efl.Gfx.IImage.GetBorderInsetsScale*"></a>
+  <h4 id="Efl_Gfx_IImage_GetBorderInsetsScale" data-uid="Efl.Gfx.IImage.GetBorderInsetsScale">GetBorderInsetsScale()</h4>
   <div class="markdown level1 summary"><p>Scaling factor applied to the image borders.
-This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
-<p>Default value is 1.0 (no scaling).</p>
+This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double GetBorderScale()</code></pre>
+    <pre><code class="lang-csharp hljs">double GetBorderInsetsScale()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -476,8 +555,90 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The scale factor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_GetCanDownscale_" data-uid="Efl.Gfx.IImage.GetCanDownscale*"></a>
+  <h4 id="Efl_Gfx_IImage_GetCanDownscale" data-uid="Efl.Gfx.IImage.GetCanDownscale">GetCanDownscale()</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a smaller size. If <code>false</code>, the image will never be resized smaller than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetCanDownscale()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>Whether to allow image downscaling.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_GetCanUpscale_" data-uid="Efl.Gfx.IImage.GetCanUpscale*"></a>
+  <h4 id="Efl_Gfx_IImage_GetCanUpscale" data-uid="Efl.Gfx.IImage.GetCanUpscale">GetCanUpscale()</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a larger size. If <code>false</code>, the image will never be resized larger than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetCanUpscale()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p>Whether to allow image upscaling.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_GetCenterFillMode_" data-uid="Efl.Gfx.IImage.GetCenterFillMode*"></a>
+  <h4 id="Efl_Gfx_IImage_GetCenterFillMode" data-uid="Efl.Gfx.IImage.GetCenterFillMode">GetCenterFillMode()</h4>
+  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
+This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <span class="text-muted">Efl.Gfx.IFill.FillAuto (object still in beta stage)</span>) to use as a frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">CenterFillMode GetCenterFillMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a></td>
+        <td><p>Fill mode of the center region. The default behavior is to render and scale the center area, respecting its transparency.</p>
 </td>
       </tr>
     </tbody>
@@ -486,8 +647,8 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
   
   <a id="Efl_Gfx_IImage_GetContentHint_" data-uid="Efl.Gfx.IImage.GetContentHint*"></a>
   <h4 id="Efl_Gfx_IImage_GetContentHint" data-uid="Efl.Gfx.IImage.GetContentHint">GetContentHint()</h4>
-  <div class="markdown level1 summary"><p>Get the content hint setting of a given image object of the canvas.
-This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
+  <div class="markdown level1 summary"><p>Content hint setting for the image. These hints might be used by EFL to enable optimizations.
+For example, if you're on the GL engine and your driver implementation supports it, setting this hint to <a class="xref" href="Efl.Gfx.ImageContentHint.html#Efl_Gfx_ImageContentHint_Dynamic">Efl.Gfx.ImageContentHint.Dynamic</a> will make it need zero copies at texture upload time, which is an &quot;expensive&quot; operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -505,7 +666,7 @@ This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></td>
-        <td><p>Dynamic or static content hint, see <a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></p>
+        <td><p>Dynamic or static content hint.</p>
 </td>
       </tr>
     </tbody>
@@ -515,7 +676,7 @@ This returns #EVAS_IMAGE_CONTENT_HINT_NONE on error.</p>
   <a id="Efl_Gfx_IImage_GetContentRegion_" data-uid="Efl.Gfx.IImage.GetContentRegion*"></a>
   <h4 id="Efl_Gfx_IImage_GetContentRegion" data-uid="Efl.Gfx.IImage.GetContentRegion">GetContentRegion()</h4>
   <div class="markdown level1 summary"><p>Return the relative area enclosed inside the image where content is expected.
-We do expect content to be inside the limit defined by the border or inside the stretch region. If a stretch region is provided, the content region will encompass the non strechable area that are surrounded by stretchable area. If no border and no stretch region is set, they are assumed to be zero and the full object geometry is where content can be layout on top. The area size change with the object size.</p>
+We do expect content to be inside the limit defined by the border or inside the stretch region. If a stretch region is provided, the content region will encompass the non-stretchable area that are surrounded by stretchable area. If no border and no stretch region is set, they are assumed to be zero and the full object geometry is where content can be layout on top. The area size change with the object size.</p>
 <p>The geometry of the area is expressed relative to the geometry of the object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -534,7 +695,7 @@ We do expect content to be inside the limit defined by the border or inside the 
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Rect.html">Eina.Rect</a></td>
-        <td><p>A rectangle inside the object boundary that where content is expected.</p>
+        <td><p>A rectangle inside the object boundary where content is expected. The default value is the image object's geometry with the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> values subtracted.</p>
 </td>
       </tr>
     </tbody>
@@ -543,7 +704,7 @@ We do expect content to be inside the limit defined by the border or inside the 
   
   <a id="Efl_Gfx_IImage_GetImageLoadError_" data-uid="Efl.Gfx.IImage.GetImageLoadError*"></a>
   <h4 id="Efl_Gfx_IImage_GetImageLoadError" data-uid="Efl.Gfx.IImage.GetImageLoadError">GetImageLoadError()</h4>
-  <div class="markdown level1 summary"><p>Gets the (last) file loading error for a given object.</p>
+  <div class="markdown level1 summary"><p>The (last) file loading error for a given object. This value is set to a nonzero value if an error has occurred.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -561,7 +722,7 @@ We do expect content to be inside the limit defined by the border or inside the 
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Error.html">Eina.Error</a></td>
-        <td><p>The load error code.</p>
+        <td><p>The load error code. A value of $0 indicates no error.</p>
 </td>
       </tr>
     </tbody>
@@ -572,7 +733,7 @@ We do expect content to be inside the limit defined by the border or inside the 
   <h4 id="Efl_Gfx_IImage_GetImageSize" data-uid="Efl.Gfx.IImage.GetImageSize">GetImageSize()</h4>
   <div class="markdown level1 summary"><p>This represents the size of the original image in pixels.
 This may be different from the actual geometry on screen or even the size of the loaded pixel buffer. This is the size of the image as stored in the original file.</p>
-<p>This is a read-only property, and may return 0x0.</p>
+<p>This is a read-only property and may return 0x0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -590,7 +751,7 @@ This may be different from the actual geometry on screen or even the size of the
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Size2D.html">Eina.Size2D</a></td>
-        <td><p>The size in pixels.</p>
+        <td><p>The size in pixels. The default value is the size of the image's internal buffer.</p>
 </td>
       </tr>
     </tbody>
@@ -599,7 +760,8 @@ This may be different from the actual geometry on screen or even the size of the
   
   <a id="Efl_Gfx_IImage_GetRatio_" data-uid="Efl.Gfx.IImage.GetRatio*"></a>
   <h4 id="Efl_Gfx_IImage_GetRatio" data-uid="Efl.Gfx.IImage.GetRatio">GetRatio()</h4>
-  <div class="markdown level1 summary"><p>Returns 1.0 if not applicable (eg. height = 0).</p>
+  <div class="markdown level1 summary"><p>The native width/height ratio of the image.
+The ratio will be 1.0 if it cannot be calculated (e.g. height = 0).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -616,7 +778,7 @@ This may be different from the actual geometry on screen or even the size of the
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The image's ratio.</p>
 </td>
       </tr>
@@ -626,8 +788,8 @@ This may be different from the actual geometry on screen or even the size of the
   
   <a id="Efl_Gfx_IImage_GetScaleHint_" data-uid="Efl.Gfx.IImage.GetScaleHint*"></a>
   <h4 id="Efl_Gfx_IImage_GetScaleHint" data-uid="Efl.Gfx.IImage.GetScaleHint">GetScaleHint()</h4>
-  <div class="markdown level1 summary"><p>Get the scale hint of a given image of the canvas.
-This function returns the scale hint value of the given image object of the canvas.</p>
+  <div class="markdown level1 summary"><p>The scale hint of a given image of the canvas.
+The scale hint affects how EFL is to cache scaled versions of its original source image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -645,21 +807,22 @@ This function returns the scale hint value of the given image object of the canv
     <tbody>
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></td>
-        <td><p>Scalable or static size hint, see <a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></p>
+        <td><p>Scalable or static size hint.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_GetScaleType_" data-uid="Efl.Gfx.IImage.GetScaleType*"></a>
-  <h4 id="Efl_Gfx_IImage_GetScaleType" data-uid="Efl.Gfx.IImage.GetScaleType">GetScaleType()</h4>
-  <div class="markdown level1 summary"><p>Control how the image is scaled.</p>
+  <a id="Efl_Gfx_IImage_GetScaleMethod_" data-uid="Efl.Gfx.IImage.GetScaleMethod*"></a>
+  <h4 id="Efl_Gfx_IImage_GetScaleMethod" data-uid="Efl.Gfx.IImage.GetScaleMethod">GetScaleMethod()</h4>
+  <div class="markdown level1 summary"><p>Determine how the image is scaled at render time.
+This allows more granular controls for how an image object should display its internal buffer. The underlying image data will not be modified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ImageScaleType GetScaleType()</code></pre>
+    <pre><code class="lang-csharp hljs">ImageScaleMethod GetScaleMethod()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -671,8 +834,8 @@ This function returns the scale hint value of the given image object of the canv
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Gfx.ImageScaleType.html">Efl.Gfx.ImageScaleType</a></td>
-        <td><p>Image scale type</p>
+        <td><a class="xref" href="Efl.Gfx.ImageScaleMethod.html">Efl.Gfx.ImageScaleMethod</a></td>
+        <td><p>Image scale type to use.</p>
 </td>
       </tr>
     </tbody>
@@ -683,7 +846,6 @@ This function returns the scale hint value of the given image object of the canv
   <h4 id="Efl_Gfx_IImage_GetSmoothScale" data-uid="Efl.Gfx.IImage.GetSmoothScale">GetSmoothScale()</h4>
   <div class="markdown level1 summary"><p>Whether to use high-quality image scaling algorithm for this image.
 When enabled, a higher quality image scaling algorithm is used when scaling images to sizes other than the source image's original one. This gives better results but is more computationally expensive.</p>
-<p><code>true</code> by default</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -700,7 +862,7 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p>Whether to use smooth scale or not.</p>
 </td>
       </tr>
@@ -709,14 +871,14 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
   
   
   <a id="Efl_Gfx_IImage_GetStretchRegion_" data-uid="Efl.Gfx.IImage.GetStretchRegion*"></a>
-  <h4 id="Efl_Gfx_IImage_GetStretchRegion_Eina_Iterator_Efl_Gfx_Image_StretchRegion___Eina_Iterator_Efl_Gfx_Image_StretchRegion___" data-uid="Efl.Gfx.IImage.GetStretchRegion(Eina.Iterator{Efl.Gfx.Image.StretchRegion}@,Eina.Iterator{Efl.Gfx.Image.StretchRegion}@)">GetStretchRegion(out Iterator&lt;StretchRegion&gt;, out Iterator&lt;StretchRegion&gt;)</h4>
+  <h4 id="Efl_Gfx_IImage_GetStretchRegion_Eina_Iterator_Efl_Gfx_ImageStretchRegion___Eina_Iterator_Efl_Gfx_ImageStretchRegion___" data-uid="Efl.Gfx.IImage.GetStretchRegion(Eina.Iterator{Efl.Gfx.ImageStretchRegion}@,Eina.Iterator{Efl.Gfx.ImageStretchRegion}@)">GetStretchRegion(out Iterator&lt;ImageStretchRegion&gt;, out Iterator&lt;ImageStretchRegion&gt;)</h4>
   <div class="markdown level1 summary"><p>This property defines the stretchable pixels region of an image.
-When the regions are set by the user, the method will walk the iterators once and then destroy them. When the regions are retrieved by the user, it is his responsibility to destroy the iterators.. It will remember the information for the lifetime of the object. It will ignore all value of <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>, <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderScale">Efl.Gfx.IImage.BorderScale</a> and <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderCenterFill">Efl.Gfx.IImage.BorderCenterFill</a> . To reset the object you can just pass <code>null</code> to both horizontal and vertical at the same time.</p>
+When the regions are set by the user, the method will walk the iterators once and then destroy them. When the regions are retrieved by the user, it is his responsibility to destroy the iterators.. It will remember the information for the lifetime of the object. It will ignore all value of <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>, <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderInsetsScale">Efl.Gfx.IImage.BorderInsetsScale</a> and <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_CenterFillMode">Efl.Gfx.IImage.CenterFillMode</a> . To reset the object you can just pass <code>null</code> to both horizontal and vertical at the same time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void GetStretchRegion(out Iterator&lt;StretchRegion&gt; horizontal, out Iterator&lt;StretchRegion&gt; vertical)</code></pre>
+    <pre><code class="lang-csharp hljs">void GetStretchRegion(out Iterator&lt;ImageStretchRegion&gt; horizontal, out Iterator&lt;ImageStretchRegion&gt; vertical)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -729,34 +891,34 @@ When the regions are set by the user, the method will walk the iterators once an
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.Image.StretchRegion&gt;</span></td>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;</span></td>
         <td><span class="parametername">horizontal</span></td>
-        <td><p>Representation of area that are stretchable in the image horizontal space.</p>
+        <td><p>Representation of areas that are stretchable in the image horizontal space.<br>The default value is <code>null</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.Image.StretchRegion&gt;</span></td>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;</span></td>
         <td><span class="parametername">vertical</span></td>
-        <td><p>Representation of area that are stretchable in the image vertical space.</p>
+        <td><p>Representation of areas that are stretchable in the image vertical space.<br>The default value is <code>null</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_SetBorder_" data-uid="Efl.Gfx.IImage.SetBorder*"></a>
-  <h4 id="Efl_Gfx_IImage_SetBorder_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Efl.Gfx.IImage.SetBorder(System.Int32,System.Int32,System.Int32,System.Int32)">SetBorder(Int32, Int32, Int32, Int32)</h4>
+  <a id="Efl_Gfx_IImage_SetBorderInsets_" data-uid="Efl.Gfx.IImage.SetBorderInsets*"></a>
+  <h4 id="Efl_Gfx_IImage_SetBorderInsets_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Efl.Gfx.IImage.SetBorderInsets(System.Int32,System.Int32,System.Int32,System.Int32)">SetBorderInsets(Int32, Int32, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Dimensions of this image's border, a region that does not scale with the center area.
 When EFL renders an image, its source may be scaled to fit the size of the object. This function sets an area from the borders of the image inwards which is not to be scaled. This function is useful for making frames and for widget theming, where, for example, buttons may be of varying sizes, but their border size must remain constant.</p>
 <p>The units used for <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> are canvas units (pixels).</p>
-<p>Note: The border region itself may be scaled by the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_SetBorderScale_System_Double_">Efl.Gfx.IImage.SetBorderScale(System.Double)</a> function.</p>
+<p>Note: The border region itself may be scaled by the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_SetBorderInsetsScale_System_Double_">Efl.Gfx.IImage.SetBorderInsetsScale(System.Double)</a> function.</p>
 <p>Note: By default, image objects have no borders set, i.e. <code>l</code>, <code>r</code>, <code>t</code> and <code>b</code> start as 0.</p>
 <p>Note: Similar to the concepts of 9-patch images or cap insets.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetBorder(int l, int r, int t, int b)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetBorderInsets(int l, int r, int t, int b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -769,74 +931,42 @@ When EFL renders an image, its source may be scaled to fit the size of the objec
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">l</span></td>
-        <td><p>The border's left width.</p>
+        <td><p>The border's left width.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">r</span></td>
-        <td><p>The border's right width.</p>
+        <td><p>The border's right width.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">t</span></td>
-        <td><p>The border's top height.</p>
+        <td><p>The border's top height.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">b</span></td>
-        <td><p>The border's bottom height.</p>
+        <td><p>The border's bottom height.<br>The default value is <code>0</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_SetBorderCenterFill_" data-uid="Efl.Gfx.IImage.SetBorderCenterFill*"></a>
-  <h4 id="Efl_Gfx_IImage_SetBorderCenterFill_Efl_Gfx_BorderFillMode_" data-uid="Efl.Gfx.IImage.SetBorderCenterFill(Efl.Gfx.BorderFillMode)">SetBorderCenterFill(BorderFillMode)</h4>
-  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
-This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <a class="xref" href="Efl.Gfx.IFill.html#Efl_Gfx_IFill_FillAuto">Efl.Gfx.IFill.FillAuto</a>) to use as a frame.</p>
-<p>The default value is <a class="xref" href="Efl.Gfx.BorderFillMode.html#Efl_Gfx_BorderFillMode_Default">Efl.Gfx.BorderFillMode.Default</a>, ie. render and scale the center area, respecting its transparency.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetBorderCenterFill(BorderFillMode fill)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.BorderFillMode.html">Efl.Gfx.BorderFillMode</a></td>
-        <td><span class="parametername">fill</span></td>
-        <td><p>Fill mode of the center region.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Gfx_IImage_SetBorderScale_" data-uid="Efl.Gfx.IImage.SetBorderScale*"></a>
-  <h4 id="Efl_Gfx_IImage_SetBorderScale_System_Double_" data-uid="Efl.Gfx.IImage.SetBorderScale(System.Double)">SetBorderScale(Double)</h4>
+  <a id="Efl_Gfx_IImage_SetBorderInsetsScale_" data-uid="Efl.Gfx.IImage.SetBorderInsetsScale*"></a>
+  <h4 id="Efl_Gfx_IImage_SetBorderInsetsScale_System_Double_" data-uid="Efl.Gfx.IImage.SetBorderInsetsScale(System.Double)">SetBorderInsetsScale(Double)</h4>
   <div class="markdown level1 summary"><p>Scaling factor applied to the image borders.
-This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
-<p>Default value is 1.0 (no scaling).</p>
+This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a> when scaling an object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetBorderScale(double scale)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetBorderInsetsScale(double scale)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -849,9 +979,97 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">scale</span></td>
-        <td><p>The scale factor.</p>
+        <td><p>The scale factor.<br>The default value is <code>1.000000</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_SetCanDownscale_" data-uid="Efl.Gfx.IImage.SetCanDownscale*"></a>
+  <h4 id="Efl_Gfx_IImage_SetCanDownscale_System_Boolean_" data-uid="Efl.Gfx.IImage.SetCanDownscale(System.Boolean)">SetCanDownscale(Boolean)</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a smaller size. If <code>false</code>, the image will never be resized smaller than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetCanDownscale(bool downscale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">downscale</span></td>
+        <td><p>Whether to allow image downscaling.<br>The default value is <code>true</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_SetCanUpscale_" data-uid="Efl.Gfx.IImage.SetCanUpscale*"></a>
+  <h4 id="Efl_Gfx_IImage_SetCanUpscale_System_Boolean_" data-uid="Efl.Gfx.IImage.SetCanUpscale(System.Boolean)">SetCanUpscale(Boolean)</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, the image may be scaled to a larger size. If <code>false</code>, the image will never be resized larger than its native size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetCanUpscale(bool upscale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">upscale</span></td>
+        <td><p>Whether to allow image upscaling.<br>The default value is <code>true</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Gfx_IImage_SetCenterFillMode_" data-uid="Efl.Gfx.IImage.SetCenterFillMode*"></a>
+  <h4 id="Efl_Gfx_IImage_SetCenterFillMode_Efl_Gfx_CenterFillMode_" data-uid="Efl.Gfx.IImage.SetCenterFillMode(Efl.Gfx.CenterFillMode)">SetCenterFillMode(CenterFillMode)</h4>
+  <div class="markdown level1 summary"><p>Specifies how the center part of the object (not the borders) should be drawn when EFL is rendering it.
+This function sets how the center part of the image object's source image is to be drawn, which must be one of the values in <a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a>. By center we mean the complementary part of that defined by <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>. This is very useful for making frames and decorations. You would most probably also be using a filled image (as in <span class="text-muted">Efl.Gfx.IFill.FillAuto (object still in beta stage)</span>) to use as a frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetCenterFillMode(CenterFillMode fill)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Efl.Gfx.CenterFillMode.html">Efl.Gfx.CenterFillMode</a></td>
+        <td><span class="parametername">fill</span></td>
+        <td><p>Fill mode of the center region. The default behavior is to render and scale the center area, respecting its transparency.<br>The default value is <a class="xref" href="Efl.Gfx.CenterFillMode.html#Efl_Gfx_CenterFillMode_Default">Efl.Gfx.CenterFillMode.Default</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -860,8 +1078,8 @@ This value multiplies the size of the <a class="xref" href="Efl.Gfx.IImage.html#
   
   <a id="Efl_Gfx_IImage_SetContentHint_" data-uid="Efl.Gfx.IImage.SetContentHint*"></a>
   <h4 id="Efl_Gfx_IImage_SetContentHint_Efl_Gfx_ImageContentHint_" data-uid="Efl.Gfx.IImage.SetContentHint(Efl.Gfx.ImageContentHint)">SetContentHint(ImageContentHint)</h4>
-  <div class="markdown level1 summary"><p>Set the content hint setting of a given image object of the canvas.
-This function sets the content hint value of the given image of the canvas. For example, if you're on the GL engine and your driver implementation supports it, setting this hint to #EVAS_IMAGE_CONTENT_HINT_DYNAMIC will make it need zero copies at texture upload time, which is an &quot;expensive&quot; operation.</p>
+  <div class="markdown level1 summary"><p>Content hint setting for the image. These hints might be used by EFL to enable optimizations.
+For example, if you're on the GL engine and your driver implementation supports it, setting this hint to <a class="xref" href="Efl.Gfx.ImageContentHint.html#Efl_Gfx_ImageContentHint_Dynamic">Efl.Gfx.ImageContentHint.Dynamic</a> will make it need zero copies at texture upload time, which is an &quot;expensive&quot; operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -881,7 +1099,7 @@ This function sets the content hint value of the given image of the canvas. For 
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></td>
         <td><span class="parametername">hint</span></td>
-        <td><p>Dynamic or static content hint, see <a class="xref" href="Efl.Gfx.ImageContentHint.html">Efl.Gfx.ImageContentHint</a></p>
+        <td><p>Dynamic or static content hint.<br>The default value is <a class="xref" href="Efl.Gfx.ImageContentHint.html#Efl_Gfx_ImageContentHint_None">Efl.Gfx.ImageContentHint.None</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -890,8 +1108,8 @@ This function sets the content hint value of the given image of the canvas. For 
   
   <a id="Efl_Gfx_IImage_SetScaleHint_" data-uid="Efl.Gfx.IImage.SetScaleHint*"></a>
   <h4 id="Efl_Gfx_IImage_SetScaleHint_Efl_Gfx_ImageScaleHint_" data-uid="Efl.Gfx.IImage.SetScaleHint(Efl.Gfx.ImageScaleHint)">SetScaleHint(ImageScaleHint)</h4>
-  <div class="markdown level1 summary"><p>Set the scale hint of a given image of the canvas.
-This function sets the scale hint value of the given image object in the canvas, which will affect how Evas is to cache scaled versions of its original source image.</p>
+  <div class="markdown level1 summary"><p>The scale hint of a given image of the canvas.
+The scale hint affects how EFL is to cache scaled versions of its original source image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -911,21 +1129,22 @@ This function sets the scale hint value of the given image object in the canvas,
       <tr>
         <td><a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></td>
         <td><span class="parametername">hint</span></td>
-        <td><p>Scalable or static size hint, see <a class="xref" href="Efl.Gfx.ImageScaleHint.html">Efl.Gfx.ImageScaleHint</a></p>
+        <td><p>Scalable or static size hint.<br>The default value is <a class="xref" href="Efl.Gfx.ImageScaleHint.html#Efl_Gfx_ImageScaleHint_None">Efl.Gfx.ImageScaleHint.None</a>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImage_SetScaleType_" data-uid="Efl.Gfx.IImage.SetScaleType*"></a>
-  <h4 id="Efl_Gfx_IImage_SetScaleType_Efl_Gfx_ImageScaleType_" data-uid="Efl.Gfx.IImage.SetScaleType(Efl.Gfx.ImageScaleType)">SetScaleType(ImageScaleType)</h4>
-  <div class="markdown level1 summary"><p>Control how the image is scaled.</p>
+  <a id="Efl_Gfx_IImage_SetScaleMethod_" data-uid="Efl.Gfx.IImage.SetScaleMethod*"></a>
+  <h4 id="Efl_Gfx_IImage_SetScaleMethod_Efl_Gfx_ImageScaleMethod_" data-uid="Efl.Gfx.IImage.SetScaleMethod(Efl.Gfx.ImageScaleMethod)">SetScaleMethod(ImageScaleMethod)</h4>
+  <div class="markdown level1 summary"><p>Determine how the image is scaled at render time.
+This allows more granular controls for how an image object should display its internal buffer. The underlying image data will not be modified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SetScaleType(ImageScaleType scale_type)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetScaleMethod(ImageScaleMethod scale_method)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -938,9 +1157,9 @@ This function sets the scale hint value of the given image object in the canvas,
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Gfx.ImageScaleType.html">Efl.Gfx.ImageScaleType</a></td>
-        <td><span class="parametername">scale_type</span></td>
-        <td><p>Image scale type</p>
+        <td><a class="xref" href="Efl.Gfx.ImageScaleMethod.html">Efl.Gfx.ImageScaleMethod</a></td>
+        <td><span class="parametername">scale_method</span></td>
+        <td><p>Image scale type to use.<br>The default value is <a class="xref" href="Efl.Gfx.ImageScaleMethod.html#Efl_Gfx_ImageScaleMethod_None">Efl.Gfx.ImageScaleMethod.None</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -951,7 +1170,6 @@ This function sets the scale hint value of the given image object in the canvas,
   <h4 id="Efl_Gfx_IImage_SetSmoothScale_System_Boolean_" data-uid="Efl.Gfx.IImage.SetSmoothScale(System.Boolean)">SetSmoothScale(Boolean)</h4>
   <div class="markdown level1 summary"><p>Whether to use high-quality image scaling algorithm for this image.
 When enabled, a higher quality image scaling algorithm is used when scaling images to sizes other than the source image's original one. This gives better results but is more computationally expensive.</p>
-<p><code>true</code> by default</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -969,9 +1187,9 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><span class="parametername">smooth_scale</span></td>
-        <td><p>Whether to use smooth scale or not.</p>
+        <td><p>Whether to use smooth scale or not.<br>The default value is <code>true</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -979,14 +1197,14 @@ When enabled, a higher quality image scaling algorithm is used when scaling imag
   
   
   <a id="Efl_Gfx_IImage_SetStretchRegion_" data-uid="Efl.Gfx.IImage.SetStretchRegion*"></a>
-  <h4 id="Efl_Gfx_IImage_SetStretchRegion_Eina_Iterator_Efl_Gfx_Image_StretchRegion__Eina_Iterator_Efl_Gfx_Image_StretchRegion__" data-uid="Efl.Gfx.IImage.SetStretchRegion(Eina.Iterator{Efl.Gfx.Image.StretchRegion},Eina.Iterator{Efl.Gfx.Image.StretchRegion})">SetStretchRegion(Iterator&lt;StretchRegion&gt;, Iterator&lt;StretchRegion&gt;)</h4>
+  <h4 id="Efl_Gfx_IImage_SetStretchRegion_Eina_Iterator_Efl_Gfx_ImageStretchRegion__Eina_Iterator_Efl_Gfx_ImageStretchRegion__" data-uid="Efl.Gfx.IImage.SetStretchRegion(Eina.Iterator{Efl.Gfx.ImageStretchRegion},Eina.Iterator{Efl.Gfx.ImageStretchRegion})">SetStretchRegion(Iterator&lt;ImageStretchRegion&gt;, Iterator&lt;ImageStretchRegion&gt;)</h4>
   <div class="markdown level1 summary"><p>This property defines the stretchable pixels region of an image.
-When the regions are set by the user, the method will walk the iterators once and then destroy them. When the regions are retrieved by the user, it is his responsibility to destroy the iterators.. It will remember the information for the lifetime of the object. It will ignore all value of <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorder_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorder(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>, <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderScale">Efl.Gfx.IImage.BorderScale</a> and <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderCenterFill">Efl.Gfx.IImage.BorderCenterFill</a> . To reset the object you can just pass <code>null</code> to both horizontal and vertical at the same time.</p>
+When the regions are set by the user, the method will walk the iterators once and then destroy them. When the regions are retrieved by the user, it is his responsibility to destroy the iterators.. It will remember the information for the lifetime of the object. It will ignore all value of <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_GetBorderInsets_System_Int32__System_Int32__System_Int32__System_Int32__">Efl.Gfx.IImage.GetBorderInsets(out System.Int32, out System.Int32, out System.Int32, out System.Int32)</a>, <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_BorderInsetsScale">Efl.Gfx.IImage.BorderInsetsScale</a> and <a class="xref" href="Efl.Gfx.IImage.html#Efl_Gfx_IImage_CenterFillMode">Efl.Gfx.IImage.CenterFillMode</a> . To reset the object you can just pass <code>null</code> to both horizontal and vertical at the same time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Error SetStretchRegion(Iterator&lt;StretchRegion&gt; horizontal, Iterator&lt;StretchRegion&gt; vertical)</code></pre>
+    <pre><code class="lang-csharp hljs">Error SetStretchRegion(Iterator&lt;ImageStretchRegion&gt; horizontal, Iterator&lt;ImageStretchRegion&gt; vertical)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -999,15 +1217,15 @@ When the regions are set by the user, the method will walk the iterators once an
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.Image.StretchRegion&gt;</span></td>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;</span></td>
         <td><span class="parametername">horizontal</span></td>
-        <td><p>Representation of area that are stretchable in the image horizontal space.</p>
+        <td><p>Representation of areas that are stretchable in the image horizontal space.<br>The default value is <code>null</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.Image.StretchRegion&gt;</span></td>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.ImageStretchRegion&gt;</span></td>
         <td><span class="parametername">vertical</span></td>
-        <td><p>Representation of area that are stretchable in the image vertical space.</p>
+        <td><p>Representation of areas that are stretchable in the image vertical space.<br>The default value is <code>null</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1023,7 +1241,7 @@ When the regions are set by the user, the method will walk the iterators once an
     <tbody>
       <tr>
         <td><a class="xref" href="Eina.Error.html">Eina.Error</a></td>
-        <td><p>return an error code if the stretch_region provided are incorrect.</p>
+        <td><p>Return an error code if the provided values are incorrect.</p>
 </td>
       </tr>
     </tbody>
@@ -1032,13 +1250,13 @@ When the regions are set by the user, the method will walk the iterators once an
   </h3>
   
   
-  <h4 id="Efl_Gfx_IImage_ImagePreloadEvt" data-uid="Efl.Gfx.IImage.ImagePreloadEvt">ImagePreloadEvt</h4>
-  <div class="markdown level1 summary"><p>Image data has been preloaded.</p>
+  <h4 id="Efl_Gfx_IImage_ImagePreloadStateChangedEvent" data-uid="Efl.Gfx.IImage.ImagePreloadStateChangedEvent">ImagePreloadStateChangedEvent</h4>
+  <div class="markdown level1 summary"><p>If <code>true</code>, image data has been preloaded and can be displayed. If <code>false</code>, the image data has been unloaded and can no longer be displayed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ImagePreloadEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ImageImagePreloadStateChangedEventArgs&gt; ImagePreloadStateChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1050,20 +1268,21 @@ When the regions are set by the user, the method will walk the iterators once an
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Gfx.ImageImagePreloadStateChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Gfx.ImageImagePreloadStateChangedEventArgs.html">Efl.Gfx.ImageImagePreloadStateChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Gfx_IImage_ImageResizeEvt" data-uid="Efl.Gfx.IImage.ImageResizeEvt">ImageResizeEvt</h4>
-  <div class="markdown level1 summary"><p>Image was resized (its pixel data).</p>
+  <h4 id="Efl_Gfx_IImage_ImageResizedEvent" data-uid="Efl.Gfx.IImage.ImageResizedEvent">ImageResizedEvent</h4>
+  <div class="markdown level1 summary"><p>Image was resized (its pixel data). The event data is the image's new size.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ImageResizeEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ImageImageResizedEventArgs&gt; ImageResizedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1075,33 +1294,9 @@ When the regions are set by the user, the method will walk the iterators once an
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Gfx_IImage_ImageUnloadEvt" data-uid="Efl.Gfx.IImage.ImageUnloadEvt">ImageUnloadEvt</h4>
-  <div class="markdown level1 summary"><p>Image data has been unloaded (by some mechanism in EFL that threw out the original image data).</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler ImageUnloadEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Gfx.ImageImageResizedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Gfx.ImageImageResizedEventArgs.html">Efl.Gfx.ImageImageResizedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>

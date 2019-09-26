@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Efl.Ui.SpinButton
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -77,14 +77,9 @@
 This is a widget which allows the user to increase or decrease numeric values using the arrow buttons or to edit values directly by clicking over them and inputting new ones.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_SpinButton_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">System.Object</a></div>
     <div class="level1"><a class="xref" href="Efl.Eo.EoWrapper.html">Efl.Eo.EoWrapper</a></div>
     <div class="level2"><a class="xref" href="Efl.Object.html">Efl.Object</a></div>
     <div class="level3"><a class="xref" href="Efl.LoopConsumer.html">Efl.LoopConsumer</a></div>
@@ -98,7 +93,7 @@ This is a widget which allows the user to increase or decrease numeric values us
   
   <h5 id="Efl_Ui_SpinButton_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SpinButton : Spin, IPointer, IEvents, IColor, IHint, IMapping, IInterface, II18n, IPart, IComponent, IEntity, IStack, IObject, IDnd, IL10n, IPropertyBind, ISelection, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IValue, IAction, IAction, IFormat, IRangeInteractive, IRangeDisplay, ILayoutOrientable, IComposition, IWrapper, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SpinButton : Spin, IPointer, IColor, IEntity, IHint, IMapping, IStack, IInterface, IPart, IPropertyBind, IView, IObject, IContainer, ICalc, IGroup, ISignal, IFactoryBind, IFormat, ILayoutOrientable, IRangeInteractive, IRangeDisplay, IWrapper, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -160,9 +155,45 @@ Do not call this constructor directly.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">style</span></td>
         <td><p>The widget style to use. See <a class="xref" href="Efl.Ui.Widget.html#Efl_Ui_Widget_SetStyle_System_String_">Efl.Ui.Widget.SetStyle(System.String)</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_SpinButton__ctor_" data-uid="Efl.Ui.SpinButton.#ctor*"></a>
+  <h4 id="Efl_Ui_SpinButton__ctor_System_IntPtr_Efl_Object_" data-uid="Efl.Ui.SpinButton.#ctor(System.IntPtr,Efl.Object)">SpinButton(IntPtr, Object)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Efl.Ui.SpinButton.html">Efl.Ui.SpinButton</a> class.
+Internal usage: Constructor to forward the wrapper initialization to the root class that interfaces with native code. Should not be used directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SpinButton(IntPtr baseKlass, Object parent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">System.IntPtr</a></td>
+        <td><span class="parametername">baseKlass</span></td>
+        <td><p>The pointer to the base native Eo class.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Efl.Object.html">Efl.Object</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>The Efl.Object parent of this instance.</p>
 </td>
       </tr>
     </tbody>
@@ -171,128 +202,11 @@ Do not call this constructor directly.</p>
   </h3>
   
   
-  <a id="Efl_Ui_SpinButton_Circulate_" data-uid="Efl.Ui.SpinButton.Circulate*"></a>
-  <h4 id="Efl_Ui_SpinButton_Circulate" data-uid="Efl.Ui.SpinButton.Circulate">Circulate</h4>
-  <div class="markdown level1 summary"><p>Control whether the spin should circulate value when it reaches its minimum or maximum value.
-Disabled by default. If disabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will be the maximum value. The same happens when the user tries to decrement it but the value less step is less than minimum value. In this case, the new displayed value will be the minimum value.</p>
-<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
-<p>E.g.: <code>min</code> = 10 <code>max</code> = 50 <code>step</code> = 20 <code>displayed</code> = 20</p>
-<p>When the user decrements the value (using left or bottom arrow), it will display $50.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Circulate { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> to enable circulate or <code>false</code> to disable it.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_CompositionElements_" data-uid="Efl.Ui.SpinButton.CompositionElements*"></a>
-  <h4 id="Efl_Ui_SpinButton_CompositionElements" data-uid="Efl.Ui.SpinButton.CompositionElements">CompositionElements</h4>
-  <div class="markdown level1 summary"><p>Set the order of elements that will be used for composition
-Elements of the list can be either an Efl.Ui.Widget, an Efl.Ui.Focus.Object or an Efl.Gfx.</p>
-<p>If the element is an Efl.Gfx.Entity, then the geometry is used as focus geometry, the focus property is redirected to the evas focus property. The mixin will take care of registration.</p>
-<p>If the element is an Efl.Ui.Focus.Object, then the mixin will take care of registering the element.</p>
-<p>If the element is a Efl.Ui.Widget nothing is done and the widget is simply part of the order.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;IEntity&gt; CompositionElements { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Eina.List&lt;Efl.Gfx.IEntity&gt;</span></td>
-        <td><p>The order to use</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_Editable_" data-uid="Efl.Ui.SpinButton.Editable*"></a>
-  <h4 id="Efl_Ui_SpinButton_Editable" data-uid="Efl.Ui.SpinButton.Editable">Editable</h4>
-  <div class="markdown level1 summary"><p>Control whether the spin can be directly edited by the user.
-Spin objects can have editing disabled, in which case they can only be changed by using arrows. This is useful for situations where you don't want your users to write their own value. It's especially useful when using special values. The user can see the real values instead of special label when editing.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Editable { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> to allow users to edit it or <code>false</code> to don't allow users to edit it directly.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_LogicalMode_" data-uid="Efl.Ui.SpinButton.LogicalMode*"></a>
-  <h4 id="Efl_Ui_SpinButton_LogicalMode" data-uid="Efl.Ui.SpinButton.LogicalMode">LogicalMode</h4>
-  <div class="markdown level1 summary"><p>Set to true if all children should be registered as logicals</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool LogicalMode { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> or <code>false</code></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_Ui_SpinButton_Orientation_" data-uid="Efl.Ui.SpinButton.Orientation*"></a>
   <h4 id="Efl_Ui_SpinButton_Orientation" data-uid="Efl.Ui.SpinButton.Orientation">Orientation</h4>
   <div class="markdown level1 summary"><p>Control the direction of a given widget.
 Use this function to change how your widget is to be disposed: vertically or horizontally or inverted vertically or inverted horizontally.</p>
-<p>Mirroring as defined in <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
+<p>Mirroring as defined in <span class="text-muted">Efl.Ui.II18n (object still in beta stage)</span> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -315,35 +229,52 @@ Use this function to change how your widget is to be disposed: vertically or hor
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-  </h3>
   
   
-  <a id="Efl_Ui_SpinButton_Dirty_" data-uid="Efl.Ui.SpinButton.Dirty*"></a>
-  <h4 id="Efl_Ui_SpinButton_Dirty" data-uid="Efl.Ui.SpinButton.Dirty">Dirty()</h4>
-  <div class="markdown level1 summary"><p>Mark this widget as dirty, the children can be considered to be changed after that call</p>
+  <a id="Efl_Ui_SpinButton_RangeStep_" data-uid="Efl.Ui.SpinButton.RangeStep*"></a>
+  <h4 id="Efl_Ui_SpinButton_RangeStep" data-uid="Efl.Ui.SpinButton.RangeStep">RangeStep</h4>
+  <div class="markdown level1 summary"><p>Control the step used to increment or decrement values for given widget.
+This value will be incremented or decremented to the displayed value.</p>
+<p>By default step value is equal to 1.</p>
+<p>Warning: The step value should be bigger than 0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void Dirty()</code></pre>
+    <pre><code class="lang-csharp hljs">public double RangeStep { get; set; }</code></pre>
   </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>The step value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   
   
-  <a id="Efl_Ui_SpinButton_GetCirculate_" data-uid="Efl.Ui.SpinButton.GetCirculate*"></a>
-  <h4 id="Efl_Ui_SpinButton_GetCirculate" data-uid="Efl.Ui.SpinButton.GetCirculate">GetCirculate()</h4>
+  <a id="Efl_Ui_SpinButton_Wraparound_" data-uid="Efl.Ui.SpinButton.Wraparound*"></a>
+  <h4 id="Efl_Ui_SpinButton_Wraparound" data-uid="Efl.Ui.SpinButton.Wraparound">Wraparound</h4>
   <div class="markdown level1 summary"><p>Control whether the spin should circulate value when it reaches its minimum or maximum value.
 Disabled by default. If disabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will be the maximum value. The same happens when the user tries to decrement it but the value less step is less than minimum value. In this case, the new displayed value will be the minimum value.</p>
-<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
+<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
 <p>E.g.: <code>min</code> = 10 <code>max</code> = 50 <code>step</code> = 20 <code>displayed</code> = 20</p>
 <p>When the user decrements the value (using left or bottom arrow), it will display $50.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool GetCirculate()</code></pre>
+    <pre><code class="lang-csharp hljs">public bool Wraparound { get; set; }</code></pre>
   </div>
-  <h5 class="returns">Returns</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -353,105 +284,21 @@ Disabled by default. If disabled, when the user tries to increment the value but
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> to enable circulate or <code>false</code> to disable it.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_GetCompositionElements_" data-uid="Efl.Ui.SpinButton.GetCompositionElements*"></a>
-  <h4 id="Efl_Ui_SpinButton_GetCompositionElements" data-uid="Efl.Ui.SpinButton.GetCompositionElements">GetCompositionElements()</h4>
-  <div class="markdown level1 summary"><p>Set the order of elements that will be used for composition
-Elements of the list can be either an Efl.Ui.Widget, an Efl.Ui.Focus.Object or an Efl.Gfx.</p>
-<p>If the element is an Efl.Gfx.Entity, then the geometry is used as focus geometry, the focus property is redirected to the evas focus property. The mixin will take care of registration.</p>
-<p>If the element is an Efl.Ui.Focus.Object, then the mixin will take care of registering the element.</p>
-<p>If the element is a Efl.Ui.Widget nothing is done and the widget is simply part of the order.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual List&lt;IEntity&gt; GetCompositionElements()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Eina.List&lt;Efl.Gfx.IEntity&gt;</span></td>
-        <td><p>The order to use</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_GetEditable_" data-uid="Efl.Ui.SpinButton.GetEditable*"></a>
-  <h4 id="Efl_Ui_SpinButton_GetEditable" data-uid="Efl.Ui.SpinButton.GetEditable">GetEditable()</h4>
-  <div class="markdown level1 summary"><p>Control whether the spin can be directly edited by the user.
-Spin objects can have editing disabled, in which case they can only be changed by using arrows. This is useful for situations where you don't want your users to write their own value. It's especially useful when using special values. The user can see the real values instead of special label when editing.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool GetEditable()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> to allow users to edit it or <code>false</code> to don't allow users to edit it directly.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_GetLogicalMode_" data-uid="Efl.Ui.SpinButton.GetLogicalMode*"></a>
-  <h4 id="Efl_Ui_SpinButton_GetLogicalMode" data-uid="Efl.Ui.SpinButton.GetLogicalMode">GetLogicalMode()</h4>
-  <div class="markdown level1 summary"><p>Set to true if all children should be registered as logicals</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool GetLogicalMode()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> or <code>false</code></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
+  <h3 id="methods">Methods
+  </h3>
   
   
   <a id="Efl_Ui_SpinButton_GetOrientation_" data-uid="Efl.Ui.SpinButton.GetOrientation*"></a>
   <h4 id="Efl_Ui_SpinButton_GetOrientation" data-uid="Efl.Ui.SpinButton.GetOrientation">GetOrientation()</h4>
   <div class="markdown level1 summary"><p>Control the direction of a given widget.
 Use this function to change how your widget is to be disposed: vertically or horizontally or inverted vertically or inverted horizontally.</p>
-<p>Mirroring as defined in <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
+<p>Mirroring as defined in <span class="text-muted">Efl.Ui.II18n (object still in beta stage)</span> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -476,72 +323,60 @@ Use this function to change how your widget is to be disposed: vertically or hor
   </table>
   
   
-  <a id="Efl_Ui_SpinButton_OnDelayChangedEvt_" data-uid="Efl.Ui.SpinButton.OnDelayChangedEvt*"></a>
-  <h4 id="Efl_Ui_SpinButton_OnDelayChangedEvt_EventArgs_" data-uid="Efl.Ui.SpinButton.OnDelayChangedEvt(EventArgs)">OnDelayChangedEvt(EventArgs)</h4>
-  <div class="markdown level1 summary"><p>Method to raise event DelayChangedEvt.</p>
+  <a id="Efl_Ui_SpinButton_GetRangeStep_" data-uid="Efl.Ui.SpinButton.GetRangeStep*"></a>
+  <h4 id="Efl_Ui_SpinButton_GetRangeStep" data-uid="Efl.Ui.SpinButton.GetRangeStep">GetRangeStep()</h4>
+  <div class="markdown level1 summary"><p>Control the step used to increment or decrement values for given widget.
+This value will be incremented or decremented to the displayed value.</p>
+<p>By default step value is equal to 1.</p>
+<p>Warning: The step value should be bigger than 0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnDelayChangedEvt(EventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual double GetRangeStep()</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventArgs</span></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><p>The step value.</p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Ui_SpinButton_Prepare_" data-uid="Efl.Ui.SpinButton.Prepare*"></a>
-  <h4 id="Efl_Ui_SpinButton_Prepare" data-uid="Efl.Ui.SpinButton.Prepare">Prepare()</h4>
-  <div class="markdown level1 summary"><p>A call to prepare the children of this element, called if marked as dirty
-You can use this function to call composition_elements.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void Prepare()</code></pre>
-  </div>
-  
-  
-  <a id="Efl_Ui_SpinButton_SetCirculate_" data-uid="Efl.Ui.SpinButton.SetCirculate*"></a>
-  <h4 id="Efl_Ui_SpinButton_SetCirculate_System_Boolean_" data-uid="Efl.Ui.SpinButton.SetCirculate(System.Boolean)">SetCirculate(Boolean)</h4>
+  <a id="Efl_Ui_SpinButton_GetWraparound_" data-uid="Efl.Ui.SpinButton.GetWraparound*"></a>
+  <h4 id="Efl_Ui_SpinButton_GetWraparound" data-uid="Efl.Ui.SpinButton.GetWraparound">GetWraparound()</h4>
   <div class="markdown level1 summary"><p>Control whether the spin should circulate value when it reaches its minimum or maximum value.
 Disabled by default. If disabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will be the maximum value. The same happens when the user tries to decrement it but the value less step is less than minimum value. In this case, the new displayed value will be the minimum value.</p>
-<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
+<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
 <p>E.g.: <code>min</code> = 10 <code>max</code> = 50 <code>step</code> = 20 <code>displayed</code> = 20</p>
 <p>When the user decrements the value (using left or bottom arrow), it will display $50.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetCirculate(bool circulate)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual bool GetWraparound()</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">circulate</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> to enable circulate or <code>false</code> to disable it.</p>
 </td>
       </tr>
@@ -549,18 +384,14 @@ Disabled by default. If disabled, when the user tries to increment the value but
   </table>
   
   
-  <a id="Efl_Ui_SpinButton_SetCompositionElements_" data-uid="Efl.Ui.SpinButton.SetCompositionElements*"></a>
-  <h4 id="Efl_Ui_SpinButton_SetCompositionElements_Eina_List_Efl_Gfx_IEntity__" data-uid="Efl.Ui.SpinButton.SetCompositionElements(Eina.List{Efl.Gfx.IEntity})">SetCompositionElements(List&lt;IEntity&gt;)</h4>
-  <div class="markdown level1 summary"><p>Set the order of elements that will be used for composition
-Elements of the list can be either an Efl.Ui.Widget, an Efl.Ui.Focus.Object or an Efl.Gfx.</p>
-<p>If the element is an Efl.Gfx.Entity, then the geometry is used as focus geometry, the focus property is redirected to the evas focus property. The mixin will take care of registration.</p>
-<p>If the element is an Efl.Ui.Focus.Object, then the mixin will take care of registering the element.</p>
-<p>If the element is a Efl.Ui.Widget nothing is done and the widget is simply part of the order.</p>
+  <a id="Efl_Ui_SpinButton_OnSteadyEvent_" data-uid="Efl.Ui.SpinButton.OnSteadyEvent*"></a>
+  <h4 id="Efl_Ui_SpinButton_OnSteadyEvent_System_EventArgs_" data-uid="Efl.Ui.SpinButton.OnSteadyEvent(System.EventArgs)">OnSteadyEvent(EventArgs)</h4>
+  <div class="markdown level1 summary"><p>Method to raise event SteadyEvent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetCompositionElements(List&lt;IEntity&gt; logical_order)</code></pre>
+    <pre><code class="lang-csharp hljs">public void OnSteadyEvent(EventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -573,68 +404,9 @@ Elements of the list can be either an Efl.Ui.Widget, an Efl.Ui.Focus.Object or a
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Eina.List&lt;Efl.Gfx.IEntity&gt;</span></td>
-        <td><span class="parametername">logical_order</span></td>
-        <td><p>The order to use</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_SetEditable_" data-uid="Efl.Ui.SpinButton.SetEditable*"></a>
-  <h4 id="Efl_Ui_SpinButton_SetEditable_System_Boolean_" data-uid="Efl.Ui.SpinButton.SetEditable(System.Boolean)">SetEditable(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Control whether the spin can be directly edited by the user.
-Spin objects can have editing disabled, in which case they can only be changed by using arrows. This is useful for situations where you don't want your users to write their own value. It's especially useful when using special values. The user can see the real values instead of special label when editing.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetEditable(bool editable)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">editable</span></td>
-        <td><p><code>true</code> to allow users to edit it or <code>false</code> to don't allow users to edit it directly.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_SpinButton_SetLogicalMode_" data-uid="Efl.Ui.SpinButton.SetLogicalMode*"></a>
-  <h4 id="Efl_Ui_SpinButton_SetLogicalMode_System_Boolean_" data-uid="Efl.Ui.SpinButton.SetLogicalMode(System.Boolean)">SetLogicalMode(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Set to true if all children should be registered as logicals</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetLogicalMode(bool logical_mode)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">logical_mode</span></td>
-        <td><p><code>true</code> or <code>false</code></p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">System.EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event to raise.</p>
 </td>
       </tr>
     </tbody>
@@ -645,7 +417,7 @@ Spin objects can have editing disabled, in which case they can only be changed b
   <h4 id="Efl_Ui_SpinButton_SetOrientation_Efl_Ui_LayoutOrientation_" data-uid="Efl.Ui.SpinButton.SetOrientation(Efl.Ui.LayoutOrientation)">SetOrientation(LayoutOrientation)</h4>
   <div class="markdown level1 summary"><p>Control the direction of a given widget.
 Use this function to change how your widget is to be disposed: vertically or horizontally or inverted vertically or inverted horizontally.</p>
-<p>Mirroring as defined in <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
+<p>Mirroring as defined in <span class="text-muted">Efl.Ui.II18n (object still in beta stage)</span> can invert the <code>horizontal</code> direction: it is <code>ltr</code> by default, but becomes <code>rtl</code> if the object is mirrored.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -670,17 +442,82 @@ Use this function to change how your widget is to be disposed: vertically or hor
       </tr>
     </tbody>
   </table>
-  <h3 id="events">Events
-  </h3>
   
   
-  <h4 id="Efl_Ui_SpinButton_DelayChangedEvt" data-uid="Efl.Ui.SpinButton.DelayChangedEvt">DelayChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Called when spin delay is changed.</p>
+  <a id="Efl_Ui_SpinButton_SetRangeStep_" data-uid="Efl.Ui.SpinButton.SetRangeStep*"></a>
+  <h4 id="Efl_Ui_SpinButton_SetRangeStep_System_Double_" data-uid="Efl.Ui.SpinButton.SetRangeStep(System.Double)">SetRangeStep(Double)</h4>
+  <div class="markdown level1 summary"><p>Control the step used to increment or decrement values for given widget.
+This value will be incremented or decremented to the displayed value.</p>
+<p>By default step value is equal to 1.</p>
+<p>Warning: The step value should be bigger than 0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public event EventHandler DelayChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void SetRangeStep(double step)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
+        <td><span class="parametername">step</span></td>
+        <td><p>The step value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Efl_Ui_SpinButton_SetWraparound_" data-uid="Efl.Ui.SpinButton.SetWraparound*"></a>
+  <h4 id="Efl_Ui_SpinButton_SetWraparound_System_Boolean_" data-uid="Efl.Ui.SpinButton.SetWraparound(System.Boolean)">SetWraparound(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Control whether the spin should circulate value when it reaches its minimum or maximum value.
+Disabled by default. If disabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will be the maximum value. The same happens when the user tries to decrement it but the value less step is less than minimum value. In this case, the new displayed value will be the minimum value.</p>
+<p>If enabled, when the user tries to increment the value but displayed value plus step value is bigger than maximum value, the new value will become the minimum value. When the user tries to decrement it, if the value minus step is less than minimum value, the new displayed value will be the maximum value.</p>
+<p>E.g.: <code>min</code> = 10 <code>max</code> = 50 <code>step</code> = 20 <code>displayed</code> = 20</p>
+<p>When the user decrements the value (using left or bottom arrow), it will display $50.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetWraparound(bool circulate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><span class="parametername">circulate</span></td>
+        <td><p><code>true</code> to enable circulate or <code>false</code> to disable it.<br>The default value is <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Efl_Ui_SpinButton_SteadyEvent" data-uid="Efl.Ui.SpinButton.SteadyEvent">SteadyEvent</h4>
+  <div class="markdown level1 summary"><p>Called when the widget's value has changed and has remained unchanged for 0.2s. This allows filtering out unwanted &quot;noise&quot; from the widget if you are only interested in its final position. Use this event instead of <a class="xref" href="Efl.Ui.IRangeDisplay.html#Efl_Ui_IRangeDisplay_ChangedEvent">Efl.Ui.IRangeDisplay.ChangedEvent</a> if you are going to perform a costly operation on its handler.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler SteadyEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -692,7 +529,7 @@ Use this function to change how your widget is to be disposed: vertically or hor
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">System.EventHandler</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -702,10 +539,10 @@ Use this function to change how your widget is to be disposed: vertically or hor
       <a class="xref" href="Efl.Canvas.IPointer.html">Efl.Canvas.IPointer</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gesture.IEvents.html">Efl.Gesture.IEvents</a>
+      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Gfx.IColor.html">Efl.Gfx.IColor</a>
+      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
   </div>
   <div>
       <a class="xref" href="Efl.Gfx.IHint.html">Efl.Gfx.IHint</a>
@@ -714,37 +551,16 @@ Use this function to change how your widget is to be disposed: vertically or hor
       <a class="xref" href="Efl.Gfx.IMapping.html">Efl.Gfx.IMapping</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
+      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Ui.II18n.html">Efl.Ui.II18n</a>
+      <a class="xref" href="Efl.Input.IInterface.html">Efl.Input.IInterface</a>
   </div>
   <div>
       <a class="xref" href="Efl.IPart.html">Efl.IPart</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Access.IComponent.html">Efl.Access.IComponent</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Gfx.IStack.html">Efl.Gfx.IStack</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.IObject.html">Efl.Access.IObject</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IDnd.html">Efl.Ui.IDnd</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.IL10n.html">Efl.Ui.IL10n</a>
-  </div>
-  <div>
       <a class="xref" href="Efl.Ui.IPropertyBind.html">Efl.Ui.IPropertyBind</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.ISelection.html">Efl.Ui.ISelection</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a>
@@ -768,28 +584,16 @@ Use this function to change how your widget is to be disposed: vertically or hor
       <a class="xref" href="Efl.Ui.IFactoryBind.html">Efl.Ui.IFactoryBind</a>
   </div>
   <div>
-      <a class="xref" href="Efl.Access.IValue.html">Efl.Access.IValue</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.Widget.IAction.html">Efl.Access.Widget.IAction</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Access.IAction.html">Efl.Access.IAction</a>
-  </div>
-  <div>
       <a class="xref" href="Efl.Ui.IFormat.html">Efl.Ui.IFormat</a>
+  </div>
+  <div>
+      <a class="xref" href="Efl.Ui.ILayoutOrientable.html">Efl.Ui.ILayoutOrientable</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IRangeInteractive.html">Efl.Ui.IRangeInteractive</a>
   </div>
   <div>
       <a class="xref" href="Efl.Ui.IRangeDisplay.html">Efl.Ui.IRangeDisplay</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.ILayoutOrientable.html">Efl.Ui.ILayoutOrientable</a>
-  </div>
-  <div>
-      <a class="xref" href="Efl.Ui.Focus.IComposition.html">Efl.Ui.Focus.IComposition</a>
   </div>
   <div>
       <a class="xref" href="Efl.Eo.IWrapper.html">Efl.Eo.IWrapper</a>

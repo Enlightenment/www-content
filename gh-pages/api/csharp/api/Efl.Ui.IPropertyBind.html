@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IPropertyBind
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -76,11 +76,6 @@
   <div class="markdown level0 summary"><p>Efl UI Property_Bind interface. view object can have <a class="xref" href="Efl.IModel.html">Efl.IModel</a> to manage the data, the interface can help loading and tracking child data from the model property. see <a class="xref" href="Efl.IModel.html">Efl.IModel</a> see <a class="xref" href="Efl.Ui.IFactory.html">Efl.Ui.IFactory</a></p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IPropertyBind_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IPropertyBind_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,14 +85,14 @@
   </h3>
   
   
-  <a id="Efl_Ui_IPropertyBind_PropertyBind_" data-uid="Efl.Ui.IPropertyBind.PropertyBind*"></a>
-  <h4 id="Efl_Ui_IPropertyBind_PropertyBind_System_String_System_String_" data-uid="Efl.Ui.IPropertyBind.PropertyBind(System.String,System.String)">PropertyBind(String, String)</h4>
+  <a id="Efl_Ui_IPropertyBind_BindProperty_" data-uid="Efl.Ui.IPropertyBind.BindProperty*"></a>
+  <h4 id="Efl_Ui_IPropertyBind_BindProperty_System_String_System_String_" data-uid="Efl.Ui.IPropertyBind.BindProperty(System.String,System.String)">BindProperty(String, String)</h4>
   <div class="markdown level1 summary"><p>bind property data with the given key string. when the data is ready or changed, bind the data to the key action and process promised work.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Error PropertyBind(string key, string property)</code></pre>
+    <pre><code class="lang-csharp hljs">Error BindProperty(string key, string property)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -110,13 +105,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">key</span></td>
         <td><p>key string for bind model property data</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">System.String</a></td>
         <td><span class="parametername">property</span></td>
         <td><p>Model property name</p>
 </td>
@@ -143,13 +138,13 @@
   </h3>
   
   
-  <h4 id="Efl_Ui_IPropertyBind_PropertiesChangedEvt" data-uid="Efl.Ui.IPropertyBind.PropertiesChangedEvt">PropertiesChangedEvt</h4>
-  <div class="markdown level1 summary"><p>Event dispatched when a property on the object has changed due to an user interaction on the object that a model could be interested in.</p>
+  <h4 id="Efl_Ui_IPropertyBind_PropertiesChangedEvent" data-uid="Efl.Ui.IPropertyBind.PropertiesChangedEvent">PropertiesChangedEvent</h4>
+  <div class="markdown level1 summary"><p>Event dispatched when a property on the object has changed due to a user interaction on the object that a model could be interested in.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IPropertyBindPropertiesChangedEvt_Args&gt; PropertiesChangedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;PropertyBindPropertiesChangedEventArgs&gt; PropertiesChangedEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,20 +156,21 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IPropertyBindPropertiesChangedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.PropertyBindPropertiesChangedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.PropertyBindPropertiesChangedEventArgs.html">Efl.Ui.PropertyBindPropertiesChangedEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="Efl_Ui_IPropertyBind_PropertyBoundEvt" data-uid="Efl.Ui.IPropertyBind.PropertyBoundEvt">PropertyBoundEvt</h4>
-  <div class="markdown level1 summary"><p>Event dispatched when a property on the object is bound to a model. This is useful to not overgenerate event.</p>
+  <h4 id="Efl_Ui_IPropertyBind_PropertyBoundEvent" data-uid="Efl.Ui.IPropertyBind.PropertyBoundEvent">PropertyBoundEvent</h4>
+  <div class="markdown level1 summary"><p>Event dispatched when a property on the object is bound to a model. This is useful to avoid generating too many events.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IPropertyBindPropertyBoundEvt_Args&gt; PropertyBoundEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;PropertyBindPropertyBoundEventArgs&gt; PropertyBoundEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -186,8 +182,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IPropertyBindPropertyBoundEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.PropertyBindPropertyBoundEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.PropertyBindPropertyBoundEventArgs.html">Efl.Ui.PropertyBindPropertyBoundEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>

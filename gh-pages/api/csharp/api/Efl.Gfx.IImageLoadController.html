@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Gfx.IImageLoadController
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -76,11 +76,6 @@
   <div class="markdown level0 summary"><p>Common APIs for all loadable 2D images.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Gfx_IImageLoadController_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Gfx_IImageLoadController_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -92,8 +87,8 @@
   
   <a id="Efl_Gfx_IImageLoadController_LoadDpi_" data-uid="Efl.Gfx.IImageLoadController.LoadDpi*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_LoadDpi" data-uid="Efl.Gfx.IImageLoadController.LoadDpi">LoadDpi</h4>
-  <div class="markdown level1 summary"><p>Get the DPI resolution of a loaded image object in the canvas.
-This function returns the DPI resolution of the given canvas image.</p>
+  <div class="markdown level1 summary"><p>The DPI resolution of an image object's source image.
+Most useful for the SVG image loader.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -110,7 +105,7 @@ This function returns the DPI resolution of the given canvas image.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The DPI resolution.</p>
 </td>
       </tr>
@@ -138,7 +133,7 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> means that it should honor the orientation information.</p>
 </td>
       </tr>
@@ -148,7 +143,9 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
   
   <a id="Efl_Gfx_IImageLoadController_LoadRegion_" data-uid="Efl.Gfx.IImageLoadController.LoadRegion*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_LoadRegion" data-uid="Efl.Gfx.IImageLoadController.LoadRegion">LoadRegion</h4>
-  <div class="markdown level1 summary"><p>Retrieve the coordinates of a given image object's selective (source image) load region.</p>
+  <div class="markdown level1 summary"><p>Inform a given image object to load a selective region of its source image.
+This property is useful when one is not showing all of an image's area on its image object.</p>
+<p>Note: The image loader for the image format in question has to support selective region loading in order for this function to work (see <a class="xref" href="Efl.Gfx.IImageLoadController.html#Efl_Gfx_IImageLoadController_GetLoadRegionSupport">Efl.Gfx.IImageLoadController.GetLoadRegionSupport()</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -192,8 +189,8 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if region load of the image is supported, <code>false</code> otherwise</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if region load of the image is supported, <code>false</code> otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -205,7 +202,7 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
   <div class="markdown level1 summary"><p>The scale down factor is a divider on the original image size.
 Setting the scale down factor can reduce load time and memory usage at the cost of having a scaled down image in memory.</p>
 <p>This function sets the scale down factor of a given canvas image. Most useful for the SVG image loader but also applies to JPEG, PNG and BMP.</p>
-<p>Powers of two (2, 4, 8) are best supported (especially with JPEG)</p>
+<p>Powers of two (2, 4, 8, ...) are best supported (especially with JPEG).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -222,7 +219,7 @@ Setting the scale down factor can reduce load time and memory usage at the cost 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><p>The scale down dividing factor.</p>
 </td>
       </tr>
@@ -233,8 +230,8 @@ Setting the scale down factor can reduce load time and memory usage at the cost 
   <a id="Efl_Gfx_IImageLoadController_LoadSize_" data-uid="Efl.Gfx.IImageLoadController.LoadSize*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_LoadSize" data-uid="Efl.Gfx.IImageLoadController.LoadSize">LoadSize</h4>
   <div class="markdown level1 summary"><p>The load size of an image.
-The image will be loaded into memory as if it was the specified size instead of its original size. This can save a lot of memory and is important for scalable types like svg.</p>
-<p>By default, the load size is not specified, so it is 0x0.</p>
+The image will be loaded into memory as if it was the specified size instead of its original size. This can save a lot of memory and is important for scalable types like SVG.</p>
+<p>By default, the load size is not specified, so it is <code>0x0</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -261,8 +258,8 @@ The image will be loaded into memory as if it was the specified size instead of 
   
   <a id="Efl_Gfx_IImageLoadController_LoadSkipHeader_" data-uid="Efl.Gfx.IImageLoadController.LoadSkipHeader*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_LoadSkipHeader" data-uid="Efl.Gfx.IImageLoadController.LoadSkipHeader">LoadSkipHeader</h4>
-  <div class="markdown level1 summary"><p>Initial load should skip header check and leave it all to data load
-If this is true, then future loads of images will defer header loading to a preload stage and/or data load later on rather than at the start when the load begins (e.g. when file is set).</p>
+  <div class="markdown level1 summary"><p>Initial load should skip header check and leave it all to data load.
+If this is <code>true</code>, then future loads of images will defer header loading to a preload stage and/or data load later on rather than at the start when the load begins (e.g. when file is set).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -279,8 +276,8 @@ If this is true, then future loads of images will defer header loading to a prel
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>Will be true if header is to be skipped.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if header is to be skipped.</p>
 </td>
       </tr>
     </tbody>
@@ -289,10 +286,22 @@ If this is true, then future loads of images will defer header loading to a prel
   </h3>
   
   
+  <a id="Efl_Gfx_IImageLoadController_CancelLoadAsync_" data-uid="Efl.Gfx.IImageLoadController.CancelLoadAsync*"></a>
+  <h4 id="Efl_Gfx_IImageLoadController_CancelLoadAsync" data-uid="Efl.Gfx.IImageLoadController.CancelLoadAsync">CancelLoadAsync()</h4>
+  <div class="markdown level1 summary"><p>Cancel preloading an image object's image data in the background.
+The object should be left in a state where it has no image data. If cancel is called too late, the image will be kept in memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CancelLoadAsync()</code></pre>
+  </div>
+  
+  
   <a id="Efl_Gfx_IImageLoadController_GetLoadDpi_" data-uid="Efl.Gfx.IImageLoadController.GetLoadDpi*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_GetLoadDpi" data-uid="Efl.Gfx.IImageLoadController.GetLoadDpi">GetLoadDpi()</h4>
-  <div class="markdown level1 summary"><p>Get the DPI resolution of a loaded image object in the canvas.
-This function returns the DPI resolution of the given canvas image.</p>
+  <div class="markdown level1 summary"><p>The DPI resolution of an image object's source image.
+Most useful for the SVG image loader.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -309,7 +318,7 @@ This function returns the DPI resolution of the given canvas image.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><p>The DPI resolution.</p>
 </td>
       </tr>
@@ -337,7 +346,7 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>true</code> means that it should honor the orientation information.</p>
 </td>
       </tr>
@@ -347,7 +356,9 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
   
   <a id="Efl_Gfx_IImageLoadController_GetLoadRegion_" data-uid="Efl.Gfx.IImageLoadController.GetLoadRegion*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_GetLoadRegion" data-uid="Efl.Gfx.IImageLoadController.GetLoadRegion">GetLoadRegion()</h4>
-  <div class="markdown level1 summary"><p>Retrieve the coordinates of a given image object's selective (source image) load region.</p>
+  <div class="markdown level1 summary"><p>Inform a given image object to load a selective region of its source image.
+This property is useful when one is not showing all of an image's area on its image object.</p>
+<p>Note: The image loader for the image format in question has to support selective region loading in order for this function to work (see <a class="xref" href="Efl.Gfx.IImageLoadController.html#Efl_Gfx_IImageLoadController_GetLoadRegionSupport">Efl.Gfx.IImageLoadController.GetLoadRegionSupport()</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -391,8 +402,8 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p><code>true</code> if region load of the image is supported, <code>false</code> otherwise</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if region load of the image is supported, <code>false</code> otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -404,7 +415,7 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
   <div class="markdown level1 summary"><p>The scale down factor is a divider on the original image size.
 Setting the scale down factor can reduce load time and memory usage at the cost of having a scaled down image in memory.</p>
 <p>This function sets the scale down factor of a given canvas image. Most useful for the SVG image loader but also applies to JPEG, PNG and BMP.</p>
-<p>Powers of two (2, 4, 8) are best supported (especially with JPEG)</p>
+<p>Powers of two (2, 4, 8, ...) are best supported (especially with JPEG).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -421,7 +432,7 @@ Setting the scale down factor can reduce load time and memory usage at the cost 
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><p>The scale down dividing factor.</p>
 </td>
       </tr>
@@ -458,8 +469,8 @@ Setting the scale down factor can reduce load time and memory usage at the cost 
   
   <a id="Efl_Gfx_IImageLoadController_GetLoadSkipHeader_" data-uid="Efl.Gfx.IImageLoadController.GetLoadSkipHeader*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_GetLoadSkipHeader" data-uid="Efl.Gfx.IImageLoadController.GetLoadSkipHeader">GetLoadSkipHeader()</h4>
-  <div class="markdown level1 summary"><p>Initial load should skip header check and leave it all to data load
-If this is true, then future loads of images will defer header loading to a preload stage and/or data load later on rather than at the start when the load begins (e.g. when file is set).</p>
+  <div class="markdown level1 summary"><p>Initial load should skip header check and leave it all to data load.
+If this is <code>true</code>, then future loads of images will defer header loading to a preload stage and/or data load later on rather than at the start when the load begins (e.g. when file is set).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -476,30 +487,18 @@ If this is true, then future loads of images will defer header loading to a prel
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>Will be true if header is to be skipped.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
+        <td><p><code>true</code> if header is to be skipped.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Efl_Gfx_IImageLoadController_LoadAsyncCancel_" data-uid="Efl.Gfx.IImageLoadController.LoadAsyncCancel*"></a>
-  <h4 id="Efl_Gfx_IImageLoadController_LoadAsyncCancel" data-uid="Efl.Gfx.IImageLoadController.LoadAsyncCancel">LoadAsyncCancel()</h4>
-  <div class="markdown level1 summary"><p>Cancel preloading an image object's image data in the background.
-The object should be left in a state where it has no image data. If cancel is called too late, the image will be kept in memory.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void LoadAsyncCancel()</code></pre>
-  </div>
-  
-  
   <a id="Efl_Gfx_IImageLoadController_LoadAsyncStart_" data-uid="Efl.Gfx.IImageLoadController.LoadAsyncStart*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_LoadAsyncStart" data-uid="Efl.Gfx.IImageLoadController.LoadAsyncStart">LoadAsyncStart()</h4>
   <div class="markdown level1 summary"><p>Begin preloading an image object's image data in the background.
-Once the background task is complete the event <code>load</code>,done will be emitted.</p>
+Once the background task is complete the event @[.load,done] will be emitted if loading succeeded, @[.load,error] otherwise.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -510,8 +509,8 @@ Once the background task is complete the event <code>load</code>,done will be em
   
   <a id="Efl_Gfx_IImageLoadController_SetLoadDpi_" data-uid="Efl.Gfx.IImageLoadController.SetLoadDpi*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_SetLoadDpi_System_Double_" data-uid="Efl.Gfx.IImageLoadController.SetLoadDpi(System.Double)">SetLoadDpi(Double)</h4>
-  <div class="markdown level1 summary"><p>Set the DPI resolution of an image object's source image.
-This function sets the DPI resolution of a given loaded canvas image. Most useful for the SVG image loader.</p>
+  <div class="markdown level1 summary"><p>The DPI resolution of an image object's source image.
+Most useful for the SVG image loader.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -529,7 +528,7 @@ This function sets the DPI resolution of a given loaded canvas image. Most usefu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Double</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">System.Double</a></td>
         <td><span class="parametername">dpi</span></td>
         <td><p>The DPI resolution.</p>
 </td>
@@ -559,7 +558,7 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><span class="parametername">enable</span></td>
         <td><p><code>true</code> means that it should honor the orientation information.</p>
 </td>
@@ -571,8 +570,8 @@ The orientation can for instance be set in the EXIF tags of a JPEG image. If thi
   <a id="Efl_Gfx_IImageLoadController_SetLoadRegion_" data-uid="Efl.Gfx.IImageLoadController.SetLoadRegion*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_SetLoadRegion_Eina_Rect_" data-uid="Efl.Gfx.IImageLoadController.SetLoadRegion(Eina.Rect)">SetLoadRegion(Rect)</h4>
   <div class="markdown level1 summary"><p>Inform a given image object to load a selective region of its source image.
-This function is useful when one is not showing all of an image's area on its image object.</p>
-<p>Note: The image loader for the image format in question has to support selective region loading in order for this function to work.</p>
+This property is useful when one is not showing all of an image's area on its image object.</p>
+<p>Note: The image loader for the image format in question has to support selective region loading in order for this function to work (see <a class="xref" href="Efl.Gfx.IImageLoadController.html#Efl_Gfx_IImageLoadController_GetLoadRegionSupport">Efl.Gfx.IImageLoadController.GetLoadRegionSupport()</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -619,7 +618,7 @@ This function is useful when one is not showing all of an image's area on its im
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">div</span></td>
         <td><p>The scale down dividing factor.</p>
 </td>
@@ -660,7 +659,8 @@ EFL will try to load an image of the requested size but does not guarantee an ex
   
   <a id="Efl_Gfx_IImageLoadController_SetLoadSkipHeader_" data-uid="Efl.Gfx.IImageLoadController.SetLoadSkipHeader*"></a>
   <h4 id="Efl_Gfx_IImageLoadController_SetLoadSkipHeader_System_Boolean_" data-uid="Efl.Gfx.IImageLoadController.SetLoadSkipHeader(System.Boolean)">SetLoadSkipHeader(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Set the skip header state for susbsequent loads of a file.</p>
+  <div class="markdown level1 summary"><p>Initial load should skip header check and leave it all to data load.
+If this is <code>true</code>, then future loads of images will defer header loading to a preload stage and/or data load later on rather than at the start when the load begins (e.g. when file is set).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -678,62 +678,10 @@ EFL will try to load an image of the requested size but does not guarantee an ex
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><span class="parametername">skip</span></td>
-        <td><p>Will be true if header is to be skipped.</p>
+        <td><p><code>true</code> if header is to be skipped.</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="events">Events
-  </h3>
-  
-  
-  <h4 id="Efl_Gfx_IImageLoadController_LoadDoneEvt" data-uid="Efl.Gfx.IImageLoadController.LoadDoneEvt">LoadDoneEvt</h4>
-  <div class="markdown level1 summary"><p>Called when he image was loaded</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler LoadDoneEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="Efl_Gfx_IImageLoadController_LoadErrorEvt" data-uid="Efl.Gfx.IImageLoadController.LoadErrorEvt">LoadErrorEvt</h4>
-  <div class="markdown level1 summary"><p>Called when an error happened during image loading</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IImageLoadControllerLoadErrorEvt_Args&gt; LoadErrorEvt</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Gfx.IImageLoadControllerLoadErrorEvt_Args&gt;</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>

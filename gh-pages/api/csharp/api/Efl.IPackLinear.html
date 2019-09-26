@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.IPackLinear
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,8 +89,8 @@ This means the sub-objects are internally organized in an ordered list.</p>
   <a id="Efl_IPackLinear_GetPackContent_" data-uid="Efl.IPackLinear.GetPackContent*"></a>
   <h4 id="Efl_IPackLinear_GetPackContent_System_Int32_" data-uid="Efl.IPackLinear.GetPackContent(System.Int32)">GetPackContent(Int32)</h4>
   <div class="markdown level1 summary"><p>Sub-object at a given <code>index</code> in this container.
-<code>index</code> ranges from -<code>count</code> to <code>count</code>-1, where positive numbers go from first sub-object (0) to last (<code>count</code>-1), and negative numbers go from last sub-object (-1) to first (-<code>count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
-<p>If <code>index</code> is less than -<code>count</code>, it will return the first sub-object whereas <code>index</code> greater than <code>count</code>-1 will return the last sub-object.</p>
+<code>index</code> ranges from <code>-count</code> to <code>count-1</code>, where positive numbers go from first sub-object (<code>0</code>) to last (<code>count-1</code>), and negative numbers go from last sub-object (<code>-1</code>) to first (<code>-count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
+<p>If <code>index</code> is less than <code>-count</code>, it will return the first sub-object whereas <code>index</code> greater than <code>count-1</code> will return the last sub-object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -108,9 +108,9 @@ This means the sub-objects are internally organized in an ordered list.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">index</span></td>
-        <td><p>Index of the existing sub-object to retrieve. Valid range is -<code>count</code> to (<code>count</code>-1).</p>
+        <td><p>Index of the existing sub-object to retrieve. Valid range is <code>-count</code> to <code>count-1</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -170,8 +170,8 @@ This means the sub-objects are internally organized in an ordered list.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><p>-1 in case <code>subobj</code> is not found, or the index of <code>subobj</code> in the range 0 to (<code>count</code>-1).</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
+        <td><p>-1 in case <code>subobj</code> is not found, or the index of <code>subobj</code> in the range <code>0</code> to <code>count-1</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -180,8 +180,9 @@ This means the sub-objects are internally organized in an ordered list.</p>
   
   <a id="Efl_IPackLinear_PackAfter_" data-uid="Efl.IPackLinear.PackAfter*"></a>
   <h4 id="Efl_IPackLinear_PackAfter_Efl_Gfx_IEntity_Efl_Gfx_IEntity_" data-uid="Efl.IPackLinear.PackAfter(Efl.Gfx.IEntity,Efl.Gfx.IEntity)">PackAfter(IEntity, IEntity)</h4>
-  <div class="markdown level1 summary"><p>Append an object after an existing sub-object.
+  <div class="markdown level1 summary"><p>Append an object after the <code>existing</code> sub-object.
 When this container is deleted, it will request deletion of the given <code>subobj</code>. Use <a class="xref" href="Efl.IPack.html#Efl_IPack_Unpack_Efl_Gfx_IEntity_">Efl.IPack.Unpack(Efl.Gfx.IEntity)</a> to remove <code>subobj</code> from this container without deleting it.</p>
+<p>If <code>existing</code> is <code>NULL</code> this method behaves like <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackEnd_Efl_Gfx_IEntity_">Efl.IPackLinear.PackEnd(Efl.Gfx.IEntity)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -207,7 +208,7 @@ When this container is deleted, it will request deletion of the given <code>subo
       <tr>
         <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
         <td><span class="parametername">existing</span></td>
-        <td><p>Existing reference sub-object.</p>
+        <td><p>Existing reference sub-object. Must already belong to the container or be <code>NULL</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -222,7 +223,7 @@ When this container is deleted, it will request deletion of the given <code>subo
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>false</code> if <code>existing</code> could not be found or <code>subobj</code> could not be packed.</p>
 </td>
       </tr>
@@ -233,8 +234,8 @@ When this container is deleted, it will request deletion of the given <code>subo
   <a id="Efl_IPackLinear_PackAt_" data-uid="Efl.IPackLinear.PackAt*"></a>
   <h4 id="Efl_IPackLinear_PackAt_Efl_Gfx_IEntity_System_Int32_" data-uid="Efl.IPackLinear.PackAt(Efl.Gfx.IEntity,System.Int32)">PackAt(IEntity, Int32)</h4>
   <div class="markdown level1 summary"><p>Inserts <code>subobj</code> BEFORE the sub-object at position <code>index</code>.
-<code>index</code> ranges from -<code>count</code> to <code>count</code>-1, where positive numbers go from first sub-object (0) to last (<code>count</code>-1), and negative numbers go from last sub-object (-1) to first (-<code>count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
-<p>If <code>index</code> is less than -<code>count</code>, it will trigger <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackBegin_Efl_Gfx_IEntity_">Efl.IPackLinear.PackBegin(Efl.Gfx.IEntity)</a>(<code>subobj</code>) whereas <code>index</code> greater than <code>count</code>-1 will trigger <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackEnd_Efl_Gfx_IEntity_">Efl.IPackLinear.PackEnd(Efl.Gfx.IEntity)</a>(<code>subobj</code>).</p>
+<code>index</code> ranges from <code>-count</code> to <code>count-1</code>, where positive numbers go from first sub-object (<code>0</code>) to last (<code>count-1</code>), and negative numbers go from last sub-object (<code>-1</code>) to first (<code>-count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
+<p>If <code>index</code> is less than <code>-count</code>, it will trigger <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackBegin_Efl_Gfx_IEntity_">Efl.IPackLinear.PackBegin(Efl.Gfx.IEntity)</a> whereas <code>index</code> greater than <code>count-1</code> will trigger <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackEnd_Efl_Gfx_IEntity_">Efl.IPackLinear.PackEnd(Efl.Gfx.IEntity)</a>.</p>
 <p>When this container is deleted, it will request deletion of the given <code>subobj</code>. Use <a class="xref" href="Efl.IPack.html#Efl_IPack_Unpack_Efl_Gfx_IEntity_">Efl.IPack.Unpack(Efl.Gfx.IEntity)</a> to remove <code>subobj</code> from this container without deleting it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -259,9 +260,9 @@ When this container is deleted, it will request deletion of the given <code>subo
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">index</span></td>
-        <td><p>Index of existing sub-object to insert BEFORE. Valid range is -<code>count</code> to (<code>count</code>-1).</p>
+        <td><p>Index of existing sub-object to insert BEFORE. Valid range is <code>-count</code> to <code>count-1</code>).</p>
 </td>
       </tr>
     </tbody>
@@ -276,7 +277,7 @@ When this container is deleted, it will request deletion of the given <code>subo
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>false</code> if <code>subobj</code> could not be packed.</p>
 </td>
       </tr>
@@ -286,8 +287,9 @@ When this container is deleted, it will request deletion of the given <code>subo
   
   <a id="Efl_IPackLinear_PackBefore_" data-uid="Efl.IPackLinear.PackBefore*"></a>
   <h4 id="Efl_IPackLinear_PackBefore_Efl_Gfx_IEntity_Efl_Gfx_IEntity_" data-uid="Efl.IPackLinear.PackBefore(Efl.Gfx.IEntity,Efl.Gfx.IEntity)">PackBefore(IEntity, IEntity)</h4>
-  <div class="markdown level1 summary"><p>Prepend an object before an existing sub-object.
+  <div class="markdown level1 summary"><p>Prepend an object before the <code>existing</code> sub-object.
 When this container is deleted, it will request deletion of the given <code>subobj</code>. Use <a class="xref" href="Efl.IPack.html#Efl_IPack_Unpack_Efl_Gfx_IEntity_">Efl.IPack.Unpack(Efl.Gfx.IEntity)</a> to remove <code>subobj</code> from this container without deleting it.</p>
+<p>If <code>existing</code> is <code>NULL</code> this method behaves like <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackBegin_Efl_Gfx_IEntity_">Efl.IPackLinear.PackBegin(Efl.Gfx.IEntity)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -313,7 +315,7 @@ When this container is deleted, it will request deletion of the given <code>subo
       <tr>
         <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
         <td><span class="parametername">existing</span></td>
-        <td><p>Existing reference sub-object.</p>
+        <td><p>Existing reference sub-object. Must already belong to the container or be <code>NULL</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -328,7 +330,7 @@ When this container is deleted, it will request deletion of the given <code>subo
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>false</code> if <code>existing</code> could not be found or <code>subobj</code> could not be packed.</p>
 </td>
       </tr>
@@ -339,7 +341,7 @@ When this container is deleted, it will request deletion of the given <code>subo
   <a id="Efl_IPackLinear_PackBegin_" data-uid="Efl.IPackLinear.PackBegin*"></a>
   <h4 id="Efl_IPackLinear_PackBegin_Efl_Gfx_IEntity_" data-uid="Efl.IPackLinear.PackBegin(Efl.Gfx.IEntity)">PackBegin(IEntity)</h4>
   <div class="markdown level1 summary"><p>Prepend an object at the beginning of this container.
-This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackAt_Efl_Gfx_IEntity_System_Int32_">Efl.IPackLinear.PackAt(Efl.Gfx.IEntity, System.Int32)</a>(<code>subobj</code>, 0).</p>
+This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackAt_Efl_Gfx_IEntity_System_Int32_">Efl.IPackLinear.PackAt(Efl.Gfx.IEntity, System.Int32)</a> with a <code>0</code> index.</p>
 <p>When this container is deleted, it will request deletion of the given <code>subobj</code>. Use <a class="xref" href="Efl.IPack.html#Efl_IPack_Unpack_Efl_Gfx_IEntity_">Efl.IPack.Unpack(Efl.Gfx.IEntity)</a> to remove <code>subobj</code> from this container without deleting it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -375,7 +377,7 @@ This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_P
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>false</code> if <code>subobj</code> could not be packed.</p>
 </td>
       </tr>
@@ -386,7 +388,7 @@ This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_P
   <a id="Efl_IPackLinear_PackEnd_" data-uid="Efl.IPackLinear.PackEnd*"></a>
   <h4 id="Efl_IPackLinear_PackEnd_Efl_Gfx_IEntity_" data-uid="Efl.IPackLinear.PackEnd(Efl.Gfx.IEntity)">PackEnd(IEntity)</h4>
   <div class="markdown level1 summary"><p>Append object at the end of this container.
-This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackAt_Efl_Gfx_IEntity_System_Int32_">Efl.IPackLinear.PackAt(Efl.Gfx.IEntity, System.Int32)</a>(<code>subobj</code>, -1).</p>
+This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_PackAt_Efl_Gfx_IEntity_System_Int32_">Efl.IPackLinear.PackAt(Efl.Gfx.IEntity, System.Int32)</a> with a <code>-1</code> index.</p>
 <p>When this container is deleted, it will request deletion of the given <code>subobj</code>. Use <a class="xref" href="Efl.IPack.html#Efl_IPack_Unpack_Efl_Gfx_IEntity_">Efl.IPack.Unpack(Efl.Gfx.IEntity)</a> to remove <code>subobj</code> from this container without deleting it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -422,7 +424,7 @@ This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_P
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">System.Boolean</a></td>
         <td><p><code>false</code> if <code>subobj</code> could not be packed.</p>
 </td>
       </tr>
@@ -433,7 +435,7 @@ This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_P
   <a id="Efl_IPackLinear_PackUnpackAt_" data-uid="Efl.IPackLinear.PackUnpackAt*"></a>
   <h4 id="Efl_IPackLinear_PackUnpackAt_System_Int32_" data-uid="Efl.IPackLinear.PackUnpackAt(System.Int32)">PackUnpackAt(Int32)</h4>
   <div class="markdown level1 summary"><p>Pop out (remove) the sub-object at the specified <code>index</code>.
-<code>index</code> ranges from -<code>count</code> to <code>count</code>-1, where positive numbers go from first sub-object (0) to last (<code>count</code>-1), and negative numbers go from last sub-object (-1) to first (-<code>count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
+<code>index</code> ranges from <code>-count</code> to <code>count-1</code>, where positive numbers go from first sub-object (<code>0</code>) to last (<code>count-1</code>), and negative numbers go from last sub-object (<code>-1</code>) to first (<code>-count</code>). <code>count</code> is the number of sub-objects currently in the container as returned by <a class="xref" href="Efl.IContainer.html#Efl_IContainer_ContentCount">Efl.IContainer.ContentCount()</a>.</p>
 <p>If <code>index</code> is less than -<code>count</code>, it will remove the first sub-object whereas <code>index</code> greater than <code>count</code>-1 will remove the last sub-object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -452,9 +454,9 @@ This is the same as <a class="xref" href="Efl.IPackLinear.html#Efl_IPackLinear_P
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">System.Int32</a></td>
         <td><span class="parametername">index</span></td>
-        <td><p>Index of the sub-object to remove. Valid range is -<code>count</code> to (<code>count</code>-1).</p>
+        <td><p>Index of the sub-object to remove. Valid range is <code>-count</code> to <code>count-1</code>.</p>
 </td>
       </tr>
     </tbody>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface Efl.Ui.IFactory
    ">
-    <meta name="generator" content="docfx 2.40.4.0">
+    <meta name="generator" content="docfx 2.45.0.0">
     
     <link rel="shortcut icon" href="../e-logo-title.png">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -73,14 +73,11 @@
   
   <h1 id="Efl_Ui_IFactory" data-uid="Efl.Ui.IFactory" class="text-break">Interface Efl.Ui.IFactory
   </h1>
-  <div class="markdown level0 summary"><p>Efl UI factory interface</p>
+  <div class="markdown level0 summary"><p>Interface for factory-pattern object creation.
+This object represents a Factory in the factory pattern. Objects should be created via the method <span class="text-muted">Efl.Ui.ViewFactory.CreateWithEvent (object still in beta stage)</span>, which will in turn call the necessary APIs from this interface. Objects created this way should be removed using <a class="xref" href="Efl.Ui.IFactory.html#Efl_Ui_IFactory_Release_Eina_Iterator_Efl_Gfx_IEntity__">Efl.Ui.IFactory.Release(Eina.Iterator&lt;Efl.Gfx.IEntity&gt;)</a>.</p>
+<p>It is recommended to not create your own <a class="xref" href="Efl.Ui.IFactory.html">Efl.Ui.IFactory</a> and use event handler as much as possible.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="remarks">
-  <h5 id="Efl_Ui_IFactory_remarks"><strong>Remarks</strong></h5>
-  <p>This is a <strong>BETA</strong> class. It can be modified or removed in the future. Do not use it for product development.</p>
-
-  </div>
   
   <h5 id="Efl_Ui_IFactory_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,122 +87,14 @@
   </h3>
   
   
-  <a id="Efl_Ui_IFactory_Create_" data-uid="Efl.Ui.IFactory.Create*"></a>
-  <h4 id="Efl_Ui_IFactory_Create_Efl_IModel_Efl_Gfx_IEntity_" data-uid="Efl.Ui.IFactory.Create(Efl.IModel,Efl.Gfx.IEntity)">Create(IModel, IEntity)</h4>
-  <div class="markdown level1 summary"><p>Create a UI object from the necessary properties in the specified model.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Future Create(IModel model, IEntity parent)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.IModel.html">Efl.IModel</a></td>
-        <td><span class="parametername">model</span></td>
-        <td><p>Efl model</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
-        <td><span class="parametername">parent</span></td>
-        <td><p>Efl canvas</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Eina.Future.html">Eina.Future</a></td>
-        <td><p>Created UI object</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Efl_Ui_IFactory_CreateAsync_" data-uid="Efl.Ui.IFactory.CreateAsync*"></a>
-  <h4 id="Efl_Ui_IFactory_CreateAsync_Efl_IModel_Efl_Gfx_IEntity_System_Threading_CancellationToken_" data-uid="Efl.Ui.IFactory.CreateAsync(Efl.IModel,Efl.Gfx.IEntity,System.Threading.CancellationToken)">CreateAsync(IModel, IEntity, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Async wrapper for <a class="xref" href="Efl.Ui.IFactory.html#Efl_Ui_IFactory_Create_Efl_IModel_Efl_Gfx_IEntity_">Efl.Ui.IFactory.Create(Efl.IModel, Efl.Gfx.IEntity)</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Value&gt; CreateAsync(IModel model, IEntity parent, CancellationToken token = default(CancellationToken))</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Efl.IModel.html">Efl.IModel</a></td>
-        <td><span class="parametername">model</span></td>
-        <td><p>Efl model</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
-        <td><span class="parametername">parent</span></td>
-        <td><p>Efl canvas</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
-        <td><span class="parametername">token</span></td>
-        <td><p>Token to notify the async operation of external request to cancel.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Threading.Tasks.Task&lt;Eina.Value&gt;</span></td>
-        <td><p>An async task wrapping the result of the operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
   <a id="Efl_Ui_IFactory_Release_" data-uid="Efl.Ui.IFactory.Release*"></a>
-  <h4 id="Efl_Ui_IFactory_Release_Efl_Gfx_IEntity_" data-uid="Efl.Ui.IFactory.Release(Efl.Gfx.IEntity)">Release(IEntity)</h4>
+  <h4 id="Efl_Ui_IFactory_Release_Eina_Iterator_Efl_Gfx_IEntity__" data-uid="Efl.Ui.IFactory.Release(Eina.Iterator{Efl.Gfx.IEntity})">Release(Iterator&lt;IEntity&gt;)</h4>
   <div class="markdown level1 summary"><p>Release a UI object and disconnect from models.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void Release(IEntity ui_view)</code></pre>
+    <pre><code class="lang-csharp hljs">void Release(Iterator&lt;IEntity&gt; ui_views)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -218,9 +107,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Efl.Gfx.IEntity.html">Efl.Gfx.IEntity</a></td>
-        <td><span class="parametername">ui_view</span></td>
-        <td><p>Efl canvas</p>
+        <td><span class="xref">Eina.Iterator&lt;Efl.Gfx.IEntity&gt;</span></td>
+        <td><span class="parametername">ui_views</span></td>
+        <td><p>Object to remove.</p>
 </td>
       </tr>
     </tbody>
@@ -229,13 +118,13 @@
   </h3>
   
   
-  <h4 id="Efl_Ui_IFactory_CreatedEvt" data-uid="Efl.Ui.IFactory.CreatedEvt">CreatedEvt</h4>
-  <div class="markdown level1 summary"><p>Event triggered when an item has been successfully created.</p>
+  <h4 id="Efl_Ui_IFactory_ItemBuildingEvent" data-uid="Efl.Ui.IFactory.ItemBuildingEvent">ItemBuildingEvent</h4>
+  <div class="markdown level1 summary"><p>Event triggered when an item has processed <a class="xref" href="Efl.Object.html#Efl_Object_FinalizeAdd">Efl.Object.FinalizeAdd()</a>, but before all the factory are done building it. Note: if the <a class="xref" href="Efl.Ui.IFactory.html">Efl.Ui.IFactory</a> does keep a cache of object, this will be called when object are pulled out of the cache.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;IFactoryCreatedEvt_Args&gt; CreatedEvt</code></pre>
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;FactoryItemBuildingEventArgs&gt; ItemBuildingEvent</code></pre>
   </div>
   <h5 class="eventType">Event Type</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -247,8 +136,87 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler&lt;Efl.Ui.IFactoryCreatedEvt_Args&gt;</span></td>
-        <td></td>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.FactoryItemBuildingEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.FactoryItemBuildingEventArgs.html">Efl.Ui.FactoryItemBuildingEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IFactory_ItemConstructingEvent" data-uid="Efl.Ui.IFactory.ItemConstructingEvent">ItemConstructingEvent</h4>
+  <div class="markdown level1 summary"><p>Event triggered when an item is under construction (between the Efl.Object.constructor and <a class="xref" href="Efl.Object.html#Efl_Object_FinalizeAdd">Efl.Object.FinalizeAdd()</a> call on the item). Note:  If the <a class="xref" href="Efl.Ui.IFactory.html">Efl.Ui.IFactory</a> does keep a cache of objects, this won't be called when objects are pulled out of the cache.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;FactoryItemConstructingEventArgs&gt; ItemConstructingEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.FactoryItemConstructingEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.FactoryItemConstructingEventArgs.html">Efl.Ui.FactoryItemConstructingEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IFactory_ItemCreatedEvent" data-uid="Efl.Ui.IFactory.ItemCreatedEvent">ItemCreatedEvent</h4>
+  <div class="markdown level1 summary"><p>Event triggered when an item has been successfully created by the factory and is about to be used by an <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;FactoryItemCreatedEventArgs&gt; ItemCreatedEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.FactoryItemCreatedEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.FactoryItemCreatedEventArgs.html">Efl.Ui.FactoryItemCreatedEventArgs</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="Efl_Ui_IFactory_ItemReleasingEvent" data-uid="Efl.Ui.IFactory.ItemReleasingEvent">ItemReleasingEvent</h4>
+  <div class="markdown level1 summary"><p>Event triggered when an item is being released by the <a class="xref" href="Efl.Ui.IFactory.html">Efl.Ui.IFactory</a>. It must be assumed that after this call, the object can be recycle to another <a class="xref" href="Efl.Ui.IView.html">Efl.Ui.IView</a> and there can be more than one call for the same item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;FactoryItemReleasingEventArgs&gt; ItemReleasingEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler&lt;Efl.Ui.FactoryItemReleasingEventArgs&gt;</span></td>
+        <td><p><a class="xref" href="Efl.Ui.FactoryItemReleasingEventArgs.html">Efl.Ui.FactoryItemReleasingEventArgs</a></p>
+</td>
       </tr>
     </tbody>
   </table>
